@@ -2,12 +2,12 @@
 
 git pull
 repos=($(awk -F= '{print $1}' ../input/rep-folders.txt))
-repos+=('sne-internal')
-repos+=('sne-external')
-repos+=('sne-external-radio')
-repos+=('sne-external-xray')
-repos+=('sne-external-spectra')
-repos+=('sne-external-WISEREP')
+repos+=('../input/sne-internal')
+repos+=('../input/sne-external')
+repos+=('../input/sne-external-radio')
+repos+=('../input/sne-external-xray')
+repos+=('../input/sne-external-spectra')
+repos+=('../input/sne-external-WISEREP')
 echo ${repos[*]}
 cd ../output
 for repo in ${repos[@]}; do

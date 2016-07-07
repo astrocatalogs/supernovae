@@ -1883,7 +1883,7 @@ if args.writecatalog and not args.eventlist:
             for ctype in sortedctypes:
                 csvout.writerow(ctype)
 
-        with open('../../sitemap.xml', 'w') as f:
+        with open(outdir + htmldir + 'sitemap.xml', 'w') as f:
             sitemapxml = sitemaptemplate
             sitemaplocs = ''
             for key in catalog.keys():

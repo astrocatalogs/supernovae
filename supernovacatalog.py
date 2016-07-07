@@ -4,15 +4,15 @@ import os
 from collections import OrderedDict
 from subprocess import check_output
 
-import astrocats.catalog
+from astrocats.catalog.catalog import Catalog
 from astrocats.catalog.utils import (is_number, pbar, read_json_arr,
                                      read_json_dict)
 from astrocats.supernovae.supernova import SUPERNOVA, Supernova
 
 
-class Catalog(astrocats.catalog.catalog.Catalog):
+class SupernovaCatalog(Catalog):
 
-    class PATHS(astrocats.catalog.catalog.Catalog.PATHS):
+    class PATHS(Catalog.PATHS):
 
         PATH_BASE = os.path.abspath(os.path.dirname(__file__))
 
