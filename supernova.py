@@ -10,7 +10,7 @@ from astrocats.catalog.photometry import PHOTOMETRY
 from astrocats.catalog.quantity import QUANTITY
 from astrocats.catalog.source import SOURCE
 from astrocats.catalog.spectrum import SPECTRUM
-from astrocats.catalog.utils import (get_event_filename, get_sig_digits,
+from astrocats.catalog.utils import (entry_to_filename, get_sig_digits,
                                      get_source_year, is_number, jd_to_mjd,
                                      make_date_string, pretty_num, uniq_cdl)
 from astrocats.supernovae.constants import (MAX_BANDS, PREF_KINDS,
@@ -308,7 +308,7 @@ class Supernova(Entry):
 
     def _get_save_path(self, bury=False):
         self._log.debug("_get_save_path(): {}".format(self.name()))
-        filename = get_event_filename(self[self._KEYS.NAME])
+        filename = entry_to_filename(self[self._KEYS.NAME])
 
         # Put non-SNe in the boneyard
         if bury:
