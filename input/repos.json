@@ -1,0 +1,23 @@
+{
+    "output":[
+        "sne-pre-1990",
+        "sne-1990-1999",
+        "sne-2000-2004",
+        "sne-2005-2009",
+        "sne-2010-2014",
+        "sne-2015-2019"
+    ],
+    "boneyard":[
+        "sne-boneyard"
+    ],
+    "external":[
+        "sne-external",
+        "sne-external-radio",
+        "sne-external-WISEREP",
+        "sne-external-xray",
+        "sne-external-spectra"
+    ],
+    "internal":[
+        "sne-internal"
+    ]
+}

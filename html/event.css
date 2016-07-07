@@ -1,0 +1,199 @@
+.event-download {
+    width: 100%;
+    text-align: center;
+}
+
+.event-download a {
+    font-size: 18pt;
+    color: darkgreen !important;
+    font-weight: bold;
+    text-decoration: none;
+    background: lightgreen;
+    width: 100%;
+	padding-left: 5px;
+	padding-right: 5px;
+}
+
+.event-download:hover {
+	text-decoration: underline;
+}
+
+.event-issue {
+    width: 100%;
+    text-align: center;
+    margin-top: 2px;
+}
+
+.event-issue a {
+    font-size: 18pt;
+    color: darkorange !important;
+    font-weight: bold;
+    text-decoration: none;
+    background: gold;
+    width: 100%;
+	padding-left: 5px;
+	padding-right: 5px;
+    margin-top: 10px;
+}
+
+.event-issue:hover {
+	text-decoration: underline;
+}
+
+.event-body {
+	font-family: Futura,Century Gothic,AppleGothic,sans-serif;
+	font-size: 10pt;
+}
+
+.event-body a {
+	color: #B52C00;
+	text-decoration: none;
+}
+
+.event-body a:hover {
+	text-decoration: underline;
+}
+
+.event-table {
+    background: #eee;
+    border-collapse: collapse;
+	width: 350px;
+    margin-bottom: 5px;
+}
+
+.event-cell {
+    border: 1px solid #FFFEF9;
+	padding-top: 1px;
+	padding-bottom: 2px;
+	padding-left: 3px;
+}
+
+.event-cell sup {
+    word-spacing: -0.3em;
+}
+
+.event-tab-title {
+    text-align: center;
+	width: 350px;
+}
+
+.event-tab-div {
+    float: left;
+    margin: 5px;
+	width: 350px;
+}
+
+.event-host-title {
+    text-align: center;
+	width: 260px;
+}
+
+.event-host-div {
+    float: left;
+    margin: 5px;
+	width: 260px;
+}
+
+.bk-hbox-spacer {
+	margin-right: 0!important;
+}
+
+.bk-slider-horizontal {
+	height: 30px!important;
+	margin-left: 15px!important;
+	width: 200px!important;
+}
+
+.bk-hbox label {
+	margin-left: 15px!important;
+}
+
+.bk-hbox p {
+    margin-top: 4px!important;
+    margin-left: 125px!important;
+}
+
+.bk-hbox select {
+    margin-top: -20px!important;
+    margin-left: 5px!important;
+}
+
+.derived {
+    color: #800080;
+}
+
+/* Tooltip container */
+.singletooltip {
+    position: relative;
+	display: inline-block;
+}
+
+//.singletooltiptext:after {
+//    content: "";
+//    position: relative;
+//    border-top: 26px solid #292f45;
+//    border-left: 26px solid transparent;
+//    border-right: 26px solid transparent;
+//    visibility: hidden;
+//    top: -20px;
+//    right: -12px;
+//}
+
+/* Tooltip text */
+.singletooltip .singletooltiptext {
+    visibility: hidden;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    padding: 1px;
+    border-radius: 6px;
+	text-decoration: none;
+    position: absolute;
+	white-space: nowrap;
+	top: -1px;
+	right: 100%;
+    z-index: 1;
+}
+
+/* Show the singletooltip text when you mouse over the singletooltip container */
+.singletooltip:hover .singletooltiptext {
+    visibility: visible;
+}
+
+.singlemarkerror {
+	-moz-box-shadow:inset 0px 1px 3px 0px #fff6af;
+	-webkit-box-shadow:inset 0px 1px 3px 0px #fff6af;
+	box-shadow:inset 0px 1px 3px 0px #fff6af;
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #ffec64), color-stop(1, #ffab23));
+	background:-moz-linear-gradient(top, #ffec64 5%, #ffab23 100%);
+	background:-webkit-linear-gradient(top, #ffec64 5%, #ffab23 100%);
+	background:-o-linear-gradient(top, #ffec64 5%, #ffab23 100%);
+	background:-ms-linear-gradient(top, #ffec64 5%, #ffab23 100%);
+	background:linear-gradient(to bottom, #ffec64 5%, #ffab23 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffec64', endColorstr='#ffab23',GradientType=0);
+	background-color:#ffec64;
+	-moz-border-radius:5px;
+	-webkit-border-radius:5px;
+	border-radius:5px;
+	border:1px solid #ffaa22;
+	display:inline-block;
+	cursor:pointer;
+	color:#333333;
+	text-decoration:none;
+	text-shadow:0px -1px 0px #ffee66;
+}
+.singlemarkerror:hover {
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #ffab23), color-stop(1, #ffec64));
+	background:-moz-linear-gradient(top, #ffab23 5%, #ffec64 100%);
+	background:-webkit-linear-gradient(top, #ffab23 5%, #ffec64 100%);
+	background:-o-linear-gradient(top, #ffab23 5%, #ffec64 100%);
+	background:-ms-linear-gradient(top, #ffab23 5%, #ffec64 100%);
+	background:linear-gradient(to bottom, #ffab23 5%, #ffec64 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffab23', endColorstr='#ffec64',GradientType=0);
+	background-color:#ffab23;
+}
+.singlemarkerror:active {
+	position:relative;
+	top:1px;
+}
+
