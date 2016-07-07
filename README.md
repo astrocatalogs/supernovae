@@ -19,7 +19,7 @@ To contribute data to the repository, please read our [contribution guide](https
 
 ## Format of Data Files ##
 
-The data files are in [JSON format](http://www.json.org/), a detailed description of the particular structure we have chosen is available [here](https://github.com/astrocatalogs/sne/blob/master/OSC-JSON-format.md).
+The data files are in [JSON format](http://www.json.org/), a detailed description of the particular structure we have chosen is available [here](https://github.com/astrocatalogs/supernovae/blob/master/SCHEMA.md).
 
 ## Installing and Running OSC Import Script ##
 
