@@ -1,8 +1,8 @@
 #!/bin/bash
 
-repos=($(awk -F= '{print $1}' rep-folders.txt))
+repos=($(awk -F= '{print $1}' ../input/rep-folders.txt))
 echo ${repos[*]}
-cd ..
+cd ../output
 for repo in ${repos[@]}; do
 	cd ${repo}
 	pwd

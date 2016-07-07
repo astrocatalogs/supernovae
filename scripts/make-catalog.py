@@ -70,7 +70,10 @@ args = parser.parse_args()
 infl = inflect.engine()
 infl.defnoun("spectrum", "spectra")
 
-outdir = "../"
+outdir = "../output/"
+cachedir = "cache/"
+jsondir = "json/"
+htmldir = "html/"
 
 travislimit = 100
 
@@ -327,8 +330,8 @@ totalphoto = 0
 totalspectra = 0
 
 hostimgs = []
-if os.path.isfile(outdir + 'hostimgs.json'):
-    with open(outdir + 'hostimgs.json', 'r') as f:
+if os.path.isfile(outdir + cachedir + 'hostimgs.json'):
+    with open(outdir + cachedir + 'hostimgs.json', 'r') as f:
         filetext = f.read()
     oldhostimgs = json.loads(filetext)
     oldhostimgs = [list(i) for i in zip(*oldhostimgs)]
@@ -339,8 +342,8 @@ else:
 files = repo_file_list(normal=(not args.boneyard), bones=args.boneyard)
 
 md5s = []
-if os.path.isfile(outdir + 'md5s.json'):
-    with open(outdir + 'md5s.json', 'r') as f:
+if os.path.isfile(outdir + cachedir + 'md5s.json'):
+    with open(outdir + cachedir + 'md5s.json', 'r') as f:
         filetext = f.read()
     oldmd5s = json.loads(filetext)
     oldmd5s = [list(i) for i in zip(*oldmd5s)]
@@ -513,13 +516,13 @@ for fcnt, eventfile in enumerate(tq(sorted(files, key=lambda s: s.lower()))):
     # expensive
     dohtml = True
     if not args.forcehtml:
-        if os.path.isfile(outdir + fileeventname + ".html"):
+        if os.path.isfile(outdir + htmldir + fileeventname + ".html"):
             if eventfile in md5dict and checksum == md5dict[eventfile]:
                 dohtml = False
 
     # Copy JSON files up a directory if they've changed
     if dohtml:
-        shutil.copy2(eventfile, '../' + os.path.basename(eventfile))
+        shutil.copy2(eventfile, outdir + jsondir + os.path.basename(eventfile))
 
     if (photoavail or radioavail or xrayavail) and dohtml and args.writehtml:
         phototime = [(mean([float(y) for y in x['time']]) if isinstance(x['time'], list) else float(x['time']))
@@ -1493,11 +1496,11 @@ for fcnt, eventfile in enumerate(tq(sorted(files, key=lambda s: s.lower()))):
                 except:
                     hasimage = False
                 else:
-                    with open(outdir + fileeventname + '-host.jpg', 'wb') as f:
+                    with open(outdir + htmldir + fileeventname + '-host.jpg', 'wb') as f:
                         f.write(resptxt)
                     imgsrc = 'SDSS'
 
-                if hasimage and filecmp.cmp(outdir + fileeventname + '-host.jpg', outdir + 'missing.jpg'):
+                if hasimage and filecmp.cmp(outdir + htmldir + fileeventname + '-host.jpg', '../input/missing.jpg'):
                     hasimage = False
 
                 if not hasimage:
@@ -1530,7 +1533,7 @@ for fcnt, eventfile in enumerate(tq(sorted(files, key=lambda s: s.lower()))):
                             except:
                                 hasimage = False
                             else:
-                                with open(outdir + fileeventname + '-host.jpg', 'wb') as f:
+                                with open(outdir + htmldir + fileeventname + '-host.jpg', 'wb') as f:
                                     f.write(response.read())
                                 imgsrc = 'DSS'
                         else:
@@ -1719,8 +1722,8 @@ for fcnt, eventfile in enumerate(tq(sorted(files, key=lambda s: s.lower()))):
 
         html = re.sub(r'(\<\/body\>)', newhtml, html)
 
-        with gzip.open(outdir + fileeventname + ".html.gz", 'wt') as fff:
-            touch(outdir + fileeventname + ".html")
+        with gzip.open(outdir + htmldir + fileeventname + ".html.gz", 'wt') as fff:
+            touch(outdir + htmldir + fileeventname + ".html")
             fff.write(html)
 
     # Necessary to clear Bokeh state
@@ -1811,25 +1814,25 @@ if args.writecatalog and not args.eventlist:
     if not args.boneyard:
         # Write the MD5 checksums
         jsonstring = json.dumps(md5s, indent='\t', separators=(',', ':'))
-        with open(outdir + 'md5s.json' + testsuffix, 'w') as f:
+        with open(outdir + cachedir + 'md5s.json' + testsuffix, 'w') as f:
             f.write(jsonstring)
 
         # Write the host image info
         if args.collecthosts:
             jsonstring = json.dumps(
                 hostimgs, indent='\t', separators=(',', ':'))
-            with open(outdir + 'hostimgs.json' + testsuffix, 'w') as f:
+            with open(outdir + cachedir + 'hostimgs.json' + testsuffix, 'w') as f:
                 f.write(jsonstring)
 
         # Things David wants in this file: names (aliases), max mag, max mag
         # date (gregorian), type, redshift, r.a., dec., # obs., link
-        with open(outdir + 'snepages.csv' + testsuffix, 'w') as f:
+        with open(outdir + htmldir + 'snepages.csv' + testsuffix, 'w') as f:
             csvout = csv.writer(f, quotechar='"', quoting=csv.QUOTE_ALL)
             for row in snepages:
                 csvout.writerow(row)
 
         # Make a few small files for generating charts
-        with open(outdir + 'sources.csv' + testsuffix, 'w') as f:
+        with open(outdir + htmldir + 'sources.csv' + testsuffix, 'w') as f:
             sortedsources = sorted(
                 list(sourcedict.items()), key=operator.itemgetter(1), reverse=True)
             csvout = csv.writer(f)
@@ -1837,7 +1840,7 @@ if args.writecatalog and not args.eventlist:
             for source in sortedsources:
                 csvout.writerow(source)
 
-        with open(outdir + 'pie.csv' + testsuffix, 'w') as f:
+        with open(outdir + htmldir + 'pie.csv' + testsuffix, 'w') as f:
             csvout = csv.writer(f)
             csvout.writerow(['Category', 'Number'])
             csvout.writerow(['Has light curve and spectra', sum(lcspye)])
@@ -1845,15 +1848,15 @@ if args.writecatalog and not args.eventlist:
             csvout.writerow(['Has spectra only', sum(sponly)])
             csvout.writerow(['No light curve or spectra', sum(lcspno)])
 
-        with open(outdir + 'info-snippets/hasphoto.html' + testsuffix, 'w') as f:
+        with open(outdir + htmldir + 'info-snippets/hasphoto.html' + testsuffix, 'w') as f:
             f.write("{:,}".format(sum(hasalc)))
-        with open(outdir + 'info-snippets/hasspectra.html' + testsuffix, 'w') as f:
+        with open(outdir + htmldir + 'info-snippets/hasspectra.html' + testsuffix, 'w') as f:
             f.write("{:,}".format(sum(hasasp)))
-        with open(outdir + 'info-snippets/snecount.html' + testsuffix, 'w') as f:
+        with open(outdir + htmldir + 'info-snippets/snecount.html' + testsuffix, 'w') as f:
             f.write("{:,}".format(len(catalog)))
-        with open(outdir + 'info-snippets/photocount.html' + testsuffix, 'w') as f:
+        with open(outdir + htmldir + 'info-snippets/photocount.html' + testsuffix, 'w') as f:
             f.write("{:,}".format(totalphoto))
-        with open(outdir + 'info-snippets/spectracount.html' + testsuffix, 'w') as f:
+        with open(outdir + htmldir + 'info-snippets/spectracount.html' + testsuffix, 'w') as f:
             f.write("{:,}".format(totalspectra))
 
         ctypedict = dict()
@@ -1874,7 +1877,7 @@ if args.writecatalog and not args.eventlist:
                 ctypedict[cleanedtype] = 1
         sortedctypes = sorted(list(ctypedict.items()),
                               key=operator.itemgetter(1), reverse=True)
-        with open(outdir + 'types.csv' + testsuffix, 'w') as f:
+        with open(outdir + htmldir + 'types.csv' + testsuffix, 'w') as f:
             csvout = csv.writer(f)
             csvout.writerow(['Type', 'Number'])
             for ctype in sortedctypes:
@@ -1922,7 +1925,7 @@ if args.writecatalog and not args.eventlist:
     with open(outdir + catprefix + '.json' + testsuffix, 'w') as f:
         f.write(jsonstring)
 
-    with open(outdir + 'table-templates/' + catprefix + '.html' + testsuffix, 'w') as f:
+    with open(outdir + htmldir + 'table-templates/' + catprefix + '.html' + testsuffix, 'w') as f:
         f.write('<table id="example" class="display" cellspacing="0" width="100%">\n')
         f.write('\t<thead>\n')
         f.write('\t\t<tr>\n')
