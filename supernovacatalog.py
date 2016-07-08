@@ -81,12 +81,12 @@ class SupernovaCatalog(Catalog):
         URL = ('https://github.com/astrocatalogs/sne/blob/' + HASH +
                '/OSC-JSON-format.md')
 
-    def __init__(self, args):
+    def __init__(self, args, log):
         """
         """
         self.proto = Supernova
         # Initialize super `astrocats.catalog.catalog.Catalog` object
-        super().__init__(args)
+        super().__init__(args, log)
         self._load_aux_data()
         return
 
