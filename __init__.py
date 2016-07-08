@@ -1,6 +1,5 @@
-"""Manage the import of supernovae data.
-
-Modified from `scripts/import.py`.
+"""The Supernova AstroCatalog.
 """
 
-from . import supernova
+# from . import supernova
+from . import main
