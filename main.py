@@ -14,8 +14,11 @@ def main(args, clargs, log):
     catalog = SupernovaCatalog(args, log)
 
     if args.subcommand == 'import':
-        log.info("Running `importer`.")
+        log.info("Running `import`.")
+        beg = datetime.now()
         catalog.import_data()
+        end = datetime.now()
+        log.debug("`import` completed after {}".format(end-beg))
 
     return
 
