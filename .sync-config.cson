@@ -1,0 +1,20 @@
+remote:
+  host: "voxcharta.org"
+  user: "root"
+  path: "/var/www/html/sne/astrocats/astrocats/supernovae"
+behaviour:
+  uploadOnSave: true
+  syncDownOnOpen: true
+  forgetConsole: false
+  autoHideConsole: true
+  alwaysSyncAll: false
+option:
+  deleteFiles: true
+  exclude: [
+    ".sync-config.cson"
+    ".git"
+    "node_modules"
+    "tmp"
+    "vendor"
+    "input/sne-*"
+  ]
