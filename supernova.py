@@ -4,7 +4,7 @@ import warnings
 
 from astropy.time import Time as astrotime
 
-from astrocats.catalog.entry import KEYS, Entry
+from astrocats.catalog.entry import ENTRY, Entry
 from astrocats.catalog.error import ERROR
 from astrocats.catalog.photometry import PHOTOMETRY
 from astrocats.catalog.quantity import QUANTITY
@@ -20,7 +20,7 @@ from astrocats.supernovae.utils import (frame_priority, host_clean, name_clean,
 from cdecimal import Decimal
 
 
-class SUPERNOVA(KEYS):
+class SUPERNOVA(ENTRY):
     CLAIMED_TYPE = 'clamedtype'
     DISCOVERY_DATE = 'discoverdate'
     ERRORS = 'errors'

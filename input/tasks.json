@@ -3,7 +3,7 @@
         "nice_name": "%pre TEST",
         "active": false,
         "update": false,
-        "module": "supernovae.tasks.test",
+        "module": "catalog.tasks.test",
         "function": "do_test",
         "groups": ["meta"],
         "priority": 0

@@ -37,7 +37,7 @@
 -   [JFG] I've currently split the "Event" and "Entry" classes into separate
     files, and also renamed the "Event" class "Supernova," as it is specific to
     the Supernova catalog. For the keys though I'm not sure how to split; there
-    are KEYS that should be defined only for Supernova but there are definitely
+    are ENTRY that should be defined only for Supernova but there are definitely
     many keys that will be shared (names, aliases, etc.). The keys should
     likely be defined in a JSON file for each catalog, in addition to a base
     list of keys provided by the parent Catalog class.

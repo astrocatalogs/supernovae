@@ -39,31 +39,6 @@ class SupernovaCatalog(Catalog):
             self.EXTINCT = os.path.join(
                 self.PATH_OUTPUT, 'cache', 'extinctions.json')
 
-        def get_repo_output_file_list(self, normal=True, bones=True):
-            repo_folders = self.get_repo_output_folders()
-            return super()._get_repo_file_list(
-                repo_folders, normal=normal, bones=bones)
-
-        def get_repo_input_folders(self):
-            """
-            """
-            repo_folders = []
-            repo_folders += self.repos_dict['external']
-            repo_folders += self.repos_dict['internal']
-            repo_folders = [os.path.join(self.PATH_INPUT, rf)
-                            for rf in repo_folders]
-            return repo_folders
-
-        def get_repo_output_folders(self):
-            """
-            """
-            repo_folders = []
-            repo_folders += self.repos_dict['output']
-            repo_folders += self.repos_dict['boneyard']
-            repo_folders = [os.path.join(self.PATH_OUTPUT, rf)
-                            for rf in repo_folders]
-            return repo_folders
-
         def get_repo_years(self):
             """
             """
@@ -84,9 +59,9 @@ class SupernovaCatalog(Catalog):
     def __init__(self, args, log):
         """
         """
-        self.proto = Supernova
         # Initialize super `astrocats.catalog.catalog.Catalog` object
         super().__init__(args, log)
+        self.proto = Supernova
         self._load_aux_data()
         return
 
