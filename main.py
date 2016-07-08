@@ -8,6 +8,8 @@ def main(args, clargs, log):
 
     # Load supernovae-specific command-line argumenets (adding them to existing settings)
     args = load_command_line_args(args=args, clargs=clargs)
+    if args is None:
+        return
 
     catalog = SupernovaCatalog(args, log)
 
@@ -23,21 +25,14 @@ def load_command_line_args(args=None, clargs=None):
     """
     import argparse
 
-    parser = argparse.ArgumentParser(
+    parser = argparse.ArgumentParser(prog='supernovae',
         description='The Supernova Catalog.')
 
     subparsers = parser.add_subparsers(
-        description='valid subcommands', dest='subcommand',
-        help='subcommand help')
-
+        description='valid subcommands', dest='subcommand')
     # `import` --- importing supernova data
-    subparsers.add_parser(
-        "import",
-        help="Configure general parameters (interactive).")
-
-    # `importer` submodule --- importing supernova data
-    import_pars = subparsers.add_parser("sn-import",
-                                        help="Generate a catalog JSON file")
+    import_pars = subparsers.add_parser("import",
+                                        help="Input supernova data.")
     import_pars.add_argument('--update', '-u', dest='update',
                              default=False, action='store_true',
                              help='Only update catalog using live sources.')
