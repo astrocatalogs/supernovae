@@ -155,7 +155,7 @@ def do_cfa_spectra(catalog):
     oldname = ''
     file_names = next(os.walk(os.path.join(
         catalog.get_current_task_repo(), 'CfA_SNIa')))[1]
-    for name in pbar_strings(file_names, task_str):
+    for ni, name in enumerate(pbar_strings(file_names, task_str)):
         fullpath = os.path.join(
             catalog.get_current_task_repo(), 'CfA_SNIa/') + name
         origname = name
@@ -209,15 +209,15 @@ def do_cfa_spectra(catalog):
                 else '', time=time, instrument=instrument,
                 errorunit='ergs/s/cm^2/Angstrom', errors=errors,
                 source=sources, dereddened=False, deredshifted=False)
-            if catalog.args.travis and fi >= catalog.TRAVIS_QUERY_LIMIT:
-                break
+        if catalog.args.travis and ni >= catalog.TRAVIS_QUERY_LIMIT:
+            break
     catalog.journal_entries()
 
     # Ibc spectra
     oldname = ''
     file_names = next(os.walk(os.path.join(
         catalog.get_current_task_repo(), 'CfA_SNIbc')))[1]
-    for name in pbar(file_names, task_str):
+    for ni, name in enumerate(pbar(file_names, task_str)):
         fullpath = os.path.join(
             catalog.get_current_task_repo(), 'CfA_SNIbc/') + name
         if name.startswith('sn') and is_number(name[2:6]):
@@ -261,15 +261,15 @@ def do_cfa_spectra(catalog):
                 fluxes=fluxes, u_time='MJD' if time else '', time=time,
                 instrument=instrument, source=sources,
                 dereddened=False, deredshifted=False)
-            if catalog.args.travis and fi >= catalog.TRAVIS_QUERY_LIMIT:
-                break
+        if catalog.args.travis and ni >= catalog.TRAVIS_QUERY_LIMIT:
+            break
     catalog.journal_entries()
 
     # Other spectra
     oldname = ''
     file_names = next(os.walk(os.path.join(
         catalog.get_current_task_repo(), 'CfA_Extra')))[1]
-    for name in pbar_strings(file_names, task_str):
+    for ni, name in enumerate(pbar_strings(file_names, task_str)):
         fullpath = os.path.join(
             catalog.get_current_task_repo(), 'CfA_Extra/') + name
         if name.startswith('sn') and is_number(name[2:6]):
@@ -319,8 +319,8 @@ def do_cfa_spectra(catalog):
                 fluxes=fluxes, u_time='MJD' if time else '', time=time,
                 instrument=instrument, source=source,
                 dereddened=False, deredshifted=False)
-            if catalog.args.travis and fi >= catalog.TRAVIS_QUERY_LIMIT:
-                break
+        if catalog.args.travis and ni >= catalog.TRAVIS_QUERY_LIMIT:
+            break
 
     catalog.journal_entries()
     return

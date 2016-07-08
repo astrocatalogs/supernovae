@@ -370,7 +370,7 @@
         "module": "supernovae.tasks.wiserep",
         "function": "do_wiserep_spectra",
         "groups": ["spectra"],
-        "repo": "input/sne-external-wiserep",
+        "repo": "input/sne-external-WISEREP",
         "priority": 201
     },
     "cfa_spectra": {

@@ -16,6 +16,9 @@ from cdecimal import Decimal
 
 
 def do_ascii(catalog):
+    """Process ASCII files that were extracted from datatables appearing in
+    published works.
+    """
     task_str = catalog.get_current_task_str()
 
     # 2006ApJ...645..841N

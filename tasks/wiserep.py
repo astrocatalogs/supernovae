@@ -41,9 +41,11 @@ def do_wiserep_spectra(catalog):
                              'stt1839': ''}
 
     oldname = ''
-    file_names = next(os.walk(catalog.get_current_task_repo()))[1]
+    file_names = list(
+        glob(os.path.join(
+            catalog.get_current_task_repo(), '*')))
     for folder in pbar_strings(file_names, task_str):
-        files = glob(catalog.get_current_task_repo() + '/' + folder + '/*')
+        files = glob(folder + '/*')
         for fname in pbar(files, task_str):
             if '.html' in fname:
                 lfiles = deepcopy(files)
