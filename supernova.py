@@ -303,6 +303,12 @@ class Supernova(Entry):
 
         return False
 
+    def extra_aliases(self):
+        if (self[SUPERNOVA.NAME].startswith('SN') and
+                is_number(self[SUPERNOVA.NAME][2:6])):
+            return ['AT' + self[SUPERNOVA.NAME][2:]]
+        return []
+
     def clean_entry_name(self, name):
         return name_clean(name)
 
