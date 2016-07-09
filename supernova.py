@@ -74,8 +74,12 @@ class Supernova(Entry):
         kind = quantity.get(QUANTITY.KIND, '')
         key = quantity._key
 
-        if not quantity[QUANTITY.VALUE] or value == '--' or value == '-':
+        if not value:
             return
+
+        if value == '--' or value == '-':
+            quantity[QUANTITY.VALUE] = ''
+
         if error and (not is_number(error) or float(error) < 0):
             raise ValueError(self.parent[self.parent._KEYS.NAME] +
                              "'s quanta " + key +
