@@ -47,8 +47,8 @@ def do_snf_specta(catalog):
         sec_source = catalog.entries[name].add_source(
             name=sec_reference, url=sec_refurl, bibcode=sec_bibcode,
             secondary=True)
-        catalog.entries[name].add_quantity('alias', name, sec_source)
-        bibcode = bibcodes[name]
+        catalog.entries[name].add_quantity('alias', oldname, sec_source)
+        bibcode = bibcodes[oldname]
         source = catalog.entries[name].add_source(bibcode=bibcode)
         sources = uniq_cdl([source, sec_source])
         use_path = os.path.join(
@@ -111,7 +111,7 @@ def do_snf_specta(catalog):
             if haserrors:
                 errors = specdata[2]
 
-            unit_err = ('Variance' if name == 'SN2011fe' else
+            unit_err = ('Variance' if oldname == 'SN2011fe' else
                         'erg/s/cm^2/Angstrom')
             unit_flx = 'erg/s/cm^2/Angstrom'
             catalog.entries[name].add_spectrum(
