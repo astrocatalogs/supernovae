@@ -4,12 +4,12 @@ import csv
 import json
 import os
 import urllib
+from collections import OrderedDict
 from math import floor
 
 import requests
-from astropy.time import Time as astrotime
-
 from astrocats.catalog.utils import get_sig_digits, pbar, pretty_num, uniq_cdl
+from astropy.time import Time as astrotime
 
 
 def do_ucb_photo(catalog):
@@ -20,12 +20,13 @@ def do_ucb_photo(catalog):
 
     jsontxt = catalog.load_cached_url(
         'http://heracles.astro.berkeley.edu/sndb/download?id=allpubphot',
-        os.path.join(catalog.get_current_task_repo(), 'SNDB/allpub.json'))
+        os.path.join(catalog.get_current_task_repo(), 'SNDB/allpub.json'),
+        jsonsort='PhotID')
     if not jsontxt:
         return
 
     photom = json.loads(jsontxt)
-    photom = sorted(photom, key=lambda kk: kk['ObjName'])
+    photom = sorted(photom, key=lambda kk: kk['PhotID'])
     for phot in pbar(photom, task_str):
         oldname = phot['ObjName']
         name = catalog.add_entry(oldname)
@@ -103,12 +104,13 @@ def do_ucb_spectra(catalog):
 
     jsontxt = catalog.load_cached_url(
         'http://heracles.astro.berkeley.edu/sndb/download?id=allpubspec',
-        os.path.join(catalog.get_current_task_repo(), 'UCB/allpub.json'))
+        os.path.join(catalog.get_current_task_repo(), 'UCB/allpub.json'),
+        jsonsort='SpecID')
     if not jsontxt:
         return
 
     spectra = json.loads(jsontxt)
-    spectra = sorted(spectra, key=lambda kk: kk['ObjName'])
+    spectra = sorted(spectra, key=lambda kk: kk['SpecID'])
     oldname = ''
     for spectrum in pbar(spectra, task_str):
         name = spectrum['ObjName']
