@@ -44,8 +44,9 @@ class Supernova(Entry):
         return
 
     def _append_additional_tags(self, name, sources, quantity):
-        # Should be called if two objects are found to be duplicates but are
-        # not bit-for-bit identical
+        """Append additional bits of data to an existing quantity when a newly
+        added quantity is found to be a duplicate
+        """
         svalue = quantity.get(QUANTITY.VALUE, '')
         serror = quantity.get(QUANTITY.ERROR, '')
         sprob = quantity.get(QUANTITY.PROB, '')
@@ -276,6 +277,11 @@ class Supernova(Entry):
 
         return super().add_source(**kwargs)
 
+    def priority_prefixes(self):
+        """Prefixes to given priority to when merging duplicate entries.
+        """
+        return ('AT', 'SN')
+
     def add_self_source(self):
         return self.add_source(
             bibcode=self.catalog.OSC_BIBCODE,
@@ -304,6 +310,9 @@ class Supernova(Entry):
         return False
 
     def extra_aliases(self):
+        """These aliases are considered when merging duplicates only, but are
+        not added to the list of aliases that would be included with the event
+        """
         if (self[SUPERNOVA.NAME].startswith('SN') and
                 is_number(self[SUPERNOVA.NAME][2:6])):
             return ['AT' + self[SUPERNOVA.NAME][2:]]
