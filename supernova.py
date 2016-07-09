@@ -2,8 +2,6 @@
 """
 import warnings
 
-from astropy.time import Time as astrotime
-
 from astrocats.catalog.entry import ENTRY, Entry
 from astrocats.catalog.error import ERROR
 from astrocats.catalog.photometry import PHOTOMETRY
@@ -17,6 +15,8 @@ from astrocats.supernovae.constants import (MAX_BANDS, PREF_KINDS,
                                             REPR_BETTER_QUANTITY)
 from astrocats.supernovae.utils import (frame_priority, host_clean, name_clean,
                                         radec_clean)
+from astropy.time import Time as astrotime
+
 from cdecimal import Decimal
 
 
@@ -94,7 +94,7 @@ class Supernova(Entry):
 
         # Handle certain name
         if key == self._KEYS.ALIAS:
-            value = name_clean(value)
+            value = self.clean_entry_name(value)
             for df in quantity.get(self._KEYS.DISTINCT_FROM, []):
                 if value == df[QUANTITY.VALUE]:
                     return
