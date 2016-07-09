@@ -42,9 +42,9 @@ class SupernovaCatalog(Catalog):
         def get_repo_years(self):
             """
             """
-            repo_folders = self.get_repo_output_folders()
+            repo_folders = self.get_repo_output_folders(bones=False)
             repo_years = [int(repo_folders[x][-4:])
-                          for x in range(len(repo_folders) - 1)]
+                          for x in range(len(repo_folders))]
             repo_years[0] -= 1
             return repo_years
 
