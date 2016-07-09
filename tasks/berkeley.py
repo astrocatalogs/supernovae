@@ -4,7 +4,6 @@ import csv
 import json
 import os
 import urllib
-from collections import OrderedDict
 from math import floor
 
 import requests
