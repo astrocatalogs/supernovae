@@ -128,12 +128,8 @@ for fcnt, eventfile in enumerate(tqdm(sorted(files, key=lambda s: s.lower()))):
                 for key in list(item.keys()):
                     bcalias = source['alias']
                     lc = 0
-<<<<<<< HEAD:astrocats/supernovae/scripts/make-biblio.py
                     if key in ['name', 'sources', 'schema', 'photometry',
                                'spectra', 'errors']:
-=======
-                    if key in ['name', 'sources', 'schema', 'photometry', 'spectra', 'errors']:
->>>>>>> 5f7edc428e0de1e380d819ff31eb728146162d7a:scripts/make-biblio.py
                         continue
                     for quantum in item[key]:
                         if bcalias in quantum['source'].split(','):
