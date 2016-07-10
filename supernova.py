@@ -14,7 +14,7 @@ from astrocats.catalog.utils import (entry_to_filename, get_sig_digits,
                                      get_source_year, is_number, jd_to_mjd,
                                      make_date_string, pretty_num, uniq_cdl)
 from .constants import (MAX_BANDS, PREF_KINDS, REPR_BETTER_QUANTITY)
-from .utils import (frame_priority, host_clean, name_clean, radec_clean)
+from .utils import (frame_priority, host_clean, radec_clean)
 
 
 class SUPERNOVA(ENTRY):
@@ -315,9 +315,6 @@ class Supernova(Entry):
                 is_number(self[SUPERNOVA.NAME][2:6])):
             return ['AT' + self[SUPERNOVA.NAME][2:]]
         return []
-
-    def clean_entry_name(self, name):
-        return name_clean(name)
 
     def _get_save_path(self, bury=False):
         self._log.debug("_get_save_path(): {}".format(self.name()))

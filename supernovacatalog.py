@@ -10,6 +10,7 @@ from astrocats.catalog.catalog import Catalog
 from astrocats.catalog.utils import (is_number, pbar, read_json_arr,
                                      read_json_dict)
 from .supernova import SUPERNOVA, Supernova
+from .utils import name_clean
 
 
 class SupernovaCatalog(Catalog):
@@ -132,6 +133,9 @@ class SupernovaCatalog(Catalog):
         all_repos += self.PATHS.get_repo_output_folders()
         super()._clone_repos(all_repos)
         return
+
+    def clean_entry_name(self, name):
+        return name_clean(name)
 
     def set_preferred_names(self):
         """Choose between each entries given name and its possible aliases for
