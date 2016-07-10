@@ -5,7 +5,7 @@ import os
 from glob import glob
 
 from astrocats.catalog.utils import jd_to_mjd, pbar_strings
-from astrocats.supernovae.utils import clean_snname
+from ..utils import clean_snname
 from cdecimal import Decimal
 
 

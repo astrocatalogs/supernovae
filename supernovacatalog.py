@@ -9,7 +9,7 @@ from subprocess import check_output
 from astrocats.catalog.catalog import Catalog
 from astrocats.catalog.utils import (is_number, pbar, read_json_arr,
                                      read_json_dict)
-from astrocats.supernovae.supernova import SUPERNOVA, Supernova
+from .supernova import SUPERNOVA, Supernova
 
 
 class SupernovaCatalog(Catalog):
