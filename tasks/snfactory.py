@@ -35,8 +35,8 @@ def do_snf_specta(catalog):
     eventfolders = next(os.walk(os.path.join(
         catalog.get_current_task_repo(), 'SNFactory')))[1]
     for eventfolder in pbar(eventfolders, task_str):
-        name = eventfolder
-        name = catalog.get_preferred_name(name)
+        oname = eventfolder
+        name = catalog.get_preferred_name(oname)
         if oldname and name != oldname:
             catalog.journal_entries()
         oldname = name
@@ -47,8 +47,8 @@ def do_snf_specta(catalog):
         sec_source = catalog.entries[name].add_source(
             name=sec_reference, url=sec_refurl, bibcode=sec_bibcode,
             secondary=True)
-        catalog.entries[name].add_quantity('alias', oldname, sec_source)
-        bibcode = bibcodes[oldname]
+        catalog.entries[name].add_quantity('alias', oname, sec_source)
+        bibcode = bibcodes[oname]
         source = catalog.entries[name].add_source(bibcode=bibcode)
         sources = uniq_cdl([source, sec_source])
         use_path = os.path.join(
