@@ -3,7 +3,7 @@
         "nice_name": "%pre TEST",
         "active": false,
         "update": false,
-        "module": "supernovae.tasks.test",
+        "module": "catalog.tasks.test",
         "function": "do_test",
         "groups": ["meta"],
         "priority": 0
@@ -131,12 +131,12 @@
         "repo": "input/sne-external",
         "priority": 12
     },
-    "sdss": {
+    "sdss_photo": {
         "nice_name": "%pre SDSS photometry",
         "active": true,
         "update": false,
         "module": "supernovae.tasks.sdss",
-        "function": "do_sdss",
+        "function": "do_sdss_photo",
         "groups": ["photometry"],
         "repo": "input/sne-external",
         "priority": 13

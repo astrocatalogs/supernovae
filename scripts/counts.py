@@ -7,13 +7,13 @@ from collections import OrderedDict
 
 from tqdm import tqdm
 
-from utils.repos import get_repo_output_file_list
+from repos import repo_file_list
 
 
 def get_event_filename(name):
     return(name.replace('/', '_'))
 
-files = get_repo_output_file_list(bones=False)
+files = repo_file_list(bones=False)
 
 spectracount = 0
 photocount = 0
@@ -26,12 +26,13 @@ for fcnt, eventfile in enumerate(tqdm(sorted(files, key=lambda s: s.lower()))):
     fileeventname = os.path.splitext(os.path.basename(eventfile))[
         0].replace('.json', '')
 
-    if eventfile.split('.')[-1] == 'gz':
-        with gzip.open(eventfile, 'rt') as f:
-            filetext = f.read()
-    else:
-        with open(eventfile, 'r') as f:
-            filetext = f.read()
+    if os.path.isfile(eventfile):
+        if eventfile.split('.')[-1] == 'gz':
+            with gzip.open(eventfile, 'rt') as f:
+                filetext = f.read()
+        else:
+            with open(eventfile, 'r') as f:
+                filetext = f.read()
 
     item = json.loads(filetext, object_pairs_hook=OrderedDict)
     namekey = list(item.keys())[0]

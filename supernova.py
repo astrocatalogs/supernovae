@@ -2,9 +2,7 @@
 """
 import warnings
 
-from astropy.time import Time as astrotime
-
-from astrocats.catalog.entry import KEYS, Entry
+from astrocats.catalog.entry import ENTRY, Entry
 from astrocats.catalog.error import ERROR
 from astrocats.catalog.photometry import PHOTOMETRY
 from astrocats.catalog.quantity import QUANTITY
@@ -17,10 +15,12 @@ from astrocats.supernovae.constants import (MAX_BANDS, PREF_KINDS,
                                             REPR_BETTER_QUANTITY)
 from astrocats.supernovae.utils import (frame_priority, host_clean, name_clean,
                                         radec_clean)
+from astropy.time import Time as astrotime
+
 from cdecimal import Decimal
 
 
-class SUPERNOVA(KEYS):
+class SUPERNOVA(ENTRY):
     CLAIMED_TYPE = 'clamedtype'
     DISCOVERY_DATE = 'discoverdate'
     ERRORS = 'errors'
@@ -44,8 +44,9 @@ class Supernova(Entry):
         return
 
     def _append_additional_tags(self, name, sources, quantity):
-        # Should be called if two objects are found to be duplicates but are
-        # not bit-for-bit identical
+        """Append additional bits of data to an existing quantity when a newly
+        added quantity is found to be a duplicate
+        """
         svalue = quantity.get(QUANTITY.VALUE, '')
         serror = quantity.get(QUANTITY.ERROR, '')
         sprob = quantity.get(QUANTITY.PROB, '')
@@ -73,8 +74,9 @@ class Supernova(Entry):
         kind = quantity.get(QUANTITY.KIND, '')
         key = quantity._key
 
-        if not quantity[QUANTITY.VALUE] or value == '--' or value == '-':
+        if not value:
             return
+
         if error and (not is_number(error) or float(error) < 0):
             raise ValueError(self.parent[self.parent._KEYS.NAME] +
                              "'s quanta " + key +
@@ -93,7 +95,7 @@ class Supernova(Entry):
 
         # Handle certain name
         if key == self._KEYS.ALIAS:
-            value = name_clean(value)
+            value = self.clean_entry_name(value)
             for df in quantity.get(self._KEYS.DISTINCT_FROM, []):
                 if value == df[QUANTITY.VALUE]:
                     return
@@ -276,6 +278,11 @@ class Supernova(Entry):
 
         return super().add_source(**kwargs)
 
+    def priority_prefixes(self):
+        """Prefixes to given priority to when merging duplicate entries.
+        """
+        return ('AT', 'SN')
+
     def add_self_source(self):
         return self.add_source(
             bibcode=self.catalog.OSC_BIBCODE,
@@ -303,6 +310,15 @@ class Supernova(Entry):
 
         return False
 
+    def extra_aliases(self):
+        """These aliases are considered when merging duplicates only, but are
+        not added to the list of aliases that would be included with the event
+        """
+        if (self[SUPERNOVA.NAME].startswith('SN') and
+                is_number(self[SUPERNOVA.NAME][2:6])):
+            return ['AT' + self[SUPERNOVA.NAME][2:]]
+        return []
+
     def clean_entry_name(self, name):
         return name_clean(name)
 
@@ -317,6 +333,7 @@ class Supernova(Entry):
         # Get normal repository save directory
         else:
             repo_folders = self.catalog.PATHS.get_repo_output_folders()
+            repo_folders = sorted(repo_folders, key=lambda x: x.split('-')[-1])
             outdir = repo_folders[0]
 
             if self._KEYS.DISCOVERY_DATE in self.keys():

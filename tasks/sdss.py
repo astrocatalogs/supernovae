@@ -8,19 +8,29 @@ from glob import glob
 from astrocats.catalog.utils import pbar_strings
 
 
-def do_sdss(catalog):
+def do_sdss_photo(catalog):
     task_str = catalog.get_current_task_str()
     with open(os.path.join(catalog.get_current_task_repo(),
                            'SDSS/2010ApJ...708..661D.txt'), 'r') as sdss_file:
         bibcodes2010 = sdss_file.read().split('\n')
     sdssbands = ['u', 'g', 'r', 'i', 'z']
-    file_names = list(
-        glob(os.path.join(catalog.get_current_task_repo(), 'SDSS/*.sum')))
-    for fname in pbar_strings(file_names, task_str):
+    file_names = (list(glob(os.path.join(catalog
+                                         .get_current_task_repo(),
+                                         'SDSS/sum/*.sum'))) +
+                  list(glob(os.path.join(catalog
+                                         .get_current_task_repo(),
+                                         'SDSS/SMP_Data/*.dat'))))
+    for fi, fname in enumerate(pbar_strings(file_names, task_str)):
         tsvin = csv.reader(open(fname, 'r'), delimiter=' ',
                            skipinitialspace=True)
         basename = os.path.basename(fname)
-        if basename in bibcodes2010:
+        hasred = True
+        rst = 19
+        if '.dat' in fname:
+            bibcode = '2014arXiv1401.3317S'
+            hasred = False
+            rst = 4
+        elif basename in bibcodes2010:
             bibcode = '2010ApJ...708..661D'
         else:
             bibcode = '2008AJ....136.2306H'
@@ -46,13 +56,13 @@ def do_sdss(catalog):
                     'ra', row[-4], source, unit='floatdegrees')
                 catalog.entries[name].add_quantity(
                     'dec', row[-2], source, unit='floatdegrees')
-            if rr == 1:
+            if hasred and rr == 1:
                 error = row[4] if float(row[4]) >= 0.0 else ''
                 (catalog.entries[name]
                  .add_quantity('redshift', row[2], source,
                                error=error,
                                kind='heliocentric'))
-            if rr >= 19:
+            if rr >= rst:
                 # Skip bad measurements
                 if int(row[0]) > 1024:
                     continue
@@ -67,6 +77,8 @@ def do_sdss(catalog):
                                  band=band, magnitude=magnitude,
                                  e_magnitude=e_mag, source=source,
                                  system='SDSS'))
+        if not fi % 1000:
+            catalog.journal_entries()
 
     catalog.journal_entries()
     return

@@ -1,5 +1,7 @@
 """Supernovae specific catalog class.
 """
+import codecs
+import json
 import os
 from collections import OrderedDict
 from subprocess import check_output
@@ -39,37 +41,12 @@ class SupernovaCatalog(Catalog):
             self.EXTINCT = os.path.join(
                 self.PATH_OUTPUT, 'cache', 'extinctions.json')
 
-        def get_repo_output_file_list(self, normal=True, bones=True):
-            repo_folders = self.get_repo_output_folders()
-            return super()._get_repo_file_list(
-                repo_folders, normal=normal, bones=bones)
-
-        def get_repo_input_folders(self):
-            """
-            """
-            repo_folders = []
-            repo_folders += self.repos_dict['external']
-            repo_folders += self.repos_dict['internal']
-            repo_folders = [os.path.join(self.PATH_INPUT, rf)
-                            for rf in repo_folders]
-            return repo_folders
-
-        def get_repo_output_folders(self):
-            """
-            """
-            repo_folders = []
-            repo_folders += self.repos_dict['output']
-            repo_folders += self.repos_dict['boneyard']
-            repo_folders = [os.path.join(self.PATH_OUTPUT, rf)
-                            for rf in repo_folders]
-            return repo_folders
-
         def get_repo_years(self):
             """
             """
-            repo_folders = self.get_repo_output_folders()
+            repo_folders = self.get_repo_output_folders(bones=False)
             repo_years = [int(repo_folders[x][-4:])
-                          for x in range(len(repo_folders) - 1)]
+                          for x in range(len(repo_folders))]
             repo_years[0] -= 1
             return repo_years
 
@@ -84,9 +61,9 @@ class SupernovaCatalog(Catalog):
     def __init__(self, args, log):
         """
         """
-        self.proto = Supernova
         # Initialize super `astrocats.catalog.catalog.Catalog` object
         super().__init__(args, log)
+        self.proto = Supernova
         self._load_aux_data()
         return
 
@@ -139,90 +116,22 @@ class SupernovaCatalog(Catalog):
         self.nonsnetypes = read_json_arr(self.PATHS.NON_SNE_TYPES)
         return
 
+    def save_caches(self):
+        jsonstring = json.dumps(self.bibauthor_dict, indent='\t',
+                                separators=(',', ':'), ensure_ascii=False)
+        with codecs.open(self.PATHS.BIBAUTHORS, 'w', encoding='utf8') as f:
+            f.write(jsonstring)
+        jsonstring = json.dumps(self.extinctions_dict, indent='\t',
+                                separators=(',', ':'), ensure_ascii=False)
+        with codecs.open(self.PATHS.EXTINCT, 'w', encoding='utf8') as f:
+            f.write(jsonstring)
+
     def clone_repos(self):
         # Load the local 'supernovae' repository names
         all_repos = self.PATHS.get_repo_input_folders()
         all_repos += self.PATHS.get_repo_output_folders()
         super()._clone_repos(all_repos)
         return
-
-    def merge_duplicates(self):
-        """Merge and remove duplicate entries.
-
-        Compares each entry ('name') in `stubs` to all later entries to check
-        for duplicates in name or alias.  If a duplicate is found, they are
-        merged and written to file.
-        """
-        if len(self.entries) == 0:
-            self.log.error("WARNING: `entries` is empty, loading stubs")
-            if self.args.update:
-                self.log.warning(
-                    "No sources changed, entry files unchanged in update."
-                    "  Skipping merge.")
-                return
-            self.entries = self.load_stubs()
-
-        task_str = self.get_current_task_str()
-
-        keys = list(sorted(self.entries.keys()))
-        for n1, name1 in enumerate(pbar(keys, task_str)):
-            allnames1 = set(self.entries[name1].get_aliases())
-            if name1.startswith('SN') and is_number(name1[2:6]):
-                allnames1 = allnames1.union(['AT' + name1[2:]])
-
-            # Search all later names
-            for name2 in keys[n1 + 1:]:
-                if name1 == name2:
-                    continue
-
-                allnames2 = set(self.entries[name2].get_aliases())
-                if name2.startswith('SN') and is_number(name2[2:6]):
-                    allnames2.union(['AT' + name2[2:]])
-
-                # If there are any common names or aliases, merge
-                if len(allnames1 & allnames2):
-                    self.log.warning(
-                        "Found single entry with multiple entries "
-                        "('{}' and '{}'), merging.".format(name1, name2))
-
-                    load1 = self.proto.init_from_file(
-                        self, name=name1)
-                    load2 = self.proto.init_from_file(
-                        self, name=name2)
-                    if load1 is not None and load2 is not None:
-                        # Delete old files
-                        self._delete_entry_file(entry=load1)
-                        self._delete_entry_file(entry=load2)
-                        self.entries[name1] = load1
-                        self.entries[name2] = load2
-                        priority1 = 0
-                        priority2 = 0
-                        for an in allnames1:
-                            if an.startswith(('SN', 'AT')):
-                                priority1 += 1
-                        for an in allnames2:
-                            if an.startswith(('SN', 'AT')):
-                                priority2 += 1
-
-                        if priority1 > priority2:
-                            self.copy_to_entry(name2, name1)
-                            keys.append(name1)
-                            del self.entries[name2]
-                        else:
-                            self.copy_to_entry(name1, name2)
-                            keys.append(name2)
-                            del self.entries[name1]
-                    else:
-                        self.log.warning('Duplicate already deleted')
-
-                    # if len(self.entries) != 1:
-                    #     self.log.error(
-                    #         "WARNING: len(entries) = {}, expected 1.  "
-                    #         "Still journaling...".format(len(self.entries)))
-                    self.journal_entries()
-
-            if self.args.travis and n1 > self.TRAVIS_QUERY_LIMIT:
-                break
 
     def set_preferred_names(self):
         """Choose between each entries given name and its possible aliases for

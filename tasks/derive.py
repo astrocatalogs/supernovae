@@ -292,7 +292,11 @@ def do_derivations(catalog):
             bestz, bestkind, bestsig, bestsrc = catalog.entries[
                 name].get_best_redshift()
             if bestsig > 0:
-                bestz = float(bestz)
+                try:
+                    bestz = float(bestz)
+                except:
+                    print(catalog.entries[name])
+                    raise
                 if 'velocity' not in catalog.entries[name]:
                     source = catalog.entries[name].add_self_source()
                     # FIX: what's happening here?!
