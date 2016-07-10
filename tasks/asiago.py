@@ -10,7 +10,7 @@ import urllib
 from bs4 import BeautifulSoup
 
 from astrocats.catalog.utils import is_number, pbar, uniq_cdl, utf8
-from astrocats.supernovae.utils import clean_snname
+from ..utils import clean_snname
 
 
 def do_asiago_photo(catalog):

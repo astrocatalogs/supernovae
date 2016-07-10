@@ -11,7 +11,7 @@ from astrocats.catalog.utils import (convert_aq_output, get_sig_digits,
                                      is_number, jd_to_mjd, make_date_string,
                                      pbar, pretty_num, rep_chars, round_sig,
                                      uniq_cdl)
-from astrocats.supernovae.utils import radec_clean
+from ..utils import radec_clean
 from cdecimal import Decimal
 
 from ..constants import CLIGHT, KM

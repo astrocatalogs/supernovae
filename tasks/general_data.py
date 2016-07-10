@@ -6,7 +6,7 @@ from collections import OrderedDict
 from glob import glob
 
 from astrocats.catalog.utils import pbar_strings
-from astrocats.supernovae.supernova import SUPERNOVA, Supernova
+from ..supernova import SUPERNOVA, Supernova
 
 
 def do_external_radio(catalog):

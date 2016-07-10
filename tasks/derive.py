@@ -11,7 +11,7 @@ from astropy.cosmology import z_at_value
 
 from astrocats.catalog.utils import (get_sig_digits, is_number, pbar,
                                      pretty_num, tprint, uniq_cdl)
-from astrocats.supernovae.constants import CLIGHT, KM, PREF_KINDS
+from ..constants import CLIGHT, KM, PREF_KINDS
 from cdecimal import Decimal
 
 

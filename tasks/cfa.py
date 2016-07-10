@@ -9,7 +9,7 @@ from astropy.time import Time as astrotime
 
 from astrocats.catalog.utils import (is_number, jd_to_mjd, pbar, pbar_strings,
                                      uniq_cdl)
-from astrocats.supernovae.utils import clean_snname
+from ..utils import clean_snname
 from cdecimal import Decimal
 
 ACKN_CFA = ("This research has made use of the CfA Supernova Archive, "
