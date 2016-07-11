@@ -1,11 +1,10 @@
 """
 """
 import warnings
-from astropy.time import Time as astrotime
-from cdecimal import Decimal
 
 from astrocats.catalog.entry import ENTRY, Entry
 from astrocats.catalog.error import ERROR
+from astrocats.catalog.key import KEY_TYPES, Key
 from astrocats.catalog.photometry import PHOTOMETRY
 from astrocats.catalog.quantity import QUANTITY
 from astrocats.catalog.source import SOURCE
@@ -13,14 +12,18 @@ from astrocats.catalog.spectrum import SPECTRUM
 from astrocats.catalog.utils import (entry_to_filename, get_sig_digits,
                                      get_source_year, is_number, jd_to_mjd,
                                      make_date_string, pretty_num, uniq_cdl)
-from .constants import (MAX_BANDS, PREF_KINDS, REPR_BETTER_QUANTITY)
-from .utils import (frame_priority, host_clean, radec_clean)
+from astropy.time import Time as astrotime
+
+from cdecimal import Decimal
+
+from .constants import MAX_BANDS, PREF_KINDS, REPR_BETTER_QUANTITY
+from .utils import frame_priority, host_clean, radec_clean
 
 
 class SUPERNOVA(ENTRY):
-    CLAIMED_TYPE = 'clamedtype'
-    DISCOVERY_DATE = 'discoverdate'
-    ERRORS = 'errors'
+    CLAIMED_TYPE = Key('clamedtype', KEY_TYPES.STRING)
+    DISCOVERY_DATE = Key('discoverdate', KEY_TYPES.STRING)
+    ERRORS = Key('errors')
 
 
 class Supernova(Entry):
