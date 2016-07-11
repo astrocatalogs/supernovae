@@ -133,8 +133,9 @@ class Supernova(Entry):
         elif key == self._KEYS.MAX_DATE or key == self._KEYS.DISCOVER_DATE:
             # Make sure month and day have leading zeroes
             sparts = value.split('/')
-            if len(sparts[0]) > 4 and int(sparts[0]) > 0:
-                raise ValueError('Date years limited to four digits.')
+            if len(sparts[0]) > 5:
+                self._log.warn("Date year {} greater than four "
+                               "digits.".format(sparts[0]))
             if len(sparts) >= 2:
                 value = sparts[0] + '/' + sparts[1].zfill(2)
             if len(sparts) == 3:
