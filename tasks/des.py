@@ -3,9 +3,10 @@
 import json
 import os
 
+from astrocats.catalog.utils import pbar
 from bs4 import BeautifulSoup
 
-from astrocats.catalog.utils import pbar
+from ..supernova import SUPERNOVA
 
 
 def do_des(catalog):
@@ -57,9 +58,9 @@ def do_des(catalog):
                     catalog.entries[name]
                     .add_source(bibcode='2015AJ....150..172K')]
         sources = ','.join(sources)
-        catalog.entries[name].add_quantity('alias', name, sources)
-        catalog.entries[name].add_quantity('ra', ra, sources)
-        catalog.entries[name].add_quantity('dec', dec, sources)
+        catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, sources)
+        catalog.entries[name].add_quantity(SUPERNOVA.RA, ra, sources)
+        catalog.entries[name].add_quantity(SUPERNOVA.DEC, dec, sources)
 
         html2 = catalog.load_cached_url(
             des_trans_url + name, des_path + name + '.html')

@@ -4,10 +4,12 @@ import os
 import re
 import urllib
 
+from astrocats.catalog.utils import is_number, jd_to_mjd, pbar, uniq_cdl
 from bs4 import BeautifulSoup, NavigableString, Tag
 
-from astrocats.catalog.utils import is_number, jd_to_mjd, pbar, uniq_cdl
 from cdecimal import Decimal
+
+from ..supernova import SUPERNOVA
 
 
 def do_ogle(catalog):
@@ -106,7 +108,8 @@ def do_ogle(catalog):
                 lcdat = csvtxt.splitlines()
                 sources = [catalog.entries[name].add_source(
                     name=reference, url=refurl)]
-                catalog.entries[name].add_quantity('alias', name, sources[0])
+                catalog.entries[name].add_quantity(
+                    SUPERNOVA.ALIAS, name, sources[0])
                 if atelref and atelref != 'ATel#----':
                     sources.append(catalog.entries[name].add_source(
                         name=atelref, url=atelurl))
@@ -116,22 +119,24 @@ def do_ogle(catalog):
                     if name[4] == '-':
                         if is_number(name[5:9]):
                             catalog.entries[name].add_quantity(
-                                'discoverdate', name[5:9], sources)
+                                SUPERNOVA.DISCOVER_DATE, name[5:9], sources)
                     else:
                         if is_number(name[4:6]):
                             catalog.entries[name].add_quantity(
-                                'discoverdate', '20' + name[4:6], sources)
+                                SUPERNOVA.DISCOVER_DATE, '20' + name[4:6],
+                                sources)
 
                 # RA and Dec from OGLE pages currently not reliable
-                # catalog.entries[name].add_quantity('ra', ra, sources)
-                # catalog.entries[name].add_quantity('dec', dec, sources)
+                # catalog.entries[name].add_quantity(SUPERNOVA.RA, ra, sources)
+                # catalog.entries[name].add_quantity(SUPERNOVA.DEC, dec,
+                # sources)
                 if claimedtype and claimedtype != '-':
                     catalog.entries[name].add_quantity(
-                        'claimedtype', claimedtype, sources)
-                elif ('SN' not in name and 'claimedtype' not in
+                        SUPERNOVA.CLAIMED_TYPE, claimedtype, sources)
+                elif ('SN' not in name and SUPERNOVA.CLAIMED_TYPE not in
                       catalog.entries[name]):
                     catalog.entries[name].add_quantity(
-                        'claimedtype', 'Candidate', sources)
+                        SUPERNOVA.CLAIMED_TYPE, 'Candidate', sources)
                 for row in lcdat:
                     row = row.split()
                     mjd = str(jd_to_mjd(Decimal(row[0])))

@@ -9,12 +9,14 @@ from glob import glob
 from html import unescape
 from math import floor
 
+from astrocats.catalog.utils import (get_sig_digits, is_number, jd_to_mjd,
+                                     pbar, pbar_strings, pretty_num, uniq_cdl)
 from astropy.time import Time as astrotime
 from bs4 import BeautifulSoup
 
-from astrocats.catalog.utils import (get_sig_digits, is_number, jd_to_mjd,
-                                     pbar, pbar_strings, pretty_num, uniq_cdl)
 from cdecimal import Decimal
+
+from ..supernova import SUPERNOVA
 
 
 def do_suspect_photo(catalog):
@@ -55,30 +57,33 @@ def do_suspect_photo(catalog):
         sec_refurl = 'https://www.nhn.ou.edu/~suspect/'
         sec_source = catalog.entries[name].add_source(
             name=sec_ref, url=sec_refurl, secondary=True)
-        catalog.entries[name].add_quantity('alias', oldname, sec_source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.ALIAS, oldname, sec_source)
 
         if ei == 1:
             year = re.findall(r'\d+', name)[0]
             catalog.entries[name].add_quantity(
-                'discoverdate', year, sec_source)
+                SUPERNOVA.DISCOVER_DATE, year, sec_source)
             catalog.entries[name].add_quantity(
-                'host', names[1].split(':')[1].strip(), sec_source)
+                SUPERNOVA.HOST, names[1].split(':')[1].strip(), sec_source)
 
             redshifts = bandsoup.body.findAll(text=re.compile('Redshift'))
             if redshifts:
                 catalog.entries[name].add_quantity(
-                    'redshift', redshifts[0].split(':')[1].strip(),
+                    SUPERNOVA.REDSHIFT, redshifts[0].split(':')[1].strip(),
                     sec_source, kind='heliocentric')
             # hvels = bandsoup.body.findAll(text=re.compile('Heliocentric
             # Velocity'))
             # if hvels:
             #     vel = hvels[0].split(':')[1].strip().split(' ')[0]
-            #     catalog.entries[name].add_quantity('velocity', vel, sec_source,
+            #     catalog.entries[name].add_quantity(SUPERNOVA.VELOCITY, vel,
+            # sec_source,
             # kind='heliocentric')
             types = bandsoup.body.findAll(text=re.compile('Type'))
 
             catalog.entries[name].add_quantity(
-                'claimedtype', types[0].split(':')[1].strip().split(' ')[0],
+                SUPERNOVA.CLAIMED_TYPE, types[0].split(
+                    ':')[1].strip().split(' ')[0],
                 sec_source)
 
         for r, row in enumerate(bandtable.findAll('tr')):
@@ -142,7 +147,8 @@ def do_suspect_spectra(catalog):
             sec_source = catalog.entries[name].add_source(
                 name=sec_ref, url=sec_refurl, bibcode=sec_bibc,
                 secondary=True)
-            catalog.entries[name].add_quantity('alias', name, sec_source)
+            catalog.entries[name].add_quantity(
+                SUPERNOVA.ALIAS, name, sec_source)
             fpath = os.path.join(catalog.get_current_task_repo(),
                                  'Suspect', folder, eventfolder)
             eventspectra = next(os.walk(fpath))[2]
@@ -206,7 +212,8 @@ def do_suspect_spectra(catalog):
                     errorunit='Uncalibrated',
                     source=sources, filename=spectrum)
                 suspectcnt = suspectcnt + 1
-                if catalog.args.travis and suspectcnt % catalog.TRAVIS_QUERY_LIMIT == 0:
+                if (catalog.args.travis and
+                        suspectcnt % catalog.TRAVIS_QUERY_LIMIT == 0):
                     break
 
     catalog.journal_entries()

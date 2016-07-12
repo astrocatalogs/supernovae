@@ -35,7 +35,7 @@ def do_external_radio(catalog):
                         u_fluxdensity='µJy',
                         instrument=cols[5], source=source)
                     catalog.entries[name].add_quantity(
-                        'alias', oldname, source)
+                        SUPERNOVA.ALIAS, oldname, source)
 
     catalog.journal_entries()
     return
@@ -65,7 +65,7 @@ def do_external_xray(catalog):
                             17], nhmw=cols[11],
                         upperlimit=(float(cols[5]) < 0), source=source)
                     catalog.entries[name].add_quantity(
-                        'alias', oldname, source)
+                        SUPERNOVA.ALIAS, oldname, source)
 
     catalog.journal_entries()
     return

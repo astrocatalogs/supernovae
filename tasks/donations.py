@@ -8,6 +8,8 @@ from math import isnan
 
 from astrocats.catalog.utils import is_number, pbar, pbar_strings, rep_chars
 
+from ..supernova import SUPERNOVA
+
 
 def do_donations(catalog):
     task_str = catalog.get_current_task_str()
@@ -29,7 +31,7 @@ def do_donations(catalog):
         if not bibcode:
             raise ValueError('Bibcode not found!')
         source = catalog.entries[name].add_source(bibcode=bibcode)
-        catalog.entries[name].add_quantity('alias', inpname, source)
+        catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, inpname, source)
         with open(datafile, 'r') as f:
             tsvin = csv.reader(f, delimiter='\t', skipinitialspace=True)
             for r, rrow in enumerate(tsvin):
@@ -74,18 +76,21 @@ def do_donations(catalog):
             source = (catalog.entries[name]
                       .add_source(bibcode='2016A&A...585A.162M'))
             catalog.entries[name].add_quantity(
-                'alias', 'LMCSNR J' + rep_chars(ra, ' :.') +
+                SUPERNOVA.ALIAS, 'LMCSNR J' + rep_chars(ra, ' :.') +
                 rep_chars(dec, ' :.'), source)
-            catalog.entries[name].add_quantity('alias', name, source)
+            catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
             if row[1] != 'noname':
-                catalog.entries[name].add_quantity('alias', row[1], source)
-            catalog.entries[name].add_quantity('ra', row[2], source)
-            catalog.entries[name].add_quantity('dec', row[3], source)
-            catalog.entries[name].add_quantity('host', 'LMC', source)
+                catalog.entries[name].add_quantity(
+                    SUPERNOVA.ALIAS, row[1], source)
+            catalog.entries[name].add_quantity(SUPERNOVA.RA, row[2], source)
+            catalog.entries[name].add_quantity(SUPERNOVA.DEC, row[3], source)
+            catalog.entries[name].add_quantity(SUPERNOVA.HOST, 'LMC', source)
             if row[4] == '1':
-                catalog.entries[name].add_quantity('claimedtype', 'Ia', source)
+                catalog.entries[name].add_quantity(
+                    SUPERNOVA.CLAIMED_TYPE, 'Ia', source)
             elif row[4] == '2':
-                catalog.entries[name].add_quantity('claimedtype', 'CC', source)
+                catalog.entries[name].add_quantity(
+                    SUPERNOVA.CLAIMED_TYPE, 'CC', source)
     with open(os.path.join(catalog.get_current_task_repo(),
                            'Maggi-04-11-16/SMCSNRs_OpenSNe.csv')) as f:
         tsvin = csv.reader(f, delimiter=',')
@@ -97,14 +102,14 @@ def do_donations(catalog):
             ra = row[3]
             dec = row[4]
             catalog.entries[name].add_quantity(
-                name, 'alias', 'SMCSNR J' + ra.replace(':', '')[:6] +
+                name, SUPERNOVA.ALIAS, 'SMCSNR J' + ra.replace(':', '')[:6] +
                 dec.replace(':', '')[:7], source)
-            catalog.entries[name].add_quantity('alias', name, source)
-            catalog.entries[name].add_quantity('alias', row[1], source)
-            catalog.entries[name].add_quantity('alias', row[2], source)
-            catalog.entries[name].add_quantity('ra', row[3], source)
-            catalog.entries[name].add_quantity('dec', row[4], source)
-            catalog.entries[name].add_quantity('host', 'SMC', source)
+            catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
+            catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, row[1], source)
+            catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, row[2], source)
+            catalog.entries[name].add_quantity(SUPERNOVA.RA, row[3], source)
+            catalog.entries[name].add_quantity(SUPERNOVA.DEC, row[4], source)
+            catalog.entries[name].add_quantity(SUPERNOVA.HOST, 'SMC', source)
     catalog.journal_entries()
 
     # Galbany 04-18-16 donation
@@ -136,12 +141,13 @@ def do_donations(catalog):
                         name = catalog.add_entry(name)
                         source = (catalog.entries[name]
                                   .add_source(bibcode=bibcode))
-                        catalog.entries[name].add_quantity('alias', name,
+                        catalog.entries[name].add_quantity(SUPERNOVA.ALIAS,
+                                                           name,
                                                            source)
                     elif field == 'type':
                         claimedtype = value.replace('SN', '')
                         catalog.entries[name].add_quantity(
-                            'claimedtype', claimedtype, source)
+                            SUPERNOVA.CLAIMED_TYPE, claimedtype, source)
                     elif field == 'zhel':
                         zhel = value
                     elif field == 'redshift_error':
@@ -150,22 +156,23 @@ def do_donations(catalog):
                         zcmb = value
                     elif field == 'ra':
                         catalog.entries[name].add_quantity(
-                            'ra', value, source, unit='floatdegrees')
+                            SUPERNOVA.RA, value, source, unit='floatdegrees')
                     elif field == 'dec':
                         catalog.entries[name].add_quantity(
-                            'dec', value, source, unit='floatdegrees')
+                            SUPERNOVA.DEC, value, source, unit='floatdegrees')
                     elif field == 'host':
                         value = value.replace('- ', '-').replace('G ', 'G')
-                        catalog.entries[name].add_quantity('host', value,
+                        catalog.entries[name].add_quantity(SUPERNOVA.HOST,
+                                                           value,
                                                            source)
                     elif field == 'e(b-v)_mw':
                         catalog.entries[name].add_quantity(
-                            'ebv', value, source)
+                            SUPERNOVA.EBV, value, source)
 
         catalog.entries[name].add_quantity(
-            'redshift', zhel, source, error=zerr, kind='heliocentric')
+            SUPERNOVA.REDSHIFT, zhel, source, error=zerr, kind='heliocentric')
         catalog.entries[name].add_quantity(
-            'redshift', zcmb, source, error=zerr, kind='cmb')
+            SUPERNOVA.REDSHIFT, zcmb, source, error=zerr, kind='cmb')
 
         for path in photfiles:
             with open(path, 'r') as f:
@@ -196,7 +203,7 @@ def do_donations(catalog):
         source = catalog.entries[name].add_source(
             name='Swift Supernovae', bibcode='2014Ap&SS.354...89B',
             url='http://people.physics.tamu.edu/pbrown/SwiftSN/swift_sn.html')
-        catalog.entries[name].add_quantity('alias', name, source)
+        catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
         with open(fi, 'r') as f:
             lines = f.read().splitlines()
             for line in lines:
@@ -225,8 +232,8 @@ def do_donations(catalog):
         catalog.get_current_task_repo(), 'nicholl-05-03-16/*.txt'))
     name = catalog.add_entry('SN2015bn')
     source = catalog.entries[name].add_source(bibcode='2016arXiv160304748N')
-    catalog.entries[name].add_quantity('alias', name, source)
-    catalog.entries[name].add_quantity('alias', 'PS15ae', source)
+    catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
+    catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, 'PS15ae', source)
     for fi in pbar(files, task_str):
         telescope = os.path.basename(fi).split('_')[1]
         with open(fi, 'r') as f:

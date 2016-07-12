@@ -4,17 +4,18 @@ import csv
 import os
 from math import isnan
 
-from astropy.time import Time as astrotime
-from astroquery.vizier import Vizier
-
 from astrocats.catalog.utils import (convert_aq_output, get_sig_digits,
                                      is_number, jd_to_mjd, make_date_string,
                                      pbar, pretty_num, rep_chars, round_sig,
                                      uniq_cdl)
-from ..utils import radec_clean
+from astropy.time import Time as astrotime
+from astroquery.vizier import Vizier
+
 from cdecimal import Decimal
 
 from ..constants import CLIGHT, KM
+from ..supernova import SUPERNOVA
+from ..utils import radec_clean
 
 
 def do_vizier(catalog):
@@ -36,19 +37,21 @@ def do_vizier(catalog):
         name = catalog.add_entry(name)
         source = catalog.entries[name].add_source(
             bibcode='2012ApJS..200...12H')
-        catalog.entries[name].add_quantity('alias', name, source)
+        catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
         if '[' not in row['Gal']:
             catalog.entries[name].add_quantity(
-                'host', row['Gal'].replace('_', ' '), source)
-        catalog.entries[name].add_quantity('redshift', str(
+                SUPERNOVA.HOST, row['Gal'].replace('_', ' '), source)
+        catalog.entries[name].add_quantity(SUPERNOVA.REDSHIFT, str(
             row['z']), source, kind='heliocentric')
-        catalog.entries[name].add_quantity('redshift', str(
+        catalog.entries[name].add_quantity(SUPERNOVA.REDSHIFT, str(
             row['zCMB']), source, kind='cmb')
-        catalog.entries[name].add_quantity('ebv', str(
+        catalog.entries[name].add_quantity(SUPERNOVA.EBV, str(
             row['E_B-V_']), source, error=str(row['e_E_B-V_']) if
             row['e_E_B-V_'] else '')
-        catalog.entries[name].add_quantity('ra', row['RAJ2000'], source)
-        catalog.entries[name].add_quantity('dec', row['DEJ2000'], source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.RA, row['RAJ2000'], source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.DEC, row['DEJ2000'], source)
 
     # 2012ApJ...746...85S
     result = Vizier.get_catalogs('J/ApJ/746/85/table1')
@@ -60,18 +63,22 @@ def do_vizier(catalog):
         name = catalog.add_entry(name)
         source = catalog.entries[name].add_source(
             bibcode='2012ApJ...746...85S')
-        catalog.entries[name].add_quantity('alias', name, source)
+        catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
         if row['f_Name']:
-            catalog.entries[name].add_quantity('claimedtype', 'Ia', source)
+            catalog.entries[name].add_quantity(
+                SUPERNOVA.CLAIMED_TYPE, 'Ia', source)
         if row['z']:
-            catalog.entries[name].add_quantity('redshift', str(
+            catalog.entries[name].add_quantity(SUPERNOVA.REDSHIFT, str(
                 row['z']), source, kind='spectroscopic')
         else:
-            catalog.entries[name].add_quantity('redshift', str(
+            catalog.entries[name].add_quantity(SUPERNOVA.REDSHIFT, str(
                 row['zCl']), source, kind='cluster')
-        catalog.entries[name].add_quantity('ebv', str(row['E_B-V_']), source)
-        catalog.entries[name].add_quantity('ra', row['RAJ2000'], source)
-        catalog.entries[name].add_quantity('dec', row['DEJ2000'], source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.EBV, str(row['E_B-V_']), source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.RA, row['RAJ2000'], source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.DEC, row['DEJ2000'], source)
 
     result = Vizier.get_catalogs('J/ApJ/746/85/table2')
     table = result[list(result.keys())[0]]
@@ -93,7 +100,7 @@ def do_vizier(catalog):
         name = catalog.add_entry(name)
         source = catalog.entries[name].add_source(
             bibcode='2012ApJ...746...85S')
-        catalog.entries[name].add_quantity('alias', name, source)
+        catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
         catalog.entries[name].add_photometry(
             time=str(row['MJD']), band=row['Filter'],
             instrument=row['Inst'],
@@ -120,7 +127,7 @@ def do_vizier(catalog):
         name = catalog.add_entry(name)
         source = catalog.entries[name].add_source(
             bibcode='2004ApJ...602..571B')
-        catalog.entries[name].add_quantity('alias', name, source)
+        catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
         band = row['Filt']
         system = ''
         telescope = ''
@@ -146,12 +153,12 @@ def do_vizier(catalog):
         name = catalog.add_entry(name)
         source = catalog.entries[name].add_source(
             bibcode='2014MNRAS.444.3258M')
-        catalog.entries[name].add_quantity('alias', name, source)
-        catalog.entries[name].add_quantity('redshift', str(
+        catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
+        catalog.entries[name].add_quantity(SUPERNOVA.REDSHIFT, str(
             row['z']), source, kind='heliocentric', error=str(row['e_z']))
         catalog.entries[name].add_quantity(
-            'ra', str(row['_RA']), source, unit='floatdegrees')
-        catalog.entries[name].add_quantity('dec', str(
+            SUPERNOVA.RA, str(row['_RA']), source, unit='floatdegrees')
+        catalog.entries[name].add_quantity(SUPERNOVA.DEC, str(
             row['_DE']), source, unit='floatdegrees')
     catalog.journal_entries()
 
@@ -164,11 +171,13 @@ def do_vizier(catalog):
         name = catalog.add_entry(name)
         source = catalog.entries[name].add_source(
             bibcode='2014MNRAS.438.1391P')
-        catalog.entries[name].add_quantity('alias', name, source)
-        catalog.entries[name].add_quantity('redshift', str(
+        catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
+        catalog.entries[name].add_quantity(SUPERNOVA.REDSHIFT, str(
             row['zh']), source, kind='heliocentric')
-        catalog.entries[name].add_quantity('ra', row['RAJ2000'], source)
-        catalog.entries[name].add_quantity('dec', row['DEJ2000'], source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.RA, row['RAJ2000'], source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.DEC, row['DEJ2000'], source)
     catalog.journal_entries()
 
     # 2012ApJ...749...18B
@@ -180,7 +189,7 @@ def do_vizier(catalog):
         name = catalog.add_entry(name)
         source = catalog.entries[name].add_source(
             bibcode='2012ApJ...749...18B')
-        catalog.entries[name].add_quantity('alias', name, source)
+        catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
         mjd = str(astrotime(2450000. + row['JD'], format='jd').mjd)
         band = row['Filt']
         magnitude = str(row['mag'])
@@ -203,19 +212,24 @@ def do_vizier(catalog):
         name = catalog.add_entry(name)
         source = catalog.entries[name].add_source(
             bibcode='2010A&A...523A...7G')
-        catalog.entries[name].add_quantity('alias', name, source)
+        catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
         astrot = astrotime(2450000. + row['Date1'], format='jd').datetime
-        catalog.entries[name].add_quantity('discoverdate', make_date_string(
-            astrot.year, astrot.month, astrot.day), source)
-        catalog.entries[name].add_quantity('ebv', str(row['E_B-V_']), source)
-        catalog.entries[name].add_quantity('redshift', str(
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.DISCOVER_DATE,
+            make_date_string(astrot.year, astrot.month, astrot.day), source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.EBV, str(row['E_B-V_']), source)
+        catalog.entries[name].add_quantity(SUPERNOVA.REDSHIFT, str(
             row['z']), source, kind='heliocentric')
         type_str = (row['Type']
                     .replace('*', '?').replace('SN', '')
                     .replace('(pec)', ' P').replace('Ia? P?', 'Ia P?'))
-        catalog.entries[name].add_quantity('claimedtype', type_str, source)
-        catalog.entries[name].add_quantity('ra', row['RAJ2000'], source)
-        catalog.entries[name].add_quantity('dec', row['DEJ2000'], source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.CLAIMED_TYPE, type_str, source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.RA, row['RAJ2000'], source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.DEC, row['DEJ2000'], source)
     catalog.journal_entries()
 
     # 2004A&A...415..863G
@@ -227,21 +241,25 @@ def do_vizier(catalog):
         name = catalog.add_entry(name)
         source = catalog.entries[name].add_source(
             bibcode='2004A&A...415..863G')
-        catalog.entries[name].add_quantity('alias', name, source)
+        catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
         datesplit = row['Date'].split('-')
         date_str = make_date_string(datesplit[0], datesplit[1].lstrip('0'),
                                     datesplit[2].lstrip('0'))
-        catalog.entries[name].add_quantity('discoverdate', date_str, source)
         catalog.entries[name].add_quantity(
-            'host', 'Abell ' + str(row['Abell']), source)
-        catalog.entries[name].add_quantity('claimedtype', row['Type'], source)
-        catalog.entries[name].add_quantity('ra', row['RAJ2000'], source)
-        catalog.entries[name].add_quantity('dec', row['DEJ2000'], source)
+            SUPERNOVA.DISCOVER_DATE, date_str, source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.HOST, 'Abell ' + str(row['Abell']), source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.CLAIMED_TYPE, row['Type'], source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.RA, row['RAJ2000'], source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.DEC, row['DEJ2000'], source)
         if row['zSN']:
-            catalog.entries[name].add_quantity('redshift', str(
+            catalog.entries[name].add_quantity(SUPERNOVA.REDSHIFT, str(
                 row['zSN']), source, kind='spectroscopic')
         else:
-            catalog.entries[name].add_quantity('redshift', str(
+            catalog.entries[name].add_quantity(SUPERNOVA.REDSHIFT, str(
                 row['zCl']), source, kind='cluster')
     catalog.journal_entries()
 
@@ -254,11 +272,14 @@ def do_vizier(catalog):
         name = catalog.add_entry(name)
         source = catalog.entries[name].add_source(
             bibcode='2008AJ....136.2306H')
-        catalog.entries[name].add_quantity('alias', name, source)
+        catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
         catalog.entries[name].add_quantity(
-            'claimedtype', row['SpType'].replace('SN.', '').strip(':'), source)
-        catalog.entries[name].add_quantity('ra', row['RAJ2000'], source)
-        catalog.entries[name].add_quantity('dec', row['DEJ2000'], source)
+            SUPERNOVA.CLAIMED_TYPE,
+            row['SpType'].replace('SN.', '').strip(':'), source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.RA, row['RAJ2000'], source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.DEC, row['DEJ2000'], source)
 
     # 2010ApJ...708..661D
     result = Vizier.get_catalogs('J/ApJ/708/661/sn')
@@ -273,12 +294,15 @@ def do_vizier(catalog):
         name = catalog.add_entry(name)
         source = catalog.entries[name].add_source(
             bibcode='2010ApJ...708..661D')
-        catalog.entries[name].add_quantity('alias', name, source)
+        catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
         catalog.entries[name].add_quantity(
-            'alias', 'SDSS-II ' + str(row['SDSS-II']), source)
-        catalog.entries[name].add_quantity('claimedtype', 'II P', source)
-        catalog.entries[name].add_quantity('ra', row['RAJ2000'], source)
-        catalog.entries[name].add_quantity('dec', row['DEJ2000'], source)
+            SUPERNOVA.ALIAS, 'SDSS-II ' + str(row['SDSS-II']), source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.CLAIMED_TYPE, 'II P', source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.RA, row['RAJ2000'], source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.DEC, row['DEJ2000'], source)
 
     result = Vizier.get_catalogs('J/ApJ/708/661/table1')
     table = result[list(result.keys())[0]]
@@ -291,8 +315,8 @@ def do_vizier(catalog):
         name = catalog.add_entry(name)
         source = catalog.entries[name].add_source(
             bibcode='2010ApJ...708..661D')
-        catalog.entries[name].add_quantity('alias', name, source)
-        catalog.entries[name].add_quantity('redshift', str(
+        catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
+        catalog.entries[name].add_quantity(SUPERNOVA.REDSHIFT, str(
             row['z']), source, error=str(row['e_z']))
     catalog.journal_entries()
 
@@ -305,15 +329,19 @@ def do_vizier(catalog):
         name = catalog.add_entry(name)
         source = catalog.entries[name].add_source(
             bibcode='2014ApJ...795...44R')
-        catalog.entries[name].add_quantity('alias', name, source)
+        catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
         astrot = astrotime(row['tdisc'], format='mjd').datetime
-        catalog.entries[name].add_quantity('discoverdate',  make_date_string(
-            astrot.year, astrot.month, astrot.day), source)
-        catalog.entries[name].add_quantity('redshift', str(
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.DISCOVER_DATE,
+            make_date_string(astrot.year, astrot.month, astrot.day), source)
+        catalog.entries[name].add_quantity(SUPERNOVA.REDSHIFT, str(
             row['z']), source, error=str(row['e_z']), kind='heliocentric')
-        catalog.entries[name].add_quantity('ra', row['RAJ2000'], source)
-        catalog.entries[name].add_quantity('dec', row['DEJ2000'], source)
-        catalog.entries[name].add_quantity('claimedtype', 'Ia', source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.RA, row['RAJ2000'], source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.DEC, row['DEJ2000'], source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.CLAIMED_TYPE, 'Ia', source)
 
     result = Vizier.get_catalogs('J/ApJ/795/44/table6')
     table = result[list(result.keys())[0]]
@@ -323,7 +351,7 @@ def do_vizier(catalog):
         name = catalog.add_entry(name)
         source = catalog.entries[name].add_source(
             bibcode='2014ApJ...795...44R')
-        catalog.entries[name].add_quantity('alias', name, source)
+        catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
         if row['mag'] != '--':
             catalog.entries[name].add_photometry(
                 time=str(row['MJD']), band=row['Filt'],
@@ -365,7 +393,7 @@ def do_vizier(catalog):
         else:
             source = catalog.entries[name].add_source(
                 name=ii189refdict[row['r_m']])
-        catalog.entries[name].add_quantity('alias', oldname, source)
+        catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, oldname, source)
 
         catalog.entries[name].add_photometry(
             time=mjd, band=band, magnitude=mag,
@@ -404,24 +432,29 @@ def do_vizier(catalog):
                    .add_source(name='Galactic SNRs',
                                url=('https://www.mrao.cam.ac.uk/'
                                     'surveys/snrs/snrs.data.html'))))
-        catalog.entries[name].add_quantity('alias', oldname, source)
+        catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, oldname, source)
 
-        catalog.entries[name].add_quantity('alias', row['SNR'].strip(), source)
         catalog.entries[name].add_quantity(
-            'alias', 'MWSNR ' + row['SNR'].strip('G '), source)
+            SUPERNOVA.ALIAS, row['SNR'].strip(), source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.ALIAS, 'MWSNR ' + row['SNR'].strip('G '), source)
 
         if row['Names']:
             names = row['Names'].split(',')
             for nam in names:
-                catalog.entries[name].add_quantity('alias', nam.replace(
-                    'Vela (XYZ)', 'Vela').strip('()').strip(), source)
+                catalog.entries[name].add_quantity(
+                    SUPERNOVA.ALIAS,
+                    nam.replace('Vela (XYZ)', 'Vela').strip('()').strip(),
+                    source)
                 if nam.strip()[:2] == 'SN':
                     catalog.entries[name].add_quantity(
-                        'discoverdate', nam.strip()[2:], source)
+                        SUPERNOVA.DISCOVER_DATE, nam.strip()[2:], source)
 
-        catalog.entries[name].add_quantity('host', 'Milky Way', source)
-        catalog.entries[name].add_quantity('ra', row['RAJ2000'], source)
-        catalog.entries[name].add_quantity('dec', row['DEJ2000'], source)
+        catalog.entries[name].add_quantity(SUPERNOVA.HOST, 'Milky Way', source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.RA, row['RAJ2000'], source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.DEC, row['DEJ2000'], source)
     catalog.journal_entries()
 
     # 2014MNRAS.442..844F
@@ -434,10 +467,11 @@ def do_vizier(catalog):
         name = catalog.add_entry(name)
         source = catalog.entries[name].add_source(
             bibcode='2014MNRAS.442..844F')
-        catalog.entries[name].add_quantity('alias', name, source)
-        catalog.entries[name].add_quantity('redshift', str(
+        catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
+        catalog.entries[name].add_quantity(SUPERNOVA.REDSHIFT, str(
             row['zhost']), source, kind='host')
-        catalog.entries[name].add_quantity('ebv', str(row['E_B-V_']), source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.EBV, str(row['E_B-V_']), source)
     catalog.journal_entries()
 
     result = Vizier.get_catalogs('J/MNRAS/442/844/table2')
@@ -450,7 +484,7 @@ def do_vizier(catalog):
         name = catalog.add_entry(name)
         source = catalog.entries[name].add_source(
             bibcode='2014MNRAS.442..844F')
-        catalog.entries[name].add_quantity('alias', name, source)
+        catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
         for band in ['B', 'V', 'R', 'I']:
             bandtag = band + 'mag'
             if (bandtag in row and is_number(row[bandtag]) and not
@@ -471,16 +505,18 @@ def do_vizier(catalog):
         name = catalog.add_entry(name)
         source = catalog.entries[name].add_source(
             bibcode='2012MNRAS.425.1789S')
-        catalog.entries[name].add_quantity('alias', name, source)
-        catalog.entries[name].add_quantity('alias', 'SN' + row['SN'], source)
-        catalog.entries[name].add_quantity('host', row['Gal'], source)
+        catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.ALIAS, 'SN' + row['SN'], source)
+        catalog.entries[name].add_quantity(SUPERNOVA.HOST, row['Gal'], source)
         if is_number(row['cz']):
             red_str = str(
                 round_sig(float(row['cz']) * KM / CLIGHT,
                           sig=get_sig_digits(str(row['cz']))))
             catalog.entries[name].add_quantity(
-                'redshift', red_str, source, kind='heliocentric')
-        catalog.entries[name].add_quantity('ebv', str(row['E_B-V_']), source)
+                SUPERNOVA.REDSHIFT, red_str, source, kind='heliocentric')
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.EBV, str(row['E_B-V_']), source)
     catalog.journal_entries()
 
     # 2015ApJS..219...13W
@@ -493,14 +529,18 @@ def do_vizier(catalog):
         name = catalog.add_entry(name)
         source = catalog.entries[name].add_source(
             bibcode='2015ApJS..219...13W')
-        catalog.entries[name].add_quantity('alias', name, source)
-        catalog.entries[name].add_quantity('ra', row['RAJ2000'], source)
-        catalog.entries[name].add_quantity('dec', row['DEJ2000'], source)
+        catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
         catalog.entries[name].add_quantity(
-            'redshift', row['z'], source,
+            SUPERNOVA.RA, row['RAJ2000'], source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.DEC, row['DEJ2000'], source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.REDSHIFT, row['z'], source,
             error=row['e_z'], kind='heliocentric')
-        catalog.entries[name].add_quantity('ebv', row['E_B-V_'], source)
-        catalog.entries[name].add_quantity('claimedtype', 'Ia', source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.EBV, row['E_B-V_'], source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.CLAIMED_TYPE, 'Ia', source)
     result = Vizier.get_catalogs('J/ApJS/219/13/table2')
     table = result[list(result.keys())[0]]
     table.convert_bytestring_to_unicode(python3_only=True)
@@ -510,7 +550,7 @@ def do_vizier(catalog):
         name = catalog.add_entry(name)
         source = catalog.entries[name].add_source(
             bibcode='2015ApJS..219...13W')
-        catalog.entries[name].add_quantity('alias', name, source)
+        catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
         catalog.entries[name].add_photometry(
             time=str(jd_to_mjd(Decimal(row['JD']))),
             instrument='QUEST',
@@ -526,8 +566,9 @@ def do_vizier(catalog):
     name = 'SN2213-1745'
     name = catalog.add_entry(name)
     source = catalog.entries[name].add_source(bibcode='2012Natur.491..228C')
-    catalog.entries[name].add_quantity('alias', name, source)
-    catalog.entries[name].add_quantity('claimedtype', 'SLSN-R', source)
+    catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
+    catalog.entries[name].add_quantity(
+        SUPERNOVA.CLAIMED_TYPE, 'SLSN-R', source)
     for row in pbar(table, task_str):
         row = convert_aq_output(row)
         for band in ['g', 'r', 'i']:
@@ -545,8 +586,9 @@ def do_vizier(catalog):
     name = 'SN1000+0216'
     name = catalog.add_entry(name)
     source = catalog.entries[name].add_source(bibcode='2012Natur.491..228C')
-    catalog.entries[name].add_quantity('alias', name, source)
-    catalog.entries[name].add_quantity('claimedtype', 'SLSN-II?', source)
+    catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
+    catalog.entries[name].add_quantity(
+        SUPERNOVA.CLAIMED_TYPE, 'SLSN-II?', source)
     for row in pbar(table, task_str):
         row = convert_aq_output(row)
         for band in ['g', 'r', 'i']:
@@ -569,7 +611,7 @@ def do_vizier(catalog):
         name = catalog.add_entry(name)
         source = catalog.entries[name].add_source(
             bibcode='2011Natur.474..484Q')
-        catalog.entries[name].add_quantity('alias', name, source)
+        catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
         catalog.entries[name].add_photometry(
             time=row['MJD'], band=row['Filt'], telescope=row['Tel'],
             magnitude=row['mag'], e_magnitude=row['e_mag'], source=source)
@@ -582,7 +624,7 @@ def do_vizier(catalog):
     name = 'PTF10vdl'
     name = catalog.add_entry(name)
     source = catalog.entries[name].add_source(bibcode='2011ApJ...736..159G')
-    catalog.entries[name].add_quantity('alias', name, source)
+    catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
     for row in pbar(table, task_str):
         row = convert_aq_output(row)
         catalog.entries[name].add_photometry(
@@ -600,7 +642,7 @@ def do_vizier(catalog):
     name = 'PTF12gzk'
     name = catalog.add_entry(name)
     source = catalog.entries[name].add_source(bibcode='2012ApJ...760L..33B')
-    catalog.entries[name].add_quantity('alias', name, source)
+    catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
     for row in pbar(table, task_str):
         row = convert_aq_output(row)
         # Fixing a typo in VizieR table
@@ -620,7 +662,7 @@ def do_vizier(catalog):
     name = 'PS1-12sk'
     name = catalog.add_entry(name)
     source = catalog.entries[name].add_source(bibcode='2013ApJ...769...39S')
-    catalog.entries[name].add_quantity('alias', name, source)
+    catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
     for row in pbar(table, task_str):
         row = convert_aq_output(row)
         instrument = ''
@@ -642,7 +684,7 @@ def do_vizier(catalog):
     name = 'SN2005cs'
     name = catalog.add_entry(name)
     source = catalog.entries[name].add_source(bibcode='2009MNRAS.394.2266P')
-    catalog.entries[name].add_quantity('alias', name, source)
+    catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
     result = Vizier.get_catalogs('J/MNRAS/394/2266/table2')
     table = result[list(result.keys())[0]]
     table.convert_bytestring_to_unicode(python3_only=True)
@@ -707,7 +749,7 @@ def do_vizier(catalog):
     name = 'SN2003ie'
     name = catalog.add_entry(name)
     source = catalog.entries[name].add_source(bibcode='2013AJ....145...99A')
-    catalog.entries[name].add_quantity('alias', name, source)
+    catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
     for row in pbar(table, task_str):
         row = convert_aq_output(row)
         for band in ['B', 'R']:
@@ -738,7 +780,7 @@ def do_vizier(catalog):
     name = 'SN2008am'
     name = catalog.add_entry(name)
     source = catalog.entries[name].add_source(bibcode='2011ApJ...729..143C')
-    catalog.entries[name].add_quantity('alias', name, source)
+    catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
 
     result = Vizier.get_catalogs('J/ApJ/729/143/table1')
     table = result[list(result.keys())[0]]
@@ -790,7 +832,7 @@ def do_vizier(catalog):
     name = 'SN2009bb'
     name = catalog.add_entry(name)
     source = catalog.entries[name].add_source(bibcode='2011ApJ...728...14P')
-    catalog.entries[name].add_quantity('alias', name, source)
+    catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
 
     result = Vizier.get_catalogs('J/ApJ/728/14/table1')
     table = result[list(result.keys())[0]]
@@ -842,7 +884,7 @@ def do_vizier(catalog):
     name = 'SN2009nr'
     name = catalog.add_entry(name)
     source = catalog.entries[name].add_source(bibcode='2011PAZh...37..837T')
-    catalog.entries[name].add_quantity('alias', name, source)
+    catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
 
     result = Vizier.get_catalogs('J/PAZh/37/837/table2')
     table = result[list(result.keys())[0]]
@@ -864,7 +906,7 @@ def do_vizier(catalog):
     name = 'SN2012aw'
     name = catalog.add_entry(name)
     source = catalog.entries[name].add_source(bibcode='2013MNRAS.433.1871B')
-    catalog.entries[name].add_quantity('alias', name, source)
+    catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
 
     result = Vizier.get_catalogs('J/MNRAS/433/1871/table3a')
     table = result[list(result.keys())[0]]
@@ -901,7 +943,7 @@ def do_vizier(catalog):
     name = 'SN2012fr'
     name = catalog.add_entry(name)
     source = catalog.entries[name].add_source(bibcode='2014AJ....148....1Z')
-    catalog.entries[name].add_quantity('alias', name, source)
+    catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
 
     result = Vizier.get_catalogs('J/AJ/148/1/table2')
     table = result[list(result.keys())[0]]
@@ -955,7 +997,7 @@ def do_vizier(catalog):
     name = 'SN2014J'
     name = catalog.add_entry(name)
     source = catalog.entries[name].add_source(bibcode='2014AJ....148....1Z')
-    catalog.entries[name].add_quantity('alias', name, source)
+    catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
 
     result = Vizier.get_catalogs('J/ApJ/805/74/table1')
     table = result[list(result.keys())[0]]
@@ -989,7 +1031,7 @@ def do_vizier(catalog):
         name = catalog.add_entry(name)
         source = catalog.entries[name].add_source(
             bibcode='2011ApJ...741...97D')
-        catalog.entries[name].add_quantity('alias', name, source)
+        catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
         catalog.entries[name].add_photometry(
             time=str(jd_to_mjd(Decimal(row['JD']))),
             band=row['Filt'], magnitude=row['mag'],
@@ -1009,19 +1051,20 @@ def do_vizier(catalog):
         name = catalog.add_entry(name)
         source = catalog.entries[name].add_source(
             bibcode='2015MNRAS.448.1206M')
-        catalog.entries[name].add_quantity('alias', name, source)
+        catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
         catalog.entries[name].add_quantity(
-            'discoverdate', '20' + name[4:6], source)
+            SUPERNOVA.DISCOVER_DATE, '20' + name[4:6], source)
         catalog.entries[name].add_quantity(
-            'ra', row['RAJ2000'], source, unit='floatdegrees')
+            SUPERNOVA.RA, row['RAJ2000'], source, unit='floatdegrees')
         catalog.entries[name].add_quantity(
-            'dec', row['DEJ2000'], source, unit='floatdegrees')
+            SUPERNOVA.DEC, row['DEJ2000'], source, unit='floatdegrees')
         catalog.entries[name].add_quantity(
-            'redshift', row['zsp'], source, kind='spectroscopic')
+            SUPERNOVA.REDSHIFT, row['zsp'], source, kind='spectroscopic')
         catalog.entries[name].add_quantity(
             'maxappmag', row['rP1mag'], source, error=row['e_rP1mag'])
         catalog.entries[name].add_quantity('maxband', 'r', source)
-        catalog.entries[name].add_quantity('claimedtype', 'Ia', source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.CLAIMED_TYPE, 'Ia', source)
     result = Vizier.get_catalogs('J/MNRAS/448/1206/table4')
     table = result[list(result.keys())[0]]
     table.convert_bytestring_to_unicode(python3_only=True)
@@ -1031,20 +1074,21 @@ def do_vizier(catalog):
         name = catalog.add_entry(name)
         source = catalog.entries[name].add_source(
             bibcode='2015MNRAS.448.1206M')
-        catalog.entries[name].add_quantity('alias', name, source)
+        catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
         catalog.entries[name].add_quantity(
-            'discoverdate', '20' + name[4:6], source)
+            SUPERNOVA.DISCOVER_DATE, '20' + name[4:6], source)
         catalog.entries[name].add_quantity(
-            'ra', row['RAJ2000'], source, unit='floatdegrees')
+            SUPERNOVA.RA, row['RAJ2000'], source, unit='floatdegrees')
         catalog.entries[name].add_quantity(
-            'dec', row['DEJ2000'], source, unit='floatdegrees')
+            SUPERNOVA.DEC, row['DEJ2000'], source, unit='floatdegrees')
         catalog.entries[name].add_quantity(
-            'redshift', row['zph'], source, error=row['e_zph'],
+            SUPERNOVA.REDSHIFT, row['zph'], source, error=row['e_zph'],
             kind='photometric')
         catalog.entries[name].add_quantity(
             'maxappmag', row['rP1mag'], source, error=row['e_rP1mag'])
         catalog.entries[name].add_quantity('maxband', 'r', source)
-        catalog.entries[name].add_quantity('claimedtype', 'Ia?', source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.CLAIMED_TYPE, 'Ia?', source)
     result = Vizier.get_catalogs('J/MNRAS/448/1206/table5')
     table = result[list(result.keys())[0]]
     table.convert_bytestring_to_unicode(python3_only=True)
@@ -1054,19 +1098,20 @@ def do_vizier(catalog):
         name = catalog.add_entry(name)
         source = catalog.entries[name].add_source(
             bibcode='2015MNRAS.448.1206M')
-        catalog.entries[name].add_quantity('alias', name, source)
+        catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
         catalog.entries[name].add_quantity(
-            'discoverdate', '20' + name[4:6], source)
+            SUPERNOVA.DISCOVER_DATE, '20' + name[4:6], source)
         catalog.entries[name].add_quantity(
-            'ra', row['RAJ2000'], source, unit='floatdegrees')
+            SUPERNOVA.RA, row['RAJ2000'], source, unit='floatdegrees')
         catalog.entries[name].add_quantity(
-            'dec', row['DEJ2000'], source, unit='floatdegrees')
+            SUPERNOVA.DEC, row['DEJ2000'], source, unit='floatdegrees')
         catalog.entries[name].add_quantity(
-            'redshift', row['zsp'], source, kind='spectroscopic')
+            SUPERNOVA.REDSHIFT, row['zsp'], source, kind='spectroscopic')
         catalog.entries[name].add_quantity(
             'maxappmag', row['rP1mag'], source, error=row['e_rP1mag'])
         catalog.entries[name].add_quantity('maxband', 'r', source)
-        catalog.entries[name].add_quantity('claimedtype', row['Type'], source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.CLAIMED_TYPE, row['Type'], source)
     result = Vizier.get_catalogs('J/MNRAS/448/1206/table6')
     table = result[list(result.keys())[0]]
     table.convert_bytestring_to_unicode(python3_only=True)
@@ -1076,17 +1121,18 @@ def do_vizier(catalog):
         name = catalog.add_entry(name)
         source = catalog.entries[name].add_source(
             bibcode='2015MNRAS.448.1206M')
-        catalog.entries[name].add_quantity('alias', name, source)
+        catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
         catalog.entries[name].add_quantity(
-            'discoverdate', '20' + name[4:6], source)
+            SUPERNOVA.DISCOVER_DATE, '20' + name[4:6], source)
         catalog.entries[name].add_quantity(
-            'ra', row['RAJ2000'], source, unit='floatdegrees')
+            SUPERNOVA.RA, row['RAJ2000'], source, unit='floatdegrees')
         catalog.entries[name].add_quantity(
-            'dec', row['DEJ2000'], source, unit='floatdegrees')
+            SUPERNOVA.DEC, row['DEJ2000'], source, unit='floatdegrees')
         catalog.entries[name].add_quantity(
             'maxappmag', row['rP1mag'], source, error=row['e_rP1mag'])
         catalog.entries[name].add_quantity('maxband', 'r', source)
-        catalog.entries[name].add_quantity('claimedtype', row['Type'], source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.CLAIMED_TYPE, row['Type'], source)
     result = Vizier.get_catalogs('J/MNRAS/448/1206/tablea2')
     table = result[list(result.keys())[0]]
     table.convert_bytestring_to_unicode(python3_only=True)
@@ -1096,20 +1142,20 @@ def do_vizier(catalog):
         name = catalog.add_entry(name)
         source = catalog.entries[name].add_source(
             bibcode='2015MNRAS.448.1206M')
-        catalog.entries[name].add_quantity('alias', name, source)
+        catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
         catalog.entries[name].add_quantity(
-            'discoverdate', '20' + name[4:6], source)
+            SUPERNOVA.DISCOVER_DATE, '20' + name[4:6], source)
         catalog.entries[name].add_quantity(
-            'ra', row['RAJ2000'], source, unit='floatdegrees')
+            SUPERNOVA.RA, row['RAJ2000'], source, unit='floatdegrees')
         catalog.entries[name].add_quantity(
-            'dec', row['DEJ2000'], source, unit='floatdegrees')
+            SUPERNOVA.DEC, row['DEJ2000'], source, unit='floatdegrees')
         catalog.entries[name].add_quantity(
             'maxappmag', row['rP1mag'], source, error=row['e_rP1mag'])
         catalog.entries[name].add_quantity('maxband', 'r', source)
         catalog.entries[name].add_quantity(
-            'claimedtype', row['Typesoft'] + '?', source)
+            SUPERNOVA.CLAIMED_TYPE, row['Typesoft'] + '?', source)
         catalog.entries[name].add_quantity(
-            'claimedtype', row['Typepsnid'] + '?', source)
+            SUPERNOVA.CLAIMED_TYPE, row['Typepsnid'] + '?', source)
     result = Vizier.get_catalogs('J/MNRAS/448/1206/tablea3')
     table = result[list(result.keys())[0]]
     table.convert_bytestring_to_unicode(python3_only=True)
@@ -1119,17 +1165,18 @@ def do_vizier(catalog):
         name = catalog.add_entry(name)
         source = catalog.entries[name].add_source(
             bibcode='2015MNRAS.448.1206M')
-        catalog.entries[name].add_quantity('alias', name, source)
+        catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
         catalog.entries[name].add_quantity(
-            'discoverdate', '20' + name[4:6], source)
+            SUPERNOVA.DISCOVER_DATE, '20' + name[4:6], source)
         catalog.entries[name].add_quantity(
-            'ra', row['RAJ2000'], source, unit='floatdegrees')
+            SUPERNOVA.RA, row['RAJ2000'], source, unit='floatdegrees')
         catalog.entries[name].add_quantity(
-            'dec', row['DEJ2000'], source, unit='floatdegrees')
+            SUPERNOVA.DEC, row['DEJ2000'], source, unit='floatdegrees')
         catalog.entries[name].add_quantity(
             'maxappmag', row['rP1mag'], source, error=row['e_rP1mag'])
         catalog.entries[name].add_quantity('maxband', 'r', source)
-        catalog.entries[name].add_quantity('claimedtype', 'Candidate', source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.CLAIMED_TYPE, 'Candidate', source)
     catalog.journal_entries()
 
     # 2012AJ....143..126B
@@ -1144,9 +1191,9 @@ def do_vizier(catalog):
         name = catalog.add_entry(name)
         source = catalog.entries[name].add_source(
             bibcode='2012AJ....143..126B')
-        catalog.entries[name].add_quantity('alias', name, source)
+        catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
         catalog.entries[name].add_quantity(
-            'claimedtype', 'Ia-' + row['Wcl'], source)
+            SUPERNOVA.CLAIMED_TYPE, 'Ia-' + row['Wcl'], source)
     catalog.journal_entries()
 
     # 2015ApJS..220....9F
@@ -1159,23 +1206,24 @@ def do_vizier(catalog):
             name = catalog.add_entry(name=row['SN'])
             source = catalog.entries[name].add_source(
                 bibcode='2015ApJS..220....9F')
-            catalog.entries[name].add_quantity('alias', name, source)
+            catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
             catalog.entries[name].add_quantity(
-                'claimedtype', row['Type'], source)
+                SUPERNOVA.CLAIMED_TYPE, row['Type'], source)
             catalog.entries[name].add_quantity(
-                'ra', row['RAJ2000'], source, unit='floatdegrees')
+                SUPERNOVA.RA, row['RAJ2000'], source, unit='floatdegrees')
             catalog.entries[name].add_quantity(
-                'dec', row['DEJ2000'], source, unit='floatdegrees')
+                SUPERNOVA.DEC, row['DEJ2000'], source, unit='floatdegrees')
             if '?' not in row['Host']:
                 catalog.entries[name].add_quantity(
-                    'host', row['Host'].replace('_', ' '), source)
+                    SUPERNOVA.HOST, row['Host'].replace('_', ' '), source)
             kind = ''
             if 'Host' in row['n_z']:
-                kind = 'host'
+                kind = SUPERNOVA.HOST
             elif 'Spectrum' in row['n_z']:
                 kind = 'spectroscopic'
             catalog.entries[name].add_quantity(
-                'redshift', row['z'], source, error=row['e_z'], kind=kind)
+                SUPERNOVA.REDSHIFT, row['z'], source, error=row['e_z'],
+                kind=kind)
 
     result = Vizier.get_catalogs('J/ApJS/220/9/table8')
     table = result[list(result.keys())[0]]
@@ -1185,8 +1233,9 @@ def do_vizier(catalog):
         name = catalog.add_entry(row['SN'])
         source = catalog.entries[name].add_source(
             bibcode='2015ApJS..220....9F')
-        catalog.entries[name].add_quantity('alias', name, source)
-        catalog.entries[name].add_quantity('claimedtype', row['Type'], source)
+        catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.CLAIMED_TYPE, row['Type'], source)
         catalog.entries[name].add_photometry(
             time=row['MJD'], band=row['Band'], magnitude=row['mag'],
             e_magnitude=row['e_mag'], telescope=row['Tel'], source=source)
@@ -1200,19 +1249,19 @@ def do_vizier(catalog):
         name = catalog.add_entry(name='SN' + row['SN'])
         source = catalog.entries[name].add_source(
             bibcode='2008ApJ...673..999P')
-        catalog.entries[name].add_quantity('alias', name, source)
+        catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
         catalog.entries[name].add_quantity(
-            'ra', row['RAJ2000'], source, unit='floatdegrees')
+            SUPERNOVA.RA, row['RAJ2000'], source, unit='floatdegrees')
         catalog.entries[name].add_quantity(
-            'dec', row['DEJ2000'], source, unit='floatdegrees')
+            SUPERNOVA.DEC, row['DEJ2000'], source, unit='floatdegrees')
         catalog.entries[name].add_quantity(
-            'redshift', row['z'], source, kind='host')
+            SUPERNOVA.REDSHIFT, row['z'], source, kind='host')
         catalog.entries[name].add_quantity(
-            'hostra', row['RAGdeg'], source, unit='floatdegrees')
+            SUPERNOVA.HOST_RA, row['RAGdeg'], source, unit='floatdegrees')
         catalog.entries[name].add_quantity(
-            'hostdec', row['DEGdeg'], source, unit='floatdegrees')
+            SUPERNOVA.HOST_DEC, row['DEGdeg'], source, unit='floatdegrees')
         catalog.entries[name].add_quantity(
-            'claimedtype', row['Type'].strip(':'), source)
+            SUPERNOVA.CLAIMED_TYPE, row['Type'].strip(':'), source)
     catalog.journal_entries()
 
     # 2011MNRAS.417..916G
@@ -1224,17 +1273,22 @@ def do_vizier(catalog):
         name, source = catalog.new_entry(
             'SNSDF' + row['SNSDF'],
             bibcode="2011MNRAS.417..916G")
-        catalog.entries[name].add_quantity('ra', row['RAJ2000'], source)
-        catalog.entries[name].add_quantity('dec', row['DEJ2000'], source)
         catalog.entries[name].add_quantity(
-            'redshift', row['zsp'] if row['zsp'] else row['zph'], source,
+            SUPERNOVA.RA, row['RAJ2000'], source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.DEC, row['DEJ2000'], source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.REDSHIFT, row['zsp'] if row[
+                'zsp'] else row['zph'], source,
             kind='host')
         catalog.entries[name].add_quantity(
-            'discoverdate', '20' + row['SNSDF'][:2] + '/' + row['SNSDF'][2:4],
+            SUPERNOVA.DISCOVER_DATE, '20' +
+            row['SNSDF'][:2] + '/' + row['SNSDF'][2:4],
             source, kind='host')
         catalog.entries[name].add_quantity(
             'hostoffsetang', row['Offset'], source, unit='arcseconds')
-        catalog.entries[name].add_quantity('claimedtype', row['Type'], source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.CLAIMED_TYPE, row['Type'], source)
     catalog.journal_entries()
 
     # 2013MNRAS.430.1746G
@@ -1247,13 +1301,15 @@ def do_vizier(catalog):
             'SDSS' + row['SDSS'],
             bibcode="2013MNRAS.430.1746G")
         catalog.entries[name].add_quantity(
-            'ra', row['RAJ2000'], source, unit='floatdegrees')
+            SUPERNOVA.RA, row['RAJ2000'], source, unit='floatdegrees')
         catalog.entries[name].add_quantity(
-            'dec', row['DEJ2000'], source, unit='floatdegrees')
+            SUPERNOVA.DEC, row['DEJ2000'], source, unit='floatdegrees')
         catalog.entries[name].add_quantity(
-            'discoverdate', row['Date'].replace('-', '/'), source)
-        catalog.entries[name].add_quantity('redshift', row['z'], source)
-        catalog.entries[name].add_quantity('claimedtype', row['Type'], source)
+            SUPERNOVA.DISCOVER_DATE, row['Date'].replace('-', '/'), source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.REDSHIFT, row['z'], source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.CLAIMED_TYPE, row['Type'], source)
     catalog.journal_entries()
 
     # 2014AJ....148...13R
@@ -1265,19 +1321,23 @@ def do_vizier(catalog):
         name, source = catalog.new_entry(
             row['Name'],
             bibcode="2014AJ....148...13R")
-        catalog.entries[name].add_quantity('ra', row['RAJ2000'], source)
-        catalog.entries[name].add_quantity('dec', row['DEJ2000'], source)
         catalog.entries[name].add_quantity(
-            'discoverdate', '20' + row['Name'][3:5], source)
+            SUPERNOVA.RA, row['RAJ2000'], source)
         catalog.entries[name].add_quantity(
-            'redshift', row['zSN'], source, kind='heliocentric',
+            SUPERNOVA.DEC, row['DEJ2000'], source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.DISCOVER_DATE, '20' + row['Name'][3:5], source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.REDSHIFT, row['zSN'], source, kind='heliocentric',
             error=row['e_zSN'])
-        catalog.entries[name].add_quantity('hostra', row['RAG'], source)
-        catalog.entries[name].add_quantity('hostdec', row['DEG'], source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.HOST_RA, row['RAG'], source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.HOST_DEC, row['DEG'], source)
         catalog.entries[name].add_quantity(
             'hostoffsetang', row['ASep'], source, unit='arcseconds')
         catalog.entries[name].add_quantity(
-            'redshift', row['zhost'], source, kind='host',
+            SUPERNOVA.REDSHIFT, row['zhost'], source, kind='host',
             error=row['e_zhost'])
     result = Vizier.get_catalogs("J/AJ/148/13/low_z")
     table = result[list(result.keys())[0]]
@@ -1287,19 +1347,23 @@ def do_vizier(catalog):
         name, source = catalog.new_entry(
             row['Name'],
             bibcode="2014AJ....148...13R")
-        catalog.entries[name].add_quantity('ra', row['RAJ2000'], source)
-        catalog.entries[name].add_quantity('dec', row['DEJ2000'], source)
         catalog.entries[name].add_quantity(
-            'discoverdate', '20' + row['Name'][3:5], source)
+            SUPERNOVA.RA, row['RAJ2000'], source)
         catalog.entries[name].add_quantity(
-            'redshift', row['zSN'], source, kind='heliocentric',
+            SUPERNOVA.DEC, row['DEJ2000'], source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.DISCOVER_DATE, '20' + row['Name'][3:5], source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.REDSHIFT, row['zSN'], source, kind='heliocentric',
             error=row['e_zSN'])
-        catalog.entries[name].add_quantity('hostra', row['RAG'], source)
-        catalog.entries[name].add_quantity('hostdec', row['DEG'], source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.HOST_RA, row['RAG'], source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.HOST_DEC, row['DEG'], source)
         catalog.entries[name].add_quantity(
             'hostoffsetang', row['ASep'], source, unit='arcseconds')
         catalog.entries[name].add_quantity(
-            'redshift', row['zhost'], source, kind='host',
+            SUPERNOVA.REDSHIFT, row['zhost'], source, kind='host',
             error=row['e_zhost'])
     catalog.journal_entries()
 
@@ -1316,16 +1380,19 @@ def do_vizier(catalog):
             name = essname
         name, source = catalog.new_entry(
             name, bibcode="2007ApJ...666..674M")
-        catalog.entries[name].add_quantity('alias', essname, source)
-        catalog.entries[name].add_quantity('ra', row['RAJ2000'], source)
-        catalog.entries[name].add_quantity('dec', row['DEJ2000'], source)
+        catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, essname, source)
         catalog.entries[name].add_quantity(
-            'redshift', row['zSN'], source, error=row['e_zSN'],
+            SUPERNOVA.RA, row['RAJ2000'], source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.DEC, row['DEJ2000'], source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.REDSHIFT, row['zSN'], source, error=row['e_zSN'],
             kind='heliocentric')
         catalog.entries[name].add_quantity(
-            'redshift', row['zGal'], source, kind='host')
+            SUPERNOVA.REDSHIFT, row['zGal'], source, kind='host')
         catalog.entries[name].add_quantity(
-            'claimedtype', row['SType'] if row['SType'] else row['Type'],
+            SUPERNOVA.CLAIMED_TYPE, row['SType'] if row[
+                'SType'] else row['Type'],
             source)
     catalog.journal_entries()
 
@@ -1340,12 +1407,16 @@ def do_vizier(catalog):
         name, source = catalog.new_entry(
             row['Name'],
             bibcode="2013AcA....63....1K")
-        catalog.entries[name].add_quantity('alias', row['OGLEIV'], source)
-        catalog.entries[name].add_quantity('ra', row['RAJ2000'], source)
-        catalog.entries[name].add_quantity('dec', row['DEJ2000'], source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.ALIAS, row['OGLEIV'], source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.RA, row['RAJ2000'], source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.DEC, row['DEJ2000'], source)
         astrot = astrotime(float(row['Tmax']), format='jd').datetime
-        catalog.entries[name].add_quantity('maxdate', make_date_string(
-            astrot.year, astrot.month, astrot.day), source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.MAX_DATE,
+            make_date_string(astrot.year, astrot.month, astrot.day), source)
     catalog.journal_entries()
 
     # 2011MNRAS.410.1262W
@@ -1358,11 +1429,11 @@ def do_vizier(catalog):
             'SNLS-' + row['SN'],
             bibcode="2011MNRAS.410.1262W")
         catalog.entries[name].add_quantity(
-            'ra', row['_RA'], source, unit='floatdegrees')
+            SUPERNOVA.RA, row['_RA'], source, unit='floatdegrees')
         catalog.entries[name].add_quantity(
-            'dec', row['_DE'], source, unit='floatdegrees')
+            SUPERNOVA.DEC, row['_DE'], source, unit='floatdegrees')
         catalog.entries[name].add_quantity(
-            'redshift', row['z'], source, error=row['e_z'],
+            SUPERNOVA.REDSHIFT, row['z'], source, error=row['e_z'],
             kind='heliocentric')
     catalog.journal_entries()
 
@@ -1380,11 +1451,14 @@ def do_vizier(catalog):
         name, source = catalog.new_entry(
             name, bibcode="2012ApJ...755...61S")
         err = row['e_z'] if is_number(row['e_z']) else ''
-        catalog.entries[name].add_quantity('alias', sdssname, source)
-        catalog.entries[name].add_quantity('hostra', row['RAJ2000'], source)
-        catalog.entries[name].add_quantity('hostdec', row['DEJ2000'], source)
+        catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, sdssname, source)
         catalog.entries[name].add_quantity(
-            'redshift', row['z'], source, error=err, kind='host')
+            SUPERNOVA.HOST_RA, row['RAJ2000'], source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.HOST_DEC, row['DEJ2000'], source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.REDSHIFT, row['z'], source, error=err,
+            kind='host')
     catalog.journal_entries()
 
     # 2008AJ....135..348S
@@ -1400,18 +1474,19 @@ def do_vizier(catalog):
             name = sdssname
         name, source = catalog.new_entry(
             name, bibcode="2008AJ....135..348S")
-        catalog.entries[name].add_quantity('alias', sdssname, source)
+        catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, sdssname, source)
         fra = Decimal(row['RAJ2000'])
         if fra < Decimal(0.0):
             fra = Decimal(360.0) + fra
         catalog.entries[name].add_quantity(
-            'ra', str(fra), source, unit='floatdegrees')
+            SUPERNOVA.RA, str(fra), source, unit='floatdegrees')
         catalog.entries[name].add_quantity(
-            'dec', row['DEJ2000'], source, unit='floatdegrees')
+            SUPERNOVA.DEC, row['DEJ2000'], source, unit='floatdegrees')
         catalog.entries[name].add_quantity(
-            'redshift', row['zsp'], source, kind='spectroscopic')
+            SUPERNOVA.REDSHIFT, row['zsp'], source, kind='spectroscopic')
         catalog.entries[name].add_quantity(
-            'claimedtype', row['Type'].replace('SN', '').strip(), source)
+            SUPERNOVA.CLAIMED_TYPE, row['Type'].replace('SN', '').strip(),
+            source)
     catalog.journal_entries()
 
     # 2010ApJ...713.1026D
@@ -1427,13 +1502,13 @@ def do_vizier(catalog):
             name = sdssname
         name, source = catalog.new_entry(
             name, bibcode="2010ApJ...713.1026D")
-        catalog.entries[name].add_quantity('alias', sdssname, source)
+        catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, sdssname, source)
         catalog.entries[name].add_quantity(
-            'ra', row['RAJ2000'], source, unit='floatdegrees')
+            SUPERNOVA.RA, row['RAJ2000'], source, unit='floatdegrees')
         catalog.entries[name].add_quantity(
-            'dec', row['DEJ2000'], source, unit='floatdegrees')
+            SUPERNOVA.DEC, row['DEJ2000'], source, unit='floatdegrees')
         catalog.entries[name].add_quantity(
-            'redshift', row['z'], source, kind='heliocentric')
+            SUPERNOVA.REDSHIFT, row['z'], source, kind='heliocentric')
     catalog.journal_entries()
 
     # 2013ApJ...770..107C
@@ -1444,10 +1519,12 @@ def do_vizier(catalog):
         row = convert_aq_output(row)
         name, source = catalog.new_entry(
             row['SN'], bibcode="2013ApJ...770..107C")
-        catalog.entries[name].add_quantity('hostra', row['RAJ2000'], source)
-        catalog.entries[name].add_quantity('hostdec', row['DEJ2000'], source)
         catalog.entries[name].add_quantity(
-            'redshift', row['z'], source,
+            SUPERNOVA.HOST_RA, row['RAJ2000'], source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.HOST_DEC, row['DEJ2000'], source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.REDSHIFT, row['z'], source,
             error=row['e_z'] if is_number(row['e_z']) else '', kind='host')
     catalog.journal_entries()
 
@@ -1464,14 +1541,14 @@ def do_vizier(catalog):
         if fra < Decimal(0.0):
             fra = Decimal(360.0) + fra
         catalog.entries[name].add_quantity(
-            'ra', str(fra), source, unit='floatdegrees')
+            SUPERNOVA.RA, str(fra), source, unit='floatdegrees')
         catalog.entries[name].add_quantity(
-            'dec', row['DEJ2000'], source, unit='floatdegrees')
+            SUPERNOVA.DEC, row['DEJ2000'], source, unit='floatdegrees')
         catalog.entries[name].add_quantity(
-            'redshift', row['z'], source, kind='spectroscopic',
+            SUPERNOVA.REDSHIFT, row['z'], source, kind='spectroscopic',
             error=row['e_z'])
         catalog.entries[name].add_quantity(
-            'claimedtype', 'Ia', source, probability=row['PzIa'])
+            SUPERNOVA.CLAIMED_TYPE, 'Ia', source, probability=row['PzIa'])
     result = Vizier.get_catalogs("J/ApJ/738/162/table4")
     table = result[list(result.keys())[0]]
     table.convert_bytestring_to_unicode(python3_only=True)
@@ -1484,13 +1561,13 @@ def do_vizier(catalog):
         if fra < Decimal(0.0):
             fra = Decimal(360.0) + fra
         catalog.entries[name].add_quantity(
-            'ra', str(fra), source, unit='floatdegrees')
+            SUPERNOVA.RA, str(fra), source, unit='floatdegrees')
         catalog.entries[name].add_quantity(
-            'dec', row['DEJ2000'], source, unit='floatdegrees')
+            SUPERNOVA.DEC, row['DEJ2000'], source, unit='floatdegrees')
         catalog.entries[name].add_quantity(
-            'redshift', row['zph'], source, kind='photometric')
+            SUPERNOVA.REDSHIFT, row['zph'], source, kind='photometric')
         catalog.entries[name].add_quantity(
-            'claimedtype', 'Ia', source, probability=row['PIa'])
+            SUPERNOVA.CLAIMED_TYPE, 'Ia', source, probability=row['PIa'])
     catalog.journal_entries()
 
     # 2015MNRAS.446..943V
@@ -1503,18 +1580,19 @@ def do_vizier(catalog):
         table.convert_bytestring_to_unicode(python3_only=True)
         for ri, row in enumerate(pbar(table, task_str)):
             ra = (row['RAJ2000'] if isinstance(row['RAJ2000'], str) else
-                  radec_clean(str(row['RAJ2000']), 'ra',
+                  radec_clean(str(row['RAJ2000']), SUPERNOVA.RA,
                               unit='floatdegrees')[0])
             dec = (row['DEJ2000'] if isinstance(row['DEJ2000'], str) else
-                   radec_clean(str(row['DEJ2000']), 'dec',
+                   radec_clean(str(row['DEJ2000']), SUPERNOVA.DEC,
                                unit='floatdegrees')[0])
             name = (tab.upper() + 'SNR J' + rep_chars(ra, ' :.') +
                     rep_chars(dec, ' :.'))
             name, source = catalog.new_entry(
                 name, bibcode="2015MNRAS.446..943V")
-            catalog.entries[name].add_quantity('ra', ra, source)
-            catalog.entries[name].add_quantity('dec', dec, source)
-            catalog.entries[name].add_quantity('host', tab.upper(), source)
+            catalog.entries[name].add_quantity(SUPERNOVA.RA, ra, source)
+            catalog.entries[name].add_quantity(SUPERNOVA.DEC, dec, source)
+            catalog.entries[name].add_quantity(
+                SUPERNOVA.HOST, tab.upper(), source)
     catalog.journal_entries()
 
     # 2009ApJ...703..370C
@@ -1529,9 +1607,11 @@ def do_vizier(catalog):
             rep_chars(ra, ' .') + rep_chars(dec, ' .')
         name, source = catalog.new_entry(
             name, bibcode="2009ApJ...703..370C")
-        catalog.entries[name].add_quantity('ra', row['RAJ2000'], source)
-        catalog.entries[name].add_quantity('dec', row['DEJ2000'], source)
-        catalog.entries[name].add_quantity('host', row['Gal'], source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.RA, row['RAJ2000'], source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.DEC, row['DEJ2000'], source)
+        catalog.entries[name].add_quantity(SUPERNOVA.HOST, row['Gal'], source)
     catalog.journal_entries()
 
     # 2016ApJ...821...57D
@@ -1609,9 +1689,12 @@ def do_vizier(catalog):
         name = row['Name'].replace('SN ', 'SN')
         name, source = catalog.new_entry(
             name, bibcode="2004ApJ...607..665R")
-        catalog.entries[name].add_quantity('alias', row['OName'], source)
-        catalog.entries[name].add_quantity('ra', row['RAJ2000'], source)
-        catalog.entries[name].add_quantity('dec', row['DEJ2000'], source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.ALIAS, row['OName'], source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.RA, row['RAJ2000'], source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.DEC, row['DEJ2000'], source)
     result = Vizier.get_catalogs("J/ApJ/607/665/table2")
     table = result[list(result.keys())[0]]
     table.convert_bytestring_to_unicode(python3_only=True)
@@ -1634,7 +1717,7 @@ def do_vizier(catalog):
         name, source = catalog.new_entry(
             name, bibcode="2004ApJ...607..665R")
         catalog.entries[name].add_quantity(
-            'redshift', row['z'], source, kind='spectroscopic')
+            SUPERNOVA.REDSHIFT, row['z'], source, kind='spectroscopic')
     catalog.journal_entries()
 
     return
@@ -1656,27 +1739,32 @@ def do_lennarz(catalog):
         name = catalog.add_entry(name)
 
         source = catalog.entries[name].add_source(bibcode=bibcode)
-        catalog.entries[name].add_quantity('alias', name, source)
+        catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
 
         if row['RAJ2000']:
-            catalog.entries[name].add_quantity('ra', row['RAJ2000'], source)
+            catalog.entries[name].add_quantity(
+                SUPERNOVA.RA, row['RAJ2000'], source)
         if row['DEJ2000']:
-            catalog.entries[name].add_quantity('dec', row['DEJ2000'], source)
+            catalog.entries[name].add_quantity(
+                SUPERNOVA.DEC, row['DEJ2000'], source)
         if row['RAG']:
-            catalog.entries[name].add_quantity('hostra', row['RAG'], source)
+            catalog.entries[name].add_quantity(
+                SUPERNOVA.HOST_RA, row['RAG'], source)
         if row['DEG']:
-            catalog.entries[name].add_quantity('hostdec', row['DEG'], source)
+            catalog.entries[name].add_quantity(
+                SUPERNOVA.HOST_DEC, row['DEG'], source)
         if row['Gal']:
-            catalog.entries[name].add_quantity('host', row['Gal'], source)
+            catalog.entries[name].add_quantity(
+                SUPERNOVA.HOST, row['Gal'], source)
         if row['Type']:
             claimedtypes = row['Type'].split('|')
             for claimedtype in claimedtypes:
                 catalog.entries[name].add_quantity(
-                    'claimedtype', claimedtype.strip(' -'), source)
+                    SUPERNOVA.CLAIMED_TYPE, claimedtype.strip(' -'), source)
         if row['z']:
             if name not in ['SN1985D', 'SN2004cq']:
                 catalog.entries[name].add_quantity(
-                    'redshift', row['z'], source, kind='host')
+                    SUPERNOVA.REDSHIFT, row['z'], source, kind='host')
         if row['Dist']:
             if row['e_Dist']:
                 catalog.entries[name].add_quantity(
@@ -1690,7 +1778,7 @@ def do_lennarz(catalog):
             datestring = row['Ddate'].replace('-', '/')
 
             catalog.entries[name].add_quantity(
-                'discoverdate', datestring, source)
+                SUPERNOVA.DISCOVER_DATE, datestring, source)
 
             if 'photometry' not in catalog.entries[name]:
                 if ('Dmag' in row and is_number(row['Dmag']) and not
@@ -1709,7 +1797,8 @@ def do_lennarz(catalog):
         if row['Mdate']:
             datestring = row['Mdate'].replace('-', '/')
 
-            catalog.entries[name].add_quantity('maxdate', datestring, source)
+            catalog.entries[name].add_quantity(
+                SUPERNOVA.MAX_DATE, datestring, source)
 
             if 'photometry' not in catalog.entries[name]:
                 if ('MMag' in row and is_number(row['MMag']) and not

@@ -5,14 +5,16 @@ import os
 from collections import OrderedDict
 from html import unescape
 
+from astrocats.catalog.utils import (get_sig_digits, is_number, pbar,
+                                     pretty_num, uniq_cdl)
 from astropy import units as un
 from astropy.cosmology import Planck15 as cosmo
 from astropy.cosmology import z_at_value
 
-from astrocats.catalog.utils import (get_sig_digits, is_number, pbar,
-                                     pretty_num, uniq_cdl)
-from ..utils import host_clean, name_clean
 from cdecimal import Decimal
+
+from ..supernova import SUPERNOVA
+from ..utils import host_clean, name_clean
 
 
 def do_nedd(catalog):
@@ -59,7 +61,7 @@ def do_nedd(catalog):
             if name == snname:
                 if redshift:
                     catalog.entries[snname].add_quantity(
-                        'redshift', redshift, sources)
+                        SUPERNOVA.REDSHIFT, redshift, sources)
                 if dist:
                     catalog.entries[snname].add_quantity(
                         'comovingdist', dist, sources)
@@ -78,12 +80,11 @@ def do_nedd(catalog):
                                 bibcode='2015arXiv150201589P')
                             combsources = uniq_cdl(sources.split(',') +
                                                    [cosmosource])
-                            catalog.entries[snname].add_quantity('redshift',
-                                                                 redshift,
-                                                                 combsources)
+                            catalog.entries[snname].add_quantity(
+                                SUPERNOVA.REDSHIFT, redshift, combsources)
             if cleanhost:
                 catalog.entries[snname].add_quantity(
-                    'host', cleanhost, sources)
+                    SUPERNOVA.HOST, cleanhost, sources)
             if catalog.args.update and olddistname != distname:
                 catalog.journal_entries()
         olddistname = distname

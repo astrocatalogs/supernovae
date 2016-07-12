@@ -6,7 +6,10 @@ import re
 import urllib
 
 from astrocats.catalog.utils import jd_to_mjd, pbar
+
 from cdecimal import Decimal
+
+from ..supernova import SUPERNOVA
 
 
 def do_gaia(catalog):
@@ -26,20 +29,22 @@ def do_gaia(catalog):
         name = catalog.add_entry(row[0])
         source = catalog.entries[name].add_source(
             name=reference, url=refurl)
-        catalog.entries[name].add_quantity('alias', name, source)
+        catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
         year = '20' + re.findall(r'\d+', row[0])[0]
-        catalog.entries[name].add_quantity('discoverdate', year, source)
         catalog.entries[name].add_quantity(
-            'ra', row[2], source, unit='floatdegrees')
+            SUPERNOVA.DISCOVER_DATE, year, source)
         catalog.entries[name].add_quantity(
-            'dec', row[3], source, unit='floatdegrees')
+            SUPERNOVA.RA, row[2], source, unit='floatdegrees')
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.DEC, row[3], source, unit='floatdegrees')
         if row[7] and row[7] != 'unknown':
             type = row[7].replace('SNe', '').replace('SN', '').strip()
-            catalog.entries[name].add_quantity('claimedtype', type, source)
+            catalog.entries[name].add_quantity(
+                SUPERNOVA.CLAIMED_TYPE, type, source)
         elif any([xx in row[9].upper() for xx in
                   ['SN CANDIATE', 'CANDIDATE SN', 'HOSTLESS SN']]):
             catalog.entries[name].add_quantity(
-                'claimedtype', 'Candidate', source)
+                SUPERNOVA.CLAIMED_TYPE, 'Candidate', source)
 
         if ('aka' in row[9].replace('gakaxy', 'galaxy').lower() and
                 'AKARI' not in row[9]):
@@ -57,7 +62,8 @@ def do_gaia(catalog):
                         csi + 1].strip('(),:.').replace('PSNJ', 'PSN J')
                     if alias[:6] == 'ASASSN' and alias[6] != '-':
                         alias = 'ASASSN-' + alias[6:]
-                    catalog.entries[name].add_quantity('alias', alias, source)
+                    catalog.entries[name].add_quantity(
+                        SUPERNOVA.ALIAS, alias, source)
                     break
 
         fname = os.path.join(catalog.get_current_task_repo(),

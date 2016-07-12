@@ -1,9 +1,11 @@
 """Tasks related to the ASASSN survey.
 """
 import os
-from bs4 import BeautifulSoup
 
 from astrocats.catalog.utils import pbar
+from bs4 import BeautifulSoup
+
+from ..supernova import SUPERNOVA
 
 
 def do_asassn(catalog):
@@ -71,20 +73,22 @@ def do_asassn(catalog):
                              typelink.split('=')[-1], url=typelink)))
         sources = ','.join(sources)
         typesources = ','.join(typesources)
-        catalog.entries[name].add_quantity('alias', name, sources)
-        catalog.entries[name].add_quantity('discoverdate', discdate, sources)
-        catalog.entries[name].add_quantity('ra', ra, sources,
+        catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, sources)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.DISCOVER_DATE, discdate, sources)
+        catalog.entries[name].add_quantity(SUPERNOVA.RA, ra, sources,
                                            unit='floatdegrees')
-        catalog.entries[name].add_quantity('dec', dec, sources,
+        catalog.entries[name].add_quantity(SUPERNOVA.DEC, dec, sources,
                                            unit='floatdegrees')
-        catalog.entries[name].add_quantity('redshift', redshift, sources)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.REDSHIFT, redshift, sources)
         catalog.entries[name].add_quantity(
             'hostoffsetang', hostoff, sources, unit='arcseconds')
         for ct in claimedtype.split('/'):
             if ct != 'Unk':
-                catalog.entries[name].add_quantity('claimedtype', ct,
+                catalog.entries[name].add_quantity(SUPERNOVA.CLAIMED_TYPE, ct,
                                                    typesources)
         if host != 'Uncatalogued':
-            catalog.entries[name].add_quantity('host', host, sources)
+            catalog.entries[name].add_quantity(SUPERNOVA.HOST, host, sources)
     catalog.journal_entries()
     return

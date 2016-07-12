@@ -4,10 +4,12 @@ import os
 import re
 import urllib
 
+from astrocats.catalog.utils import is_number, pbar
 from bs4 import BeautifulSoup
 
-from astrocats.catalog.utils import is_number, pbar
 from cdecimal import Decimal
+
+from ..supernova import SUPERNOVA
 
 
 def do_crts(catalog):
@@ -92,13 +94,14 @@ def do_crts(catalog):
             source = catalog.entries[name].add_source(
                 name='Catalina Sky Survey', bibcode='2009ApJ...696..870D',
                 url='http://nesssi.cacr.caltech.edu/catalina/AllSN.html')
-            catalog.entries[name].add_quantity('alias', name, source)
+            catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
             for alias in validaliases:
-                catalog.entries[name].add_quantity('alias', alias, source)
+                catalog.entries[name].add_quantity(
+                    SUPERNOVA.ALIAS, alias, source)
             catalog.entries[name].add_quantity(
-                'ra', ra, source, unit='floatdegrees')
+                SUPERNOVA.RA, ra, source, unit='floatdegrees')
             catalog.entries[name].add_quantity(
-                'dec', dec, source, unit='floatdegrees')
+                SUPERNOVA.DEC, dec, source, unit='floatdegrees')
 
             if hostmag:
                 # 1.0 magnitude error based on Drake 2009 assertion that SN are

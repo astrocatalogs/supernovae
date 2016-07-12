@@ -5,11 +5,12 @@ import os
 from glob import glob
 from math import log10
 
+from astrocats.catalog.utils import (get_sig_digits, pbar, pbar_strings,
+                                     pretty_num)
 from astropy.time import Time as astrotime
 from astroquery.vizier import Vizier
 
-from astrocats.catalog.utils import (get_sig_digits, pbar, pbar_strings,
-                                     pretty_num)
+from ..supernova import SUPERNOVA
 
 
 def do_snls_photo(catalog):
@@ -27,7 +28,7 @@ def do_snls_photo(catalog):
         name = catalog.add_entry(name)
         source = catalog.entries[name].add_source(
             bibcode='2010A&A...523A...7G')
-        catalog.entries[name].add_quantity('alias', name, source)
+        catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
         band = row[1]
         mjd = row[2]
         sig = get_sig_digits(flux.split('E')[0]) + 1
@@ -72,10 +73,10 @@ def do_snls_spectra(catalog):
         name = catalog.add_entry(name)
         source = catalog.entries[name].add_source(
             bibcode='2009A&A...507...85B')
-        catalog.entries[name].add_quantity('alias', name, source)
+        catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
 
         catalog.entries[name].add_quantity(
-            'discoverdate', '20' + fileparts[1][:2], source)
+            SUPERNOVA.DISCOVER_DATE, '20' + fileparts[1][:2], source)
 
         f = open(fname, 'r')
         data = csv.reader(f, delimiter=' ', skipinitialspace=True)
@@ -85,7 +86,7 @@ def do_snls_spectra(catalog):
                 telescope = row[1].strip()
             elif row[0] == '@REDSHIFT':
                 catalog.entries[name].add_quantity(
-                    'redshift', row[1].strip(), source)
+                    SUPERNOVA.REDSHIFT, row[1].strip(), source)
             if r < 14:
                 continue
             specdata.append(list(filter(None, [x.strip(' \t') for x in row])))

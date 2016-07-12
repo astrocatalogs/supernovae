@@ -5,12 +5,14 @@ import os
 from glob import glob
 from math import floor
 
-from astropy.time import Time as astrotime
-
 from astrocats.catalog.utils import (is_number, jd_to_mjd, pbar, pbar_strings,
                                      uniq_cdl)
-from ..utils import clean_snname
+from astropy.time import Time as astrotime
+
 from cdecimal import Decimal
+
+from ..supernova import SUPERNOVA
+from ..utils import clean_snname
 
 ACKN_CFA = ("This research has made use of the CfA Supernova Archive, "
             "which is funded in part by the National Science Foundation "
@@ -49,11 +51,12 @@ def do_cfa_photo(catalog):
         secondarysource = catalog.entries[name].add_source(
             name=secondaryname, url=secondaryurl, secondary=True,
             acknowledgment=ACKN_CFA)
-        catalog.entries[name].add_quantity('alias', name, secondarysource)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.ALIAS, name, secondarysource)
 
         year = re.findall(r'\d+', name)[0]
         catalog.entries[name].add_quantity(
-            'discoverdate', year, secondarysource)
+            SUPERNOVA.DISCOVER_DATE, year, secondarysource)
 
         eventbands = list(eventparts[1])
 
@@ -120,8 +123,9 @@ def do_cfa_photo(catalog):
 
             source = catalog.entries[name].add_source(
                 bibcode='2012ApJS..200...12H')
-            catalog.entries[name].add_quantity('alias', name, source)
-            catalog.entries[name].add_quantity('claimedtype', 'Ia', source)
+            catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
+            catalog.entries[name].add_quantity(
+                SUPERNOVA.CLAIMED_TYPE, 'Ia', source)
             catalog.entries[name].add_photometry(
                 u_time='MJD', time=row[2].strip(),
                 band=row[1].strip(),
@@ -138,7 +142,7 @@ def do_cfa_photo(catalog):
 
             source = catalog.entries[name].add_source(
                 bibcode='2014ApJS..213...19B')
-            catalog.entries[name].add_quantity('alias', name, source)
+            catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
             catalog.entries[name].add_photometry(
                 u_time='MJD', time=row[2], band=row[1],
                 magnitude=row[3],
@@ -173,7 +177,7 @@ def do_cfa_spectra(catalog):
         source = catalog.entries[name].add_source(
             name=reference, url=refurl, secondary=True,
             acknowledgment=ACKN_CFA)
-        catalog.entries[name].add_quantity('alias', name, source)
+        catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
         for fi, fname in enumerate(sorted(glob(fullpath + '/*'),
                                           key=lambda s: s.lower())):
             filename = os.path.basename(fname)
@@ -232,7 +236,7 @@ def do_cfa_spectra(catalog):
         source = catalog.entries[name].add_source(
             name=reference, url=refurl, secondary=True,
             acknowledgment=ACKN_CFA)
-        catalog.entries[name].add_quantity('alias', name, source)
+        catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
         for fi, fname in enumerate(sorted(glob(fullpath + '/*'),
                                           key=lambda s: s.lower())):
             filename = os.path.basename(fname)
@@ -284,7 +288,7 @@ def do_cfa_spectra(catalog):
         source = catalog.entries[name].add_source(
             name=reference, url=refurl, secondary=True,
             acknowledgment=ACKN_CFA)
-        catalog.entries[name].add_quantity('alias', name, source)
+        catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
         for fi, fname in enumerate(sorted(glob(fullpath + '/*'), key=lambda s:
                                           s.lower())):
             if not os.path.isfile(fname):

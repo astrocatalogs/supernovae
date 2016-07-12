@@ -8,11 +8,13 @@ import re
 from datetime import datetime
 from glob import glob
 
-from astropy.time import Time as astrotime
-
 from astrocats.catalog.utils import (is_number, jd_to_mjd, make_date_string,
                                      pbar, pbar_strings)
+from astropy.time import Time as astrotime
+
 from cdecimal import Decimal
+
+from ..supernova import SUPERNOVA
 
 
 def do_ascii(catalog):
@@ -30,12 +32,13 @@ def do_ascii(catalog):
         name = catalog.add_entry(name)
         source = catalog.entries[name].add_source(
             bibcode='2006ApJ...645..841N')
-        catalog.entries[name].add_quantity('alias', name, source)
+        catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
         catalog.entries[name].add_quantity(
-            'redshift', row[1], source, kind='spectroscopic')
+            SUPERNOVA.REDSHIFT, row[1], source, kind='spectroscopic')
         astrot = astrotime(float(row[4]) + 2450000., format='jd').datetime
         date_str = make_date_string(astrot.year, astrot.month, astrot.day)
-        catalog.entries[name].add_quantity('discoverdate', date_str, source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.DISCOVER_DATE, date_str, source)
     catalog.journal_entries()
 
     # Anderson 2014
@@ -54,7 +57,7 @@ def do_ascii(catalog):
         name = catalog.add_entry(name)
         source = catalog.entries[name].add_source(
             bibcode='2014ApJ...786...67A')
-        catalog.entries[name].add_quantity('alias', name, source)
+        catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
 
         if name in ['SN1999ca', 'SN2003dq', 'SN2008aw']:
             system = 'Swope'
@@ -83,7 +86,7 @@ def do_ascii(catalog):
         name = catalog.add_entry(name)
         source = catalog.entries[name].add_source(
             bibcode='2004A&A...415..863G')
-        catalog.entries[name].add_quantity('alias', name, source)
+        catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
         mjd = str(jd_to_mjd(Decimal(row[1])))
         for ri, ci in enumerate(range(2, len(row), 3)):
             if not row[ci]:
@@ -119,10 +122,12 @@ def do_ascii(catalog):
         name = catalog.add_entry(name)
         source = catalog.entries[name].add_source(
             bibcode='2015MNRAS.449..451W')
-        catalog.entries[name].add_quantity('alias', name, source)
+        catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
         if len(namesplit) > 1:
-            catalog.entries[name].add_quantity('alias', namesplit[0], source)
-        catalog.entries[name].add_quantity('claimedtype', row[1], source)
+            catalog.entries[name].add_quantity(
+                SUPERNOVA.ALIAS, namesplit[0], source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.CLAIMED_TYPE, row[1], source)
         catalog.entries[name].add_photometry(
             time=row[2], band=row[4], magnitude=row[3], source=source)
     catalog.journal_entries()
@@ -134,7 +139,7 @@ def do_ascii(catalog):
                            quotechar='"', skipinitialspace=True))
     name = catalog.add_entry('LSQ13zm')
     source = catalog.entries[name].add_source(bibcode='2016MNRAS.459.1039T')
-    catalog.entries[name].add_quantity('alias', name, source)
+    catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
     for rr, row in enumerate(pbar(data, task_str)):
         if row[0][0] == '#':
             bands = [xx.replace('(err)', '') for xx in row[3:-1]]
@@ -160,7 +165,7 @@ def do_ascii(catalog):
                            quotechar='"', skipinitialspace=True))
     name = catalog.add_entry('PS1-13arp')
     source = catalog.entries[name].add_source(bibcode='2015ApJ...804...28G')
-    catalog.entries[name].add_quantity('alias', name, source)
+    catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
     for rr, row in enumerate(pbar(data, task_str)):
         if rr == 0:
             continue
@@ -186,13 +191,14 @@ def do_ascii(catalog):
         name = catalog.add_entry(row[0])
         source = catalog.entries[name].add_source(
             bibcode='2016ApJ...819...35A')
-        catalog.entries[name].add_quantity('alias', name, source)
-        catalog.entries[name].add_quantity('ra', row[1], source)
-        catalog.entries[name].add_quantity('dec', row[2], source)
-        catalog.entries[name].add_quantity('redshift', row[3], source)
+        catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
+        catalog.entries[name].add_quantity(SUPERNOVA.RA, row[1], source)
+        catalog.entries[name].add_quantity(SUPERNOVA.DEC, row[2], source)
+        catalog.entries[name].add_quantity(SUPERNOVA.REDSHIFT, row[3], source)
         disc_date = datetime.strptime(row[4], '%Y %b %d').isoformat()
         disc_date = disc_date.split('T')[0].replace('-', '/')
-        catalog.entries[name].add_quantity('discoverdate', disc_date, source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.DISCOVER_DATE, disc_date, source)
     catalog.journal_entries()
 
     # 2014ApJ...784..105W
@@ -206,7 +212,7 @@ def do_ascii(catalog):
         name = catalog.add_entry(row[0])
         source = catalog.entries[name].add_source(
             bibcode='2014ApJ...784..105W')
-        catalog.entries[name].add_quantity('alias', name, source)
+        catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
         mjd = row[1]
         band = row[2]
         mag = row[3]
@@ -229,7 +235,7 @@ def do_ascii(catalog):
         name = catalog.add_entry(row[0])
         source = catalog.entries[name].add_source(
             bibcode='2012MNRAS.425.1007B')
-        catalog.entries[name].add_quantity('alias', name, source)
+        catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
         mjd = row[1]
         mags = [xx.split('±')[0].strip() for xx in row[2:]]
         errs = [xx.split('±')[1].strip()
@@ -264,13 +270,14 @@ def do_ascii(catalog):
                 continue
             name, source = catalog.new_entry(
                 row[0], bibcode='2014ApJ...783...28G')
-            catalog.entries[name].add_quantity('alias', row[1], source)
+            catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, row[1], source)
             catalog.entries[name].add_quantity(
-                'discoverdate', '20' + row[0][3:5], source)
-            catalog.entries[name].add_quantity('ra', row[2], source)
-            catalog.entries[name].add_quantity('dec', row[3], source)
+                SUPERNOVA.DISCOVER_DATE, '20' + row[0][3:5], source)
+            catalog.entries[name].add_quantity(SUPERNOVA.RA, row[2], source)
+            catalog.entries[name].add_quantity(SUPERNOVA.DEC, row[3], source)
             catalog.entries[name].add_quantity(
-                'redshift', row[13] if is_number(row[13]) else row[10], source)
+                SUPERNOVA.REDSHIFT, row[13] if is_number(row[13]) else
+                row[10], source)
     catalog.journal_entries()
 
     # 2005ApJ...634.1190H
@@ -283,13 +290,15 @@ def do_ascii(catalog):
             name, source = catalog.new_entry(
                 'SNLS-' + row[0], bibcode='2005ApJ...634.1190H')
             catalog.entries[name].add_quantity(
-                'discoverdate', '20' + row[0][:2], source)
-            catalog.entries[name].add_quantity('ra', row[1], source)
-            catalog.entries[name].add_quantity('dec', row[2], source)
-            catalog.entries[name].add_quantity('redshift', row[5].replace(
-                '?', ''), source, error=row[6], kind='host')
+                SUPERNOVA.DISCOVER_DATE, '20' + row[0][:2], source)
+            catalog.entries[name].add_quantity(SUPERNOVA.RA, row[1], source)
+            catalog.entries[name].add_quantity(SUPERNOVA.DEC, row[2], source)
             catalog.entries[name].add_quantity(
-                'claimedtype', row[7].replace('SN', '').strip(':* '), source)
+                SUPERNOVA.REDSHIFT, row[5].replace('?', ''), source,
+                error=row[6], kind='host')
+            catalog.entries[name].add_quantity(
+                SUPERNOVA.CLAIMED_TYPE, row[7].replace('SN', '').strip(':* '),
+                source)
     catalog.journal_entries()
 
     # 2014MNRAS.444.2133S
@@ -306,9 +315,10 @@ def do_ascii(catalog):
                 name = 'SN' + name
             name, source = catalog.new_entry(
                 name, bibcode='2014MNRAS.444.2133S')
-            catalog.entries[name].add_quantity('ra', row[1], source)
-            catalog.entries[name].add_quantity('dec', row[2], source)
-            catalog.entries[name].add_quantity('redshift', row[3], source,
+            catalog.entries[name].add_quantity(SUPERNOVA.RA, row[1], source)
+            catalog.entries[name].add_quantity(SUPERNOVA.DEC, row[2], source)
+            catalog.entries[name].add_quantity(SUPERNOVA.REDSHIFT, row[3],
+                                               source,
                                                kind='host')
     catalog.journal_entries()
 

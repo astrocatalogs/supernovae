@@ -2,7 +2,10 @@
 """
 import csv
 import os
+
 from astrocats.catalog.utils import pbar
+
+from ..supernova import SUPERNOVA
 
 
 def do_pessto(catalog):
@@ -20,7 +23,7 @@ def do_pessto(catalog):
         name = catalog.add_entry(name)
         source = catalog.entries[name].add_source(
             bibcode='2015A&A...579A..40S')
-        catalog.entries[name].add_quantity('alias', name, source)
+        catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
         for hi, ci in enumerate(range(3, len(row) - 1, 2)):
             if not row[ci]:
                 continue

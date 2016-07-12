@@ -9,12 +9,12 @@ from copy import deepcopy
 from glob import glob
 from html import unescape
 
+from astrocats.catalog.utils import (is_number, pbar, pbar_strings, tprint,
+                                     uniq_cdl)
 from astropy.time import Time as astrotime
 from bs4 import BeautifulSoup
 
-from astrocats.catalog.utils import uniq_cdl
-
-from astrocats.catalog.utils import is_number, pbar, pbar_strings, tprint
+from ..supernova import SUPERNOVA
 
 
 def do_wiserep_spectra(catalog):
@@ -181,7 +181,7 @@ def do_wiserep_spectra(catalog):
                                 url=secondaryrefurl,
                                 bibcode=secondarybibcode, secondary=True)
                             catalog.entries[name].add_quantity(
-                                'alias', name, secondarysource)
+                                SUPERNOVA.ALIAS, name, secondarysource)
                             if bibcode:
                                 newbibcode = bibcode
                                 if bibcode in wiserepbibcorrectdict:
@@ -198,10 +198,10 @@ def do_wiserep_spectra(catalog):
 
                             if claimedtype not in ['Other']:
                                 catalog.entries[name].add_quantity(
-                                    'claimedtype', claimedtype,
+                                    SUPERNOVA.CLAIMED_TYPE, claimedtype,
                                     secondarysource)
                             catalog.entries[name].add_quantity(
-                                'redshift', redshift, secondarysource)
+                                SUPERNOVA.REDSHIFT, redshift, secondarysource)
 
                             if not specpath:
                                 continue

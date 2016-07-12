@@ -5,8 +5,9 @@ import os
 from collections import OrderedDict
 
 import requests
-
 from astrocats.catalog.utils import is_number, pbar, round_sig, uniq_cdl
+
+from ..supernova import SUPERNOVA
 
 
 def do_cpcs(catalog):
@@ -50,12 +51,14 @@ def do_cpcs(catalog):
         sec_source = catalog.entries[name].add_source(
             name='Cambridge Photometric Calibration Server',
             url='http://gsaweb.ast.cam.ac.uk/followup/', secondary=True)
-        catalog.entries[name].add_quantity('alias', oldname, sec_source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.ALIAS, oldname, sec_source)
         unit_deg = 'floatdegrees'
         catalog.entries[name].add_quantity(
-            'ra', str(alertindex[ii]['ra']), sec_source, unit=unit_deg)
-        catalog.entries[name].add_quantity('dec', str(
-            alertindex[ii]['dec']), sec_source, unit=unit_deg)
+            SUPERNOVA.RA, str(alertindex[ii][SUPERNOVA.RA]), sec_source,
+            unit=unit_deg)
+        catalog.entries[name].add_quantity(SUPERNOVA.DEC, str(
+            alertindex[ii][SUPERNOVA.DEC]), sec_source, unit=unit_deg)
 
         alerturl = ('http://gsaweb.ast.cam.ac.uk/'
                     'followup/get_alert_lc_data?alert_id=' +

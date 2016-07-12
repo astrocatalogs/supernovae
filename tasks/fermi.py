@@ -5,6 +5,8 @@ import os
 
 from astrocats.catalog.utils import pbar
 
+from ..supernova import SUPERNOVA
+
 
 def do_fermi(catalog):
     task_str = catalog.get_current_task_str()
@@ -22,12 +24,12 @@ def do_fermi(catalog):
             name = catalog.add_entry(name)
             source = (catalog.entries[name]
                       .add_source(bibcode='2016ApJS..224....8A'))
-            catalog.entries[name].add_quantity('alias', name, source)
+            catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
             catalog.entries[name].add_quantity(
-                'alias', row[0].replace('SNR', 'MWSNR'), source)
+                SUPERNOVA.ALIAS, row[0].replace('SNR', 'MWSNR'), source)
             catalog.entries[name].add_quantity(
-                'ra', row[2], source, unit='floatdegrees')
+                SUPERNOVA.RA, row[2], source, unit='floatdegrees')
             catalog.entries[name].add_quantity(
-                'dec', row[3], source, unit='floatdegrees')
+                SUPERNOVA.DEC, row[3], source, unit='floatdegrees')
     catalog.journal_entries()
     return

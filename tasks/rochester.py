@@ -6,10 +6,11 @@ import re
 from math import floor
 from string import ascii_letters
 
+from astrocats.catalog.utils import is_number, make_date_string, pbar, uniq_cdl
 from astropy.time import Time as astrotime
 from bs4 import BeautifulSoup
 
-from astrocats.catalog.utils import is_number, make_date_string, pbar, uniq_cdl
+from ..supernova import SUPERNOVA
 
 
 def do_rochester(catalog):
@@ -26,7 +27,7 @@ def do_rochester(catalog):
 
         filepath = (os.path.join(
             catalog.get_current_task_repo(), 'rochester/') +
-                    os.path.basename(path))
+            os.path.basename(path))
         for mirror in rochestermirrors:
             html = catalog.load_cached_url(
                 mirror + path, filepath,
@@ -88,8 +89,9 @@ def do_rochester(catalog):
             sec_source = catalog.entries[name].add_source(
                 name=sec_ref, url=sec_refurl, secondary=True)
             sources = uniq_cdl(list(filter(None, [source, sec_source])))
-            catalog.entries[name].add_quantity('alias', oldname, sources)
-            catalog.entries[name].add_quantity('alias', sn, sources)
+            catalog.entries[name].add_quantity(
+                SUPERNOVA.ALIAS, oldname, sources)
+            catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, sn, sources)
 
             if cols[14].contents:
                 if aka == 'SNR G1.9+0.3':
@@ -102,17 +104,18 @@ def do_rochester(catalog):
                 if 'POSSIBLE' in aka.upper() and ra and dec:
                     aka = 'PSN J' + ra.replace(':', '').replace('.', '')
                     aka += dec.replace(':', '').replace('.', '')
-                catalog.entries[name].add_quantity('alias', aka, sources)
+                catalog.entries[name].add_quantity(
+                    SUPERNOVA.ALIAS, aka, sources)
 
             if str(cols[1].contents[0]).strip() != 'unk':
                 type = str(cols[1].contents[0]).strip(' :,')
                 catalog.entries[name].add_quantity(
-                    'claimedtype', type, sources)
+                    SUPERNOVA.CLAIMED_TYPE, type, sources)
             if str(cols[2].contents[0]).strip() != 'anonymous':
-                catalog.entries[name].add_quantity('host', str(
+                catalog.entries[name].add_quantity(SUPERNOVA.HOST, str(
                     cols[2].contents[0]).strip(), sources)
-            catalog.entries[name].add_quantity('ra', ra, sources)
-            catalog.entries[name].add_quantity('dec', dec, sources)
+            catalog.entries[name].add_quantity(SUPERNOVA.RA, ra, sources)
+            catalog.entries[name].add_quantity(SUPERNOVA.DEC, dec, sources)
             if (str(cols[6].contents[0]).strip() not in
                     ['2440587', '2440587.292']):
                 astrot = astrotime(
@@ -120,7 +123,7 @@ def do_rochester(catalog):
                     format='jd').datetime
                 ddate = make_date_string(astrot.year, astrot.month, astrot.day)
                 catalog.entries[name].add_quantity(
-                    'discoverdate', ddate, sources)
+                    SUPERNOVA.DISCOVER_DATE, ddate, sources)
             if (str(cols[7].contents[0]).strip() not in
                     ['2440587', '2440587.292']):
                 astrot = astrotime(
@@ -133,7 +136,7 @@ def do_rochester(catalog):
                         time=str(astrot.mjd), magnitude=mag,
                         source=sources)
             if cols[11].contents[0] != 'n/a':
-                catalog.entries[name].add_quantity('redshift', str(
+                catalog.entries[name].add_quantity(SUPERNOVA.REDSHIFT, str(
                     cols[11].contents[0]).strip(), sources)
             catalog.entries[name].add_quantity('discoverer', str(
                 cols[13].contents[0]).strip(), sources)
@@ -163,7 +166,7 @@ def do_rochester(catalog):
                     sec_source = catalog.entries[name].add_source(
                         name=sec_ref, url=sec_refurl, secondary=True)
                     catalog.entries[name].add_quantity(
-                        'alias', name, sec_source)
+                        SUPERNOVA.ALIAS, name, sec_source)
 
                     if not is_number(row[1]):
                         continue
@@ -200,7 +203,7 @@ def do_rochester(catalog):
                             source = catalog.entries[
                                 name].add_source(name=reference)
                             catalog.entries[name].add_quantity(
-                                'alias', name, sec_source)
+                                SUPERNOVA.ALIAS, name, sec_source)
                             sources = uniq_cdl([source, sec_source])
                     else:
                         sources = sec_source

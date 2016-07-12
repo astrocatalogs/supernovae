@@ -3,9 +3,10 @@
 import csv
 import os
 
+from astrocats.catalog.utils import make_date_string, pbar
 from astropy.time import Time as astrotime
 
-from astrocats.catalog.utils import make_date_string, pbar
+from ..supernova import SUPERNOVA
 
 
 def do_psst(catalog):
@@ -23,9 +24,11 @@ def do_psst(catalog):
              source) = catalog.new_entry(row[0],
                                          bibcode='2016arXiv160204156S')
             catalog.entries[name].add_quantity(
-                'claimedtype', row[3].replace('SN', '').strip('() '), source)
-            catalog.entries[name].add_quantity('redshift', row[5].strip(
-                '() '), source, kind='spectroscopic')
+                SUPERNOVA.CLAIMED_TYPE, row[3].replace('SN', '').strip('() '),
+                source)
+            catalog.entries[name].add_quantity(
+                SUPERNOVA.REDSHIFT, row[5].strip('() '), source,
+                kind='spectroscopic')
 
     file_path = os.path.join(
         catalog.get_current_task_repo(), '2016arXiv160204156S-tab2.tsv')
@@ -38,12 +41,12 @@ def do_psst(catalog):
             (name,
              source) = catalog.new_entry(row[0],
                                          bibcode='2016arXiv160204156S')
-            catalog.entries[name].add_quantity('ra', row[1], source)
-            catalog.entries[name].add_quantity('dec', row[2], source)
+            catalog.entries[name].add_quantity(SUPERNOVA.RA, row[1], source)
+            catalog.entries[name].add_quantity(SUPERNOVA.DEC, row[2], source)
             mldt = astrotime(float(row[4]), format='mjd').datetime
             discoverdate = make_date_string(mldt.year, mldt.month, mldt.day)
-            catalog.entries[name].add_quantity('discoverdate', discoverdate,
-                                               source)
+            catalog.entries[name].add_quantity(
+                SUPERNOVA.DISCOVER_DATE, discoverdate, source)
 
     catalog.journal_entries()
 
@@ -59,17 +62,19 @@ def do_psst(catalog):
              source) = catalog.new_entry(row[0],
                                          srcname='Smartt et al. 2016',
                                          url='http://arxiv.org/abs/1606.04795')
-            catalog.entries[name].add_quantity('ra', row[1], source)
-            catalog.entries[name].add_quantity('dec', row[2], source)
+            catalog.entries[name].add_quantity(SUPERNOVA.RA, row[1], source)
+            catalog.entries[name].add_quantity(SUPERNOVA.DEC, row[2], source)
             mldt = astrotime(float(row[3]), format='mjd').datetime
             discoverdate = make_date_string(mldt.year, mldt.month, mldt.day)
-            catalog.entries[name].add_quantity('discoverdate', discoverdate,
-                                               source)
-            catalog.entries[name].add_quantity('claimedtype', row[6], source)
             catalog.entries[name].add_quantity(
-                'redshift', row[7], source, kind='spectroscopic')
+                SUPERNOVA.DISCOVER_DATE, discoverdate, source)
+            catalog.entries[name].add_quantity(
+                SUPERNOVA.CLAIMED_TYPE, row[6], source)
+            catalog.entries[name].add_quantity(
+                SUPERNOVA.REDSHIFT, row[7], source, kind='spectroscopic')
             for alias in [x.strip() for x in row[8].split(',')]:
-                catalog.entries[name].add_quantity('alias', alias, source)
+                catalog.entries[name].add_quantity(
+                    SUPERNOVA.ALIAS, alias, source)
 
     catalog.journal_entries()
 

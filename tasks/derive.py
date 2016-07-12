@@ -4,15 +4,18 @@ import statistics
 import warnings
 from math import hypot, log10, pi, sqrt
 
+from astrocats.catalog.quantity import QUANTITY
+from astrocats.catalog.utils import (get_sig_digits, is_number, pbar,
+                                     pretty_num, tprint, uniq_cdl)
 from astropy import units as un
 from astropy.coordinates import SkyCoord as coord
 from astropy.cosmology import Planck15 as cosmo
 from astropy.cosmology import z_at_value
 
-from astrocats.catalog.utils import (get_sig_digits, is_number, pbar,
-                                     pretty_num, tprint, uniq_cdl)
-from ..constants import CLIGHT, KM, PREF_KINDS
 from cdecimal import Decimal
+
+from ..constants import CLIGHT, KM, PREF_KINDS
+from ..supernova import SUPERNOVA
 
 
 def do_derivations(catalog):
@@ -24,7 +27,7 @@ def do_derivations(catalog):
         aliases = catalog.entries[name].get_aliases()
         catalog.entries[name].set_first_max_light()
 
-        if 'discoverdate' not in catalog.entries[name]:
+        if SUPERNOVA.DISCOVER_DATE not in catalog.entries[name]:
             prefixes = ['MLS', 'SSS', 'CSS', 'GRB ']
             for alias in aliases:
                 for prefix in prefixes:
@@ -41,11 +44,12 @@ def do_derivations(catalog):
                                 alias + ']: ' + discoverdate)
                         source = catalog.entries[name].add_self_source()
                         catalog.entries[name].add_quantity(
-                            'discoverdate', discoverdate, source, derived=True)
+                            SUPERNOVA.DISCOVER_DATE, discoverdate, source,
+                            derived=True)
                         break
-                if 'discoverdate' in catalog.entries[name]:
+                if SUPERNOVA.DISCOVER_DATE in catalog.entries[name]:
                     break
-        if 'discoverdate' not in catalog.entries[name]:
+        if SUPERNOVA.DISCOVER_DATE not in catalog.entries[name]:
             prefixes = ['ASASSN-', 'PS1-', 'PS1', 'PS', 'iPTF', 'PTF', 'SCP-',
                         'SNLS-', 'SPIRITS', 'LSQ', 'DES', 'SNHiTS', 'Gaia',
                         'GND', 'GNW', 'GSD', 'GSW', 'EGS', 'COS', 'OGLE',
@@ -62,11 +66,12 @@ def do_derivations(catalog):
                                 alias + ']: ' + discoverdate)
                         source = catalog.entries[name].add_self_source()
                         catalog.entries[name].add_quantity(
-                            'discoverdate', discoverdate, source, derived=True)
+                            SUPERNOVA.DISCOVER_DATE, discoverdate, source,
+                            derived=True)
                         break
-                if 'discoverdate' in catalog.entries[name]:
+                if SUPERNOVA.DISCOVER_DATE in catalog.entries[name]:
                     break
-        if 'discoverdate' not in catalog.entries[name]:
+        if SUPERNOVA.DISCOVER_DATE not in catalog.entries[name]:
             prefixes = ['SNF']
             for alias in aliases:
                 for prefix in prefixes:
@@ -83,11 +88,12 @@ def do_derivations(catalog):
                                 alias + ']: ' + discoverdate)
                         source = catalog.entries[name].add_self_source()
                         catalog.entries[name].add_quantity(
-                            'discoverdate', discoverdate, source, derived=True)
+                            SUPERNOVA.DISCOVER_DATE, discoverdate, source,
+                            derived=True)
                         break
-                if 'discoverdate' in catalog.entries[name]:
+                if SUPERNOVA.DISCOVER_DATE in catalog.entries[name]:
                     break
-        if 'discoverdate' not in catalog.entries[name]:
+        if SUPERNOVA.DISCOVER_DATE not in catalog.entries[name]:
             prefixes = ['PTFS', 'SNSDF']
             for alias in aliases:
                 for prefix in prefixes:
@@ -104,11 +110,12 @@ def do_derivations(catalog):
                                 alias + ']: ' + discoverdate)
                         source = catalog.entries[name].add_self_source()
                         catalog.entries[name].add_quantity(
-                            'discoverdate', discoverdate, source, derived=True)
+                            SUPERNOVA.DISCOVER_DATE, discoverdate, source,
+                            derived=True)
                         break
-                if 'discoverdate' in catalog.entries[name]:
+                if SUPERNOVA.DISCOVER_DATE in catalog.entries[name]:
                     break
-        if 'discoverdate' not in catalog.entries[name]:
+        if SUPERNOVA.DISCOVER_DATE not in catalog.entries[name]:
             prefixes = ['AT', 'SN', 'OGLE-', 'SM ', 'KSN-']
             for alias in aliases:
                 for prefix in prefixes:
@@ -122,13 +129,14 @@ def do_derivations(catalog):
                                 alias + ']: ' + discoverdate)
                         source = catalog.entries[name].add_self_source()
                         catalog.entries[name].add_quantity(
-                            'discoverdate', discoverdate, source, derived=True)
+                            SUPERNOVA.DISCOVER_DATE, discoverdate, source,
+                            derived=True)
                         break
-                if 'discoverdate' in catalog.entries[name]:
+                if SUPERNOVA.DISCOVER_DATE in catalog.entries[name]:
                     break
 
-        if ('ra' not in catalog.entries[name] or
-                'dec' not in catalog.entries[name]):
+        if (SUPERNOVA.RA not in catalog.entries[name] or
+                SUPERNOVA.DEC not in catalog.entries[name]):
             prefixes = ['PSN J', 'MASJ', 'CSS', 'SSS', 'MASTER OT J', 'HST J',
                         'TCP J', 'MACS J', '2MASS J', 'EQ J', 'CRTS J',
                         'SMT J']
@@ -154,24 +162,26 @@ def do_derivations(catalog):
                             tprint('Added ra/dec from name: ' + ra + ' ' + dec)
                         source = catalog.entries[name].add_self_source()
                         catalog.entries[name].add_quantity(
-                            'ra', ra, source, derived=True)
+                            SUPERNOVA.RA, ra, source, derived=True)
                         catalog.entries[name].add_quantity(
-                            'dec', dec, source, derived=True)
+                            SUPERNOVA.DEC, dec, source, derived=True)
                         break
-                if 'ra' in catalog.entries[name]:
+                if SUPERNOVA.RA in catalog.entries[name]:
                     break
 
-        no_host = ('host' not in catalog.entries[name] or
-                   not any([x['value'] == 'Milky Way' for x in
-                            catalog.entries[name]['host']]))
-        if ('ra' in catalog.entries[name] and
-                'dec' in catalog.entries[name] and no_host):
+        no_host = (SUPERNOVA.HOST not in catalog.entries[name] or
+                   not any([x[QUANTITY.VALUE] == 'Milky Way' for x in
+                            catalog.entries[name][SUPERNOVA.HOST]]))
+        if (SUPERNOVA.RA in catalog.entries[name] and
+                SUPERNOVA.DEC in catalog.entries[name] and no_host):
             from astroquery.irsa_dust import IrsaDust
             if name not in catalog.extinctions_dict:
                 try:
-                    ra_dec = catalog.entries[name]['ra'][0]['value'] + \
-                        " " + catalog.entries[name]['dec'][0]['value']
-                    result = IrsaDust.get_query_table(ra_dec, section='ebv')
+                    ra_dec = catalog.entries[name][
+                        SUPERNOVA.RA][0][QUANTITY.VALUE] + \
+                        " " + \
+                        catalog.entries[name][SUPERNOVA.DEC][0][QUANTITY.VALUE]
+                    result = IrsaDust.get_query_table(ra_dec, section=SUPERNOVA.EBV)
                 except (KeyboardInterrupt, SystemExit):
                     raise
                 except:
@@ -187,18 +197,18 @@ def do_derivations(catalog):
                      catalog.entries[name]
                      .add_source(bibcode='2011ApJ...737..103S')])
                 (catalog.entries[name]
-                 .add_quantity('ebv',
+                 .add_quantity(SUPERNOVA.EBV,
                                str(catalog
                                    .extinctions_dict[name][0]),
                                sources,
                                error=str(catalog
                                          .extinctions_dict[name][1]),
                                derived=True))
-        if (('host' in catalog.entries[name] and
-             ('hostra' not in catalog.entries[name] or
-              'hostdec' not in catalog.entries[name]))):
-            for host in catalog.entries[name]['host']:
-                alias = host['value']
+        if ((SUPERNOVA.HOST in catalog.entries[name] and
+             (SUPERNOVA.HOST_RA not in catalog.entries[name] or
+              SUPERNOVA.HOST_DEC not in catalog.entries[name]))):
+            for host in catalog.entries[name][SUPERNOVA.HOST]:
+                alias = host[QUANTITY.VALUE]
                 if ' J' in alias and is_number(alias.split(' J')[-1][:6]):
                     noprefix = alias.split(
                         ' J')[-1].split(':')[-1].replace('.', '')
@@ -219,21 +229,21 @@ def do_derivations(catalog):
                                hostra + ' ' + hostdec)
                     source = catalog.entries[name].add_self_source()
                     catalog.entries[name].add_quantity(
-                        'hostra', hostra, source, derived=True)
+                        SUPERNOVA.HOST_RA, hostra, source, derived=True)
                     catalog.entries[name].add_quantity(
-                        'hostdec', hostdec, source, derived=True)
+                        SUPERNOVA.HOST_DEC, hostdec, source, derived=True)
                     break
-                if 'hostra' in catalog.entries[name]:
+                if SUPERNOVA.HOST_RA in catalog.entries[name]:
                     break
 
-        if ('redshift' not in catalog.entries[name] and
-                'velocity' in catalog.entries[name]):
+        if (SUPERNOVA.REDSHIFT not in catalog.entries[name] and
+                SUPERNOVA.VELOCITY in catalog.entries[name]):
             # Find the "best" velocity to use for this
             bestsig = 0
-            for hv in catalog.entries[name]['velocity']:
-                sig = get_sig_digits(hv['value'])
+            for hv in catalog.entries[name][SUPERNOVA.VELOCITY]:
+                sig = get_sig_digits(hv[QUANTITY.VALUE])
                 if sig > bestsig:
-                    besthv = hv['value']
+                    besthv = hv[QUANTITY.VALUE]
                     bestsrc = hv['source']
                     bestsig = sig
             if bestsig > 0 and is_number(besthv):
@@ -241,30 +251,30 @@ def do_derivations(catalog):
                 source = catalog.entries[name].add_self_source()
                 sources = uniq_cdl([source] + bestsrc.split(','))
                 (catalog.entries[name]
-                 .add_quantity('redshift',
+                 .add_quantity(SUPERNOVA.REDSHIFT,
                                pretty_num(sqrt((1. + voc) / (1. - voc)) - 1.,
                                           sig=bestsig),
                                sources, kind='heliocentric',
                                derived=True))
-        if ('redshift' not in catalog.entries[name] and
+        if (SUPERNOVA.REDSHIFT not in catalog.entries[name] and
                 len(catalog.nedd_dict) > 0 and
-                'host' in catalog.entries[name]):
+                SUPERNOVA.HOST in catalog.entries[name]):
             reference = "NED-D"
             refurl = "http://ned.ipac.caltech.edu/Library/Distances/"
-            for host in catalog.entries[name]['host']:
-                if host['value'] in catalog.nedd_dict:
+            for host in catalog.entries[name][SUPERNOVA.HOST]:
+                if host[QUANTITY.VALUE] in catalog.nedd_dict:
                     source = catalog.entries[name].add_source(
                         bibcode='2015arXiv150201589P')
                     secondarysource = catalog.entries[name].add_source(
                         name=reference, url=refurl, secondary=True)
                     meddist = statistics.median(
-                        catalog.nedd_dict[host['value']])
+                        catalog.nedd_dict[host[QUANTITY.VALUE]])
                     redz = z_at_value(
                         cosmo.comoving_distance, float(meddist) * un.Mpc)
                     redshift = pretty_num(
                         redz, sig=get_sig_digits(str(meddist)))
                     catalog.entries[name].add_quantity(
-                        name, 'redshift', redshift,
+                        name, SUPERNOVA.REDSHIFT, redshift,
                         uniq_cdl([source, secondarysource]),
                         kind='host', derived=True)
         if ('maxabsmag' not in catalog.entries[name] and
@@ -273,21 +283,22 @@ def do_derivations(catalog):
             # Find the "best" distance to use for this
             bestsig = 0
             for ld in catalog.entries[name]['lumdist']:
-                sig = get_sig_digits(ld['value'])
+                sig = get_sig_digits(ld[QUANTITY.VALUE])
                 if sig > bestsig:
-                    bestld = ld['value']
+                    bestld = ld[QUANTITY.VALUE]
                     bestsrc = ld['source']
                     bestsig = sig
             if bestsig > 0 and is_number(bestld) and float(bestld) > 0.:
                 source = catalog.entries[name].add_self_source()
                 sources = uniq_cdl([source] + bestsrc.split(','))
                 # FIX: what's happening here?!
-                pnum = (float(catalog.entries[name]['maxappmag'][0]['value']) -
+                pnum = (float(catalog.entries[name]['maxappmag'][0][
+                    QUANTITY.VALUE]) -
                         5.0 * (log10(float(bestld) * 1.0e6) - 1.0))
                 pnum = pretty_num(pnum, sig=bestsig)
                 catalog.entries[name].add_quantity(
                     'maxabsmag', pnum, sources, derived=True)
-        if 'redshift' in catalog.entries[name]:
+        if SUPERNOVA.REDSHIFT in catalog.entries[name]:
             # Find the "best" redshift to use for this
             bestz, bestkind, bestsig, bestsrc = catalog.entries[
                 name].get_best_redshift()
@@ -297,14 +308,15 @@ def do_derivations(catalog):
                 except:
                     print(catalog.entries[name])
                     raise
-                if 'velocity' not in catalog.entries[name]:
+                if SUPERNOVA.VELOCITY not in catalog.entries[name]:
                     source = catalog.entries[name].add_self_source()
                     # FIX: what's happening here?!
                     pnum = CLIGHT / KM * \
                         ((bestz + 1.)**2. - 1.) / ((bestz + 1.)**2. + 1.)
                     pnum = pretty_num(pnum, sig=bestsig)
                     catalog.entries[name].add_quantity(
-                        'velocity', pnum, source, kind=PREF_KINDS[bestkind])
+                        SUPERNOVA.VELOCITY, pnum, source,
+                        kind=PREF_KINDS[bestkind])
                 if bestz > 0.:
                     from astropy.cosmology import Planck15 as cosmo
                     if 'lumdist' not in catalog.entries[name]:
@@ -323,7 +335,7 @@ def do_derivations(catalog):
                             source = catalog.entries[name].add_self_source()
                             pnum = pretty_num(
                                 float(catalog.entries[name]['maxappmag'][0][
-                                    'value']) -
+                                    QUANTITY.VALUE]) -
                                 5.0 * (log10(dl.to('pc').value) - 1.0),
                                 sig=bestsig)
                             catalog.entries[name].add_quantity(
@@ -339,16 +351,20 @@ def do_derivations(catalog):
                             'comovingdist', pretty_num(cd.value, sig=bestsig),
                             sources, derived=True)
         if all([x in catalog.entries[name] for x in
-                ['ra', 'dec', 'hostra', 'hostdec']]):
+                [SUPERNOVA.RA, SUPERNOVA.DEC, SUPERNOVA.HOST_RA,
+                 SUPERNOVA.HOST_DEC]]):
             # For now just using first coordinates that appear in entry
             try:
                 c1 = coord(
-                    ra=catalog.entries[name]['ra'][0][
-                        'value'], dec=catalog.entries[name]['dec'][0]['value'],
+                    ra=catalog.entries[name][SUPERNOVA.RA][0][
+                        QUANTITY.VALUE], dec=catalog.entries[name][
+                            SUPERNOVA.DEC][0][QUANTITY.VALUE],
                     unit=(un.hourangle, un.deg))
                 c2 = coord(
-                    ra=catalog.entries[name]['hostra'][0]['value'],
-                    dec=catalog.entries[name]['hostdec'][0]['value'],
+                    ra=catalog.entries[name][SUPERNOVA.HOST_RA][0][
+                        QUANTITY.VALUE],
+                    dec=catalog.entries[name][SUPERNOVA.HOST_DEC][0][
+                        QUANTITY.VALUE],
                     unit=(un.hourangle, un.deg))
             except (KeyboardInterrupt, SystemExit):
                 raise
@@ -357,10 +373,14 @@ def do_derivations(catalog):
             else:
                 sources = uniq_cdl(
                     [catalog.entries[name].add_self_source()] +
-                    catalog.entries[name]['ra'][0]['source'].split(',') +
-                    catalog.entries[name]['dec'][0]['source'].split(',') +
-                    catalog.entries[name]['hostra'][0]['source'].split(',') +
-                    catalog.entries[name]['hostdec'][0]['source'].split(','))
+                    catalog.entries[name][
+                        SUPERNOVA.RA][0]['source'].split(',') +
+                    catalog.entries[name][
+                        SUPERNOVA.DEC][0]['source'].split(',') +
+                    catalog.entries[name][
+                        SUPERNOVA.HOST_RA][0]['source'].split(',') +
+                    catalog.entries[name][
+                        SUPERNOVA.HOST_DEC][0]['source'].split(','))
                 if 'hostoffsetang' not in catalog.entries[name]:
                     hosa = Decimal(hypot(c1.ra.degree - c2.ra.degree,
                                          c1.dec.degree - c2.dec.degree))
@@ -369,29 +389,31 @@ def do_derivations(catalog):
                         'hostoffsetang', hosa, sources,
                         derived=True, unit='arcseconds')
                 if ('comovingdist' in catalog.entries[name] and
-                        'redshift' in catalog.entries[name] and
+                        SUPERNOVA.REDSHIFT in catalog.entries[name] and
                         'hostoffsetdist' not in catalog.entries[name]):
                     offsetsig = get_sig_digits(
-                        catalog.entries[name]['hostoffsetang'][0]['value'])
+                        catalog.entries[name]['hostoffsetang'][0][
+                            QUANTITY.VALUE])
                     sources = uniq_cdl(sources.split(',') +
                                        (catalog.entries[name]['comovingdist']
                                         [0]['source']).split(',') +
-                                       (catalog.entries[name]['redshift']
+                                       (catalog.entries[name][
+                                           SUPERNOVA.REDSHIFT]
                                         [0]['source']).split(','))
                     (catalog.entries[name]
                      .add_quantity('hostoffsetdist',
                                    pretty_num(
                                        float(catalog.entries[name][
                                            'hostoffsetang']
-                                           [0]['value']) /
+                                           [0][QUANTITY.VALUE]) /
                                        3600. * (pi / 180.) *
                                        float(catalog.entries[name][
                                            'comovingdist']
-                                           [0]['value']) *
+                                           [0][QUANTITY.VALUE]) *
                                        1000. / (1.0 +
                                                 float(catalog.entries[name][
-                                                    'redshift']
-                                                    [0]['value'])),
+                                                    SUPERNOVA.REDSHIFT]
+                                                    [0][QUANTITY.VALUE])),
                                        sig=offsetsig), sources))
 
         catalog.journal_entries()

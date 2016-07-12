@@ -7,11 +7,13 @@ from collections import OrderedDict
 from glob import glob
 
 import requests
-from bs4 import BeautifulSoup
-
 from astrocats.catalog.utils import (is_number, pbar, pbar_strings, round_sig,
                                      uniq_cdl)
+from bs4 import BeautifulSoup
+
 from cdecimal import Decimal
+
+from ..supernova import SUPERNOVA
 
 
 def do_cccp(catalog):
@@ -31,7 +33,8 @@ def do_cccp(catalog):
                     name = catalog.add_entry(name)
                     source = catalog.entries[name].add_source(
                         bibcode='2012ApJ...744...10K')
-                    catalog.entries[name].add_quantity('alias', name, source)
+                    catalog.entries[name].add_quantity(
+                        SUPERNOVA.ALIAS, name, source)
                 elif rr >= 5:
                     mjd = str(Decimal(row[0]) + 53000)
                     for bb, band in enumerate(cccpbands):
@@ -66,7 +69,7 @@ def do_cccp(catalog):
                       .add_source(name='CCCP',
                                   url=('https://webhome.weizmann.ac.il'
                                        '/home/iair/sc_cccp.html')))
-            catalog.entries[name].add_quantity('alias', name, source)
+            catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
 
             if catalog.current_task.load_archive(catalog.args):
                 fname = os.path.join(catalog.get_current_task_repo(),
@@ -162,12 +165,14 @@ def do_cpcs(catalog):
         sec_source = catalog.entries[name].add_source(
             name='Cambridge Photometric Calibration Server',
             url='http://gsaweb.ast.cam.ac.uk/followup/', secondary=True)
-        catalog.entries[name].add_quantity('alias', oldname, sec_source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.ALIAS, oldname, sec_source)
         unit_deg = 'floatdegrees'
         catalog.entries[name].add_quantity(
-            'ra', str(alertindex[ii]['ra']), sec_source, unit=unit_deg)
-        catalog.entries[name].add_quantity('dec', str(
-            alertindex[ii]['dec']), sec_source, unit=unit_deg)
+            SUPERNOVA.RA, str(alertindex[ii][SUPERNOVA.RA]), sec_source,
+            unit=unit_deg)
+        catalog.entries[name].add_quantity(SUPERNOVA.DEC, str(
+            alertindex[ii][SUPERNOVA.DEC]), sec_source, unit=unit_deg)
 
         alerturl = ('http://gsaweb.ast.cam.ac.uk/'
                     'followup/get_alert_lc_data?alert_id=' +

@@ -7,6 +7,8 @@ from glob import glob
 
 from astrocats.catalog.utils import pbar_strings
 
+from ..supernova import SUPERNOVA
+
 
 def do_sdss_photo(catalog):
     task_str = catalog.get_current_task_str()
@@ -43,23 +45,24 @@ def do_sdss_photo(catalog):
                     name = 'SN' + row[5]
                 name = catalog.add_entry(name)
                 source = catalog.entries[name].add_source(bibcode=bibcode)
-                catalog.entries[name].add_quantity('alias', name, source)
                 catalog.entries[name].add_quantity(
-                    'alias', 'SDSS-II SN ' + row[3], source)
+                    SUPERNOVA.ALIAS, name, source)
+                catalog.entries[name].add_quantity(
+                    SUPERNOVA.ALIAS, 'SDSS-II SN ' + row[3], source)
 
                 if row[5] != 'RA:':
                     year = re.findall(r'\d+', name)[0]
-                    catalog.entries[name].add_quantity('discoverdate', year,
-                                                       source)
+                    catalog.entries[name].add_quantity(
+                        SUPERNOVA.DISCOVER_DATE, year, source)
 
                 catalog.entries[name].add_quantity(
-                    'ra', row[-4], source, unit='floatdegrees')
+                    SUPERNOVA.RA, row[-4], source, unit='floatdegrees')
                 catalog.entries[name].add_quantity(
-                    'dec', row[-2], source, unit='floatdegrees')
+                    SUPERNOVA.DEC, row[-2], source, unit='floatdegrees')
             if hasred and rr == 1:
                 error = row[4] if float(row[4]) >= 0.0 else ''
                 (catalog.entries[name]
-                 .add_quantity('redshift', row[2], source,
+                 .add_quantity(SUPERNOVA.REDSHIFT, row[2], source,
                                error=error,
                                kind='heliocentric'))
             if rr >= rst:

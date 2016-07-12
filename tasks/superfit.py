@@ -55,7 +55,7 @@ def do_superfit_spectra(catalog):
 
             source = catalog.entries[name].add_source(
                 name='Superfit', url=superfit_url, secondary=True)
-            catalog.entries[name].add_quantity('alias', oldname, source)
+            catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, oldname, source)
 
             with open(sffile) as ff:
                 rows = ff.read().splitlines()

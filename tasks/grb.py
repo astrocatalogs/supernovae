@@ -5,6 +5,8 @@ import os
 
 from astrocats.catalog.utils import pbar
 
+from ..supernova import SUPERNOVA
+
 
 def do_grb(catalog):
     task_str = catalog.get_current_task_str()
@@ -28,10 +30,10 @@ def do_grb(catalog):
                                      srcname='Gamma-ray Bursts Catalog',
                                      url='http://grbcatalog.org')
         catalog.entries[name].add_quantity(
-            'ra', row[2], source, unit='floatdegrees')
+            SUPERNOVA.RA, row[2], source, unit='floatdegrees')
         catalog.entries[name].add_quantity(
-            'dec', row[3], source, unit='floatdegrees')
-        catalog.entries[name].add_quantity('redshift', row[8], source)
+            SUPERNOVA.DEC, row[3], source, unit='floatdegrees')
+        catalog.entries[name].add_quantity(SUPERNOVA.REDSHIFT, row[8], source)
 
     catalog.journal_entries()
     return

@@ -5,9 +5,10 @@ import os
 from math import ceil
 
 import requests
+from astrocats.catalog.utils import pbar, pretty_num
 from astropy.time import Time as astrotime
 
-from astrocats.catalog.utils import pbar, pretty_num
+from ..supernova import SUPERNOVA
 
 
 def do_tns(catalog):
@@ -72,22 +73,26 @@ def do_tns(catalog):
             name = catalog.add_entry(name)
             source = catalog.entries[name].add_source(
                 name='Transient Name Server', url=tns_url)
-            catalog.entries[name].add_quantity('alias', name, source)
+            catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
             if row[2] and row[2] != '00:00:00.00':
-                catalog.entries[name].add_quantity('ra', row[2], source)
+                catalog.entries[name].add_quantity(
+                    SUPERNOVA.RA, row[2], source)
             if row[3] and row[3] != '+00:00:00.00':
-                catalog.entries[name].add_quantity('dec', row[3], source)
+                catalog.entries[name].add_quantity(
+                    SUPERNOVA.DEC, row[3], source)
             if row[4]:
                 catalog.entries[name].add_quantity(
-                    'claimedtype', row[4].replace('SN', '').strip(), source)
+                    SUPERNOVA.CLAIMED_TYPE, row[4].replace('SN', '').strip(),
+                    source)
             if row[5]:
                 catalog.entries[name].add_quantity(
-                    'redshift', row[5], source, kind='spectroscopic')
+                    SUPERNOVA.REDSHIFT, row[5], source, kind='spectroscopic')
             if row[6]:
-                catalog.entries[name].add_quantity('host', row[6], source)
+                catalog.entries[name].add_quantity(
+                    SUPERNOVA.HOST, row[6], source)
             if row[7]:
                 catalog.entries[name].add_quantity(
-                    'redshift', row[7], source, kind='host')
+                    SUPERNOVA.REDSHIFT, row[7], source, kind='host')
             if row[8]:
                 catalog.entries[name].add_quantity(
                     'discoverer', row[8], source)
@@ -99,7 +104,8 @@ def do_tns(catalog):
             #                                  observer.strip(),
             #                                  source)
             if row[10]:
-                catalog.entries[name].add_quantity('alias', row[10], source)
+                catalog.entries[name].add_quantity(
+                    SUPERNOVA.ALIAS, row[10], source)
             if row[8] and row[14] and row[15] and row[16]:
                 survey = row[8]
                 magnitude = row[14]
@@ -120,7 +126,7 @@ def do_tns(catalog):
                         date += pretty_num(dt.total_seconds() /
                                            (24 * 60 * 60), sig=6).lstrip('0')
                     catalog.entries[name].add_quantity(
-                        'discoverdate', date, source)
+                        SUPERNOVA.DISCOVER_DATE, date, source)
             if catalog.args.update:
                 catalog.journal_entries()
 
