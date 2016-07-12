@@ -1061,8 +1061,8 @@ def do_vizier(catalog):
         catalog.entries[name].add_quantity(
             SUPERNOVA.REDSHIFT, row['zsp'], source, kind='spectroscopic')
         catalog.entries[name].add_quantity(
-            'maxappmag', row['rP1mag'], source, error=row['e_rP1mag'])
-        catalog.entries[name].add_quantity('maxband', 'r', source)
+            SUPERNOVA.MAX_APP_MAG, row['rP1mag'], source, error=row['e_rP1mag'])
+        catalog.entries[name].add_quantity(SUPERNOVA.MAX_BAND, 'r', source)
         catalog.entries[name].add_quantity(
             SUPERNOVA.CLAIMED_TYPE, 'Ia', source)
     result = Vizier.get_catalogs('J/MNRAS/448/1206/table4')
@@ -1085,8 +1085,8 @@ def do_vizier(catalog):
             SUPERNOVA.REDSHIFT, row['zph'], source, error=row['e_zph'],
             kind='photometric')
         catalog.entries[name].add_quantity(
-            'maxappmag', row['rP1mag'], source, error=row['e_rP1mag'])
-        catalog.entries[name].add_quantity('maxband', 'r', source)
+            SUPERNOVA.MAX_APP_MAG, row['rP1mag'], source, error=row['e_rP1mag'])
+        catalog.entries[name].add_quantity(SUPERNOVA.MAX_BAND, 'r', source)
         catalog.entries[name].add_quantity(
             SUPERNOVA.CLAIMED_TYPE, 'Ia?', source)
     result = Vizier.get_catalogs('J/MNRAS/448/1206/table5')
@@ -1108,8 +1108,8 @@ def do_vizier(catalog):
         catalog.entries[name].add_quantity(
             SUPERNOVA.REDSHIFT, row['zsp'], source, kind='spectroscopic')
         catalog.entries[name].add_quantity(
-            'maxappmag', row['rP1mag'], source, error=row['e_rP1mag'])
-        catalog.entries[name].add_quantity('maxband', 'r', source)
+            SUPERNOVA.MAX_APP_MAG, row['rP1mag'], source, error=row['e_rP1mag'])
+        catalog.entries[name].add_quantity(SUPERNOVA.MAX_BAND, 'r', source)
         catalog.entries[name].add_quantity(
             SUPERNOVA.CLAIMED_TYPE, row['Type'], source)
     result = Vizier.get_catalogs('J/MNRAS/448/1206/table6')
@@ -1129,8 +1129,8 @@ def do_vizier(catalog):
         catalog.entries[name].add_quantity(
             SUPERNOVA.DEC, row['DEJ2000'], source, unit='floatdegrees')
         catalog.entries[name].add_quantity(
-            'maxappmag', row['rP1mag'], source, error=row['e_rP1mag'])
-        catalog.entries[name].add_quantity('maxband', 'r', source)
+            SUPERNOVA.MAX_APP_MAG, row['rP1mag'], source, error=row['e_rP1mag'])
+        catalog.entries[name].add_quantity(SUPERNOVA.MAX_BAND, 'r', source)
         catalog.entries[name].add_quantity(
             SUPERNOVA.CLAIMED_TYPE, row['Type'], source)
     result = Vizier.get_catalogs('J/MNRAS/448/1206/tablea2')
@@ -1150,8 +1150,8 @@ def do_vizier(catalog):
         catalog.entries[name].add_quantity(
             SUPERNOVA.DEC, row['DEJ2000'], source, unit='floatdegrees')
         catalog.entries[name].add_quantity(
-            'maxappmag', row['rP1mag'], source, error=row['e_rP1mag'])
-        catalog.entries[name].add_quantity('maxband', 'r', source)
+            SUPERNOVA.MAX_APP_MAG, row['rP1mag'], source, error=row['e_rP1mag'])
+        catalog.entries[name].add_quantity(SUPERNOVA.MAX_BAND, 'r', source)
         catalog.entries[name].add_quantity(
             SUPERNOVA.CLAIMED_TYPE, row['Typesoft'] + '?', source)
         catalog.entries[name].add_quantity(
@@ -1173,8 +1173,8 @@ def do_vizier(catalog):
         catalog.entries[name].add_quantity(
             SUPERNOVA.DEC, row['DEJ2000'], source, unit='floatdegrees')
         catalog.entries[name].add_quantity(
-            'maxappmag', row['rP1mag'], source, error=row['e_rP1mag'])
-        catalog.entries[name].add_quantity('maxband', 'r', source)
+            SUPERNOVA.MAX_APP_MAG, row['rP1mag'], source, error=row['e_rP1mag'])
+        catalog.entries[name].add_quantity(SUPERNOVA.MAX_BAND, 'r', source)
         catalog.entries[name].add_quantity(
             SUPERNOVA.CLAIMED_TYPE, 'Candidate', source)
     catalog.journal_entries()
@@ -1768,11 +1768,11 @@ def do_lennarz(catalog):
         if row['Dist']:
             if row['e_Dist']:
                 catalog.entries[name].add_quantity(
-                    'lumdist', row['Dist'], source,
+                    SUPERNOVA.LUM_DIST, row['Dist'], source,
                     error=row['e_Dist'], kind='host')
             else:
                 catalog.entries[name].add_quantity(
-                    'lumdist', row['Dist'], source, kind='host')
+                    SUPERNOVA.LUM_DIST, row['Dist'], source, kind='host')
 
         if row['Ddate']:
             datestring = row['Ddate'].replace('-', '/')

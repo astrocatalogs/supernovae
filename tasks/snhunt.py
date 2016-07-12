@@ -3,9 +3,10 @@
 import os
 import re
 
+from astrocats.catalog.utils import pbar
 from bs4 import BeautifulSoup
 
-from astrocats.catalog.utils import pbar
+from ..supernova import SUPERNOVA
 
 
 def do_snhunt(catalog):

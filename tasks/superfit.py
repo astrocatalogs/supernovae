@@ -4,10 +4,12 @@ import os
 import re
 from glob import glob
 
+from astrocats.catalog.utils import pbar
 from astropy.time import Time as astrotime
 
-from astrocats.catalog.utils import pbar
 from cdecimal import Decimal
+
+from ..supernova import SUPERNOVA
 
 
 def do_superfit_spectra(catalog):
@@ -55,7 +57,8 @@ def do_superfit_spectra(catalog):
 
             source = catalog.entries[name].add_source(
                 name='Superfit', url=superfit_url, secondary=True)
-            catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, oldname, source)
+            catalog.entries[name].add_quantity(
+                SUPERNOVA.ALIAS, oldname, source)
 
             with open(sffile) as ff:
                 rows = ff.read().splitlines()

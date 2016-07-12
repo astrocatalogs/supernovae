@@ -64,7 +64,7 @@ def do_nedd(catalog):
                         SUPERNOVA.REDSHIFT, redshift, sources)
                 if dist:
                     catalog.entries[snname].add_quantity(
-                        'comovingdist', dist, sources)
+                        SUPERNOVA.COMOVING_DIST, dist, sources)
                     if not redshift:
                         try:
                             zatval = z_at_value(cosmo.comoving_distance,

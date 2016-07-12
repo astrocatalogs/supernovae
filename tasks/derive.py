@@ -277,12 +277,12 @@ def do_derivations(catalog):
                         name, SUPERNOVA.REDSHIFT, redshift,
                         uniq_cdl([source, secondarysource]),
                         kind='host', derived=True)
-        if ('maxabsmag' not in catalog.entries[name] and
-                'maxappmag' in catalog.entries[name] and
-                'lumdist' in catalog.entries[name]):
+        if (SUPERNOVA.MAX_ABS_MAG not in catalog.entries[name] and
+                SUPERNOVA.MAX_APP_MAG in catalog.entries[name] and
+                SUPERNOVA.LUM_DIST in catalog.entries[name]):
             # Find the "best" distance to use for this
             bestsig = 0
-            for ld in catalog.entries[name]['lumdist']:
+            for ld in catalog.entries[name][SUPERNOVA.LUM_DIST]:
                 sig = get_sig_digits(ld[QUANTITY.VALUE])
                 if sig > bestsig:
                     bestld = ld[QUANTITY.VALUE]
@@ -292,12 +292,12 @@ def do_derivations(catalog):
                 source = catalog.entries[name].add_self_source()
                 sources = uniq_cdl([source] + bestsrc.split(','))
                 # FIX: what's happening here?!
-                pnum = (float(catalog.entries[name]['maxappmag'][0][
+                pnum = (float(catalog.entries[name][SUPERNOVA.MAX_APP_MAG][0][
                     QUANTITY.VALUE]) -
                         5.0 * (log10(float(bestld) * 1.0e6) - 1.0))
                 pnum = pretty_num(pnum, sig=bestsig)
                 catalog.entries[name].add_quantity(
-                    'maxabsmag', pnum, sources, derived=True)
+                    SUPERNOVA.MAX_ABS_MAG, pnum, sources, derived=True)
         if SUPERNOVA.REDSHIFT in catalog.entries[name]:
             # Find the "best" redshift to use for this
             bestz, bestkind, bestsig, bestsrc = catalog.entries[
@@ -319,7 +319,7 @@ def do_derivations(catalog):
                         kind=PREF_KINDS[bestkind])
                 if bestz > 0.:
                     from astropy.cosmology import Planck15 as cosmo
-                    if 'lumdist' not in catalog.entries[name]:
+                    if SUPERNOVA.LUM_DIST not in catalog.entries[name]:
                         dl = cosmo.luminosity_distance(bestz)
                         sources = [
                             catalog.entries[name].add_self_source(),
@@ -327,20 +327,20 @@ def do_derivations(catalog):
                             .add_source(bibcode='2015arXiv150201589P')]
                         sources = uniq_cdl(sources + bestsrc.split(','))
                         catalog.entries[name].add_quantity(
-                            'lumdist', pretty_num(dl.value, sig=bestsig),
+                            SUPERNOVA.LUM_DIST, pretty_num(dl.value, sig=bestsig),
                             sources, kind=PREF_KINDS[bestkind],
                             derived=True)
-                        if ('maxabsmag' not in catalog.entries[name] and
-                                'maxappmag' in catalog.entries[name]):
+                        if (SUPERNOVA.MAX_ABS_MAG not in catalog.entries[name] and
+                                SUPERNOVA.MAX_APP_MAG in catalog.entries[name]):
                             source = catalog.entries[name].add_self_source()
                             pnum = pretty_num(
-                                float(catalog.entries[name]['maxappmag'][0][
+                                float(catalog.entries[name][SUPERNOVA.MAX_APP_MAG][0][
                                     QUANTITY.VALUE]) -
                                 5.0 * (log10(dl.to('pc').value) - 1.0),
                                 sig=bestsig)
                             catalog.entries[name].add_quantity(
-                                'maxabsmag', pnum, sources, derived=True)
-                    if 'comovingdist' not in catalog.entries[name]:
+                                SUPERNOVA.MAX_ABS_MAG, pnum, sources, derived=True)
+                    if SUPERNOVA.COMOVING_DIST not in catalog.entries[name]:
                         cd = cosmo.comoving_distance(bestz)
                         sources = [
                             catalog.entries[name].add_self_source(),
@@ -348,7 +348,7 @@ def do_derivations(catalog):
                             .add_source(bibcode='2015arXiv150201589P')]
                         sources = uniq_cdl(sources + bestsrc.split(','))
                         catalog.entries[name].add_quantity(
-                            'comovingdist', pretty_num(cd.value, sig=bestsig),
+                            SUPERNOVA.COMOVING_DIST, pretty_num(cd.value, sig=bestsig),
                             sources, derived=True)
         if all([x in catalog.entries[name] for x in
                 [SUPERNOVA.RA, SUPERNOVA.DEC, SUPERNOVA.HOST_RA,
@@ -388,14 +388,14 @@ def do_derivations(catalog):
                     catalog.entries[name].add_quantity(
                         'hostoffsetang', hosa, sources,
                         derived=True, unit='arcseconds')
-                if ('comovingdist' in catalog.entries[name] and
+                if (SUPERNOVA.COMOVING_DIST in catalog.entries[name] and
                         SUPERNOVA.REDSHIFT in catalog.entries[name] and
                         'hostoffsetdist' not in catalog.entries[name]):
                     offsetsig = get_sig_digits(
                         catalog.entries[name]['hostoffsetang'][0][
                             QUANTITY.VALUE])
                     sources = uniq_cdl(sources.split(',') +
-                                       (catalog.entries[name]['comovingdist']
+                                       (catalog.entries[name][SUPERNOVA.COMOVING_DIST]
                                         [0]['source']).split(',') +
                                        (catalog.entries[name][
                                            SUPERNOVA.REDSHIFT]
@@ -408,7 +408,7 @@ def do_derivations(catalog):
                                            [0][QUANTITY.VALUE]) /
                                        3600. * (pi / 180.) *
                                        float(catalog.entries[name][
-                                           'comovingdist']
+                                           SUPERNOVA.COMOVING_DIST]
                                            [0][QUANTITY.VALUE]) *
                                        1000. / (1.0 +
                                                 float(catalog.entries[name][

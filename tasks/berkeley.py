@@ -10,6 +10,8 @@ import requests
 from astrocats.catalog.utils import get_sig_digits, pbar, pretty_num, uniq_cdl
 from astropy.time import Time as astrotime
 
+from ..supernova import SUPERNOVA
+
 
 def do_ucb_photo(catalog):
     task_str = catalog.get_current_task_str()
@@ -34,7 +36,8 @@ def do_ucb_photo(catalog):
             name=sec_ref, url=sec_refurl,
             bibcode=sec_refbib,
             secondary=True)
-        catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, oldname, sec_source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.ALIAS, oldname, sec_source)
         sources = [sec_source]
         if phot['Reference']:
             sources += [catalog.entries[name]
@@ -44,10 +47,12 @@ def do_ucb_photo(catalog):
         if phot['Type'] and phot['Type'].strip() != 'NoMatch':
             for ct in phot['Type'].strip().split(','):
                 catalog.entries[name].add_quantity(
-                    SUPERNOVA.CLAIMED_TYPE, ct.replace('-norm', '').strip(), sources)
+                    SUPERNOVA.CLAIMED_TYPE, ct.replace('-norm', '').strip(),
+                    sources)
         if phot['DiscDate']:
             catalog.entries[name].add_quantity(
-                SUPERNOVA.DISCOVER_DATE, phot['DiscDate'].replace('-', '/'), sources)
+                SUPERNOVA.DISCOVER_DATE, phot['DiscDate'].replace('-', '/'),
+                sources)
         if phot['HostName']:
             host = urllib.parse.unquote(phot['HostName']).replace('*', '')
             catalog.entries[name].add_quantity(SUPERNOVA.HOST, host, sources)
@@ -131,10 +136,12 @@ def do_ucb_spectra(catalog):
         if spectrum['Type'] and spectrum['Type'].strip() != 'NoMatch':
             for ct in spectrum['Type'].strip().split(','):
                 catalog.entries[name].add_quantity(
-                    SUPERNOVA.CLAIMED_TYPE, ct.replace('-norm', '').strip(), sources)
+                    SUPERNOVA.CLAIMED_TYPE, ct.replace('-norm', '').strip(),
+                    sources)
         if spectrum['DiscDate']:
             ddate = spectrum['DiscDate'].replace('-', '/')
-            catalog.entries[name].add_quantity(SUPERNOVA.DISCOVER_DATE, ddate, sources)
+            catalog.entries[name].add_quantity(
+                SUPERNOVA.DISCOVER_DATE, ddate, sources)
         if spectrum['HostName']:
             host = urllib.parse.unquote(spectrum['HostName']).replace('*', '')
             catalog.entries[name].add_quantity(SUPERNOVA.HOST, host, sources)
