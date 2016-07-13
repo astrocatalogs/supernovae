@@ -346,6 +346,8 @@ class Supernova(Entry):
         return outdir, filename
 
     def sanitize(self):
+        super().sanitize()
+
         # Calculate some columns based on imported data, sanitize some fields
         name = self[self._KEYS.NAME]
         aliases = self.get_aliases()
@@ -390,28 +392,6 @@ class Supernova(Entry):
             self[self._KEYS.SPECTRA].sort(key=lambda x: (
                 float(x[SPECTRUM.TIME]) if SPECTRUM.TIME in x else 0.0))
 
-        if self._KEYS.SOURCES in self:
-            # Remove orphan sources
-            source_aliases = [x[SOURCE.ALIAS] for
-                              x in self[self._KEYS.SOURCES]]
-            source_list = []
-            for key in self.keys():
-                if key in [SUPERNOVA.NAME, SUPERNOVA.SOURCES,
-                           SUPERNOVA.SCHEMA]:
-                    continue
-                for item in self[key]:
-                    source_list += item[item._KEYS.SOURCE].split(',')
-            new_src_list = sorted(list(set(source_aliases)
-                                       .intersection(source_list)))
-            new_sources = []
-            for source in self[self._KEYS.SOURCES]:
-                if source[SOURCE.ALIAS] in new_src_list:
-                    new_sources.append(source)
-
-            if not new_sources:
-                del self[self._KEYS.SOURCES]
-
-            self[self._KEYS.SOURCES] = new_sources
         if self._KEYS.SOURCES in self:
             for source in self[self._KEYS.SOURCES]:
                 if SOURCE.BIBCODE in source:
@@ -470,8 +450,6 @@ class Supernova(Entry):
 
         if self._KEYS.CLAIMED_TYPE in self:
             self[self._KEYS.CLAIMED_TYPE] = self.ct_list_prioritized()
-
-        super().sanitize()
 
     def clean_internal(self, data):
         """Clean input data from the 'Supernovae/input/internal' repository.
