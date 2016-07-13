@@ -527,6 +527,9 @@ class Supernova(Entry):
         # Go through all remaining keys in 'dirty' event, and make sure
         # everything is a quantity with a source (OSC if no other)
         for key in data.keys():
+            # The following line should be used to replace the above once keys
+            # returns the superclass keys too
+            # if self._KEYS.get_key_by_name(key).no_source:
             if (key in [self._KEYS.NAME, self._KEYS.SCHEMA,
                         self._KEYS.SOURCES, self._KEYS.ERRORS]):
                 pass
