@@ -102,7 +102,7 @@ def do_donations(catalog):
             ra = row[3]
             dec = row[4]
             catalog.entries[name].add_quantity(
-                name, SUPERNOVA.ALIAS, 'SMCSNR J' + ra.replace(':', '')[:6] +
+                SUPERNOVA.ALIAS, 'SMCSNR J' + ra.replace(':', '')[:6] +
                 dec.replace(':', '')[:7], source)
             catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
             catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, row[1], source)

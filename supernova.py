@@ -1,6 +1,7 @@
 """
 """
 import warnings
+from collections import OrderedDict
 
 from astrocats.catalog.entry import ENTRY, Entry
 from astrocats.catalog.error import ERROR
@@ -9,9 +10,10 @@ from astrocats.catalog.photometry import PHOTOMETRY
 from astrocats.catalog.quantity import QUANTITY
 from astrocats.catalog.source import SOURCE
 from astrocats.catalog.spectrum import SPECTRUM
-from astrocats.catalog.utils import (entry_to_filename, get_sig_digits,
-                                     get_source_year, is_number, jd_to_mjd,
-                                     make_date_string, pretty_num, uniq_cdl)
+from astrocats.catalog.utils import (bib_priority, entry_to_filename,
+                                     get_sig_digits, get_source_year,
+                                     is_number, jd_to_mjd, make_date_string,
+                                     pretty_num, uniq_cdl)
 from astropy.time import Time as astrotime
 
 from cdecimal import Decimal
@@ -177,7 +179,7 @@ class Supernova(Entry):
         if (forcereplacebetter or quantity in REPR_BETTER_QUANTITY) and \
                 len(my_quantity_list) > 1:
 
-            # The quantity that was added should be last in the list
+            # The quantity that was just added should be last in the list
             added_quantity = my_quantity_list.pop()
 
             newquantities = []
@@ -203,7 +205,7 @@ class Supernova(Entry):
                 for ct in my_quantity_list:
                     if QUANTITY.ERROR in ct:
                         if QUANTITY.ERROR in added_quantity:
-                            if (float(added_quantity[QUANTITY.ERROR]) <
+                            if (float(added_quantity[QUANTITY.ERROR]) <=
                                     float(ct[QUANTITY.ERROR])):
                                 isworse = False
                                 continue
@@ -450,6 +452,25 @@ class Supernova(Entry):
 
         if self._KEYS.CLAIMED_TYPE in self:
             self[self._KEYS.CLAIMED_TYPE] = self.ct_list_prioritized()
+
+        # Renumber and reorder sources
+        if self._KEYS.SOURCES in self:
+            source_reps = OrderedDict(
+                [[x[SOURCE.ALIAS], str(i)] for i, x in
+                 enumerate(sorted(self[self._KEYS.SOURCES],
+                                  key=lambda x: bib_priority(x)))])
+            for i, source in enumerate(self[self._KEYS.SOURCES]):
+                self[self._KEYS.SOURCES][i][
+                    SOURCE.ALIAS] = source_reps[source[SOURCE.ALIAS]]
+            for key in self.keys():
+                if key in [ENTRY.NAME, ENTRY.SOURCES,
+                           ENTRY.ERRORS, ENTRY.SCHEMA]:
+                    continue
+                for item in self[key]:
+                    print(item)
+                    aliases = [source_reps[x] for
+                               x in item[item._KEYS.SOURCE].split(',')]
+                    item[item._KEYS.SOURCE] = ','.join(aliases)
 
     def clean_internal(self, data):
         """Clean input data from the 'Supernovae/input/internal' repository.
