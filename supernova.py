@@ -383,11 +383,35 @@ class Supernova(Entry):
                                x else '',
                                float(x[PHOTOMETRY.MAGNITUDE]) if
                                PHOTOMETRY.MAGNITUDE in x else ''))
+
         if (self._KEYS.SPECTRA in self and
                 list(filter(None, [SPECTRUM.TIME in x
                                    for x in self[self._KEYS.SPECTRA]]))):
             self[self._KEYS.SPECTRA].sort(key=lambda x: (
                 float(x[SPECTRUM.TIME]) if SPECTRUM.TIME in x else 0.0))
+
+        if self._KEYS.SOURCES in self:
+            # Remove orphan sources
+            source_aliases = [x[SOURCE.ALIAS] for
+                              x in self[self._KEYS.SOURCES]]
+            source_list = []
+            for key in self.keys():
+                if key in [SUPERNOVA.NAME, SUPERNOVA.SOURCES,
+                           SUPERNOVA.SCHEMA]:
+                    continue
+                for item in self[key]:
+                    source_list += item[item._KEYS.SOURCE].split(',')
+            new_src_list = sorted(list(set(source_aliases)
+                                       .intersection(source_list)))
+            new_sources = []
+            for source in self[self._KEYS.SOURCES]:
+                if source[SOURCE.ALIAS] in new_src_list:
+                    new_sources.append(source)
+
+            if not new_sources:
+                del self[self._KEYS.SOURCES]
+
+            self[self._KEYS.SOURCES] = new_sources
         if self._KEYS.SOURCES in self:
             for source in self[self._KEYS.SOURCES]:
                 if SOURCE.BIBCODE in source:
@@ -433,14 +457,17 @@ class Supernova(Entry):
                         source[SOURCE.BIBCODE]]
                     if SOURCE.NAME not in source and source[SOURCE.BIBCODE]:
                         source[SOURCE.NAME] = source[SOURCE.BIBCODE]
+
         if self._KEYS.REDSHIFT in self:
             self[self._KEYS.REDSHIFT] = list(
                 sorted(self[self._KEYS.REDSHIFT], key=lambda key:
                        frame_priority(key)))
+
         if self._KEYS.VELOCITY in self:
             self[self._KEYS.VELOCITY] = list(
                 sorted(self[self._KEYS.VELOCITY], key=lambda key:
                        frame_priority(key)))
+
         if self._KEYS.CLAIMED_TYPE in self:
             self[self._KEYS.CLAIMED_TYPE] = self.ct_list_prioritized()
 
