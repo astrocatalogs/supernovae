@@ -602,26 +602,17 @@ class Supernova(Entry):
     def set_first_max_light(self):
         if 'maxappmag' not in self:
             mldt, mlmag, mlband, mlsource = self._get_max_light()
+            if mldt or mlmag or mlband:
+                source = self.add_self_source()
+                uniq_src = uniq_cdl([source] + mlsource.split(','))
             if mldt:
-                source = self.add_self_source()
                 max_date = make_date_string(mldt.year, mldt.month, mldt.day)
-                self.add_quantity(
-                    'maxdate', max_date,
-                    uniq_cdl([source] + mlsource.split(',')),
-                    derived=True)
+                self.add_quantity('maxdate', max_date, uniq_src, derived=True)
             if mlmag:
-                source = self.add_self_source()
-                self.add_quantity(
-                    'maxappmag', pretty_num(mlmag),
-                    uniq_cdl([source] + mlsource.split(',')),
-                    derived=True)
+                mlmag = pretty_num(mlmag)
+                self.add_quantity('maxappmag', mlmag, uniq_src, derived=True)
             if mlband:
-                source = self.add_self_source()
-                (self
-                 .add_quantity('maxband',
-                               mlband,
-                               uniq_cdl([source] + mlsource.split(',')),
-                               derived=True))
+                self.add_quantity('maxband', mlband, uniq_src, derived=True)
 
         if (self._KEYS.DISCOVER_DATE not in self or
                 max([len(x[QUANTITY.VALUE].split('/')) for x in
