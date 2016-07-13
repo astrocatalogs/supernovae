@@ -469,11 +469,13 @@ class Supernova(Entry):
 
             # Change sources to match new aliases
             for key in self.keys():
-                if key.no_source:
+                # if self._KEYS.get_key_by_name(key).no_source:
+                if (key in [self._KEYS.NAME, self._KEYS.SCHEMA,
+                            self._KEYS.SOURCES, self._KEYS.ERRORS]):
                     continue
                 for item in self[key]:
-                    aliases = [source_reps[x] for
-                               x in item[item._KEYS.SOURCE].split(',')]
+                    aliases = [str(y) for y in sorted(int(source_reps[x]) for
+                               x in item[item._KEYS.SOURCE].split(','))]
                     item[item._KEYS.SOURCE] = ','.join(aliases)
 
     def clean_internal(self, data):
@@ -608,25 +610,25 @@ class Supernova(Entry):
         return flmjd, flsource
 
     def set_first_max_light(self):
-        if 'maxappmag' not in self:
+        if ENTRY.MAX_APP_MAG not in self:
             mldt, mlmag, mlband, mlsource = self._get_max_light()
             if mldt:
                 source = self.add_self_source()
                 max_date = make_date_string(mldt.year, mldt.month, mldt.day)
                 self.add_quantity(
-                    'maxdate', max_date,
+                    ENTRY.MAX_DATE, max_date,
                     uniq_cdl([source] + mlsource.split(',')),
                     derived=True)
             if mlmag:
                 source = self.add_self_source()
                 self.add_quantity(
-                    'maxappmag', pretty_num(mlmag),
+                    ENTRY.MAX_APP_MAG, pretty_num(mlmag),
                     uniq_cdl([source] + mlsource.split(',')),
                     derived=True)
             if mlband:
                 source = self.add_self_source()
                 (self
-                 .add_quantity('maxband',
+                 .add_quantity(ENTRY.MAX_BAND,
                                mlband,
                                uniq_cdl([source] + mlsource.split(',')),
                                derived=True))
