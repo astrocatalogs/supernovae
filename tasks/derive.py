@@ -181,7 +181,8 @@ def do_derivations(catalog):
                         SUPERNOVA.RA][0][QUANTITY.VALUE] + \
                         " " + \
                         catalog.entries[name][SUPERNOVA.DEC][0][QUANTITY.VALUE]
-                    result = IrsaDust.get_query_table(ra_dec, section=SUPERNOVA.EBV)
+                    result = IrsaDust.get_query_table(ra_dec,
+                                                      section='ebv')
                 except (KeyboardInterrupt, SystemExit):
                     raise
                 except:
@@ -327,19 +328,24 @@ def do_derivations(catalog):
                             .add_source(bibcode='2015arXiv150201589P')]
                         sources = uniq_cdl(sources + bestsrc.split(','))
                         catalog.entries[name].add_quantity(
-                            SUPERNOVA.LUM_DIST, pretty_num(dl.value, sig=bestsig),
+                            SUPERNOVA.LUM_DIST, pretty_num(dl.value,
+                                                           sig=bestsig),
                             sources, kind=PREF_KINDS[bestkind],
                             derived=True)
-                        if (SUPERNOVA.MAX_ABS_MAG not in catalog.entries[name] and
-                                SUPERNOVA.MAX_APP_MAG in catalog.entries[name]):
+                        if (SUPERNOVA.MAX_ABS_MAG not in
+                            catalog.entries[name] and
+                                SUPERNOVA.MAX_APP_MAG in
+                                catalog.entries[name]):
                             source = catalog.entries[name].add_self_source()
                             pnum = pretty_num(
-                                float(catalog.entries[name][SUPERNOVA.MAX_APP_MAG][0][
+                                float(catalog.entries[name][
+                                    SUPERNOVA.MAX_APP_MAG][0][
                                     QUANTITY.VALUE]) -
                                 5.0 * (log10(dl.to('pc').value) - 1.0),
                                 sig=bestsig)
                             catalog.entries[name].add_quantity(
-                                SUPERNOVA.MAX_ABS_MAG, pnum, sources, derived=True)
+                                SUPERNOVA.MAX_ABS_MAG, pnum, sources,
+                                derived=True)
                     if SUPERNOVA.COMOVING_DIST not in catalog.entries[name]:
                         cd = cosmo.comoving_distance(bestz)
                         sources = [
@@ -348,7 +354,8 @@ def do_derivations(catalog):
                             .add_source(bibcode='2015arXiv150201589P')]
                         sources = uniq_cdl(sources + bestsrc.split(','))
                         catalog.entries[name].add_quantity(
-                            SUPERNOVA.COMOVING_DIST, pretty_num(cd.value, sig=bestsig),
+                            SUPERNOVA.COMOVING_DIST, pretty_num(cd.value,
+                                                                sig=bestsig),
                             sources, derived=True)
         if all([x in catalog.entries[name] for x in
                 [SUPERNOVA.RA, SUPERNOVA.DEC, SUPERNOVA.HOST_RA,
@@ -395,7 +402,8 @@ def do_derivations(catalog):
                         catalog.entries[name]['hostoffsetang'][0][
                             QUANTITY.VALUE])
                     sources = uniq_cdl(sources.split(',') +
-                                       (catalog.entries[name][SUPERNOVA.COMOVING_DIST]
+                                       (catalog.entries[name][
+                                           SUPERNOVA.COMOVING_DIST]
                                         [0]['source']).split(',') +
                                        (catalog.entries[name][
                                            SUPERNOVA.REDSHIFT]
