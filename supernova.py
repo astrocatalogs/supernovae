@@ -455,16 +455,21 @@ class Supernova(Entry):
 
         # Renumber and reorder sources
         if self._KEYS.SOURCES in self:
+            # Sort sources reverse-chronologically
+            self[self._KEYS.SOURCES] = sorted(self[self._KEYS.SOURCES],
+                                              key=lambda x: bib_priority(x))
+
+            # Assign new aliases to match new order
             source_reps = OrderedDict(
                 [[x[SOURCE.ALIAS], str(i+1)] for i, x in
-                 enumerate(sorted(self[self._KEYS.SOURCES],
-                                  key=lambda x: bib_priority(x)))])
+                 enumerate(self[self._KEYS.SOURCES])])
             for i, source in enumerate(self[self._KEYS.SOURCES]):
                 self[self._KEYS.SOURCES][i][
                     SOURCE.ALIAS] = source_reps[source[SOURCE.ALIAS]]
+
+            # Change sources to match new aliases
             for key in self.keys():
-                if key in [ENTRY.NAME, ENTRY.SOURCES,
-                           ENTRY.ERRORS, ENTRY.SCHEMA]:
+                if key.no_source:
                     continue
                 for item in self[key]:
                     aliases = [source_reps[x] for
