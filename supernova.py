@@ -467,7 +467,6 @@ class Supernova(Entry):
                            ENTRY.ERRORS, ENTRY.SCHEMA]:
                     continue
                 for item in self[key]:
-                    print(item)
                     aliases = [source_reps[x] for
                                x in item[item._KEYS.SOURCE].split(',')]
                     item[item._KEYS.SOURCE] = ','.join(aliases)
