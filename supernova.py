@@ -328,7 +328,7 @@ class Supernova(Entry):
 
         # Put non-SNe in the boneyard
         if bury:
-            outdir = self.catalog.get_repo_boneyard()
+            outdir = self.catalog.PATHS.get_repo_boneyard()
 
         # Get normal repository save directory
         else:
