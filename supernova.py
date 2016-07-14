@@ -455,20 +455,27 @@ class Supernova(Entry):
 
         # Renumber and reorder sources
         if self._KEYS.SOURCES in self:
+            # Sort sources reverse-chronologically
+            self[self._KEYS.SOURCES] = sorted(self[self._KEYS.SOURCES],
+                                              key=lambda x: bib_priority(x))
+
+            # Assign new aliases to match new order
             source_reps = OrderedDict(
-                [[x[SOURCE.ALIAS], str(i)] for i, x in
-                 enumerate(sorted(self[self._KEYS.SOURCES],
-                                  key=lambda x: bib_priority(x)))])
+                [[x[SOURCE.ALIAS], str(i+1)] for i, x in
+                 enumerate(self[self._KEYS.SOURCES])])
             for i, source in enumerate(self[self._KEYS.SOURCES]):
                 self[self._KEYS.SOURCES][i][
                     SOURCE.ALIAS] = source_reps[source[SOURCE.ALIAS]]
+
+            # Change sources to match new aliases
             for key in self.keys():
-                if key in [ENTRY.NAME, ENTRY.SOURCES,
-                           ENTRY.ERRORS, ENTRY.SCHEMA]:
+                # if self._KEYS.get_key_by_name(key).no_source:
+                if (key in [self._KEYS.NAME, self._KEYS.SCHEMA,
+                            self._KEYS.SOURCES, self._KEYS.ERRORS]):
                     continue
                 for item in self[key]:
-                    aliases = [source_reps[x] for
-                               x in item[item._KEYS.SOURCE].split(',')]
+                    aliases = [str(y) for y in sorted(int(source_reps[x]) for
+                               x in item[item._KEYS.SOURCE].split(','))]
                     item[item._KEYS.SOURCE] = ','.join(aliases)
 
     def clean_internal(self, data):
@@ -522,6 +529,9 @@ class Supernova(Entry):
         # Go through all remaining keys in 'dirty' event, and make sure
         # everything is a quantity with a source (OSC if no other)
         for key in data.keys():
+            # The following line should be used to replace the above once keys
+            # returns the superclass keys too
+            # if self._KEYS.get_key_by_name(key).no_source:
             if (key in [self._KEYS.NAME, self._KEYS.SCHEMA,
                         self._KEYS.SOURCES, self._KEYS.ERRORS]):
                 pass
@@ -600,19 +610,19 @@ class Supernova(Entry):
         return flmjd, flsource
 
     def set_first_max_light(self):
-        if 'maxappmag' not in self:
+        if ENTRY.MAX_APP_MAG not in self:
             mldt, mlmag, mlband, mlsource = self._get_max_light()
             if mldt or mlmag or mlband:
                 source = self.add_self_source()
                 uniq_src = uniq_cdl([source] + mlsource.split(','))
             if mldt:
                 max_date = make_date_string(mldt.year, mldt.month, mldt.day)
-                self.add_quantity('maxdate', max_date, uniq_src, derived=True)
+                self.add_quantity(ENTRY.MAX_DATE, max_date, uniq_src, derived=True)
             if mlmag:
                 mlmag = pretty_num(mlmag)
-                self.add_quantity('maxappmag', mlmag, uniq_src, derived=True)
+                self.add_quantity(ENTRY.MAX_APP_MAG, mlmag, uniq_src, derived=True)
             if mlband:
-                self.add_quantity('maxband', mlband, uniq_src, derived=True)
+                self.add_quantity(ENTRY.MAX_BAND, mlband, uniq_src, derived=True)
 
         if (self._KEYS.DISCOVER_DATE not in self or
                 max([len(x[QUANTITY.VALUE].split('/')) for x in
