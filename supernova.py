@@ -86,7 +86,7 @@ class Supernova(Entry):
 
         # Set default units
         if not unit and key == self._KEYS.VELOCITY:
-            unit = 'KM/s'
+            unit = 'km/s'
         if not unit and key == self._KEYS.RA:
             unit = 'hours'
         if not unit and key == self._KEYS.DEC:
