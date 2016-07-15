@@ -77,7 +77,7 @@ class Supernova(Entry):
         key = quantity._key
 
         if not value:
-            return
+            return False
 
         if error and (not is_number(error) or float(error) < 0):
             raise ValueError(self.parent[self.parent._KEYS.NAME] +
@@ -100,18 +100,14 @@ class Supernova(Entry):
             value = self.clean_entry_name(value)
             for df in quantity.get(self._KEYS.DISTINCT_FROM, []):
                 if value == df[QUANTITY.VALUE]:
-                    return
+                    return False
 
-        if key in [self._KEYS.VELOCITY, self._KEYS.REDSHIFT, self._KEYS.EBV,
-                   self._KEYS.LUM_DIST, self._KEYS.COMOVING_DIST]:
-            if not is_number(value):
-                return
         if key == self._KEYS.HOST:
             if is_number(value):
-                return
+                return False
             if value.lower() in ['anonymous', 'anon.', 'anon',
                                  'intergalactic']:
-                return
+                return False
             value = host_clean(value)
             if ((not kind and ((value.lower().startswith('abell') and
                                 is_number(value[5:].strip())) or
@@ -121,7 +117,7 @@ class Supernova(Entry):
             isq = False
             value = value.replace('young', '')
             if value.lower() in ['unknown', 'unk', '?', '-']:
-                return
+                return False
             if '?' in value:
                 isq = True
                 value = value.strip(' ?')
@@ -150,7 +146,7 @@ class Supernova(Entry):
             #     # Only add dates if they have more information
             #     if len(ct[QUANTITY.VALUE].split('/')) >
             #            len(value.split('/')):
-            #         return
+            #         return False
 
         if is_number(value):
             value = '%g' % Decimal(value)
@@ -165,6 +161,8 @@ class Supernova(Entry):
             quantity[QUANTITY.UNIT] = unit
         if kind:
             quantity[QUANTITY.KIND] = kind
+
+        return True
 
     def add_quantity(self, quantity, value, source, forcereplacebetter=False,
                      **kwargs):
@@ -437,8 +435,9 @@ class Supernova(Entry):
                         self.catalog.bibauthor_dict[source[SOURCE.BIBCODE]]):
                     source[SOURCE.REFERENCE] = self.catalog.bibauthor_dict[
                         source[SOURCE.BIBCODE]]
-                    if SOURCE.NAME not in source and source[SOURCE.BIBCODE]:
-                        source[SOURCE.NAME] = source[SOURCE.BIBCODE]
+                if (SOURCE.NAME not in source and SOURCE.BIBCODE in source and
+                        source[SOURCE.BIBCODE]):
+                    source[SOURCE.NAME] = source[SOURCE.BIBCODE]
 
         if self._KEYS.REDSHIFT in self:
             self[self._KEYS.REDSHIFT] = list(

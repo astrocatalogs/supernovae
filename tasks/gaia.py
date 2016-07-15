@@ -34,9 +34,9 @@ def do_gaia(catalog):
         catalog.entries[name].add_quantity(
             SUPERNOVA.DISCOVER_DATE, year, source)
         catalog.entries[name].add_quantity(
-            SUPERNOVA.RA, row[2], source, unit='floatdegrees')
+            SUPERNOVA.RA, row[2], source, u_value='floatdegrees')
         catalog.entries[name].add_quantity(
-            SUPERNOVA.DEC, row[3], source, unit='floatdegrees')
+            SUPERNOVA.DEC, row[3], source, u_value='floatdegrees')
         if row[7] and row[7] != 'unknown':
             type = row[7].replace('SNe', '').replace('SN', '').strip()
             catalog.entries[name].add_quantity(

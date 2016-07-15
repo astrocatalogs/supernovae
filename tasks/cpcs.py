@@ -56,9 +56,9 @@ def do_cpcs(catalog):
         unit_deg = 'floatdegrees'
         catalog.entries[name].add_quantity(
             SUPERNOVA.RA, str(alertindex[ii][SUPERNOVA.RA]), sec_source,
-            unit=unit_deg)
+            u_value=unit_deg)
         catalog.entries[name].add_quantity(SUPERNOVA.DEC, str(
-            alertindex[ii][SUPERNOVA.DEC]), sec_source, unit=unit_deg)
+            alertindex[ii][SUPERNOVA.DEC]), sec_source, u_value=unit_deg)
 
         alerturl = ('http://gsaweb.ast.cam.ac.uk/'
                     'followup/get_alert_lc_data?alert_id=' +

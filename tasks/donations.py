@@ -156,10 +156,10 @@ def do_donations(catalog):
                         zcmb = value
                     elif field == 'ra':
                         catalog.entries[name].add_quantity(
-                            SUPERNOVA.RA, value, source, unit='floatdegrees')
+                            SUPERNOVA.RA, value, source, u_value='floatdegrees')
                     elif field == 'dec':
                         catalog.entries[name].add_quantity(
-                            SUPERNOVA.DEC, value, source, unit='floatdegrees')
+                            SUPERNOVA.DEC, value, source, u_value='floatdegrees')
                     elif field == 'host':
                         value = value.replace('- ', '-').replace('G ', 'G')
                         catalog.entries[name].add_quantity(SUPERNOVA.HOST,

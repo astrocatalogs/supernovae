@@ -56,9 +56,9 @@ def do_sdss_photo(catalog):
                         SUPERNOVA.DISCOVER_DATE, year, source)
 
                 catalog.entries[name].add_quantity(
-                    SUPERNOVA.RA, row[-4], source, unit='floatdegrees')
+                    SUPERNOVA.RA, row[-4], source, u_value='floatdegrees')
                 catalog.entries[name].add_quantity(
-                    SUPERNOVA.DEC, row[-2], source, unit='floatdegrees')
+                    SUPERNOVA.DEC, row[-2], source, u_value='floatdegrees')
             if hasred and rr == 1:
                 error = row[4] if float(row[4]) >= 0.0 else ''
                 (catalog.entries[name]

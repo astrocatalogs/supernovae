@@ -394,7 +394,7 @@ def do_derivations(catalog):
                     hosa = pretty_num(hosa * Decimal(3600.))
                     catalog.entries[name].add_quantity(
                         'hostoffsetang', hosa, sources,
-                        derived=True, unit='arcseconds')
+                        derived=True, u_value='arcseconds')
                 if (SUPERNOVA.COMOVING_DIST in catalog.entries[name] and
                         SUPERNOVA.REDSHIFT in catalog.entries[name] and
                         'hostoffsetdist' not in catalog.entries[name]):

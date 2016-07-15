@@ -81,7 +81,7 @@ Data quantities have five standard fields:
 | `e_value` | The e_value associated with the value | yes
 | `lowerlimit` | Value is a lower limit | yes
 | `upperlimit` | Value is an upper limit | yes
-| `unit` | The unit of the value | yes
+| `u_value` | The unit of the value | yes
 | `kind` | Variant of the quantity | yes
 | `source` | A list of integer aliases to sources for the data | no
 
@@ -176,8 +176,9 @@ And finally for spectra, these fields are used:
 | Field | Value | Optional?
 | :--- | :--- | :---
 | `data` | Nx2 or Nx3 array of wavelengths, fluxes, and (optionally) errors | no
-| `waveunit` | Unit for wavelength | no
-| `fluxunit` | Unit for fluxes | no
+| `u_wavelengths` | Unit for wavelength | no
+| `u_fluxes` | Unit for fluxes | no
+| `u_errors` | Unit for flux errors | yes
 | `snr` | Signal to noise ratio | yes
 | `filename` | Name of file spectra was extracted from | yes
 | `deredshifted` | Data is known to have been deredshifted from observer frame | yes
