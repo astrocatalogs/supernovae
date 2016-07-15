@@ -208,7 +208,7 @@ def do_ucb_spectra(catalog):
             'Angstrom', units, u_time='MJD', time=mjd,
             wavelengths=wavelengths, filename=filename, fluxes=fluxes,
             errors=errors,
-            errorunit=units, instrument=instrument, source=sources, snr=snr,
+            u_errors=units, instrument=instrument, source=sources, snr=snr,
             observer=observer,
             reducer=reducer, deredshifted=('-noz' in filename))
         ucbspectracnt = ucbspectracnt + 1

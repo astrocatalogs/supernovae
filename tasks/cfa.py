@@ -211,7 +211,7 @@ def do_cfa_spectra(catalog):
                 filename=filename,
                 wavelengths=wavelengths, fluxes=fluxes, u_time='MJD' if time
                 else '', time=time, instrument=instrument,
-                errorunit='ergs/s/cm^2/Angstrom', errors=errors,
+                u_errors='ergs/s/cm^2/Angstrom', errors=errors,
                 source=sources, dereddened=False, deredshifted=False)
         if catalog.args.travis and ni >= catalog.TRAVIS_QUERY_LIMIT:
             break

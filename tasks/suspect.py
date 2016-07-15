@@ -209,7 +209,7 @@ def do_suspect_spectra(catalog):
                     'Angstrom', 'Uncalibrated', u_time='MJD',
                     time=time,
                     wavelengths=wavelengths, fluxes=fluxes, errors=errors,
-                    errorunit='Uncalibrated',
+                    u_errors='Uncalibrated',
                     source=sources, filename=spectrum)
                 suspectcnt = suspectcnt + 1
                 if (catalog.args.travis and

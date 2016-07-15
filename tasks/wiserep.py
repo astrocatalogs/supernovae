@@ -243,7 +243,7 @@ def do_wiserep_spectra(catalog):
                                 catalog.entries[name].add_spectrum(
                                     'Angstrom', fluxunit,
                                     errors=errors,
-                                    errorunit=fluxunit,
+                                    u_errors=fluxunit,
                                     wavelengths=wavelengths,
                                     fluxes=fluxes,
                                     u_time='MJD', time=time,
