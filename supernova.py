@@ -617,12 +617,15 @@ class Supernova(Entry):
                 uniq_src = uniq_cdl([source] + mlsource.split(','))
             if mldt:
                 max_date = make_date_string(mldt.year, mldt.month, mldt.day)
-                self.add_quantity(ENTRY.MAX_DATE, max_date, uniq_src, derived=True)
+                self.add_quantity(ENTRY.MAX_DATE, max_date, uniq_src,
+                                  derived=True)
             if mlmag:
                 mlmag = pretty_num(mlmag)
-                self.add_quantity(ENTRY.MAX_APP_MAG, mlmag, uniq_src, derived=True)
+                self.add_quantity(ENTRY.MAX_APP_MAG, mlmag, uniq_src,
+                                  derived=True)
             if mlband:
-                self.add_quantity(ENTRY.MAX_BAND, mlband, uniq_src, derived=True)
+                self.add_quantity(ENTRY.MAX_BAND, mlband, uniq_src,
+                                  derived=True)
 
         if (self._KEYS.DISCOVER_DATE not in self or
                 max([len(x[QUANTITY.VALUE].split('/')) for x in
