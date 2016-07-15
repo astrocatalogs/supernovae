@@ -564,13 +564,14 @@ for fcnt, eventfile in enumerate(tq(sorted(files, key=lambda s: s.lower()))):
         photocorr = [('k' if 'kcorrected' in x else 'raw')
                      for x in catalog[entry]['photometry'] if 'magnitude' in x]
 
+        photoutime = catalog[entry]['photometry'][0]['u_time'] if 'u_time' in catalog[entry]['photometry'][0] else 'MJD'
         hastimeerrs = (len(list(filter(None, phototimelowererrs)))
                        and len(list(filter(None, phototimeuppererrs))))
         hasABerrs = (len(list(filter(None, photoABlowererrs)))
                      and len(list(filter(None, photoABuppererrs))))
         tt = [
             ("Source ID(s)", "@src"),
-            ("Epoch (" + catalog[entry]['photometry'][0]['u_time'] + ")",
+            ("Epoch (" + photoutime + ")",
              "@x{1.11}" + ("<sub>-@xle{1}</sub><sup>+@xue{1}</sup>" if hastimeerrs else ""))
         ]
         tt += [("Apparent Magnitude", "@y{1.111}" + (
@@ -610,7 +611,7 @@ for fcnt, eventfile in enumerate(tq(sorted(files, key=lambda s: s.lower()))):
 
         p1.extra_x_ranges = {"gregorian date": Range1d(
             start=min_x_date, end=max_x_date)}
-        p1.add_layout(DatetimeAxis(major_label_text_font_size='8pt', axis_label='Time (' + catalog[entry]['photometry'][0]['u_time'] + '/Gregorian)',
+        p1.add_layout(DatetimeAxis(major_label_text_font_size='8pt', axis_label='Time (' + photoutime + '/Gregorian)',
                                    major_label_text_font='futura', axis_label_text_font='futura', major_tick_in=0,
                                    x_range_name="gregorian date", axis_label_text_font_size='11pt'), 'below')
 
@@ -1030,6 +1031,7 @@ for fcnt, eventfile in enumerate(tq(sorted(files, key=lambda s: s.lower()))):
         phototype = [(True if 'upperlimit' in x or radiosigma * float(x['e_fluxdensity']) >= float(x['fluxdensity']) else False)
                      for x in catalog[entry]['photometry'] if 'fluxdensity' in x]
 
+        photoutime = catalog[entry]['photometry'][0]['u_time'] if 'u_time' in catalog[entry]['photometry'][0] else 'MJD'
         if distancemod:
             dist = (10.0**(1.0 + 0.2 * distancemod) * un.pc).cgs.value
             areacorr = 4.0 * pi * dist**2.0 * ((1.0e-6 * un.jansky).cgs.value)
@@ -1042,7 +1044,7 @@ for fcnt, eventfile in enumerate(tq(sorted(files, key=lambda s: s.lower()))):
         hasfderrs = len(list(filter(None, photofderrs)))
         tt = [
             ("Source ID(s)", "@src"),
-            ("Epoch (" + catalog[entry]['photometry'][0]['u_time'] + ")",
+            ("Epoch (" + photoutime + ")",
              "@x{1.11}" + ("<sub>-@xle{1}</sub><sup>+@xue{1}</sup>" if hastimeerrs else ""))
         ]
         tt += [("Flux Density (" + photoufd[0] + ")",
@@ -1086,7 +1088,7 @@ for fcnt, eventfile in enumerate(tq(sorted(files, key=lambda s: s.lower()))):
 
         p3.extra_x_ranges = {"gregorian date": Range1d(
             start=min_x_date, end=max_x_date)}
-        p3.add_layout(DatetimeAxis(major_label_text_font_size='8pt', axis_label='Time (' + catalog[entry]['photometry'][0]['u_time'] + '/Gregorian)',
+        p3.add_layout(DatetimeAxis(major_label_text_font_size='8pt', axis_label='Time (' + photoutime + '/Gregorian)',
                                    major_label_text_font='futura', axis_label_text_font='futura', major_tick_in=0,
                                    x_range_name="gregorian date", axis_label_text_font_size='11pt'), 'below')
 
@@ -1253,6 +1255,7 @@ for fcnt, eventfile in enumerate(tq(sorted(files, key=lambda s: s.lower()))):
         phototype = [(True if 'upperlimit' in x or radiosigma * float(x['e_flux']) >= float(x['flux']) else False)
                      for x in catalog[entry]['photometry'] if 'flux' in x]
 
+        photoutime = catalog[entry]['photometry'][0]['u_time'] if 'u_time' in catalog[entry]['photometry'][0] else 'MJD'
         if distancemod:
             dist = (10.0**(1.0 + 0.2 * distancemod) * un.pc).cgs.value
             areacorr = 4.0 * pi * dist**2.0
@@ -1265,7 +1268,7 @@ for fcnt, eventfile in enumerate(tq(sorted(files, key=lambda s: s.lower()))):
         hasflerrs = len(list(filter(None, photoflerrs)))
         tt = [
             ("Source ID(s)", "@src"),
-            ("Epoch (" + catalog[entry]['photometry'][0]['u_time'] + ")",
+            ("Epoch (" + photoutime + ")",
              "@x{1.11}" + ("<sub>-@xle{1}</sub><sup>+@xue{1}</sup>" if hastimeerrs else ""))
         ]
         tt += [("Flux (" + photoufl[0].replace("ergs/s/cm^2", "ergs s⁻¹ cm⁻²") + ")",
@@ -1310,7 +1313,7 @@ for fcnt, eventfile in enumerate(tq(sorted(files, key=lambda s: s.lower()))):
 
         p4.extra_x_ranges = {"gregorian date": Range1d(
             start=min_x_date, end=max_x_date)}
-        p4.add_layout(DatetimeAxis(major_label_text_font_size='8pt', axis_label='Time (' + catalog[entry]['photometry'][0]['u_time'] + '/Gregorian)',
+        p4.add_layout(DatetimeAxis(major_label_text_font_size='8pt', axis_label='Time (' + photoutime + '/Gregorian)',
                                    major_label_text_font='futura', axis_label_text_font='futura', major_tick_in=0,
                                    x_range_name="gregorian date", axis_label_text_font_size='11pt'), 'below')
 
@@ -1595,8 +1598,8 @@ for fcnt, eventfile in enumerate(tq(sorted(files, key=lambda s: s.lower()))):
                             '''<body class='event-body'><div style="padding-bottom:8px;"><strong>Disclaimer:</strong> All data collected by the OSC was originally generated by others, if you intend to use this data in a publication, we ask that you please cite the linked sources and/or contact the sources of the data directly. Data sources are revealed by hovering over the data with your cursor.</div>''')
         html = re.sub(r'(\<\/title\>)', r'''\1\n
             <base target="_parent" />\n
-            <link rel="stylesheet" href="event.css" type="text/css">\n
-            <script type="text/javascript" src="scripts/marks.js" type="text/css"></script>\n
+            <link rel="stylesheet" href="https://sne.space/astrocats/astrocats/supernovae/html/event.css" type="text/css">\n
+            <script type="text/javascript" src="https://sne.space/astrocats/astrocats/supernovae/scripts/marks.js" type="text/css"></script>\n
             <script type="text/javascript">\n
                 if(top==self)\n
                 this.location="''' + eventname + '''"\n
@@ -1610,7 +1613,7 @@ for fcnt, eventfile in enumerate(tq(sorted(files, key=lambda s: s.lower()))):
         issueargs = '?title=' + ('[' + eventname + '] <Descriptive issue title>').encode('ascii', 'xmlcharrefreplace').decode("utf-8") + '&body=' + \
             ('Please describe the issue with ' + eventname + '\'s data here, be as descriptive as possible! ' +
              'If you believe the issue appears in other events as well, please identify which other events the issue possibly extends to.').encode('ascii', 'xmlcharrefreplace').decode("utf-8")
-        html = re.sub(r'(\<\/body\>)', '<div class="event-issue">' + r'<a href="https://github.com/astrocatalogs/sne/issues/new' +
+        html = re.sub(r'(\<\/body\>)', '<div class="event-issue">' + r'<a href="https://github.com/astrocatalogs/supernovae/issues/new' +
                       issueargs + r'" target="_blank">' + r'Report an issue with ' + eventname +
                       r'</a></div>\n\1', html)
 
@@ -1702,10 +1705,11 @@ for fcnt, eventfile in enumerate(tq(sorted(files, key=lambda s: s.lower()))):
                 if 'url' in source:
                     refurl = source['url']
 
+                sourcename = source['name'] if 'name' in source else source['bibcode']
                 newhtml = (newhtml + r'<tr><td class="event-cell" id="source' + source['alias'] + '">' + source['alias'] +
                            r'</td><td width=250px class="event-cell">' +
-                           ((((r'<a href="' + refurl + '">') if refurl else '') + source['name'].encode('ascii', 'xmlcharrefreplace').decode("utf-8") +
-                             ((r'</a>\n') if refurl else '') + r'<br>') if 'bibcode' not in source or source['name'] != source['bibcode'] else '') +
+                           ((((r'<a href="' + refurl + '">') if refurl else '') + sourcename.encode('ascii', 'xmlcharrefreplace').decode("utf-8") +
+                             ((r'</a>\n') if refurl else '') + r'<br>') if 'bibcode' not in source or sourcename != source['bibcode'] else '') +
                            ((source['reference'] + r'<br>') if 'reference' in source else '') +
                            ((r'\n[' + (('<a href="' + biburl + '">') if 'reference' in source else '') + source['bibcode'] +
                              (r'</a>' if 'reference' in source else '') + ']') if 'bibcode' in source else '') +
@@ -1749,6 +1753,8 @@ for fcnt, eventfile in enumerate(tq(sorted(files, key=lambda s: s.lower()))):
         if 'sources' in catalog[entry]:
             lsourcedict = {}
             for sourcerow in catalog[entry]['sources']:
+                if 'name' not in sourcerow:
+                    continue
                 strippedname = re.sub(
                     '<[^<]+?>', '', sourcerow['name'].encode('ascii', 'xmlcharrefreplace').decode("utf-8"))
                 alias = sourcerow['alias']

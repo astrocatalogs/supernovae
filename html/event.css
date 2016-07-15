@@ -43,6 +43,7 @@
 .event-body {
 	font-family: Futura,Century Gothic,AppleGothic,sans-serif;
 	font-size: 10pt;
+    width: 100%;
 }
 
 .event-body a {
@@ -101,7 +102,11 @@
 .bk-slider-horizontal {
 	height: 30px!important;
 	margin-left: 15px!important;
-	width: 200px!important;
+	//width: 200px!important;
+}
+
+.bk-root {
+    height: initial!important;
 }
 
 .bk-hbox label {
