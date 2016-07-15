@@ -78,7 +78,7 @@ Data quantities have five standard fields:
 | Field | Value | Optional?
 | :--- | :--- | :---
 | `value` | The value of the quantity | no
-| `error` | The error associated with the value | yes
+| `e_value` | The e_value associated with the value | yes
 | `lowerlimit` | Value is a lower limit | yes
 | `upperlimit` | Value is an upper limit | yes
 | `unit` | The unit of the value | yes
