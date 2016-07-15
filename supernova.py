@@ -678,6 +678,11 @@ class Supernova(Entry):
         return bestz, bestkind, bestsig, bestsrc
 
     def set_preferred_name(self):
+        """Highest preference goes to names of the form 'SN####AA'.
+        Otherwise base the name on whichever survey is the 'discoverer'.
+
+        FIX: create function to match SN####AA type names.
+        """
         name = self[self._KEYS.NAME]
         newname = ''
         aliases = self.get_aliases()
