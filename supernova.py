@@ -72,7 +72,7 @@ class Supernova(Entry):
     def _clean_quantity(self, quantity):
         value = quantity.get(QUANTITY.VALUE, '')
         error = quantity.get(QUANTITY.E_VALUE, '')
-        unit = quantity.get(QUANTITY.UNIT, '')
+        unit = quantity.get(QUANTITY.U_VALUE, '')
         kind = quantity.get(QUANTITY.KIND, '')
         key = quantity._key
 
@@ -158,7 +158,7 @@ class Supernova(Entry):
         if error:
             quantity[QUANTITY.E_VALUE] = error
         if unit:
-            quantity[QUANTITY.UNIT] = unit
+            quantity[QUANTITY.U_VALUE] = unit
         if kind:
             quantity[QUANTITY.KIND] = kind
 
@@ -676,6 +676,80 @@ class Supernova(Entry):
                 bestsrc = z['source']
 
         return bestz, bestkind, bestsig, bestsrc
+
+    def set_preferred_name(self):
+        name = self[self._KEYS.NAME]
+        newname = ''
+        aliases = self.get_aliases()
+        # if there are no other options to choose from, skip
+        if len(aliases) <= 1:
+            return name
+        # If the name is already in the form 'SN####AA' then keep using
+        # that
+        if (name.startswith('SN') and
+            ((is_number(name[2:6]) and not is_number(name[6:])) or
+             (is_number(name[2:5]) and not is_number(name[5:])))):
+            return name
+        # If one of the aliases is in the form 'SN####AA' then use that
+        for alias in aliases:
+            if (alias.startswith('SN') and
+                ((is_number(alias[2:6]) and not is_number(alias[6:])) or
+                 (is_number(alias[2:5]) and not is_number(alias[5:])))):
+                newname = alias
+                break
+        # Otherwise, name based on the 'discoverer' survey
+        if not newname and 'discoverer' in self:
+            discoverer = ','.join(
+                [x['value'].upper() for x in
+                 self['discoverer']])
+            if 'ASAS' in discoverer:
+                for alias in aliases:
+                    if 'ASASSN' in alias.upper():
+                        newname = alias
+                        break
+            if not newname and 'OGLE' in discoverer:
+                for alias in aliases:
+                    if 'OGLE' in alias.upper():
+                        newname = alias
+                        break
+            if not newname and 'CRTS' in discoverer:
+                for alias in aliases:
+                    if True in [x in alias.upper()
+                                for x in ['CSS', 'MLS', 'SSS', 'SNHUNT']]:
+                        newname = alias
+                        break
+            if not newname and 'PS1' in discoverer:
+                for alias in aliases:
+                    if 'PS1' in alias.upper():
+                        newname = alias
+                        break
+            if not newname and 'PTF' in discoverer:
+                for alias in aliases:
+                    if 'PTF' in alias.upper():
+                        newname = alias
+                        break
+            if not newname and 'GAIA' in discoverer:
+                for alias in aliases:
+                    if 'GAIA' in alias.upper():
+                        newname = alias
+                        break
+        # Always prefer another alias over PSN
+        if not newname and name.startswith('PSN'):
+            newname = aliases[0]
+        if newname and name != newname:
+            # Make sure new name doesn't already exist
+            if self.init_from_file(self.catalog, name=newname):
+                self._log.error("WARNING: `newname` already exists... "
+                                "should do something about that...")
+
+            self._log.warning("Changing entry from name '{}' to preferred"
+                              " name '{}'".format(name, newname))
+            self.catalog.entries[newname] = self.catalog.entries[name]
+            del self.catalog.entries[name]
+            self.catalog.entries[newname][self._KEYS.NAME] = newname
+            return newname
+
+        return name
 
     def ct_list_prioritized(self):
         ct_list = list(sorted(

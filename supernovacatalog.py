@@ -7,8 +7,8 @@ from collections import OrderedDict
 from subprocess import check_output
 
 from astrocats.catalog.catalog import Catalog
-from astrocats.catalog.utils import (is_number, pbar, read_json_arr,
-                                     read_json_dict)
+from astrocats.catalog.utils import pbar, read_json_arr, read_json_dict
+
 from .supernova import SUPERNOVA, Supernova
 from .utils import name_clean
 
@@ -151,90 +151,9 @@ class SupernovaCatalog(Catalog):
             self.load_stubs()
 
         task_str = self.get_current_task_str()
-        for ni, name in enumerate(pbar(list(
-                sorted(self.entries.keys())), task_str)):
-            newname = ''
-            aliases = self.entries[name].get_aliases()
-            # if there are no other options to choose from, skip
-            if len(aliases) <= 1:
-                continue
-            # If the name is already in the form 'SN####AA' then keep using
-            # that
-            if (name.startswith('SN') and
-                ((is_number(name[2:6]) and not is_number(name[6:])) or
-                 (is_number(name[2:5]) and not is_number(name[5:])))):
-                continue
-            # If one of the aliases is in the form 'SN####AA' then use that
-            for alias in aliases:
-                if (alias[:2] == 'SN' and
-                    ((is_number(alias[2:6]) and not is_number(alias[6:])) or
-                     (is_number(alias[2:5]) and not is_number(alias[5:])))):
-                    newname = alias
-                    break
-            # Otherwise, name based on the 'discoverer' survey
-            if not newname and 'discoverer' in self.entries[name]:
-                discoverer = ','.join(
-                    [x['value'].upper() for x in
-                     self.entries[name]['discoverer']])
-                if 'ASAS' in discoverer:
-                    for alias in aliases:
-                        if 'ASASSN' in alias.upper():
-                            newname = alias
-                            break
-                if not newname and 'OGLE' in discoverer:
-                    for alias in aliases:
-                        if 'OGLE' in alias.upper():
-                            newname = alias
-                            break
-                if not newname and 'CRTS' in discoverer:
-                    for alias in aliases:
-                        if True in [x in alias.upper()
-                                    for x in ['CSS', 'MLS', 'SSS', 'SNHUNT']]:
-                            newname = alias
-                            break
-                if not newname and 'PS1' in discoverer:
-                    for alias in aliases:
-                        if 'PS1' in alias.upper():
-                            newname = alias
-                            break
-                if not newname and 'PTF' in discoverer:
-                    for alias in aliases:
-                        if 'PTF' in alias.upper():
-                            newname = alias
-                            break
-                if not newname and 'GAIA' in discoverer:
-                    for alias in aliases:
-                        if 'GAIA' in alias.upper():
-                            newname = alias
-                            break
-            # Always prefer another alias over PSN
-            if not newname and name.startswith('PSN'):
-                newname = aliases[0]
-            if newname and name != newname:
-                # Make sure new name doesn't already exist
-                if self.proto.init_from_file(self, name=newname):
-                    self.log.error("WARNING: `newname` already exists... "
-                                   "should do something about that...")
-                    continue
-
-                new_entry = self.proto.init_from_file(self, name=name)
-                if new_entry is None:
-                    self.log.error(
-                        "Could not load `new_entry` with name '{}'"
-                        .format(name))
-                else:
-                    self.log.info("Changing entry from name '{}' to preferred"
-                                  " name '{}'".format(name, newname))
-                    self._delete_entry_file(entry=new_entry)
-                    del self.entries[name]
-                    self.entries[newname] = new_entry
-                    self.entries[newname][self.proto._KEYS.NAME] = newname
-                    if name in self.entries:
-                        self.log.error(
-                            "WARNING: `name` = '{}' is in `entries` "
-                            "shouldnt happen?".format(name))
-                        del self.entries[name]
-                    self.journal_entries()
+        for ni, oname in enumerate(pbar(self.entries, task_str)):
+            name = self.add_entry(oname)
+            self[name].set_preferred_name()
 
             if self.args.travis and ni > self.TRAVIS_QUERY_LIMIT:
                 break

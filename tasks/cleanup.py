@@ -18,11 +18,18 @@ from ..constants import CLIGHT, KM, PREF_KINDS
 from ..supernova import SUPERNOVA
 
 
-def do_derivations(catalog):
+def do_cleanup(catalog):
     task_str = catalog.get_current_task_str()
-    # Calculate some columns based on imported data, sanitize some fields
-    for oname in pbar(catalog.entries, task_str):
+
+    # Set preferred names, calculate some columns based on imported data,
+    # sanitize some fields
+    keys = catalog.entries.copy().keys()
+
+    for oname in pbar(keys, task_str):
         name = catalog.add_entry(oname)
+
+        # Set the preferred name, switching to that name if name changed.
+        name = catalog.entries[name].set_preferred_name()
 
         aliases = catalog.entries[name].get_aliases()
         catalog.entries[name].set_first_max_light()
@@ -424,6 +431,9 @@ def do_derivations(catalog):
                                                     [0][QUANTITY.VALUE])),
                                        sig=offsetsig), sources))
 
-        catalog.journal_entries()
+        catalog.entries[name].sanitize()
+        catalog.journal_entries(bury=True, final=True)
+
+    catalog.save_caches()
 
     return
