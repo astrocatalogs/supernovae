@@ -295,7 +295,7 @@ def do_ascii(catalog):
             catalog.entries[name].add_quantity(SUPERNOVA.DEC, row[2], source)
             catalog.entries[name].add_quantity(
                 SUPERNOVA.REDSHIFT, row[5].replace('?', ''), source,
-                error=row[6], kind='host')
+                e_value=row[6], kind='host')
             catalog.entries[name].add_quantity(
                 SUPERNOVA.CLAIMED_TYPE, row[7].replace('SN', '').strip(':* '),
                 source)

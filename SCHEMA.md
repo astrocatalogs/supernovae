@@ -58,13 +58,13 @@ The OSC stores many different pieces of metadata for each event. Data quantities
 "redshift":[
 	{
 		"value":"0.045",
-		"error":"0.001",
+		"e_value":"0.001",
 		"source":"1,2",
 		"kind":"heliocentric"
 	},
 	{
 		"value":"0.043",
-		"error":"0.002",
+		"e_value":"0.002",
 		"source":"3",
 		"kind":"host"
 	}

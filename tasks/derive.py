@@ -202,8 +202,8 @@ def do_derivations(catalog):
                                str(catalog
                                    .extinctions_dict[name][0]),
                                sources,
-                               error=str(catalog
-                                         .extinctions_dict[name][1]),
+                               e_value=str(catalog
+                                           .extinctions_dict[name][1]),
                                derived=True))
         if ((SUPERNOVA.HOST in catalog.entries[name] and
              (SUPERNOVA.HOST_RA not in catalog.entries[name] or

@@ -170,9 +170,9 @@ def do_donations(catalog):
                             SUPERNOVA.EBV, value, source)
 
         catalog.entries[name].add_quantity(
-            SUPERNOVA.REDSHIFT, zhel, source, error=zerr, kind='heliocentric')
+            SUPERNOVA.REDSHIFT, zhel, source, e_value=zerr, kind='heliocentric')
         catalog.entries[name].add_quantity(
-            SUPERNOVA.REDSHIFT, zcmb, source, error=zerr, kind='cmb')
+            SUPERNOVA.REDSHIFT, zcmb, source, e_value=zerr, kind='cmb')
 
         for path in photfiles:
             with open(path, 'r') as f:

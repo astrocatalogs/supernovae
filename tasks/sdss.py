@@ -63,7 +63,7 @@ def do_sdss_photo(catalog):
                 error = row[4] if float(row[4]) >= 0.0 else ''
                 (catalog.entries[name]
                  .add_quantity(SUPERNOVA.REDSHIFT, row[2], source,
-                               error=error,
+                               e_value=error,
                                kind='heliocentric'))
             if rr >= rst:
                 # Skip bad measurements
