@@ -50,7 +50,7 @@ class Supernova(Entry):
         added quantity is found to be a duplicate
         """
         svalue = quantity.get(QUANTITY.VALUE, '')
-        serror = quantity.get(QUANTITY.ERROR, '')
+        serror = quantity.get(QUANTITY.E_VALUE, '')
         sprob = quantity.get(QUANTITY.PROB, '')
         skind = quantity.get(QUANTITY.KIND, '')
 
@@ -63,15 +63,15 @@ class Supernova(Entry):
                     if (source not in
                             self[name][ii][QUANTITY.SOURCE].split(',')):
                         self[name][ii][QUANTITY.SOURCE] += ',' + source
-                        if serror and QUANTITY.ERROR not in self[name][ii]:
-                            self[name][ii][QUANTITY.ERROR] = serror
+                        if serror and QUANTITY.E_VALUE not in self[name][ii]:
+                            self[name][ii][QUANTITY.E_VALUE] = serror
                         if sprob and QUANTITY.PROB not in self[name][ii]:
                             self[name][ii][QUANTITY.PROB] = sprob
                 return
 
     def _clean_quantity(self, quantity):
         value = quantity.get(QUANTITY.VALUE, '')
-        error = quantity.get(QUANTITY.ERROR, '')
+        error = quantity.get(QUANTITY.E_VALUE, '')
         unit = quantity.get(QUANTITY.UNIT, '')
         kind = quantity.get(QUANTITY.KIND, '')
         key = quantity._key
@@ -160,7 +160,7 @@ class Supernova(Entry):
         if value:
             quantity[QUANTITY.VALUE] = value
         if error:
-            quantity[QUANTITY.ERROR] = error
+            quantity[QUANTITY.E_VALUE] = error
         if unit:
             quantity[QUANTITY.UNIT] = unit
         if kind:
@@ -203,15 +203,15 @@ class Supernova(Entry):
             else:
                 newsig = get_sig_digits(added_quantity[QUANTITY.VALUE])
                 for ct in my_quantity_list:
-                    if QUANTITY.ERROR in ct:
-                        if QUANTITY.ERROR in added_quantity:
-                            if (float(added_quantity[QUANTITY.ERROR]) <=
-                                    float(ct[QUANTITY.ERROR])):
+                    if QUANTITY.E_VALUE in ct:
+                        if QUANTITY.E_VALUE in added_quantity:
+                            if (float(added_quantity[QUANTITY.E_VALUE]) <=
+                                    float(ct[QUANTITY.E_VALUE])):
                                 isworse = False
                                 continue
                         newquantities.append(ct)
                     else:
-                        if QUANTITY.ERROR in added_quantity:
+                        if QUANTITY.E_VALUE in added_quantity:
                             isworse = False
                             continue
                         oldsig = get_sig_digits(ct[QUANTITY.VALUE])
