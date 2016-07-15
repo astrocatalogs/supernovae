@@ -7,7 +7,7 @@ from collections import OrderedDict
 from subprocess import check_output
 
 from astrocats.catalog.catalog import Catalog
-from astrocats.catalog.utils import pbar, read_json_arr, read_json_dict
+from astrocats.catalog.utils import read_json_arr, read_json_dict
 
 from .supernova import SUPERNOVA, Supernova
 from .utils import name_clean
