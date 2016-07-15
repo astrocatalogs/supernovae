@@ -1581,10 +1581,10 @@ def do_vizier(catalog):
         for ri, row in enumerate(pbar(table, task_str)):
             ra = (row['RAJ2000'] if isinstance(row['RAJ2000'], str) else
                   radec_clean(str(row['RAJ2000']), SUPERNOVA.RA,
-                              u_value='floatdegrees')[0])
+                              unit='floatdegrees')[0])
             dec = (row['DEJ2000'] if isinstance(row['DEJ2000'], str) else
                    radec_clean(str(row['DEJ2000']), SUPERNOVA.DEC,
-                               u_value='floatdegrees')[0])
+                               unit='floatdegrees')[0])
             name = (tab.upper() + 'SNR J' + rep_chars(ra, ' :.') +
                     rep_chars(dec, ' :.'))
             name, source = catalog.new_entry(
