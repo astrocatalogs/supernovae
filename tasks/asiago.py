@@ -106,16 +106,16 @@ def do_asiago_photo(catalog):
                     SUPERNOVA.VELOCITY, velocity, source, kind='host')
             if (hostra != ''):
                 catalog.entries[name].add_quantity(
-                    SUPERNOVA.HOST_RA, hostra, source, unit='nospace')
+                    SUPERNOVA.HOST_RA, hostra, source, u_value='nospace')
             if (hostdec != ''):
                 catalog.entries[name].add_quantity(
-                    SUPERNOVA.HOST_DEC, hostdec, source, unit='nospace')
+                    SUPERNOVA.HOST_DEC, hostdec, source, u_value='nospace')
             if (ra != ''):
                 catalog.entries[name].add_quantity(SUPERNOVA.RA, ra, source,
-                                                   unit='nospace')
+                                                   u_value='nospace')
             if (dec != ''):
                 catalog.entries[name].add_quantity(SUPERNOVA.DEC, dec, source,
-                                                   unit='nospace')
+                                                   u_value='nospace')
             if (discoverer != ''):
                 catalog.entries[name].add_quantity(SUPERNOVA.DISCOVERER,
                                                    discoverer,

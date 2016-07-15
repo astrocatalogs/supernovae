@@ -72,12 +72,12 @@ class Supernova(Entry):
     def _clean_quantity(self, quantity):
         value = quantity.get(QUANTITY.VALUE, '')
         error = quantity.get(QUANTITY.E_VALUE, '')
-        unit = quantity.get(QUANTITY.UNIT, '')
+        unit = quantity.get(QUANTITY.U_VALUE, '')
         kind = quantity.get(QUANTITY.KIND, '')
         key = quantity._key
 
         if not value:
-            return
+            return False
 
         if error and (not is_number(error) or float(error) < 0):
             raise ValueError(self.parent[self.parent._KEYS.NAME] +
@@ -100,18 +100,14 @@ class Supernova(Entry):
             value = self.clean_entry_name(value)
             for df in quantity.get(self._KEYS.DISTINCT_FROM, []):
                 if value == df[QUANTITY.VALUE]:
-                    return
+                    return False
 
-        if key in [self._KEYS.VELOCITY, self._KEYS.REDSHIFT, self._KEYS.EBV,
-                   self._KEYS.LUM_DIST, self._KEYS.COMOVING_DIST]:
-            if not is_number(value):
-                return
         if key == self._KEYS.HOST:
             if is_number(value):
-                return
+                return False
             if value.lower() in ['anonymous', 'anon.', 'anon',
                                  'intergalactic']:
-                return
+                return False
             value = host_clean(value)
             if ((not kind and ((value.lower().startswith('abell') and
                                 is_number(value[5:].strip())) or
@@ -121,7 +117,7 @@ class Supernova(Entry):
             isq = False
             value = value.replace('young', '')
             if value.lower() in ['unknown', 'unk', '?', '-']:
-                return
+                return False
             if '?' in value:
                 isq = True
                 value = value.strip(' ?')
@@ -150,7 +146,7 @@ class Supernova(Entry):
             #     # Only add dates if they have more information
             #     if len(ct[QUANTITY.VALUE].split('/')) >
             #            len(value.split('/')):
-            #         return
+            #         return False
 
         if is_number(value):
             value = '%g' % Decimal(value)
@@ -162,9 +158,11 @@ class Supernova(Entry):
         if error:
             quantity[QUANTITY.E_VALUE] = error
         if unit:
-            quantity[QUANTITY.UNIT] = unit
+            quantity[QUANTITY.U_VALUE] = unit
         if kind:
             quantity[QUANTITY.KIND] = kind
+
+        return True
 
     def add_quantity(self, quantity, value, source, forcereplacebetter=False,
                      **kwargs):
@@ -437,8 +435,9 @@ class Supernova(Entry):
                         self.catalog.bibauthor_dict[source[SOURCE.BIBCODE]]):
                     source[SOURCE.REFERENCE] = self.catalog.bibauthor_dict[
                         source[SOURCE.BIBCODE]]
-                    if SOURCE.NAME not in source and source[SOURCE.BIBCODE]:
-                        source[SOURCE.NAME] = source[SOURCE.BIBCODE]
+                if (SOURCE.NAME not in source and SOURCE.BIBCODE in source and
+                        source[SOURCE.BIBCODE]):
+                    source[SOURCE.NAME] = source[SOURCE.BIBCODE]
 
         if self._KEYS.REDSHIFT in self:
             self[self._KEYS.REDSHIFT] = list(
@@ -677,6 +676,85 @@ class Supernova(Entry):
                 bestsrc = z['source']
 
         return bestz, bestkind, bestsig, bestsrc
+
+    def set_preferred_name(self):
+        """Highest preference goes to names of the form 'SN####AA'.
+        Otherwise base the name on whichever survey is the 'discoverer'.
+
+        FIX: create function to match SN####AA type names.
+        """
+        name = self[self._KEYS.NAME]
+        newname = ''
+        aliases = self.get_aliases()
+        # if there are no other options to choose from, skip
+        if len(aliases) <= 1:
+            return name
+        # If the name is already in the form 'SN####AA' then keep using
+        # that
+        if (name.startswith('SN') and
+            ((is_number(name[2:6]) and not is_number(name[6:])) or
+             (is_number(name[2:5]) and not is_number(name[5:])))):
+            return name
+        # If one of the aliases is in the form 'SN####AA' then use that
+        for alias in aliases:
+            if (alias.startswith('SN') and
+                ((is_number(alias[2:6]) and not is_number(alias[6:])) or
+                 (is_number(alias[2:5]) and not is_number(alias[5:])))):
+                newname = alias
+                break
+        # Otherwise, name based on the 'discoverer' survey
+        if not newname and 'discoverer' in self:
+            discoverer = ','.join(
+                [x['value'].upper() for x in
+                 self['discoverer']])
+            if 'ASAS' in discoverer:
+                for alias in aliases:
+                    if 'ASASSN' in alias.upper():
+                        newname = alias
+                        break
+            if not newname and 'OGLE' in discoverer:
+                for alias in aliases:
+                    if 'OGLE' in alias.upper():
+                        newname = alias
+                        break
+            if not newname and 'CRTS' in discoverer:
+                for alias in aliases:
+                    if True in [x in alias.upper()
+                                for x in ['CSS', 'MLS', 'SSS', 'SNHUNT']]:
+                        newname = alias
+                        break
+            if not newname and 'PS1' in discoverer:
+                for alias in aliases:
+                    if 'PS1' in alias.upper():
+                        newname = alias
+                        break
+            if not newname and 'PTF' in discoverer:
+                for alias in aliases:
+                    if 'PTF' in alias.upper():
+                        newname = alias
+                        break
+            if not newname and 'GAIA' in discoverer:
+                for alias in aliases:
+                    if 'GAIA' in alias.upper():
+                        newname = alias
+                        break
+        # Always prefer another alias over PSN
+        if not newname and name.startswith('PSN'):
+            newname = aliases[0]
+        if newname and name != newname:
+            # Make sure new name doesn't already exist
+            if self.init_from_file(self.catalog, name=newname):
+                self._log.error("WARNING: `newname` already exists... "
+                                "should do something about that...")
+
+            self._log.warning("Changing entry from name '{}' to preferred"
+                              " name '{}'".format(name, newname))
+            self.catalog.entries[newname] = self.catalog.entries[name]
+            del self.catalog.entries[name]
+            self.catalog.entries[newname][self._KEYS.NAME] = newname
+            return newname
+
+        return name
 
     def ct_list_prioritized(self):
         ct_list = list(sorted(

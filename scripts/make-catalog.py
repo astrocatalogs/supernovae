@@ -925,7 +925,7 @@ for fcnt, eventfile in enumerate(tq(sorted(files, key=lambda s: s.lower()))):
                 y0=prunedscaled[i],
                 yorig=spectrumflux[i],
                 fluxunit=[label_format(catalog[entry]['spectra'][
-                                       i]['fluxunit'])] * sl,
+                                       i]['u_fluxes'])] * sl,
                 x=prunedwave[i],
                 y=[y_offsets[i] + j for j in prunedscaled[i]],
                 src=[catalog[entry]['spectra'][i]['source']] * sl
@@ -1655,8 +1655,8 @@ for fcnt, eventfile in enumerate(tq(sorted(files, key=lambda s: s.lower()))):
                                     and catalog[entry]['maxband']):
                                 keyhtml = keyhtml + \
                                     r' [' + catalog[entry]['maxband'][0]['value'] + ']'
-                            if 'error' in row:
-                                keyhtml = keyhtml + r' ± ' + row['error']
+                            if 'e_value' in row:
+                                keyhtml = keyhtml + r' ± ' + row['e_value']
                             if 'derived' in row and row['derived']:
                                 keyhtml = keyhtml + '</span>'
 
@@ -1911,8 +1911,8 @@ if args.writecatalog and not args.eventlist:
                 for row in catalogcopy[entry][col]:
                     if 'source' in row:
                         del row['source']
-                    if 'unit' in row:
-                        del row['unit']
+                    if 'u_value' in row:
+                        del row['u_value']
     catalog = deepcopy(catalogcopy)
 
     # Convert to array since that's what datatables expects

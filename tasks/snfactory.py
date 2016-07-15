@@ -120,7 +120,7 @@ def do_snf_specta(catalog):
                 'Angstrom', unit_flx, u_time='MJD', time=time,
                 wavelengths=wavelengths, fluxes=fluxes, errors=errors,
                 observer=observer, observatory=observatory,
-                telescope=telescope, instrument=instrument, errorunit=unit_err,
+                telescope=telescope, instrument=instrument, u_errors=unit_err,
                 source=sources, filename=filename)
             snfcnt = snfcnt + 1
             if (catalog.args.travis and

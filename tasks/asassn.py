@@ -77,13 +77,13 @@ def do_asassn(catalog):
         catalog.entries[name].add_quantity(
             SUPERNOVA.DISCOVER_DATE, discdate, sources)
         catalog.entries[name].add_quantity(SUPERNOVA.RA, ra, sources,
-                                           unit='floatdegrees')
+                                           u_value='floatdegrees')
         catalog.entries[name].add_quantity(SUPERNOVA.DEC, dec, sources,
-                                           unit='floatdegrees')
+                                           u_value='floatdegrees')
         catalog.entries[name].add_quantity(
             SUPERNOVA.REDSHIFT, redshift, sources)
         catalog.entries[name].add_quantity(
-            'hostoffsetang', hostoff, sources, unit='arcseconds')
+            'hostoffsetang', hostoff, sources, u_value='arcseconds')
         for ct in claimedtype.split('/'):
             if ct != 'Unk':
                 catalog.entries[name].add_quantity(SUPERNOVA.CLAIMED_TYPE, ct,

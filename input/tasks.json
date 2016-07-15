@@ -453,30 +453,12 @@
         "groups": ["meta"],
         "priority": -100
     },
-    "set_pref_names": {
-        "nice_name": "Setting preferred names",
-        "active": true,
-        "update": false,
-        "module": "catalog.tasks.set_preferred_names",
-        "function": "set_preferred_names",
-        "groups": ["meta"],
-        "priority": -10
-    },
-    "derive": {
+    "cleanup": {
         "nice_name": "Added derived quantities",
         "active": true,
         "update": false,
-        "module": "supernovae.tasks.derive",
-        "function": "do_derivations",
-        "groups": ["meta"],
-        "priority": -2
-    },
-    "sanitize": {
-        "nice_name": "Writing final time",
-        "active": true,
-        "update": false,
-        "module": "catalog.tasks.sanitize",
-        "function": "sanitize",
+        "module": "supernovae.tasks.cleanup",
+        "function": "do_cleanup",
         "groups": ["meta"],
         "priority": -1
     }

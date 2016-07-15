@@ -47,9 +47,9 @@ def do_snhunt(catalog):
         host = re.sub('<[^<]+?>', '', cols[1]).strip().replace('_', ' ')
         catalog.entries[name].add_quantity(SUPERNOVA.HOST, host, source)
         catalog.entries[name].add_quantity(
-            SUPERNOVA.RA, cols[2], source, unit='floatdegrees')
+            SUPERNOVA.RA, cols[2], source, u_value='floatdegrees')
         catalog.entries[name].add_quantity(
-            SUPERNOVA.DEC, cols[3], source, unit='floatdegrees')
+            SUPERNOVA.DEC, cols[3], source, u_value='floatdegrees')
         dd = cols[0]
         discoverdate = dd[:4] + '/' + dd[4:6] + '/' + dd[6:8]
         catalog.entries[name].add_quantity(

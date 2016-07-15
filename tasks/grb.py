@@ -30,9 +30,9 @@ def do_grb(catalog):
                                      srcname='Gamma-ray Bursts Catalog',
                                      url='http://grbcatalog.org')
         catalog.entries[name].add_quantity(
-            SUPERNOVA.RA, row[2], source, unit='floatdegrees')
+            SUPERNOVA.RA, row[2], source, u_value='floatdegrees')
         catalog.entries[name].add_quantity(
-            SUPERNOVA.DEC, row[3], source, unit='floatdegrees')
+            SUPERNOVA.DEC, row[3], source, u_value='floatdegrees')
         catalog.entries[name].add_quantity(SUPERNOVA.REDSHIFT, row[8], source)
 
     catalog.journal_entries()
