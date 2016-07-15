@@ -1338,7 +1338,7 @@ for fcnt, eventfile in enumerate(tq(sorted(files, key=lambda s: s.lower()))):
             p4.add_layout(LinearAxis(axis_label="Luminosity in band (ergs s⁻¹)", major_label_text_font_size='8pt',
                                      major_label_text_font='futura', axis_label_text_font='futura',
                                      y_range_name="abs mag", axis_label_text_font_size='11pt'), 'right')
-        p4.yaxis[1].formatter.precision = 1
+            p4.yaxis[1].formatter.precision = 1
         p4.add_tools(hover)
 
         xs = []
