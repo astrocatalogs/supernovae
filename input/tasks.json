@@ -372,6 +372,7 @@
         "function": "do_wiserep_spectra",
         "groups": ["spectra"],
         "repo": "input/sne-external-WISEREP",
+        "always_journal": true,
         "priority": 201
     },
     "cfa_spectra": {
@@ -382,6 +383,7 @@
         "function": "do_cfa_spectra",
         "groups": ["spectra"],
         "repo": "input/sne-external-spectra",
+        "always_journal": true,
         "priority": 202
     },
     "snls_spectra": {
@@ -392,6 +394,7 @@
         "function": "do_snls_spectra",
         "groups": ["spectra"],
         "repo": "input/sne-external-spectra",
+        "always_journal": true,
         "priority": 203
     },
     "csp_spectra": {
@@ -402,6 +405,7 @@
         "function": "do_csp_spectra",
         "groups": ["spectra"],
         "repo": "input/sne-external-spectra",
+        "always_journal": true,
         "priority": 204
     },
     "ucb_spectra": {
@@ -413,6 +417,7 @@
         "function": "do_ucb_spectra",
         "groups": ["spectra"],
         "repo": "input/sne-external-spectra",
+        "always_journal": true,
         "priority": 205
     },
     "suspect_spectra": {
@@ -423,6 +428,7 @@
         "function": "do_suspect_spectra",
         "groups": ["spectra"],
         "repo": "input/sne-external-spectra",
+        "always_journal": true,
         "priority": 206
     },
     "snf_spectra": {
@@ -433,6 +439,7 @@
         "function": "do_snf_specta",
         "groups": ["spectra"],
         "repo": "input/sne-external-spectra",
+        "always_journal": true,
         "priority": 207
     },
     "superfit_spectra": {
@@ -443,6 +450,7 @@
         "function": "do_superfit_spectra",
         "groups": ["spectra"],
         "repo": "input/sne-external-spectra",
+        "always_journal": true,
         "priority": 208
     },
     "merge_duplicates": {
