@@ -23,7 +23,7 @@ from .utils import frame_priority, host_clean, radec_clean
 
 
 class SUPERNOVA(ENTRY):
-    CLAIMED_TYPE = Key('clamedtype', KEY_TYPES.STRING)
+    CLAIMED_TYPE = Key('claimedtype', KEY_TYPES.STRING)
     DISCOVERY_DATE = Key('discoverdate', KEY_TYPES.STRING)
     ERRORS = Key('errors')
 
@@ -468,9 +468,7 @@ class Supernova(Entry):
 
             # Change sources to match new aliases
             for key in self.keys():
-                # if self._KEYS.get_key_by_name(key).no_source:
-                if (key in [self._KEYS.NAME, self._KEYS.SCHEMA,
-                            self._KEYS.SOURCES, self._KEYS.ERRORS]):
+                if self._KEYS.get_key_by_name(key).no_source:
                     continue
                 for item in self[key]:
                     aliases = [str(y) for y in sorted(int(source_reps[x]) for
@@ -530,9 +528,7 @@ class Supernova(Entry):
         for key in data.keys():
             # The following line should be used to replace the above once keys
             # returns the superclass keys too
-            # if self._KEYS.get_key_by_name(key).no_source:
-            if (key in [self._KEYS.NAME, self._KEYS.SCHEMA,
-                        self._KEYS.SOURCES, self._KEYS.ERRORS]):
+            if self._KEYS.get_key_by_name(key).no_source:
                 pass
             elif key == self._KEYS.PHOTOMETRY:
                 for p, photo in enumerate(data[self._KEYS.PHOTOMETRY]):

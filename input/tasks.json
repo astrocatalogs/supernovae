@@ -361,6 +361,7 @@
         "function": "do_asiago_spectra",
         "groups": ["spectra"],
         "repo": "input/sne-external-spectra",
+        "always_journal": true,
         "priority": 200
     },
     "wiserep_spectra": {
