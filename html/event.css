@@ -95,6 +95,10 @@
 	width: 260px;
 }
 
+.bk-widget select {
+    min-width: initial!important;
+}
+
 .bk-hbox-spacer {
 	margin-right: 0!important;
 }
