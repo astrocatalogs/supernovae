@@ -11,15 +11,14 @@ from astrocats.catalog.quantity import QUANTITY
 from astrocats.catalog.source import SOURCE
 from astrocats.catalog.spectrum import SPECTRUM
 from astrocats.catalog.utils import (bib_priority, get_sig_digits,
-                                     get_source_year,
-                                     is_number, jd_to_mjd, make_date_string,
-                                     pretty_num, uniq_cdl)
+                                     get_source_year, is_number, jd_to_mjd,
+                                     make_date_string, pretty_num, uniq_cdl)
 from astropy.time import Time as astrotime
 
 from cdecimal import Decimal
 
 from .constants import MAX_BANDS, PREF_KINDS, REPR_BETTER_QUANTITY
-from .utils import frame_priority, host_clean, radec_clean
+from .utils import frame_priority, host_clean, name_clean, radec_clean
 
 
 class SUPERNOVA(ENTRY):
@@ -101,8 +100,7 @@ class Supernova(Entry):
             for df in quantity.get(self._KEYS.DISTINCT_FROM, []):
                 if value == df[QUANTITY.VALUE]:
                     return False
-
-        if key == self._KEYS.HOST:
+        elif key == self._KEYS.HOST:
             if is_number(value):
                 return False
             if value.lower() in ['anonymous', 'anon.', 'anon',
@@ -127,7 +125,6 @@ class Supernova(Entry):
                     break
             if isq:
                 value = value + '?'
-
         elif key in [self._KEYS.RA, self._KEYS.DEC,
                      self._KEYS.HOST_RA, self._KEYS.HOST_DEC]:
             (value, unit) = radec_clean(value, key, unit=unit)
@@ -460,7 +457,7 @@ class Supernova(Entry):
 
             # Assign new aliases to match new order
             source_reps = OrderedDict(
-                [[x[SOURCE.ALIAS], str(i+1)] for i, x in
+                [[x[SOURCE.ALIAS], str(i + 1)] for i, x in
                  enumerate(self[self._KEYS.SOURCES])])
             for i, source in enumerate(self[self._KEYS.SOURCES]):
                 self[self._KEYS.SOURCES][i][
@@ -472,8 +469,11 @@ class Supernova(Entry):
                     continue
                 for item in self[key]:
                     aliases = [str(y) for y in sorted(int(source_reps[x]) for
-                               x in item[item._KEYS.SOURCE].split(','))]
+                                                      x in item[item._KEYS.SOURCE].split(','))]
                     item[item._KEYS.SOURCE] = ','.join(aliases)
+
+    def clean_entry_name(self, name):
+        return name_clean(name)
 
     def clean_internal(self, data):
         """Clean input data from the 'Supernovae/input/internal' repository.
