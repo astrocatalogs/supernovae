@@ -56,7 +56,7 @@ class SupernovaCatalog(Catalog):
                               '--',
                               'OSC-JSON-format.md'])
                 .decode('ascii').strip().strip('"').strip())
-        URL = ('https://github.com/astrocatalogs/sne/blob/' + HASH +
+        URL = ('https://github.com/astrocatalogs/astrocats/blob/' + HASH +
                '/OSC-JSON-format.md')
 
     def __init__(self, args, log):
