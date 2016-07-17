@@ -18,7 +18,7 @@ from astropy.time import Time as astrotime
 from cdecimal import Decimal
 
 from .constants import MAX_BANDS, PREF_KINDS, REPR_BETTER_QUANTITY
-from .utils import frame_priority, host_clean, name_clean, radec_clean
+from .utils import frame_priority, host_clean, radec_clean
 
 
 class SUPERNOVA(ENTRY):
@@ -96,7 +96,7 @@ class Supernova(Entry):
 
         # Handle certain name
         if key == self._KEYS.ALIAS:
-            value = self.clean_entry_name(value)
+            value = self.catalog.clean_entry_name(value)
             for df in quantity.get(self._KEYS.DISTINCT_FROM, []):
                 if value == df[QUANTITY.VALUE]:
                     return False
@@ -471,9 +471,6 @@ class Supernova(Entry):
                     aliases = [str(y) for y in sorted(int(source_reps[x]) for
                                                       x in item[item._KEYS.SOURCE].split(','))]
                     item[item._KEYS.SOURCE] = ','.join(aliases)
-
-    def clean_entry_name(self, name):
-        return name_clean(name)
 
     def clean_internal(self, data):
         """Clean input data from the 'Supernovae/input/internal' repository.
