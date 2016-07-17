@@ -919,13 +919,15 @@ for fcnt, eventfile in enumerate(tq(sorted(files, key=lambda s: s.lower()))):
         sources = []
         for i in range(len(prunedwave)):
             sl = len(prunedscaled[i])
+            fluxunit = catalog[entry]['spectra'][i][
+                'u_fluxes'] if 'u_fluxes' in catalog[entry][
+                    'spectra'][i] else ''
 
             data = dict(
                 x0=prunedwave[i],
                 y0=prunedscaled[i],
                 yorig=spectrumflux[i],
-                fluxunit=[label_format(catalog[entry]['spectra'][
-                                       i]['u_fluxes'])] * sl,
+                fluxunit=[label_format()] * sl,
                 x=prunedwave[i],
                 y=[y_offsets[i] + j for j in prunedscaled[i]],
                 src=[catalog[entry]['spectra'][i]['source']] * sl
