@@ -783,8 +783,8 @@ for fcnt, eventfile in enumerate(tq(sorted(files, key=lambda s: s.lower()))):
                     eval('s'+s).trigger('change');
                 }
             """)
-            photochecks = row(Paragraph(text="Photometry to show:"), Select(
-                value="Raw", options=["Raw", "K-Corrected", "All"], callback=photocallback))
+            photochecks = Select(title="Photometry to show:",
+                value="Raw", options=["Raw", "K-Corrected", "All"], callback=photocallback)
         else:
             photochecks = ''
 
