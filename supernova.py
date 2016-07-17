@@ -489,10 +489,6 @@ class Supernova(Entry):
         for ss, source in enumerate(data.get(self._KEYS.SOURCES, [])):
             if SOURCE.BIBCODE in source:
                 bibcodes.append(source[SOURCE.BIBCODE])
-                # If there is a bibcode, remove the 'name'
-                #    auto construct it later instead
-                if self._KEYS.NAME in source:
-                    source.pop(self._KEYS.NAME)
 
         # If there are no existing sources, add OSC as one
         if len(bibcodes) == 0:
