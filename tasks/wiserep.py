@@ -8,6 +8,7 @@ from glob import glob
 from html import unescape
 
 from astrocats.catalog.utils import is_number, pbar, pbar_strings, uniq_cdl
+from astrocats.catalog.source import SOURCE
 from astropy.time import Time as astrotime
 
 from ..supernova import SUPERNOVA
@@ -23,7 +24,7 @@ def do_wiserep_spectra(catalog):
     # These are known to be in error on the WISeREP page, either fix or ignore
     # them.
     wiserepbibcorrectdict = {'2000AJ....120..367G]': '2000AJ....120..367G',
-                             'Harutyunyan+et+al.+2008': '2008A&A...488..383H',
+                             'Harutyunyan et al. 2008': '2008A&A...488..383H',
                              '0609268': '2007AJ....133...58K',
                              '2006ApJ...636...400Q': '2006ApJ...636..400Q',
                              '2011ApJ...741...76': '2011ApJ...741...76C',
@@ -34,7 +35,9 @@ def do_wiserep_spectra(catalog):
                              '2014MNRAS.438,368': '2014MNRAS.438..368T',
                              '2012MNRAS.420.1135': '2012MNRAS.420.1135S',
                              '2012Sci..337..942D': '2012Sci...337..942D',
-                             'stt1839': ''}
+                             'stt1839': '',
+                             'arXiv:1605.03136': '2016arXiv160503136T',
+                             '10.1093/mnras/stt1839': '2013MNRAS.436.3614S'}
 
     file_names = list(
         glob(os.path.join(
@@ -83,12 +86,16 @@ def do_wiserep_spectra(catalog):
                 newbibcode = bibcode
                 if bibcode in wiserepbibcorrectdict:
                     newbibcode = wiserepbibcorrectdict[bibcode]
-                if newbibcode:
+                if newbibcode and len(newbibcode) == 19:
                     source = catalog.entries[name].add_source(
                         bibcode=unescape(newbibcode))
                 else:
+                    bibname = unescape(bibcode)
                     source = catalog.entries[name].add_source(
-                        name=unescape(bibcode))
+                        name=bibname)
+                    catalog.log.warning('Bibcode "{}" is invalid, using as '
+                                        '`{}` instead'.format(bibname,
+                                                              SOURCE.NAME))
                 sources = uniq_cdl([source, secondarysource])
             else:
                 sources = secondarysource
@@ -138,7 +145,7 @@ def do_wiserep_spectra(catalog):
                     u_wavelengths='Angstrom',
                     errors=errors,
                     u_fluxes=fluxunit,
-                    u_errors=fluxunit,
+                    u_errors=fluxunit if errors else '',
                     wavelengths=wavelengths,
                     fluxes=fluxes,
                     u_time='MJD', time=time,
