@@ -35,7 +35,7 @@ def do_wiserep_spectra(catalog):
                              '2014MNRAS.438,368': '2014MNRAS.438..368T',
                              '2012MNRAS.420.1135': '2012MNRAS.420.1135S',
                              '2012Sci..337..942D': '2012Sci...337..942D',
-                             'stt1839': '',
+                             'stt1839': '2013MNRAS.436.3614S',
                              'arXiv:1605.03136': '2016arXiv160503136T',
                              '10.1093/mnras/stt1839': '2013MNRAS.436.3614S'}
 
