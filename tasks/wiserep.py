@@ -67,10 +67,9 @@ def do_wiserep_spectra(catalog):
         with open(os.path.join(folder, 'README.json'), 'r') as f:
             fileinfo = json.loads(f.read())
 
-        files = glob(folder + '/*')
+        files = list(set(glob(folder + '/*')) -
+                     set(glob(folder + '/README.json')))
         for fname in pbar(files, task_str):
-            if "README.json" in fname:
-                continue
             specfile = os.path.basename(fname)
             claimedtype = fileinfo[specfile]["Type"]
             instrument = fileinfo[specfile]["Instrument"]
