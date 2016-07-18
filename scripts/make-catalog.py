@@ -1954,13 +1954,14 @@ if args.writecatalog and not args.eventlist:
     with open(outdir + catprefix + '.min.json', 'rb') as f_in, gzip.open(outdir + catprefix + '.min.json.gz', 'wb') as f_out:
         shutil.copyfileobj(f_in, f_out)
 
+    names = OrderedDict()
+    for ev in catalog:
+        names[ev['name']] = [x['value'] for x in ev['alias']]
+    jsonstring = json.dumps(names, separators=(',', ':'))
+    with open(outdir + 'names.min.json' + testsuffix, 'w') as f:
+        f.write(jsonstring)
+
     if args.deleteorphans and not args.boneyard:
-        names = OrderedDict()
-        for ev in catalog:
-            names[ev['name']] = [x['value'] for x in ev['alias']]
-        jsonstring = json.dumps(names, separators=(',', ':'))
-        with open(outdir + 'names.min.json' + testsuffix, 'w') as f:
-            f.write(jsonstring)
 
         safefiles = [os.path.basename(x) for x in files]
         safefiles += ['catalog.json', 'catalog.min.json', 'bones.json', 'bones.min.json', 'names.min.json', 'md5s.json', 'hostimgs.json', 'iaucs.json', 'errata.json',
