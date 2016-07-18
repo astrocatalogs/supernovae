@@ -100,7 +100,8 @@ def do_snls_spectra(catalog):
         # specdata[3]]
 
         catalog.entries[name].add_spectrum(
-            'Angstrom', 'erg/s/cm^2/Angstrom', wavelengths=wavelengths,
+            u_wavelengths='Angstrom', u_fluxes='erg/s/cm^2/Angstrom',
+            wavelengths=wavelengths,
             fluxes=fluxes, u_time='MJD' if name in datedict else '',
             time=datedict[name] if name in datedict else '',
             telescope=telescope, source=source,

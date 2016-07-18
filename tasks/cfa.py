@@ -207,7 +207,7 @@ def do_cfa_spectra(catalog):
                                 (catalog.entries[name]
                                  .add_source(bibcode='2008AJ....135.1598M'))])
             catalog.entries[name].add_spectrum(
-                'Angstrom', 'erg/s/cm^2/Angstrom',
+                u_wavelengths='Angstrom', u_fluxes='erg/s/cm^2/Angstrom',
                 filename=filename,
                 wavelengths=wavelengths, fluxes=fluxes, u_time='MJD' if time
                 else '', time=time, instrument=instrument,
@@ -260,7 +260,7 @@ def do_cfa_spectra(catalog):
                  catalog.entries[name]
                  .add_source(bibcode='2014AJ....147...99M')])
             catalog.entries[name].add_spectrum(
-                'Angstrom', 'erg/s/cm^2/Angstrom',
+                u_wavelengths='Angstrom', u_fluxes='erg/s/cm^2/Angstrom',
                 wavelengths=wavelengths, filename=filename,
                 fluxes=fluxes, u_time='MJD' if time else '', time=time,
                 instrument=instrument, source=sources,
@@ -318,7 +318,7 @@ def do_cfa_spectra(catalog):
             wavelengths = data[0]
             fluxes = [str(Decimal(x) * Decimal(1.0e-15)) for x in data[1]]
             catalog.entries[name].add_spectrum(
-                'Angstrom', 'erg/s/cm^2/Angstrom',
+                u_wavelengths='Angstrom', u_fluxes='erg/s/cm^2/Angstrom',
                 wavelengths=wavelengths, filename=filename,
                 fluxes=fluxes, u_time='MJD' if time else '', time=time,
                 instrument=instrument, source=source,

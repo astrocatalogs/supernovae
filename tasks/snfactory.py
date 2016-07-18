@@ -117,7 +117,8 @@ def do_snf_specta(catalog):
                         'erg/s/cm^2/Angstrom')
             unit_flx = 'erg/s/cm^2/Angstrom'
             catalog.entries[name].add_spectrum(
-                'Angstrom', unit_flx, u_time='MJD', time=time,
+                u_wavelengths='Angstrom', u_fluxes=unit_flx, u_time='MJD',
+                time=time,
                 wavelengths=wavelengths, fluxes=fluxes, errors=errors,
                 observer=observer, observatory=observatory,
                 telescope=telescope, instrument=instrument, u_errors=unit_err,

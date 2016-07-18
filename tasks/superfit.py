@@ -81,7 +81,8 @@ def do_superfit_spectra(catalog):
             else:
                 mlmjd = ''
             catalog.entries[name].add_spectrum(
-                'Angstrom', 'Uncalibrated', u_time='MJD' if mlmjd else '',
+                u_wavelengths='Angstrom', u_fluxes='Uncalibrated',
+                u_time='MJD' if mlmjd else '',
                 time=mlmjd, wavelengths=wavelengths, fluxes=fluxes,
                 source=source)
 

@@ -206,7 +206,8 @@ def do_suspect_spectra(catalog):
                     errors = specdata[2]
 
                 catalog.entries[name].add_spectrum(
-                    'Angstrom', 'Uncalibrated', u_time='MJD',
+                    u_wavelengths='Angstrom', u_fluxes='Uncalibrated',
+                    u_time='MJD',
                     time=time,
                     wavelengths=wavelengths, fluxes=fluxes, errors=errors,
                     u_errors='Uncalibrated',

@@ -94,7 +94,8 @@ def do_csp_spectra(catalog):
                 jd = row[1].strip()
                 time = str(jd_to_mjd(Decimal(jd)))
             elif row[0] == '#Redshift:':
-                catalog.entries[name].add_quantity(SUPERNOVA.REDSHIFT, row[1].strip(),
+                catalog.entries[name].add_quantity(SUPERNOVA.REDSHIFT,
+                                                   row[1].strip(),
                                                    source)
             if r < 7:
                 continue
@@ -104,7 +105,8 @@ def do_csp_spectra(catalog):
         fluxes = specdata[1]
 
         catalog.entries[name].add_spectrum(
-            'Angstrom', 'erg/s/cm^2/Angstrom', u_time='MJD',
+            u_wavelengths='Angstrom', u_fluxes='erg/s/cm^2/Angstrom',
+            u_time='MJD',
             time=time, wavelengths=wavelengths, fluxes=fluxes,
             telescope=telescope, instrument=instrument,
             source=source, deredshifted=True, filename=filename)
