@@ -7,8 +7,7 @@ import warnings
 from glob import glob
 from html import unescape
 
-from astrocats.catalog.utils import (is_number, pbar, pbar_strings, tprint,
-                                     uniq_cdl)
+from astrocats.catalog.utils import is_number, pbar, pbar_strings, uniq_cdl
 from astropy.time import Time as astrotime
 
 from ..supernova import SUPERNOVA
@@ -41,6 +40,8 @@ def do_wiserep_spectra(catalog):
         glob(os.path.join(
             catalog.get_current_task_repo(), '*')))
     for folder in pbar_strings(file_names, task_str):
+        if '.txt' in folder:
+            continue
         name = os.path.basename(folder).strip()
         if name.startswith('sn'):
             name = 'SN' + name[2:]
@@ -151,7 +152,6 @@ def do_wiserep_spectra(catalog):
                         catalog.TRAVIS_QUERY_LIMIT == 0):
                     break
 
-        tprint('WISeREP spectrum count: ' + str(wiserepcnt))
         catalog.journal_entries()
 
     return
