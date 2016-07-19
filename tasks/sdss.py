@@ -39,7 +39,8 @@ def do_sdss_photo(catalog):
 
         for rr, row in enumerate(tsvin):
             if rr == 0:
-                if row[5] == 'RA:':
+                # Ignore IAU names from Sako 2014 as they are unreliable
+                if row[5] == 'RA:' or bibcode == '2014arXiv1401.3317S':
                     name = 'SDSS-II SN ' + row[3]
                 else:
                     name = 'SN' + row[5]

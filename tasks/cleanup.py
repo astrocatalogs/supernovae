@@ -432,7 +432,7 @@ def do_cleanup(catalog):
                                        sig=offsetsig), sources))
 
         catalog.entries[name].sanitize()
-        catalog.journal_entries(bury=True, final=True)
+        catalog.journal_entries(bury=True, final=True, gz=True)
 
     catalog.save_caches()
 

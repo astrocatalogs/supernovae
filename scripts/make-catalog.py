@@ -1696,7 +1696,8 @@ for fcnt, eventfile in enumerate(tq(sorted(files, key=lambda s: s.lower()))):
         html = re.sub(r'(\<\/body\>)', newhtml, html)
 
         if 'sources' in catalog[entry] and len(catalog[entry]['sources']):
-            newhtml = r'<div class="event-tab-div"><h3 class="event-tab-title">Sources of data</h3><table class="event-table"><tr><th width=30px class="event-cell">ID</th><th class="event-cell">Source</th></tr>\n'
+            newhtml = r'<div class="event-tab-div"><h3 class="event-tab-title">Sources of data</h3><table class="event-table"><tr><th width=30px class="event-cell">ID</th><th class="event-cell">Primary Source</th></tr>\n'
+            first_secondary = False
             for source in catalog[entry]['sources']:
                 biburl = ''
                 if 'bibcode' in source:
@@ -1708,6 +1709,9 @@ for fcnt, eventfile in enumerate(tq(sorted(files, key=lambda s: s.lower()))):
                     refurl = source['url']
 
                 sourcename = source['name'] if 'name' in source else source['bibcode']
+                if not first_secondary and source.get('secondary', False):
+                    first_secondary = True
+                    newhtml += r'<th colspan="2" class="event-cell">Secondary Source</th></tr>\n'
                 newhtml = (newhtml + r'<tr><td class="event-cell" id="source' + source['alias'] + '">' + source['alias'] +
                            r'</td><td width=250px class="event-cell">' +
                            ((((r'<a href="' + refurl + '">') if refurl else '') + sourcename.encode('ascii', 'xmlcharrefreplace').decode("utf-8") +
@@ -1954,13 +1958,14 @@ if args.writecatalog and not args.eventlist:
     with open(outdir + catprefix + '.min.json', 'rb') as f_in, gzip.open(outdir + catprefix + '.min.json.gz', 'wb') as f_out:
         shutil.copyfileobj(f_in, f_out)
 
+    names = OrderedDict()
+    for ev in catalog:
+        names[ev['name']] = [x['value'] for x in ev['alias']]
+    jsonstring = json.dumps(names, separators=(',', ':'))
+    with open(outdir + 'names.min.json' + testsuffix, 'w') as f:
+        f.write(jsonstring)
+
     if args.deleteorphans and not args.boneyard:
-        names = OrderedDict()
-        for ev in catalog:
-            names[ev['name']] = [x['value'] for x in ev['alias']]
-        jsonstring = json.dumps(names, separators=(',', ':'))
-        with open(outdir + 'names.min.json' + testsuffix, 'w') as f:
-            f.write(jsonstring)
 
         safefiles = [os.path.basename(x) for x in files]
         safefiles += ['catalog.json', 'catalog.min.json', 'bones.json', 'bones.min.json', 'names.min.json', 'md5s.json', 'hostimgs.json', 'iaucs.json', 'errata.json',
