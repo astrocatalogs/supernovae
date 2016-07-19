@@ -4,7 +4,6 @@ import warnings
 from collections import OrderedDict
 
 from astrocats.catalog.entry import ENTRY, Entry
-from astrocats.catalog.error import ERROR
 from astrocats.catalog.key import KEY_TYPES, Key
 from astrocats.catalog.photometry import PHOTOMETRY
 from astrocats.catalog.quantity import QUANTITY
@@ -447,8 +446,9 @@ class Supernova(Entry):
                 if self._KEYS.get_key_by_name(key).no_source:
                     continue
                 for item in self[key]:
-                    aliases = [str(y) for y in sorted(int(source_reps[x]) for
-                                                      x in item[item._KEYS.SOURCE].split(','))]
+                    aliases = [str(y) for y in
+                               sorted(int(source_reps[x]) for x in
+                                      item[item._KEYS.SOURCE].split(','))]
                     item[item._KEYS.SOURCE] = ','.join(aliases)
 
     def clean_internal(self, data):
