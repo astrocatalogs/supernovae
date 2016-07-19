@@ -287,27 +287,6 @@ class Supernova(Entry):
             name=self.catalog.OSC_NAME,
             url=self.catalog.OSC_URL, secondary=True)
 
-    def is_erroneous(self, field, sources):
-        if hasattr(self, self._KEYS.ERRORS):
-            my_errors = self[self._KEYS.ERRORS]
-            for alias in sources.split(','):
-                source = self.get_source_by_alias(alias)
-                bib_err_values = [err[QUANTITY.VALUE] for err in my_errors
-                                  if err[ERROR.KIND] == SOURCE.BIBCODE and
-                                  err[ERROR.EXTRA] == field]
-                if (SOURCE.BIBCODE in source and source[SOURCE.BIBCODE] in
-                        bib_err_values):
-                    return True
-
-                name_err_values = [err[QUANTITY.VALUE] for err in my_errors
-                                   if err[ERROR.KIND] == SOURCE.NAME and
-                                   err[ERROR.EXTRA] == field]
-                if (SOURCE.NAME in source and
-                        source[SOURCE.NAME] in name_err_values):
-                    return True
-
-        return False
-
     def extra_aliases(self):
         """These aliases are considered when merging duplicates only, but are
         not added to the list of aliases that would be included with the event
