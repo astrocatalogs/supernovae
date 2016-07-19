@@ -5,13 +5,75 @@ import os
 import re
 from glob import glob
 
-from astrocats.catalog.utils import pbar_strings
+from astrocats.catalog.quantity import QUANTITY
+from astrocats.catalog.utils import make_date_string, pbar, pbar_strings
+from astropy.time import Time as astrotime
 
 from ..supernova import SUPERNOVA
 
 
 def do_sdss_photo(catalog):
     task_str = catalog.get_current_task_str()
+    # Load up metadata first
+    with open(os.path.join(catalog.get_current_task_repo(),
+                           'SDSS/sdsssn_master.dat2'), 'r') as f:
+        rows = list(csv.reader(f.read().splitlines()[1:], delimiter=' '))
+        ignored_cids = []
+        colnames = [
+            '',
+            SUPERNOVA.RA,
+            SUPERNOVA.DEC,
+            '',
+            SUPERNOVA.ALIAS,
+            SUPERNOVA.CLAIMED_TYPE,
+            '', '', '', '', '',
+            SUPERNOVA.REDSHIFT,
+            '', '', '', '', '', '', '', '', '',
+            SUPERNOVA.MAX_DATE
+        ]
+        columns = dict(zip(range(len(colnames)), colnames))
+        for ri, row in enumerate(pbar(rows, task_str + ": metadata")):
+            row = [x.replace('\\N', '') for x in row]
+            name = ''
+
+            # Check if type is non-SNe first
+            ct = row[colnames.index(SUPERNOVA.CLAIMED_TYPE)]
+            al = row[colnames.index(SUPERNOVA.ALIAS)]
+            if ct in ['AGN', 'Variable'] and not al:
+                catalog.log.info('`{}` is not a SN, not '
+                                 'adding.'.format(row[0]))
+                ignored_cids.append(row[0])
+                continue
+
+            # Add entry
+            (name, source) = catalog.new_entry(
+                'SDSS-II SN ' + row[0], bibcode='2014arXiv1401.3317S',
+                url='http://data.sdss3.org/sas/dr10/boss/papers/supernova/')
+
+            for col in columns:
+                key = columns[col]
+                if not key:
+                    continue
+                ic = int(col)
+                val = row[ic]
+                if not val:
+                    continue
+                kwargs = {}
+                if key == SUPERNOVA.ALIAS:
+                    val = 'SN' + val
+                if key in [SUPERNOVA.RA, SUPERNOVA.DEC]:
+                    kwargs = {QUANTITY.U_VALUE: 'floatdegrees'}
+                if key == SUPERNOVA.CLAIMED_TYPE:
+                    val = val.lstrip('pz').replace('SN', '')
+                if key == SUPERNOVA.REDSHIFT:
+                    kwargs[QUANTITY.KIND] = 'spectroscopic'
+                    if float(row[ic+1]) > 0.0:
+                        kwargs[QUANTITY.E_VALUE] = row[ic + 1]
+                if key == SUPERNOVA.MAX_DATE:
+                    dt = astrotime(float(val), format='mjd').datetime
+                    val = make_date_string(dt.year, dt.month, dt.day)
+                catalog.entries[name].add_quantity(key, val, source, **kwargs)
+
     with open(os.path.join(catalog.get_current_task_repo(),
                            'SDSS/2010ApJ...708..661D.txt'), 'r') as sdss_file:
         bibcodes2010 = sdss_file.read().split('\n')
@@ -37,8 +99,15 @@ def do_sdss_photo(catalog):
         else:
             bibcode = '2008AJ....136.2306H'
 
+        skip_entry = False
         for rr, row in enumerate(tsvin):
+            if skip_entry:
+                break
             if rr == 0:
+                # Ignore non-SNe objects and those not in metadata table above
+                if row[3] in ignored_cids:
+                    skip_entry = True
+                    continue
                 # Ignore IAU names from Sako 2014 as they are unreliable
                 if row[5] == 'RA:' or bibcode == '2014arXiv1401.3317S':
                     name = 'SDSS-II SN ' + row[3]

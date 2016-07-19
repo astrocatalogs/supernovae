@@ -78,7 +78,7 @@ class Supernova(Entry):
             return False
 
         if error and (not is_number(error) or float(error) < 0):
-            raise ValueError(self.parent[self.parent._KEYS.NAME] +
+            raise ValueError(self[self._KEYS.NAME] +
                              "'s quanta " + key +
                              ' error value must be a number and positive.')
 
