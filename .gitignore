@@ -5,6 +5,7 @@
 *.csv
 *.html
 !catalog.html
+*.xml
 *.json
 !/catalog.json
 *.sw*
