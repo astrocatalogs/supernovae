@@ -36,10 +36,10 @@ script:
     - git clone --depth=1 https://github.com/astrocatalogs/astrocats.git
     - cd astrocats
     - mv ../supernovae .
-    - coverage run -a -m astrocats setup
+    - python -m astrocats setup
     - echo "travis_fold:start:IMPORT Importing data"
-    - coverage run -a -m astrocats supernova import --tasks internal --travis
-    - coverage run -a -m astrocats catalog analyze -v --count
+    - coverage run -a -m astrocats supernovae import --tasks internal --travis
+    - python -m astrocats catalog analyze -v --count
     - echo "travis_fold:end:IMPORT Importing data done"
 
 # Run coveralls
