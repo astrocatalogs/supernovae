@@ -35,7 +35,7 @@ script:
     - cd ..
     - git clone --depth=1 https://github.com/astrocatalogs/astrocats.git
     - cd astrocats
-    - mv ../supernovae .
+    - mv ../supernovae astrocats/.
     - python -m astrocats setup
     - echo "travis_fold:start:IMPORT Importing data"
     - coverage run -a -m astrocats supernovae import --tasks internal --travis
