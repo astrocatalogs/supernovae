@@ -38,7 +38,7 @@ script:
     - mv ../supernovae .
     - coverage run -a -m astrocats setup
     - echo "travis_fold:start:IMPORT Importing data"
-    - coverage run -a -m astrocats supernova import --tasks internal
+    - coverage run -a -m astrocats supernova import --tasks internal -tr
     - coverage run -a -m astrocats catalog analyze -v --count
     - echo "travis_fold:end:IMPORT Importing data done"
 
