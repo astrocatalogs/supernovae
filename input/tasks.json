@@ -1,13 +1,4 @@
 {
-    "test": {
-        "nice_name": "%pre TEST",
-        "active": false,
-        "update": false,
-        "module": "catalog.tasks.test",
-        "function": "do_test",
-        "groups": ["meta"],
-        "priority": 0
-    },
     "internal": {
         "nice_name": "%pre metadata and photometry",
         "active": true,

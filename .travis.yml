@@ -1,0 +1,47 @@
+language: python
+python:
+    - "3.4"
+    - "3.5"
+notifications:
+    email:
+        on_failure: change
+        on_success: change
+    slack: astrochats:tV2KNwL9jXSGSv5KhulGNVro
+git:
+    depth: 1
+
+# Setup anaconda
+before_install:
+# Install packages
+    - if [[ "$TRAVIS_PYTHON_VERSION" == "3.3" ]]; then
+          wget https://repo.continuum.io/miniconda/Miniconda3-4.0.5-Linux-x86_64.sh -O miniconda.sh;
+      else
+          wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh;
+      fi
+    - bash miniconda.sh -b -p $HOME/miniconda
+    - export PATH="$HOME/miniconda/bin:$PATH"
+    - hash -r
+    - conda config --set always_yes yes --set changeps1 no
+    - if [[ "$TRAVIS_PYTHON_VERSION" != "3.3" ]];
+      then conda update -q conda;
+      fi
+install:
+    - conda install --yes python=$TRAVIS_PYTHON_VERSION scipy matplotlib
+    - pip install -r requirements.txt
+    - pip install coveralls
+
+# Run test
+script:
+    - cd ..
+    - git clone git@github.com:astrocatalogs/astrocats.git
+    - cd astrocats
+    - mv ../supernovae .
+    - coverage run -a -m astrocats setup
+    - echo "travis_fold:start:IMPORT Importing data"
+    - coverage run -a -m astrocats supernova import --tasks internal
+    - coverage run -a -m astrocats catalog analyze -v --count
+    - echo "travis_fold:end:IMPORT Importing data done"
+
+# Run coveralls
+after_success:
+    coveralls
