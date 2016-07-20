@@ -113,8 +113,6 @@ class Supernova(Entry):
         elif key == self._KEYS.CLAIMED_TYPE:
             isq = False
             value = value.replace('young', '')
-            if value.lower() in ['unknown', 'unk', '?', '-']:
-                return False
             if '?' in value:
                 isq = True
                 value = value.strip(' ?')
@@ -124,6 +122,8 @@ class Supernova(Entry):
                     break
             if isq:
                 value = value + '?'
+            if not value:
+                return False
         elif key in [self._KEYS.RA, self._KEYS.DEC,
                      self._KEYS.HOST_RA, self._KEYS.HOST_DEC]:
             (value, unit) = radec_clean(value, key, unit=unit)
