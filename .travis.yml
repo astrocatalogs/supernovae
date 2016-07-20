@@ -33,7 +33,7 @@ install:
 # Run test
 script:
     - cd ..
-    - git clone git@github.com:astrocatalogs/astrocats.git
+    - git clone --depth=1 https://github.com/astrocatalogs/astrocats.git
     - cd astrocats
     - mv ../supernovae .
     - coverage run -a -m astrocats setup
