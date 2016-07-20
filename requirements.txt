@@ -1,0 +1,14 @@
+astropy>=1.2.1
+astroquery>=0.3.2
+bokeh>=0.12.0
+m3_cdecimal>=2.3
+beautifulsoup4>=4.4.1
+argparse>=1.4.0
+palettable>=2.1.1
+tqdm>=4.5.0
+ads>=0.11.3
+inflect>=0.2.5
+tweepy>=3.5.0
+seaborn>=0.7.1
+GitPython>=2.0.6
+psutil>=4.3.0
