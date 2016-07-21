@@ -75,7 +75,7 @@ def do_wiserep_spectra(catalog):
             instrument = fileinfo[specfile]["Instrument"]
             epoch = fileinfo[specfile]["Obs. Date"]
             observer = fileinfo[specfile]["Observer"]
-            reducer = ''
+            reducer = fileinfo[specfile]["Reducer"]
             bibcode = fileinfo[specfile]["Bibcode"]
             redshift = fileinfo[specfile]["Redshift"]
             survey = fileinfo[specfile]["Program"]

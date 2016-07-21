@@ -460,7 +460,7 @@
     },
     "merge_duplicates": {
         "nice_name": "Merging duplicates",
-        "active": true,
+        "active": false,
         "update": false,
         "module": "catalog.tasks.merge_duplicates",
         "function": "merge_duplicates",
