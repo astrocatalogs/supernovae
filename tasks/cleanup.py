@@ -1,5 +1,6 @@
 """
 """
+import re
 import statistics
 import warnings
 from math import hypot, log10, pi, sqrt
@@ -126,19 +127,20 @@ def do_cleanup(catalog):
             prefixes = ['AT', 'SN', 'OGLE-', 'SM ', 'KSN-']
             for alias in aliases:
                 for prefix in prefixes:
-                    if (alias.startswith(prefix) and
-                            is_number(alias.replace(prefix, '')[:4]) and
-                            '.' not in alias.replace(prefix, '')[:4]):
-                        discoverdate = alias.replace(prefix, '')[:4]
-                        if catalog.args.verbose:
-                            tprint(
-                                'Added discoverdate from name [' +
-                                alias + ']: ' + discoverdate)
-                        source = catalog.entries[name].add_self_source()
-                        catalog.entries[name].add_quantity(
-                            SUPERNOVA.DISCOVER_DATE, discoverdate, source,
-                            derived=True)
-                        break
+                    if alias.startswith(prefix):
+                        year = re.findall(r'\d+', alias).get(0, '')
+                        if (year and is_number(year) and '.' not in year and
+                                len(year) <= 4):
+                            discoverdate = year
+                            if catalog.args.verbose:
+                                tprint(
+                                    'Added discoverdate from name [' +
+                                    alias + ']: ' + discoverdate)
+                            source = catalog.entries[name].add_self_source()
+                            catalog.entries[name].add_quantity(
+                                SUPERNOVA.DISCOVER_DATE, discoverdate, source,
+                                derived=True)
+                            break
                 if SUPERNOVA.DISCOVER_DATE in catalog.entries[name]:
                     break
 
@@ -302,7 +304,7 @@ def do_cleanup(catalog):
                 # FIX: what's happening here?!
                 pnum = (float(catalog.entries[name][SUPERNOVA.MAX_APP_MAG][0][
                     QUANTITY.VALUE]) -
-                        5.0 * (log10(float(bestld) * 1.0e6) - 1.0))
+                    5.0 * (log10(float(bestld) * 1.0e6) - 1.0))
                 pnum = pretty_num(pnum, sig=bestsig)
                 catalog.entries[name].add_quantity(
                     SUPERNOVA.MAX_ABS_MAG, pnum, sources, derived=True)

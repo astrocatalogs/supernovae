@@ -112,6 +112,8 @@ class Supernova(Entry):
                 kind = 'cluster'
         elif key == self._KEYS.CLAIMED_TYPE:
             isq = False
+            if value.startswith('SN '):
+                value = value.replace('SN ', '', 1)
             value = value.replace('young', '')
             if '?' in value:
                 isq = True
