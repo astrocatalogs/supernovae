@@ -9,10 +9,6 @@ from tqdm import tqdm
 
 from repos import repo_file_list
 
-
-def get_event_filename(name):
-    return(name.replace('/', '_'))
-
 files = repo_file_list(bones=False)
 
 spectracount = 0
