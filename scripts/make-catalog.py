@@ -796,6 +796,7 @@ for fcnt, eventfile in enumerate(tq(sorted(files, key=lambda s: s.lower()))):
         hasepoch = True
         if 'redshift' in catalog[entry]:
             z = float(catalog[entry]['redshift'][0]['value'])
+        catalog[entry]['spectra'] = list(filter(None, [x if 'data' in x else None for x in catalog[entry]['spectra']]))
         for spectrum in catalog[entry]['spectra']:
             spectrumdata = deepcopy(spectrum['data'])
             oldlen = len(spectrumdata)
