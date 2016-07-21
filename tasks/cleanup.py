@@ -128,7 +128,11 @@ def do_cleanup(catalog):
             for alias in aliases:
                 for prefix in prefixes:
                     if alias.startswith(prefix):
-                        year = re.findall(r'\d+', alias).get(0, '')
+                        year = re.findall(r'\d+', alias)
+                        if len(year) == 1:
+                            year = year[0]
+                        else:
+                            continue
                         if (year and is_number(year) and '.' not in year and
                                 len(year) <= 4):
                             discoverdate = year
