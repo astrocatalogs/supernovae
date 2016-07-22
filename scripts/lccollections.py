@@ -11,27 +11,26 @@ from bokeh.models import ColumnDataSource, HoverTool
 from bokeh.plotting import Figure, reset_output
 from bokeh.resources import CDN
 
-from events import *
-from utils.photometry import bandaliasf, bandcolorf
-from utils.repos import get_repo_output_file_list
-from utils.tq_funcs import tq, tprint
+from astrocats.catalog.utils import bandaliasf, bandcolorf, tprint, tq
+from astrocats.supernovae.scripts.events import get_event_text
+from astrocats.supernovae.scripts.repos import repo_file_list
 
 tools = "pan,wheel_zoom,box_zoom,save,crosshair,reset,resize"
 
-outdir = "../"
+outdir = "astrocats/supernovae/output/html"
 
 averagetypes = ['Ia', 'I P', 'Ia P', 'Ib P', 'Ic P', 'Ia/c', 'Ib/c', 'Ib/c P',
                 'II P', 'II L', 'IIn', 'IIn P',
                 'IIb P', 'Ia CSM', 'SLSN-Ic', 'SLSN-I', 'SLSN-II', 'Ia-91bg',
                 'Ia-91T', 'Ia-02cx', 'Ib-Ca', 'II P-97D', 'Ic BL']
 
-files = get_repo_output_file_list(bones=False)
+files = repo_file_list(bones=False)
 
 
 def photo_cut(x):
     return ('magnitude' in x and 'time' in x and 'includeshost' not in x)
 
-with open('../catalog.min.json', 'r') as f:
+with open('astrocats/supernovae/output/catalog.min.json', 'r') as f:
     filetext = f.read()
     meta = json.loads(filetext, object_pairs_hook=OrderedDict)
 
@@ -48,7 +47,9 @@ for averagetype in averagetypes:
     photoevent = []
     phototype = []
 
-    for fcnt, eventfile in enumerate(tq(sorted(files, key=lambda s: s.lower()), 'Looping over ' + averagetype + ' SNe')):
+    for fcnt, eventfile in enumerate(
+        tq(sorted(files, key=lambda s: s.lower()), 'Looping over ' +
+           averagetype + ' SNe')):
         # if fcnt > 2000:
         #    break
 
@@ -66,7 +67,7 @@ for averagetype in averagetypes:
         else:
             continue
 
-        filetext = get_entry_text(eventfile)
+        filetext = get_event_text(eventfile)
 
         thisevent = json.loads(filetext, object_pairs_hook=OrderedDict)
         thisevent = thisevent[list(thisevent.keys())[0]]
@@ -223,7 +224,7 @@ for averagetype in averagetypes:
 
     html = file_html(p1, CDN, 'Average ' + averagetype)
 
-    with open(outdir + "average-" + averagetype.lower().replace(' ', '_').replace('/', '-') + ".html", "w") as f:
+    with open(outdir + "LCs-" + averagetype.lower().replace(' ', '_').replace('/', '-') + ".html", "w") as f:
         f.write(html)
 
     # Necessary to clear Bokeh state
