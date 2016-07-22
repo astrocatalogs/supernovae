@@ -171,11 +171,11 @@ for ci, ct in enumerate(claimedtypes):
 
 p1.legend.label_text_font_size = '7pt'
 p1.legend.label_width = 20
-p1.legend.label_height = 10
-p1.legend.glyph_height = 10
-p1.legend.legend_spacing = 2
+p1.legend.label_height = 8
+p1.legend.glyph_height = 8
+p1.legend.legend_spacing = 0
 
-html = file_html(p1, CDN, 'Supernova locations')
+html = file_html(p1, CDN, 'Supernova locations').replace('width: 90%;', 'width: inherit;')
 
 with open(outdir + "sne-locations.html", "w") as f:
     f.write(html)
