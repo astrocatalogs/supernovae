@@ -52,9 +52,10 @@ hover = HoverTool(tooltips=tt, line_policy='interp')
 p = Figure(x_range=[0., 100.], y_range=[0., 1.],
            title='Supernova Host Offsets',
            x_axis_label='Offset (kpc)', y_axis_label='CDF',
-           plot_width=980, plot_height=500,
-           title_text_font='futura', title_text_font_size='14pt')
+           plot_width=980, plot_height=500)
 p.add_tools(hover)
+p.title.text_font = 'futura'
+p.title.text_font_size = '14pt'
 
 for si, sntype in enumerate(tq(sntypes)):
     for event in meta:
@@ -86,19 +87,19 @@ p.xaxis.axis_label_text_font = 'futura'
 p.yaxis.axis_label_text_font = 'futura'
 p.xaxis.major_label_text_font = 'futura'
 p.yaxis.major_label_text_font = 'futura'
-p.xaxis.axis_label_text_font_size = '11pt'
-p.yaxis.axis_label_text_font_size = '11pt'
-p.xaxis.major_label_text_font_size = '8pt'
-p.yaxis.major_label_text_font_size = '8pt'
+p.xaxis.axis_label_text_font_size = '12pt'
+p.yaxis.axis_label_text_font_size = '12pt'
+p.xaxis.major_label_text_font_size = '9pt'
+p.yaxis.major_label_text_font_size = '9pt'
 p.legend.label_text_font = 'futura'
 p.legend.location = "bottom_right"
-p.legend.label_text_font_size = '8pt'
+p.legend.label_text_font_size = '7pt'
 p.legend.label_width = 20
-p.legend.label_height = 10
+p.legend.label_height = 8
 p.legend.glyph_height = 10
-p.legend.legend_spacing = 3
+p.legend.legend_spacing = 0
 
-html = file_html(p, CDN, 'Offsets')
+html = file_html(p, CDN, 'Offsets').replace('width: 90%;', 'width: inherit;')
 
 with open(outdir + "host-offsets.html", "w") as f:
     f.write(html)

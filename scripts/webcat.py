@@ -330,25 +330,19 @@ hasasp = []
 totalphoto = 0
 totalspectra = 0
 
-hostimgs = []
 if os.path.isfile(outdir + cachedir + 'hostimgs.json'):
     with open(outdir + cachedir + 'hostimgs.json', 'r') as f:
         filetext = f.read()
-    oldhostimgs = json.loads(filetext)
-    oldhostimgs = [list(i) for i in zip(*oldhostimgs)]
-    hostimgdict = dict(list(zip(oldhostimgs[0], oldhostimgs[1])))
+    hostimgdict = json.loads(filetext)
 else:
     hostimgdict = {}
 
 files = repo_file_list(normal=(not args.boneyard), bones=args.boneyard)
 
-md5s = []
 if os.path.isfile(outdir + cachedir + 'md5s.json'):
     with open(outdir + cachedir + 'md5s.json', 'r') as f:
         filetext = f.read()
-    oldmd5s = json.loads(filetext)
-    oldmd5s = [list(i) for i in zip(*oldmd5s)]
-    md5dict = dict(list(zip(oldmd5s[0], oldmd5s[1])))
+    md5dict = json.loads(filetext)
 else:
     md5dict = {}
 
@@ -361,8 +355,11 @@ for fcnt, eventfile in enumerate(tq(sorted(files, key=lambda s: s.lower()))):
     if args.travis and fcnt >= travislimit:
         break
 
+    entry_changed = False
     checksum = md5file(eventfile)
-    md5s.append([eventfile, checksum])
+    if eventfile not in md5dict or md5dict[eventfile] != checksum:
+        entry_changed = True
+        md5dict[eventfile] = checksum
 
     filetext = get_event_text(eventfile)
 
@@ -518,7 +515,7 @@ for fcnt, eventfile in enumerate(tq(sorted(files, key=lambda s: s.lower()))):
     dohtml = True
     if not args.forcehtml:
         if os.path.isfile(outdir + htmldir + fileeventname + ".html"):
-            if eventfile in md5dict and checksum == md5dict[eventfile]:
+            if not entry_changed:
                 dohtml = False
 
     # Copy JSON files up a directory if they've changed
@@ -1552,11 +1549,11 @@ for fcnt, eventfile in enumerate(tq(sorted(files, key=lambda s: s.lower()))):
 
         if hasimage:
             if imgsrc == 'SDSS':
-                hostimgs.append([eventname, 'SDSS'])
+                hostimgdict[eventname] = 'SDSS'
                 skyhtml = ('<a href="http://skyserver.sdss.org/DR12/en/tools/chart/navi.aspx?opt=G&ra='
                            + str(c.ra.deg) + '&dec=' + str(c.dec.deg) + '&scale=0.15"><img src="' + fileeventname + '-host.jpg" width=250></a>')
             elif imgsrc == 'DSS':
-                hostimgs.append([eventname, 'DSS'])
+                hostimgdict[eventname] = 'DSS'
                 url = ("http://skyview.gsfc.nasa.gov/current/cgi/runquery.pl?Position=" + str(urllib.parse.quote_plus(snra + " " + sndec)) +
                        "&coordinates=J2000&coordinates=&projection=Tan&pixels=500&size=" + str(dssimagescale) + "float=on&scaling=Log&resolver=SIMBAD-NED" +
                        "&Sampler=_skip_&Deedger=_skip_&rotation=&Smooth=&lut=colortables%2Fb-w-linear.bin&PlotColor=&grid=_skip_&gridlabels=1" +
@@ -1564,7 +1561,7 @@ for fcnt, eventfile in enumerate(tq(sorted(files, key=lambda s: s.lower()))):
                 skyhtml = ('<a href="' + url + '"><img src="' +
                            fileeventname + '-host.jpg" width=250></a>')
         else:
-            hostimgs.append([eventname, 'None'])
+            hostimgdict[eventname] = 'None'
 
     if dohtml and args.writehtml:
         # if (photoavail and spectraavail) and dohtml and args.writehtml:
@@ -1830,19 +1827,19 @@ for fcnt, eventfile in enumerate(tq(sorted(files, key=lambda s: s.lower()))):
 if args.writecatalog and not args.eventlist:
     catalog = deepcopy(catalogcopy)
 
-    if not args.boneyard:
-        # Write the MD5 checksums
-        jsonstring = json.dumps(md5s, indent='\t', separators=(',', ':'))
-        with open(outdir + cachedir + 'md5s.json' + testsuffix, 'w') as f:
+    # Write the MD5 checksums
+    jsonstring = json.dumps(md5dict, indent='\t', separators=(',', ':'))
+    with open(outdir + cachedir + 'md5s.json' + testsuffix, 'w') as f:
+        f.write(jsonstring)
+
+    # Write the host image info
+    if args.collecthosts:
+        jsonstring = json.dumps(
+            hostimgdict, indent='\t', separators=(',', ':'))
+        with open(outdir + cachedir + 'hostimgs.json' + testsuffix, 'w') as f:
             f.write(jsonstring)
 
-        # Write the host image info
-        if args.collecthosts:
-            jsonstring = json.dumps(
-                hostimgs, indent='\t', separators=(',', ':'))
-            with open(outdir + cachedir + 'hostimgs.json' + testsuffix, 'w') as f:
-                f.write(jsonstring)
-
+    if not args.boneyard:
         # Things David wants in this file: names (aliases), max mag, max mag
         # date (gregorian), type, redshift, r.a., dec., # obs., link
         with open(outdir + htmldir + 'snepages.csv' + testsuffix, 'w') as f:
@@ -1965,12 +1962,13 @@ if args.writecatalog and not args.eventlist:
     with open(outdir + catprefix + '.min.json', 'rb') as f_in, gzip.open(outdir + catprefix + '.min.json.gz', 'wb') as f_out:
         shutil.copyfileobj(f_in, f_out)
 
-    names = OrderedDict()
-    for ev in catalog:
-        names[ev['name']] = [x['value'] for x in ev['alias']]
-    jsonstring = json.dumps(names, separators=(',', ':'))
-    with open(outdir + 'names.min.json' + testsuffix, 'w') as f:
-        f.write(jsonstring)
+    if not args.boneyard:
+        names = OrderedDict()
+        for ev in catalog:
+            names[ev['name']] = [x['value'] for x in ev['alias']]
+        jsonstring = json.dumps(names, separators=(',', ':'))
+        with open(outdir + 'names.min.json' + testsuffix, 'w') as f:
+            f.write(jsonstring)
 
     if args.deleteorphans and not args.boneyard:
 
