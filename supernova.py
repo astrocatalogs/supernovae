@@ -68,10 +68,12 @@ class Supernova(Entry):
                 return
 
     def _clean_quantity(self, quantity):
-        value = quantity.get(QUANTITY.VALUE, '')
-        error = quantity.get(QUANTITY.E_VALUE, '')
-        unit = quantity.get(QUANTITY.U_VALUE, '')
-        kind = quantity.get(QUANTITY.KIND, '')
+        """Clean quantity value before it is added to entry.
+        """
+        value = quantity.get(QUANTITY.VALUE, '').strip()
+        error = quantity.get(QUANTITY.E_VALUE, '').strip()
+        unit = quantity.get(QUANTITY.U_VALUE, '').strip()
+        kind = quantity.get(QUANTITY.KIND, '').strip()
         key = quantity._key
 
         if not value:

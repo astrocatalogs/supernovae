@@ -195,6 +195,7 @@ def name_clean(name):
 
 
 def radec_clean(svalue, quantity, unit=''):
+    svalue = svalue.strip()
     if unit == 'floatdegrees':
         if not is_number(svalue):
             return (svalue, unit)
