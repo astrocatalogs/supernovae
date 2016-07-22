@@ -1,5 +1,4 @@
 #!/usr/local/bin/python3.5
-
 import argparse
 import csv
 import filecmp
@@ -37,13 +36,15 @@ from bokeh.resources import CDN
 from bs4 import BeautifulSoup
 from palettable import cubehelix
 
+from astrocats.catalog.utils import (bandaliasf, bandcodes, bandcolorf,
+                                     bandshortaliasf, bandwavef,
+                                     bandwavelengths, get_sig_digits,
+                                     is_number, pretty_num, radiocolorf,
+                                     round_sig, tprint, tq, xraycolorf)
+from astrocats.supernovae.scripts.events import (get_event_filename,
+                                                 get_event_text)
+from astrocats.supernovae.scripts.repos import get_rep_folder, repo_file_list
 from cdecimal import Decimal
-from digits import get_sig_digits, is_number, pretty_num, round_sig
-from events import get_event_filename, get_event_text
-from photometry import (bandaliasf, bandcodes, bandcolorf, bandshortaliasf,
-                        bandwavef, bandwavelengths, radiocolorf, xraycolorf)
-from repos import get_rep_folder, repo_file_list
-from tq import tprint, tq
 
 parser = argparse.ArgumentParser(
     description='Generate a catalog JSON file and plot HTML files from SNE data.')
@@ -70,7 +71,7 @@ args = parser.parse_args()
 infl = inflect.engine()
 infl.defnoun("spectrum", "spectra")
 
-outdir = "../output/"
+outdir = "astrocats/supernovae/output/"
 cachedir = "cache/"
 jsondir = "json/"
 htmldir = "html/"
@@ -239,7 +240,7 @@ newfiletemplate = (
 }'''
 )
 
-with open('sitemap-template.xml', 'r') as f:
+with open('astrocats/supernovae/html/sitemap-template.xml', 'r') as f:
     sitemaptemplate = f.read()
 
 if len(columnkey) != len(header):
@@ -376,7 +377,7 @@ for fcnt, eventfile in enumerate(tq(sorted(files, key=lambda s: s.lower()))):
     tprint(eventfile + ' [' + checksum + ']')
 
     repfolder = get_rep_folder(catalog[entry])
-    if os.path.isfile("../sne-internal/" + fileeventname + ".json"):
+    if os.path.isfile("astrocats/supernovae/input/sne-internal/" + fileeventname + ".json"):
         catalog[entry]['download'] = 'e'
     else:
         catalog[entry]['download'] = ''
@@ -1510,7 +1511,7 @@ for fcnt, eventfile in enumerate(tq(sorted(files, key=lambda s: s.lower()))):
                         f.write(resptxt)
                     imgsrc = 'SDSS'
 
-                if hasimage and filecmp.cmp(outdir + htmldir + fileeventname + '-host.jpg', '../input/missing.jpg'):
+                if hasimage and filecmp.cmp(outdir + htmldir + fileeventname + '-host.jpg', 'astrocats/supernovae/input/missing.jpg'):
                     hasimage = False
 
                 if not hasimage:
@@ -1683,7 +1684,7 @@ for fcnt, eventfile in enumerate(tq(sorted(files, key=lambda s: s.lower()))):
                                 raise(ValueError(
                                     'Unable to find associated source by alias!'))
                             edit = "true" if os.path.isfile(
-                                '../sne-internal/' + get_event_filename(entry) + '.json') else "false"
+                                'astrocats/supernovae/input/sne-internal/' + get_event_filename(entry) + '.json') else "false"
                             keyhtml = (keyhtml + "<span class='singletooltiptext'><button class='singlemarkerror' type='button' onclick='markError(\"" +
                                        entry + "\", \"" + key + "\", \"" + ','.join(idtypes) +
                                        "\", \"" + ','.join(sourceids) + "\", \"" + edit + "\")'>Flag as erroneous</button></span>")
@@ -1977,7 +1978,7 @@ if args.writecatalog and not args.eventlist:
         safefiles += ['catalog.json', 'catalog.min.json', 'bones.json', 'bones.min.json', 'names.min.json', 'md5s.json', 'hostimgs.json', 'iaucs.json', 'errata.json',
                       'bibauthors.json', 'extinctions.json', 'dupes.json', 'biblio.json', 'atels.json', 'cbets.json', 'conflicts.json', 'hosts.json', 'hosts.min.json']
 
-        for myfile in glob('../*.json'):
+        for myfile in glob(outdir + jsondir + '*.json'):
             if not os.path.basename(myfile) in safefiles:
                 print('Deleting orphan ' + myfile)
                 # os.remove(myfile)

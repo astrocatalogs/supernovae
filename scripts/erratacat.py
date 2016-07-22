@@ -6,12 +6,14 @@ from collections import OrderedDict
 
 from tqdm import tqdm
 
-from events import *
-from utils.repos import get_repo_output_file_list
+from astrocats.supernovae.scripts.events import get_event_text
+from astrocats.supernovae.scripts.repos import repo_file_list
 
 errata = []
 
-files = get_repo_output_file_list(bones=False)
+files = repo_file_list(bones=False)
+
+outdir = 'astrocats/supernovae/output/'
 
 for fcnt, eventfile in enumerate(tqdm(sorted(files, key=lambda s: s.lower()))):
     # if fcnt > 100:
@@ -19,7 +21,7 @@ for fcnt, eventfile in enumerate(tqdm(sorted(files, key=lambda s: s.lower()))):
     fileeventname = os.path.splitext(os.path.basename(eventfile))[
         0].replace('.json', '')
 
-    filetext = get_entry_text(eventfile)
+    filetext = get_event_text(eventfile)
 
     item = json.loads(filetext, object_pairs_hook=OrderedDict)
     item = item[list(item.keys())[0]]
@@ -39,5 +41,5 @@ for fcnt, eventfile in enumerate(tqdm(sorted(files, key=lambda s: s.lower()))):
 
 jsonstring = json.dumps(errata, indent='\t',
                         separators=(',', ':'), ensure_ascii=False)
-with open('../errata.json', 'w') as f:
+with open(outdir + 'errata.json', 'w') as f:
     f.write(jsonstring)

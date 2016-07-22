@@ -4,32 +4,26 @@ import gzip
 import json
 import os
 from collections import OrderedDict
-from glob import glob
-
-from astropy.time import Time as astrotime
-from utils.tq_funcs import tqdm
+from tqdm import tqdm
 
 import ads
+from astropy.time import Time as astrotime
+
+from astrocats.supernovae.scripts.repos import repo_file_list
+from astrocats.catalog.utils import tq
 
 biblio = OrderedDict()
 
+outdir = 'astrocats/supernovae/output/'
 
-def get_event_filename(name):
-    return(name.replace('/', '_'))
-
-with open('rep-folders.txt', 'r') as f:
-    repfolders = f.read().splitlines()
-
-path = '../bibauthors.json'
+path = 'astrocats/supernovae/output/cache/bibauthors.json'
 if os.path.isfile(path):
     with open(path, 'r') as f:
         bibauthordict = json.loads(f.read(), object_pairs_hook=OrderedDict)
 else:
     bibauthordict = OrderedDict()
 
-files = []
-for rep in repfolders:
-    files += glob('../' + rep + "/*.json") + glob('../' + rep + "/*.json.gz")
+files = repo_file_list(bones=False)
 
 path = 'ads.key'
 if os.path.isfile(path):
@@ -41,7 +35,7 @@ else:
         "https://ui.adsabs.harvard.edu/#user/settings/token and place it in "
         "this file.")
 
-for fcnt, eventfile in enumerate(tqdm(sorted(files, key=lambda s: s.lower()))):
+for fcnt, eventfile in enumerate(tq(sorted(files, key=lambda s: s.lower()))):
     # if fcnt > 100:
     #    break
     fileeventname = os.path.splitext(os.path.basename(eventfile))[
@@ -145,5 +139,5 @@ for bc in biblio:
 biblio = list(biblio.values())
 jsonstring = json.dumps(biblio, indent='\t',
                         separators=(',', ':'), ensure_ascii=False)
-with open('../biblio.json', 'w') as f:
+with open(outdir + 'biblio.json', 'w') as f:
     f.write(jsonstring)

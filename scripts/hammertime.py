@@ -14,13 +14,13 @@ from bokeh.plotting import Figure
 from bokeh.resources import CDN
 from palettable import cubehelix
 
-from events import *
-from utils.repos import get_repo_output_file_list
-from utils.tq_funcs import tq, tprint
+from astrocats.catalog.utils import tprint, tq
+from astrocats.supernovae.scripts.events import get_event_text
+from astrocats.supernovae.scripts.repos import repo_file_list
 
 tools = "pan,wheel_zoom,box_zoom,save,crosshair,reset,resize"
 
-outdir = "../"
+outdir = "astrocats/supernovae/output/html/"
 
 snhxs = []
 snhys = []
@@ -41,9 +41,9 @@ colors = (cubehelix.cubehelix1_16.hex_colors[2:13] +
           cubehelix.perceptual_rainbow_16.hex_colors)
 shuffle(colors)
 
-files = get_repo_output_file_list(bones=False)
+files = repo_file_list(bones=False)
 
-with open('non-sne-types.json', 'r') as f:
+with open('astrocats/supernovae/input/non-sne-types.json', 'r') as f:
     nonsnetypes = json.loads(f.read(), object_pairs_hook=OrderedDict)
     nonsnetypes = [x.upper() for x in nonsnetypes]
 
@@ -52,7 +52,7 @@ for fcnt, eventfile in enumerate(tq(sorted(files, key=lambda s: s.lower()),
     # if fcnt > 20:
     #    break
 
-    filetext = get_entry_text(eventfile)
+    filetext = get_event_text(eventfile)
 
     thisevent = json.loads(filetext, object_pairs_hook=OrderedDict)
     thisevent = thisevent[list(thisevent.keys())[0]]
@@ -117,12 +117,13 @@ p1 = Figure(title='Supernova Positions', x_axis_label='Right Ascension (deg)',
             plot_height=720,
             x_range=(-1.05 * (2.0**1.5), 1.3 * 2.0**1.5),
             y_range=(-2.0 * sqrt(2.0), 1.2 * sqrt(2.0)),
-            title_text_font_size='20pt', min_border_bottom=0,
+            min_border_bottom=0,
             min_border_left=0, min_border=0)
 p1.axis.visible = None
 p1.outline_line_color = None
 p1.xgrid.grid_line_color = None
 p1.ygrid.grid_line_color = None
+p1.title.text_font_size = '20pt'
 
 raxs = []
 rays = []

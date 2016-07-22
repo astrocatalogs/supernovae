@@ -11,25 +11,19 @@ from math import sqrt
 from astropy.time import Time as astrotime
 from tqdm import tqdm
 
-from utils.digits import pretty_num
+from astrocats.catalog.utils import pretty_num
+from astrocats.supernovae.scripts.repos import repo_file_list
 
 hosts = OrderedDict()
 
-
-def get_event_filename(name):
-    return(name.replace('/', '_'))
+outdir = "astrocats/supernovae/output/"
 
 
 def touch(fname, times=None):
     with open(fname, 'a'):
         os.utime(fname, times)
 
-with open('rep-folders.txt', 'r') as f:
-    repfolders = f.read().splitlines()
-
-files = []
-for rep in repfolders:
-    files += glob('../' + rep + "/*.json") + glob('../' + rep + "/*.json.gz")
+files = repo_file_list(bones=False)
 
 for fcnt, eventfile in enumerate(tqdm(sorted(files, key=lambda s: s.lower()))):
     # if fcnt > 1000:
@@ -165,10 +159,10 @@ hosts = list(hosts.values())
 
 jsonstring = json.dumps(
     hosts, indent='\t', separators=(',', ':'), ensure_ascii=False)
-with open('../hosts.json', 'w') as f:
+with open(outdir + 'hosts.json', 'w') as f:
     f.write(jsonstring)
 
 minjsonstring = json.dumps(hosts, separators=(',', ':'), ensure_ascii=False)
-with gzip.open("../hosts.min.json.gz", 'wt') as fff:
-    touch("../hosts.min.json")
+with gzip.open(outdir + "hosts.min.json.gz", 'wt') as fff:
+    touch(outdir + "hosts.min.json")
     fff.write(minjsonstring)
