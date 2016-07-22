@@ -9,6 +9,8 @@ from tqdm import tqdm
 
 from astrocats.catalog.catalog import Catalog
 
+outdir = "astrocats/supernovae/input/"
+
 atels = OrderedDict()
 yearseps = range(1990, 2020, 2)
 for i in tqdm(range(len(yearseps) - 1)):
@@ -25,7 +27,7 @@ for i in tqdm(range(len(yearseps) - 1)):
           x.strip()) for x in newatels])))
 
 jsonstring = json.dumps(atels, separators=(',', ':'), ensure_ascii=False)
-path = '../input/atels.json'
+path = outdir + '/atels.json'
 with codecs.open(path, 'w', encoding='utf8') as f:
     f.write(jsonstring)
 
@@ -45,7 +47,7 @@ for i in tqdm(range(len(yearseps) - 1)):
           x.strip()) for x in newcbets])))
 
 jsonstring = json.dumps(cbets, separators=(',', ':'), ensure_ascii=False)
-path = '../input/cbets.json'
+path = outdir + '/cbets.json'
 with codecs.open(path, 'w', encoding='utf8') as f:
     f.write(jsonstring)
 
@@ -65,6 +67,6 @@ for i in tqdm(range(len(yearseps) - 1)):
           x.strip()) for x in newiaucs])))
 
 jsonstring = json.dumps(iaucs, separators=(',', ':'), ensure_ascii=False)
-path = '../input/iaucs.json'
+path = outdir + 'iaucs.json'
 with codecs.open(path, 'w', encoding='utf8') as f:
     f.write(jsonstring)

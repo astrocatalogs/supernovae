@@ -9,19 +9,18 @@ from bokeh.models import ColumnDataSource, HoverTool
 from bokeh.plotting import Figure, reset_output
 from bokeh.resources import CDN
 
-from utils.digits import is_number
-from utils.tq_funcs import tq
+from astrocats.catalog.utils import is_number, tq
 
-outdir = "../"
+outdir = "astrocats/supernovae/output/"
 
 mincnt = 5
 
-with open('../catalog.min.json', 'r') as f:
+with open(outdir + 'catalog.min.json', 'r') as f:
     filetext = f.read()
     meta = json.loads(filetext, object_pairs_hook=OrderedDict)
-with open('type-synonyms.json', 'r') as f:
+with open('astrocats/supernovae/input/type-synonyms.json', 'r') as f:
     typereps = json.loads(f.read(), object_pairs_hook=OrderedDict)
-with open('non-sne-types.json', 'r') as f:
+with open('astrocats/supernovae/input/non-sne-types.json', 'r') as f:
     nonsnetypes = json.loads(f.read(), object_pairs_hook=OrderedDict)
     nonsnetypes = [x.upper() for x in nonsnetypes]
 

@@ -1,5 +1,4 @@
 #!/usr/local/bin/python3.5
-
 import gzip
 import json
 import os
@@ -10,16 +9,16 @@ from astropy import units as un
 from astropy.coordinates import SkyCoord as coord
 from tqdm import tqdm
 
-from digits import round_sig
-from utils.repos import get_repo_output_file_list
+from astrocats.catalog.utils import round_sig
+from astrocats.supernovae.scripts.repos import repo_file_list
+
+from ...catalog.utils import get_entry_filename
 
 conflicts = []
 
+outdir = "astrocats/supernovae/output/"
 
-def get_event_filename(name):
-    return(name.replace('/', '_'))
-
-files = get_repo_output_file_list(bones=False)
+files = repo_file_list(bones=False)
 
 for fcnt, eventfile in enumerate(tqdm(sorted(files, key=lambda s: s.lower()))):
     # if fcnt > 100:
@@ -101,7 +100,7 @@ for fcnt, eventfile in enumerate(tqdm(sorted(files, key=lambda s: s.lower()))):
                         [x['idtype'] for x in newsources]), 'id': ','.join([x['id'] for x in newsources])})
 
     edit = True if os.path.isfile(
-        '../sne-internal/' + get_event_filename(item['name']) + '.json') else False
+        '../sne-internal/' + get_entry_filename(item['name']) + '.json') else False
 
     if ras and decs and item['name'] and item['name'] not in ['SN2002fz']:
         oralen = len(ras)
@@ -173,5 +172,5 @@ for fcnt, eventfile in enumerate(tqdm(sorted(files, key=lambda s: s.lower()))):
 # Convert to array since that's what datatables expects
 jsonstring = json.dumps(conflicts, indent='\t',
                         separators=(',', ':'), ensure_ascii=False)
-with open('../conflicts.json', 'w') as f:
+with open(outdir + 'conflicts.json', 'w') as f:
     f.write(jsonstring)

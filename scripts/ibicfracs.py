@@ -7,14 +7,10 @@ from collections import OrderedDict
 
 from tqdm import tqdm
 
-from utils.repos import get_repo_output_file_list
-from utils.tq_funcs import tprint
+from astrocats.supernovae.scripts.repos import repo_file_list
+from astrocats.catalog.utils import tprint
 
-
-def get_event_filename(name):
-    return(name.replace('/', '_'))
-
-files = get_repo_output_file_list(bones=False)
+files = repo_file_list(bones=False)
 
 spectracount = 0
 photocount = 0
@@ -44,7 +40,7 @@ for fcnt, eventfile in enumerate(tqdm(sorted(files, key=lambda s: s.lower()))):
     tprint(namekey)
 
     if 'claimedtype' in item and 'maxdate' in item:
-        maxyear = int(item['maxdate'][0]['value'].split('/')[0])
+        maxyear = int(round(float(item['maxdate'][0]['value'].split('/')[0])))
         for yi, year in enumerate(years):
             if maxyear <= years[yi]:
                 for ct in item['claimedtype']:

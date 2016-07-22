@@ -15,7 +15,7 @@ sourcedict = {}
 soup = BeautifulSoup(response.read(), "html5lib")
 i = 0
 for a in soup.findAll('a'):
-    if 'spec=yes' in a['href'] and not 'phot=yes' in a['href']:
+    if 'spec=yes' in a['href'] and 'phot=yes' not in a['href']:
         if int(a.contents[0]) > 0:
             i = i + 1
             photlink = 'http://www.nhn.ou.edu/cgi-bin/cgiwrap/~suspect/' + \
@@ -66,5 +66,5 @@ for a in soup.findAll('a'):
 print(sourcedict)
 jsonstring = json.dumps(sourcedict, indent='\t',
                         separators=(',', ':'), ensure_ascii=False)
-with open('../sne-external-spectra/Suspect/sources.json', 'w') as f:
+with open('astrocats/supernovae/input/sne-external-spectra/Suspect/sources.json', 'w') as f:
     f.write(jsonstring)
