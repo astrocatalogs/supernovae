@@ -151,13 +151,13 @@ def do_wiserep_spectra(catalog):
                     instrument=instrument, source=sources,
                     observer=observer, reducer=reducer, reduction=reduction,
                     filename=specfile, survey=survey, redshift=redshift)
-                wiserepcnt = wiserepcnt + 1
-
-                if (catalog.args.travis and
-                        wiserepcnt %
-                        catalog.TRAVIS_QUERY_LIMIT == 0):
-                    break
 
         catalog.journal_entries()
+
+        wiserepcnt = wiserepcnt + 1
+        if (catalog.args.travis and
+                wiserepcnt %
+                catalog.TRAVIS_QUERY_LIMIT == 0):
+            break
 
     return
