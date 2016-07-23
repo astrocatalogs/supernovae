@@ -28,6 +28,12 @@ def do_cleanup(catalog):
 
     cleanupcnt = 0
     for oname in pbar(keys, task_str):
+        cleanupcnt = cleanupcnt + 1
+        if (catalog.args.travis and
+                cleanupcnt %
+                catalog.TRAVIS_QUERY_LIMIT != 0):
+            continue
+
         name = catalog.add_entry(oname)
 
         # Set the preferred name, switching to that name if name changed.
@@ -440,12 +446,6 @@ def do_cleanup(catalog):
 
         catalog.entries[name].sanitize()
         catalog.journal_entries(bury=True, final=True, gz=True)
-
-        cleanupcnt = cleanupcnt + 1
-        if (catalog.args.travis and
-                cleanupcnt %
-                catalog.TRAVIS_QUERY_LIMIT != 0):
-            continue
 
     catalog.save_caches()
 
