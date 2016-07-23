@@ -8,7 +8,7 @@ __all__ = ['name_clean', 'host_clean', 'radec_clean', 'clean_snname']
 
 
 def name_clean(name):
-    newname = name.strip(' ;,*')
+    newname = name.strip(' ;,*.')
     if newname.startswith('NAME '):
         newname = newname.replace('NAME ', '', 1)
     if newname.endswith(' SN'):

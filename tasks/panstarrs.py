@@ -50,6 +50,9 @@ def do_ps_threepi(catalog):
     if not html:
         return
 
+    # Clean some common HTML manglings
+    html = html.replace('ahref=', 'a href=')
+
     bs = BeautifulSoup(html, 'html5lib')
     div = bs.find('div', {'class': 'pagination'})
     offline = False

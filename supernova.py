@@ -221,8 +221,8 @@ class Supernova(Entry):
                 newquantities.append(added_quantity)
             self[quantity] = newquantities
 
-        # As all SN####xx designations have corresponding AT designations, add
-        # the AT alias when the SN alias is added.
+        # As all SN####xx designations for 2016+ have corresponding AT
+        # designations, add the AT alias when the SN alias is added.
         if quantity == self._KEYS.ALIAS:
             cleaned_quantity = quantity.strip()
             if (cleaned_quantity.startswith('SN') and
