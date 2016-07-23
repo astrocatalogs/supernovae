@@ -55,8 +55,7 @@ class Supernova(Entry):
 
         for ii, ct in enumerate(self[name]):
             if ct[QUANTITY.VALUE] == svalue and sources:
-                if (QUANTITY.KIND in ct and skind and
-                        ct[QUANTITY.KIND] != skind):
+                if ct.get(QUANTITY.KIND, '') != skind:
                     return
                 for source in sources.split(','):
                     if (source not in
@@ -221,15 +220,15 @@ class Supernova(Entry):
                 newquantities.append(added_quantity)
             self[quantity] = newquantities
 
-        # As all SN####xx designations have corresponding AT designations, add
-        # the AT alias when the SN alias is added.
+        # As all SN####xx designations for 2016+ have corresponding AT
+        # designations, add the AT alias when the SN alias is added.
         if quantity == self._KEYS.ALIAS:
-            cleaned_quantity = quantity.strip()
-            if (cleaned_quantity.startswith('SN') and
-                is_integer(cleaned_quantity[2:6]) and
-                    int(cleaned_quantity[2:6]) >= 2016):
+            cleaned_value = value.strip()
+            if (cleaned_value.startswith('SN') and
+                is_integer(cleaned_value[2:6]) and
+                    int(cleaned_value[2:6]) >= 2016):
                 success = super().add_quantity(
-                    'AT' + cleaned_quantity[2:], value, source, **kwargs)
+                    'AT' + cleaned_value[2:], value, source, **kwargs)
 
         return True
 

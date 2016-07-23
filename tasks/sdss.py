@@ -88,6 +88,8 @@ def do_sdss_photo(catalog):
                     val = val.lstrip('pz').replace('SN', '')
                 elif key == SUPERNOVA.REDSHIFT:
                     kwargs[QUANTITY.KIND] = 'spectroscopic'
+                    if float(val) < -1.0:
+                        continue
                     if float(row[ic + 1]) > 0.0:
                         kwargs[QUANTITY.E_VALUE] = row[ic + 1]
                 elif key == SUPERNOVA.MAX_DATE:
@@ -152,9 +154,11 @@ def do_sdss_photo(catalog):
                     SUPERNOVA.DEC, row[-2], source, u_value='floatdegrees')
             if hasred and rr == 1:
                 error = row[4] if float(row[4]) >= 0.0 else ''
+                val = row[2]
+                if float(val) < -1.0:
+                    continue
                 (catalog.entries[name]
-                 .add_quantity(SUPERNOVA.REDSHIFT, row[2], source,
-                               e_value=error,
+                 .add_quantity(SUPERNOVA.REDSHIFT, val, source, e_value=error,
                                kind='heliocentric'))
             if rr >= rst:
                 # Skip bad measurements
