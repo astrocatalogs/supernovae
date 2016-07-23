@@ -71,7 +71,7 @@ def do_rochester(catalog):
             elif len(sn) == 4 and is_number(sn[:4]):
                 sn = 'SN' + sn
             if not name:
-                if not sn:
+                if not sn or sn in ['Transient']:
                     continue
                 if sn[:8] == 'MASTER J':
                     sn = sn.replace('MASTER J', 'MASTER OT J').replace(
@@ -152,8 +152,8 @@ def do_rochester(catalog):
                 tsvin = csv.reader(csv_file, delimiter=' ',
                                    skipinitialspace=True)
                 for rr, row in enumerate(tsvin):
-                    if (not row or row[0][:4] in ['http', 'www.'] or
-                            len(row) < 3):
+                    if (not row or row[0] in ['Transient'] or
+                            row[0][:4] in ['http', 'www.'] or len(row) < 3):
                         continue
                     name = row[0].strip()
                     if name[:4].isdigit():
