@@ -158,8 +158,8 @@ def do_crts(catalog):
             if catalog.args.update:
                 catalog.journal_entries()
 
-        if catalog.args.travis and tri > catalog.TRAVIS_QUERY_LIMIT:
-            break
+            if catalog.args.travis and tri > catalog.TRAVIS_QUERY_LIMIT:
+                break
 
     catalog.journal_entries()
     return
