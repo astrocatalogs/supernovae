@@ -1,6 +1,7 @@
 {
     "Transient Name Server":           ["TNS"],
     "Pan-STARRS 3Pi":                  ["PS1 SN page"],
-    "Gaia Photometric Science Alerts": ["Gaia Photometric Science Alerts"],
+    "Gaia Photometric Science Alerts": ["Gaia Photometric Science Alerts",
+                                        "GAIA page"],
     "Supernova Hunt":                  ["SNHunt", "SNhunt"]
 }

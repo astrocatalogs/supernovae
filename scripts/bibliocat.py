@@ -56,7 +56,7 @@ for fcnt, eventfile in enumerate(tq(sorted(files, key=lambda s: s.lower()))):
             if 'bibcode' in source:
                 bc = source['bibcode']
                 if bc not in biblio:
-                    tqdm.write(bc)
+                    # tqdm.write(bc)
 
                     authors = ''
                     if bc in bibauthordict:
