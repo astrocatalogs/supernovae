@@ -311,6 +311,12 @@ class Supernova(Entry):
         return []
 
     def _get_save_path(self, bury=False):
+        """Return the path that this Entry should be saved to.
+
+        Determines output repository based on the name (i.e. the year) of the
+        supernova.  If `bury` is true, then this entry is saved to the
+        'boneyard'.
+        """
         self._log.debug("_get_save_path(): {}".format(self.name()))
         filename = self.get_filename(self[self._KEYS.NAME])
 
