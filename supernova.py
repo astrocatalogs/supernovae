@@ -3,6 +3,8 @@
 import warnings
 from collections import OrderedDict
 
+from astropy.time import Time as astrotime
+
 from astrocats.catalog.entry import ENTRY, Entry
 from astrocats.catalog.key import KEY_TYPES, Key
 from astrocats.catalog.photometry import PHOTOMETRY
@@ -10,10 +12,9 @@ from astrocats.catalog.quantity import QUANTITY
 from astrocats.catalog.source import SOURCE
 from astrocats.catalog.spectrum import SPECTRUM
 from astrocats.catalog.utils import (bib_priority, get_sig_digits,
-                                     get_source_year, is_number, jd_to_mjd,
-                                     make_date_string, pretty_num, uniq_cdl)
-from astropy.time import Time as astrotime
-
+                                     get_source_year, is_integer, is_number,
+                                     jd_to_mjd, make_date_string, pretty_num,
+                                     uniq_cdl)
 from cdecimal import Decimal
 
 from .constants import MAX_BANDS, PREF_KINDS, REPR_BETTER_QUANTITY
@@ -166,10 +167,9 @@ class Supernova(Entry):
 
     def add_quantity(self, quantity, value, source, forcereplacebetter=False,
                      **kwargs):
-        quantity_added = super().add_quantity(quantity, value, source,
-                                              **kwargs)
+        success = super().add_quantity(quantity, value, source, **kwargs)
 
-        if not quantity_added:
+        if not success:
             return
 
         my_quantity_list = self.get(quantity, [])
@@ -220,7 +220,18 @@ class Supernova(Entry):
             if not isworse:
                 newquantities.append(added_quantity)
             self[quantity] = newquantities
-        return
+
+        # As all SN####xx designations have corresponding AT designations, add
+        # the AT alias when the SN alias is added.
+        if quantity == self._KEYS.ALIAS:
+            cleaned_quantity = quantity.strip()
+            if (cleaned_quantity.startswith('SN') and
+                is_integer(cleaned_quantity[2:6]) and
+                    int(cleaned_quantity[2:6]) >= 2016):
+                success = super().add_quantity(
+                    'AT' + cleaned_quantity[2:], value, source, **kwargs)
+
+        return True
 
     def add_source(self, **kwargs):
         # Sanitize some fields before adding source
