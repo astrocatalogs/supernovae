@@ -37,10 +37,18 @@ script:
     - cd astrocats
     - mv ../supernovae astrocats/.
     - python -m astrocats setup
+
     - echo "travis_fold:start:IMPORT Importing data"
-    - coverage run --source astrocats/supernovae --omit astrocats/supernovae/scripts -a -m astrocats supernovae import --clone-depth 1 --travis
-    - python -m astrocats catalog analyze -v --count
+    - coverage run --source astrocats/supernovae -a -m astrocats supernovae import --clone-depth 1 --travis
     - echo "travis_fold:end:IMPORT Importing data done"
+
+    - echo "travis_fold:start:COUNT Counting data"
+    - python -m astrocats supernovae analyze -v --count
+    - echo "travis_fold:end:COUNT Counting data done"
+
+    - echo "travis_fold:start:WEBCAT Creating web catalog"
+    - coverage run --source astrocats/supernovae -a -m astrocats.supernovae.scripts.webcat --travis
+    - echo "travis_fold:end:WEBCAT Web catalog created"
 
 # Run coveralls
 after_success:

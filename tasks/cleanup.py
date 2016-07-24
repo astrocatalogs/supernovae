@@ -441,7 +441,7 @@ def do_cleanup(catalog):
         catalog.entries[name].sanitize()
         catalog.journal_entries(bury=True, final=True, gz=True)
         cleanupcnt = cleanupcnt + 1
-        if catalog.args.travis and cleanupcnt % 100 == 0:
+        if catalog.args.travis and cleanupcnt % 1000 == 0:
             break
 
     catalog.save_caches()
