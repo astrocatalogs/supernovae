@@ -2,7 +2,6 @@
 """
 import csv
 import os
-import re
 from glob import glob
 
 from astropy.coordinates import SkyCoord as coord
