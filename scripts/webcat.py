@@ -411,12 +411,12 @@ for fcnt, eventfile in enumerate(tq(sorted(files, key=lambda s: s.lower()))):
     # Must be two sigma above host magnitude, if host magnitude known, to add
     # to phot count.
     numphoto = len([x for x in catalog[entry]['photometry'] if 'upperlimit' not in x and 'magnitude' in x and
-                    (not hostmag or not 'includeshost' in x or float(x['magnitude']) <= (hostmag - 2.0 * hosterr))]) if photoavail else 0
+                    (not hostmag or 'includeshost' not in x or float(x['magnitude']) <= (hostmag - 2.0 * hosterr))]) if photoavail else 0
     numradio = len([x for x in catalog[entry]['photometry'] if 'upperlimit' not in x and 'fluxdensity' in x and
                     (not x['e_fluxdensity'] or float(x['fluxdensity']) > radiosigma * float(x['e_fluxdensity'])) and
-                    (not hostmag or not 'includeshost' in x or float(x['magnitude']) <= (hostmag - 2.0 * hosterr))]) if photoavail else 0
+                    (not hostmag or 'includeshost' not in x or float(x['magnitude']) <= (hostmag - 2.0 * hosterr))]) if photoavail else 0
     numxray = len([x for x in catalog[entry]['photometry'] if 'upperlimit' not in x and 'counts' in x and
-                   (not hostmag or not 'includeshost' in x or float(x['magnitude']) <= (hostmag - 2.0 * hosterr))]) if photoavail else 0
+                   (not hostmag or 'includeshost' not in x or float(x['magnitude']) <= (hostmag - 2.0 * hosterr))]) if photoavail else 0
     numspectra = len(catalog[entry]['spectra']) if spectraavail else 0
 
     redshiftfactor = (1.0 / (1.0 + float(catalog[entry]['redshift'][0]['value']))) if (
