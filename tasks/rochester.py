@@ -31,7 +31,7 @@ def do_rochester(catalog):
         for mirror in rochestermirrors:
             html = catalog.load_url(
                 mirror + path, filepath,
-                failhard=(mirror != rochestermirrors[-1]))
+                fail=(mirror != rochestermirrors[-1]))
             if html:
                 break
 
