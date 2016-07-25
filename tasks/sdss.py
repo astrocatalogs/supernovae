@@ -142,12 +142,6 @@ def do_sdss_photo(catalog):
                     SUPERNOVA.ALIAS, name, source)
                 catalog.entries[name].add_quantity(
                     SUPERNOVA.ALIAS, 'SDSS-II SN ' + row[3], source)
-
-                if row[5] != 'RA:' and bibcode != '2014arXiv1401.3317S':
-                    year = re.findall(r'\d+', name)[0]
-                    catalog.entries[name].add_quantity(
-                        SUPERNOVA.DISCOVER_DATE, year, source)
-
                 catalog.entries[name].add_quantity(
                     SUPERNOVA.RA, row[-4], source, u_value='floatdegrees')
                 catalog.entries[name].add_quantity(
