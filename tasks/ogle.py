@@ -95,15 +95,7 @@ def do_ogle(catalog):
 
                 fname = os.path.join(catalog.get_current_task_repo(),
                                      'OGLE/') + datafnames[ec]
-                if (catalog.current_task.load_archive(catalog.args) and
-                        os.path.isfile(fname)):
-                    with open(fname, 'r') as f:
-                        csvtxt = f.read()
-                else:
-                    response = urllib.request.urlopen(datalinks[ec])
-                    with open(fname, 'w') as f:
-                        csvtxt = response.read().decode('utf-8')
-                        f.write(csvtxt)
+                csvtxt = catalog.load_url(datalinks[ec], fname)
 
                 lcdat = csvtxt.splitlines()
                 sources = [catalog.entries[name].add_source(

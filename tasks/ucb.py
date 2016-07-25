@@ -6,7 +6,6 @@ import os
 import urllib
 from math import floor
 
-import requests
 from astrocats.catalog.utils import get_sig_digits, pbar, pretty_num, uniq_cdl
 from astropy.time import Time as astrotime
 
@@ -22,7 +21,7 @@ def do_ucb_photo(catalog):
     jsontxt = catalog.load_url(
         'http://heracles.astro.berkeley.edu/sndb/download?id=allpubphot',
         os.path.join(catalog.get_current_task_repo(), 'SNDB/allpub.json'),
-        jsonsort='PhotID')
+        json_sort='PhotID')
     if not jsontxt:
         return
 
@@ -65,18 +64,9 @@ def do_ucb_photo(catalog):
 
         filepath = os.path.join(
             catalog.get_current_task_repo(), 'SNDB/') + filename
-        if (catalog.current_task.load_archive(catalog.args) and
-                os.path.isfile(filepath)):
-            with open(filepath, 'r') as ff:
-                phottxt = ff.read()
-        else:
-            session = requests.Session()
-            response = session.get(
-                'http://heracles.astro.berkeley.edu/sndb/download?id=dp:' +
-                str(phot['PhotID']))
-            phottxt = response.text
-            with open(filepath, 'w') as ff:
-                ff.write(phottxt)
+        phottxt = catalog.load_url('http://heracles.astro.berkeley.edu/sndb/'
+                                   'download?id=dp:' + str(phot['PhotID']),
+                                   filepath)
 
         tsvin = csv.reader(phottxt.splitlines(),
                            delimiter=' ', skipinitialspace=True)
@@ -109,7 +99,7 @@ def do_ucb_spectra(catalog):
     jsontxt = catalog.load_url(
         'http://heracles.astro.berkeley.edu/sndb/download?id=allpubspec',
         os.path.join(catalog.get_current_task_repo(), 'UCB/allpub.json'),
-        jsonsort='SpecID')
+        json_sort='SpecID')
     if not jsontxt:
         return
 
@@ -167,18 +157,9 @@ def do_ucb_spectra(catalog):
 
         filepath = os.path.join(
             catalog.get_current_task_repo(), 'UCB/') + filename
-        if (catalog.current_task.load_archive(catalog.args) and
-                os.path.isfile(filepath)):
-            with open(filepath, 'r') as ff:
-                spectxt = ff.read()
-        else:
-            session = requests.Session()
-            response = session.get(
-                'http://heracles.astro.berkeley.edu/sndb/download?id=ds:' +
-                str(spectrum['SpecID']))
-            spectxt = response.text
-            with open(filepath, 'w') as ff:
-                ff.write(spectxt)
+        spectxt = catalog.load_url(
+            'http://heracles.astro.berkeley.edu/sndb/download?id=ds:' +
+            str(spectrum['SpecID']), filepath)
 
         specdata = list(csv.reader(spectxt.splitlines(),
                                    delimiter=' ', skipinitialspace=True))
