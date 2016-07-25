@@ -24,7 +24,7 @@ def do_ogle(catalog):
 
         filepath = os.path.join(catalog.get_current_task_repo(), 'OGLE-')
         filepath += bn.replace('/', '-') + '-transients.html'
-        htmltxt = catalog.load_cached_url(
+        htmltxt = catalog.load_url(
             'http://ogle.astrouw.edu.pl/ogle4/' + bn +
             '/transients.html', filepath)
         if not htmltxt:

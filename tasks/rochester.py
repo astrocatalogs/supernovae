@@ -29,7 +29,7 @@ def do_rochester(catalog):
             catalog.get_current_task_repo(), 'rochester/') +
             os.path.basename(path))
         for mirror in rochestermirrors:
-            html = catalog.load_cached_url(
+            html = catalog.load_url(
                 mirror + path, filepath,
                 failhard=(mirror != rochestermirrors[-1]))
             if html:

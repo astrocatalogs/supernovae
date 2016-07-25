@@ -19,7 +19,7 @@ def do_ucb_photo(catalog):
     sec_refurl = 'http://heracles.astro.berkeley.edu/sndb/info'
     sec_refbib = '2012MNRAS.425.1789S'
 
-    jsontxt = catalog.load_cached_url(
+    jsontxt = catalog.load_url(
         'http://heracles.astro.berkeley.edu/sndb/download?id=allpubphot',
         os.path.join(catalog.get_current_task_repo(), 'SNDB/allpub.json'),
         jsonsort='PhotID')
@@ -106,7 +106,7 @@ def do_ucb_spectra(catalog):
     sec_refbib = '2012MNRAS.425.1789S'
     ucbspectracnt = 0
 
-    jsontxt = catalog.load_cached_url(
+    jsontxt = catalog.load_url(
         'http://heracles.astro.berkeley.edu/sndb/download?id=allpubspec',
         os.path.join(catalog.get_current_task_repo(), 'UCB/allpub.json'),
         jsonsort='SpecID')

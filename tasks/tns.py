@@ -18,7 +18,7 @@ def do_tns(catalog):
     tns_url = 'https://wis-tns.weizmann.ac.il/'
     search_url = tns_url + \
         'search?&num_page=1&format=html&sort=desc&order=id&format=csv&page=0'
-    csvtxt = catalog.load_cached_url(
+    csvtxt = catalog.load_url(
         search_url, os.path.join(catalog.get_current_task_repo(),
                                  'TNS/index.csv'))
     if not csvtxt:

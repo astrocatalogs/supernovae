@@ -11,7 +11,7 @@ from ..supernova import SUPERNOVA
 def do_asassn(catalog):
     task_str = catalog.get_current_task_str()
     asn_url = 'http://www.astronomy.ohio-state.edu/~assassin/sn_list.html'
-    html = catalog.load_cached_url(asn_url, os.path.join(
+    html = catalog.load_url(asn_url, os.path.join(
         catalog.get_current_task_repo(), 'ASASSN/sn_list.html'))
     if not html:
         return
