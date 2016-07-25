@@ -18,7 +18,7 @@ def do_des(catalog):
                 '#DESdatause')
     # Make sure there is aa trailing slash
     des_path = os.path.join(catalog.get_current_task_repo(), 'DES', '')
-    html = catalog.load_cached_url(des_trans_url, des_path + 'transients.html')
+    html = catalog.load_url(des_trans_url, des_path + 'transients.html')
     if not html:
         return
     bs = BeautifulSoup(html, 'html5lib')
@@ -62,7 +62,7 @@ def do_des(catalog):
         catalog.entries[name].add_quantity(SUPERNOVA.RA, ra, sources)
         catalog.entries[name].add_quantity(SUPERNOVA.DEC, dec, sources)
 
-        html2 = catalog.load_cached_url(
+        html2 = catalog.load_url(
             des_trans_url + name, des_path + name + '.html')
         if not html2:
             continue

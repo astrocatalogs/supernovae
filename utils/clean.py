@@ -8,7 +8,7 @@ __all__ = ['name_clean', 'host_clean', 'radec_clean', 'clean_snname']
 
 
 def name_clean(name):
-    newname = name.strip(' ;,*')
+    newname = name.strip(' ;,*.')
     if newname.startswith('NAME '):
         newname = newname.replace('NAME ', '', 1)
     if newname.endswith(' SN'):
@@ -198,6 +198,7 @@ def name_clean(name):
 
 
 def radec_clean(svalue, quantity, unit=''):
+    svalue = svalue.strip()
     if unit == 'floatdegrees':
         if not is_number(svalue):
             return (svalue, unit)

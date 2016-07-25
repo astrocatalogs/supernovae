@@ -1,5 +1,4 @@
 #!/usr/local/bin/python3.5
-
 import argparse
 import csv
 import filecmp
@@ -16,34 +15,36 @@ import urllib.request
 import warnings
 from collections import OrderedDict
 from copy import deepcopy
-from datetime import datetime
 from glob import glob
-from math import ceil, floor, hypot, isnan, pi
+from math import ceil, isnan, pi
 from statistics import mean
 
+import inflect
 import numpy
 import requests
 from astropy import units as un
-from astropy import constants
 from astropy.coordinates import SkyCoord as coord
 from astropy.time import Time as astrotime
-from bokeh.embed import components, file_html
-from bokeh.layouts import column, layout, row as bokehrow, widgetbox
+from bokeh.embed import file_html
+from bokeh.layouts import row as bokehrow
+from bokeh.layouts import column, layout
 from bokeh.models import (ColumnDataSource, CustomJS, DatetimeAxis, HoverTool,
-                          LinearAxis, Paragraph, Range1d, Slider)
+                          LinearAxis, Range1d, Slider)
 from bokeh.models.widgets import Select
-from bokeh.plotting import Figure, reset_output, save, show
-from bokeh.resources import CDN, INLINE
-from bs4 import BeautifulSoup, NavigableString, Tag
+from bokeh.plotting import Figure, reset_output
+from bokeh.resources import CDN
+from bs4 import BeautifulSoup
 from palettable import cubehelix
 
-import inflect
+from astrocats.catalog.utils import (bandaliasf, bandcodes, bandcolorf,
+                                     bandshortaliasf, bandwavef,
+                                     bandwavelengths, get_sig_digits,
+                                     is_number, pretty_num, radiocolorf,
+                                     round_sig, tprint, tq, xraycolorf)
+from astrocats.supernovae.scripts.events import (get_event_filename,
+                                                 get_event_text)
+from astrocats.supernovae.scripts.repos import get_rep_folder, repo_file_list
 from cdecimal import Decimal
-from digits import *
-from events import *
-from photometry import *
-from repos import *
-from tq import *
 
 parser = argparse.ArgumentParser(
     description='Generate a catalog JSON file and plot HTML files from SNE data.')
@@ -70,7 +71,7 @@ args = parser.parse_args()
 infl = inflect.engine()
 infl.defnoun("spectrum", "spectra")
 
-outdir = "../output/"
+outdir = "astrocats/supernovae/output/"
 cachedir = "cache/"
 jsondir = "json/"
 htmldir = "html/"
@@ -239,7 +240,7 @@ newfiletemplate = (
 }'''
 )
 
-with open('sitemap-template.xml', 'r') as f:
+with open('astrocats/supernovae/html/sitemap-template.xml', 'r') as f:
     sitemaptemplate = f.read()
 
 if len(columnkey) != len(header):
@@ -329,25 +330,19 @@ hasasp = []
 totalphoto = 0
 totalspectra = 0
 
-hostimgs = []
 if os.path.isfile(outdir + cachedir + 'hostimgs.json'):
     with open(outdir + cachedir + 'hostimgs.json', 'r') as f:
         filetext = f.read()
-    oldhostimgs = json.loads(filetext)
-    oldhostimgs = [list(i) for i in zip(*oldhostimgs)]
-    hostimgdict = dict(list(zip(oldhostimgs[0], oldhostimgs[1])))
+    hostimgdict = json.loads(filetext)
 else:
     hostimgdict = {}
 
 files = repo_file_list(normal=(not args.boneyard), bones=args.boneyard)
 
-md5s = []
 if os.path.isfile(outdir + cachedir + 'md5s.json'):
     with open(outdir + cachedir + 'md5s.json', 'r') as f:
         filetext = f.read()
-    oldmd5s = json.loads(filetext)
-    oldmd5s = [list(i) for i in zip(*oldmd5s)]
-    md5dict = dict(list(zip(oldmd5s[0], oldmd5s[1])))
+    md5dict = json.loads(filetext)
 else:
     md5dict = {}
 
@@ -360,8 +355,11 @@ for fcnt, eventfile in enumerate(tq(sorted(files, key=lambda s: s.lower()))):
     if args.travis and fcnt >= travislimit:
         break
 
+    entry_changed = False
     checksum = md5file(eventfile)
-    md5s.append([eventfile, checksum])
+    if eventfile not in md5dict or md5dict[eventfile] != checksum:
+        entry_changed = True
+        md5dict[eventfile] = checksum
 
     filetext = get_event_text(eventfile)
 
@@ -376,7 +374,7 @@ for fcnt, eventfile in enumerate(tq(sorted(files, key=lambda s: s.lower()))):
     tprint(eventfile + ' [' + checksum + ']')
 
     repfolder = get_rep_folder(catalog[entry])
-    if os.path.isfile("../sne-internal/" + fileeventname + ".json"):
+    if os.path.isfile("astrocats/supernovae/input/sne-internal/" + fileeventname + ".json"):
         catalog[entry]['download'] = 'e'
     else:
         catalog[entry]['download'] = ''
@@ -413,12 +411,12 @@ for fcnt, eventfile in enumerate(tq(sorted(files, key=lambda s: s.lower()))):
     # Must be two sigma above host magnitude, if host magnitude known, to add
     # to phot count.
     numphoto = len([x for x in catalog[entry]['photometry'] if 'upperlimit' not in x and 'magnitude' in x and
-                    (not hostmag or not 'includeshost' in x or float(x['magnitude']) <= (hostmag - 2.0 * hosterr))]) if photoavail else 0
+                    (not hostmag or 'includeshost' not in x or float(x['magnitude']) <= (hostmag - 2.0 * hosterr))]) if photoavail else 0
     numradio = len([x for x in catalog[entry]['photometry'] if 'upperlimit' not in x and 'fluxdensity' in x and
                     (not x['e_fluxdensity'] or float(x['fluxdensity']) > radiosigma * float(x['e_fluxdensity'])) and
-                    (not hostmag or not 'includeshost' in x or float(x['magnitude']) <= (hostmag - 2.0 * hosterr))]) if photoavail else 0
+                    (not hostmag or 'includeshost' not in x or float(x['magnitude']) <= (hostmag - 2.0 * hosterr))]) if photoavail else 0
     numxray = len([x for x in catalog[entry]['photometry'] if 'upperlimit' not in x and 'counts' in x and
-                   (not hostmag or not 'includeshost' in x or float(x['magnitude']) <= (hostmag - 2.0 * hosterr))]) if photoavail else 0
+                   (not hostmag or 'includeshost' not in x or float(x['magnitude']) <= (hostmag - 2.0 * hosterr))]) if photoavail else 0
     numspectra = len(catalog[entry]['spectra']) if spectraavail else 0
 
     redshiftfactor = (1.0 / (1.0 + float(catalog[entry]['redshift'][0]['value']))) if (
@@ -517,7 +515,7 @@ for fcnt, eventfile in enumerate(tq(sorted(files, key=lambda s: s.lower()))):
     dohtml = True
     if not args.forcehtml:
         if os.path.isfile(outdir + htmldir + fileeventname + ".html"):
-            if eventfile in md5dict and checksum == md5dict[eventfile]:
+            if not entry_changed:
                 dohtml = False
 
     # Copy JSON files up a directory if they've changed
@@ -564,7 +562,8 @@ for fcnt, eventfile in enumerate(tq(sorted(files, key=lambda s: s.lower()))):
         photocorr = [('k' if 'kcorrected' in x else 'raw')
                      for x in catalog[entry]['photometry'] if 'magnitude' in x]
 
-        photoutime = catalog[entry]['photometry'][0]['u_time'] if 'u_time' in catalog[entry]['photometry'][0] else 'MJD'
+        photoutime = catalog[entry]['photometry'][0][
+            'u_time'] if 'u_time' in catalog[entry]['photometry'][0] else 'MJD'
         hastimeerrs = (len(list(filter(None, phototimelowererrs)))
                        and len(list(filter(None, phototimeuppererrs))))
         hasABerrs = (len(list(filter(None, photoABlowererrs)))
@@ -784,7 +783,7 @@ for fcnt, eventfile in enumerate(tq(sorted(files, key=lambda s: s.lower()))):
                 }
             """)
             photochecks = Select(title="Photometry to show:",
-                value="Raw", options=["Raw", "K-Corrected", "All"], callback=photocallback)
+                                 value="Raw", options=["Raw", "K-Corrected", "All"], callback=photocallback)
         else:
             photochecks = ''
 
@@ -796,6 +795,8 @@ for fcnt, eventfile in enumerate(tq(sorted(files, key=lambda s: s.lower()))):
         hasepoch = True
         if 'redshift' in catalog[entry]:
             z = float(catalog[entry]['redshift'][0]['value'])
+        catalog[entry]['spectra'] = list(
+            filter(None, [x if 'data' in x else None for x in catalog[entry]['spectra']]))
         for spectrum in catalog[entry]['spectra']:
             spectrumdata = deepcopy(spectrum['data'])
             oldlen = len(spectrumdata)
@@ -1033,7 +1034,8 @@ for fcnt, eventfile in enumerate(tq(sorted(files, key=lambda s: s.lower()))):
         phototype = [(True if 'upperlimit' in x or radiosigma * float(x['e_fluxdensity']) >= float(x['fluxdensity']) else False)
                      for x in catalog[entry]['photometry'] if 'fluxdensity' in x]
 
-        photoutime = catalog[entry]['photometry'][0]['u_time'] if 'u_time' in catalog[entry]['photometry'][0] else 'MJD'
+        photoutime = catalog[entry]['photometry'][0][
+            'u_time'] if 'u_time' in catalog[entry]['photometry'][0] else 'MJD'
         if distancemod:
             dist = (10.0**(1.0 + 0.2 * distancemod) * un.pc).cgs.value
             areacorr = 4.0 * pi * dist**2.0 * ((1.0e-6 * un.jansky).cgs.value)
@@ -1257,7 +1259,8 @@ for fcnt, eventfile in enumerate(tq(sorted(files, key=lambda s: s.lower()))):
         phototype = [(True if 'upperlimit' in x or radiosigma * float(x['e_flux']) >= float(x['flux']) else False)
                      for x in catalog[entry]['photometry'] if 'flux' in x]
 
-        photoutime = catalog[entry]['photometry'][0]['u_time'] if 'u_time' in catalog[entry]['photometry'][0] else 'MJD'
+        photoutime = catalog[entry]['photometry'][0][
+            'u_time'] if 'u_time' in catalog[entry]['photometry'][0] else 'MJD'
         if distancemod:
             dist = (10.0**(1.0 + 0.2 * distancemod) * un.pc).cgs.value
             areacorr = 4.0 * pi * dist**2.0
@@ -1505,7 +1508,7 @@ for fcnt, eventfile in enumerate(tq(sorted(files, key=lambda s: s.lower()))):
                         f.write(resptxt)
                     imgsrc = 'SDSS'
 
-                if hasimage and filecmp.cmp(outdir + htmldir + fileeventname + '-host.jpg', '../input/missing.jpg'):
+                if hasimage and filecmp.cmp(outdir + htmldir + fileeventname + '-host.jpg', 'astrocats/supernovae/input/missing.jpg'):
                     hasimage = False
 
                 if not hasimage:
@@ -1546,11 +1549,11 @@ for fcnt, eventfile in enumerate(tq(sorted(files, key=lambda s: s.lower()))):
 
         if hasimage:
             if imgsrc == 'SDSS':
-                hostimgs.append([eventname, 'SDSS'])
+                hostimgdict[eventname] = 'SDSS'
                 skyhtml = ('<a href="http://skyserver.sdss.org/DR12/en/tools/chart/navi.aspx?opt=G&ra='
                            + str(c.ra.deg) + '&dec=' + str(c.dec.deg) + '&scale=0.15"><img src="' + fileeventname + '-host.jpg" width=250></a>')
             elif imgsrc == 'DSS':
-                hostimgs.append([eventname, 'DSS'])
+                hostimgdict[eventname] = 'DSS'
                 url = ("http://skyview.gsfc.nasa.gov/current/cgi/runquery.pl?Position=" + str(urllib.parse.quote_plus(snra + " " + sndec)) +
                        "&coordinates=J2000&coordinates=&projection=Tan&pixels=500&size=" + str(dssimagescale) + "float=on&scaling=Log&resolver=SIMBAD-NED" +
                        "&Sampler=_skip_&Deedger=_skip_&rotation=&Smooth=&lut=colortables%2Fb-w-linear.bin&PlotColor=&grid=_skip_&gridlabels=1" +
@@ -1558,7 +1561,7 @@ for fcnt, eventfile in enumerate(tq(sorted(files, key=lambda s: s.lower()))):
                 skyhtml = ('<a href="' + url + '"><img src="' +
                            fileeventname + '-host.jpg" width=250></a>')
         else:
-            hostimgs.append([eventname, 'None'])
+            hostimgdict[eventname] = 'None'
 
     if dohtml and args.writehtml:
         # if (photoavail and spectraavail) and dohtml and args.writehtml:
@@ -1678,7 +1681,7 @@ for fcnt, eventfile in enumerate(tq(sorted(files, key=lambda s: s.lower()))):
                                 raise(ValueError(
                                     'Unable to find associated source by alias!'))
                             edit = "true" if os.path.isfile(
-                                '../sne-internal/' + get_event_filename(entry) + '.json') else "false"
+                                'astrocats/supernovae/input/sne-internal/' + get_event_filename(entry) + '.json') else "false"
                             keyhtml = (keyhtml + "<span class='singletooltiptext'><button class='singlemarkerror' type='button' onclick='markError(\"" +
                                        entry + "\", \"" + key + "\", \"" + ','.join(idtypes) +
                                        "\", \"" + ','.join(sourceids) + "\", \"" + edit + "\")'>Flag as erroneous</button></span>")
@@ -1708,7 +1711,8 @@ for fcnt, eventfile in enumerate(tq(sorted(files, key=lambda s: s.lower()))):
                 if 'url' in source:
                     refurl = source['url']
 
-                sourcename = source['name'] if 'name' in source else source['bibcode']
+                sourcename = source[
+                    'name'] if 'name' in source else source['bibcode']
                 if not first_secondary and source.get('secondary', False):
                     first_secondary = True
                     newhtml += r'<tr><th colspan="2" class="event-cell">Secondary Sources</th></tr>\n'
@@ -1823,19 +1827,19 @@ for fcnt, eventfile in enumerate(tq(sorted(files, key=lambda s: s.lower()))):
 if args.writecatalog and not args.eventlist:
     catalog = deepcopy(catalogcopy)
 
-    if not args.boneyard:
-        # Write the MD5 checksums
-        jsonstring = json.dumps(md5s, indent='\t', separators=(',', ':'))
-        with open(outdir + cachedir + 'md5s.json' + testsuffix, 'w') as f:
+    # Write the MD5 checksums
+    jsonstring = json.dumps(md5dict, indent='\t', separators=(',', ':'))
+    with open(outdir + cachedir + 'md5s.json' + testsuffix, 'w') as f:
+        f.write(jsonstring)
+
+    # Write the host image info
+    if args.collecthosts:
+        jsonstring = json.dumps(
+            hostimgdict, indent='\t', separators=(',', ':'))
+        with open(outdir + cachedir + 'hostimgs.json' + testsuffix, 'w') as f:
             f.write(jsonstring)
 
-        # Write the host image info
-        if args.collecthosts:
-            jsonstring = json.dumps(
-                hostimgs, indent='\t', separators=(',', ':'))
-            with open(outdir + cachedir + 'hostimgs.json' + testsuffix, 'w') as f:
-                f.write(jsonstring)
-
+    if not args.boneyard:
         # Things David wants in this file: names (aliases), max mag, max mag
         # date (gregorian), type, redshift, r.a., dec., # obs., link
         with open(outdir + htmldir + 'snepages.csv' + testsuffix, 'w') as f:
@@ -1958,12 +1962,13 @@ if args.writecatalog and not args.eventlist:
     with open(outdir + catprefix + '.min.json', 'rb') as f_in, gzip.open(outdir + catprefix + '.min.json.gz', 'wb') as f_out:
         shutil.copyfileobj(f_in, f_out)
 
-    names = OrderedDict()
-    for ev in catalog:
-        names[ev['name']] = [x['value'] for x in ev['alias']]
-    jsonstring = json.dumps(names, separators=(',', ':'))
-    with open(outdir + 'names.min.json' + testsuffix, 'w') as f:
-        f.write(jsonstring)
+    if not args.boneyard:
+        names = OrderedDict()
+        for ev in catalog:
+            names[ev['name']] = [x['value'] for x in ev['alias']]
+        jsonstring = json.dumps(names, separators=(',', ':'))
+        with open(outdir + 'names.min.json' + testsuffix, 'w') as f:
+            f.write(jsonstring)
 
     if args.deleteorphans and not args.boneyard:
 
@@ -1971,7 +1976,7 @@ if args.writecatalog and not args.eventlist:
         safefiles += ['catalog.json', 'catalog.min.json', 'bones.json', 'bones.min.json', 'names.min.json', 'md5s.json', 'hostimgs.json', 'iaucs.json', 'errata.json',
                       'bibauthors.json', 'extinctions.json', 'dupes.json', 'biblio.json', 'atels.json', 'cbets.json', 'conflicts.json', 'hosts.json', 'hosts.min.json']
 
-        for myfile in glob('../*.json'):
+        for myfile in glob(outdir + jsondir + '*.json'):
             if not os.path.basename(myfile) in safefiles:
                 print('Deleting orphan ' + myfile)
                 # os.remove(myfile)

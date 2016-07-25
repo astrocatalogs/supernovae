@@ -7,12 +7,14 @@ from collections import OrderedDict
 
 from tqdm import tqdm
 
-from importer.constants import ADS_BIB_URL
+from astrocats.catalog.catalog import Catalog
+
+outdir = "astrocats/supernovae/input/"
 
 atels = OrderedDict()
 yearseps = range(1990, 2020, 2)
 for i in tqdm(range(len(yearseps) - 1)):
-    adsquery = (ADS_BIB_URL + '*ATel.*' +
+    adsquery = (Catalog.ADS_BIB_URL + '*ATel.*' +
                 '&data_type=Custom&nr_to_return=10000&format=%25R' +
                 '&start_mon=&start_year=' +
                 str(yearseps[i]) + '&end_mon=&end_year=' +
@@ -25,14 +27,14 @@ for i in tqdm(range(len(yearseps) - 1)):
           x.strip()) for x in newatels])))
 
 jsonstring = json.dumps(atels, separators=(',', ':'), ensure_ascii=False)
-path = '../atels.json'
+path = outdir + '/atels.json'
 with codecs.open(path, 'w', encoding='utf8') as f:
     f.write(jsonstring)
 
 cbets = OrderedDict()
 yearseps = range(2000, 2020, 2)
 for i in tqdm(range(len(yearseps) - 1)):
-    adsquery = (ADS_BIB_URL + '*CBET.*' +
+    adsquery = (Catalog.ADS_BIB_URL + '*CBET.*' +
                 '&data_type=Custom&nr_to_return=10000&format=%25R' +
                 '&start_mon=&start_year=' +
                 str(yearseps[i]) + '&end_mon=&end_year=' +
@@ -45,14 +47,14 @@ for i in tqdm(range(len(yearseps) - 1)):
           x.strip()) for x in newcbets])))
 
 jsonstring = json.dumps(cbets, separators=(',', ':'), ensure_ascii=False)
-path = '../cbets.json'
+path = outdir + '/cbets.json'
 with codecs.open(path, 'w', encoding='utf8') as f:
     f.write(jsonstring)
 
 iaucs = OrderedDict()
 yearseps = range(1920, 2020, 2)
 for i in tqdm(range(len(yearseps) - 1)):
-    adsquery = (ADS_BIB_URL + '*IAUC.*' +
+    adsquery = (Catalog.ADS_BIB_URL + '*IAUC.*' +
                 '&data_type=Custom&nr_to_return=10000&format=%25R' +
                 '&start_mon=&start_year=' +
                 str(yearseps[i]) + '&end_mon=&end_year=' +
@@ -65,6 +67,6 @@ for i in tqdm(range(len(yearseps) - 1)):
           x.strip()) for x in newiaucs])))
 
 jsonstring = json.dumps(iaucs, separators=(',', ':'), ensure_ascii=False)
-path = '../iaucs.json'
+path = outdir + 'iaucs.json'
 with codecs.open(path, 'w', encoding='utf8') as f:
     f.write(jsonstring)

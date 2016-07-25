@@ -2,7 +2,6 @@
 """
 import os
 
-import requests
 from astrocats.catalog.utils import is_number, pbar
 from bs4 import BeautifulSoup
 
@@ -23,17 +22,9 @@ def do_ptf(catalog):
     # name = catalog.add_entry(name)
     task_str = catalog.get_current_task_str()
 
-    if catalog.current_task.load_archive(catalog.args):
-        with open(os.path.join(catalog.get_current_task_repo(),
-                               'PTF/update.html'), 'r') as f:
-            html = f.read()
-    else:
-        session = requests.Session()
-        response = session.get('http://wiserep.weizmann.ac.il/spectra/update')
-        html = response.text
-        with open(os.path.join(catalog.get_current_task_repo(),
-                               'PTF/update.html'), 'w') as f:
-            f.write(html)
+    html = catalog.load_url('http://wiserep.weizmann.ac.il/spectra/update',
+                            os.path.join(catalog.get_current_task_repo(),
+                                         'PTF/update.html'))
 
     bs = BeautifulSoup(html, 'html5lib')
     select = bs.find('select', {'name': 'objid'})

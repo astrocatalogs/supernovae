@@ -29,10 +29,16 @@ def do_external_radio(catalog):
                 else:
                     cols = list(filter(None, line.split()))
                     source = radiosourcedict[cols[6]]
+                    if float(cols[4]) == 0.0:
+                        eflux = ''
+                        upp = True
+                    else:
+                        eflux = cols[4]
+                        upp = False
                     catalog.entries[name].add_photometry(
                         time=cols[0], frequency=cols[2], u_frequency='GHz',
-                        fluxdensity=cols[3], e_fluxdensity=cols[4],
-                        u_fluxdensity='µJy',
+                        fluxdensity=cols[3], e_fluxdensity=eflux,
+                        u_fluxdensity='µJy', upperlimit=upp,
                         instrument=cols[5], source=source)
                     catalog.entries[name].add_quantity(
                         SUPERNOVA.ALIAS, oldname, source)

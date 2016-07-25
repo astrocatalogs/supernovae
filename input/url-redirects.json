@@ -1,3 +1,7 @@
 {
-    "https://gaia.ac.uk/selected-gaia-science-alerts": ["http://gsaweb.ast.cam.ac.uk/alerts"]
+    "http://gsaweb.ast.cam.ac.uk/alerts/alertsindex":
+    [
+        "http://gsaweb.ast.cam.ac.uk/alerts",
+        "https://gaia.ac.uk/selected-gaia-science-alerts"
+    ]
 }

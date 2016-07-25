@@ -12,7 +12,7 @@ from ..supernova import SUPERNOVA
 def do_snhunt(catalog):
     task_str = catalog.get_current_task_str()
     snh_url = 'http://nesssi.cacr.caltech.edu/catalina/current.html'
-    html = catalog.load_cached_url(snh_url, os.path.join(
+    html = catalog.load_url(snh_url, os.path.join(
         catalog.get_current_task_repo(), 'SNhunt/current.html'))
     if not html:
         return

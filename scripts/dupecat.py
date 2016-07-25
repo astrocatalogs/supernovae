@@ -1,35 +1,31 @@
 #!/usr/local/bin/python3.5
-
 import gzip
 import json
 import math
 import os
 from collections import OrderedDict
 from copy import deepcopy
-from glob import glob
 
 from astropy import units as un
 from astropy.coordinates import SkyCoord as coord
-from astropy.time import Time as astrotime
 from tqdm import tqdm
 
-from utils.repos import get_repo_output_file_list
+from astrocats.supernovae.scripts.repos import repo_file_list
+
+from ...catalog.utils import get_entry_filename
 
 dupes = OrderedDict()
 
+outdir = "astrocats/supernovae/output/"
 
-def get_event_filename(name):
-    return(name.replace('/', '_'))
-
-files = get_repo_output_file_list(bones=False)
+files = repo_file_list(bones=False)
 
 newcatalog = []
 
-for fcnt, eventfile in enumerate(tqdm(sorted(files, key=lambda s: s.lower()))):
+for fcnt, eventfile in enumerate(
+        tqdm(sorted(files, key=lambda s: s.lower()))):
     # if fcnt > 1000:
     #    break
-    fileeventname = os.path.splitext(os.path.basename(eventfile))[
-        0].replace('.json', '')
 
     if eventfile.split('.')[-1] == 'gz':
         with gzip.open(eventfile, 'rt') as f:
@@ -172,15 +168,15 @@ for item1 in tqdm(newcatalog):
                                name2 + " [" + str(distdeg) + ', ' +
                                str(discdiffyear) + ']')
                 else:
-                    tqdm.write(name1 + ' has ' + exactstr +
-                               ' coordinate, but significantly different ' +
-                               'date, to ' + name2 + " [Deg. diff: " +
-                               str(distdeg) +
-                               ((', Max. diff: ' + str(maxdiffyear)) if
-                                maxdiffyear else '') +
-                               ((', Disc. diff: ' +
-                                str(discdiffyear)) if
-                                discdiffyear else '') + ']')
+                    tqdm.write(
+                        name1 + ' has ' + exactstr +
+                        ' coordinate, but significantly different ' +
+                        'date, to ' + name2 + " [Deg. diff: " +
+                        str(distdeg) +
+                        ((', Max. diff: ' + str(maxdiffyear)) if
+                         maxdiffyear else '') +
+                        ((', Disc. diff: ' + str(discdiffyear)) if
+                         discdiffyear else '') + ']')
             else:
                 tqdm.write(name1 + ' has ' + exactstr +
                            ' coordinate match to ' + name2 + " [" +
@@ -199,11 +195,12 @@ for item1 in tqdm(newcatalog):
             continue
 
         edit = True if os.path.isfile(
-            '../sne-internal/' + get_event_filename(name1) +
+            '../sne-internal/' + get_entry_filename(name1) +
             '.json') else False
 
         dupes[name1] = OrderedDict([('name1', name1),
-                                    ('aliases1', aliases1), ('name2', name2),
+                                    ('aliases1', aliases1),
+                                    ('name2', name2),
                                     ('aliases2', aliases2), ('ra1', ra1),
                                     ('dec1', dec1),
                                     ('ra2', ra2), ('dec2', dec2),
@@ -216,5 +213,5 @@ for item1 in tqdm(newcatalog):
 dupes = list(dupes.values())
 jsonstring = json.dumps(
     dupes, indent='\t', separators=(',', ':'), ensure_ascii=False)
-with open('../dupes.json', 'w') as f:
+with open(outdir + 'dupes.json', 'w') as f:
     f.write(jsonstring)

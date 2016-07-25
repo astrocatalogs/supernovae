@@ -4,7 +4,6 @@ import json
 import os
 from collections import OrderedDict
 
-import requests
 from astrocats.catalog.utils import is_number, pbar, round_sig, uniq_cdl
 
 from ..supernova import SUPERNOVA
@@ -16,7 +15,7 @@ def do_cpcs(catalog):
                 'followup/list_of_alerts?format=json&num=100000&'
                 'published=1&observed_only=1'
                 '&hashtag=JG_530ad9462a0b8785bfb385614bf178c6')
-    jsontxt = catalog.load_cached_url(
+    jsontxt = catalog.load_url(
         cpcs_url, os.path.join(catalog.get_current_task_repo(),
                                'CPCS/index.json'))
     if not jsontxt:
@@ -67,17 +66,9 @@ def do_cpcs(catalog):
             name='CPCS Alert ' + str(ai), url=alerturl)
         fname = os.path.join(catalog.get_current_task_repo(),
                              'CPCS/alert-') + str(ai).zfill(2) + '.json'
-        if (catalog.current_task.load_archive(catalog.args) and
-                os.path.isfile(fname)):
-            with open(fname, 'r') as ff:
-                jsonstr = ff.read()
-        else:
-            session = requests.Session()
-            response = session.get(
-                alerturl + '&hashtag=JG_530ad9462a0b8785bfb385614bf178c6')
-            with open(fname, 'w') as ff:
-                jsonstr = response.text
-                ff.write(jsonstr)
+
+        jsonstr = catalog.load_url(
+            alerturl + '&hashtag=JG_530ad9462a0b8785bfb385614bf178c6', fname)
 
         try:
             cpcsalert = json.loads(jsonstr)

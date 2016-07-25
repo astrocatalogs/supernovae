@@ -15,6 +15,10 @@ from ..supernova import SUPERNOVA
 
 
 def do_wiserep_spectra(catalog):
+    if not catalog.args.travis:
+        from ..input.WISeWEBSpider.wisewebspider import spider
+        spider(update=True, daysago=7, path="/../../sne-external-WISEREP/")
+
     task_str = catalog.get_current_task_str()
     secondaryreference = 'WISeREP'
     secondaryrefurl = 'http://wiserep.weizmann.ac.il/'
@@ -43,7 +47,7 @@ def do_wiserep_spectra(catalog):
         glob(os.path.join(
             catalog.get_current_task_repo(), '*')))
     for folder in pbar_strings(file_names, task_str):
-        if '.txt' in folder:
+        if '.txt' in folder or '.json' in folder:
             continue
         name = os.path.basename(folder).strip()
         if name.startswith('sn'):
@@ -75,7 +79,7 @@ def do_wiserep_spectra(catalog):
             instrument = fileinfo[specfile]["Instrument"]
             epoch = fileinfo[specfile]["Obs. Date"]
             observer = fileinfo[specfile]["Observer"]
-            reducer = ''
+            reducer = fileinfo[specfile]["Reducer"]
             bibcode = fileinfo[specfile]["Bibcode"]
             redshift = fileinfo[specfile]["Redshift"]
             survey = fileinfo[specfile]["Program"]
@@ -151,13 +155,13 @@ def do_wiserep_spectra(catalog):
                     instrument=instrument, source=sources,
                     observer=observer, reducer=reducer, reduction=reduction,
                     filename=specfile, survey=survey, redshift=redshift)
-                wiserepcnt = wiserepcnt + 1
-
-                if (catalog.args.travis and
-                        wiserepcnt %
-                        catalog.TRAVIS_QUERY_LIMIT == 0):
-                    break
 
         catalog.journal_entries()
+
+        wiserepcnt = wiserepcnt + 1
+        if (catalog.args.travis and
+                wiserepcnt %
+                catalog.TRAVIS_QUERY_LIMIT == 0):
+            break
 
     return

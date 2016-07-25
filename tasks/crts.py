@@ -17,7 +17,7 @@ def do_crts(catalog):
     task_str = catalog.get_current_task_str()
     folders = ['catalina', 'MLS', 'SSS']
     for fold in pbar(folders, task_str):
-        html = catalog.load_cached_url(
+        html = catalog.load_url(
             'http://nesssi.cacr.caltech.edu/' + fold + '/AllSN.html',
             os.path.join(catalog.get_current_task_repo(), 'CRTS', fold +
                          '.html'))
@@ -116,18 +116,10 @@ def do_crts(catalog):
             fname2 = (catalog.get_current_task_repo() + '/' + fold + '/' +
                       lclink.split('.')[-2].rstrip('p').split('/')[-1] +
                       '.html')
-            if (catalog.current_task.load_archive(catalog.args) and
-                    os.path.isfile(fname2)):
-                with open(fname2, 'r') as ff:
-                    html2 = ff.read()
-            else:
-                try:
-                    with open(fname2, 'w') as ff:
-                        response2 = urllib.request.urlopen(lclink)
-                        html2 = response2.read().decode('utf-8')
-                        ff.write(html2)
-                except:
-                    continue
+
+            html2 = catalog.load_url(lclink, fname2)
+            if not html2:
+                continue
 
             lines = html2.splitlines()
             teles = 'Catalina Schmidt'
@@ -158,8 +150,8 @@ def do_crts(catalog):
             if catalog.args.update:
                 catalog.journal_entries()
 
-        if catalog.args.travis and tri > catalog.TRAVIS_QUERY_LIMIT:
-            break
+            if catalog.args.travis and tri > catalog.TRAVIS_QUERY_LIMIT:
+                break
 
     catalog.journal_entries()
     return

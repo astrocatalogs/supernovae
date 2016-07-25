@@ -5,7 +5,7 @@ import json
 # with open('../names', 'r') as f:
 #    names = f.read().splitlines()
 
-with open('../hostimgs.json', 'r') as f:
+with open('astrocats/supernovae/output/cache/hostimgs.json', 'r') as f:
     hostimgs = json.loads(f.read())
 
 count = 0
@@ -19,5 +19,5 @@ for ei, entry in enumerate(hostimgs):
 print(count)
 
 jsonstring = json.dumps(newhostimgs, indent='\t', separators=(',', ':'))
-with open('../hostimgs.json', 'w') as f:
+with open('astrocats/supernovae/output/cache/hostimgs.json', 'w') as f:
     f.write(jsonstring)

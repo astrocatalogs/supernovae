@@ -2,13 +2,14 @@
 """
 import csv
 import os
-import re
 from glob import glob
+
+from astropy.coordinates import SkyCoord as coord
+from astropy.time import Time as astrotime
 
 from astrocats.catalog.quantity import QUANTITY
 from astrocats.catalog.utils import make_date_string, pbar, pbar_strings
-from astropy.coordinates import SkyCoord as coord
-from astropy.time import Time as astrotime
+from cdecimal import Decimal
 
 from ..supernova import SUPERNOVA
 
@@ -26,7 +27,7 @@ def do_sdss_photo(catalog):
             SUPERNOVA.ALIAS: 4,
             SUPERNOVA.CLAIMED_TYPE: 5,
             SUPERNOVA.REDSHIFT: 11,
-            SUPERNOVA.MAX_DATE: 20,
+            SUPERNOVA.MAX_DATE: 21,
             SUPERNOVA.HOST_RA: 99,
             SUPERNOVA.HOST_DEC: 100
         }
@@ -75,16 +76,22 @@ def do_sdss_photo(catalog):
                 kwargs = {}
                 if key == SUPERNOVA.ALIAS:
                     val = 'SN' + val
-                if key in [SUPERNOVA.RA, SUPERNOVA.DEC, SUPERNOVA.HOST_RA,
-                           SUPERNOVA.HOST_DEC]:
+                elif key in [SUPERNOVA.RA, SUPERNOVA.DEC, SUPERNOVA.HOST_RA,
+                             SUPERNOVA.HOST_DEC]:
                     kwargs = {QUANTITY.U_VALUE: 'floatdegrees'}
-                if key == SUPERNOVA.CLAIMED_TYPE:
+                    if key in [SUPERNOVA.RA, SUPERNOVA.HOST_RA]:
+                        fval = float(val)
+                        if fval < 0.0:
+                            val = str(Decimal(360) + Decimal(fval))
+                elif key == SUPERNOVA.CLAIMED_TYPE:
                     val = val.lstrip('pz').replace('SN', '')
-                if key == SUPERNOVA.REDSHIFT:
+                elif key == SUPERNOVA.REDSHIFT:
                     kwargs[QUANTITY.KIND] = 'spectroscopic'
+                    if float(val) < -1.0:
+                        continue
                     if float(row[ic + 1]) > 0.0:
                         kwargs[QUANTITY.E_VALUE] = row[ic + 1]
-                if key == SUPERNOVA.MAX_DATE:
+                elif key == SUPERNOVA.MAX_DATE:
                     dt = astrotime(float(val), format='mjd').datetime
                     val = make_date_string(dt.year, dt.month, dt.day)
                 catalog.entries[name].add_quantity(key, val, source, **kwargs)
@@ -134,21 +141,17 @@ def do_sdss_photo(catalog):
                     SUPERNOVA.ALIAS, name, source)
                 catalog.entries[name].add_quantity(
                     SUPERNOVA.ALIAS, 'SDSS-II SN ' + row[3], source)
-
-                if row[5] != 'RA:' and bibcode == '2014arXiv1401.3317S':
-                    year = re.findall(r'\d+', name)[0]
-                    catalog.entries[name].add_quantity(
-                        SUPERNOVA.DISCOVER_DATE, year, source)
-
                 catalog.entries[name].add_quantity(
                     SUPERNOVA.RA, row[-4], source, u_value='floatdegrees')
                 catalog.entries[name].add_quantity(
                     SUPERNOVA.DEC, row[-2], source, u_value='floatdegrees')
             if hasred and rr == 1:
                 error = row[4] if float(row[4]) >= 0.0 else ''
+                val = row[2]
+                if float(val) < -1.0:
+                    continue
                 (catalog.entries[name]
-                 .add_quantity(SUPERNOVA.REDSHIFT, row[2], source,
-                               e_value=error,
+                 .add_quantity(SUPERNOVA.REDSHIFT, val, source, e_value=error,
                                kind='heliocentric'))
             if rr >= rst:
                 # Skip bad measurements

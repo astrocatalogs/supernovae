@@ -11,17 +11,17 @@ from astropy.coordinates import SkyCoord as coord
 from astroquery.simbad import Simbad
 from tqdm import tqdm
 
-from utils.repos import get_repo_output_file_list
+from astrocats.supernovae.scripts.repos import repo_file_list
+
+from ...catalog.utils import get_entry_filename
 
 events = OrderedDict()
 
 warnings.filterwarnings('ignore')
 
+outdir = "astrocats/supernovae/output/"
 
-def get_event_filename(name):
-    return(name.replace('/', '_'))
-
-files = get_repo_output_file_list(bones=False)
+files = repo_file_list(bones=False)
 
 newcatalog = []
 
@@ -74,9 +74,9 @@ for ci, co in enumerate(tqdm(coo)):
             print(newcatalog[ci]['redshift'])
         print(result_table)
 
-# Convert to array since that's what datatables expects
-# dupes = list(dupes.values())
-# jsonstring = json.dumps(dupes, indent='\t', separators=(',', ':'),
-#                         ensure_ascii=False)
-# with open('../dupes.json', 'w') as f:
-#    f.write(jsonstring)
+Convert to array since that's what datatables expects
+dupes = list(dupes.values())
+jsonstring = json.dumps(dupes, indent='\t', separators=(',', ':'),
+                        ensure_ascii=False)
+with open(outdir + 'hostcandidates.json', 'w') as f:
+   f.write(jsonstring)

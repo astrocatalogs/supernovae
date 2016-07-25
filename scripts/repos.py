@@ -1,23 +1,28 @@
-import sys
 import warnings
 from glob import glob
-from digits import *
 
-with open('../input/rep-folders.txt', 'r') as f:
+from astrocats.catalog.utils import is_number
+
+with open('astrocats/supernovae/input/rep-folders.txt', 'r') as f:
     repofolders = f.read().splitlines()
 
-repoyears = [int(repofolders[x][-4:]) for x in range(len(repofolders)-1)]
+repoyears = [int(repofolders[x][-4:]) for x in range(len(repofolders) - 1)]
 repoyears[0] -= 1
 
-def repo_file_list(normal = True, bones = True):
+outdir = 'astrocats/supernovae/output/'
+
+
+def repo_file_list(normal=True, bones=True):
     files = []
     for rep in repofolders:
-        if not 'boneyard' in rep and not normal:
+        if 'boneyard' not in rep and not normal:
             continue
         if not bones and 'boneyard' in rep:
             continue
-        files += glob('../output/' + rep + "/*.json") + glob('../output/' + rep + "/*.json.gz")
+        files += glob(outdir + rep + "/*.json") + \
+            glob(outdir + rep + "/*.json.gz")
     return files
+
 
 def get_rep_folder(entry):
     if 'discoverdate' not in entry:

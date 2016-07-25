@@ -3,6 +3,8 @@
 import warnings
 from collections import OrderedDict
 
+from astropy.time import Time as astrotime
+
 from astrocats.catalog.entry import ENTRY, Entry
 from astrocats.catalog.key import KEY_TYPES, Key
 from astrocats.catalog.photometry import PHOTOMETRY
@@ -10,10 +12,9 @@ from astrocats.catalog.quantity import QUANTITY
 from astrocats.catalog.source import SOURCE
 from astrocats.catalog.spectrum import SPECTRUM
 from astrocats.catalog.utils import (bib_priority, get_sig_digits,
-                                     get_source_year, is_number, jd_to_mjd,
-                                     make_date_string, pretty_num, uniq_cdl)
-from astropy.time import Time as astrotime
-
+                                     get_source_year, is_integer, is_number,
+                                     jd_to_mjd, make_date_string, pretty_num,
+                                     uniq_cdl)
 from cdecimal import Decimal
 
 from .constants import MAX_BANDS, PREF_KINDS, REPR_BETTER_QUANTITY
@@ -54,8 +55,7 @@ class Supernova(Entry):
 
         for ii, ct in enumerate(self[name]):
             if ct[QUANTITY.VALUE] == svalue and sources:
-                if (QUANTITY.KIND in ct and skind and
-                        ct[QUANTITY.KIND] != skind):
+                if ct.get(QUANTITY.KIND, '') != skind:
                     return
                 for source in sources.split(','):
                     if (source not in
@@ -68,10 +68,12 @@ class Supernova(Entry):
                 return
 
     def _clean_quantity(self, quantity):
-        value = quantity.get(QUANTITY.VALUE, '')
-        error = quantity.get(QUANTITY.E_VALUE, '')
-        unit = quantity.get(QUANTITY.U_VALUE, '')
-        kind = quantity.get(QUANTITY.KIND, '')
+        """Clean quantity value before it is added to entry.
+        """
+        value = quantity.get(QUANTITY.VALUE, '').strip()
+        error = quantity.get(QUANTITY.E_VALUE, '').strip()
+        unit = quantity.get(QUANTITY.U_VALUE, '').strip()
+        kind = quantity.get(QUANTITY.KIND, '').strip()
         key = quantity._key
 
         if not value:
@@ -112,6 +114,8 @@ class Supernova(Entry):
                 kind = 'cluster'
         elif key == self._KEYS.CLAIMED_TYPE:
             isq = False
+            if value.startswith('SN '):
+                value = value.replace('SN ', '', 1)
             value = value.replace('young', '')
             if '?' in value:
                 isq = True
@@ -162,10 +166,9 @@ class Supernova(Entry):
 
     def add_quantity(self, quantity, value, source, forcereplacebetter=False,
                      **kwargs):
-        quantity_added = super().add_quantity(quantity, value, source,
-                                              **kwargs)
+        success = super().add_quantity(quantity, value, source, **kwargs)
 
-        if not quantity_added:
+        if not success:
             return
 
         my_quantity_list = self.get(quantity, [])
@@ -216,7 +219,18 @@ class Supernova(Entry):
             if not isworse:
                 newquantities.append(added_quantity)
             self[quantity] = newquantities
-        return
+
+        # As all SN####xx designations for 2016+ have corresponding AT
+        # designations, add the AT alias when the SN alias is added.
+        if quantity == self._KEYS.ALIAS:
+            cleaned_value = value.strip()
+            if (cleaned_value.startswith('SN') and
+                is_integer(cleaned_value[2:6]) and
+                    int(cleaned_value[2:6]) >= 2016):
+                success = super().add_quantity(
+                    'AT' + cleaned_value[2:], value, source, **kwargs)
+
+        return True
 
     def add_source(self, **kwargs):
         # Sanitize some fields before adding source
@@ -296,6 +310,12 @@ class Supernova(Entry):
         return []
 
     def _get_save_path(self, bury=False):
+        """Return the path that this Entry should be saved to.
+
+        Determines output repository based on the name (i.e. the year) of the
+        supernova.  If `bury` is true, then this entry is saved to the
+        'boneyard'.
+        """
         self._log.debug("_get_save_path(): {}".format(self.name()))
         filename = self.get_filename(self[self._KEYS.NAME])
 

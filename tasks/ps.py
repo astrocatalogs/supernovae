@@ -46,9 +46,12 @@ def do_ps_threepi(catalog):
     fname = os.path.join(catalog.get_current_task_repo(), '3pi/page00.html')
     ps_url = ("http://psweb.mp.qub.ac.uk/"
               "ps1threepi/psdb/public/?page=1&sort=followup_flag_date")
-    html = catalog.load_cached_url(ps_url, fname, write=False)
+    html = catalog.load_url(ps_url, fname, write=False)
     if not html:
         return
+
+    # Clean some common HTML manglings
+    html = html.replace('ahref=', 'a href=')
 
     bs = BeautifulSoup(html, 'html5lib')
     div = bs.find('div', {'class': 'pagination'})
@@ -85,8 +88,7 @@ def do_ps_threepi(catalog):
             with open(fname, 'r') as f:
                 html = f.read()
         else:
-            if (not catalog.args.full_refresh and
-                    catalog.current_task.load_archive(catalog.args) and
+            if (catalog.current_task.load_archive(catalog.args) and
                     page < oldnumpages and os.path.isfile(fname)):
                 with open(fname, 'r') as f:
                     html = f.read()
