@@ -1106,15 +1106,13 @@ for fcnt, eventfile in enumerate(tq(sorted(files, key=lambda s: s.lower()))):
                                      x_range_name="time since max", axis_label_text_font_size='11pt'), 'above')
 
         if distancemod:
-            min_y_absmag = min([(x - y) * (areacorr * float(z) * ((1.0 * un.GHz).cgs.value))
-                                for x, y, z in list(zip(photofd, photofderrs, photofreq))])
-            max_y_absmag = max([(x + y) * (areacorr * float(z) * ((1.0 * un.GHz).cgs.value))
-                                for x, y, z in list(zip(photofd, photofderrs, photofreq))])
-            [min_y_absmag, max_y_absmag] = [min_y_absmag - 0.1 *
-                                            (max_y_absmag - min_y_absmag), max_y_absmag + 0.1 * (max_y_absmag - min_y_absmag)]
+            min_y_absmag = min_y_range * areacorr * (1.0 * un.GHz).cgs.value
+            max_y_absmag = max_y_range * areacorr * (1.0 * un.GHz).cgs.value
+            # [min_y_absmag, max_y_absmag] = [min_y_absmag - 0.1 *
+            #                                 (max_y_absmag - min_y_absmag), max_y_absmag + 0.1 * (max_y_absmag - min_y_absmag)]
             p3.extra_y_ranges = {"abs mag": Range1d(
                 start=min_y_absmag, end=max_y_absmag)}
-            p3.add_layout(LinearAxis(axis_label="Isotropic Luminosity at ν (ergs s⁻¹)", major_label_text_font_size='8pt',
+            p3.add_layout(LinearAxis(axis_label="Isotropic Luminosity at 1 GHz (ergs s⁻¹)", major_label_text_font_size='8pt',
                                      major_label_text_font='futura', axis_label_text_font='futura',
                                      y_range_name="abs mag", axis_label_text_font_size='11pt'), 'right')
             p3.yaxis[1].formatter.precision = 1
