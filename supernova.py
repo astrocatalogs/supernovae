@@ -223,7 +223,7 @@ class Supernova(Entry):
         # As all SN####xx designations for 2016+ have corresponding AT
         # designations, add the AT alias when the SN alias is added.
         if quantity == self._KEYS.ALIAS:
-            cleaned_value = value.strip()
+            cleaned_value = my_quantity_list[-1][QUANTITY.VALUE]
             if (cleaned_value.startswith('SN') and
                 is_integer(cleaned_value[2:6]) and
                     int(cleaned_value[2:6]) >= 2016):
