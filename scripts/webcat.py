@@ -1129,7 +1129,7 @@ for fcnt, eventfile in enumerate(tq(sorted(files, key=lambda s: s.lower()))):
             err_xs.append((x - xlowerr, x + xupperr))
             err_ys.append((y - yerr, y + yerr))
 
-        freqset = set(photofreq)
+        freqset = [str(y) for y in sorted([float(x) for x in set(photofreq)])]
         frequnit = photoufreq[0] if photoufreq else ''
 
         for freq in freqset:
