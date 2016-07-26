@@ -1017,8 +1017,13 @@ for fcnt, eventfile in enumerate(tq(sorted(files, key=lambda s: s.lower()))):
                               else (float(x['e_time']) if 'e_time' in x else 0.) for x in catalog[entry]['photometry'] if 'fluxdensity' in x]
         phototimeuppererrs = [float(x['e_upper_time']) if ('e_lower_time' in x and 'e_upper_time' in x) in x
                               else (float(x['e_time']) if 'e_time' in x else 0.) for x in catalog[entry]['photometry'] if 'fluxdensity' in x]
-        photofd = [float(x['fluxdensity']) if (float(x['fluxdensity']) > radiosigma * float(x['e_fluxdensity'])) else
-                   round_sig(radiosigma * float(x['e_fluxdensity']), sig=get_sig_digits(x['e_fluxdensity'])) for x in catalog[entry]['photometry'] if 'fluxdensity' in x]
+        photofd = [
+            float(x['fluxdensity']) if 'e_fluxdensity' not in x else
+            (float(x['fluxdensity']) if (float(x['fluxdensity']) > radiosigma *
+                                         float(x['e_fluxdensity']))
+             else round_sig(radiosigma * float(x['e_fluxdensity']),
+                            sig=get_sig_digits(x['e_fluxdensity']))) for x in
+            catalog[entry]['photometry'] if 'fluxdensity' in x]
         photofderrs = [(float(x['e_fluxdensity']) if 'e_fluxdensity' in x else 0.)
                        for x in catalog[entry]['photometry'] if 'fluxdensity' in x]
         photoufd = [(x['u_fluxdensity'] if 'fluxdensity' in x else '')
