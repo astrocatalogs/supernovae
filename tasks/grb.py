@@ -17,7 +17,7 @@ def do_grb(catalog):
         catalog.get_current_task_repo(), 'GRB-catalog/catalog.csv')
     csvtxt = catalog.load_url(
         'http://grb.pa.msu.edu/grbcatalog/'
-        'download_data?cut_0_min=10&cut_0=BAT%20T90'
+        'download_data?cut_0_min=5&cut_0=BAT%20T90'
         '&cut_0_max=100000&num_cuts=1&no_date_cut=True',
         file_path)
     if not csvtxt:
