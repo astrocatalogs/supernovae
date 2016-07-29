@@ -272,6 +272,17 @@
         "always_journal": true,
         "priority": 27
     },
+    "batse": {
+        "nice_name": "%pre BATSE catalog",
+        "active": true,
+        "update": true,
+        "archived": false,
+        "module": "supernovae.tasks.grb",
+        "function": "do_batse",
+        "repo": "input/sne-external",
+        "always_journal": true,
+        "priority": 27
+    },
     "crts": {
         "nice_name": "%pre CRTS",
         "active": true,
