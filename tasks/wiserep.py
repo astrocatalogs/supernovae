@@ -74,6 +74,8 @@ def do_wiserep_spectra(catalog):
         files = list(set(glob(folder + '/*')) -
                      set(glob(folder + '/README.json')))
         for fname in pbar(files, task_str):
+            if 'Private Spectra' in fname:
+                continue
             specfile = os.path.basename(fname)
             claimedtype = fileinfo[specfile]["Type"]
             instrument = fileinfo[specfile]["Instrument"]
