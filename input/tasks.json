@@ -275,7 +275,7 @@
     "batse": {
         "nice_name": "%pre BATSE catalog",
         "active": true,
-        "update": true,
+        "update": false,
         "archived": false,
         "module": "supernovae.tasks.grb",
         "function": "do_batse",
