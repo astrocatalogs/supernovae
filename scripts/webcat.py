@@ -36,7 +36,7 @@ from bokeh.resources import CDN
 from bs4 import BeautifulSoup
 from palettable import cubehelix
 
-from astrocats.catalog.utils import (bandaliasf, bandcodes, bandcolorf,
+from astrocats.catalog.utils import (bandaliasf, bandcodes, bandcolorf, bandgroupf,
                                      bandshortaliasf, bandwavef,
                                      bandwavelengths, get_sig_digits,
                                      is_number, pretty_num, radiocolorf,
@@ -645,9 +645,9 @@ for fcnt, eventfile in enumerate(tq(sorted(files, key=lambda s: s.lower()))):
             err_xs.append((x - xlowerr, x + xupperr))
             err_ys.append((y - ylowerr, y + yupperr))
 
-        bandset = set(photoband)
-        bandset = [i for (j, i) in sorted(
-            list(zip(list(map(bandaliasf, bandset)), bandset)))]
+        bandset = list(set(photoband))
+        bandsortlists = sorted(list(zip(list(map(bandgroupf, bandset)), list(map(bandwavef, bandset)), list(map(bandaliasf, bandset)))))
+        bandset = list(filter(None, [i for (k, j, i) in bandsortlists]))
 
         sources = []
         corrects = ['raw', 'k']
