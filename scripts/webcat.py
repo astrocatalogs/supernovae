@@ -206,8 +206,6 @@ if len(columnkey) != len(eventpageheader):
     raise (ValueError('Event page header not same length as key list.'))
     sys.exit(0)
 
-dataavaillink = "<a href='https://bitbucket.org/Guillochon/sne'>Y</a>"
-
 header = OrderedDict(list(zip(columnkey, header)))
 eventpageheader = OrderedDict(list(zip(columnkey, eventpageheader)))
 titles = OrderedDict(list(zip(columnkey, titles)))
@@ -1523,18 +1521,37 @@ for fcnt, eventfile in enumerate(tq(sorted(files, key=lambda s: s.lower()))):
 
         hastimeerrs = (len(list(filter(None, phototimelowererrs))) and
                        len(list(filter(None, phototimeuppererrs))))
+        hasfl = len(list(filter(None, photofl)))
         hasflerrs = len(list(filter(None, photoflerrs)))
+        yaxis = 'Flux'
+        if not hasfl:
+            yaxis = 'Counts'
+            photofl = [float(x['counts'])
+                       if ('e_counts' not in x or
+                           float(x['counts']) > radiosigma * float(x['e_counts'])) else
+                       round_sig(
+                           radiosigma * float(x['e_counts']),
+                           sig=get_sig_digits(x['e_counts']))
+                       for x in catalog[entry]['photometry'] if 'counts' in x]
+            photoflerrs = [(float(x['e_counts']) if 'e_counts' in x else 0.)
+                           for x in catalog[entry]['photometry'] if 'counts' in x]
+            photoufl = ['' for x in photofl]
+            hasfl = len(list(filter(None, photofl)))
+            hasflerrs = len(list(filter(None, photoflerrs)))
         tt = [
             ("Source ID(s)", "@src"),
             ("Epoch (" + photoutime + ")",
              "@x{1.11}" + ("<sub>-@xle{1}</sub><sup>+@xue{1}</sup>"
                            if hastimeerrs else ""))
         ]
-        tt += [("Flux (" + photoufl[0].replace("ergs/s/cm^2", "ergs s⁻¹ cm⁻²")
-                + ")", "@y" + ("&nbsp;±&nbsp;@err" if hasflerrs else ""))]
-        if 'maxabsmag' in catalog[entry] and 'maxappmag' in catalog[entry]:
-            tt += [("Iso. Lum. (ergs s⁻¹)", "@yabs" + ("&nbsp;±&nbsp;@abserr"
-                                                       if hasflerrs else ""))]
+        if hasfl:
+            tt += [(yaxis + " (" + photoufl[0].replace("ergs/s/cm^2",
+                                                   "ergs s⁻¹ cm⁻²") + ")",
+                    "@y" + ("&nbsp;±&nbsp;@err" if hasflerrs else ""))]
+            if 'maxabsmag' in catalog[entry] and 'maxappmag' in catalog[entry]:
+                tt += [("Iso. Lum. (ergs s⁻¹)",
+                        "@yabs" + ("&nbsp;±&nbsp;@abserr"
+                                   if hasflerrs else ""))]
         if len(list(filter(None, photoener))):
             tt += [("Frequency (" + photouener[0] + ")", "@desc")]
         if len(list(filter(None, photoinstru))):
