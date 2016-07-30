@@ -75,6 +75,10 @@ def do_wiserep_spectra(catalog):
                      set(glob(folder + '/README.json')))
         for fname in pbar(files, task_str):
             specfile = os.path.basename(fname)
+            if specfile not in fileinfo:
+                catalog.log.warning(
+                    'Metadata not found for "{}"'.format(fname))
+                continue
             claimedtype = fileinfo[specfile]["Type"]
             instrument = fileinfo[specfile]["Instrument"]
             epoch = fileinfo[specfile]["Obs. Date"]

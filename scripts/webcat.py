@@ -37,7 +37,7 @@ from bs4 import BeautifulSoup
 from palettable import cubehelix
 
 from astrocats.catalog.utils import (bandaliasf, bandcodes, bandcolorf,
-                                     bandshortaliasf, bandwavef,
+                                     bandgroupf, bandshortaliasf, bandwavef,
                                      bandwavelengths, get_sig_digits,
                                      is_number, pretty_num, radiocolorf,
                                      round_sig, tprint, tq, xraycolorf)
@@ -713,10 +713,14 @@ for fcnt, eventfile in enumerate(tq(sorted(files, key=lambda s: s.lower()))):
             err_xs.append((x - xlowerr, x + xupperr))
             err_ys.append((y - ylowerr, y + yupperr))
 
-        bandset = set(photoband)
-        bandset = [i
-                   for (j, i) in sorted(
-                       list(zip(list(map(bandaliasf, bandset)), bandset)))]
+        bandset = list(set(photoband))
+        bandsortlists = sorted(
+            list(
+                zip(
+                    list(map(bandgroupf, bandset)), list(
+                        map(bandwavef, bandset)), list(
+                            map(bandaliasf, bandset)))))
+        bandset = list(filter(None, [i for (k, j, i) in bandsortlists]))
 
         sources = []
         corrects = ['raw', 'k']
@@ -1158,11 +1162,12 @@ for fcnt, eventfile in enumerate(tq(sorted(files, key=lambda s: s.lower()))):
             for x in catalog[entry]['photometry'] if 'fluxdensity' in x
         ]
         photofd = [
-            float(x['fluxdensity']) if
-            (float(x['fluxdensity']) > radiosigma * float(x['e_fluxdensity']))
-            else round_sig(
-                radiosigma * float(x['e_fluxdensity']),
-                sig=get_sig_digits(x['e_fluxdensity']))
+            float(x['fluxdensity']) if 'e_fluxdensity' not in x else
+            (float(x['fluxdensity']) if
+             (float(x['fluxdensity']) > radiosigma * float(x['e_fluxdensity']))
+             else round_sig(
+                 radiosigma * float(x['e_fluxdensity']),
+                 sig=get_sig_digits(x['e_fluxdensity'])))
             for x in catalog[entry]['photometry'] if 'fluxdensity' in x
         ]
         photofderrs = [(float(x['e_fluxdensity'])
@@ -1189,9 +1194,10 @@ for fcnt, eventfile in enumerate(tq(sorted(files, key=lambda s: s.lower()))):
                        for x, y in enumerate(catalog[entry]['photometry'])
                        if 'fluxdensity' in y]
         phototype = [
-            (True if 'upperlimit' in x or radiosigma *
-             float(x['e_fluxdensity']) >= float(x['fluxdensity']) else False)
-            for x in catalog[entry]['photometry'] if 'fluxdensity' in x
+            (True if 'upperlimit' in x or
+             radiosigma * float(x['e_fluxdensity']) >= float(x['fluxdensity'])
+             else False) for x in catalog[entry]['photometry']
+            if 'fluxdensity' in x
         ]
 
         photoutime = catalog[entry]['photometry'][0][
@@ -1290,21 +1296,15 @@ for fcnt, eventfile in enumerate(tq(sorted(files, key=lambda s: s.lower()))):
                 'above')
 
         if distancemod:
-            min_y_absmag = min(
-                [(x - y) * (areacorr * float(z) * ((1.0 * un.GHz).cgs.value))
-                 for x, y, z in list(zip(photofd, photofderrs, photofreq))])
-            max_y_absmag = max(
-                [(x + y) * (areacorr * float(z) * ((1.0 * un.GHz).cgs.value))
-                 for x, y, z in list(zip(photofd, photofderrs, photofreq))])
-            [min_y_absmag, max_y_absmag] = [
-                min_y_absmag - 0.1 * (max_y_absmag - min_y_absmag),
-                max_y_absmag + 0.1 * (max_y_absmag - min_y_absmag)
-            ]
+            min_y_absmag = min_y_range * areacorr * (1.0 * un.GHz).cgs.value
+            max_y_absmag = max_y_range * areacorr * (1.0 * un.GHz).cgs.value
+            # [min_y_absmag, max_y_absmag] = [min_y_absmag - 0.1 *
+            #                                 (max_y_absmag - min_y_absmag), max_y_absmag + 0.1 * (max_y_absmag - min_y_absmag)]
             p3.extra_y_ranges = {"abs mag": Range1d(
                 start=min_y_absmag, end=max_y_absmag)}
             p3.add_layout(
                 LinearAxis(
-                    axis_label="Isotropic Luminosity at ν (ergs s⁻¹)",
+                    axis_label="Isotropic Luminosity at 1 GHz (ergs s⁻¹)",
                     major_label_text_font_size='8pt',
                     major_label_text_font='futura',
                     axis_label_text_font='futura',
@@ -1327,7 +1327,7 @@ for fcnt, eventfile in enumerate(tq(sorted(files, key=lambda s: s.lower()))):
             err_xs.append((x - xlowerr, x + xupperr))
             err_ys.append((y - yerr, y + yerr))
 
-        freqset = set(photofreq)
+        freqset = [str(y) for y in sorted([float(x) for x in set(photofreq)])]
         frequnit = photoufreq[0] if photoufreq else ''
 
         for freq in freqset:
@@ -2247,14 +2247,16 @@ if args.writecatalog and not args.eventlist:
             csvout.writerow(['Has spectra only', sum(sponly)])
             csvout.writerow(['No light curve or spectra', sum(lcspno)])
 
-        with open(outdir + htmldir + 'info-snippets/hasphoto.html' +
-                  testsuffix, 'w') as f:
+        with open(
+                outdir + htmldir + 'info-snippets/hasphoto.html' + testsuffix,
+                'w') as f:
             f.write("{:,}".format(sum(hasalc)))
         with open(outdir + htmldir + 'info-snippets/hasspectra.html' +
                   testsuffix, 'w') as f:
             f.write("{:,}".format(sum(hasasp)))
-        with open(outdir + htmldir + 'info-snippets/snecount.html' +
-                  testsuffix, 'w') as f:
+        with open(
+                outdir + htmldir + 'info-snippets/snecount.html' + testsuffix,
+                'w') as f:
             f.write("{:,}".format(len(catalog)))
         with open(outdir + htmldir + 'info-snippets/photocount.html' +
                   testsuffix, 'w') as f:
