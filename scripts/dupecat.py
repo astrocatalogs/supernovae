@@ -75,6 +75,8 @@ for fcnt, eventfile in enumerate(
         newitem['alias'] = [x['value'] for x in item['alias']]
         newitem['ra'] = item['ra'][0]['value']
         newitem['dec'] = item['dec'][0]['value']
+        newitem['raerr'] = float(item['ra'][0].get('e_value', 0))
+        newitem['decerr'] = float(item['dec'][0].get('e_value', 0))
         # Temporary fix for David's typo
         if newitem['dec'].count('.') == 2:
             newitem['dec'] = newitem['dec'][:newitem['dec'].rfind('.')]
@@ -138,6 +140,8 @@ for item1 in tqdm(newcatalog):
         ra2 = item2['ra']
         dec1 = item1['dec']
         dec2 = item2['dec']
+        poserr1 = math.hypot(item1['raerr'], item1['decerr'])
+        poserr2 = math.hypot(item2['raerr'], item2['decerr'])
         radeg1 = item1['radeg']
         radeg2 = item2['radeg']
         decdeg1 = item1['decdeg']
@@ -150,7 +154,7 @@ for item1 in tqdm(newcatalog):
                     decdeg1 == decdeg2 else 'a close')
 
         distdeg = math.hypot((radeg1 - radeg2), (decdeg1 - decdeg2))
-        if distdeg < 10. / 3600.:
+        if distdeg < ((10. + poserr1 + poserr2) / 3600.):
             if (maxyear1 and maxyear2) or (discyear1 and discyear2):
                 if maxyear1 and maxyear2:
                     maxdiffyear = abs(maxyear1 - maxyear2)
