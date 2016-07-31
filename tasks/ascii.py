@@ -37,6 +37,7 @@ def do_ascii(catalog):
         if len(row) == 2:
             catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, row[1], source)
         catalog.entries[name].add_quantity(SUPERNOVA.CLAIMED_TYPE, ct, source)
+    catalog.journal_entries()
 
     # 2004ApJ...606..381L
     file_path = os.path.join(
