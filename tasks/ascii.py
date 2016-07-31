@@ -23,6 +23,21 @@ def do_ascii(catalog):
     """
     task_str = catalog.get_current_task_str()
 
+    # 2015arXiv150907124M
+    file_path = os.path.join(
+        catalog.get_current_task_repo(), '2015arXiv150907124M.txt')
+    tsvin = list(csv.reader(
+        open(file_path, 'r'), delimiter='/', skipinitialspace=True))
+    for ri, row in enumerate(pbar(tsvin, task_str)):
+        if row[0][0] == '#':
+            ct = row[0].lstrip('#')
+        name = row[0]
+        (name, source) = catalog.new_entry(
+            name, bibcode='2015arXiv150907124M')
+        if len(row) == 2:
+            catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, row[1], source)
+        catalog.entries[name].add_quantity(SUPERNOVA.CLAIMED_TYPE, ct, source)
+
     # 2004ApJ...606..381L
     file_path = os.path.join(
         catalog.get_current_task_repo(), '2004ApJ...606..381L-table3.txt')
