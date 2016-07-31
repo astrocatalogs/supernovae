@@ -23,6 +23,56 @@ def do_ascii(catalog):
     """
     task_str = catalog.get_current_task_str()
 
+    # 2004ApJ...606..381L
+    file_path = os.path.join(
+        catalog.get_current_task_repo(), '2004ApJ...606..381L-table3.txt')
+    tsvin = list(csv.reader(
+        open(file_path, 'r'), delimiter=' ', skipinitialspace=True))
+    name = 'SN2003dh'
+    (name, source) = catalog.new_entry(
+        name, bibcode='2004ApJ...606..381L')
+    instdict = {}
+    banddict = {}
+    bibdict = {}
+    bibs = {
+        'Uemura': '2003Natur.423..843U',
+        'Burenin': '2003AstL...29..573B',
+        'Bloom': '2004AJ....127..252B',
+        'Matheson': '2003ApJ...599..394M'
+    }
+    for ri, row in enumerate(pbar(tsvin, task_str)):
+        if not row:
+            continue
+        if ri >= 23 and ri <= 38:
+            instbibstr = (' '.join(row[2:])).rstrip('.;')
+            instdict[row[0]] = instbibstr.split('(')[0].strip()
+            bc = ''
+            for bib in bibs:
+                if bib in instbibstr:
+                    bc = bibs[bib]
+            bibdict[row[0]] = bc
+        elif ri >= 40 and ri <= 43:
+            banddict[row[0]] = row[2]
+        elif ri >= 45:
+            time = str(astrotime(float(row[3]) + 2450000.,
+                                 format='jd').mjd)
+            ssource = ''
+            if bibdict[row[0]]:
+                ssource = catalog.entries[name].add_source(
+                    bibcode=bibdict[row[0]])
+            photodict = {
+                'instrument': instdict[row[0]],
+                'band': banddict[row[1]],
+                'time': time,
+                'magnitude': row[4],
+                'e_magnitude': row[6],
+                'source': source + ((',' + ssource) if ssource else '')
+            }
+            catalog.entries[name].add_photometry(**photodict)
+        else:
+            continue
+    catalog.journal_entries()
+
     # 2006ApJ...645..841N
     file_path = os.path.join(
         catalog.get_current_task_repo(), '2006ApJ...645..841N-table3.csv')
