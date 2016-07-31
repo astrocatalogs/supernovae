@@ -221,6 +221,8 @@ def radec_clean(svalue, quantity, unit=''):
             degree = floor(fldeg)
             minutes = floor((fldeg - degree) * 60.0)
             seconds = (fldeg * 60.0 - (degree * 60.0 + minutes)) * 60.0
+            minutes = 0 if minutes < 1.e-6 else minutes
+            seconds = 0.0 if seconds < 1.e-6 else seconds
             if seconds > 60.0:
                 raise(ValueError('Invalid seconds value for ' + quantity))
             svalue = (('+' if deg >= 0.0 else '-') +
