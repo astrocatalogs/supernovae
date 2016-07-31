@@ -22,7 +22,8 @@ def do_grb(catalog):
         file_path)
     if not csvtxt:
         return
-    data = list(csv.reader(csvtxt.splitlines(), delimiter=',',
+    csvtxt = csvtxt.replace('\x0C', '').splitlines()
+    data = list(csv.reader(csvtxt, delimiter=',',
                            quotechar='"', skipinitialspace=True))
     for r, row in enumerate(pbar(data, task_str)):
         if r == 0:
