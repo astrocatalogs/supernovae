@@ -27,10 +27,23 @@ def do_vizier(catalog):
     Vizier.ROW_LIMIT = -1
 
     # 2016ApJ...820...33R
+    result = Vizier.get_catalogs('J/ApJ/820/33/table1')
+    table = result[list(result.keys())[0]]
+    table.convert_bytestring_to_unicode(python3_only=True)
+    for row in pbar(table, task_str):
+        name = row['SN']
+        (name, source) = catalog.new_entry(
+            name, bibcode='2016ApJ...820...33R')
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.RA, row['RAJ2000'], source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.DEC, row['DEJ2000'], source)
+        catalog.entries[name].add_quantity(SUPERNOVA.REDSHIFT, str(
+            row['z']), source, kind='spectroscopic')
+
     result = Vizier.get_catalogs('J/ApJ/820/33/table2')
     table = result[list(result.keys())[0]]
     table.convert_bytestring_to_unicode(python3_only=True)
-    oldname = ''
     for row in pbar(table, task_str):
         name = row['SN']
         (name, source) = catalog.new_entry(
