@@ -8,6 +8,7 @@ from astrocats.catalog.utils import (convert_aq_output, get_sig_digits,
                                      is_number, jd_to_mjd, make_date_string,
                                      pbar, pretty_num, rep_chars, round_sig,
                                      uniq_cdl)
+from astrocats.catalog.photometry import PHOTOMETRY
 from astropy.time import Time as astrotime
 from astroquery.vizier import Vizier
 
@@ -24,6 +25,29 @@ def do_vizier(catalog):
     task_str = catalog.get_current_task_str()
 
     Vizier.ROW_LIMIT = -1
+
+    # 2016ApJ...820...33R
+    result = Vizier.get_catalogs('J/ApJ/820/33/table2')
+    table = result[list(result.keys())[0]]
+    table.convert_bytestring_to_unicode(python3_only=True)
+    oldname = ''
+    for row in pbar(table, task_str):
+        name = row['SN']
+        (name, source) = catalog.add_entry(
+            name, bibcode='2016ApJ...820...33R')
+        photoentry = {
+            PHOTOMETRY.TIME: row['MJD'],
+            PHOTOMETRY.TELESCOPE: row['Tel'],
+            PHOTOMETRY.BAND: row['Filt'],
+            PHOTOMETRY.SOURCE: source
+        }
+        if row['mag']:
+            photoentry[PHOTOMETRY.MAGNITUDE] = row['mag']
+            photoentry[PHOTOMETRY.E_MAGNITUDE] = row['e_mag']
+        else:
+            photoentry[PHOTOMETRY.MAGNITUDE] = row['Limit']
+            photoentry[PHOTOMETRY.UPPER_LIMIT] = True
+        catalog.entries[name].add_photometry(**photoentry)
 
     # 2012ApJS..200...12H
     result = Vizier.get_catalogs('J/ApJS/200/12/table1')
