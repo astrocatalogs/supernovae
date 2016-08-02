@@ -33,7 +33,7 @@ def do_vizier(catalog):
     oldname = ''
     for row in pbar(table, task_str):
         name = row['SN']
-        (name, source) = catalog.add_entry(
+        (name, source) = catalog.new_entry(
             name, bibcode='2016ApJ...820...33R')
         photoentry = {
             PHOTOMETRY.TIME: row['MJD'],
@@ -48,6 +48,7 @@ def do_vizier(catalog):
             photoentry[PHOTOMETRY.MAGNITUDE] = row['Limit']
             photoentry[PHOTOMETRY.UPPER_LIMIT] = True
         catalog.entries[name].add_photometry(**photoentry)
+    catalog.journal_entries()
 
     # 2012ApJS..200...12H
     result = Vizier.get_catalogs('J/ApJS/200/12/table1')
