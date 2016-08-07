@@ -10,46 +10,11 @@ from astrocats.catalog.catalog import Catalog
 from astrocats.catalog.utils import read_json_arr, read_json_dict
 
 from .supernova import SUPERNOVA, Supernova
+from .paths import Paths
 from .utils import name_clean
 
 
 class SupernovaCatalog(Catalog):
-
-    class PATHS(Catalog.PATHS):
-
-        PATH_BASE = os.path.abspath(os.path.dirname(__file__))
-
-        def __init__(self, catalog):
-            super().__init__(catalog)
-            # auxiliary datafiles
-            self.TYPE_SYNONYMS = os.path.join(
-                self.PATH_INPUT, 'type-synonyms.json')
-            self.SOURCE_SYNONYMS = os.path.join(
-                self.PATH_INPUT, 'source-synonyms.json')
-            self.URL_REDIRECTS = os.path.join(
-                self.PATH_INPUT, 'url-redirects.json')
-            self.NON_SNE_TYPES = os.path.join(
-                self.PATH_INPUT, 'non-sne-types.json')
-            self.NON_SNE_PREFIXES = os.path.join(
-                self.PATH_INPUT, 'non-sne-prefixes.json')
-            self.BIBERRORS = os.path.join(self.PATH_INPUT, 'biberrors.json')
-            self.ATELS = os.path.join(self.PATH_INPUT, 'atels.json')
-            self.CBETS = os.path.join(self.PATH_INPUT, 'cbets.json')
-            self.IAUCS = os.path.join(self.PATH_INPUT, 'iaucs.json')
-            # cached datafiles
-            self.BIBAUTHORS = os.path.join(
-                self.PATH_OUTPUT, 'cache', 'bibauthors.json')
-            self.EXTINCT = os.path.join(
-                self.PATH_OUTPUT, 'cache', 'extinctions.json')
-
-        def get_repo_years(self):
-            """
-            """
-            repo_folders = self.get_repo_output_folders(bones=False)
-            repo_years = [int(repo_folders[x][-4:])
-                          for x in range(len(repo_folders))]
-            repo_years[0] -= 1
-            return repo_years
 
     class SCHEMA:
         HASH = (check_output(['git', 'log', '-n', '1', '--format="%H"',
@@ -65,6 +30,7 @@ class SupernovaCatalog(Catalog):
         # Initialize super `astrocats.catalog.catalog.Catalog` object
         super().__init__(args, log)
         self.proto = Supernova
+        self.paths = Paths(self, log)
         self._load_aux_data()
         return
 
@@ -103,35 +69,35 @@ class SupernovaCatalog(Catalog):
         """
         # Create/Load auxiliary dictionaries
         self.nedd_dict = OrderedDict()
-        self.bibauthor_dict = read_json_dict(self.PATHS.BIBAUTHORS)
-        self.biberror_dict = read_json_dict(self.PATHS.BIBERRORS)
-        self.extinctions_dict = read_json_dict(self.PATHS.EXTINCT)
-        self.iaucs_dict = read_json_dict(self.PATHS.IAUCS)
-        self.cbets_dict = read_json_dict(self.PATHS.CBETS)
-        self.atels_dict = read_json_dict(self.PATHS.ATELS)
-        self.source_syns = read_json_dict(self.PATHS.SOURCE_SYNONYMS)
-        self.url_redirs = read_json_dict(self.PATHS.URL_REDIRECTS)
-        self.type_syns = read_json_dict(self.PATHS.TYPE_SYNONYMS)
+        self.bibauthor_dict = read_json_dict(self.paths.BIBAUTHORS)
+        self.biberror_dict = read_json_dict(self.paths.BIBERRORS)
+        self.extinctions_dict = read_json_dict(self.paths.EXTINCT)
+        self.iaucs_dict = read_json_dict(self.paths.IAUCS)
+        self.cbets_dict = read_json_dict(self.paths.CBETS)
+        self.atels_dict = read_json_dict(self.paths.ATELS)
+        self.source_syns = read_json_dict(self.paths.SOURCE_SYNONYMS)
+        self.url_redirs = read_json_dict(self.paths.URL_REDIRECTS)
+        self.type_syns = read_json_dict(self.paths.TYPE_SYNONYMS)
         # Create/Load auxiliary arrays
         self.nonsneprefixes_dict = read_json_arr(
-            self.PATHS.NON_SNE_PREFIXES)
-        self.nonsnetypes = read_json_arr(self.PATHS.NON_SNE_TYPES)
+            self.paths.NON_SNE_PREFIXES)
+        self.nonsnetypes = read_json_arr(self.paths.NON_SNE_TYPES)
         return
 
     def save_caches(self):
         jsonstring = json.dumps(self.bibauthor_dict, indent='\t',
                                 separators=(',', ':'), ensure_ascii=False)
-        with codecs.open(self.PATHS.BIBAUTHORS, 'w', encoding='utf8') as f:
+        with codecs.open(self.paths.BIBAUTHORS, 'w', encoding='utf8') as f:
             f.write(jsonstring)
         jsonstring = json.dumps(self.extinctions_dict, indent='\t',
                                 separators=(',', ':'), ensure_ascii=False)
-        with codecs.open(self.PATHS.EXTINCT, 'w', encoding='utf8') as f:
+        with codecs.open(self.paths.EXTINCT, 'w', encoding='utf8') as f:
             f.write(jsonstring)
 
     def clone_repos(self):
         # Load the local 'supernovae' repository names
-        all_repos = self.PATHS.get_repo_input_folders()
-        all_repos += self.PATHS.get_repo_output_folders()
+        all_repos = self.paths.get_repo_input_folders()
+        all_repos += self.paths.get_repo_output_folders()
         super()._clone_repos(all_repos)
         return
 

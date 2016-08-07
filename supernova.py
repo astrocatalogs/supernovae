@@ -321,16 +321,16 @@ class Supernova(Entry):
 
         # Put non-SNe in the boneyard
         if bury:
-            outdir = self.catalog.PATHS.get_repo_boneyard()
+            outdir = self.catalog.paths.get_repo_boneyard()
 
         # Get normal repository save directory
         else:
-            repo_folders = self.catalog.PATHS.get_repo_output_folders()
+            repo_folders = self.catalog.paths.get_repo_output_folders()
             repo_folders = sorted(repo_folders, key=lambda x: x.split('-')[-1])
             outdir = repo_folders[0]
 
             if self._KEYS.DISCOVERY_DATE in self.keys():
-                repo_years = self.catalog.PATHS.get_repo_years()
+                repo_years = self.catalog.paths.get_repo_years()
                 dyr = self[self._KEYS.DISCOVERY_DATE][0][
                     QUANTITY.VALUE].split('/')[0]
                 for r, year in enumerate(repo_years):
