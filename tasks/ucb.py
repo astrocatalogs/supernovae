@@ -6,8 +6,11 @@ import os
 import urllib
 from math import floor
 
-from astrocats.catalog.utils import get_sig_digits, pbar, pretty_num, uniq_cdl
 from astropy.time import Time as astrotime
+
+from astrocats.catalog.photometry import PHOTOMETRY
+from astrocats.catalog.utils import (get_sig_digits, is_number, pbar,
+                                     pretty_num, uniq_cdl)
 
 from ..supernova import SUPERNOVA
 
@@ -32,11 +35,12 @@ def do_ucb_photo(catalog):
         name = catalog.add_entry(oldname)
 
         sec_source = catalog.entries[name].add_source(
-            name=sec_ref, url=sec_refurl,
-            bibcode=sec_refbib,
-            secondary=True)
-        catalog.entries[name].add_quantity(
-            SUPERNOVA.ALIAS, oldname, sec_source)
+            name=sec_ref, url=sec_refurl, bibcode=sec_refbib, secondary=True)
+        catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, oldname,
+                                           sec_source)
+        if phot['AltObjName']:
+            catalog.entries[name].add_quantity(SUPERNOVA.ALIAS,
+                                               phot['AltObjName'], sec_source)
         sources = [sec_source]
         if phot['Reference']:
             sources += [catalog.entries[name]
@@ -62,28 +66,34 @@ def do_ucb_photo(catalog):
         if not phot['PhotID']:
             raise ValueError('ID not found for SNDB phot!')
 
-        filepath = os.path.join(
-            catalog.get_current_task_repo(), 'SNDB/') + filename
+        filepath = os.path.join(catalog.get_current_task_repo(),
+                                'SNDB/') + filename
         phottxt = catalog.load_url('http://heracles.astro.berkeley.edu/sndb/'
                                    'download?id=dp:' + str(phot['PhotID']),
                                    filepath)
 
-        tsvin = csv.reader(phottxt.splitlines(),
-                           delimiter=' ', skipinitialspace=True)
+        tsvin = csv.reader(
+            phottxt.splitlines(), delimiter=' ', skipinitialspace=True)
 
         for rr, row in enumerate(tsvin):
             if len(row) > 0 and row[0] == "#":
                 continue
-            mjd = row[0]
-            magnitude = row[1]
-            if magnitude and float(magnitude) > 99.0:
+            photodict = {
+                PHOTOMETRY.TIME: row[0],
+                PHOTOMETRY.U_TIME: 'MJD',
+                PHOTOMETRY.TELESCOPE: row[5],
+                PHOTOMETRY.BAND: row[4],
+                PHOTOMETRY.SOURCE: sources
+            }
+            if is_number(row[1]) and float(row[1]) < 99.0:
+                photodict[PHOTOMETRY.MAGNITUDE] = row[1]
+                photodict[PHOTOMETRY.E_MAGNITUDE] = row[2]
+            elif is_number(row[3]) and float(row[1]) < 99.0:
+                photodict[PHOTOMETRY.MAGNITUDE] = row[3]
+                photodict[PHOTOMETRY.UPPER_LIMIT] = True
+            else:
                 continue
-            e_mag = row[2]
-            band = row[4]
-            telescope = row[5]
-            catalog.entries[name].add_photometry(
-                time=mjd, telescope=telescope, band=band,
-                magnitude=magnitude, e_magnitude=e_mag, source=sources)
+            catalog.entries[name].add_photometry(**photodict)
 
     catalog.journal_entries()
     return
@@ -114,7 +124,9 @@ def do_ucb_spectra(catalog):
         name = catalog.add_entry(name)
 
         sec_source = catalog.entries[name].add_source(
-            name=sec_reference, url=sec_refurl, bibcode=sec_refbib,
+            name=sec_reference,
+            url=sec_refurl,
+            bibcode=sec_refbib,
             secondary=True)
         catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, sec_source)
         sources = [sec_source]
@@ -130,8 +142,8 @@ def do_ucb_spectra(catalog):
                     sources)
         if spectrum['DiscDate']:
             ddate = spectrum['DiscDate'].replace('-', '/')
-            catalog.entries[name].add_quantity(
-                SUPERNOVA.DISCOVER_DATE, ddate, sources)
+            catalog.entries[name].add_quantity(SUPERNOVA.DISCOVER_DATE, ddate,
+                                               sources)
         if spectrum['HostName']:
             host = urllib.parse.unquote(spectrum['HostName']).replace('*', '')
             catalog.entries[name].add_quantity(SUPERNOVA.HOST, host, sources)
@@ -141,8 +153,8 @@ def do_ucb_spectra(catalog):
             month = epoch[4:6]
             day = epoch[6:]
             sig = get_sig_digits(day) + 5
-            mjd = astrotime(year + '-' + month + '-' +
-                            str(floor(float(day))).zfill(2)).mjd
+            mjd = astrotime(year + '-' + month + '-' + str(floor(float(
+                day))).zfill(2)).mjd
             mjd = pretty_num(mjd + float(day) - floor(float(day)), sig=sig)
         filename = spectrum['Filename'] if spectrum['Filename'] else ''
         instrument = spectrum['Instrument'] if spectrum['Instrument'] else ''
@@ -155,14 +167,17 @@ def do_ucb_spectra(catalog):
         if not spectrum['SpecID']:
             raise ValueError('ID not found for SNDB spectrum!')
 
-        filepath = os.path.join(
-            catalog.get_current_task_repo(), 'UCB/') + filename
+        filepath = os.path.join(catalog.get_current_task_repo(),
+                                'UCB/') + filename
         spectxt = catalog.load_url(
             'http://heracles.astro.berkeley.edu/sndb/download?id=ds:' +
-            str(spectrum['SpecID']), filepath, archived_mode=True)
+            str(spectrum['SpecID']),
+            filepath,
+            archived_mode=True)
 
-        specdata = list(csv.reader(spectxt.splitlines(),
-                                   delimiter=' ', skipinitialspace=True))
+        specdata = list(
+            csv.reader(
+                spectxt.splitlines(), delimiter=' ', skipinitialspace=True))
         startrow = 0
         for row in specdata:
             if row[0][0] == '#':
@@ -171,8 +186,8 @@ def do_ucb_spectra(catalog):
                 break
         specdata = specdata[startrow:]
 
-        haserrors = len(specdata[0]) == 3 and specdata[
-            0][2] and specdata[0][2] != 'NaN'
+        haserrors = len(specdata[0]) == 3 and specdata[0][2] and specdata[0][
+            2] != 'NaN'
         specdata = [list(ii) for ii in zip(*specdata)]
 
         wavelengths = specdata[0]
@@ -186,12 +201,21 @@ def do_ucb_spectra(catalog):
 
         units = 'Uncalibrated'
         catalog.entries[name].add_spectrum(
-            u_wavelengths='Angstrom', u_fluxes=units, u_time='MJD', time=mjd,
-            wavelengths=wavelengths, filename=filename, fluxes=fluxes,
+            u_wavelengths='Angstrom',
+            u_fluxes=units,
+            u_time='MJD',
+            time=mjd,
+            wavelengths=wavelengths,
+            filename=filename,
+            fluxes=fluxes,
             errors=errors,
-            u_errors=units, instrument=instrument, source=sources, snr=snr,
+            u_errors=units,
+            instrument=instrument,
+            source=sources,
+            snr=snr,
             observer=observer,
-            reducer=reducer, deredshifted=('-noz' in filename))
+            reducer=reducer,
+            deredshifted=('-noz' in filename))
         ucbspectracnt = ucbspectracnt + 1
         if catalog.args.travis and ucbspectracnt >= catalog.TRAVIS_QUERY_LIMIT:
             break
