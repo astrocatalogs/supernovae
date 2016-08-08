@@ -7,11 +7,13 @@ import os
 import re
 from datetime import datetime
 from glob import glob
+from math import log10
+
+from astropy.time import Time as astrotime
 
 from astrocats.catalog.utils import (is_number, jd_to_mjd, make_date_string,
                                      pbar, pbar_strings)
-from astropy.time import Time as astrotime
-
+from astrocats.catalog.photometry import PHOTOMETRY
 from cdecimal import Decimal
 
 from ..supernova import SUPERNOVA
@@ -23,30 +25,74 @@ def do_ascii(catalog):
     """
     task_str = catalog.get_current_task_str()
 
+    # 2015MNRAS.446.3895F
+    file_path = os.path.join(catalog.get_current_task_repo(),
+                             '2015MNRAS.446.3895F.txt')
+    tsvin = list(
+        csv.reader(
+            open(file_path, 'r'), delimiter=' ', skipinitialspace=True))
+    for ri, row in enumerate(pbar(tsvin, task_str)):
+        if row[0][0] == '#':
+            continue
+        (name, source) = catalog.new_entry(
+            row[0], bibcode='2015MNRAS.446.3895F')
+        counts = row[3].rstrip('0')
+        e_counts = row[4].rstrip('0')
+        if row[1].startswith('LSQ'):
+            off = 2
+        else:
+            off = 1
+        photodict = {
+            PHOTOMETRY.INSTRUMENT: row[1][:-off],
+            PHOTOMETRY.BAND: row[1][-off:],
+            PHOTOMETRY.TIME: row[2],
+            PHOTOMETRY.COUNTS: counts,
+            PHOTOMETRY.E_COUNTS: e_counts,
+            PHOTOMETRY.SOURCE: source
+        }
+        zp = row[5].rstrip('0')
+        # Use 3-sigma as upper limit
+        if float(e_counts) > float(counts):
+            photodict[PHOTOMETRY.UPPER_LIMIT] = True
+            photodict[PHOTOMETRY.MAGNITUDE] = (
+                Decimal(zp) - (Decimal(2.5) *
+                               (Decimal(3.0) * Decimal(e_counts)).log10()))
+        else:
+            photodict[PHOTOMETRY.MAGNITUDE] = (
+                Decimal(zp) - Decimal(2.5) * Decimal(counts).log10())
+            photodict[PHOTOMETRY.E_UPPER_MAGNITUDE] = (
+                Decimal(2.5) * ((Decimal(counts) + Decimal(e_counts)).log10() -
+                                Decimal(counts).log10()))
+            photodict[PHOTOMETRY.E_LOWER_MAGNITUDE] = (
+                Decimal(2.5) * (Decimal(counts).log10() -
+                                (Decimal(counts) - Decimal(e_counts)).log10()))
+        catalog.entries[name].add_photometry(**photodict)
+    catalog.journal_entries()
+
     # 2015arXiv150907124M
-    file_path = os.path.join(
-        catalog.get_current_task_repo(), '2015arXiv150907124M.txt')
-    tsvin = list(csv.reader(
-        open(file_path, 'r'), delimiter='/', skipinitialspace=True))
+    file_path = os.path.join(catalog.get_current_task_repo(),
+                             '2015arXiv150907124M.txt')
+    tsvin = list(
+        csv.reader(
+            open(file_path, 'r'), delimiter='/', skipinitialspace=True))
     for ri, row in enumerate(pbar(tsvin, task_str)):
         if row[0][0] == '#':
             ct = row[0].lstrip('#')
         name = row[0]
-        (name, source) = catalog.new_entry(
-            name, bibcode='2015arXiv150907124M')
+        (name, source) = catalog.new_entry(name, bibcode='2015arXiv150907124M')
         if len(row) == 2:
             catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, row[1], source)
         catalog.entries[name].add_quantity(SUPERNOVA.CLAIMED_TYPE, ct, source)
     catalog.journal_entries()
 
     # 2004ApJ...606..381L
-    file_path = os.path.join(
-        catalog.get_current_task_repo(), '2004ApJ...606..381L-table3.txt')
-    tsvin = list(csv.reader(
-        open(file_path, 'r'), delimiter=' ', skipinitialspace=True))
+    file_path = os.path.join(catalog.get_current_task_repo(),
+                             '2004ApJ...606..381L-table3.txt')
+    tsvin = list(
+        csv.reader(
+            open(file_path, 'r'), delimiter=' ', skipinitialspace=True))
     name = 'SN2003dh'
-    (name, source) = catalog.new_entry(
-        name, bibcode='2004ApJ...606..381L')
+    (name, source) = catalog.new_entry(name, bibcode='2004ApJ...606..381L')
     instdict = {}
     banddict = {}
     bibdict = {}
@@ -70,8 +116,7 @@ def do_ascii(catalog):
         elif ri >= 40 and ri <= 43:
             banddict[row[0]] = row[2]
         elif ri >= 45:
-            time = str(astrotime(float(row[3]) + 2450000.,
-                                 format='jd').mjd)
+            time = str(astrotime(float(row[3]) + 2450000., format='jd').mjd)
             ssource = ''
             if bibdict[row[0]]:
                 ssource = catalog.entries[name].add_source(
@@ -90,8 +135,8 @@ def do_ascii(catalog):
     catalog.journal_entries()
 
     # 2006ApJ...645..841N
-    file_path = os.path.join(
-        catalog.get_current_task_repo(), '2006ApJ...645..841N-table3.csv')
+    file_path = os.path.join(catalog.get_current_task_repo(),
+                             '2006ApJ...645..841N-table3.csv')
     tsvin = list(csv.reader(open(file_path, 'r'), delimiter=','))
     for ri, row in enumerate(pbar(tsvin, task_str)):
         name = 'SNLS-' + row[0]
@@ -103,14 +148,15 @@ def do_ascii(catalog):
             SUPERNOVA.REDSHIFT, row[1], source, kind='spectroscopic')
         astrot = astrotime(float(row[4]) + 2450000., format='jd').datetime
         date_str = make_date_string(astrot.year, astrot.month, astrot.day)
-        catalog.entries[name].add_quantity(
-            SUPERNOVA.DISCOVER_DATE, date_str, source)
+        catalog.entries[name].add_quantity(SUPERNOVA.DISCOVER_DATE, date_str,
+                                           source)
     catalog.journal_entries()
 
     # Anderson 2014
     file_names = list(
-        glob(os.path.join(
-            catalog.get_current_task_repo(), 'SNII_anderson2014/*.dat')))
+        glob(
+            os.path.join(catalog.get_current_task_repo(),
+                         'SNII_anderson2014/*.dat')))
     for datafile in pbar_strings(file_names, task_str):
         basename = os.path.basename(datafile)
         if not is_number(basename[:2]):
@@ -118,8 +164,8 @@ def do_ascii(catalog):
         if basename == '0210_V.dat':
             name = 'SN0210'
         else:
-            name = ('SN20' if int(basename[:2]) <
-                    50 else 'SN19') + basename.split('_')[0]
+            name = ('SN20' if int(basename[:2]) < 50 else 'SN19'
+                    ) + basename.split('_')[0]
         name = catalog.add_entry(name)
         source = catalog.entries[name].add_source(
             bibcode='2014ApJ...786...67A')
@@ -137,15 +183,18 @@ def do_ascii(catalog):
                     continue
                 time = str(jd_to_mjd(Decimal(row[0])))
                 catalog.entries[name].add_photometry(
-                    time=time, band='V',
-                    magnitude=row[1], e_magnitude=row[2],
-                    system=system, source=source)
+                    time=time,
+                    band='V',
+                    magnitude=row[1],
+                    e_magnitude=row[2],
+                    system=system,
+                    source=source)
     catalog.journal_entries()
 
     # stromlo
     stromlobands = ['B', 'V', 'R', 'I', 'VM', 'RM']
-    file_path = os.path.join(
-        catalog.get_current_task_repo(), 'J_A+A_415_863-1/photometry.csv')
+    file_path = os.path.join(catalog.get_current_task_repo(),
+                             'J_A+A_415_863-1/photometry.csv')
     tsvin = list(csv.reader(open(file_path, 'r'), delimiter=','))
     for row in pbar(tsvin, task_str):
         name = row[0]
@@ -159,25 +208,33 @@ def do_ascii(catalog):
                 continue
             band = stromlobands[ri]
             upperlimit = True if (not row[ci + 1] and row[ci + 2]) else False
-            e_upper_magnitude = str(
-                abs(Decimal(row[ci + 1]))) if row[ci + 1] else ''
-            e_lower_magnitude = str(
-                abs(Decimal(row[ci + 2]))) if row[ci + 2] else ''
+            e_upper_magnitude = str(abs(Decimal(row[ci + 1]))) if row[
+                ci + 1] else ''
+            e_lower_magnitude = str(abs(Decimal(row[ci + 2]))) if row[
+                ci + 2] else ''
             teles = 'MSSSO 1.3m' if band in ['VM', 'RM'] else 'CTIO'
             instr = 'MaCHO' if band in ['VM', 'RM'] else ''
             catalog.entries[name].add_photometry(
-                time=mjd, band=band, magnitude=row[ci],
+                time=mjd,
+                band=band,
+                magnitude=row[ci],
                 e_upper_magnitude=e_upper_magnitude,
                 e_lower_magnitude=e_lower_magnitude,
-                upperlimit=upperlimit, telescope=teles,
-                instrument=instr, source=source)
+                upperlimit=upperlimit,
+                telescope=teles,
+                instrument=instr,
+                source=source)
     catalog.journal_entries()
 
     # 2015MNRAS.449..451W
-    file_path = os.path.join(
-        catalog.get_current_task_repo(), '2015MNRAS.449..451W.dat')
-    data = list(csv.reader(open(file_path, 'r'), delimiter='\t',
-                           quotechar='"', skipinitialspace=True))
+    file_path = os.path.join(catalog.get_current_task_repo(),
+                             '2015MNRAS.449..451W.dat')
+    data = list(
+        csv.reader(
+            open(file_path, 'r'),
+            delimiter='\t',
+            quotechar='"',
+            skipinitialspace=True))
     for rr, row in enumerate(pbar(data, task_str)):
         if rr == 0:
             continue
@@ -190,19 +247,23 @@ def do_ascii(catalog):
             bibcode='2015MNRAS.449..451W')
         catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
         if len(namesplit) > 1:
-            catalog.entries[name].add_quantity(
-                SUPERNOVA.ALIAS, namesplit[0], source)
-        catalog.entries[name].add_quantity(
-            SUPERNOVA.CLAIMED_TYPE, row[1], source)
+            catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, namesplit[0],
+                                               source)
+        catalog.entries[name].add_quantity(SUPERNOVA.CLAIMED_TYPE, row[1],
+                                           source)
         catalog.entries[name].add_photometry(
             time=row[2], band=row[4], magnitude=row[3], source=source)
     catalog.journal_entries()
 
     # 2016MNRAS.459.1039T
-    file_path = os.path.join(
-        catalog.get_current_task_repo(), '2016MNRAS.459.1039T.tsv')
-    data = list(csv.reader(open(file_path, 'r'), delimiter='\t',
-                           quotechar='"', skipinitialspace=True))
+    file_path = os.path.join(catalog.get_current_task_repo(),
+                             '2016MNRAS.459.1039T.tsv')
+    data = list(
+        csv.reader(
+            open(file_path, 'r'),
+            delimiter='\t',
+            quotechar='"',
+            skipinitialspace=True))
     name = catalog.add_entry('LSQ13zm')
     source = catalog.entries[name].add_source(bibcode='2016MNRAS.459.1039T')
     catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
@@ -214,21 +275,30 @@ def do_ascii(catalog):
         mags = [re.sub(r'\([^)]*\)', '', xx) for xx in row[3:-1]]
         upps = [True if '>' in xx else '' for xx in mags]
         mags = [xx.replace('>', '') for xx in mags]
-        errs = [xx[xx.find('(') + 1:xx.find(')')]
-                if '(' in xx else '' for xx in row[3:-1]]
+        errs = [xx[xx.find('(') + 1:xx.find(')')] if '(' in xx else ''
+                for xx in row[3:-1]]
         for mi, mag in enumerate(mags):
             if not is_number(mag):
                 continue
             catalog.entries[name].add_photometry(
-                time=mjd, band=bands[mi], magnitude=mag, e_magnitude=errs[mi],
-                instrument=row[-1], upperlimit=upps[mi], source=source)
+                time=mjd,
+                band=bands[mi],
+                magnitude=mag,
+                e_magnitude=errs[mi],
+                instrument=row[-1],
+                upperlimit=upps[mi],
+                source=source)
     catalog.journal_entries()
 
     # 2015ApJ...804...28G
-    file_path = os.path.join(
-        catalog.get_current_task_repo(), '2015ApJ...804...28G.tsv')
-    data = list(csv.reader(open(file_path, 'r'), delimiter='\t',
-                           quotechar='"', skipinitialspace=True))
+    file_path = os.path.join(catalog.get_current_task_repo(),
+                             '2015ApJ...804...28G.tsv')
+    data = list(
+        csv.reader(
+            open(file_path, 'r'),
+            delimiter='\t',
+            quotechar='"',
+            skipinitialspace=True))
     name = catalog.add_entry('PS1-13arp')
     source = catalog.entries[name].add_source(bibcode='2015ApJ...804...28G')
     catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
@@ -242,15 +312,24 @@ def do_ascii(catalog):
         err = row[4] if is_number(row[4]) else ''
         ins = row[5]
         catalog.entries[name].add_photometry(
-            time=mjd, band=row[0], magnitude=mag, e_magnitude=err,
-            instrument=ins, upperlimit=upp, source=source)
+            time=mjd,
+            band=row[0],
+            magnitude=mag,
+            e_magnitude=err,
+            instrument=ins,
+            upperlimit=upp,
+            source=source)
     catalog.journal_entries()
 
     # 2016ApJ...819...35A
-    file_path = os.path.join(
-        catalog.get_current_task_repo(), '2016ApJ...819...35A.tsv')
-    data = list(csv.reader(open(file_path, 'r'), delimiter='\t',
-                           quotechar='"', skipinitialspace=True))
+    file_path = os.path.join(catalog.get_current_task_repo(),
+                             '2016ApJ...819...35A.tsv')
+    data = list(
+        csv.reader(
+            open(file_path, 'r'),
+            delimiter='\t',
+            quotechar='"',
+            skipinitialspace=True))
     for rr, row in enumerate(pbar(data, task_str)):
         if row[0][0] == '#':
             continue
@@ -263,15 +342,19 @@ def do_ascii(catalog):
         catalog.entries[name].add_quantity(SUPERNOVA.REDSHIFT, row[3], source)
         disc_date = datetime.strptime(row[4], '%Y %b %d').isoformat()
         disc_date = disc_date.split('T')[0].replace('-', '/')
-        catalog.entries[name].add_quantity(
-            SUPERNOVA.DISCOVER_DATE, disc_date, source)
+        catalog.entries[name].add_quantity(SUPERNOVA.DISCOVER_DATE, disc_date,
+                                           source)
     catalog.journal_entries()
 
     # 2014ApJ...784..105W
-    file_path = os.path.join(
-        catalog.get_current_task_repo(), '2014ApJ...784..105W.tsv')
-    data = list(csv.reader(open(file_path, 'r'), delimiter='\t',
-                           quotechar='"', skipinitialspace=True))
+    file_path = os.path.join(catalog.get_current_task_repo(),
+                             '2014ApJ...784..105W.tsv')
+    data = list(
+        csv.reader(
+            open(file_path, 'r'),
+            delimiter='\t',
+            quotechar='"',
+            skipinitialspace=True))
     for rr, row in enumerate(pbar(data, task_str)):
         if row[0][0] == '#':
             continue
@@ -284,16 +367,26 @@ def do_ascii(catalog):
         mag = row[3]
         err = row[4]
         catalog.entries[name].add_photometry(
-            time=mjd, band=row[2], magnitude=mag, e_magnitude=err,
-            instrument='WHIRC', telescope='WIYN 3.5 m', observatory='NOAO',
-            system='WHIRC', source=source)
+            time=mjd,
+            band=row[2],
+            magnitude=mag,
+            e_magnitude=err,
+            instrument='WHIRC',
+            telescope='WIYN 3.5 m',
+            observatory='NOAO',
+            system='WHIRC',
+            source=source)
     catalog.journal_entries()
 
     # 2012MNRAS.425.1007B
-    file_path = os.path.join(
-        catalog.get_current_task_repo(), '2012MNRAS.425.1007B.tsv')
-    data = list(csv.reader(open(file_path, 'r'), delimiter='\t',
-                           quotechar='"', skipinitialspace=True))
+    file_path = os.path.join(catalog.get_current_task_repo(),
+                             '2012MNRAS.425.1007B.tsv')
+    data = list(
+        csv.reader(
+            open(file_path, 'r'),
+            delimiter='\t',
+            quotechar='"',
+            skipinitialspace=True))
     for rr, row in enumerate(pbar(data, task_str)):
         if row[0][0] == '#':
             bands = row[2:]
@@ -304,8 +397,8 @@ def do_ascii(catalog):
         catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
         mjd = row[1]
         mags = [xx.split('±')[0].strip() for xx in row[2:]]
-        errs = [xx.split('±')[1].strip()
-                if '±' in xx else '' for xx in row[2:]]
+        errs = [xx.split('±')[1].strip() if '±' in xx else ''
+                for xx in row[2:]]
         if row[0] == 'PTF09dlc':
             ins = 'HAWK-I'
             tel = 'VLT 8.1m'
@@ -319,60 +412,72 @@ def do_ascii(catalog):
             if not is_number(mag):
                 continue
             catalog.entries[name].add_photometry(
-                time=mjd, band=bands[mi], magnitude=mag, e_magnitude=errs[mi],
-                instrument=ins, telescope=tel, observatory=obs,
-                system='Natural', source=source)
+                time=mjd,
+                band=bands[mi],
+                magnitude=mag,
+                e_magnitude=errs[mi],
+                instrument=ins,
+                telescope=tel,
+                observatory=obs,
+                system='Natural',
+                source=source)
 
         catalog.journal_entries()
 
     # 2014ApJ...783...28G
-    file_path = os.path.join(
-        catalog.get_current_task_repo(), 'apj490105t2_ascii.txt')
+    file_path = os.path.join(catalog.get_current_task_repo(),
+                             'apj490105t2_ascii.txt')
     with open(file_path, 'r') as f:
-        data = list(csv.reader(f, delimiter='\t',
-                               quotechar='"', skipinitialspace=True))
+        data = list(
+            csv.reader(
+                f, delimiter='\t', quotechar='"', skipinitialspace=True))
         for r, row in enumerate(pbar(data, task_str)):
             if row[0][0] == '#':
                 continue
             name, source = catalog.new_entry(
                 row[0], bibcode='2014ApJ...783...28G')
             catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, row[1], source)
-            catalog.entries[name].add_quantity(
-                SUPERNOVA.DISCOVER_DATE, '20' + row[0][3:5], source)
+            catalog.entries[name].add_quantity(SUPERNOVA.DISCOVER_DATE,
+                                               '20' + row[0][3:5], source)
             catalog.entries[name].add_quantity(SUPERNOVA.RA, row[2], source)
             catalog.entries[name].add_quantity(SUPERNOVA.DEC, row[3], source)
-            catalog.entries[name].add_quantity(
-                SUPERNOVA.REDSHIFT, row[13] if is_number(row[13]) else
-                row[10], source)
+            catalog.entries[name].add_quantity(SUPERNOVA.REDSHIFT, row[13]
+                                               if is_number(row[13]) else
+                                               row[10], source)
     catalog.journal_entries()
 
     # 2005ApJ...634.1190H
-    file_path = os.path.join(
-        catalog.get_current_task_repo(), '2005ApJ...634.1190H.tsv')
+    file_path = os.path.join(catalog.get_current_task_repo(),
+                             '2005ApJ...634.1190H.tsv')
     with open(file_path, 'r') as f:
-        data = list(csv.reader(f, delimiter='\t',
-                               quotechar='"', skipinitialspace=True))
+        data = list(
+            csv.reader(
+                f, delimiter='\t', quotechar='"', skipinitialspace=True))
         for r, row in enumerate(pbar(data, task_str)):
             name, source = catalog.new_entry(
                 'SNLS-' + row[0], bibcode='2005ApJ...634.1190H')
-            catalog.entries[name].add_quantity(
-                SUPERNOVA.DISCOVER_DATE, '20' + row[0][:2], source)
+            catalog.entries[name].add_quantity(SUPERNOVA.DISCOVER_DATE,
+                                               '20' + row[0][:2], source)
             catalog.entries[name].add_quantity(SUPERNOVA.RA, row[1], source)
             catalog.entries[name].add_quantity(SUPERNOVA.DEC, row[2], source)
             catalog.entries[name].add_quantity(
-                SUPERNOVA.REDSHIFT, row[5].replace('?', ''), source,
-                e_value=row[6], kind='host')
+                SUPERNOVA.REDSHIFT,
+                row[5].replace('?', ''),
+                source,
+                e_value=row[6],
+                kind='host')
             catalog.entries[name].add_quantity(
                 SUPERNOVA.CLAIMED_TYPE, row[7].replace('SN', '').strip(':* '),
                 source)
     catalog.journal_entries()
 
     # 2014MNRAS.444.2133S
-    file_path = os.path.join(
-        catalog.get_current_task_repo(), '2014MNRAS.444.2133S.tsv')
+    file_path = os.path.join(catalog.get_current_task_repo(),
+                             '2014MNRAS.444.2133S.tsv')
     with open(file_path, 'r') as f:
-        data = list(csv.reader(f, delimiter='\t',
-                               quotechar='"', skipinitialspace=True))
+        data = list(
+            csv.reader(
+                f, delimiter='\t', quotechar='"', skipinitialspace=True))
         for r, row in enumerate(pbar(data, task_str)):
             if row[0][0] == '#':
                 continue
@@ -383,17 +488,17 @@ def do_ascii(catalog):
                 name, bibcode='2014MNRAS.444.2133S')
             catalog.entries[name].add_quantity(SUPERNOVA.RA, row[1], source)
             catalog.entries[name].add_quantity(SUPERNOVA.DEC, row[2], source)
-            catalog.entries[name].add_quantity(SUPERNOVA.REDSHIFT, row[3],
-                                               source,
-                                               kind='host')
+            catalog.entries[name].add_quantity(
+                SUPERNOVA.REDSHIFT, row[3], source, kind='host')
     catalog.journal_entries()
 
     # 2009MNRAS.398.1041B
-    file_path = os.path.join(
-        catalog.get_current_task_repo(), '2009MNRAS.398.1041B.tsv')
+    file_path = os.path.join(catalog.get_current_task_repo(),
+                             '2009MNRAS.398.1041B.tsv')
     with open(file_path, 'r') as f:
-        data = list(csv.reader(f, delimiter='\t',
-                               quotechar='"', skipinitialspace=True))
+        data = list(
+            csv.reader(
+                f, delimiter='\t', quotechar='"', skipinitialspace=True))
         for r, row in enumerate(pbar(data, task_str)):
             if row[0][0] == '#':
                 bands = row[2:-1]
@@ -403,8 +508,8 @@ def do_ascii(catalog):
             mjd = str(jd_to_mjd(Decimal(row[0])))
             mags = [x.split('±')[0].strip() for x in row[2:]]
             upps = [('<' in x.split('±')[0]) for x in row[2:]]
-            errs = [x.split('±')[1].strip()
-                    if '±' in x else '' for x in row[2:]]
+            errs = [x.split('±')[1].strip() if '±' in x else ''
+                    for x in row[2:]]
 
             instrument = row[-1]
 
@@ -412,17 +517,21 @@ def do_ascii(catalog):
                 if not is_number(mag):
                     continue
                 catalog.entries[name].add_photometry(
-                    time=mjd, band=bands[mi],
-                    magnitude=mag, e_magnitude=errs[mi],
-                    instrument=instrument, source=source)
+                    time=mjd,
+                    band=bands[mi],
+                    magnitude=mag,
+                    e_magnitude=errs[mi],
+                    instrument=instrument,
+                    source=source)
     catalog.journal_entries()
 
     # 2010arXiv1007.0011P
-    file_path = os.path.join(
-        catalog.get_current_task_repo(), '2010arXiv1007.0011P.tsv')
+    file_path = os.path.join(catalog.get_current_task_repo(),
+                             '2010arXiv1007.0011P.tsv')
     with open(file_path, 'r') as f:
-        data = list(csv.reader(f, delimiter='\t',
-                               quotechar='"', skipinitialspace=True))
+        data = list(
+            csv.reader(
+                f, delimiter='\t', quotechar='"', skipinitialspace=True))
         for r, row in enumerate(pbar(data, task_str)):
             if row[0][0] == '#':
                 bands = row[1:]
@@ -431,24 +540,28 @@ def do_ascii(catalog):
                 'SN2008S', bibcode='2010arXiv1007.0011P')
             mjd = row[0]
             mags = [x.split('±')[0].strip() for x in row[1:]]
-            errs = [x.split('±')[1].strip()
-                    if '±' in x else '' for x in row[1:]]
+            errs = [x.split('±')[1].strip() if '±' in x else ''
+                    for x in row[1:]]
 
             for mi, mag in enumerate(mags):
                 if not is_number(mag):
                     continue
                 catalog.entries[name].add_photometry(
-                    time=mjd, band=bands[mi],
-                    magnitude=mag, e_magnitude=errs[mi],
-                    instrument='LBT', source=source)
+                    time=mjd,
+                    band=bands[mi],
+                    magnitude=mag,
+                    e_magnitude=errs[mi],
+                    instrument='LBT',
+                    source=source)
     catalog.journal_entries()
 
     # 2000ApJ...533..320G
-    file_path = os.path.join(
-        catalog.get_current_task_repo(), '2000ApJ...533..320G.tsv')
+    file_path = os.path.join(catalog.get_current_task_repo(),
+                             '2000ApJ...533..320G.tsv')
     with open(file_path, 'r') as f:
-        data = list(csv.reader(f, delimiter='\t',
-                               quotechar='"', skipinitialspace=True))
+        data = list(
+            csv.reader(
+                f, delimiter='\t', quotechar='"', skipinitialspace=True))
         name, source = catalog.new_entry(
             'SN1997cy', bibcode='2000ApJ...533..320G')
         for r, row in enumerate(pbar(data, task_str)):
@@ -461,10 +574,13 @@ def do_ascii(catalog):
                 if not is_number(mag):
                     continue
                 catalog.entries[name].add_photometry(
-                    time=mjd, band=bands[mi],
+                    time=mjd,
+                    band=bands[mi],
                     magnitude=mag,
-                    observatory='Mount Stromlo', telescope='MSSSO',
-                    source=source, kcorrected=True)
+                    observatory='Mount Stromlo',
+                    telescope='MSSSO',
+                    source=source,
+                    kcorrected=True)
 
     catalog.journal_entries()
     return
