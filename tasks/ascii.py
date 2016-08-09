@@ -7,7 +7,6 @@ import os
 import re
 from datetime import datetime
 from glob import glob
-from math import log10
 
 from astropy.time import Time as astrotime
 
