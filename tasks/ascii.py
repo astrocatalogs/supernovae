@@ -25,6 +25,18 @@ def do_ascii(catalog):
     """
     task_str = catalog.get_current_task_str()
 
+    # 2013ApJ...767...57F
+    file_path = os.path.join(catalog.get_current_task_repo(),
+                             '2013ApJ...767...57F.txt')
+    tsvin = list(
+        csv.reader(
+            open(file_path, 'r'), delimiter=' ', skipinitialspace=True))
+    for ri, row in enumerate(pbar(tsvin, task_str)):
+        (name, source) = catalog.new_entry(
+            row[0], bibcode='2013ApJ...767...57F')
+        catalog.entries[name].add_quantity(SUPERNOVA.CLAIMED_TYPE, 'Ia-02cx',
+                                           source)
+
     # 2015MNRAS.446.3895F
     file_path = os.path.join(catalog.get_current_task_repo(),
                              '2015MNRAS.446.3895F.txt')
