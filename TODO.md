@@ -33,6 +33,7 @@ Other multiple SN datasets:
 
 Other single SN datasets:
 * SN1885A - 2011ApJ...730...89P (from Perets e-mail)
+* SN1972E - IR photometry from Kirschner paper
 * SN1978K - http://adsabs.harvard.edu/abs/1993ApJ...416..167R (Table 1)
 * SN1979C - http://adsabs.harvard.edu/abs/1981ApJ...244..780B
 * SN1983V - http://adsabs.harvard.edu/abs/1997ApJ...483..675C
