@@ -137,7 +137,6 @@ Other single SN datasets:
 * SN2014C - http://adsabs.harvard.edu/abs/2015ApJ...815..120M  (LC & spectra, data not in paper)
 * iPTF14atg - http://adsabs.harvard.edu/abs/2015Natur.521..328C (LC, data not in paper)
 * SN2015H - http://adsabs.harvard.edu/abs/2016A%26A...589A..89M (LC, data not in paper)
-* SN2015U - http://arxiv.org/abs/1603.04866
 * SN2015bn - http://arxiv.org/abs/1603.04748
 * iPTF15dtg - http://arxiv.org/abs/1605.02491
 
