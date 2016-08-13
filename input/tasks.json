@@ -469,6 +469,17 @@
         "always_journal": true,
         "priority": 208
     },
+    "swift": {
+        "nice_name": "Coordinates from Swift TOO",
+        "active": true,
+        "update": false,
+        "module": "supernovae.tasks.swift",
+        "function": "do_swift",
+        "groups": ["meta"],
+        "repo": "input/sne-external",
+        "always_journal": true,
+        "priority": -200
+    },
     "merge_duplicates": {
         "nice_name": "Merging duplicates",
         "active": false,
