@@ -38,9 +38,9 @@ for folder in tqdm(glob('../input/sne-external-WISEREP/*')):
                 if privcount > 0:
                     evcount += 1
                     totcount += privcount
+                    tqdm.write(name + ': ' + str(privcount))
                     if year < 2014:
                         totcountp14 += privcount
                         names.append(name)
-                        tqdm.write(name)
 
 print(evcount, totcount, totcountp14)

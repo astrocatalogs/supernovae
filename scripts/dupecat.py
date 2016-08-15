@@ -181,6 +181,7 @@ for item1 in tqdm(newcatalog):
                          maxdiffyear else '') +
                         ((', Disc. diff: ' + str(discdiffyear)) if
                          discdiffyear else '') + ']')
+                    continue
             else:
                 tqdm.write(name1 + ' has ' + exactstr +
                            ' coordinate match to ' + name2 + " [" +

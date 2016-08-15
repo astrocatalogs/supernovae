@@ -58,7 +58,7 @@ def do_swift(catalog):
                     catalog.journal_entries()
                     continue
                 source = catalog.entries[name].add_source(
-                    srcname=reference, url=url)
+                    name=reference, url=url)
 
                 catalog.entries[name].add_quantity(
                     SUPERNOVA.RA, radeg, u_value='floatdegrees', source=source)
