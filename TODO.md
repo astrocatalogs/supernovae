@@ -33,6 +33,7 @@ Other multiple SN datasets:
 
 Other single SN datasets:
 * SN1885A - 2011ApJ...730...89P (from Perets e-mail)
+* SN1972E - IR photometry from Kirschner paper
 * SN1978K - http://adsabs.harvard.edu/abs/1993ApJ...416..167R (Table 1)
 * SN1979C - http://adsabs.harvard.edu/abs/1981ApJ...244..780B
 * SN1983V - http://adsabs.harvard.edu/abs/1997ApJ...483..675C
@@ -180,13 +181,13 @@ Spectra to recover that were donated to SuSpect (bad wavelength solutions, etc):
 SNR catalogs:
 * Chandra SNR catalog - http://hea-www.cfa.harvard.edu/ChandraSNR/
 * GALEX SNR catalog?
-* GRBs (BATSE, Swift, FERMI). LGRBs are definitely SNe, should we considered SGRBs to be SNe?
+* GRBs (FERMI, GRBs from early 2000s)
 
 Online catalogs:
 * No known missing online catalogs at this time.
 
 ####Data that likely exists but no known source
-* Any SNe with a typing but no spectrum likely has a spectrum.
+* Any SNe with a typing but no spectrum likely has a spectrum somewhere.
 
 ####Known errors that need to be corrected:
 * No known errors at this time.
