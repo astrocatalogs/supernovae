@@ -26,6 +26,33 @@ def do_vizier(catalog):
 
     Vizier.ROW_LIMIT = -1
 
+    # 2013A&A...555A..10T
+    results = Vizier.get_catalogs(['J/A+A/555/A10/table4',
+                                  'J/A+A/555/A10/table5'])
+    for table in results:
+        table.convert_bytestring_to_unicode(python3_only=True)
+        for row in pbar(table, task_str):
+            name = row['SN']
+            if is_number(name[:4]):
+                name = 'SN' + name
+            name, source = catalog.new_entry(name,
+                                             bibcode='2013A&A...555A..10T')
+            for band in ['u', 'g', 'r', 'i', 'B', 'V']:
+                bandtag = band + 'mag'
+                if (bandtag in row and is_number(row[bandtag]) and not
+                        isnan(float(row[bandtag]))):
+                    photodict = {
+                        PHOTOMETRY.TIME: str(jd_to_mjd(
+                            Decimal(row['Epoch']) + Decimal('2453000'))),
+                        PHOTOMETRY.U_TIME: 'MJD',
+                        PHOTOMETRY.BAND: band,
+                        PHOTOMETRY.MAGNITUDE: row[bandtag],
+                        PHOTOMETRY.E_MAGNITUDE: row['e_' + bandtag],
+                        PHOTOMETRY.SOURCE: source,
+                        PHOTOMETRY.TELESCOPE: row['Tel']
+                    }
+                    catalog.entries[name].add_photometry(**photodict)
+
     # 2016ApJ...820...33R
     result = Vizier.get_catalogs('J/ApJ/820/33/table1')
     table = result[list(result.keys())[0]]
@@ -48,19 +75,20 @@ def do_vizier(catalog):
         name = row['SN']
         (name, source) = catalog.new_entry(
             name, bibcode='2016ApJ...820...33R')
-        photoentry = {
+        photodict = {
             PHOTOMETRY.TIME: row['MJD'],
+            PHOTOMETRY.U_TIME: 'MJD',
             PHOTOMETRY.TELESCOPE: row['Tel'],
             PHOTOMETRY.BAND: row['Filt'],
             PHOTOMETRY.SOURCE: source
         }
         if row['mag']:
-            photoentry[PHOTOMETRY.MAGNITUDE] = row['mag']
-            photoentry[PHOTOMETRY.E_MAGNITUDE] = row['e_mag']
+            photodict[PHOTOMETRY.MAGNITUDE] = row['mag']
+            photodict[PHOTOMETRY.E_MAGNITUDE] = row['e_mag']
         else:
-            photoentry[PHOTOMETRY.MAGNITUDE] = row['Limit']
-            photoentry[PHOTOMETRY.UPPER_LIMIT] = True
-        catalog.entries[name].add_photometry(**photoentry)
+            photodict[PHOTOMETRY.MAGNITUDE] = row['Limit']
+            photodict[PHOTOMETRY.UPPER_LIMIT] = True
+        catalog.entries[name].add_photometry(**photodict)
     catalog.journal_entries()
 
     # 2012ApJS..200...12H
@@ -139,10 +167,16 @@ def do_vizier(catalog):
         source = catalog.entries[name].add_source(
             bibcode='2012ApJ...746...85S')
         catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
-        catalog.entries[name].add_photometry(
-            time=str(row['MJD']), band=row['Filter'],
-            instrument=row['Inst'],
-            magnitude=magnitude, e_magnitude=e_magnitude, source=source)
+        photodict = {
+            PHOTOMETRY.TIME: str(row['MJD']),
+            PHOTOMETRY.U_TIME: 'MJD',
+            PHOTOMETRY.BAND: row['Filter'],
+            PHOTOMETRY.MAGNITUDE: magnitude,
+            PHOTOMETRY.E_MAGNITUDE: e_magnitude,
+            PHOTOMETRY.SOURCE: source,
+            PHOTOMETRY.INSTRUMENT: row['Inst']
+        }
+        catalog.entries[name].add_photometry(**photodict)
 
     # 2004ApJ...602..571B
     result = Vizier.get_catalogs('J/ApJ/602/571/table8')
