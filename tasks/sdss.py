@@ -177,7 +177,7 @@ def do_sdss_photo(catalog):
                     continue
 
                 mjd = row[1]
-                band = sdssbands[int(row[2])]
+                band = sdssbands[int(row[2])] + "'"
                 magnitude = row[3]
                 e_mag = row[4]
                 telescope = 'SDSS'
