@@ -61,7 +61,6 @@ def do_itep(catalog):
             source = catalog.entries[name].add_source(
                 name=reference) if reference else ''
 
-        print([sec_source, source])
         photodict = {
             PHOTOMETRY.TIME: mjd,
             PHOTOMETRY.U_TIME: 'MJD',
