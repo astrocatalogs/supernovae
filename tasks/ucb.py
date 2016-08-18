@@ -178,13 +178,13 @@ def do_ucb_spectra(catalog):
         specdata = list(
             csv.reader(
                 spectxt.splitlines(), delimiter=' ', skipinitialspace=True))
-        startrow = 0
+        newspecdata = []
         for row in specdata:
             if row[0][0] == '#':
-                startrow += 1
+                continue
             else:
-                break
-        specdata = specdata[startrow:]
+                newspecdata.append(row)
+        specdata = newspecdata
 
         haserrors = len(specdata[0]) == 3 and specdata[0][2] and specdata[0][
             2] != 'NaN'

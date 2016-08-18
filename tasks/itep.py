@@ -7,7 +7,8 @@ import re
 from collections import OrderedDict
 from html import unescape
 
-from astrocats.catalog.utils import jd_to_mjd, pbar
+from astrocats.catalog.utils import jd_to_mjd, pbar, uniq_cdl
+from astrocats.catalog.photometry import PHOTOMETRY
 
 from cdecimal import Decimal
 
@@ -60,12 +61,21 @@ def do_itep(catalog):
             source = catalog.entries[name].add_source(
                 name=reference) if reference else ''
 
+        print([sec_source, source])
+        photodict = {
+            PHOTOMETRY.TIME: mjd,
+            PHOTOMETRY.U_TIME: 'MJD',
+            PHOTOMETRY.MAGNITUDE: magnitude,
+            PHOTOMETRY.SOURCE: uniq_cdl([sec_source, source])
+        }
+        if e_magnitude:
+            photodict[PHOTOMETRY.E_MAGNITUDE] = e_magnitude
+        if band.endswith('_SDSS'):
+            photodict[PHOTOMETRY.SYSTEM] = 'SDSS'
+            band = band.replace('_SDSS', "'")
+        photodict[PHOTOMETRY.BAND] = band
         if bibcode not in itepbadsources:
-            catalog.entries[name].add_photometry(time=mjd, band=band,
-                                                 magnitude=magnitude,
-                                                 e_magnitude=e_magnitude,
-                                                 source=sec_source + ',' +
-                                                 source)
+            catalog.entries[name].add_photometry(**photodict)
 
     # Write out references that could use aa bibcode
     needsbib = list(OrderedDict.fromkeys(needsbib))
