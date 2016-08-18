@@ -579,7 +579,7 @@ for fcnt, eventfile in enumerate(tq(sorted(files, key=lambda s: s.lower()))):
                              if 'e_magnitude' in x else 0.)
                             for x in catalog[entry]['photometry']
                             if 'magnitude' in x]
-        photoband = [(x['band'] if 'band' in x else '')
+        photoband = [(bandaliasf(x['band']) if 'band' in x else '')
                      for x in catalog[entry]['photometry'] if 'magnitude' in x]
         photoinstru = [(x['instrument'] if 'instrument' in x else '')
                        for x in catalog[entry]['photometry']
@@ -716,8 +716,7 @@ for fcnt, eventfile in enumerate(tq(sorted(files, key=lambda s: s.lower()))):
             list(
                 zip(
                     list(map(bandgroupf, bandset)), list(
-                        map(bandwavef, bandset)), list(
-                            map(bandaliasf, bandset)))))
+                        map(bandwavef, bandset)), bandset)))
         bandset = list(filter(None, [i for (k, j, i) in bandsortlists]))
 
         sources = []
@@ -776,6 +775,7 @@ for fcnt, eventfile in enumerate(tq(sorted(files, key=lambda s: s.lower()))):
                     desc=[photoband[i] for i in indye],
                     instr=[photoinstru[i] for i in indye],
                     src=[photosource[i] for i in indye])
+                print(data)
                 if 'maxabsmag' in catalog[entry] and 'maxappmag' in catalog[
                         entry]:
                     data['yabs'] = [photoAB[i] - distancemod for i in indye]
