@@ -553,7 +553,6 @@ def do_vizier(catalog):
         catalog.entries[name].add_quantity(
             SUPERNOVA.EBV, str(row['E_B-V_']), source)
     catalog.journal_entries()
-    return
 
     result = Vizier.get_catalogs('J/MNRAS/442/844/table2')
     table = result[list(result.keys())[0]]
