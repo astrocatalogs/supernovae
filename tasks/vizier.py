@@ -29,7 +29,7 @@ def do_vizier(catalog):
     # 2013A&A...555A..10T
     results = Vizier.get_catalogs(['J/A+A/555/A10/table4',
                                   'J/A+A/555/A10/table5'])
-    for table in results:
+    for ti, table in enumerate(results):
         table.convert_bytestring_to_unicode(python3_only=True)
         for row in pbar(table, task_str):
             name = row['SN']
@@ -37,21 +37,29 @@ def do_vizier(catalog):
                 name = 'SN' + name
             name, source = catalog.new_entry(name,
                                              bibcode='2013A&A...555A..10T')
-            for band in ['u', 'g', 'r', 'i', 'B', 'V']:
-                bandtag = band + 'mag'
-                if (bandtag in row and is_number(row[bandtag]) and not
+            bands = [x for x in row.colnames if x.endswith('mag') and not
+                     x.startswith('e_')]
+            for bandtag in bands:
+                band = bandtag.replace('mag', '')
+                if (bandtag in row.colnames and is_number(row[bandtag]) and not
                         isnan(float(row[bandtag]))):
                     photodict = {
                         PHOTOMETRY.TIME: str(jd_to_mjd(
-                            Decimal(row['Epoch']) + Decimal('2453000'))),
+                            Decimal(str(row['Epoch'])) + Decimal('2453000'))),
                         PHOTOMETRY.U_TIME: 'MJD',
-                        PHOTOMETRY.BAND: band,
                         PHOTOMETRY.MAGNITUDE: row[bandtag],
-                        PHOTOMETRY.E_MAGNITUDE: row['e_' + bandtag],
                         PHOTOMETRY.SOURCE: source,
                         PHOTOMETRY.TELESCOPE: row['Tel']
                     }
+                    if ti == 0:
+                        photodict[PHOTOMETRY.SYSTEM] = 'SDSS'
+                        band = band + "'"
+                    photodict[PHOTOMETRY.BAND] = band
+                    if (is_number(row['e_' + bandtag]) and not
+                            isnan(float(row['e_' + bandtag]))):
+                        photodict[PHOTOMETRY.E_MAGNITUDE] = row['e_' + bandtag]
                     catalog.entries[name].add_photometry(**photodict)
+    catalog.journal_entries()
 
     # 2016ApJ...820...33R
     result = Vizier.get_catalogs('J/ApJ/820/33/table1')
@@ -545,6 +553,7 @@ def do_vizier(catalog):
         catalog.entries[name].add_quantity(
             SUPERNOVA.EBV, str(row['E_B-V_']), source)
     catalog.journal_entries()
+    return
 
     result = Vizier.get_catalogs('J/MNRAS/442/844/table2')
     table = result[list(result.keys())[0]]
@@ -559,7 +568,7 @@ def do_vizier(catalog):
         catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
         for band in ['B', 'V', 'R', 'I']:
             bandtag = band + 'mag'
-            if (bandtag in row and is_number(row[bandtag]) and not
+            if (bandtag in row.colnames and is_number(row[bandtag]) and not
                     isnan(float(row[bandtag]))):
                 catalog.entries[name].add_photometry(
                     time=row['MJD'], band=band, magnitude=row[bandtag],
@@ -645,7 +654,7 @@ def do_vizier(catalog):
         row = convert_aq_output(row)
         for band in ['g', 'r', 'i']:
             bandtag = band + '_mag'
-            if (bandtag in row and is_number(row[bandtag]) and not
+            if (bandtag in row.colnames and is_number(row[bandtag]) and not
                     isnan(float(row[bandtag]))):
                 catalog.entries[name].add_photometry(
                     time=row['MJD' + band + '_'], band=band + "'",
@@ -665,7 +674,7 @@ def do_vizier(catalog):
         row = convert_aq_output(row)
         for band in ['g', 'r', 'i']:
             bandtag = band + '_mag'
-            if (bandtag in row and is_number(row[bandtag]) and not
+            if (bandtag in row.colnames and is_number(row[bandtag]) and not
                     isnan(float(row[bandtag]))):
                 catalog.entries[name].add_photometry(
                     time=row['MJD' + band + '_'], band=band + "'",
@@ -764,7 +773,7 @@ def do_vizier(catalog):
         row = convert_aq_output(row)
         for band in ['U', 'B', 'V', 'R', 'I']:
             bandtag = band + 'mag'
-            if (bandtag in row and is_number(row[bandtag]) and not
+            if (bandtag in row.colnames and is_number(row[bandtag]) and not
                     isnan(float(row[bandtag]))):
                 e_mag = (row['e_' + bandtag]
                          if row['l_' + bandtag] != '>' else '')
@@ -789,7 +798,7 @@ def do_vizier(catalog):
         row = convert_aq_output(row)
         for band in ['B', 'V', 'R']:
             bandtag = band + 'mag'
-            if (bandtag in row and is_number(row[bandtag]) and not
+            if (bandtag in row.colnames and is_number(row[bandtag]) and not
                     isnan(float(row[bandtag]))):
                 time = str(jd_to_mjd(Decimal(row['JD'])))
                 e_mag = (row['e_' + bandtag]
@@ -806,7 +815,7 @@ def do_vizier(catalog):
         row = convert_aq_output(row)
         for band in ['J', 'H', 'K']:
             bandtag = band + 'mag'
-            if (bandtag in row and is_number(row[bandtag]) and not
+            if (bandtag in row.colnames and is_number(row[bandtag]) and not
                     isnan(float(row[bandtag]))):
                 catalog.entries[name].add_photometry(
                     time=str(jd_to_mjd(Decimal(row['JD']))),
@@ -826,7 +835,7 @@ def do_vizier(catalog):
         row = convert_aq_output(row)
         for band in ['B', 'R']:
             bandtag = band + 'mag'
-            if (bandtag in row and is_number(row[bandtag]) and not
+            if (bandtag in row.colnames and is_number(row[bandtag]) and not
                     isnan(float(row[bandtag]))):
                 catalog.entries[name].add_photometry(
                     time=row["MJD"], band=band,
@@ -837,7 +846,7 @@ def do_vizier(catalog):
                     source=source)
         for band in ['V', 'I']:
             bandtag = band + 'mag'
-            if (bandtag in row and is_number(row[bandtag]) and not
+            if (bandtag in row.colnames and is_number(row[bandtag]) and not
                     isnan(float(row[bandtag]))):
                 catalog.entries[name].add_photometry(
                     time=row["MJD"], band=band,
@@ -872,7 +881,7 @@ def do_vizier(catalog):
         row = convert_aq_output(row)
         for band in ['J', 'H', 'Ks']:
             bandtag = band + 'mag'
-            if (bandtag in row and is_number(row[bandtag]) and not
+            if (bandtag in row.colnames and is_number(row[bandtag]) and not
                     isnan(float(row[bandtag]))):
                 catalog.entries[name].add_photometry(
                     time=row["MJD"],
@@ -913,7 +922,7 @@ def do_vizier(catalog):
         row = convert_aq_output(row)
         for band in ['B', 'V', 'R', 'I']:
             bandtag = band + 'mag'
-            if (bandtag in row and is_number(row[bandtag]) and not
+            if (bandtag in row.colnames and is_number(row[bandtag]) and not
                     isnan(float(row[bandtag]))):
                 catalog.entries[name].add_photometry(
                     time=str(jd_to_mjd(Decimal(row["JD"]))),
@@ -928,7 +937,7 @@ def do_vizier(catalog):
         row = convert_aq_output(row)
         for band in ['u', 'g', 'r', 'i', 'z']:
             bandtag = band + 'mag'
-            if (bandtag in row and is_number(row[bandtag]) and not
+            if (bandtag in row.colnames and is_number(row[bandtag]) and not
                     isnan(float(row[bandtag]))):
                 catalog.entries[name].add_photometry(
                     time=str(jd_to_mjd(Decimal(row["JD"]))),
@@ -943,7 +952,7 @@ def do_vizier(catalog):
         row = convert_aq_output(row)
         for band in ['Y', 'J', 'H']:
             bandtag = band + 'mag'
-            if (bandtag in row and is_number(row[bandtag]) and not
+            if (bandtag in row.colnames and is_number(row[bandtag]) and not
                     isnan(float(row[bandtag]))):
                 catalog.entries[name].add_photometry(
                     time=str(jd_to_mjd(Decimal(row["JD"]))),
@@ -966,7 +975,7 @@ def do_vizier(catalog):
         mjd = str(jd_to_mjd(Decimal(row['JD']) + 2455000))
         for band in ['U', 'B', 'V', 'R', 'I']:
             bandtag = band + 'mag'
-            if (bandtag in row and is_number(row[bandtag]) and not
+            if (bandtag in row.colnames and is_number(row[bandtag]) and not
                     isnan(float(row[bandtag]))):
                 catalog.entries[name].add_photometry(
                     time=mjd, telescope=row["Tel"], band=band,
@@ -988,7 +997,7 @@ def do_vizier(catalog):
         mjd = str(jd_to_mjd(Decimal(row['JD']) + 2456000))
         for band in ['U', 'B', 'V', 'Rc', 'Ic']:
             bandtag = band + 'mag'
-            if (bandtag in row and is_number(row[bandtag]) and not
+            if (bandtag in row.colnames and is_number(row[bandtag]) and not
                     isnan(float(row[bandtag]))):
                 catalog.entries[name].add_photometry(
                     time=mjd, telescope=row["Tel"],
@@ -1003,7 +1012,7 @@ def do_vizier(catalog):
         mjd = str(jd_to_mjd(Decimal(row['JD']) + 2456000))
         for band in ['g', 'r', 'i', 'z']:
             bandtag = band + 'mag'
-            if (bandtag in row and is_number(row[bandtag]) and not
+            if (bandtag in row.colnames and is_number(row[bandtag]) and not
                     isnan(float(row[bandtag]))):
                 catalog.entries[name].add_photometry(
                     time=mjd, telescope=row["Tel"],
@@ -1025,7 +1034,7 @@ def do_vizier(catalog):
         mjd = row['MJD']
         for band in ['B', 'V', 'R', 'I']:
             bandtag = band + 'mag'
-            if (bandtag in row and is_number(row[bandtag]) and not
+            if (bandtag in row.colnames and is_number(row[bandtag]) and not
                     isnan(float(row[bandtag]))):
                 catalog.entries[name].add_photometry(
                     time=mjd, telescope="LJT",
@@ -1041,7 +1050,7 @@ def do_vizier(catalog):
         mjd = row['MJD']
         for band in ['U', 'B', 'V', 'UVW1', 'UVW2', 'UVM2']:
             bandtag = band + 'mag' if len(band) == 1 else band
-            if (bandtag in row and is_number(row[bandtag]) and not
+            if (bandtag in row.colnames and is_number(row[bandtag]) and not
                     isnan(float(row[bandtag]))):
                 catalog.entries[name].add_photometry(
                     time=mjd, telescope="Swift",
@@ -1057,7 +1066,7 @@ def do_vizier(catalog):
         mjd = row['MJD']
         for band in ['B', 'V', 'R', 'I']:
             bandtag = band + 'mag'
-            if (bandtag in row and is_number(row[bandtag]) and not
+            if (bandtag in row.colnames and is_number(row[bandtag]) and not
                     isnan(float(row[bandtag]))):
                 catalog.entries[name].add_photometry(
                     time=mjd, telescope="LJT",
@@ -1696,7 +1705,7 @@ def do_vizier(catalog):
         row = convert_aq_output(row)
         for band in ['UVW2', 'UVM2', 'UVW1', 'U', 'B', 'V']:
             bandtag = band + 'mag'
-            if (bandtag in row and is_number(row[bandtag]) and not
+            if (bandtag in row.colnames and is_number(row[bandtag]) and not
                     isnan(float(row[bandtag]))):
                 catalog.entries[name].add_photometry(
                     time=str(row["MJD"]), band=band,
@@ -1711,7 +1720,7 @@ def do_vizier(catalog):
         row = convert_aq_output(row)
         for band in ['B', 'V', 'R', 'I']:
             bandtag = band + 'mag'
-            if (bandtag in row and is_number(row[bandtag]) and not
+            if (bandtag in row.colnames and is_number(row[bandtag]) and not
                     isnan(float(row[bandtag]))):
                 catalog.entries[name].add_photometry(
                     time=str(row["MJD"]), band=band,
@@ -1725,7 +1734,7 @@ def do_vizier(catalog):
         row = convert_aq_output(row)
         for band in ['B', 'V', "r'", "i'"]:
             bandtag = band + 'mag'
-            if (bandtag in row and is_number(row[bandtag]) and not
+            if (bandtag in row.colnames and is_number(row[bandtag]) and not
                     isnan(float(row[bandtag]))):
                 catalog.entries[name].add_photometry(
                     time=str(row["MJD"]), band=band,
@@ -1739,10 +1748,10 @@ def do_vizier(catalog):
         row = convert_aq_output(row)
         for band in ['r', 'i', 'z']:
             bandtag = band + 'mag'
-            if (bandtag in row and is_number(row[bandtag]) and not
+            if (bandtag in row.colnames and is_number(row[bandtag]) and not
                     isnan(float(row[bandtag]))):
                 upp = False
-                if "l_" + bandtag in row and row["l_" + bandtag] == ">":
+                if "l_" + bandtag in row.colnames and row["l_" + bandtag] == ">":
                     upp = True
                 catalog.entries[name].add_photometry(
                     time=str(row["MJD"]), band=band,

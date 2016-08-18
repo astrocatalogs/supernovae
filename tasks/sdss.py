@@ -6,16 +6,34 @@ from glob import glob
 
 from astropy.coordinates import SkyCoord as coord
 from astropy.time import Time as astrotime
+from astropy.io import fits
 
 from astrocats.catalog.quantity import QUANTITY
 from astrocats.catalog.utils import make_date_string, pbar, pbar_strings
 from cdecimal import Decimal
+from collections import Counter
 
 from ..supernova import SUPERNOVA
 
 
 def do_sdss_photo(catalog):
     task_str = catalog.get_current_task_str()
+
+    # fits_path = os.path.join(catalog.get_current_task_repo(),
+    #                          'SDSS/SDSS_allCandidates+BOSS_PHOT.FITS')
+
+    # hdulist = fits.open(fits_path)
+    # hdulist.info()
+    # print(hdulist[0].header)
+    # print(hdulist[1].header)
+    # print(hdulist[1].data)
+    # a = hdulist[1].data['IAUC']
+    # print((Counter(a) - Counter(set(a))).keys())
+    # for ri, row in enumerate(hdulist[1].data['SNID']):
+    #     print(hdulist[1].data['SNID'][ri], hdulist[1].data['IAUC'][ri])
+    # print(hdulist[1].data['MJD'])
+    # hdulist.close()
+
     # Load up metadata first
     with open(os.path.join(catalog.get_current_task_repo(),
                            'SDSS/sdsssn_master.dat2'), 'r') as f:
