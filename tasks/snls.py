@@ -5,10 +5,13 @@ import os
 from glob import glob
 from math import log10
 
-from astrocats.catalog.utils import (get_sig_digits, pbar, pbar_strings,
-                                     pretty_num)
 from astropy.time import Time as astrotime
 from astroquery.vizier import Vizier
+
+from astrocats.catalog.photometry import PHOTOMETRY
+from astrocats.catalog.spectrum import SPECTRUM
+from astrocats.catalog.utils import (get_sig_digits, pbar, pbar_strings,
+                                     pretty_num)
 
 from ..supernova import SUPERNOVA
 
@@ -16,33 +19,44 @@ from ..supernova import SUPERNOVA
 def do_snls_photo(catalog):
     task_str = catalog.get_current_task_str()
     snls_path = os.path.join(catalog.get_current_task_repo(), 'SNLS-ugriz.dat')
-    data = list(csv.reader(open(snls_path, 'r'), delimiter=' ',
-                           quotechar='"', skipinitialspace=True))
+    data = list(
+        csv.reader(
+            open(snls_path, 'r'),
+            delimiter=' ',
+            quotechar='"',
+            skipinitialspace=True))
     for row in pbar(data, task_str):
-        flux = row[3]
+        counts = row[3]
         err = row[4]
         # Being extra strict here with the flux constraint, see note below.
-        if float(flux) < 3.0 * float(err):
+        if float(counts) < 3.0 * float(err):
             continue
         name = 'SNLS-' + row[0]
         name = catalog.add_entry(name)
         source = catalog.entries[name].add_source(
             bibcode='2010A&A...523A...7G')
         catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
-        band = row[1]
-        mjd = row[2]
-        sig = get_sig_digits(flux.split('E')[0]) + 1
+        sig = get_sig_digits(counts.split('E')[0]) + 1
         # Conversion comes from SNLS-Readme
         # NOTE: Datafiles avail for download suggest diff zeropoints than 30,
-        # need to inquire.
-        magnitude = pretty_num(30.0 - 2.5 * log10(float(flux)), sig=sig)
+        # but README states mags should be calculated assuming 30. Need to
+        # inquire.
+        magnitude = pretty_num(30.0 - 2.5 * log10(float(counts)), sig=sig)
         e_mag = pretty_num(
-            2.5 * log10(1.0 + float(err) / float(flux)), sig=sig)
-        # e_mag = pretty_num(2.5*(log10(float(flux) + float(err)) -
-        # log10(float(flux))), sig=sig)
-        catalog.entries[name].add_photometry(
-            time=mjd, band=band, magnitude=magnitude, e_magnitude=e_mag,
-            counts=flux, e_counts=err, source=source)
+            2.5 * log10(1.0 + float(err) / float(counts)), sig=sig)
+        photodict = {
+            PHOTOMETRY.TIME: row[2],
+            PHOTOMETRY.BAND: row[1],
+            PHOTOMETRY.MAGNITUDE: magnitude,
+            PHOTOMETRY.E_MAGNITUDE: e_mag,
+            PHOTOMETRY.COUNTS: counts,
+            PHOTOMETRY.E_COUNTS: err,
+            PHOTOMETRY.SOURCE: source,
+            PHOTOMETRY.TELESCOPE: 'CFHT',
+            PHOTOMETRY.INSTRUMENT: 'MegaCam',
+            PHOTOMETRY.SYSTEM: 'natural'
+        }
+        catalog.entries[name].add_photometry(**photodict)
 
     catalog.journal_entries()
     return
@@ -75,8 +89,8 @@ def do_snls_spectra(catalog):
             bibcode='2009A&A...507...85B')
         catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
 
-        catalog.entries[name].add_quantity(
-            SUPERNOVA.DISCOVER_DATE, '20' + fileparts[1][:2], source)
+        catalog.entries[name].add_quantity(SUPERNOVA.DISCOVER_DATE,
+                                           '20' + fileparts[1][:2], source)
 
         f = open(fname, 'r')
         data = csv.reader(f, delimiter=' ', skipinitialspace=True)
@@ -85,27 +99,37 @@ def do_snls_spectra(catalog):
             if row[0] == '@TELESCOPE':
                 telescope = row[1].strip()
             elif row[0] == '@REDSHIFT':
-                catalog.entries[name].add_quantity(
-                    SUPERNOVA.REDSHIFT, row[1].strip(), source)
+                catalog.entries[name].add_quantity(SUPERNOVA.REDSHIFT,
+                                                   row[1].strip(), source)
             if r < 14:
                 continue
             specdata.append(list(filter(None, [x.strip(' \t') for x in row])))
         specdata = [list(i) for i in zip(*specdata)]
         wavelengths = specdata[1]
 
-        fluxes = [pretty_num(float(x) * 1.e-16, sig=get_sig_digits(x))
-                  for x in specdata[2]]
+        fluxes = [pretty_num(
+            float(x) * 1.e-16, sig=get_sig_digits(x)) for x in specdata[2]]
         # FIX: this isnt being used
-        # errors = [pretty_num(float(x)*1.e-16, sig=get_sig_digits(x)) for x in
-        # specdata[3]]
+        errors = [pretty_num(
+            float(x) * 1.e-16, sig=get_sig_digits(x)) for x in specdata[3]]
 
-        catalog.entries[name].add_spectrum(
-            u_wavelengths='Angstrom', u_fluxes='erg/s/cm^2/Angstrom',
-            wavelengths=wavelengths,
-            fluxes=fluxes, u_time='MJD' if name in datedict else '',
-            time=datedict[name] if name in datedict else '',
-            telescope=telescope, source=source,
-            filename=filename)
+        fluxunit = 'erg/s/cm^2/Angstrom'
+
+        specdict = {
+            SPECTRUM.WAVELENGTHS: wavelengths,
+            SPECTRUM.FLUXES: fluxes,
+            SPECTRUM.ERRORS: errors,
+            SPECTRUM.U_WAVELENGTHS: 'Angstrom',
+            SPECTRUM.U_FLUXES: fluxunit,
+            SPECTRUM.U_ERRORS: fluxunit,
+            SPECTRUM.TELESCOPE: telescope,
+            SPECTRUM.FILENAME: filename,
+            SPECTRUM.SOURCE: source
+        }
+        if name in datedict:
+            specdict[SPECTRUM.TIME] = datedict[name]
+            specdict[SPECTRUM.U_TIME] = 'MJD'
+        catalog.entries[name].add_spectrum(**specdict)
         if catalog.args.travis and fi >= catalog.TRAVIS_QUERY_LIMIT:
             break
     catalog.journal_entries()
