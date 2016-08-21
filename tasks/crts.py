@@ -2,7 +2,6 @@
 """
 import os
 import re
-import urllib
 
 from astrocats.catalog.utils import is_number, pbar
 from bs4 import BeautifulSoup
@@ -15,12 +14,15 @@ from ..supernova import SUPERNOVA
 def do_crts(catalog):
     crtsnameerrors = ['2011ax']
     task_str = catalog.get_current_task_str()
-    folders = ['catalina', 'MLS', 'SSS']
-    for fold in pbar(folders, task_str):
+    folders = ['catalina', 'MLS', 'MLS', 'SSS']
+    files = ['AllSN.html', 'AllSN.arch.html', 'CRTSII_SN.html', 'AllSN.html']
+    for fi, fold in enumerate(pbar(folders, task_str)):
+        if fi <= 1:
+            continue
         html = catalog.load_url(
-            'http://nesssi.cacr.caltech.edu/' + fold + '/AllSN.html',
-            os.path.join(catalog.get_current_task_repo(), 'CRTS', fold +
-                         '.html'))
+            'http://nesssi.cacr.caltech.edu/' + fold + '/' + files[fi],
+            os.path.join(catalog.get_current_task_repo(), 'CRTS', fold + '-' +
+                         files[fi]), archived_mode=('arch' in files[fi]))
         if not html:
             continue
         bs = BeautifulSoup(html, 'html5lib')
@@ -44,10 +46,10 @@ def do_crts(catalog):
                     ra = td.contents[0]
                 elif tdi == 2:
                     dec = td.contents[0]
-                elif tdi == 11:
+                elif tdi == (8 if files[fi] == 'CRTSII_SN.html' else 11):
                     lclink = td.find('a')['onclick']
                     lclink = lclink.split("'")[1]
-                elif tdi == 13:
+                elif tdi == (10 if files[fi] == 'CRTSII_SN.html' else 13):
                     aliases = re.sub('[()]', '', re.sub(
                         '<[^<]+?>', '', td.contents[-1].strip()))
                     aliases = [xx.strip('; ') for xx in list(

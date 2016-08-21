@@ -100,7 +100,7 @@ def do_cfa_photo(catalog):
                         if float(row[v]) < 90.0:
                             src = secondarysource + ',' + source
                             catalog.entries[name].add_photometry(
-                                u_time=tuout, time=mjd,
+                                u_time=tuout, time=mjd, system='Standard',
                                 band=eventbands[(v - 1) // 2],
                                 magnitude=row[v], e_magnitude=row[v + 1],
                                 source=src)
@@ -128,14 +128,14 @@ def do_cfa_photo(catalog):
                 SUPERNOVA.CLAIMED_TYPE, 'Ia', source)
             catalog.entries[name].add_photometry(
                 u_time='MJD', time=row[2].strip(),
-                band=row[1].strip(),
+                band=row[1].strip(), system='Standard',
                 magnitude=row[6].strip(), e_magnitude=row[7].strip(),
                 source=source)
 
-        # Bianco 2014
-        tsvin = open(os.path.join(catalog.get_current_task_repo(),
-                                  'bianco-2014-standard.dat'), 'r')
-        tsvin = list(csv.reader(tsvin, delimiter=' ', skipinitialspace=True))
+    # Bianco 2014
+    with open(os.path.join(catalog.get_current_task_repo(),
+                           'bianco-2014-standard.dat'), 'r') as infile:
+        tsvin = list(csv.reader(infile, delimiter=' ', skipinitialspace=True))
         for row in pbar(tsvin, task_str):
             name = 'SN' + row[0]
             name = catalog.add_entry(name)
