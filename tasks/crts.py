@@ -17,8 +17,6 @@ def do_crts(catalog):
     folders = ['catalina', 'MLS', 'MLS', 'SSS']
     files = ['AllSN.html', 'AllSN.arch.html', 'CRTSII_SN.html', 'AllSN.html']
     for fi, fold in enumerate(pbar(folders, task_str)):
-        if fi <= 1:
-            continue
         html = catalog.load_url(
             'http://nesssi.cacr.caltech.edu/' + fold + '/' + files[fi],
             os.path.join(catalog.get_current_task_repo(), 'CRTS', fold + '-' +
