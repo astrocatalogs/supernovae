@@ -34,8 +34,8 @@ else:
         "this file.")
 
 for fcnt, eventfile in enumerate(tq(sorted(files, key=lambda s: s.lower()))):
-    # if fcnt > 1400:
-    #     break
+    if fcnt > 4000:
+        break
     fileeventname = os.path.splitext(os.path.basename(eventfile))[0].replace(
         '.json', '')
 
@@ -71,9 +71,9 @@ for fcnt, eventfile in enumerate(tq(sorted(files, key=lambda s: s.lower()))):
         targets[bc]['events'].append(fileeventname)
 
     if allpapers:
-        tprint(fileeventname)
         rate_limits = allpapers.response.get_ratelimits()
-        tprint(rate_limits['remaining'])
+        tprint(fileeventname + '\t(remaining API calls: ' + rate_limits[
+            'remaining'] + ')')
         if int(rate_limits['remaining']) <= 10:
             print('ADS API limit reached, terminating early.')
             break
