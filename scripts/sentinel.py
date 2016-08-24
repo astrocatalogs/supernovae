@@ -4,15 +4,13 @@ import gzip
 import json
 import os
 from collections import OrderedDict
-from tqdm import tqdm
 
 import ads
-from astropy.time import Time as astrotime
 
+from astrocats.catalog.utils import tq, tprint
 from astrocats.supernovae.scripts.repos import repo_file_list
-from astrocats.catalog.utils import tq
 
-biblio = OrderedDict()
+targets = OrderedDict()
 
 outdir = 'astrocats/supernovae/output/'
 
@@ -36,10 +34,10 @@ else:
         "this file.")
 
 for fcnt, eventfile in enumerate(tq(sorted(files, key=lambda s: s.lower()))):
-    # if fcnt > 100:
-    #    break
-    fileeventname = os.path.splitext(os.path.basename(eventfile))[
-        0].replace('.json', '')
+    # if fcnt > 1500:
+    #     break
+    fileeventname = os.path.splitext(os.path.basename(eventfile))[0].replace(
+        '.json', '')
 
     if eventfile.split('.')[-1] == 'gz':
         with gzip.open(eventfile, 'rt') as f:
@@ -51,13 +49,36 @@ for fcnt, eventfile in enumerate(tq(sorted(files, key=lambda s: s.lower()))):
     item = json.loads(filetext, object_pairs_hook=OrderedDict)
     item = item[list(item.keys())[0]]
 
-    if 'PTF' not in [x['value'] for x in item['alias']]:
+    if ('redshift' not in item and
+            'claimedtype' not in item) or 'spectra' in item:
         continue
-    print(fileeventname)
+
+    try:
+        q = ads.SearchQuery(q=(
+            'full:"' + fileeventname + '"' + ' and property:refereed'))
+        allpapers = list(q)
+    except:
+        continue
+
+    if len(allpapers) > 0:
+        print(q.response.get_ratelimits())
+
+    for paper in allpapers:
+        bc = paper.bibcode
+        if bc not in targets:
+            allauthors = []
+            if allpapers and allpapers[0].author:
+                allauthors = allpapers[0].author
+            targets[bc] = OrderedDict(
+                [('bibcode', bc), ('allauthors', allauthors), ('events', [])])
+        targets[bc]['events'].append(fileeventname)
+
+    if len(allpapers) > 0:
+        tprint(fileeventname)
 
 # Convert to array since that's what datatables expects
-# biblio = list(biblio.values())
-# jsonstring = json.dumps(biblio, indent='\t',
-#                         separators=(',', ':'), ensure_ascii=False)
-# with open(outdir + 'biblio.json', 'w') as f:
-#     f.write(jsonstring)
+targets = list(targets.values())
+jsonstring = json.dumps(
+    targets, indent='\t', separators=(',', ':'), ensure_ascii=False)
+with open(outdir + 'targets.json', 'w') as f:
+    f.write(jsonstring)
