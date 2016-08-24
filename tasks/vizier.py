@@ -1548,7 +1548,7 @@ def do_vizier(catalog):
         catalog.entries[name].add_quantity(
             SUPERNOVA.DISCOVER_DATE, row['Date'].replace('-', '/'), source)
         catalog.entries[name].add_quantity(SUPERNOVA.REDSHIFT, row['z'],
-                                           source)
+                                           source, kind='host')
         catalog.entries[name].add_quantity(SUPERNOVA.CLAIMED_TYPE, row['Type'],
                                            source)
     catalog.journal_entries()

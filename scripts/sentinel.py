@@ -34,8 +34,8 @@ else:
         "this file.")
 
 for fcnt, eventfile in enumerate(tq(sorted(files, key=lambda s: s.lower()))):
-    # if fcnt > 10000:
-    #     break
+    if fcnt > 10000:
+        break
     fileeventname = os.path.splitext(os.path.basename(eventfile))[0].replace(
         '.json', '')
 
@@ -49,34 +49,51 @@ for fcnt, eventfile in enumerate(tq(sorted(files, key=lambda s: s.lower()))):
     item = json.loads(filetext, object_pairs_hook=OrderedDict)
     item = item[list(item.keys())[0]]
 
-    if ('redshift' not in item and
-            'claimedtype' not in item) or 'spectra' in item:
+    if 'spectra' in item:
+        continue
+
+    hasspecred = False
+    if 'redshift' in item:
+        redshiftkinds = [x['kind'] if 'kind' in x else ''
+                         for x in item['redshift']]
+        if any([any([y == x for y in ['heliocentric', 'spectroscopic', '']])
+                for x in redshiftkinds]):
+            hasspecred = True
+
+    if not hasspecred and 'claimedtype' not in item:
         continue
 
     try:
-        qstr = '(full:"' + '" or full:"'.join(
-            [x['value'] for x in item['alias']]) + '") '
+        aliases = [x['value'] for x in item['alias']
+                   if 'GRB' not in x['value']]
+        if not aliases:
+            continue
+        qstr = '(full:"' + '" or full:"'.join(aliases) + '") '
         allpapers = ads.SearchQuery(
             q=(qstr + ' and property:refereed'),
             fl=['id', 'bibcode', 'author'])
     except:
         continue
 
-    for paper in allpapers:
-        bc = paper.bibcode
-        if bc not in sentinel:
-            allauthors = paper.author
-            sentinel[bc] = OrderedDict(
-                [('bibcode', bc), ('allauthors', allauthors), ('events', [])])
-        sentinel[bc]['events'].append(fileeventname)
+    if not allpapers:
+        continue
 
-    if allpapers:
-        rate_limits = allpapers.response.get_ratelimits()
-        tprint(fileeventname + '\t(remaining API calls: ' + rate_limits[
-            'remaining'] + ')')
-        if int(rate_limits['remaining']) <= 10:
-            print('ADS API limit reached, terminating early.')
-            break
+    try:
+        for paper in allpapers:
+            bc = paper.bibcode
+            if bc not in sentinel:
+                allauthors = paper.author
+                sentinel[bc] = OrderedDict([('bibcode', bc), (
+                    'allauthors', allauthors), ('events', [])])
+            sentinel[bc]['events'].append(fileeventname)
+            rate_limits = allpapers.response.get_ratelimits()
+            tprint(fileeventname + '\t(remaining API calls: ' + rate_limits[
+                'remaining'] + ')')
+            if int(rate_limits['remaining']) <= 10:
+                print('ADS API limit reached, terminating early.')
+                break
+    except:
+        continue
 
 # Convert to array since that's what datatables expects
 sentinel = list(sentinel.values())
