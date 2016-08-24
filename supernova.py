@@ -80,8 +80,7 @@ class Supernova(Entry):
             return False
 
         if error and (not is_number(error) or float(error) < 0):
-            raise ValueError(self[self._KEYS.NAME] +
-                             "'s quanta " + key +
+            raise ValueError(self[self._KEYS.NAME] + "'s quanta " + key +
                              ' error value must be a number and positive.')
 
         # Set default units
@@ -91,8 +90,7 @@ class Supernova(Entry):
             unit = 'hours'
         if not unit and key == self._KEYS.DEC:
             unit = 'degrees'
-        if not unit and key in [self._KEYS.LUM_DIST,
-                                self._KEYS.COMOVING_DIST]:
+        if not unit and key in [self._KEYS.LUM_DIST, self._KEYS.COMOVING_DIST]:
             unit = 'Mpc'
 
         # Handle certain name
@@ -104,8 +102,8 @@ class Supernova(Entry):
         elif key == self._KEYS.HOST:
             if is_number(value):
                 return False
-            if value.lower() in ['anonymous', 'anon.', 'anon',
-                                 'intergalactic']:
+            if value.lower() in ['anonymous', 'anon.', 'anon', 'intergalactic'
+                                 ]:
                 return False
             value = host_clean(value)
             if ((not kind and ((value.lower().startswith('abell') and
@@ -128,8 +126,8 @@ class Supernova(Entry):
                 value = value + '?'
             if not value:
                 return False
-        elif key in [self._KEYS.RA, self._KEYS.DEC,
-                     self._KEYS.HOST_RA, self._KEYS.HOST_DEC]:
+        elif key in [self._KEYS.RA, self._KEYS.DEC, self._KEYS.HOST_RA,
+                     self._KEYS.HOST_DEC]:
             (value, unit) = radec_clean(value, key, unit=unit)
         elif key == self._KEYS.MAX_DATE or key == self._KEYS.DISCOVER_DATE:
             # Make sure month and day have leading zeroes
@@ -164,7 +162,11 @@ class Supernova(Entry):
 
         return True
 
-    def add_quantity(self, quantity, value, source, forcereplacebetter=False,
+    def add_quantity(self,
+                     quantity,
+                     value,
+                     source,
+                     forcereplacebetter=False,
                      **kwargs):
         success = super().add_quantity(quantity, value, source, **kwargs)
 
@@ -189,10 +191,10 @@ class Supernova(Entry):
                         isworse = False
                         continue
                     elif len(ctsplit) < len(svsplit) and len(svsplit) == 3:
-                        val_one = max(2, get_sig_digits(
-                            ctsplit[-1].lstrip('0')))
-                        val_two = max(2, get_sig_digits(
-                            svsplit[-1].lstrip('0')))
+                        val_one = max(2,
+                                      get_sig_digits(ctsplit[-1].lstrip('0')))
+                        val_two = max(2,
+                                      get_sig_digits(svsplit[-1].lstrip('0')))
                         if val_one < val_two:
                             isworse = False
                             continue
@@ -225,10 +227,10 @@ class Supernova(Entry):
         if quantity == self._KEYS.ALIAS:
             cleaned_value = my_quantity_list[-1][QUANTITY.VALUE]
             if (cleaned_value.startswith('SN') and
-                is_integer(cleaned_value[2:6]) and
+                    is_integer(cleaned_value[2:6]) and
                     int(cleaned_value[2:6]) >= 2016):
-                success = super().add_quantity(
-                    'AT' + cleaned_value[2:], value, source, **kwargs)
+                success = super().add_quantity('AT' + cleaned_value[2:], value,
+                                               source, **kwargs)
 
         return True
 
@@ -237,9 +239,8 @@ class Supernova(Entry):
         # Replace reference names and URLs using dictionaries.
         if (kwargs.get(SOURCE.BIBCODE, []) and
                 len(kwargs[SOURCE.BIBCODE]) != 19):
-            raise ValueError(
-                "Bibcode '{}' must be exactly 19 characters "
-                "long".format(kwargs[SOURCE.BIBCODE]))
+            raise ValueError("Bibcode '{}' must be exactly 19 characters "
+                             "long".format(kwargs[SOURCE.BIBCODE]))
 
         # if SOURCE.NAME not in kwargs:
         #     kwargs[SOURCE.NAME] = kwargs[SOURCE.BIBCODE]
@@ -247,12 +248,10 @@ class Supernova(Entry):
         if SOURCE.NAME in kwargs:
             if (kwargs[SOURCE.NAME].upper().startswith('ATEL') and
                     SOURCE.BIBCODE not in kwargs):
-                kwargs[SOURCE.NAME] = (kwargs[SOURCE.NAME]
-                                       .replace('ATEL', 'ATel')
-                                       .replace('Atel', 'ATel')
-                                       .replace('ATel #', 'ATel ')
-                                       .replace('ATel#', 'ATel')
-                                       .replace('ATel', 'ATel '))
+                kwargs[SOURCE.NAME] = (
+                    kwargs[SOURCE.NAME].replace('ATEL', 'ATel')
+                    .replace('Atel', 'ATel').replace('ATel #', 'ATel ')
+                    .replace('ATel#', 'ATel').replace('ATel', 'ATel '))
                 kwargs[SOURCE.NAME] = ' '.join(kwargs[SOURCE.NAME].split())
                 atelnum = kwargs[SOURCE.NAME].split()[-1]
                 if is_number(atelnum) and atelnum in self.catalog.atels_dict:
@@ -298,7 +297,8 @@ class Supernova(Entry):
         return self.add_source(
             bibcode=self.catalog.OSC_BIBCODE,
             name=self.catalog.OSC_NAME,
-            url=self.catalog.OSC_URL, secondary=True)
+            url=self.catalog.OSC_URL,
+            secondary=True)
 
     def extra_aliases(self):
         """These aliases are considered when merging duplicates only, but are
@@ -331,8 +331,8 @@ class Supernova(Entry):
 
             if self._KEYS.DISCOVERY_DATE in self.keys():
                 repo_years = self.catalog.PATHS.get_repo_years()
-                dyr = self[self._KEYS.DISCOVERY_DATE][0][
-                    QUANTITY.VALUE].split('/')[0]
+                dyr = self[self._KEYS.DISCOVERY_DATE][0][QUANTITY.VALUE].split(
+                    '/')[0]
                 for r, year in enumerate(repo_years):
                     if int(dyr) <= year:
                         outdir = repo_folders[r]
@@ -349,9 +349,8 @@ class Supernova(Entry):
 
         if ((name.startswith('SN') and is_number(name[2:6]) and
              self._KEYS.DISCOVER_DATE in self and
-             int(self[self._KEYS.DISCOVER_DATE][0][QUANTITY.VALUE].
-                 split('/')[0]) >= 2016 and
-             not any(['AT' in x for x in aliases]))):
+             int(self[self._KEYS.DISCOVER_DATE][0][QUANTITY.VALUE].split('/')[
+                 0]) >= 2016 and not any(['AT' in x for x in aliases]))):
             source = self.add_self_source()
             self.add_quantity(self._KEYS.ALIAS, 'AT' + name[2:], source)
 
@@ -360,11 +359,12 @@ class Supernova(Entry):
             #      i.e. add it to `clean` or something??
             self[self._KEYS.CLAIMED_TYPE] = self.ct_list_prioritized()
         if self._KEYS.CLAIMED_TYPE in self:
-            self[self._KEYS.CLAIMED_TYPE][:] = [ct for ct in self[
-                self._KEYS.CLAIMED_TYPE] if (ct[QUANTITY.VALUE] != '?' and
-                                             ct[QUANTITY.VALUE] != '-')]
+            self[self._KEYS.CLAIMED_TYPE][:] = [
+                ct for ct in self[self._KEYS.CLAIMED_TYPE]
+                if (ct[QUANTITY.VALUE] != '?' and ct[QUANTITY.VALUE] != '-')
+            ]
             if not len(self[self._KEYS.CLAIMED_TYPE]):
-                del(self[self._KEYS.CLAIMED_TYPE])
+                del (self[self._KEYS.CLAIMED_TYPE])
         if self._KEYS.CLAIMED_TYPE not in self and name.startswith('AT'):
             source = self.add_self_source()
             self.add_quantity(self._KEYS.CLAIMED_TYPE, 'Candidate', source)
@@ -381,11 +381,13 @@ class Supernova(Entry):
                                float(x[PHOTOMETRY.MAGNITUDE]) if
                                PHOTOMETRY.MAGNITUDE in x else ''))
 
-        if (self._KEYS.SPECTRA in self and
-                list(filter(None, [SPECTRUM.TIME in x
-                                   for x in self[self._KEYS.SPECTRA]]))):
-            self[self._KEYS.SPECTRA].sort(key=lambda x: (
-                float(x[SPECTRUM.TIME]) if SPECTRUM.TIME in x else 0.0))
+        if (self._KEYS.SPECTRA in self and list(
+                filter(None, [SPECTRUM.TIME in x
+                              for x in self[self._KEYS.SPECTRA]]))):
+            self[self._KEYS.SPECTRA].sort(
+                key=lambda x: (
+                    (float(x[SPECTRUM.TIME]), x[SPECTRUM.FILENAME]) if
+                    SPECTRUM.TIME in x else (0.0, x[SPECTRUM.FILENAME])))
 
         if self._KEYS.SOURCES in self:
             for source in self[self._KEYS.SOURCES]:
@@ -395,8 +397,8 @@ class Supernova(Entry):
                     # First sanitize the bibcode
                     if len(source[SOURCE.BIBCODE]) != 19:
                         source[SOURCE.BIBCODE] = urllib.parse.unquote(
-                            unescape(source[SOURCE.BIBCODE])).replace(
-                                'A.A.', 'A&A')
+                            unescape(source[SOURCE.BIBCODE])).replace('A.A.',
+                                                                      'A&A')
                     if source[SOURCE.BIBCODE] in self.catalog.biberror_dict:
                         source[SOURCE.BIBCODE] = \
                             self.catalog.biberror_dict[source[SOURCE.BIBCODE]]
@@ -425,8 +427,8 @@ class Supernova(Entry):
 
             for source in self[self._KEYS.SOURCES]:
                 if (SOURCE.BIBCODE in source and
-                        source[SOURCE.BIBCODE] in
-                        self.catalog.bibauthor_dict and
+                        source[SOURCE.BIBCODE] in self.catalog.bibauthor_dict
+                        and
                         self.catalog.bibauthor_dict[source[SOURCE.BIBCODE]]):
                     source[SOURCE.REFERENCE] = self.catalog.bibauthor_dict[
                         source[SOURCE.BIBCODE]]
@@ -436,13 +438,15 @@ class Supernova(Entry):
 
         if self._KEYS.REDSHIFT in self:
             self[self._KEYS.REDSHIFT] = list(
-                sorted(self[self._KEYS.REDSHIFT], key=lambda key:
-                       frame_priority(key)))
+                sorted(
+                    self[self._KEYS.REDSHIFT],
+                    key=lambda key: frame_priority(key)))
 
         if self._KEYS.VELOCITY in self:
             self[self._KEYS.VELOCITY] = list(
-                sorted(self[self._KEYS.VELOCITY], key=lambda key:
-                       frame_priority(key)))
+                sorted(
+                    self[self._KEYS.VELOCITY],
+                    key=lambda key: frame_priority(key)))
 
         if self._KEYS.CLAIMED_TYPE in self:
             self[self._KEYS.CLAIMED_TYPE] = self.ct_list_prioritized()
@@ -450,25 +454,27 @@ class Supernova(Entry):
         # Renumber and reorder sources
         if self._KEYS.SOURCES in self:
             # Sort sources reverse-chronologically
-            self[self._KEYS.SOURCES] = sorted(self[self._KEYS.SOURCES],
-                                              key=lambda x: bib_priority(x))
+            self[self._KEYS.SOURCES] = sorted(
+                self[self._KEYS.SOURCES], key=lambda x: bib_priority(x))
 
             # Assign new aliases to match new order
             source_reps = OrderedDict(
-                [[x[SOURCE.ALIAS], str(i + 1)] for i, x in
-                 enumerate(self[self._KEYS.SOURCES])])
+                [[x[SOURCE.ALIAS], str(i + 1)]
+                 for i, x in enumerate(self[self._KEYS.SOURCES])])
             for i, source in enumerate(self[self._KEYS.SOURCES]):
-                self[self._KEYS.SOURCES][i][
-                    SOURCE.ALIAS] = source_reps[source[SOURCE.ALIAS]]
+                self[self._KEYS.SOURCES][i][SOURCE.ALIAS] = source_reps[source[
+                    SOURCE.ALIAS]]
 
             # Change sources to match new aliases
             for key in self.keys():
                 if self._KEYS.get_key_by_name(key).no_source:
                     continue
                 for item in self[key]:
-                    aliases = [str(y) for y in
-                               sorted(int(source_reps[x]) for x in
-                                      item[item._KEYS.SOURCE].split(','))]
+                    aliases = [str(y)
+                               for y in sorted(
+                                   int(source_reps[x])
+                                   for x in item[item._KEYS.SOURCE].split(','))
+                               ]
                     item[item._KEYS.SOURCE] = ','.join(aliases)
 
     def clean_internal(self, data):
@@ -527,8 +533,7 @@ class Supernova(Entry):
                     if photo[PHOTOMETRY.U_TIME] == 'JD':
                         data[self._KEYS.PHOTOMETRY][p][
                             PHOTOMETRY.U_TIME] = 'MJD'
-                        data[self._KEYS.PHOTOMETRY][p][
-                            PHOTOMETRY.TIME] = str(
+                        data[self._KEYS.PHOTOMETRY][p][PHOTOMETRY.TIME] = str(
                             jd_to_mjd(Decimal(photo['time'])))
                     if QUANTITY.SOURCE not in photo:
                         source = self.add_source(bibcode=bibcodes[0])
@@ -547,12 +552,11 @@ class Supernova(Entry):
             return (None, None, None, None)
 
         # FIX: THIS
-        eventphoto = [(x['u_time'], x['time'],
-                       Decimal(x['magnitude']), x[
-            'band'] if 'band' in x else '',
-                       x['source']) for x in self[self._KEYS.PHOTOMETRY] if
-            ('magnitude' in x and 'time' in x and 'u_time' in x and
-             'upperlimit' not in x)]
+        eventphoto = [(x['u_time'], x['time'], Decimal(x['magnitude']),
+                       x['band'] if 'band' in x else '', x['source'])
+                      for x in self[self._KEYS.PHOTOMETRY]
+                      if ('magnitude' in x and 'time' in x and 'u_time' in x
+                          and 'upperlimit' not in x)]
         if not eventphoto:
             return None, None, None, None
 
@@ -584,10 +588,10 @@ class Supernova(Entry):
 
         # FIX THIS
         eventphoto = [(Decimal(x['time']) if isinstance(x['time'], str) else
-                       Decimal(min(float(y) for y in x['time'])),
-                       x['source']) for x in self[self._KEYS.PHOTOMETRY] if
-                      'upperlimit' not in x and
-                      'time' in x and 'u_time' in x and x['u_time'] == 'MJD']
+                       Decimal(min(float(y) for y in x['time'])), x['source'])
+                      for x in self[self._KEYS.PHOTOMETRY]
+                      if 'upperlimit' not in x and 'time' in x and 'u_time' in
+                      x and x['u_time'] == 'MJD']
         if not eventphoto:
             return None, None
         flmjd = min([x[0] for x in eventphoto])
@@ -604,25 +608,26 @@ class Supernova(Entry):
                 uniq_src = uniq_cdl([source] + mlsource.split(','))
             if mldt:
                 max_date = make_date_string(mldt.year, mldt.month, mldt.day)
-                self.add_quantity(ENTRY.MAX_DATE, max_date, uniq_src,
-                                  derived=True)
+                self.add_quantity(
+                    ENTRY.MAX_DATE, max_date, uniq_src, derived=True)
             if mlmag:
                 mlmag = pretty_num(mlmag)
-                self.add_quantity(ENTRY.MAX_APP_MAG, mlmag, uniq_src,
-                                  derived=True)
+                self.add_quantity(
+                    ENTRY.MAX_APP_MAG, mlmag, uniq_src, derived=True)
             if mlband:
-                self.add_quantity(ENTRY.MAX_BAND, mlband, uniq_src,
-                                  derived=True)
+                self.add_quantity(
+                    ENTRY.MAX_BAND, mlband, uniq_src, derived=True)
 
         if (self._KEYS.DISCOVER_DATE not in self or
-                max([len(x[QUANTITY.VALUE].split('/')) for x in
-                     self[self._KEYS.DISCOVER_DATE]]) < 3):
+                max([len(x[QUANTITY.VALUE].split('/'))
+                     for x in self[self._KEYS.DISCOVER_DATE]]) < 3):
             fldt, flsource = self._get_first_light()
             if fldt:
                 source = self.add_self_source()
                 disc_date = make_date_string(fldt.year, fldt.month, fldt.day)
                 self.add_quantity(
-                    self._KEYS.DISCOVER_DATE, disc_date,
+                    self._KEYS.DISCOVER_DATE,
+                    disc_date,
                     uniq_cdl([source] + flsource.split(',')),
                     derived=True)
 
@@ -646,7 +651,8 @@ class Supernova(Entry):
                 source = self.add_self_source()
                 disc_date = make_date_string(fldt.year, fldt.month, fldt.day)
                 self.add_quantity(
-                    self._KEYS.DISCOVER_DATE, disc_date,
+                    self._KEYS.DISCOVER_DATE,
+                    disc_date,
                     uniq_cdl([source] + minspecsource.split(',')),
                     derived=True)
         return
@@ -692,9 +698,8 @@ class Supernova(Entry):
                 break
         # Otherwise, name based on the 'discoverer' survey
         if not newname and 'discoverer' in self:
-            discoverer = ','.join(
-                [x['value'].upper() for x in
-                 self['discoverer']])
+            discoverer = ','.join([x['value'].upper()
+                                   for x in self['discoverer']])
             if 'ASAS' in discoverer:
                 for alias in aliases:
                     if 'ASASSN' in alias.upper():
@@ -745,9 +750,10 @@ class Supernova(Entry):
         return name
 
     def ct_list_prioritized(self):
-        ct_list = list(sorted(
-            self[self._KEYS.CLAIMED_TYPE], key=lambda key:
-            self._ct_priority(key)))
+        ct_list = list(
+            sorted(
+                self[self._KEYS.CLAIMED_TYPE],
+                key=lambda key: self._ct_priority(key)))
         return ct_list
 
     def _ct_priority(self, attr):
