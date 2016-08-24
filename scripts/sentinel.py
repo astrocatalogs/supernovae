@@ -10,7 +10,7 @@ import ads
 from astrocats.catalog.utils import tprint, tq
 from astrocats.supernovae.scripts.repos import repo_file_list
 
-targets = OrderedDict()
+sentinel = OrderedDict()
 
 outdir = 'astrocats/supernovae/output/'
 
@@ -34,8 +34,8 @@ else:
         "this file.")
 
 for fcnt, eventfile in enumerate(tq(sorted(files, key=lambda s: s.lower()))):
-    if fcnt > 4000:
-        break
+    # if fcnt > 10000:
+    #     break
     fileeventname = os.path.splitext(os.path.basename(eventfile))[0].replace(
         '.json', '')
 
@@ -64,11 +64,11 @@ for fcnt, eventfile in enumerate(tq(sorted(files, key=lambda s: s.lower()))):
 
     for paper in allpapers:
         bc = paper.bibcode
-        if bc not in targets:
+        if bc not in sentinel:
             allauthors = paper.author
-            targets[bc] = OrderedDict(
+            sentinel[bc] = OrderedDict(
                 [('bibcode', bc), ('allauthors', allauthors), ('events', [])])
-        targets[bc]['events'].append(fileeventname)
+        sentinel[bc]['events'].append(fileeventname)
 
     if allpapers:
         rate_limits = allpapers.response.get_ratelimits()
@@ -79,8 +79,8 @@ for fcnt, eventfile in enumerate(tq(sorted(files, key=lambda s: s.lower()))):
             break
 
 # Convert to array since that's what datatables expects
-targets = list(targets.values())
+sentinel = list(sentinel.values())
 jsonstring = json.dumps(
-    targets, indent='\t', separators=(',', ':'), ensure_ascii=False)
-with open(outdir + 'targets.json', 'w') as f:
+    sentinel, indent='\t', separators=(',', ':'), ensure_ascii=False)
+with open(outdir + 'sentinel.json', 'w') as f:
     f.write(jsonstring)
