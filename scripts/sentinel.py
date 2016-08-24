@@ -60,9 +60,6 @@ for fcnt, eventfile in enumerate(tq(sorted(files, key=lambda s: s.lower()))):
     except:
         continue
 
-    if len(allpapers) > 0:
-        print(q.response.get_ratelimits())
-
     for paper in allpapers:
         bc = paper.bibcode
         if bc not in targets:
@@ -75,6 +72,11 @@ for fcnt, eventfile in enumerate(tq(sorted(files, key=lambda s: s.lower()))):
 
     if len(allpapers) > 0:
         tprint(fileeventname)
+        rate_limits = q.response.get_ratelimits()
+        tprint(rate_limits['remaining'])
+        if int(rate_limits['remaining']) <= 10:
+            print('ADS API limit reached, terminating early.')
+            break
 
 # Convert to array since that's what datatables expects
 targets = list(targets.values())
