@@ -775,7 +775,6 @@ for fcnt, eventfile in enumerate(tq(sorted(files, key=lambda s: s.lower()))):
                     desc=[photoband[i] for i in indye],
                     instr=[photoinstru[i] for i in indye],
                     src=[photosource[i] for i in indye])
-                print(data)
                 if 'maxabsmag' in catalog[entry] and 'maxappmag' in catalog[
                         entry]:
                     data['yabs'] = [photoAB[i] - distancemod for i in indye]
