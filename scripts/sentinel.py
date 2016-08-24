@@ -7,7 +7,7 @@ from collections import OrderedDict
 
 import ads
 
-from astrocats.catalog.utils import tq, tprint
+from astrocats.catalog.utils import tprint, tq
 from astrocats.supernovae.scripts.repos import repo_file_list
 
 targets = OrderedDict()
@@ -34,7 +34,7 @@ else:
         "this file.")
 
 for fcnt, eventfile in enumerate(tq(sorted(files, key=lambda s: s.lower()))):
-    # if fcnt > 1500:
+    # if fcnt > 1400:
     #     break
     fileeventname = os.path.splitext(os.path.basename(eventfile))[0].replace(
         '.json', '')
@@ -54,25 +54,25 @@ for fcnt, eventfile in enumerate(tq(sorted(files, key=lambda s: s.lower()))):
         continue
 
     try:
-        q = ads.SearchQuery(q=(
-            'full:"' + fileeventname + '"' + ' and property:refereed'))
-        allpapers = list(q)
+        qstr = '(full:"' + '" or full:"'.join(
+            [x['value'] for x in item['alias']]) + '") '
+        allpapers = ads.SearchQuery(
+            q=(qstr + ' and property:refereed'),
+            fl=['id', 'bibcode', 'author'])
     except:
         continue
 
     for paper in allpapers:
         bc = paper.bibcode
         if bc not in targets:
-            allauthors = []
-            if allpapers and allpapers[0].author:
-                allauthors = allpapers[0].author
+            allauthors = paper.author
             targets[bc] = OrderedDict(
                 [('bibcode', bc), ('allauthors', allauthors), ('events', [])])
         targets[bc]['events'].append(fileeventname)
 
-    if len(allpapers) > 0:
+    if allpapers:
         tprint(fileeventname)
-        rate_limits = q.response.get_ratelimits()
+        rate_limits = allpapers.response.get_ratelimits()
         tprint(rate_limits['remaining'])
         if int(rate_limits['remaining']) <= 10:
             print('ADS API limit reached, terminating early.')
