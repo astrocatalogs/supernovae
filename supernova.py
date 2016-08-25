@@ -386,8 +386,8 @@ class Supernova(Entry):
                               for x in self[self._KEYS.SPECTRA]]))):
             self[self._KEYS.SPECTRA].sort(
                 key=lambda x: (
-                    (float(x[SPECTRUM.TIME]), x[SPECTRUM.FILENAME]) if
-                    SPECTRUM.TIME in x else (0.0, x[SPECTRUM.FILENAME])))
+                    float(x[SPECTRUM.TIME]) if SPECTRUM.TIME in x else 0.0,
+                    x[SPECTRUM.FILENAME] if SPECTRUM.FILENAME in x else ''))
 
         if self._KEYS.SOURCES in self:
             for source in self[self._KEYS.SOURCES]:
