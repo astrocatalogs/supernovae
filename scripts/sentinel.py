@@ -96,10 +96,10 @@ for fcnt, eventfile in enumerate(tq(sorted(files, key=lambda s: s.lower()))):
                 sentinel[bc] = OrderedDict([('bibcode', bc), (
                     'allauthors', allauthors), ('events', [])])
             sentinel[bc]['events'].append(fileeventname)
-            if int(rate_limits['remaining']) <= 10:
-                print('ADS API limit reached, terminating early.')
-                break
         rate_limits = allpapers.response.get_ratelimits()
+        if int(rate_limits['remaining']) <= 10:
+            print('ADS API limit reached, terminating early.')
+            break
         tprint(fileeventname + '\t(remaining API calls: ' + rate_limits[
             'remaining'] + ')')
     except:
