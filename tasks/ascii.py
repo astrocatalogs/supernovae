@@ -89,6 +89,7 @@ def do_ascii(catalog):
     for ri, row in enumerate(pbar(tsvin, task_str)):
         if row[0][0] == '#':
             ct = row[0].lstrip('#')
+            continue
         name = row[0]
         (name, source) = catalog.new_entry(name, bibcode='2015arXiv150907124M')
         if len(row) == 2:

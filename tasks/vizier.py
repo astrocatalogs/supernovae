@@ -465,7 +465,7 @@ def do_vizier(catalog):
         catalog.entries[name].add_quantity(SUPERNOVA.DEC, row['DEJ2000'],
                                            source)
         catalog.entries[name].add_quantity(SUPERNOVA.CLAIMED_TYPE, 'Ia',
-                                           source)
+                                           source, kind='spectroscopic')
 
     result = Vizier.get_catalogs('J/ApJ/795/44/table6')
     table = result[list(result.keys())[0]]
