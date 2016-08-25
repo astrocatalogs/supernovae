@@ -85,7 +85,6 @@ def do_vizier(catalog):
                     survey='SCP',
                     upperlimit=upp)
     catalog.journal_entries()
-    return
 
     # 2013A&A...555A..10T
     results = Vizier.get_catalogs(['J/A+A/555/A10/table4',
