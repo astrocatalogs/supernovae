@@ -60,7 +60,17 @@ for fcnt, eventfile in enumerate(tq(sorted(files, key=lambda s: s.lower()))):
                 for x in redshiftkinds]):
             hasspecred = True
 
-    if not hasspecred and 'claimedtype' not in item:
+    hastype = False
+    if 'claimedtype' in item:
+        typekinds = ['candidate'
+                     if x['value'] == 'Candidate' else (x['kind']
+                                                        if 'kind' in x else '')
+                     for x in item['claimedtype']]
+        if any([any([y == x for y in ['spectroscopic', '']])
+                for x in typekinds]):
+            hastype = True
+
+    if not hasspecred and not hastype:
         continue
 
     try:

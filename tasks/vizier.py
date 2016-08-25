@@ -1280,8 +1280,8 @@ def do_vizier(catalog):
             source,
             e_value=row['e_rP1mag'])
         catalog.entries[name].add_quantity(SUPERNOVA.MAX_BAND, 'r', source)
-        catalog.entries[name].add_quantity(SUPERNOVA.CLAIMED_TYPE, 'Ia',
-                                           source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.CLAIMED_TYPE, 'Ia', source, kind='spectroscopic')
     result = Vizier.get_catalogs('J/MNRAS/448/1206/table4')
     table = result[list(result.keys())[0]]
     table.convert_bytestring_to_unicode(python3_only=True)
@@ -1310,8 +1310,8 @@ def do_vizier(catalog):
             source,
             e_value=row['e_rP1mag'])
         catalog.entries[name].add_quantity(SUPERNOVA.MAX_BAND, 'r', source)
-        catalog.entries[name].add_quantity(SUPERNOVA.CLAIMED_TYPE, 'Ia?',
-                                           source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.CLAIMED_TYPE, 'Ia?', source, kind='photometric')
     result = Vizier.get_catalogs('J/MNRAS/448/1206/table5')
     table = result[list(result.keys())[0]]
     table.convert_bytestring_to_unicode(python3_only=True)
@@ -1336,8 +1336,8 @@ def do_vizier(catalog):
             source,
             e_value=row['e_rP1mag'])
         catalog.entries[name].add_quantity(SUPERNOVA.MAX_BAND, 'r', source)
-        catalog.entries[name].add_quantity(SUPERNOVA.CLAIMED_TYPE, row['Type'],
-                                           source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.CLAIMED_TYPE, row['Type'], source, kind='spectroscopic')
     result = Vizier.get_catalogs('J/MNRAS/448/1206/table6')
     table = result[list(result.keys())[0]]
     table.convert_bytestring_to_unicode(python3_only=True)
@@ -1360,8 +1360,8 @@ def do_vizier(catalog):
             source,
             e_value=row['e_rP1mag'])
         catalog.entries[name].add_quantity(SUPERNOVA.MAX_BAND, 'r', source)
-        catalog.entries[name].add_quantity(SUPERNOVA.CLAIMED_TYPE, row['Type'],
-                                           source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.CLAIMED_TYPE, row['Type'], source, kind='photometric')
     result = Vizier.get_catalogs('J/MNRAS/448/1206/tablea2')
     table = result[list(result.keys())[0]]
     table.convert_bytestring_to_unicode(python3_only=True)
@@ -1384,10 +1384,16 @@ def do_vizier(catalog):
             source,
             e_value=row['e_rP1mag'])
         catalog.entries[name].add_quantity(SUPERNOVA.MAX_BAND, 'r', source)
-        catalog.entries[name].add_quantity(SUPERNOVA.CLAIMED_TYPE,
-                                           row['Typesoft'] + '?', source)
-        catalog.entries[name].add_quantity(SUPERNOVA.CLAIMED_TYPE,
-                                           row['Typepsnid'] + '?', source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.CLAIMED_TYPE,
+            row['Typesoft'] + '?',
+            source,
+            kind='photometric')
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.CLAIMED_TYPE,
+            row['Typepsnid'] + '?',
+            source,
+            kind='photometric')
     result = Vizier.get_catalogs('J/MNRAS/448/1206/tablea3')
     table = result[list(result.keys())[0]]
     table.convert_bytestring_to_unicode(python3_only=True)
