@@ -79,7 +79,14 @@ for fcnt, eventfile in enumerate(tq(sorted(files, key=lambda s: s.lower()))):
                    if not any([y in x['value'] for y in ['GRB', 'SNR']])]
         if not aliases:
             continue
+        # ADS treats queries with spaces differently, so must search for both
+        # variations.
+        for alias in aliases[:]:
+            if alias.startswith('SN'):
+                aliases.append('SN ' + alias[2:])
         qstr = '(full:"' + '" or full:"'.join(aliases) + '") '
+        print(qstr)
+        continue
         allpapers = ads.SearchQuery(
             q=(qstr + ' and property:refereed'),
             fl=['id', 'bibcode', 'author'])
