@@ -134,6 +134,8 @@ def do_cleanup(catalog):
                             year = year[0]
                         else:
                             continue
+                        if alias.replace(prefix, '').index(year) != 0:
+                            continue
                         if (year and is_number(year) and '.' not in year and
                                 len(year) <= 4):
                             discoverdate = year
