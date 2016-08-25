@@ -19,6 +19,7 @@ Other multiple SN datasets:
 * http://adsabs.harvard.edu/abs/1989AJ.....97..726F (spectra for 1987F and 1988I)
 * http://adsabs.harvard.edu/abs/1990Ap&SS.169..275R (spectra for 1987N, 1988Y, 1988D, 1989D)
 * http://iopscience.iop.org/article/10.1088/0004-637X/743/2/114/meta (PS1-10awh, PS1-10ky)
+* http://adsabs.harvard.edu/abs/2008ApJ...686..749K (photometry for several dozen SNe)
 * http://mnras.oxfordjournals.org/content/452/4/3869.full (24 SLSNe) [Erratum: http://mnras.oxfordjournals.org/content/457/3/2514.full]
 * http://mnras.oxfordjournals.org/content/444/3/2096.full (LSQ12dlf, SSS120810, SN2013dg)
 * http://adsabs.harvard.edu/abs/2014arXiv1401.3317S (SDSS SNe light curves, broken link - http://sdssdp62.fnal.gov/sdsssn/DataRelease/index.html)
