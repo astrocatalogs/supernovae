@@ -679,7 +679,7 @@ def do_vizier(catalog):
         catalog.entries[name].add_quantity(SUPERNOVA.EBV, row['E_B-V_'],
                                            source)
         catalog.entries[name].add_quantity(SUPERNOVA.CLAIMED_TYPE, 'Ia',
-                                           source)
+                                           source, kind='spectroscopic')
     result = Vizier.get_catalogs('J/ApJS/219/13/table2')
     table = result[list(result.keys())[0]]
     table.convert_bytestring_to_unicode(python3_only=True)
@@ -1536,7 +1536,7 @@ def do_vizier(catalog):
         catalog.entries[name].add_quantity(
             'hostoffsetang', row['Offset'], source, u_value='arcseconds')
         catalog.entries[name].add_quantity(SUPERNOVA.CLAIMED_TYPE, row['Type'],
-                                           source)
+                                           source, kind='photometric')
     catalog.journal_entries()
 
     # 2013MNRAS.430.1746G

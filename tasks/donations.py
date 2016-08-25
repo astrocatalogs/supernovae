@@ -4,9 +4,12 @@ import csv
 import json
 import os
 from glob import glob
-from math import isnan
+from math import floor, isnan
 
-from astrocats.catalog.utils import is_number, pbar, pbar_strings, rep_chars
+from astropy.time import Time as astrotime
+
+from astrocats.catalog.utils import (get_sig_digits, is_number, pbar,
+                                     pbar_strings, pretty_num, rep_chars)
 
 from ..supernova import SUPERNOVA
 
@@ -14,14 +17,15 @@ from ..supernova import SUPERNOVA
 def do_donations(catalog):
     task_str = catalog.get_current_task_str()
     # Nicholl 04-01-16 donation
-    with open(os.path.join(catalog.get_current_task_repo(),
-                           'Nicholl-04-01-16/bibcodes.json'), 'r') as f:
+    with open(
+            os.path.join(catalog.get_current_task_repo(),
+                         'Nicholl-04-01-16/bibcodes.json'), 'r') as f:
         bcs = json.loads(f.read())
 
-    file_names = glob(os.path.join(
-        catalog.get_current_task_repo(), 'Nicholl-04-01-16/*.txt'))
-    for datafile in pbar_strings(file_names, task_str +
-                                 ': Nicholl-04-01-16'):
+    file_names = glob(
+        os.path.join(catalog.get_current_task_repo(),
+                     'Nicholl-04-01-16/*.txt'))
+    for datafile in pbar_strings(file_names, task_str + ': Nicholl-04-01-16'):
         inpname = os.path.basename(datafile).split('_')[0]
         name = catalog.add_entry(inpname)
         bibcode = ''
@@ -59,16 +63,20 @@ def do_donations(catalog):
                             not isnan(float(row[2 * v + 2]))):
                         err = row[2 * v + 2]
                     catalog.entries[name].add_photometry(
-                        time=mjd, band=bands[v], magnitude=mag,
-                        e_magnitude=err, upperlimit=upperlimit, source=source)
+                        time=mjd,
+                        band=bands[v],
+                        magnitude=mag,
+                        e_magnitude=err,
+                        upperlimit=upperlimit,
+                        source=source)
     catalog.journal_entries()
 
     # Maggi 04-11-16 donation (MC SNRs)
-    with open(os.path.join(catalog.get_current_task_repo(),
-                           'Maggi-04-11-16/LMCSNRs_OpenSNe.csv')) as f:
+    with open(
+            os.path.join(catalog.get_current_task_repo(),
+                         'Maggi-04-11-16/LMCSNRs_OpenSNe.csv')) as f:
         tsvin = csv.reader(f, delimiter=',')
-        for row in pbar(list(tsvin), task_str +
-                        ': Maggi-04-11-16/LMCSNRs'):
+        for row in pbar(list(tsvin), task_str + ': Maggi-04-11-16/LMCSNRs'):
             name = 'MCSNR ' + row[0]
             name = catalog.add_entry(name)
             ra = row[2]
@@ -76,34 +84,35 @@ def do_donations(catalog):
             source = (catalog.entries[name]
                       .add_source(bibcode='2016A&A...585A.162M'))
             catalog.entries[name].add_quantity(
-                SUPERNOVA.ALIAS, 'LMCSNR J' + rep_chars(ra, ' :.') +
-                rep_chars(dec, ' :.'), source)
+                SUPERNOVA.ALIAS,
+                'LMCSNR J' + rep_chars(ra, ' :.') + rep_chars(dec, ' :.'),
+                source)
             catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
             if row[1] != 'noname':
-                catalog.entries[name].add_quantity(
-                    SUPERNOVA.ALIAS, row[1], source)
+                catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, row[1],
+                                                   source)
             catalog.entries[name].add_quantity(SUPERNOVA.RA, row[2], source)
             catalog.entries[name].add_quantity(SUPERNOVA.DEC, row[3], source)
             catalog.entries[name].add_quantity(SUPERNOVA.HOST, 'LMC', source)
             if row[4] == '1':
-                catalog.entries[name].add_quantity(
-                    SUPERNOVA.CLAIMED_TYPE, 'Ia', source)
+                catalog.entries[name].add_quantity(SUPERNOVA.CLAIMED_TYPE,
+                                                   'Ia', source)
             elif row[4] == '2':
-                catalog.entries[name].add_quantity(
-                    SUPERNOVA.CLAIMED_TYPE, 'CC', source)
-    with open(os.path.join(catalog.get_current_task_repo(),
-                           'Maggi-04-11-16/SMCSNRs_OpenSNe.csv')) as f:
+                catalog.entries[name].add_quantity(SUPERNOVA.CLAIMED_TYPE,
+                                                   'CC', source)
+    with open(
+            os.path.join(catalog.get_current_task_repo(),
+                         'Maggi-04-11-16/SMCSNRs_OpenSNe.csv')) as f:
         tsvin = csv.reader(f, delimiter=',')
-        for row in pbar(list(tsvin), task_str +
-                        ': Maggi-04-11-16/SMCSNRs'):
+        for row in pbar(list(tsvin), task_str + ': Maggi-04-11-16/SMCSNRs'):
             name = 'MCSNR ' + row[0]
             name = catalog.add_entry(name)
             source = catalog.entries[name].add_source(name='Pierre Maggi')
             ra = row[3]
             dec = row[4]
             catalog.entries[name].add_quantity(
-                SUPERNOVA.ALIAS, 'SMCSNR J' + ra.replace(':', '')[:6] +
-                dec.replace(':', '')[:7], source)
+                SUPERNOVA.ALIAS, 'SMCSNR J' + ra.replace(
+                    ':', '')[:6] + dec.replace(':', '')[:7], source)
             catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
             catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, row[1], source)
             catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, row[2], source)
@@ -113,16 +122,18 @@ def do_donations(catalog):
     catalog.journal_entries()
 
     # Galbany 04-18-16 donation
-    folders = next(os.walk(os.path.join(
-        catalog.get_current_task_repo(), 'galbany-04-18-16/')))[1]
+    folders = next(
+        os.walk(
+            os.path.join(catalog.get_current_task_repo(),
+                         'galbany-04-18-16/')))[1]
     bibcode = '2016AJ....151...33G'
     for folder in folders:
-        infofiles = glob(os.path.join(catalog.get_current_task_repo(),
-                                      'galbany-04-18-16/') + folder +
-                         '/*.info')
-        photfiles = glob(os.path.join(catalog.get_current_task_repo(),
-                                      'galbany-04-18-16/') + folder +
-                         '/*.out*')
+        infofiles = glob(
+            os.path.join(catalog.get_current_task_repo(), 'galbany-04-18-16/')
+            + folder + '/*.info')
+        photfiles = glob(
+            os.path.join(catalog.get_current_task_repo(), 'galbany-04-18-16/')
+            + folder + '/*.out*')
 
         zhel = ''
         zcmb = ''
@@ -136,14 +147,13 @@ def do_donations(catalog):
                     value = splitline[1].strip()
                     if field == 'name':
                         name = value[:6].upper()
-                        name += (value[6].upper() if len(value) == 7
-                                 else value[6:])
+                        name += (value[6].upper()
+                                 if len(value) == 7 else value[6:])
                         name = catalog.add_entry(name)
                         source = (catalog.entries[name]
                                   .add_source(bibcode=bibcode))
                         catalog.entries[name].add_quantity(SUPERNOVA.ALIAS,
-                                                           name,
-                                                           source)
+                                                           name, source)
                     elif field == 'type':
                         claimedtype = value.replace('SN', '')
                         catalog.entries[name].add_quantity(
@@ -156,21 +166,30 @@ def do_donations(catalog):
                         zcmb = value
                     elif field == 'ra':
                         catalog.entries[name].add_quantity(
-                            SUPERNOVA.RA, value, source, u_value='floatdegrees')
+                            SUPERNOVA.RA,
+                            value,
+                            source,
+                            u_value='floatdegrees')
                     elif field == 'dec':
                         catalog.entries[name].add_quantity(
-                            SUPERNOVA.DEC, value, source, u_value='floatdegrees')
+                            SUPERNOVA.DEC,
+                            value,
+                            source,
+                            u_value='floatdegrees')
                     elif field == 'host':
                         value = value.replace('- ', '-').replace('G ', 'G')
                         catalog.entries[name].add_quantity(SUPERNOVA.HOST,
-                                                           value,
-                                                           source)
+                                                           value, source)
                     elif field == 'e(b-v)_mw':
-                        catalog.entries[name].add_quantity(
-                            SUPERNOVA.EBV, value, source)
+                        catalog.entries[name].add_quantity(SUPERNOVA.EBV,
+                                                           value, source)
 
         catalog.entries[name].add_quantity(
-            SUPERNOVA.REDSHIFT, zhel, source, e_value=zerr, kind='heliocentric')
+            SUPERNOVA.REDSHIFT,
+            zhel,
+            source,
+            e_value=zerr,
+            kind='heliocentric')
         catalog.entries[name].add_quantity(
             SUPERNOVA.REDSHIFT, zcmb, source, e_value=zerr, kind='cmb')
 
@@ -188,20 +207,24 @@ def do_donations(catalog):
                         if not cols:
                             continue
                         catalog.entries[name].add_photometry(
-                            time=cols[0], magnitude=cols[1],
+                            time=cols[0],
+                            magnitude=cols[1],
                             e_magnitude=cols[2],
-                            band=band, system=cols[3], telescope=cols[4],
+                            band=band,
+                            system=cols[3],
+                            telescope=cols[4],
                             source=source)
     catalog.journal_entries()
 
     # Brown 05-14-16
-    files = glob(os.path.join(
-        catalog.get_current_task_repo(), 'brown-05-14-16/*.dat'))
+    files = glob(
+        os.path.join(catalog.get_current_task_repo(), 'brown-05-14-16/*.dat'))
     for fi in pbar(files, task_str):
         name = os.path.basename(fi).split('_')[0]
         name = catalog.add_entry(name)
         source = catalog.entries[name].add_source(
-            name='Swift Supernovae', bibcode='2014Ap&SS.354...89B',
+            name='Swift Supernovae',
+            bibcode='2014Ap&SS.354...89B',
             url='http://people.physics.tamu.edu/pbrown/SwiftSN/swift_sn.html')
         catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
         with open(fi, 'r') as f:
@@ -219,17 +242,22 @@ def do_donations(catalog):
                 mag = cols[2] if not isupp else cols[4]
                 e_mag = cols[3] if not isupp else ''
                 upp = '' if not isupp else True
-                (catalog.entries[name]
-                 .add_photometry(time=mjd, magnitude=mag,
-                                 e_magnitude=e_mag,
-                                 upperlimit=upp, band=band, source=source,
-                                 telescope='Swift', instrument='UVOT',
-                                 system='Vega'))
+                (catalog.entries[name].add_photometry(
+                    time=mjd,
+                    magnitude=mag,
+                    e_magnitude=e_mag,
+                    upperlimit=upp,
+                    band=band,
+                    source=source,
+                    telescope='Swift',
+                    instrument='UVOT',
+                    system='Vega'))
     catalog.journal_entries()
 
     # Nicholl 05-03-16
-    files = glob(os.path.join(
-        catalog.get_current_task_repo(), 'nicholl-05-03-16/*.txt'))
+    files = glob(
+        os.path.join(catalog.get_current_task_repo(),
+                     'nicholl-05-03-16/*.txt'))
     name = catalog.add_entry('SN2015bn')
     source = catalog.entries[name].add_source(bibcode='2016arXiv160304748N')
     catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
@@ -259,14 +287,89 @@ def do_donations(catalog):
                         emag = ''
                         upp = True
                     instrument = 'UVOT' if telescope == 'Swift' else ''
-                    (catalog.entries[name]
-                     .add_photometry(time=mjd, magnitude=col,
-                                     e_magnitude=emag, upperlimit=upp,
-                                     band=bands[ci], source=source,
-                                     telescope=telescope,
-                                     instrument=instrument,
-                                     system='Vega' if
-                                     telescope == 'Swift' else 'AB'))
+                    (catalog.entries[name].add_photometry(
+                        time=mjd,
+                        magnitude=col,
+                        e_magnitude=emag,
+                        upperlimit=upp,
+                        band=bands[ci],
+                        source=source,
+                        telescope=telescope,
+                        instrument=instrument,
+                        system='Vega' if telescope == 'Swift' else 'AB'))
+
+    catalog.journal_entries()
+    return
+
+
+def do_donated_spectra(catalog):
+    task_str = catalog.get_current_task_str()
+    with open(
+            os.path.join(catalog.get_current_task_repo(),
+                         'donations/meta.json'), 'r') as f:
+        metadict = json.loads(f.read())
+
+    files = list(sorted(glob(os.path.join(
+        catalog.get_current_task_repo(), 'donations/*.dat'))))
+    print(files)
+    donationscnt = 0
+    oldname = ''
+    for fpath in pbar(files, task_str):
+        fname = fpath.split('/')[-1]
+        name = metadict[fname]['name']
+        name = catalog.get_preferred_name(name)
+        if oldname and name != oldname:
+            catalog.journal_entries()
+        oldname = name
+        sec_bibc = metadict[fname]['bibcode']
+        name, source = catalog.new_entry(name, bibcode=sec_bibc)
+
+        date = metadict[fname].get('date', '')
+        year, month, day = date.split('/')
+        sig = get_sig_digits(day) + 5
+        day_fmt = str(floor(float(day))).zfill(2)
+        time = astrotime(year + '-' + month + '-' + day_fmt).mjd
+        time = time + float(day) - floor(float(day))
+        time = pretty_num(time, sig=sig)
+
+        with open(fpath, 'r') as f:
+            specdata = list(
+                csv.reader(
+                    f, delimiter=' ', skipinitialspace=True))
+            specdata = list(filter(None, specdata))
+            newspec = []
+            oldval = ''
+            for row in specdata:
+                if row[1] == oldval:
+                    continue
+                newspec.append(row)
+                oldval = row[1]
+            specdata = newspec
+        haserrors = len(specdata[0]) == 3 and specdata[0][2] and specdata[0][
+            2] != 'NaN'
+        specdata = [list(i) for i in zip(*specdata)]
+
+        wavelengths = specdata[0]
+        fluxes = specdata[1]
+        errors = ''
+        if haserrors:
+            errors = specdata[2]
+
+        catalog.entries[name].add_spectrum(
+            u_wavelengths='Angstrom',
+            u_fluxes='Uncalibrated',
+            u_time='MJD',
+            time=time,
+            wavelengths=wavelengths,
+            fluxes=fluxes,
+            errors=errors,
+            u_errors='Uncalibrated',
+            source=source,
+            filename=fname)
+        donationscnt = donationscnt + 1
+        if (catalog.args.travis and
+                donationscnt % catalog.TRAVIS_QUERY_LIMIT == 0):
+            break
 
     catalog.journal_entries()
     return

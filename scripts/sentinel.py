@@ -56,7 +56,8 @@ for fcnt, eventfile in enumerate(tq(sorted(files, key=lambda s: s.lower()))):
     if 'redshift' in item:
         redshiftkinds = [x['kind'] if 'kind' in x else ''
                          for x in item['redshift']]
-        if any([any([y == x for y in ['heliocentric', 'spectroscopic', '']])
+        if any([any(
+            [y == x for y in ['cmb', 'heliocentric', 'spectroscopic', '']])
                 for x in redshiftkinds]):
             hasspecred = True
 

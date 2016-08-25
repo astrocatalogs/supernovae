@@ -369,6 +369,17 @@
         "always_journal": true,
         "priority": 35
     },
+    "donated_spectra": {
+        "nice_name": "%pre Donated spectra",
+        "active": true,
+        "update": true,
+        "module": "supernovae.tasks.donations",
+        "function": "do_donated_spectra",
+        "groups": ["spectra"],
+        "repo": "input/sne-external-spectra",
+        "always_journal": true,
+        "priority": 100
+    },
     "asiago_spectra": {
         "nice_name": "%pre Asiago spectra",
         "active": true,

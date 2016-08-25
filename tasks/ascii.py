@@ -10,9 +10,9 @@ from glob import glob
 
 from astropy.time import Time as astrotime
 
+from astrocats.catalog.photometry import PHOTOMETRY
 from astrocats.catalog.utils import (is_number, jd_to_mjd, make_date_string,
                                      pbar, pbar_strings)
-from astrocats.catalog.photometry import PHOTOMETRY
 from cdecimal import Decimal
 
 from ..supernova import SUPERNOVA
@@ -71,9 +71,9 @@ def do_ascii(catalog):
         else:
             photodict[PHOTOMETRY.MAGNITUDE] = (
                 Decimal(zp) - Decimal(2.5) * Decimal(counts).log10())
-            photodict[PHOTOMETRY.E_UPPER_MAGNITUDE] = (
-                Decimal(2.5) * ((Decimal(counts) + Decimal(e_counts)).log10() -
-                                Decimal(counts).log10()))
+            photodict[PHOTOMETRY.E_UPPER_MAGNITUDE] = (Decimal(2.5) * (
+                (Decimal(counts) + Decimal(e_counts)
+                 ).log10() - Decimal(counts).log10()))
             photodict[PHOTOMETRY.E_LOWER_MAGNITUDE] = (
                 Decimal(2.5) * (Decimal(counts).log10() -
                                 (Decimal(counts) - Decimal(e_counts)).log10()))
@@ -448,14 +448,17 @@ def do_ascii(catalog):
                 continue
             name, source = catalog.new_entry(
                 row[0], bibcode='2014ApJ...783...28G')
+            spz = is_number(row[13])
             catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, row[1], source)
             catalog.entries[name].add_quantity(SUPERNOVA.DISCOVER_DATE,
                                                '20' + row[0][3:5], source)
             catalog.entries[name].add_quantity(SUPERNOVA.RA, row[2], source)
             catalog.entries[name].add_quantity(SUPERNOVA.DEC, row[3], source)
-            catalog.entries[name].add_quantity(SUPERNOVA.REDSHIFT, row[13]
-                                               if is_number(row[13]) else
-                                               row[10], source)
+            catalog.entries[name].add_quantity(
+                SUPERNOVA.REDSHIFT,
+                row[13] if spz else row[10],
+                source,
+                kind=('spectroscopic' if spz else 'photometric'))
     catalog.journal_entries()
 
     # 2005ApJ...634.1190H
