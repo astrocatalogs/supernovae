@@ -12,8 +12,14 @@ Single SN dataset on VizieR:
 
 Other multiple SN datasets:
 * http://adsabs.harvard.edu/abs/1938ApJ....88..285B (Historical SN data)
+* http://adsabs.harvard.edu/abs/1982A%26A...116...43B (spectra for 1979B and 1979C)
 * http://adsabs.harvard.edu/abs/1999AJ....117..725F (1979C, 1980K)
+* http://adsabs.harvard.edu/abs/1987ApJ...317..355H (spectra for 1983N and 1984L)
+* http://adsabs.harvard.edu/abs/1987Ap&SS.134..329P (spectra for 1985G and 1985H)
+* http://adsabs.harvard.edu/abs/1989AJ.....97..726F (spectra for 1987F and 1988I)
+* http://adsabs.harvard.edu/abs/1990Ap&SS.169..275R (spectra for 1987N, 1988Y, 1988D, 1989D)
 * http://iopscience.iop.org/article/10.1088/0004-637X/743/2/114/meta (PS1-10awh, PS1-10ky)
+* http://adsabs.harvard.edu/abs/2008ApJ...686..749K (photometry for several dozen SNe)
 * http://mnras.oxfordjournals.org/content/452/4/3869.full (24 SLSNe) [Erratum: http://mnras.oxfordjournals.org/content/457/3/2514.full]
 * http://mnras.oxfordjournals.org/content/444/3/2096.full (LSQ12dlf, SSS120810, SN2013dg)
 * http://adsabs.harvard.edu/abs/2014arXiv1401.3317S (SDSS SNe light curves, broken link - http://sdssdp62.fnal.gov/sdsssn/DataRelease/index.html)
@@ -36,9 +42,14 @@ Other single SN datasets:
 * SN1972E - IR photometry from Kirschner paper
 * SN1978K - http://adsabs.harvard.edu/abs/1993ApJ...416..167R (Table 1)
 * SN1979C - http://adsabs.harvard.edu/abs/1981ApJ...244..780B
+* SN1980I - http://adsabs.harvard.edu/abs/1981AJ.....86..998S (spectrum)
+* SN1983I - http://adsabs.harvard.edu/abs/1987ApJ...313L..69W (spectrum)
 * SN1983V - http://adsabs.harvard.edu/abs/1997ApJ...483..675C
+* SN1984A - http://adsabs.harvard.edu/abs/1989A&A...220...83B (multiple spectra)
+* SN1985F - http://adsabs.harvard.edu/abs/1986Ap&SS.125..175P (spectrum)
 * SN1986G - http://adsabs.harvard.edu/abs/2002AJ....124..417H, May 7th spectrum
 * SN1987A - http://adsabs.harvard.edu/abs/1996ApJ...467..435W
+* SN1987D - http://adsabs.harvard.edu/abs/1987PASP...99.1167S (multiple spectra)
 * SN1989B - http://adsabs.harvard.edu/abs/1990A%26A...237...79B (need to reacquire a few from original source)
 * SN1991D - http://adsabs.harvard.edu/abs/2002MNRAS.336...91B
 * SN1991T - http://adsabs.harvard.edu/abs/1996MNRAS.281..263M
