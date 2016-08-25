@@ -34,8 +34,8 @@ else:
         "this file.")
 
 for fcnt, eventfile in enumerate(tq(sorted(files, key=lambda s: s.lower()))):
-    if fcnt > 10000:
-        break
+    # if fcnt > 10000:
+    #    break
     fileeventname = os.path.splitext(os.path.basename(eventfile))[0].replace(
         '.json', '')
 
@@ -65,7 +65,7 @@ for fcnt, eventfile in enumerate(tq(sorted(files, key=lambda s: s.lower()))):
 
     try:
         aliases = [x['value'] for x in item['alias']
-                   if 'GRB' not in x['value']]
+                   if not any([y in x['value'] for y in ['GRB', 'SNR']])]
         if not aliases:
             continue
         qstr = '(full:"' + '" or full:"'.join(aliases) + '") '
@@ -86,12 +86,12 @@ for fcnt, eventfile in enumerate(tq(sorted(files, key=lambda s: s.lower()))):
                 sentinel[bc] = OrderedDict([('bibcode', bc), (
                     'allauthors', allauthors), ('events', [])])
             sentinel[bc]['events'].append(fileeventname)
-            rate_limits = allpapers.response.get_ratelimits()
-            tprint(fileeventname + '\t(remaining API calls: ' + rate_limits[
-                'remaining'] + ')')
             if int(rate_limits['remaining']) <= 10:
                 print('ADS API limit reached, terminating early.')
                 break
+        rate_limits = allpapers.response.get_ratelimits()
+        tprint(fileeventname + '\t(remaining API calls: ' + rate_limits[
+            'remaining'] + ')')
     except:
         continue
 
