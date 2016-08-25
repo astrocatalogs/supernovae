@@ -39,6 +39,7 @@ Other single SN datasets:
 * SN1978K - http://adsabs.harvard.edu/abs/1993ApJ...416..167R (Table 1)
 * SN1979C - http://adsabs.harvard.edu/abs/1981ApJ...244..780B
 * SN1980I - http://adsabs.harvard.edu/abs/1981AJ.....86..998S (spectrum)
+* SN1983I - http://adsabs.harvard.edu/abs/1987ApJ...313L..69W (spectrum)
 * SN1983V - http://adsabs.harvard.edu/abs/1997ApJ...483..675C
 * SN1986G - http://adsabs.harvard.edu/abs/2002AJ....124..417H, May 7th spectrum
 * SN1987A - http://adsabs.harvard.edu/abs/1996ApJ...467..435W
