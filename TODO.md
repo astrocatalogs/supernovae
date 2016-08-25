@@ -46,6 +46,7 @@ Other single SN datasets:
 * SN1985F - http://adsabs.harvard.edu/abs/1986Ap&SS.125..175P (spectrum)
 * SN1986G - http://adsabs.harvard.edu/abs/2002AJ....124..417H, May 7th spectrum
 * SN1987A - http://adsabs.harvard.edu/abs/1996ApJ...467..435W
+* SN1987D - http://adsabs.harvard.edu/abs/1987PASP...99.1167S (multiple spectra)
 * SN1989B - http://adsabs.harvard.edu/abs/1990A%26A...237...79B (need to reacquire a few from original source)
 * SN1991D - http://adsabs.harvard.edu/abs/2002MNRAS.336...91B
 * SN1991T - http://adsabs.harvard.edu/abs/1996MNRAS.281..263M
