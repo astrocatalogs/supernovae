@@ -14,6 +14,7 @@ Other multiple SN datasets:
 * http://adsabs.harvard.edu/abs/1938ApJ....88..285B (Historical SN data)
 * http://adsabs.harvard.edu/abs/1982A%26A...116...43B (spectra for 1979B and 1979C)
 * http://adsabs.harvard.edu/abs/1999AJ....117..725F (1979C, 1980K)
+* http://adsabs.harvard.edu/abs/1987ApJ...317..355H (spectra for 1983N and 1984L)
 * http://iopscience.iop.org/article/10.1088/0004-637X/743/2/114/meta (PS1-10awh, PS1-10ky)
 * http://mnras.oxfordjournals.org/content/452/4/3869.full (24 SLSNe) [Erratum: http://mnras.oxfordjournals.org/content/457/3/2514.full]
 * http://mnras.oxfordjournals.org/content/444/3/2096.full (LSQ12dlf, SSS120810, SN2013dg)
