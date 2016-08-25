@@ -21,6 +21,7 @@ def do_simbad(catalog):
                         '2015A&A...574A.112D', '2011MNRAS.417..916G',
                         '2002ApJ...566..880G']
     simbadbannedcats = ['[TBV2008]', 'OGLE-MBR']
+    simbadbannednames = ['SN']
     customSimbad = Simbad()
     customSimbad.ROW_LIMIT = -1
     customSimbad.TIMEOUT = 120
@@ -54,7 +55,7 @@ def do_simbad(catalog):
         if row['COO_BIBCODE'] and row['COO_BIBCODE'] in simbadbadnamebib:
             continue
         name = single_spaces(re.sub(r'\[[^)]*\]', '', row['MAIN_ID']).strip())
-        if name == 'SN':
+        if name in simbadbannednames:
             continue
         if is_number(name):
             continue
@@ -70,6 +71,8 @@ def do_simbad(catalog):
                 continue
             ali = single_spaces(re.sub(r'\[[^)]*\]', '', alias).strip())
             if is_number(ali):
+                continue
+            if ali in simbadbannednames:
                 continue
             ali = name_clean(ali)
             catalog.entries[name].add_quantity(SUPERNOVA.ALIAS,
