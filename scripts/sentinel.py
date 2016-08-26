@@ -85,8 +85,6 @@ for fcnt, eventfile in enumerate(tq(sorted(files, key=lambda s: s.lower()))):
             if alias.startswith('SN'):
                 aliases.append('SN ' + alias[2:])
         qstr = '(full:"' + '" or full:"'.join(aliases) + '") '
-        print(qstr)
-        continue
         allpapers = ads.SearchQuery(
             q=(qstr + ' and property:refereed'),
             fl=['id', 'bibcode', 'author'])
