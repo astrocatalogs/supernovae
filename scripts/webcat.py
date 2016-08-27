@@ -579,7 +579,7 @@ for fcnt, eventfile in enumerate(tq(sorted(files, key=lambda s: s.lower()))):
                              if 'e_magnitude' in x else 0.)
                             for x in catalog[entry]['photometry']
                             if 'magnitude' in x]
-        photoband = [(bandaliasf(x['band']) if 'band' in x else 'Unknown band')
+        photoband = [(bandaliasf(x['band']) if 'band' in x else '?')
                      for x in catalog[entry]['photometry'] if 'magnitude' in x]
         photoinstru = [(x['instrument'] if 'instrument' in x else '')
                        for x in catalog[entry]['photometry']
@@ -739,110 +739,116 @@ for fcnt, eventfile in enumerate(tq(sorted(files, key=lambda s: s.lower()))):
                 indye = set(indb).intersection(indt).intersection(
                     indc).intersection(set(indyey).union(indyex))
 
-                noerrorlegend = bandname if len(indne) == 0 else ''
+                if indne:
+                    noerrorlegend = bandname
 
-                data = dict(
-                    x=[phototime[i] for i in indne],
-                    y=[photoAB[i] for i in indne],
-                    lerr=[photoABlowererrs[i] for i in indne],
-                    uerr=[photoABuppererrs[i] for i in indne],
-                    desc=[photoband[i] for i in indne],
-                    instr=[photoinstru[i] for i in indne],
-                    src=[photosource[i] for i in indne])
-                if 'maxabsmag' in catalog[entry] and 'maxappmag' in catalog[
-                        entry]:
-                    data['yabs'] = [photoAB[i] - distancemod for i in indne]
-                if hastimeerrs:
-                    data['xle'] = [phototimelowererrs[i] for i in indne]
-                    data['xue'] = [phototimeuppererrs[i] for i in indne]
+                    data = dict(
+                        x=[phototime[i] for i in indne],
+                        y=[photoAB[i] for i in indne],
+                        lerr=[photoABlowererrs[i] for i in indne],
+                        uerr=[photoABuppererrs[i] for i in indne],
+                        desc=[photoband[i] for i in indne],
+                        instr=[photoinstru[i] for i in indne],
+                        src=[photosource[i] for i in indne])
+                    if 'maxabsmag' in catalog[entry] and 'maxappmag' in catalog[
+                            entry]:
+                        data['yabs'] = [photoAB[i] - distancemod for i in indne]
+                    if hastimeerrs:
+                        data['xle'] = [phototimelowererrs[i] for i in indne]
+                        data['xue'] = [phototimeuppererrs[i] for i in indne]
 
-                sources.append(ColumnDataSource(data))
-                glyphs[ci].append(
-                    p1.circle(
-                        'x',
-                        'y',
-                        source=sources[-1],
-                        color=bandcolorf(band),
-                        fill_color="white",
-                        legend=noerrorlegend,
-                        size=4).glyph)
+                    sources.append(ColumnDataSource(data))
+                    glyphs[ci].append(
+                        p1.circle(
+                            'x',
+                            'y',
+                            source=sources[-1],
+                            color=bandcolorf(band),
+                            fill_color="white",
+                            legend=noerrorlegend,
+                            size=4).glyph)
 
-                data = dict(
-                    x=[phototime[i] for i in indye],
-                    y=[photoAB[i] for i in indye],
-                    lerr=[photoABlowererrs[i] for i in indye],
-                    uerr=[photoABuppererrs[i] for i in indye],
-                    desc=[photoband[i] for i in indye],
-                    instr=[photoinstru[i] for i in indye],
-                    src=[photosource[i] for i in indye])
-                if 'maxabsmag' in catalog[entry] and 'maxappmag' in catalog[
-                        entry]:
-                    data['yabs'] = [photoAB[i] - distancemod for i in indye]
-                if hastimeerrs:
-                    data['xle'] = [phototimelowererrs[i] for i in indye]
-                    data['xue'] = [phototimeuppererrs[i] for i in indye]
+                if indye:
+                    data = dict(
+                        x=[phototime[i] for i in indye],
+                        y=[photoAB[i] for i in indye],
+                        lerr=[photoABlowererrs[i] for i in indye],
+                        uerr=[photoABuppererrs[i] for i in indye],
+                        desc=[photoband[i] for i in indye],
+                        instr=[photoinstru[i] for i in indye],
+                        src=[photosource[i] for i in indye])
+                    if 'maxabsmag' in catalog[entry] and 'maxappmag' in catalog[
+                            entry]:
+                        data['yabs'] = [photoAB[i] - distancemod for i in indye]
+                    if hastimeerrs:
+                        data['xle'] = [phototimelowererrs[i] for i in indye]
+                        data['xue'] = [phototimeuppererrs[i] for i in indye]
 
-                sources.append(ColumnDataSource(data))
-                glyphs[ci].append(
-                    p1.multi_line(
-                        [err_xs[x] for x in indye], [
-                            [ys[x], ys[x]] for x in indye
-                        ],
-                        color=bandcolorf(band)).glyph)
-                glyphs[ci].append(
-                    p1.multi_line(
-                        [[xs[x], xs[x]] for x in indye], [
-                            err_ys[x] for x in indye
-                        ],
-                        color=bandcolorf(band)).glyph)
-                glyphs[ci].append(
-                    p1.circle(
-                        'x',
-                        'y',
-                        source=sources[-1],
-                        color=bandcolorf(band),
-                        legend=bandname,
-                        size=4).glyph)
+                    sources.append(ColumnDataSource(data))
+                    glyphs[ci].append(
+                        p1.multi_line(
+                            [err_xs[x] for x in indye], [
+                                [ys[x], ys[x]] for x in indye
+                            ],
+                            color=bandcolorf(band)).glyph)
+                    glyphs[ci].append(
+                        p1.multi_line(
+                            [[xs[x], xs[x]] for x in indye], [
+                                err_ys[x] for x in indye
+                            ],
+                            color=bandcolorf(band)).glyph)
+                    glyphs[ci].append(
+                        p1.circle(
+                            'x',
+                            'y',
+                            source=sources[-1],
+                            color=bandcolorf(band),
+                            legend=bandname,
+                            size=4).glyph)
 
-                upplimlegend = bandname if len(indye) == 0 and len(
-                    indne) == 0 else ''
+                upplimlegend = bandname if (not indye and not indne) else ''
 
                 indt = [i for i, j in enumerate(phototype) if j]
-                ind = set(indb).intersection(indt)
-                data = dict(
-                    x=[phototime[i] for i in ind],
-                    y=[photoAB[i] for i in ind],
-                    lerr=[photoABlowererrs[i] for i in ind],
-                    uerr=[photoABuppererrs[i] for i in ind],
-                    desc=[photoband[i] for i in ind],
-                    instr=[photoinstru[i] for i in ind],
-                    src=[photosource[i] for i in ind])
-                if 'maxabsmag' in catalog[entry] and 'maxappmag' in catalog[
-                        entry]:
-                    data['yabs'] = [photoAB[i] - distancemod for i in ind]
-                if hastimeerrs:
-                    data['xle'] = [phototimelowererrs[i] for i in ind]
-                    data['xue'] = [phototimeuppererrs[i] for i in ind]
+                ind = set(indb).intersection(indt).intersection(indc)
+                if ind:
+                    data = dict(
+                        x=[phototime[i] for i in ind],
+                        y=[photoAB[i] for i in ind],
+                        lerr=[photoABlowererrs[i] for i in ind],
+                        uerr=[photoABuppererrs[i] for i in ind],
+                        desc=[photoband[i] for i in ind],
+                        instr=[photoinstru[i] for i in ind],
+                        src=[photosource[i] for i in ind])
+                    if 'maxabsmag' in catalog[entry] and 'maxappmag' in catalog[
+                            entry]:
+                        data['yabs'] = [photoAB[i] - distancemod for i in ind]
+                    if hastimeerrs:
+                        data['xle'] = [phototimelowererrs[i] for i in ind]
+                        data['xue'] = [phototimeuppererrs[i] for i in ind]
 
-                sources.append(ColumnDataSource(data))
-                # Currently Bokeh doesn't support tooltips for
-                # inverted_triangle, so hide an invisible circle behind for the
-                # tooltip
-                glyphs[ci].append(
-                    p1.circle(
-                        'x', 'y', source=sources[-1], alpha=0.0, size=7).glyph)
-                glyphs[ci].append(
-                    p1.inverted_triangle(
-                        'x',
-                        'y',
-                        source=sources[-1],
-                        color=bandcolorf(band),
-                        legend=upplimlegend,
-                        size=7).glyph)
+                    sources.append(ColumnDataSource(data))
+                    # Currently Bokeh doesn't support tooltips for
+                    # inverted_triangle, so hide an invisible circle behind for the
+                    # tooltip
+                    glyphs[ci].append(
+                        p1.circle(
+                            'x', 'y', source=sources[-1], alpha=0.0, size=7).glyph)
+                    uppdict = {
+                        'source':sources[-1],
+                        'color':bandcolorf(band),
+                        'size':7
+                    }
+                    if upplimlegend:
+                        uppdict['legend'] = upplimlegend
+                    glyphs[ci].append(
+                        p1.inverted_triangle(
+                            'x',
+                            'y',
+                            **uppdict).glyph)
 
-                for gi, gly in enumerate(glyphs[ci]):
-                    if corr != 'raw':
-                        glyphs[ci][gi].visible = False
+                    for gi, gly in enumerate(glyphs[ci]):
+                        if corr != 'raw':
+                            glyphs[ci][gi].visible = False
 
         p1.legend.label_text_font = 'futura'
         p1.legend.label_text_font_size = '8pt'
