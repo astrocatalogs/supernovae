@@ -49,6 +49,7 @@ for fcnt, eventfile in enumerate(tq(sorted(files, key=lambda s: s.lower()))):
     item = json.loads(filetext, object_pairs_hook=OrderedDict)
     item = item[list(item.keys())[0]]
 
+    # Check for likely existence of spectrum
     if 'spectra' in item:
         continue
 
@@ -84,7 +85,9 @@ for fcnt, eventfile in enumerate(tq(sorted(files, key=lambda s: s.lower()))):
         for alias in aliases[:]:
             if alias.startswith('SN'):
                 aliases.append('SN ' + alias[2:])
-        qstr = '(full:"' + '" or full:"'.join(aliases) + '") '
+        qstr = 'full:("' + '" or "'.join(aliases) + '") '
+        print(qstr)
+        continue
         allpapers = ads.SearchQuery(
             q=(qstr + ' and property:refereed'),
             fl=['id', 'bibcode', 'author'])
