@@ -34,6 +34,7 @@ def do_cleanup(catalog):
         name = catalog.entries[name].set_preferred_name()
 
         aliases = catalog.entries[name].get_aliases()
+        catalog.entries[name].purge_bandless_photometry()
         catalog.entries[name].set_first_max_light()
 
         if SUPERNOVA.DISCOVER_DATE not in catalog.entries[name]:

@@ -133,7 +133,7 @@ def do_rochester(catalog):
                              catalog.entries[name].get_aliases()))):
                     mag = str(cols[8].contents[0]).strip()
                     catalog.entries[name].add_photometry(
-                        time=str(astrot.mjd), magnitude=mag,
+                        time=str(astrot.mjd), u_time='MJD', magnitude=mag,
                         source=sources)
             if cols[11].contents[0] != 'n/a':
                 catalog.entries[name].add_quantity(SUPERNOVA.REDSHIFT, str(
@@ -211,7 +211,7 @@ def do_rochester(catalog):
                     band = row[2].lstrip('1234567890.')
 
                     catalog.entries[name].add_photometry(
-                        time=mjd, band=band, magnitude=magnitude,
+                        time=mjd, u_time='MJD', band=band, magnitude=magnitude,
                         e_magnitude=e_magnitude, source=sources)
 
     catalog.journal_entries()

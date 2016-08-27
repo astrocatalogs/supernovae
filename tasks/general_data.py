@@ -38,7 +38,7 @@ def do_external_radio(catalog):
                     catalog.entries[name].add_photometry(
                         time=cols[0], frequency=cols[2], u_frequency='GHz',
                         fluxdensity=cols[3], e_fluxdensity=eflux,
-                        u_fluxdensity='µJy', upperlimit=upp,
+                        u_fluxdensity='µJy', upperlimit=upp, u_time='MJD',
                         instrument=cols[5], source=source)
                     catalog.entries[name].add_quantity(
                         SUPERNOVA.ALIAS, oldname, source)
@@ -63,7 +63,7 @@ def do_external_xray(catalog):
                 else:
                     cols = list(filter(None, line.split()))
                     catalog.entries[name].add_photometry(
-                        time=cols[:2],
+                        time=cols[:2], u_time='MJD',
                         energy=cols[2:4], u_energy='keV', counts=cols[4],
                         flux=cols[6],
                         unabsorbedflux=cols[8], u_flux='ergs/ss/cm^2',

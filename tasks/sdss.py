@@ -20,8 +20,8 @@ def do_sdss_photo(catalog):
     task_str = catalog.get_current_task_str()
 
     # fits_path = os.path.join(catalog.get_current_task_repo(),
-    #                          'SDSS/SDSS_allCandidates+BOSS_PHOT.FITS')
-
+    #                          'SDSS/SDSS_allCandidates+BOSS_HEAD.FITS')
+    #
     # hdulist = fits.open(fits_path)
     # hdulist.info()
     # print(hdulist[0].header)
@@ -30,9 +30,12 @@ def do_sdss_photo(catalog):
     # a = hdulist[1].data['IAUC']
     # print((Counter(a) - Counter(set(a))).keys())
     # for ri, row in enumerate(hdulist[1].data['SNID']):
-    #     print(hdulist[1].data['SNID'][ri], hdulist[1].data['IAUC'][ri])
-    # print(hdulist[1].data['MJD'])
+    #     print(hdulist[1].data['SNID'][ri], hdulist[1].data['IAUC'][ri],
+    #           hdulist[1].data['REDSHIFT_HELIO'][ri])
+    #
+    # # print(hdulist[1].data['MJD'])
     # hdulist.close()
+    # return
 
     # Load up metadata first
     with open(os.path.join(catalog.get_current_task_repo(),

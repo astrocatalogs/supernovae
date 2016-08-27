@@ -385,9 +385,7 @@ class Supernova(Entry):
                 filter(None, [SPECTRUM.TIME in x
                               for x in self[self._KEYS.SPECTRA]]))):
             self[self._KEYS.SPECTRA].sort(
-                key=lambda x: (
-                    float(x[SPECTRUM.TIME]) if SPECTRUM.TIME in x else 0.0,
-                    x[SPECTRUM.FILENAME] if SPECTRUM.FILENAME in x else ''))
+                key=lambda x: (float(x[SPECTRUM.TIME]) if SPECTRUM.TIME in x else 0.0, x[SPECTRUM.FILENAME] if SPECTRUM.FILENAME in x else ''))
 
         if self._KEYS.SOURCES in self:
             for source in self[self._KEYS.SOURCES]:
@@ -657,6 +655,40 @@ class Supernova(Entry):
                     derived=True)
         return
 
+    def purge_bandless_photometry(self):
+        """This function removes photometry without band information in cases
+        where photometry with band information exists before and after the
+        bandless photometry, in such cases the bandless photometry is not
+        providing additional information.
+        """
+        if SUPERNOVA.PHOTOMETRY not in self:
+            return
+        mjds = [
+            float(x[PHOTOMETRY.TIME]) for x in self[SUPERNOVA.PHOTOMETRY]
+            if (PHOTOMETRY.TIME in x and x.get(PHOTOMETRY.U_TIME, '') == 'MJD'
+                and PHOTOMETRY.MAGNITUDE in x and PHOTOMETRY.BAND in x)
+        ]
+        if not mjds:
+            return
+        minmjd = min(mjds)
+        maxmjd = max(mjds)
+        newphotos = []
+        for photo in self[SUPERNOVA.PHOTOMETRY]:
+            if (PHOTOMETRY.MAGNITUDE in photo and
+                PHOTOMETRY.BAND not in photo and
+                (PHOTOMETRY.TIME not in photo or
+                 PHOTOMETRY.U_TIME not in photo or
+                 (float(photo[PHOTOMETRY.TIME]) >= minmjd and
+                  float(photo[PHOTOMETRY.TIME]) <= maxmjd))):
+                self._log.info("Purging photometry without band information, "
+                               "MJD: {}, Mag: {}".format(
+                                   photo.get(PHOTOMETRY.TIME, "Not specified"),
+                                   photo[PHOTOMETRY.MAGNITUDE]))
+                continue
+            newphotos.append(photo)
+        self[SUPERNOVA.PHOTOMETRY] = newphotos
+        return
+
     def get_best_redshift(self):
         bestsig = -1
         bestkind = 10
@@ -740,8 +772,8 @@ class Supernova(Entry):
                 self._log.error("WARNING: `newname` already exists... "
                                 "should do something about that...")
 
-            self._log.warning("Changing entry from name '{}' to preferred"
-                              " name '{}'".format(name, newname))
+            self._log.info("Changing entry from name '{}' to preferred"
+                           " name '{}'".format(name, newname))
             self.catalog.entries[newname] = self.catalog.entries[name]
             del self.catalog.entries[name]
             self.catalog.entries[newname][self._KEYS.NAME] = newname
