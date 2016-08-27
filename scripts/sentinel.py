@@ -62,7 +62,7 @@ for fcnt, eventfile in enumerate(tq(sorted(files, key=lambda s: s.lower()))):
                 for x in redshiftkinds]):
             hasspecred = True
 
-    hastype = False
+    hasspectype = False
     if 'claimedtype' in item:
         typekinds = ['candidate'
                      if x['value'] == 'Candidate' else (x['kind']
@@ -70,14 +70,15 @@ for fcnt, eventfile in enumerate(tq(sorted(files, key=lambda s: s.lower()))):
                      for x in item['claimedtype']]
         if any([any([y == x for y in ['spectroscopic', '']])
                 for x in typekinds]):
-            hastype = True
+            hasspectype = True
 
-    if not hasspecred and not hastype:
+    if not hasspecred and not hasspectype:
         continue
 
     try:
         aliases = [x['value'] for x in item['alias']
-                   if not any([y in x['value'] for y in ['GRB', 'SNR']])]
+                   if (not any([y in x['value'] for y in ['GRB', 'SNR']])
+                       and len(x['value']) >= 4)]
         if not aliases:
             continue
         # ADS treats queries with spaces differently, so must search for both
@@ -86,11 +87,10 @@ for fcnt, eventfile in enumerate(tq(sorted(files, key=lambda s: s.lower()))):
             if alias.startswith('SN'):
                 aliases.append('SN ' + alias[2:])
         qstr = 'full:("' + '" or "'.join(aliases) + '") '
-        print(qstr)
-        continue
         allpapers = ads.SearchQuery(
-            q=(qstr + ' and property:refereed'),
-            fl=['id', 'bibcode', 'author'])
+            q=(qstr +
+               ' and property:refereed and full:("spectrum" or "spectra")'),
+            fl=['id', 'bibcode', 'author'], max_pages=100)
     except:
         continue
 
