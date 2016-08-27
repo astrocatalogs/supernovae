@@ -2030,7 +2030,7 @@ def do_vizier(catalog):
         row = convert_aq_output(row)
         name = row['Name'].replace('SN ', 'SN')
         name, source = catalog.new_entry(name, bibcode="2004ApJ...607..665R")
-        mjd = str(jd_to_mjd(Decimal(row['HJD'])))
+        mjd = str(jd_to_mjd(Decimal(2000) + Decimal(row['HJD'])))
         catalog.entries[name].add_photometry(
             time=mjd,
             band=row['Filt'],
