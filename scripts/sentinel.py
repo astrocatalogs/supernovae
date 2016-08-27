@@ -76,9 +76,10 @@ for fcnt, eventfile in enumerate(tq(sorted(files, key=lambda s: s.lower()))):
         continue
 
     try:
-        aliases = [x['value'] for x in item['alias']
-                   if (not any([y in x['value'] for y in ['GRB', 'SNR']])
-                       and len(x['value']) >= 4)]
+        aliases = [
+            x['value'] for x in item['alias']
+            if (not any([y in x['value'] for y in ['GRB', 'SNR', 'SDSS-II']])
+                and len(x['value']) >= 4)]
         if not aliases:
             continue
         # ADS treats queries with spaces differently, so must search for both
