@@ -90,7 +90,9 @@ for fcnt, eventfile in enumerate(tq(sorted(files, key=lambda s: s.lower()))):
         qstr = 'full:("' + '" or "'.join(aliases) + '") '
         allpapers = ads.SearchQuery(
             q=(qstr +
-               ' and property:refereed and full:("spectrum" or "spectra")'),
+               ' and property:refereed and ' +
+               'full:("spectrum" or "spectra" or "spectroscopic" or ' +
+               '"spectroscopy")'),
             fl=['id', 'bibcode', 'author'], max_pages=100)
     except:
         continue

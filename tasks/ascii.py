@@ -50,7 +50,6 @@ def do_ascii(catalog):
             }
             catalog.entries[name].add_photometry(**photodict)
     catalog.journal_entries()
-    return
 
     # 2013ApJ...767...57F
     file_path = os.path.join(catalog.get_current_task_repo(),
