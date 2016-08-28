@@ -84,7 +84,7 @@ def do_superfit_spectra(catalog):
                 u_wavelengths='Angstrom', u_fluxes='Uncalibrated',
                 u_time='MJD' if mlmjd else '',
                 time=mlmjd, wavelengths=wavelengths, fluxes=fluxes,
-                source=source)
+                source=source, filename=basename)
 
             lastname = name
 
