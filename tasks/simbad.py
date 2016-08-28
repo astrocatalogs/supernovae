@@ -17,6 +17,7 @@ def do_simbad(catalog):
     simbadmirrors = ['http://simbad.harvard.edu/simbad/sim-script',
                      'http://simbad.u-strasbg.fr/simbad/sim-script']
     simbadbadcoordbib = ['2013ApJ...770..107C']
+    simbadbadtypebib = ['2014ApJ...796...87I']
     simbadbadnamebib = ['2004AJ....127.2809W', '2005MNRAS.364.1419Z',
                         '2015A&A...574A.112D', '2011MNRAS.417..916G',
                         '2002ApJ...566..880G']
@@ -85,7 +86,7 @@ def do_simbad(catalog):
                                                row['RA'], csources)
             catalog.entries[name].add_quantity(SUPERNOVA.DEC,
                                                row['DEC'], csources)
-        if row['SP_BIBCODE']:
+        if row['SP_BIBCODE'] and row['SP_BIBCODE'] not in simbadbadtypebib:
             ssources = uniq_cdl([source,
                                  catalog.entries[name]
                                  .add_source(bibcode=row['SP_BIBCODE'])] +
