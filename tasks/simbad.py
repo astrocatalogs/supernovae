@@ -17,7 +17,8 @@ def do_simbad(catalog):
     simbadmirrors = ['http://simbad.harvard.edu/simbad/sim-script',
                      'http://simbad.u-strasbg.fr/simbad/sim-script']
     simbadbadcoordbib = ['2013ApJ...770..107C']
-    simbadbadtypebib = ['2014ApJ...796...87I', '2015MNRAS.448.1206M']
+    simbadbadtypebib = ['2014ApJ...796...87I', '2015MNRAS.448.1206M',
+                        '2015ApJ...807L..18N']
     simbadbadnamebib = ['2004AJ....127.2809W', '2005MNRAS.364.1419Z',
                         '2015A&A...574A.112D', '2011MNRAS.417..916G',
                         '2002ApJ...566..880G']
