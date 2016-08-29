@@ -10,6 +10,7 @@ from astropy.time import Time as astrotime
 
 from astrocats.catalog.utils import (get_sig_digits, is_number, pbar,
                                      pbar_strings, pretty_num, rep_chars)
+from astrocats.catalog.spectrum import SPECTRUM
 
 from ..supernova import SUPERNOVA
 
@@ -304,18 +305,13 @@ def do_donations(catalog):
 
 def do_donated_spectra(catalog):
     task_str = catalog.get_current_task_str()
-    with open(
-            os.path.join(catalog.get_current_task_repo(),
-                         'donations/meta.json'), 'r') as f:
+    fpath = os.path.join(catalog.get_current_task_repo(), 'donations')
+    with open(os.path.join(fpath, 'meta.json'), 'r') as f:
         metadict = json.loads(f.read())
 
-    files = list(sorted(glob(os.path.join(
-        catalog.get_current_task_repo(), 'donations/*.dat'))))
-    print(files)
     donationscnt = 0
     oldname = ''
-    for fpath in pbar(files, task_str):
-        fname = fpath.split('/')[-1]
+    for fname in pbar(metadict, task_str):
         name = metadict[fname]['name']
         name = catalog.get_preferred_name(name)
         if oldname and name != oldname:
@@ -332,7 +328,7 @@ def do_donated_spectra(catalog):
         time = time + float(day) - floor(float(day))
         time = pretty_num(time, sig=sig)
 
-        with open(fpath, 'r') as f:
+        with open(os.path.join(fpath, fname), 'r') as f:
             specdata = list(
                 csv.reader(
                     f, delimiter=' ', skipinitialspace=True))
@@ -340,6 +336,8 @@ def do_donated_spectra(catalog):
             newspec = []
             oldval = ''
             for row in specdata:
+                if row[0][0] == '#':
+                    continue
                 if row[1] == oldval:
                     continue
                 newspec.append(row)
@@ -355,17 +353,31 @@ def do_donated_spectra(catalog):
         if haserrors:
             errors = specdata[2]
 
-        catalog.entries[name].add_spectrum(
-            u_wavelengths='Angstrom',
-            u_fluxes='Uncalibrated',
-            u_time='MJD',
-            time=time,
-            wavelengths=wavelengths,
-            fluxes=fluxes,
-            errors=errors,
-            u_errors='Uncalibrated',
-            source=source,
-            filename=fname)
+        specdict = {
+            SPECTRUM.U_WAVELENGTHS: 'Angstrom',
+            SPECTRUM.U_TIME: 'MJD',
+            SPECTRUM.TIME: time,
+            SPECTRUM.WAVELENGTHS: wavelengths,
+            SPECTRUM.FLUXES: fluxes,
+            SPECTRUM.ERRORS: errors,
+            SPECTRUM.SOURCE: source,
+            SPECTRUM.FILENAME: fname
+        }
+        if 'instrument' in metadict[fname]:
+            specdict[SPECTRUM.INSTRUMENT] = metadict[fname]['instrument']
+        if 'telescope' in metadict[fname]:
+            specdict[SPECTRUM.TELESCOPE] = metadict[fname]['telescope']
+        if 'yunit' in metadict[fname]:
+            specdict[SPECTRUM.U_FLUXES] = metadict[fname]['yunit']
+            specdict[SPECTRUM.U_ERRORS] = metadict[fname]['yunit']
+        else:
+            if max([float(x) for x in fluxes]) < 1.0e-5:
+                fluxunit = 'erg/s/cm^2/Angstrom'
+            else:
+                fluxunit = 'Uncalibrated'
+            specdict[SPECTRUM.U_FLUXES] = fluxunit
+            specdict[SPECTRUM.U_ERRORS] = fluxunit
+        catalog.entries[name].add_spectrum(**specdict)
         donationscnt = donationscnt + 1
         if (catalog.args.travis and
                 donationscnt % catalog.TRAVIS_QUERY_LIMIT == 0):
