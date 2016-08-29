@@ -15,7 +15,7 @@ from astrocats.catalog.spectrum import SPECTRUM
 from ..supernova import SUPERNOVA
 
 
-def do_donations(catalog):
+def do_donated_photo(catalog):
     task_str = catalog.get_current_task_str()
     # Nicholl 04-01-16 donation
     with open(

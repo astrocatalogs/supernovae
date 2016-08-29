@@ -333,8 +333,6 @@ for fcnt, eventfile in enumerate(tq(sorted(files, key=lambda s: s.lower()))):
     if os.path.isfile("astrocats/supernovae/input/sne-internal/" +
                       fileeventname + ".json"):
         catalog[entry]['download'] = 'e'
-    else:
-        catalog[entry]['download'] = ''
     if 'discoverdate' in catalog[entry]:
         for d, date in enumerate(catalog[entry]['discoverdate']):
             catalog[entry]['discoverdate'][d]['value'] = catalog[entry][
@@ -2218,8 +2216,6 @@ for fcnt, eventfile in enumerate(tq(sorted(files, key=lambda s: s.lower()))):
         for col in columnkey:
             if col in catalog[entry]:
                 catalogcopy[entry][col] = deepcopy(catalog[entry][col])
-            else:
-                catalogcopy[entry][col] = None
 
     del catalog[entry]
 
@@ -2332,10 +2328,12 @@ if args.writecatalog and not args.eventlist:
             catalogcopy[entry][col] = deepcopy(catalog[entry][col])
             if catalogcopy[entry][col]:
                 for row in catalogcopy[entry][col]:
-                    if 'source' in row:
-                        del row['source']
-                    if 'u_value' in row:
-                        del row['u_value']
+                    for tag in [
+                        'source', 'u_value', 'e_value',
+                            'e_upper_value', 'e_lower_value',
+                            'derived']:
+                        if tag in row:
+                            del row[tag]
     catalog = deepcopy(catalogcopy)
 
     # Convert to array since that's what datatables expects

@@ -45,12 +45,12 @@
         "repo": "input/sne-external",
         "priority": 4
     },
-    "donations": {
+    "donated_photo": {
         "nice_name": "%pre donations",
         "active": true,
         "update": false,
         "module": "supernovae.tasks.donations",
-        "function": "do_donations",
+        "function": "do_donated_photo",
         "repo": "input/sne-external",
         "priority": 5
     },
