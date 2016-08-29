@@ -8,9 +8,10 @@ from math import floor, isnan
 
 from astropy.time import Time as astrotime
 
+from astrocats.catalog.photometry import PHOTOMETRY
+from astrocats.catalog.spectrum import SPECTRUM
 from astrocats.catalog.utils import (get_sig_digits, is_number, pbar,
                                      pbar_strings, pretty_num, rep_chars)
-from astrocats.catalog.spectrum import SPECTRUM
 
 from ..supernova import SUPERNOVA
 
@@ -23,11 +24,14 @@ def do_donations(catalog):
                          'Nicholl-04-01-16/bibcodes.json'), 'r') as f:
         bcs = json.loads(f.read())
 
+    kcorrected = ['SN2011ke', 'SN2011kf', 'SN2012il', 'PTF10hgi', 'PTF11rks']
+
     file_names = glob(
         os.path.join(catalog.get_current_task_repo(),
                      'Nicholl-04-01-16/*.txt'))
     for datafile in pbar_strings(file_names, task_str + ': Nicholl-04-01-16'):
         inpname = os.path.basename(datafile).split('_')[0]
+        isk = inpname in kcorrected
         name = catalog.add_entry(inpname)
         bibcode = ''
         for bc in bcs:
@@ -63,13 +67,17 @@ def do_donations(catalog):
                     if (is_number(row[2 * v + 2]) and
                             not isnan(float(row[2 * v + 2]))):
                         err = row[2 * v + 2]
-                    catalog.entries[name].add_photometry(
-                        time=mjd,
-                        band=bands[v],
-                        magnitude=mag,
-                        e_magnitude=err,
-                        upperlimit=upperlimit,
-                        source=source)
+                    photodict = {
+                        PHOTOMETRY.TIME: mjd,
+                        PHOTOMETRY.BAND: bands[v],
+                        PHOTOMETRY.MAGNITUDE: mag,
+                        PHOTOMETRY.E_MAGNITUDE: err,
+                        PHOTOMETRY.UPPER_LIMIT: upperlimit,
+                        PHOTOMETRY.SOURCE: source
+                    }
+                    if isk:
+                        photodict[PHOTOMETRY.KCORRECTED] = True
+                    catalog.entries[name].add_photometry(**photodict)
     catalog.journal_entries()
 
     # Maggi 04-11-16 donation (MC SNRs)
