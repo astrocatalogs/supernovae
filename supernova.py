@@ -489,14 +489,15 @@ class Supernova(Entry):
         sources = data.get(self._KEYS.SOURCES, [])
         if sources:
             def_source_dict = sources[0]
+            allow_alias = False
+            if SOURCE.ALIAS in def_source_dict:
+                del(def_source_dict[SOURCE.ALIAS])
         else:
             # If there are no existing sources, add OSC as one
             self.add_self_source()
-            sources = data.get(self._KEYS.SOURCES, [])
+            sources = self.get(self._KEYS.SOURCES, [])
             def_source_dict = sources[0]
-
-        if SOURCE.ALIAS in def_source_dict:
-            del(def_source_dict[SOURCE.ALIAS])
+            allow_alias = True
 
         # Clean some legacy fields
         alias_key = 'aliases'
@@ -540,7 +541,8 @@ class Supernova(Entry):
                         if not def_source_dict:
                             raise ValueError("No sources found, can't add "
                                              "photometry.")
-                        source = self.add_source(**def_source_dict)
+                        source = self.add_source(allow_alias=allow_alias,
+                                                 **def_source_dict)
                         data[self._KEYS.PHOTOMETRY][p][
                             QUANTITY.SOURCE] = source
             else:
@@ -549,7 +551,8 @@ class Supernova(Entry):
                         if not def_source_dict:
                             raise ValueError("No sources found, can't add "
                                              "quantity.")
-                        source = self.add_source(**def_source_dict)
+                        source = self.add_source(allow_alias=allow_alias,
+                                                 **def_source_dict)
                         data[key][qi][QUANTITY.SOURCE] = source
 
         return data
