@@ -484,16 +484,19 @@ class Supernova(Entry):
         """
         self._log.debug("clean_internal(): {}".format(self.name()))
 
-        bibcodes = []
-        # Remove 'names' when 'bibcodes' are given
-        for ss, source in enumerate(data.get(self._KEYS.SOURCES, [])):
-            if SOURCE.BIBCODE in source:
-                bibcodes.append(source[SOURCE.BIBCODE])
-
-        # If there are no existing sources, add OSC as one
-        if len(bibcodes) == 0:
+        def_source_dict = {}
+        # Find source that will be used as default
+        sources = data.get(self._KEYS.SOURCES, [])
+        if sources:
+            def_source_dict = sources[0]
+        else:
+            # If there are no existing sources, add OSC as one
             self.add_self_source()
-            bibcodes = [self.catalog.OSC_BIBCODE]
+            sources = data.get(self._KEYS.SOURCES, [])
+            def_source_dict = sources[0]
+
+        if SOURCE.ALIAS in def_source_dict:
+            del(def_source_dict[SOURCE.ALIAS])
 
         # Clean some legacy fields
         alias_key = 'aliases'
@@ -534,13 +537,19 @@ class Supernova(Entry):
                         data[self._KEYS.PHOTOMETRY][p][PHOTOMETRY.TIME] = str(
                             jd_to_mjd(Decimal(photo['time'])))
                     if QUANTITY.SOURCE not in photo:
-                        source = self.add_source(bibcode=bibcodes[0])
+                        if not def_source_dict:
+                            raise ValueError("No sources found, can't add "
+                                             "photometry.")
+                        source = self.add_source(**def_source_dict)
                         data[self._KEYS.PHOTOMETRY][p][
                             QUANTITY.SOURCE] = source
             else:
                 for qi, quantity in enumerate(data[key]):
                     if QUANTITY.SOURCE not in quantity:
-                        source = self.add_source(bibcode=bibcodes[0])
+                        if not def_source_dict:
+                            raise ValueError("No sources found, can't add "
+                                             "quantity.")
+                        source = self.add_source(**def_source_dict)
                         data[key][qi][QUANTITY.SOURCE] = source
 
         return data
