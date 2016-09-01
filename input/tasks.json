@@ -32,7 +32,7 @@
         "update": false,
         "module": "supernovae.tasks.simbad",
         "function": "do_simbad",
-        "groups": ["photometry"],
+        "groups": ["meta"],
         "priority": 3
     },
     "vizier": {
