@@ -748,9 +748,10 @@ for fcnt, eventfile in enumerate(tq(sorted(files, key=lambda s: s.lower()))):
                         desc=[photoband[i] for i in indne],
                         instr=[photoinstru[i] for i in indne],
                         src=[photosource[i] for i in indne])
-                    if 'maxabsmag' in catalog[entry] and 'maxappmag' in catalog[
-                            entry]:
-                        data['yabs'] = [photoAB[i] - distancemod for i in indne]
+                    if 'maxabsmag' in catalog[
+                            entry] and 'maxappmag' in catalog[entry]:
+                        data['yabs'] = [photoAB[i] - distancemod
+                                        for i in indne]
                     if hastimeerrs:
                         data['xle'] = [phototimelowererrs[i] for i in indne]
                         data['xue'] = [phototimeuppererrs[i] for i in indne]
@@ -775,9 +776,10 @@ for fcnt, eventfile in enumerate(tq(sorted(files, key=lambda s: s.lower()))):
                         desc=[photoband[i] for i in indye],
                         instr=[photoinstru[i] for i in indye],
                         src=[photosource[i] for i in indye])
-                    if 'maxabsmag' in catalog[entry] and 'maxappmag' in catalog[
-                            entry]:
-                        data['yabs'] = [photoAB[i] - distancemod for i in indye]
+                    if 'maxabsmag' in catalog[
+                            entry] and 'maxappmag' in catalog[entry]:
+                        data['yabs'] = [photoAB[i] - distancemod
+                                        for i in indye]
                     if hastimeerrs:
                         data['xle'] = [phototimelowererrs[i] for i in indye]
                         data['xue'] = [phototimeuppererrs[i] for i in indye]
@@ -817,8 +819,8 @@ for fcnt, eventfile in enumerate(tq(sorted(files, key=lambda s: s.lower()))):
                         desc=[photoband[i] for i in ind],
                         instr=[photoinstru[i] for i in ind],
                         src=[photosource[i] for i in ind])
-                    if 'maxabsmag' in catalog[entry] and 'maxappmag' in catalog[
-                            entry]:
+                    if 'maxabsmag' in catalog[
+                            entry] and 'maxappmag' in catalog[entry]:
                         data['yabs'] = [photoAB[i] - distancemod for i in ind]
                     if hastimeerrs:
                         data['xle'] = [phototimelowererrs[i] for i in ind]
@@ -830,19 +832,17 @@ for fcnt, eventfile in enumerate(tq(sorted(files, key=lambda s: s.lower()))):
                     # tooltip
                     glyphs[ci].append(
                         p1.circle(
-                            'x', 'y', source=sources[-1], alpha=0.0, size=7).glyph)
+                            'x', 'y', source=sources[-1], alpha=0.0,
+                            size=7).glyph)
                     uppdict = {
-                        'source':sources[-1],
-                        'color':bandcolorf(band),
-                        'size':7
+                        'source': sources[-1],
+                        'color': bandcolorf(band),
+                        'size': 7
                     }
                     if upplimlegend:
                         uppdict['legend'] = upplimlegend
                     glyphs[ci].append(
-                        p1.inverted_triangle(
-                            'x',
-                            'y',
-                            **uppdict).glyph)
+                        p1.inverted_triangle('x', 'y', **uppdict).glyph)
 
                     for gi, gly in enumerate(glyphs[ci]):
                         if corr != 'raw':
@@ -1529,15 +1529,16 @@ for fcnt, eventfile in enumerate(tq(sorted(files, key=lambda s: s.lower()))):
         yaxis = 'Flux'
         if not hasfl:
             yaxis = 'Counts'
-            photofl = [float(x['counts'])
-                       if ('e_counts' not in x or
-                           float(x['counts']) > radiosigma * float(x['e_counts'])) else
-                       round_sig(
+            photofl = [float(x['counts']) if
+                       ('e_counts' not in x or
+                        float(x['counts']) > radiosigma * float(x['e_counts']))
+                       else round_sig(
                            radiosigma * float(x['e_counts']),
                            sig=get_sig_digits(x['e_counts']))
                        for x in catalog[entry]['photometry'] if 'counts' in x]
             photoflerrs = [(float(x['e_counts']) if 'e_counts' in x else 0.)
-                           for x in catalog[entry]['photometry'] if 'counts' in x]
+                           for x in catalog[entry]['photometry']
+                           if 'counts' in x]
             photoufl = ['' for x in photofl]
             hasfl = len(list(filter(None, photofl)))
             hasflerrs = len(list(filter(None, photoflerrs)))
@@ -1549,7 +1550,7 @@ for fcnt, eventfile in enumerate(tq(sorted(files, key=lambda s: s.lower()))):
         ]
         if hasfl:
             tt += [(yaxis + " (" + photoufl[0].replace("ergs/s/cm^2",
-                                                   "ergs s⁻¹ cm⁻²") + ")",
+                                                       "ergs s⁻¹ cm⁻²") + ")",
                     "@y" + ("&nbsp;±&nbsp;@err" if hasflerrs else ""))]
             if 'maxabsmag' in catalog[entry] and 'maxappmag' in catalog[entry]:
                 tt += [("Iso. Lum. (ergs s⁻¹)",
@@ -2329,9 +2330,9 @@ if args.writecatalog and not args.eventlist:
             if catalogcopy[entry][col]:
                 for row in catalogcopy[entry][col]:
                     for tag in [
-                        'source', 'u_value', 'e_value',
-                            'e_upper_value', 'e_lower_value',
-                            'derived']:
+                            'source', 'u_value', 'e_value', 'e_upper_value',
+                            'e_lower_value', 'derived'
+                    ]:
                         if tag in row:
                             del row[tag]
     catalog = deepcopy(catalogcopy)
