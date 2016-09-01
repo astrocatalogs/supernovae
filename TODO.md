@@ -79,6 +79,7 @@ Other single SN datasets:
 * SN2003ma - http://adsabs.harvard.edu/abs/2011ApJ...729...88R
 * SN2004dj - http://adsabs.harvard.edu/abs/2011A%26A...527A..61S
 * SN2004et - http://adsabs.harvard.edu/abs/2007MNRAS.381..280M, http://adsabs.harvard.edu/abs/2009ApJ...704..306K
+* SN2005E - http://adsabs.harvard.edu/abs/2010Natur.465..322P
 * SN2005am - http://adsabs.harvard.edu/abs/2005ApJ...635.1192B
 * SN2005df - http://adsabs.harvard.edu/abs/2015ApJ...806..107D
 * SN2005ke - http://adsabs.harvard.edu/abs/2014A%26A...572A..75K
