@@ -73,6 +73,8 @@ def do_cpcs(catalog):
         try:
             cpcsalert = json.loads(jsonstr)
         except:
+            catalog.log.warning('Mangled CPCS data for alert {}.'
+                                .format(ai))
             continue
 
         mjds = [round_sig(xx, sig=9) for xx in cpcsalert['mjd']]

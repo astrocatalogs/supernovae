@@ -13,7 +13,7 @@ To comply with the standard, the object should contain a `schema` key, where `sc
 ```JSON
 {
 	"SN1987A":{
-		"schema":"https://github.com/astrocatalogs/sne/blob/commithash/OSC-JSON-format.md",
+		"schema":"https://github.com/astrocatalogs/supernovae/blob/commithash/SCHEMA.md",
 		"name":"SN1987A"
 	}
 }

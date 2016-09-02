@@ -54,10 +54,10 @@ class SupernovaCatalog(Catalog):
     class SCHEMA:
         HASH = (check_output(['git', 'log', '-n', '1', '--format="%H"',
                               '--',
-                              'OSC-JSON-format.md'])
+                              'SCHEMA.md'])
                 .decode('ascii').strip().strip('"').strip())
-        URL = ('https://github.com/astrocatalogs/astrocats/blob/' + HASH +
-               '/OSC-JSON-format.md')
+        URL = ('https://github.com/astrocatalogs/supernovae/blob/' + HASH +
+               '/SCHEMA.md')
 
     def __init__(self, args, log):
         """
