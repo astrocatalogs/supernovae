@@ -474,7 +474,7 @@ def do_vizier(catalog):
             bibcode='2010ApJ...708..661D')
         catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
         catalog.entries[name].add_quantity(
-            SUPERNOVA.ALIAS, 'SDSS-II ' + str(row['SDSS-II']), source)
+            SUPERNOVA.ALIAS, 'SDSS-II SN ' + str(row['SDSS-II']), source)
         catalog.entries[name].add_quantity(SUPERNOVA.CLAIMED_TYPE, 'II P',
                                            source)
         catalog.entries[name].add_quantity(SUPERNOVA.RA, row['RAJ2000'],
