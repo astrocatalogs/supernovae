@@ -18,16 +18,57 @@ from ..supernova import SUPERNOVA
 
 def do_donated_photo(catalog):
     task_str = catalog.get_current_task_str()
+
+    # Inserra 09-04-16 donation
+    file_names = glob(
+        os.path.join(catalog.get_current_task_repo(), 'Donations',
+                     'Inserra-09-04-16/*.txt'))
+    for datafile in pbar_strings(file_names, task_str + ': Inserra-09-04-16'):
+        inpname = os.path.basename(datafile).split('.')[0]
+        (name, source) = catalog.new_entry(
+            inpname, bibcode='2013ApJ...770..128I')
+        with open(datafile, 'r') as f:
+            tsvin = csv.reader(f, delimiter=' ', skipinitialspace=True)
+            host = False
+            for row in tsvin:
+                if row[0][0] == '#':
+                    if row[0] == '#Host':
+                        host = True
+                        continue
+                    host = False
+                    bands = row[3:-1]
+                    continue
+                for bi, ba in enumerate(bands):
+                    mag = row[5 + 2 * bi]
+                    if not is_number(mag):
+                        continue
+                    photodict = {
+                        PHOTOMETRY.TIME: row[3],
+                        PHOTOMETRY.U_TIME: 'MJD',
+                        PHOTOMETRY.MAGNITUDE: mag.strip('< '),
+                        PHOTOMETRY.SOURCE: source
+                    }
+                    if 'ATel' not in row[-1]:
+                        photodict[PHOTOMETRY.TELESCOPE] = row[-1]
+                    if host:
+                        photodict[PHOTOMETRY.HOST] = True
+                    if '<' in mag:
+                        photodict[PHOTOMETRY.UPPER_LIMIT] = True
+                    e_mag = row[5 + 2 * bi + 1].strip('() ')
+                    if is_number(e_mag):
+                        photodict[PHOTOMETRY.E_MAGNITUDE] = e_mag
+                    catalog.entries[name].add_photometry(**photodict)
+
     # Nicholl 04-01-16 donation
     with open(
-            os.path.join(catalog.get_current_task_repo(),
+            os.path.join(catalog.get_current_task_repo(), 'Donations',
                          'Nicholl-04-01-16/bibcodes.json'), 'r') as f:
         bcs = json.loads(f.read())
 
     kcorrected = ['SN2011ke', 'SN2011kf', 'SN2012il', 'PTF10hgi', 'PTF11rks']
 
     file_names = glob(
-        os.path.join(catalog.get_current_task_repo(),
+        os.path.join(catalog.get_current_task_repo(), 'Donations',
                      'Nicholl-04-01-16/*.txt'))
     for datafile in pbar_strings(file_names, task_str + ': Nicholl-04-01-16'):
         inpname = os.path.basename(datafile).split('_')[0]
@@ -63,18 +104,17 @@ def do_donated_photo(catalog):
                     if (not is_number(mag) or isnan(float(mag)) or
                             float(mag) > 90.0):
                         continue
-                    err = ''
-                    if (is_number(row[2 * v + 2]) and
-                            not isnan(float(row[2 * v + 2]))):
-                        err = row[2 * v + 2]
                     photodict = {
                         PHOTOMETRY.TIME: mjd,
+                        PHOTOMETRY.U_TIME: 'MJD',
                         PHOTOMETRY.BAND: bands[v],
                         PHOTOMETRY.MAGNITUDE: mag,
-                        PHOTOMETRY.E_MAGNITUDE: err,
                         PHOTOMETRY.UPPER_LIMIT: upperlimit,
                         PHOTOMETRY.SOURCE: source
                     }
+                    if (is_number(row[2 * v + 2]) and
+                            not isnan(float(row[2 * v + 2]))):
+                        photodict[PHOTOMETRY.E_MAGNITUDE] = row[2 * v + 2]
                     if isk:
                         photodict[PHOTOMETRY.KCORRECTED] = True
                     catalog.entries[name].add_photometry(**photodict)
@@ -82,7 +122,7 @@ def do_donated_photo(catalog):
 
     # Maggi 04-11-16 donation (MC SNRs)
     with open(
-            os.path.join(catalog.get_current_task_repo(),
+            os.path.join(catalog.get_current_task_repo(), 'Donations',
                          'Maggi-04-11-16/LMCSNRs_OpenSNe.csv')) as f:
         tsvin = csv.reader(f, delimiter=',')
         for row in pbar(list(tsvin), task_str + ': Maggi-04-11-16/LMCSNRs'):
@@ -110,7 +150,7 @@ def do_donated_photo(catalog):
                 catalog.entries[name].add_quantity(SUPERNOVA.CLAIMED_TYPE,
                                                    'CC', source)
     with open(
-            os.path.join(catalog.get_current_task_repo(),
+            os.path.join(catalog.get_current_task_repo(), 'Donations',
                          'Maggi-04-11-16/SMCSNRs_OpenSNe.csv')) as f:
         tsvin = csv.reader(f, delimiter=',')
         for row in pbar(list(tsvin), task_str + ': Maggi-04-11-16/SMCSNRs'):
@@ -133,16 +173,16 @@ def do_donated_photo(catalog):
     # Galbany 04-18-16 donation
     folders = next(
         os.walk(
-            os.path.join(catalog.get_current_task_repo(),
-                         'galbany-04-18-16/')))[1]
+            os.path.join(catalog.get_current_task_repo(), 'Donations',
+                         'Galbany-04-18-16/')))[1]
     bibcode = '2016AJ....151...33G'
     for folder in folders:
         infofiles = glob(
-            os.path.join(catalog.get_current_task_repo(), 'galbany-04-18-16/')
-            + folder + '/*.info')
+            os.path.join(catalog.get_current_task_repo(), 'Donations',
+                         'Galbany-04-18-16/') + folder + '/*.info')
         photfiles = glob(
-            os.path.join(catalog.get_current_task_repo(), 'galbany-04-18-16/')
-            + folder + '/*.out*')
+            os.path.join(catalog.get_current_task_repo(), 'Donations',
+                         'Galbany-04-18-16/') + folder + '/*.out*')
 
         zhel = ''
         zcmb = ''
@@ -217,6 +257,7 @@ def do_donated_photo(catalog):
                             continue
                         catalog.entries[name].add_photometry(
                             time=cols[0],
+                            u_time='MJD',
                             magnitude=cols[1],
                             e_magnitude=cols[2],
                             band=band,
@@ -227,7 +268,8 @@ def do_donated_photo(catalog):
 
     # Brown 05-14-16
     files = glob(
-        os.path.join(catalog.get_current_task_repo(), 'brown-05-14-16/*.dat'))
+        os.path.join(catalog.get_current_task_repo(), 'Donations',
+                     'brown-05-14-16/*.dat'))
     for fi in pbar(files, task_str):
         name = os.path.basename(fi).split('_')[0]
         name = catalog.add_entry(name)
@@ -265,8 +307,8 @@ def do_donated_photo(catalog):
 
     # Nicholl 05-03-16
     files = glob(
-        os.path.join(catalog.get_current_task_repo(),
-                     'nicholl-05-03-16/*.txt'))
+        os.path.join(catalog.get_current_task_repo(), 'Donations',
+                     'Nicholl-05-03-16/*.txt'))
     name = catalog.add_entry('SN2015bn')
     source = catalog.entries[name].add_source(bibcode='2016arXiv160304748N')
     catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
@@ -298,6 +340,7 @@ def do_donated_photo(catalog):
                     instrument = 'UVOT' if telescope == 'Swift' else ''
                     (catalog.entries[name].add_photometry(
                         time=mjd,
+                        u_time='MJD',
                         magnitude=col,
                         e_magnitude=emag,
                         upperlimit=upp,
