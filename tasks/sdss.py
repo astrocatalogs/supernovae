@@ -5,13 +5,12 @@ import os
 from glob import glob
 
 from astropy.coordinates import SkyCoord as coord
+# from astropy.io import fits
 from astropy.time import Time as astrotime
-from astropy.io import fits
 
 from astrocats.catalog.quantity import QUANTITY
 from astrocats.catalog.utils import make_date_string, pbar, pbar_strings
 from cdecimal import Decimal
-from collections import Counter
 
 from ..supernova import SUPERNOVA
 
@@ -23,13 +22,9 @@ def do_sdss_photo(catalog):
     #                          'SDSS/SDSS_allCandidates+BOSS_HEAD.FITS')
     #
     # hdulist = fits.open(fits_path)
-    # hdulist.info()
-    # print(hdulist[0].header)
-    # print(hdulist[1].header)
-    # print(hdulist[1].data)
-    # a = hdulist[1].data['IAUC']
-    # print((Counter(a) - Counter(set(a))).keys())
+    # print(hdulist[1].columns)
     # for ri, row in enumerate(hdulist[1].data['SNID']):
+    #     print([[tag, hdulist[1].data[tag][ri]] for tag in hdulist[1].data])
     #     print(hdulist[1].data['SNID'][ri], hdulist[1].data['IAUC'][ri],
     #           hdulist[1].data['REDSHIFT_HELIO'][ri])
     #
@@ -38,8 +33,9 @@ def do_sdss_photo(catalog):
     # return
 
     # Load up metadata first
-    with open(os.path.join(catalog.get_current_task_repo(),
-                           'SDSS/sdsssn_master.dat2'), 'r') as f:
+    with open(
+            os.path.join(catalog.get_current_task_repo(),
+                         'SDSS/sdsssn_master.dat2'), 'r') as f:
         rows = list(csv.reader(f.read().splitlines()[1:], delimiter=' '))
         ignored_cids = []
         columns = {
@@ -58,10 +54,11 @@ def do_sdss_photo(catalog):
 
         co = [[x[0], x[99], x[100]] for x in rows if x[99] and x[100]]
         coo = coord([x[1] for x in co], [x[2] for x in co], unit="deg")
-        coo = [''.join([y[:9] for y in x.split()]) for x in
-               coo.to_string('hmsdms', sep='')]
-        hostdict = dict(zip([x[0] for x in co],
-                            ['SDSS J' + x[1:] for x in coo]))
+        coo = [''.join([y[:9] for y in x.split()])
+               for x in coo.to_string(
+                   'hmsdms', sep='')]
+        hostdict = dict(
+            zip([x[0] for x in co], ['SDSS J' + x[1:] for x in coo]))
 
         for ri, row in enumerate(pbar(rows, task_str + ": metadata")):
             name = ''
@@ -69,7 +66,7 @@ def do_sdss_photo(catalog):
             # Check if type is non-SNe first
             ct = row[columns[SUPERNOVA.CLAIMED_TYPE]]
             al = row[columns[SUPERNOVA.ALIAS]]
-            if ct in ['AGN', 'Variable'] and not al:
+            if ct in ['AGN', 'Variable', 'Unknown'] and not al:
                 catalog.log.info('`{}` is not a SN, not '
                                  'adding.'.format(row[0]))
                 ignored_cids.append(row[0])
@@ -77,7 +74,8 @@ def do_sdss_photo(catalog):
 
             # Add entry
             (name, source) = catalog.new_entry(
-                'SDSS-II SN ' + row[0], bibcode='2014arXiv1401.3317S',
+                'SDSS-II SN ' + row[0],
+                bibcode='2014arXiv1401.3317S',
                 url='http://data.sdss3.org/sas/dr10/boss/papers/supernova/')
 
             # Add host name
@@ -117,19 +115,20 @@ def do_sdss_photo(catalog):
                     val = make_date_string(dt.year, dt.month, dt.day)
                 catalog.entries[name].add_quantity(key, val, source, **kwargs)
 
-    with open(os.path.join(catalog.get_current_task_repo(),
-                           'SDSS/2010ApJ...708..661D.txt'), 'r') as sdss_file:
+    with open(
+            os.path.join(catalog.get_current_task_repo(),
+                         'SDSS/2010ApJ...708..661D.txt'), 'r') as sdss_file:
         bibcodes2010 = sdss_file.read().split('\n')
     sdssbands = ['u', 'g', 'r', 'i', 'z']
-    file_names = (list(glob(os.path.join(catalog
-                                         .get_current_task_repo(),
-                                         'SDSS/sum/*.sum'))) +
-                  list(glob(os.path.join(catalog
-                                         .get_current_task_repo(),
-                                         'SDSS/SMP_Data/*.dat'))))
+    file_names = (list(
+        glob(os.path.join(catalog.get_current_task_repo(), 'SDSS/sum/*.sum')))
+                  + list(
+                      glob(
+                          os.path.join(catalog.get_current_task_repo(),
+                                       'SDSS/SMP_Data/*.dat'))))
     for fi, fname in enumerate(pbar_strings(file_names, task_str)):
-        tsvin = csv.reader(open(fname, 'r'), delimiter=' ',
-                           skipinitialspace=True)
+        tsvin = csv.reader(
+            open(fname, 'r'), delimiter=' ', skipinitialspace=True)
         basename = os.path.basename(fname)
         hasred = True
         rst = 19
@@ -151,17 +150,9 @@ def do_sdss_photo(catalog):
                 if row[3] in ignored_cids:
                     skip_entry = True
                     continue
-                # Ignore IAU names from Sako 2014 as they are unreliable
-                if row[5] == 'RA:' or bibcode == '2014arXiv1401.3317S':
-                    name = 'SDSS-II SN ' + row[3]
-                else:
-                    name = 'SN' + row[5]
-                name = catalog.add_entry(name)
-                source = catalog.entries[name].add_source(bibcode=bibcode)
-                catalog.entries[name].add_quantity(
-                    SUPERNOVA.ALIAS, name, source)
-                catalog.entries[name].add_quantity(
-                    SUPERNOVA.ALIAS, 'SDSS-II SN ' + row[3], source)
+                # Ignore IAU names from file headers as they are unreliable
+                name = 'SDSS-II SN ' + row[3]
+                (name, source) = catalog.new_entry(name, bibcode=bibcode)
                 catalog.entries[name].add_quantity(
                     SUPERNOVA.RA, row[-4], source, u_value='floatdegrees')
                 catalog.entries[name].add_quantity(
@@ -171,9 +162,12 @@ def do_sdss_photo(catalog):
                 val = row[2]
                 if float(val) < -1.0:
                     continue
-                (catalog.entries[name]
-                 .add_quantity(SUPERNOVA.REDSHIFT, val, source, e_value=error,
-                               kind='heliocentric'))
+                (catalog.entries[name].add_quantity(
+                    SUPERNOVA.REDSHIFT,
+                    val,
+                    source,
+                    e_value=error,
+                    kind='heliocentric'))
             if rr >= rst:
                 # Skip bad measurements
                 if int(row[0]) > 1024:
@@ -184,11 +178,14 @@ def do_sdss_photo(catalog):
                 magnitude = row[3]
                 e_mag = row[4]
                 telescope = 'SDSS'
-                (catalog.entries[name]
-                 .add_photometry(time=mjd, telescope=telescope,
-                                 band=band, magnitude=magnitude,
-                                 e_magnitude=e_mag, source=source,
-                                 system='SDSS'))
+                (catalog.entries[name].add_photometry(
+                    time=mjd,
+                    telescope=telescope,
+                    band=band,
+                    magnitude=magnitude,
+                    e_magnitude=e_mag,
+                    source=source,
+                    system='SDSS'))
         if not fi % 1000:
             catalog.journal_entries()
 
