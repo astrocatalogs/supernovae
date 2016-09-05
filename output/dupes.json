@@ -2161,17 +2161,17 @@
 		"aliases1":[
 			"GRB 920214A"
 		],
-		"name2":"GRB 930212A",
+		"name2":"SDSS-II SN 19826",
 		"aliases2":[
-			"GRB 930212A"
+			"SDSS-II SN 19826"
 		],
 		"ra1":"02:38:40.8",
 		"dec1":"+07:07:48",
-		"ra2":"02:33:24",
-		"dec2":"+08:53:24",
-		"distdeg":"2.1999999999999993",
+		"ra2":"02:36:38.64",
+		"dec2":"+01:02:29.8",
+		"distdeg":"6.1096284880789336",
 		"maxdiffyear":"",
-		"discdiffyear":"0.9944444444445253",
+		"discdiffyear":"",
 		"edit":false
 	},
 	{
@@ -2359,15 +2359,16 @@
 		"aliases1":[
 			"GRB 920328A"
 		],
-		"name2":"SDSS-II SN 6648",
+		"name2":"SDSS-SN 15207",
 		"aliases2":[
-			"SDSS-II SN 6648"
+			"SDSS-SN 15207",
+			"SDSS-II SN 15207"
 		],
 		"ra1":"21:00:33.6",
 		"dec1":"-04:18:00.0",
-		"ra2":"21:09:00.96",
-		"dec2":"-00:23:29.7",
-		"distdeg":"4.4435027669933636",
+		"ra2":"20:58:43.45",
+		"dec2":"+01:02:47.0",
+		"distdeg":"5.366052264278715",
 		"maxdiffyear":"",
 		"discdiffyear":"",
 		"edit":false
@@ -2864,15 +2865,15 @@
 		"aliases1":[
 			"GRB 920608A"
 		],
-		"name2":"SDSS-II SN 7922",
+		"name2":"SDSS-II SN 9676",
 		"aliases2":[
-			"SDSS-II SN 7922"
+			"SDSS-II SN 9676"
 		],
 		"ra1":"01:27:09.6",
 		"dec1":"+05:43:12",
-		"ra2":"02:12:53.30",
-		"dec2":"-00:55:03.1",
-		"distdeg":"13.219277754138066",
+		"ra2":"02:34:31.824",
+		"dec2":"-00:36:34.812",
+		"distdeg":"17.99271788999372",
 		"maxdiffyear":"",
 		"discdiffyear":"",
 		"edit":false
@@ -3117,15 +3118,15 @@
 		"aliases1":[
 			"GRB 920620B"
 		],
-		"name2":"SDSS-II SN 4022",
+		"name2":"SDSS-II SN 2928",
 		"aliases2":[
-			"SDSS-II SN 4022"
+			"SDSS-II SN 2928"
 		],
 		"ra1":"00:19:24",
 		"dec1":"-00:21:36",
-		"ra2":"00:23:02.9424",
-		"dec2":"+01:07:56.532",
-		"distdeg":"1.7491102093636073",
+		"ra2":"00:19:24.60",
+		"dec2":"-00:35:20.8",
+		"distdeg":"0.2291247503753532",
 		"maxdiffyear":"",
 		"discdiffyear":"",
 		"edit":false
@@ -3335,15 +3336,15 @@
 		"aliases1":[
 			"GRB 920717B"
 		],
-		"name2":"SDSS-II SN 4127",
+		"name2":"SDSS-II SN 6968",
 		"aliases2":[
-			"SDSS-II SN 4127"
+			"SDSS-II SN 6968"
 		],
 		"ra1":"01:23:00",
 		"dec1":"-02:19:12",
-		"ra2":"00:45:25.392",
-		"dec2":"-01:15:16.488",
-		"distdeg":"9.454422955231058",
+		"ra2":"01:18:13.37",
+		"dec2":"-00:54:23.6",
+		"distdeg":"1.8504479951082937",
 		"maxdiffyear":"",
 		"discdiffyear":"",
 		"edit":false
@@ -3968,19 +3969,19 @@
 	{
 		"name1":"SN1991as",
 		"aliases1":[
-			"SN1991as"
-		],
-		"name2":"GRB 921205A",
-		"aliases2":[
 			"GRB 921205A"
 		],
-		"ra1":"22:48:41.00",
-		"dec1":"+08:10:12.0",
-		"ra2":"22:36:28.8",
-		"dec2":"+05:48:00.0",
-		"distdeg":"3.8632219749553407",
+		"name2":"SDSS-II SN 7254",
+		"aliases2":[
+			"SDSS-II SN 7254"
+		],
+		"ra1":"22:36:28.8",
+		"dec1":"+05:48:00.0",
+		"ra2":"22:39:19.44",
+		"dec2":"+00:32:34.66",
+		"distdeg":"5.304901401467339",
 		"maxdiffyear":"",
-		"discdiffyear":"1.2944444444444798",
+		"discdiffyear":"",
 		"edit":false
 	},
 	{
@@ -4205,15 +4206,15 @@
 		"aliases1":[
 			"GRB 930113A"
 		],
-		"name2":"SDSS-II SN 20409",
+		"name2":"SDSS-II SN 7517",
 		"aliases2":[
-			"SDSS-II SN 20409"
+			"SDSS-II SN 7517"
 		],
 		"ra1":"21:53:16.8",
 		"dec1":"+09:32:24",
-		"ra2":"21:28:16.08",
-		"dec2":"-00:44:24.2088",
-		"distdeg":"12.032439548294594",
+		"ra2":"21:46:22.32",
+		"dec2":"-01:10:26.9",
+		"distdeg":"10.852432959037394",
 		"maxdiffyear":"",
 		"discdiffyear":"",
 		"edit":false
@@ -6838,15 +6839,15 @@
 		"aliases1":[
 			"GRB 940211B"
 		],
-		"name2":"SDSS-II SN 20140",
+		"name2":"SDSS-II SN 21661",
 		"aliases2":[
-			"SDSS-II SN 20140"
+			"SDSS-II SN 21661"
 		],
 		"ra1":"01:42:28.8",
 		"dec1":"-01:25:48",
-		"ra2":"01:52:53.856",
-		"dec2":"-00:54:06.7572",
-		"distdeg":"2.6574072445014916",
+		"ra2":"01:39:29.328",
+		"dec2":"+00:08:18.546",
+		"distdeg":"1.7376277032854313",
 		"maxdiffyear":"",
 		"discdiffyear":"",
 		"edit":false
@@ -7452,15 +7453,15 @@
 		"aliases1":[
 			"GRB 940423A"
 		],
-		"name2":"SDSS-II SN 18673",
+		"name2":"SDSS-II SN 18893",
 		"aliases2":[
-			"SDSS-II SN 18673"
+			"SDSS-II SN 18893"
 		],
 		"ra1":"00:30:04.8",
 		"dec1":"-04:04:48",
-		"ra2":"00:27:07.5168",
-		"dec2":"-00:50:29.454",
-		"distdeg":"3.3216612165639345",
+		"ra2":"00:24:28.672",
+		"dec2":"-01:08:23.92",
+		"distdeg":"3.256566333569496",
 		"maxdiffyear":"",
 		"discdiffyear":"",
 		"edit":false
@@ -7506,15 +7507,15 @@
 		"aliases1":[
 			"GRB 940426A"
 		],
-		"name2":"SDSS-II SN 2250",
+		"name2":"SDSS-II SN 21661",
 		"aliases2":[
-			"SDSS-II SN 2250"
+			"SDSS-II SN 21661"
 		],
 		"ra1":"01:31:14.4",
 		"dec1":"+00:54:00",
-		"ra2":"01:26:27.36",
-		"dec2":"-00:34:50.502",
-		"distdeg":"1.9033847963627835",
+		"ra2":"01:39:29.328",
+		"dec2":"+00:08:18.546",
+		"distdeg":"2.198311610128328",
 		"maxdiffyear":"",
 		"discdiffyear":"",
 		"edit":false
@@ -8492,15 +8493,15 @@
 		"aliases1":[
 			"GRB 940830B"
 		],
-		"name2":"SDSS-II SN 4127",
+		"name2":"SDSS-II SN 4490",
 		"aliases2":[
-			"SDSS-II SN 4127"
+			"SDSS-II SN 4490"
 		],
 		"ra1":"00:07:02.4",
 		"dec1":"-06:17:24",
-		"ra2":"00:45:25.392",
-		"dec2":"-01:15:16.488",
-		"distdeg":"10.836735311725574",
+		"ra2":"00:55:18.38",
+		"dec2":"+00:12:25.2",
+		"distdeg":"13.70450445438571",
 		"maxdiffyear":"",
 		"discdiffyear":"",
 		"edit":false
@@ -8947,15 +8948,15 @@
 		"aliases1":[
 			"GRB 941018B"
 		],
-		"name2":"SDSS-II SN 3562",
+		"name2":"SDSS-II SN 7892",
 		"aliases2":[
-			"SDSS-II SN 3562"
+			"SDSS-II SN 7892"
 		],
 		"ra1":"21:56:04.8",
 		"dec1":"-01:43:48",
-		"ra2":"22:37:53.728",
-		"dec2":"+00:06:48.12",
-		"distdeg":"10.61514620493854",
+		"ra2":"22:17:48.96",
+		"dec2":"-01:00:26.532",
+		"distdeg":"5.481838206012677",
 		"maxdiffyear":"",
 		"discdiffyear":"",
 		"edit":false
@@ -9403,15 +9404,16 @@
 		"aliases1":[
 			"GRB 950119A"
 		],
-		"name2":"SDSS-II SN 3562",
+		"name2":"SDSS-II SN 7431",
 		"aliases2":[
-			"SDSS-II SN 3562"
+			"SDSS-II SN 7431",
+			"2MASS J22434909-0016290"
 		],
 		"ra1":"22:41:14.4",
 		"dec1":"-00:42:00",
-		"ra2":"22:37:53.728",
-		"dec2":"+00:06:48.12",
-		"distdeg":"1.1664837270856714",
+		"ra2":"22:43:49.093",
+		"dec2":"-00:16:29.06",
+		"distdeg":"0.7722027495358845",
 		"maxdiffyear":"",
 		"discdiffyear":"",
 		"edit":false
@@ -9694,15 +9696,16 @@
 		"aliases1":[
 			"GRB 950412A"
 		],
-		"name2":"SDSS-II SN 6648",
+		"name2":"SDSS-SN 15207",
 		"aliases2":[
-			"SDSS-II SN 6648"
+			"SDSS-SN 15207",
+			"SDSS-II SN 15207"
 		],
 		"ra1":"21:09:26.4",
 		"dec1":"+02:39:00.0",
-		"ra2":"21:09:00.96",
-		"dec2":"-00:23:29.7",
-		"distdeg":"3.0434298371428077",
+		"ra2":"20:58:43.45",
+		"dec2":"+01:02:47.0",
+		"distdeg":"3.122240597297866",
 		"maxdiffyear":"",
 		"discdiffyear":"",
 		"edit":false
@@ -10330,15 +10333,15 @@
 		"aliases1":[
 			"GRB 970510B"
 		],
-		"name2":"SDSS-II SN 4127",
+		"name2":"SDSS-II SN 6968",
 		"aliases2":[
-			"SDSS-II SN 4127"
+			"SDSS-II SN 6968"
 		],
 		"ra1":"00:51:21.6",
 		"dec1":"-00:50:24",
-		"ra2":"00:45:25.392",
-		"dec2":"-01:15:16.488",
-		"distdeg":"1.5410146710528094",
+		"ra2":"01:18:13.37",
+		"dec2":"-00:54:23.6",
+		"distdeg":"6.716038122314234",
 		"maxdiffyear":"",
 		"discdiffyear":"",
 		"edit":false
@@ -12257,17 +12260,17 @@
 		"aliases1":[
 			"GRB 960623D"
 		],
-		"name2":"SN1996bd",
+		"name2":"SDSS-II SN 8118",
 		"aliases2":[
-			"SN1996bd"
+			"SDSS-II SN 8118"
 		],
 		"ra1":"23:56:00",
 		"dec1":"+00:03:00",
-		"ra2":"23:59:26.98",
-		"dec2":"-00:56:16.6",
-		"distdeg":"1.3114102074686917",
+		"ra2":"23:43:26.09",
+		"dec2":"+00:17:49.6",
+		"distdeg":"3.150996229179615",
 		"maxdiffyear":"",
-		"discdiffyear":"0.2944444444444798",
+		"discdiffyear":"",
 		"edit":false
 	},
 	{
@@ -12618,15 +12621,16 @@
 		"aliases1":[
 			"GRB 960806A"
 		],
-		"name2":"SDSS-II SN 6648",
+		"name2":"SDSS-SN 15207",
 		"aliases2":[
-			"SDSS-II SN 6648"
+			"SDSS-SN 15207",
+			"SDSS-II SN 15207"
 		],
 		"ra1":"21:19:55.2",
 		"dec1":"+01:01:48",
-		"ra2":"21:09:00.96",
-		"dec2":"-00:23:29.7",
-		"distdeg":"3.074406475014504",
+		"ra2":"20:58:43.45",
+		"dec2":"+01:02:47.0",
+		"distdeg":"5.298983677468923",
 		"maxdiffyear":"",
 		"discdiffyear":"",
 		"edit":false
@@ -13018,17 +13022,17 @@
 		"aliases1":[
 			"GRB 960924A"
 		],
-		"name2":"SDSS-II SN 10157",
+		"name2":"SN1995ax",
 		"aliases2":[
-			"SDSS-II SN 10157"
+			"SN1995ax"
 		],
 		"ra1":"02:29:07.2",
 		"dec1":"+02:42:00",
-		"ra2":"02:33:13.32",
-		"dec2":"+01:02:53.988",
-		"distdeg":"1.9441358077305164",
+		"ra2":"02:26:25.80",
+		"dec2":"+00:48:44.2",
+		"distdeg":"2.0039339904975924",
 		"maxdiffyear":"",
-		"discdiffyear":"",
+		"discdiffyear":"0.8472222222221717",
 		"edit":false
 	},
 	{
@@ -13054,15 +13058,15 @@
 		"aliases1":[
 			"GRB 960929A"
 		],
-		"name2":"SDSS-II SN 15722",
+		"name2":"SDSS-II SN 7296",
 		"aliases2":[
-			"SDSS-II SN 15722"
+			"SDSS-II SN 7296"
 		],
 		"ra1":"03:57:24",
 		"dec1":"-02:29:24",
-		"ra2":"03:41:24.15",
-		"dec2":"+01:11:40.6",
-		"distdeg":"5.437955445822305",
+		"ra2":"03:32:53.712",
+		"dec2":"-00:31:33.816",
+		"distdeg":"6.433302943558631",
 		"maxdiffyear":"",
 		"discdiffyear":"",
 		"edit":false
@@ -18099,15 +18103,15 @@
 		"aliases1":[
 			"GRB 981021B"
 		],
-		"name2":"SDSS-II SN 13802",
+		"name2":"SDSS-II SN 8118",
 		"aliases2":[
-			"SDSS-II SN 13802"
+			"SDSS-II SN 8118"
 		],
 		"ra1":"23:48:38.4",
 		"dec1":"+01:40:12",
-		"ra2":"23:40:02.88",
-		"dec2":"+00:36:44.7",
-		"distdeg":"2.3942402776129854",
+		"ra2":"23:43:26.09",
+		"dec2":"+00:17:49.6",
+		"distdeg":"1.8916088134101092",
 		"maxdiffyear":"",
 		"discdiffyear":"",
 		"edit":false
@@ -18408,15 +18412,15 @@
 		"aliases1":[
 			"GRB 990117A"
 		],
-		"name2":"ESSENCE n246",
+		"name2":"SDSS-II SN 6968",
 		"aliases2":[
-			"ESSENCE n246"
+			"SDSS-II SN 6968"
 		],
 		"ra1":"01:18:38.4",
 		"dec1":"-01:17:24",
-		"ra2":"01:14:33.08",
-		"dec2":"-00:26:23.2",
-		"distdeg":"1.3295497439377482",
+		"ra2":"01:18:13.37",
+		"dec2":"-00:54:23.6",
+		"distdeg":"0.3973743747543609",
 		"maxdiffyear":"",
 		"discdiffyear":"",
 		"edit":false
@@ -18917,15 +18921,15 @@
 		"aliases1":[
 			"GRB 990321A"
 		],
-		"name2":"SDSS-II SN 2813",
+		"name2":"SDSS-II SN 9676",
 		"aliases2":[
-			"SDSS-II SN 2813"
+			"SDSS-II SN 9676"
 		],
 		"ra1":"02:49:02.4",
 		"dec1":"+00:13:50",
-		"ra2":"02:47:00.672",
-		"dec2":"+01:10:18.588",
-		"distdeg":"1.0692284226320377",
+		"ra2":"02:34:31.824",
+		"dec2":"-00:36:34.812",
+		"distdeg":"3.723440578847553",
 		"maxdiffyear":"",
 		"discdiffyear":"",
 		"edit":false
@@ -19355,15 +19359,15 @@
 		"aliases1":[
 			"GRB 990513A"
 		],
-		"name2":"SDSS-II SN 20409",
+		"name2":"SDSS-II SN 7517",
 		"aliases2":[
-			"SDSS-II SN 20409"
+			"SDSS-II SN 7517"
 		],
 		"ra1":"21:46:52.8",
 		"dec1":"-04:40:12",
-		"ra2":"21:28:16.08",
-		"dec2":"-00:44:24.2088",
-		"distdeg":"6.090554418389527",
+		"ra2":"21:46:22.32",
+		"dec2":"-01:10:26.9",
+		"distdeg":"3.498167221300179",
 		"maxdiffyear":"",
 		"discdiffyear":"",
 		"edit":false
@@ -20065,15 +20069,16 @@
 		"aliases1":[
 			"GRB 991229A"
 		],
-		"name2":"SDSS-II SN 8217",
+		"name2":"SDSS-SN 15207",
 		"aliases2":[
-			"SDSS-II SN 8217"
+			"SDSS-SN 15207",
+			"SDSS-II SN 15207"
 		],
 		"ra1":"21:11:28.8",
 		"dec1":"+08:08:24",
-		"ra2":"20:28:23.76",
-		"dec2":"+00:40:33.046",
-		"distdeg":"13.10450435068093",
+		"ra2":"20:58:43.45",
+		"dec2":"+01:02:47.0",
+		"distdeg":"7.777452915152569",
 		"maxdiffyear":"",
 		"discdiffyear":"",
 		"edit":false
@@ -20245,17 +20250,17 @@
 		"aliases1":[
 			"GRB 991005B"
 		],
-		"name2":"SN2001cx",
+		"name2":"SDSS-II SN 20052",
 		"aliases2":[
-			"SN2001cx"
+			"SDSS-II SN 20052"
 		],
 		"ra1":"22:49:19.2",
 		"dec1":"+06:12:00",
-		"ra2":"22:58:00.28",
-		"dec2":"+06:03:48.4",
-		"distdeg":"2.1754567599006984",
+		"ra2":"22:52:18.98",
+		"dec2":"+01:14:03.2",
+		"distdeg":"5.021959256958327",
 		"maxdiffyear":"",
-		"discdiffyear":"1.6777777777779193",
+		"discdiffyear":"",
 		"edit":false
 	},
 	{
@@ -20335,15 +20340,16 @@
 		"aliases1":[
 			"GRB 991027A"
 		],
-		"name2":"SDSS-II SN 6648",
+		"name2":"SDSS-SN 15207",
 		"aliases2":[
-			"SDSS-II SN 6648"
+			"SDSS-SN 15207",
+			"SDSS-II SN 15207"
 		],
 		"ra1":"21:43:52.8",
 		"dec1":"-05:39:00",
-		"ra2":"21:09:00.96",
-		"dec2":"-00:23:29.7",
-		"distdeg":"10.17937138728502",
+		"ra2":"20:58:43.45",
+		"dec2":"+01:02:47.0",
+		"distdeg":"13.125631581107639",
 		"maxdiffyear":"",
 		"discdiffyear":"",
 		"edit":false
@@ -22018,25 +22024,6 @@
 		"edit":false
 	},
 	{
-		"name1":"PS16bmh",
-		"aliases1":[
-			"PS16bmh",
-			"AT2016brk"
-		],
-		"name2":"MLS160404:101846+094936",
-		"aliases2":[
-			"MLS160404:101846+094936"
-		],
-		"ra1":"10:18:46.41",
-		"dec1":"+09:49:36.36",
-		"ra2":"10:18:46.32",
-		"dec2":"+09:49:36.264",
-		"distdeg":"0.00037594695251387495",
-		"maxdiffyear":"0.01666666666665151",
-		"discdiffyear":"10.186869375000015",
-		"edit":false
-	},
-	{
 		"name1":"PSN J0955525083+694045420",
 		"aliases1":[
 			"PSN J0955525083+694045420"
@@ -22073,24 +22060,6 @@
 		"edit":false
 	},
 	{
-		"name1":"SDSS-II SN 10036",
-		"aliases1":[
-			"SDSS-II SN 10036"
-		],
-		"name2":"SDSS-II SN 19343",
-		"aliases2":[
-			"SDSS-II SN 19343"
-		],
-		"ra1":"01:35:27.336",
-		"dec1":"+00:13:57.018",
-		"ra2":"01:35:27.648",
-		"dec2":"+00:14:04.3296",
-		"distdeg":"0.0024114230238579107",
-		"maxdiffyear":"1.941666666666606",
-		"discdiffyear":"2.0055555555554747",
-		"edit":false
-	},
-	{
 		"name1":"SDSS-II SN 14205",
 		"aliases1":[
 			"SDSS-II SN 14205"
@@ -22106,61 +22075,6 @@
 		"distdeg":"0.0",
 		"maxdiffyear":"0.04166666666674246",
 		"discdiffyear":"0.0",
-		"edit":false
-	},
-	{
-		"name1":"SN2006fo",
-		"aliases1":[
-			"SN2006fo",
-			"SDSS-II SN 13195"
-		],
-		"name2":"SDSS-II SN 13540",
-		"aliases2":[
-			"SDSS-II SN 13540"
-		],
-		"ra1":"02:32:38.89",
-		"dec1":"+00:37:03.0",
-		"ra2":"02:32:39.312",
-		"dec2":"+00:37:03.4716",
-		"distdeg":"0.0017632064856721913",
-		"maxdiffyear":"0.12222222222226264",
-		"discdiffyear":"0.049999999999954525",
-		"edit":false
-	},
-	{
-		"name1":"SDSS-II SN 1363",
-		"aliases1":[
-			"SDSS-II SN 1363"
-		],
-		"name2":"PSN J000123+000504",
-		"aliases2":[
-			"PSN J000123+000504"
-		],
-		"ra1":"00:01:23.358",
-		"dec1":"+00:05:04.031",
-		"ra2":"00:01:23.360",
-		"dec2":"+00:05:04.02",
-		"distdeg":"8.875858504761278e-06",
-		"maxdiffyear":"",
-		"discdiffyear":"",
-		"edit":false
-	},
-	{
-		"name1":"SN2005ad",
-		"aliases1":[
-			"SN2005ad"
-		],
-		"name2":"SDSS-II SN 1417",
-		"aliases2":[
-			"SDSS-II SN 1417"
-		],
-		"ra1":"02:28:29.45",
-		"dec1":"-01:08:20.0",
-		"ra2":"02:28:29.448",
-		"dec2":"-01:08:20.184",
-		"distdeg":"5.1786003162933465e-05",
-		"maxdiffyear":"0.6499999999998636",
-		"discdiffyear":"0.591666666666697",
 		"edit":false
 	},
 	{
@@ -22180,24 +22094,6 @@
 		"distdeg":"0.00023733343736949555",
 		"maxdiffyear":"0.0638888888886413",
 		"discdiffyear":"0.0",
-		"edit":false
-	},
-	{
-		"name1":"SDSS-II SN 7978",
-		"aliases1":[
-			"SDSS-II SN 7978"
-		],
-		"name2":"SDSS-II SN 14398",
-		"aliases2":[
-			"SDSS-II SN 14398"
-		],
-		"ra1":"03:22:50.592",
-		"dec1":"+00:16:22.591",
-		"ra2":"03:22:50.489",
-		"dec2":"+00:16:21.34",
-		"distdeg":"0.0005522139782555839",
-		"maxdiffyear":"0.8694444444445253",
-		"discdiffyear":"1.0222222222221262",
 		"edit":false
 	},
 	{
@@ -22310,79 +22206,6 @@
 		"edit":false
 	},
 	{
-		"name1":"SN2007tu",
-		"aliases1":[
-			"SN2007tu"
-		],
-		"name2":"SDSS-II SN 20086",
-		"aliases2":[
-			"SDSS-II SN 20086"
-		],
-		"ra1":"01:14:05.22",
-		"dec1":"-00:36:25.6",
-		"ra2":"01:14:05.208",
-		"dec2":"-00:36:25.5744",
-		"distdeg":"5.050314743701306e-05",
-		"maxdiffyear":"0.06944444444434339",
-		"discdiffyear":"0.17222222222221717",
-		"edit":false
-	},
-	{
-		"name1":"SN2007sj",
-		"aliases1":[
-			"SN2007sj",
-			"SDSS-II SN 21898"
-		],
-		"name2":"SDSS-II SN 20707",
-		"aliases2":[
-			"SDSS-II SN 20707"
-		],
-		"ra1":"00:10:39.63",
-		"dec1":"-00:03:10.2",
-		"ra2":"00:10:39.3408",
-		"dec2":"-00:03:09.9216",
-		"distdeg":"0.0012074789623197333",
-		"maxdiffyear":"0.027777777777828305",
-		"discdiffyear":"0.2055555555555202",
-		"edit":false
-	},
-	{
-		"name1":"SN2005cg",
-		"aliases1":[
-			"SN2005cg"
-		],
-		"name2":"SDSS-II SN 2109",
-		"aliases2":[
-			"SDSS-II SN 2109"
-		],
-		"ra1":"21:10:50.42",
-		"dec1":"+00:12:07.4",
-		"ra2":"21:10:50.4",
-		"dec2":"+00:12:07.0704",
-		"distdeg":"0.00012380171323678234",
-		"maxdiffyear":"0.2722222222223536",
-		"discdiffyear":"0.26944444444461624",
-		"edit":false
-	},
-	{
-		"name1":"SDSS-II SN 792",
-		"aliases1":[
-			"SDSS-II SN 792"
-		],
-		"name2":"SDSS-II SN 22035",
-		"aliases2":[
-			"SDSS-II SN 22035"
-		],
-		"ra1":"03:00:51.504",
-		"dec1":"+00:48:31.14",
-		"ra2":"03:00:51.6",
-		"dec2":"+00:48:26.528",
-		"distdeg":"0.0013421049433676076",
-		"maxdiffyear":"2.119444444444298",
-		"discdiffyear":"2.0",
-		"edit":false
-	},
-	{
 		"name1":"SDSS-II SN 4104",
 		"aliases1":[
 			"SDSS-II SN 4104"
@@ -22419,24 +22242,6 @@
 		"edit":false
 	},
 	{
-		"name1":"SDSS-II SN 5116",
-		"aliases1":[
-			"SDSS-II SN 5116"
-		],
-		"name2":"SDSS-II SN 979",
-		"aliases2":[
-			"SDSS-II SN 979"
-		],
-		"ra1":"22:26:20.4",
-		"dec1":"+01:09:51.624",
-		"ra2":"22:26:20.4",
-		"dec2":"+01:09:51.732",
-		"distdeg":"2.999999999997449e-05",
-		"maxdiffyear":"0.13888888888868678",
-		"discdiffyear":"0.0",
-		"edit":false
-	},
-	{
 		"name1":"SDSS-II SN 6996",
 		"aliases1":[
 			"SDSS-II SN 6996"
@@ -22455,19 +22260,19 @@
 		"edit":false
 	},
 	{
-		"name1":"SDSS-II SN 9135",
+		"name1":"SDSS-II SN 7978",
 		"aliases1":[
-			"SDSS-II SN 9135"
+			"SDSS-II SN 7978"
 		],
-		"name2":"ESSENCE n271",
+		"name2":"SDSS-II SN 14398",
 		"aliases2":[
-			"ESSENCE n271"
+			"SDSS-II SN 14398"
 		],
-		"ra1":"01:13:06.504",
-		"dec1":"+00:30:04.9536",
-		"ra2":"01:13:06.51",
-		"dec2":"+00:30:04.9",
-		"distdeg":"2.9097749266694742e-05",
+		"ra1":"03:22:50.592",
+		"dec1":"+00:16:22.591",
+		"ra2":"03:22:50.489",
+		"dec2":"+00:16:21.34",
+		"distdeg":"0.0005522139782555839",
 		"maxdiffyear":"",
 		"discdiffyear":"",
 		"edit":false
@@ -22531,8 +22336,7 @@
 		"name1":"SN2006ny",
 		"aliases1":[
 			"SN2006ny",
-			"SDSS-II SN 16192",
-			"SDSS-II 16192"
+			"SDSS-II SN 16192"
 		],
 		"name2":"SNF20061114-021",
 		"aliases2":[
@@ -23339,6 +23143,24 @@
 		"edit":false
 	},
 	{
+		"name1":"MLS151122:083521+181515",
+		"aliases1":[
+			"MLS151122:083521+181515"
+		],
+		"name2":"PS16dx",
+		"aliases2":[
+			"PS16dx"
+		],
+		"ra1":"08:35:20.88",
+		"dec1":"+18:15:15.48",
+		"ra2":"08:35:20.97",
+		"dec2":"+18:15:15.1",
+		"distdeg":"0.0003895728112701331",
+		"maxdiffyear":"0.1138888888888232",
+		"discdiffyear":"5.808333333333394",
+		"edit":false
+	},
+	{
 		"name1":"OGLE-2015-SN-078",
 		"aliases1":[
 			"OGLE-2015-SN-078"
@@ -23892,26 +23714,6 @@
 		"edit":false
 	},
 	{
-		"name1":"CSS160704:150122+125617",
-		"aliases1":[
-			"CSS160704:150122+125617",
-			"AT2016dgm",
-			"PS16ded"
-		],
-		"name2":"Gaia16avi",
-		"aliases2":[
-			"Gaia16avi"
-		],
-		"ra1":"15:01:22.21",
-		"dec1":"+12:56:17.13",
-		"ra2":"15:01:22.32",
-		"dec2":"+12:56:17.16",
-		"distdeg":"0.0004584090846572822",
-		"maxdiffyear":"0.03888888888877773",
-		"discdiffyear":"0.03888888888877773",
-		"edit":false
-	},
-	{
 		"name1":"DES15X2asq",
 		"aliases1":[
 			"DES15X2asq"
@@ -23948,45 +23750,6 @@
 		"edit":false
 	},
 	{
-		"name1":"iPTF16bkn",
-		"aliases1":[
-			"iPTF16bkn"
-		],
-		"name2":"Gaia16ase",
-		"aliases2":[
-			"Gaia16ase",
-			"AT2016edk"
-		],
-		"ra1":"17:47:14.16",
-		"dec1":"+30:13:30",
-		"ra2":"17:47:14.20",
-		"dec2":"+30:13:29.30",
-		"distdeg":"0.0002560984571307357",
-		"maxdiffyear":"",
-		"discdiffyear":"0.5398166472223238",
-		"edit":false
-	},
-	{
-		"name1":"SN2016czr",
-		"aliases1":[
-			"SN2016czr",
-			"PTSS-16jvj",
-			"AT2016czr"
-		],
-		"name2":"Gaia16awh",
-		"aliases2":[
-			"Gaia16awh"
-		],
-		"ra1":"16:45:37.25",
-		"dec1":"+21:49:19.30",
-		"ra2":"16:45:37.2",
-		"dec2":"+21:49:20.64",
-		"distdeg":"0.0004265585077092831",
-		"maxdiffyear":"0.04722222222221717",
-		"discdiffyear":"0.04560853888870042",
-		"edit":false
-	},
-	{
 		"name1":"PS16dgi",
 		"aliases1":[
 			"PS16dgi",
@@ -24003,27 +23766,6 @@
 		"distdeg":"0.00045836700211011113",
 		"maxdiffyear":"0.03611111111104037",
 		"discdiffyear":"0.03523337777778579",
-		"edit":false
-	},
-	{
-		"name1":"SN2016eja",
-		"aliases1":[
-			"SN2016eja",
-			"ASASSN-16hr",
-			"iPTF16btg",
-			"AT2016eja"
-		],
-		"name2":"Gaia16azu",
-		"aliases2":[
-			"Gaia16azu"
-		],
-		"ra1":"22:25:31.76",
-		"dec1":"+38:59:03.50",
-		"ra2":"22:25:31.68",
-		"dec2":"+38:59:03.48",
-		"distdeg":"0.00033337962636936596",
-		"maxdiffyear":"0.036111111111267746",
-		"discdiffyear":"0.03494444444459077",
 		"edit":false
 	},
 	{
@@ -24044,6 +23786,105 @@
 		"distdeg":"0.0004056411629539993",
 		"maxdiffyear":"0.06944444444457076",
 		"discdiffyear":"0.018152777777686424",
+		"edit":false
+	},
+	{
+		"name1":"PS16dth",
+		"aliases1":[
+			"PS16dth",
+			"AT2016ezk"
+		],
+		"name2":"Gaia16bcl",
+		"aliases2":[
+			"Gaia16bcl"
+		],
+		"ra1":"17:00:18.76",
+		"dec1":"+60:37:27.76",
+		"ra2":"17:00:18.72",
+		"dec2":"+60:37:27.48",
+		"distdeg":"0.00018392161511338298",
+		"maxdiffyear":"0.03888888888877773",
+		"discdiffyear":"0.03809445833326208",
+		"edit":false
+	},
+	{
+		"name1":"SN2016ffh",
+		"aliases1":[
+			"SN2016ffh",
+			"ATLAS16cpu",
+			"AT2016ffh"
+		],
+		"name2":"Gaia16bcm",
+		"aliases2":[
+			"Gaia16bcm"
+		],
+		"ra1":"15:11:49.48",
+		"dec1":"+46:15:03.22",
+		"ra2":"15:11:49.44",
+		"dec2":"+46:15:03.24",
+		"distdeg":"0.0001667592335874733",
+		"maxdiffyear":"0.002777777777737356",
+		"discdiffyear":"0.021461130555508134",
+		"edit":false
+	},
+	{
+		"name1":"SN2016fes",
+		"aliases1":[
+			"SN2016fes",
+			"PS16dwg",
+			"AT2016fes"
+		],
+		"name2":"Gaia16bct",
+		"aliases2":[
+			"Gaia16bct"
+		],
+		"ra1":"16:26:29.21",
+		"dec1":"+62:05:32.05",
+		"ra2":"16:26:29.28",
+		"dec2":"+62:05:31.92",
+		"distdeg":"0.0002938936147509352",
+		"maxdiffyear":"0.04166666666674246",
+		"discdiffyear":"0.040877797222265144",
+		"edit":false
+	},
+	{
+		"name1":"SN2016fez",
+		"aliases1":[
+			"SN2016fez",
+			"ASASSN-16je",
+			"AT2016fez"
+		],
+		"name2":"Gaia16bdb",
+		"aliases2":[
+			"Gaia16bdb"
+		],
+		"ra1":"17:05:48.61",
+		"dec1":"+69:50:53.95",
+		"ra2":"17:05:48.96",
+		"dec2":"+69:50:54.6",
+		"distdeg":"0.001469468073757295",
+		"maxdiffyear":"0.027777777777828305",
+		"discdiffyear":"0.015750000000025466",
+		"edit":false
+	},
+	{
+		"name1":"SN2016eiy",
+		"aliases1":[
+			"SN2016eiy",
+			"ASASSN-16hp",
+			"AT2016eiy"
+		],
+		"name2":"Gaia16bef",
+		"aliases2":[
+			"Gaia16bef"
+		],
+		"ra1":"13:34:38.64",
+		"dec1":"-23:40:53.15",
+		"ra2":"13:34:38.64",
+		"dec2":"-23:40:53.4",
+		"distdeg":"6.944444444201281e-05",
+		"maxdiffyear":"0.09444444444443434",
+		"discdiffyear":"0.09425000000010186",
 		"edit":false
 	},
 	{
@@ -24268,27 +24109,6 @@
 		"distdeg":"0.001756656212638266",
 		"maxdiffyear":"",
 		"discdiffyear":"0.04722222222221717",
-		"edit":false
-	},
-	{
-		"name1":"SN2016cyw",
-		"aliases1":[
-			"SN2016cyw",
-			"KAIT-16ag",
-			"AT2016cyw"
-		],
-		"name2":"PS16dtj",
-		"aliases2":[
-			"PS16dtj",
-			"AT2016ezm"
-		],
-		"ra1":"01:25:56.19",
-		"dec1":"+16:35:49.50",
-		"ra2":"01:25:56.25",
-		"dec2":"+16:35:43.72",
-		"distdeg":"0.0016249026561555961",
-		"maxdiffyear":"0.10277777777787378",
-		"discdiffyear":"0.10398128861129408",
 		"edit":false
 	},
 	{
@@ -31427,24 +31247,6 @@
 		"ra2":"15:34:57.2184",
 		"dec2":"+23:30:11.319",
 		"distdeg":"3.487189962264079e-05",
-		"maxdiffyear":"",
-		"discdiffyear":"",
-		"edit":false
-	},
-	{
-		"name1":"SDSS-II SN 14198",
-		"aliases1":[
-			"SDSS-II SN 14198"
-		],
-		"name2":"SDSS-II SN 15279",
-		"aliases2":[
-			"SDSS-II SN 15279"
-		],
-		"ra1":"20:16:20.64",
-		"dec1":"-00:22:09.732",
-		"ra2":"20:16:20.64",
-		"dec2":"-00:22:08.76",
-		"distdeg":"0.00026999999999999247",
 		"maxdiffyear":"",
 		"discdiffyear":"",
 		"edit":false
