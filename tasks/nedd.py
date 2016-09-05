@@ -30,6 +30,7 @@ def do_nedd(catalog):
     refurl = "http://ned.ipac.caltech.edu/Library/Distances/"
     nedd_dict = OrderedDict()
     olddistname = ''
+    loopcnt = 0
     for r, row in enumerate(pbar(data, task_str)):
         if r <= 12:
             continue
@@ -88,6 +89,10 @@ def do_nedd(catalog):
             if catalog.args.update and olddistname != distname:
                 catalog.journal_entries()
         olddistname = distname
+
+        loopcnt = loopcnt + 1
+        if catalog.args.travis and loopcnt % catalog.TRAVIS_QUERY_LIMIT == 0:
+            break
     catalog.journal_entries()
 
     f.close()

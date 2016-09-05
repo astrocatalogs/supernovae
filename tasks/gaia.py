@@ -23,6 +23,7 @@ def do_gaia(catalog):
                             delimiter=',', skipinitialspace=True))
     reference = 'Gaia Photometric Science Alerts'
     refurl = 'http://gsaweb.ast.cam.ac.uk/alerts/alertsindex'
+    loopcnt = 0
     for ri, row in enumerate(pbar(tsvin, task_str)):
         if ri == 0 or not row:
             continue
@@ -88,5 +89,8 @@ def do_gaia(catalog):
                 e_magnitude=e_mag, source=source)
         if catalog.args.update:
             catalog.journal_entries()
+                loopcnt = loopcnt + 1
+        if catalog.args.travis and loopcnt % catalog.TRAVIS_QUERY_LIMIT == 0:
+            break
     catalog.journal_entries()
     return

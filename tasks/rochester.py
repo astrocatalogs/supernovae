@@ -43,6 +43,7 @@ def do_rochester(catalog):
         sec_ref = 'Latest Supernovae'
         sec_refurl = ('http://www.rochesterastronomy.org/'
                       'snimages/snredshiftall.html')
+        loopcnt = 0
         for rr, row in enumerate(pbar(rows, task_str)):
             if rr == 0:
                 continue
@@ -142,6 +143,10 @@ def do_rochester(catalog):
                 cols[13].contents[0]).strip(), sources)
             if catalog.args.update:
                 catalog.journal_entries()
+            loopcnt = loopcnt + 1
+            if (catalog.args.travis and
+                    loopcnt % catalog.TRAVIS_QUERY_LIMIT == 0):
+                break
 
     if not catalog.args.update:
         vsnetfiles = ['latestsne.dat']
@@ -151,6 +156,7 @@ def do_rochester(catalog):
             with open(file_name, 'r', encoding='latin1') as csv_file:
                 tsvin = csv.reader(csv_file, delimiter=' ',
                                    skipinitialspace=True)
+                loopcnt = 0
                 for rr, row in enumerate(tsvin):
                     if (not row or row[0] in ['Transient'] or
                             row[0][:4] in ['http', 'www.'] or len(row) < 3):
@@ -213,6 +219,10 @@ def do_rochester(catalog):
                     catalog.entries[name].add_photometry(
                         time=mjd, u_time='MJD', band=band, magnitude=magnitude,
                         e_magnitude=e_magnitude, source=sources)
+
+                    if (catalog.args.travis and
+                            loopcnt % catalog.TRAVIS_QUERY_LIMIT == 0):
+                        break
 
     catalog.journal_entries()
     return
