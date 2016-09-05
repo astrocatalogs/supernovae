@@ -5,10 +5,10 @@ from astrocats.catalog.quantity import QUANTITY
 __all__ = ['frame_priority']
 
 
-def frame_priority(quantity):
+def frame_priority(quantity, key):
     if quantity.get(QUANTITY.KIND, ''):
-        if quantity[QUANTITY.KIND] in quantity.kind_preference:
-            return quantity.kind_preference.index(quantity[QUANTITY.KIND])
+        if quantity[QUANTITY.KIND] in key.kind_preference:
+            return key.kind_preference.index(quantity[QUANTITY.KIND])
         else:
-            return len(quantity.kind_preference)
-    return len(quantity.kind_preference)
+            return len(key.kind_preference)
+    return len(key.kind_preference)

@@ -178,8 +178,9 @@ class Supernova(Entry):
 
         my_quantity_list = self.get(quantity, [])
 
-        if (forcereplacebetter or quantity.replace_better) and \
-                len(my_quantity_list) > 1:
+        if ((forcereplacebetter or
+             (type(quantity) == Key and quantity.replace_better)) and
+                len(my_quantity_list) > 1):
 
             # The quantity that was just added should be last in the list
             added_quantity = my_quantity_list.pop()
@@ -408,10 +409,7 @@ class Supernova(Entry):
                 filter(None, [SPECTRUM.TIME in x
                               for x in self[self._KEYS.SPECTRA]]))):
             self[self._KEYS.SPECTRA].sort(
-                key=lambda x: (float(x[SPECTRUM.TIME]) if
-                               SPECTRUM.TIME in x else 0.0,
-                               x[SPECTRUM.FILENAME] if
-                               SPECTRUM.FILENAME in x else ''))
+                key=lambda x: (float(x[SPECTRUM.TIME]) if SPECTRUM.TIME in x else 0.0, x[SPECTRUM.FILENAME] if SPECTRUM.FILENAME in x else ''))
 
         if self._KEYS.SOURCES in self:
             for source in self[self._KEYS.SOURCES]:
@@ -464,13 +462,13 @@ class Supernova(Entry):
             self[self._KEYS.REDSHIFT] = list(
                 sorted(
                     self[self._KEYS.REDSHIFT],
-                    key=lambda key: frame_priority(key)))
+                    key=lambda q: frame_priority(q, self._KEYS.REDSHIFT)))
 
         if self._KEYS.VELOCITY in self:
             self[self._KEYS.VELOCITY] = list(
                 sorted(
                     self[self._KEYS.VELOCITY],
-                    key=lambda key: frame_priority(key)))
+                    key=lambda q: frame_priority(q, self._KEYS.VELOCITY)))
 
         if self._KEYS.CLAIMED_TYPE in self:
             self[self._KEYS.CLAIMED_TYPE] = self.ct_list_prioritized()
@@ -729,14 +727,15 @@ class Supernova(Entry):
 
     def get_best_redshift(self):
         bestsig = -1
-        bestkind = 10
+        bestkind = None
         for z in self['redshift']:
             try:
-                kind = z.kind_preference().index(z.get(QUANTITY.KIND, ''))
+                kind = z.kind_preference.index(z.get(QUANTITY.KIND, ''))
             except:
-                kind = 10
+                kind = None
             sig = get_sig_digits(z[QUANTITY.VALUE])
-            if sig > bestsig and kind <= bestkind:
+            if (sig > bestsig and (
+                    (kind is None and bestkind is None) or kind <= bestkind)):
                 bestz = z[QUANTITY.VALUE]
                 bestkind = kind
                 bestsig = sig

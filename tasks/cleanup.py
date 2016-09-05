@@ -338,7 +338,8 @@ def do_cleanup(catalog):
                         SUPERNOVA.VELOCITY,
                         pnum,
                         source,
-                        kind=SUPERNOVA.VELOCITY.kind_preference[bestkind])
+                        kind=(SUPERNOVA.VELOCITY.kind_preference[bestkind]
+                              if bestkind else ''))
                 if bestz > 0.:
                     from astropy.cosmology import Planck15 as cosmo
                     if SUPERNOVA.LUM_DIST not in catalog.entries[name]:
@@ -354,7 +355,8 @@ def do_cleanup(catalog):
                             pretty_num(
                                 dl.value, sig=bestsig + 1),
                             sources,
-                            kind=SUPERNOVA.LUM_DIST.kind_preference[bestkind],
+                            kind=(SUPERNOVA.LUM_DIST.kind_preference[bestkind]
+                                  if bestkind else ''),
                             derived=True)
                         if (SUPERNOVA.MAX_ABS_MAG not in catalog.entries[name]
                                 and SUPERNOVA.MAX_APP_MAG in
