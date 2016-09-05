@@ -1594,7 +1594,7 @@ def do_vizier(catalog):
             '20' + row['SNSDF'][:2] + '/' + row['SNSDF'][2:4], source,
             kind='host')
         catalog.entries[name].add_quantity(
-            'hostoffsetang', row['Offset'], source, u_value='arcseconds')
+            SUPERNOVA.HOST_OFFSET_ANG, row['Offset'], source, u_value='arcseconds')
         catalog.entries[name].add_quantity(
             SUPERNOVA.CLAIMED_TYPE, row['Type'], source, kind='photometric')
     catalog.journal_entries()
@@ -1644,7 +1644,7 @@ def do_vizier(catalog):
         catalog.entries[name].add_quantity(SUPERNOVA.HOST_DEC, row['DEG'],
                                            source)
         catalog.entries[name].add_quantity(
-            'hostoffsetang', row['ASep'], source, u_value='arcseconds')
+            SUPERNOVA.HOST_OFFSET_ANG, row['ASep'], source, u_value='arcseconds')
         catalog.entries[name].add_quantity(
             SUPERNOVA.REDSHIFT,
             row['zhost'],
@@ -1675,7 +1675,7 @@ def do_vizier(catalog):
         catalog.entries[name].add_quantity(SUPERNOVA.HOST_DEC, row['DEG'],
                                            source)
         catalog.entries[name].add_quantity(
-            'hostoffsetang', row['ASep'], source, u_value='arcseconds')
+            SUPERNOVA.HOST_OFFSET_ANG, row['ASep'], source, u_value='arcseconds')
         catalog.entries[name].add_quantity(
             SUPERNOVA.REDSHIFT,
             row['zhost'],

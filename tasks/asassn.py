@@ -83,7 +83,7 @@ def do_asassn(catalog):
         catalog.entries[name].add_quantity(
             SUPERNOVA.REDSHIFT, redshift, sources)
         catalog.entries[name].add_quantity(
-            'hostoffsetang', hostoff, sources, u_value='arcseconds')
+            SUPERNOVA.HOST_OFFSET_ANG, hostoff, sources, u_value='arcseconds')
         for ct in claimedtype.split('/'):
             if ct != 'Unk':
                 catalog.entries[name].add_quantity(SUPERNOVA.CLAIMED_TYPE, ct,
