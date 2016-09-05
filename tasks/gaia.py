@@ -89,7 +89,7 @@ def do_gaia(catalog):
                 e_magnitude=e_mag, source=source)
         if catalog.args.update:
             catalog.journal_entries()
-                loopcnt = loopcnt + 1
+        loopcnt = loopcnt + 1
         if catalog.args.travis and loopcnt % catalog.TRAVIS_QUERY_LIMIT == 0:
             break
     catalog.journal_entries()
