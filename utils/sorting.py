@@ -1,14 +1,14 @@
 """
 """
-from ..constants import PREF_KINDS
+from astrocats.catalog.quantity import QUANTITY
 
 __all__ = ['frame_priority']
 
 
-def frame_priority(attr):
-    if 'kind' in attr:
-        if attr['kind'] in PREF_KINDS:
-            return PREF_KINDS.index(attr['kind'])
+def frame_priority(quantity):
+    if quantity.get(QUANTITY.KIND, ''):
+        if quantity[QUANTITY.KIND] in quantity.kind_preference:
+            return quantity.kind_preference.index(quantity[QUANTITY.KIND])
         else:
-            return len(PREF_KINDS)
-    return len(PREF_KINDS)
+            return len(quantity.kind_preference)
+    return len(quantity.kind_preference)

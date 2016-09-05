@@ -17,12 +17,15 @@ from astrocats.catalog.utils import (bib_priority, get_sig_digits,
                                      uniq_cdl)
 from cdecimal import Decimal
 
-from .constants import MAX_BANDS, PREF_KINDS, REPR_BETTER_QUANTITY
+from .constants import MAX_BANDS
 from .utils import frame_priority, host_clean, radec_clean
 
 
 class SUPERNOVA(ENTRY):
-    CLAIMED_TYPE = Key('claimedtype', KEY_TYPES.STRING)
+    CLAIMED_TYPE = Key('claimedtype',
+                       KEY_TYPES.STRING,
+                       kind_preference=['spectroscopic', 'photometric'],
+                       replace_better=True)
     DISCOVERY_DATE = Key('discoverdate', KEY_TYPES.STRING)
     ERRORS = Key('errors')
 
@@ -175,7 +178,7 @@ class Supernova(Entry):
 
         my_quantity_list = self.get(quantity, [])
 
-        if (forcereplacebetter or quantity in REPR_BETTER_QUANTITY) and \
+        if (forcereplacebetter or quantity.replace_better) and \
                 len(my_quantity_list) > 1:
 
             # The quantity that was just added should be last in the list
@@ -200,24 +203,44 @@ class Supernova(Entry):
                             continue
                     newquantities.append(ct)
             else:
-                newsig = get_sig_digits(added_quantity[QUANTITY.VALUE])
-                for ct in my_quantity_list:
-                    if QUANTITY.E_VALUE in ct:
-                        if QUANTITY.E_VALUE in added_quantity:
-                            if (float(added_quantity[QUANTITY.E_VALUE]) <=
-                                    float(ct[QUANTITY.E_VALUE])):
+                if type(quantity) != Key:
+                    isworse = False
+                elif quantity.type == KEY_TYPES.NUMERIC:
+                    newsig = get_sig_digits(added_quantity[QUANTITY.VALUE])
+                    for ct in my_quantity_list:
+                        if QUANTITY.E_VALUE in ct:
+                            if QUANTITY.E_VALUE in added_quantity:
+                                if (float(added_quantity[QUANTITY.E_VALUE]) <=
+                                        float(ct[QUANTITY.E_VALUE])):
+                                    isworse = False
+                                    continue
+                            newquantities.append(ct)
+                        else:
+                            if QUANTITY.E_VALUE in added_quantity:
                                 isworse = False
                                 continue
-                        newquantities.append(ct)
-                    else:
-                        if QUANTITY.E_VALUE in added_quantity:
-                            isworse = False
-                            continue
-                        oldsig = get_sig_digits(ct[QUANTITY.VALUE])
-                        if oldsig >= newsig:
-                            newquantities.append(ct)
-                        if newsig >= oldsig:
-                            isworse = False
+                            oldsig = get_sig_digits(ct[QUANTITY.VALUE])
+                            if oldsig >= newsig:
+                                newquantities.append(ct)
+                            if newsig >= oldsig:
+                                isworse = False
+                elif quantity.type == KEY_TYPES.STRING:
+                    if len(quantity.kind_preference):
+                        for ct in my_quantity_list:
+                            if (ct.get(QUANTITY.KIND, '') in
+                                    quantity.kind_preference):
+                                if (added_quantity.get(QUANTITY.KIND, '') in
+                                        quantity.kind_preference):
+                                    if (quantity.kind_preference.index(
+                                            added_quantity[QUANTITY.KIND]) <=
+                                            quantity.kind_preference.index(ct[
+                                                QUANTITY.KIND])):
+                                        isworse = False
+                                        continue
+                            else:
+                                isworse = False
+                                continue
+
             if not isworse:
                 newquantities.append(added_quantity)
             self[quantity] = newquantities
@@ -385,7 +408,10 @@ class Supernova(Entry):
                 filter(None, [SPECTRUM.TIME in x
                               for x in self[self._KEYS.SPECTRA]]))):
             self[self._KEYS.SPECTRA].sort(
-                key=lambda x: (float(x[SPECTRUM.TIME]) if SPECTRUM.TIME in x else 0.0, x[SPECTRUM.FILENAME] if SPECTRUM.FILENAME in x else ''))
+                key=lambda x: (float(x[SPECTRUM.TIME]) if
+                               SPECTRUM.TIME in x else 0.0,
+                               x[SPECTRUM.FILENAME] if
+                               SPECTRUM.FILENAME in x else ''))
 
         if self._KEYS.SOURCES in self:
             for source in self[self._KEYS.SOURCES]:
@@ -491,7 +517,7 @@ class Supernova(Entry):
             def_source_dict = sources[0]
             allow_alias = False
             if SOURCE.ALIAS in def_source_dict:
-                del(def_source_dict[SOURCE.ALIAS])
+                del (def_source_dict[SOURCE.ALIAS])
         else:
             # If there are no existing sources, add OSC as one
             self.add_self_source()
@@ -541,8 +567,8 @@ class Supernova(Entry):
                         if not def_source_dict:
                             raise ValueError("No sources found, can't add "
                                              "photometry.")
-                        source = self.add_source(allow_alias=allow_alias,
-                                                 **def_source_dict)
+                        source = self.add_source(
+                            allow_alias=allow_alias, **def_source_dict)
                         data[self._KEYS.PHOTOMETRY][p][
                             QUANTITY.SOURCE] = source
             else:
@@ -551,8 +577,8 @@ class Supernova(Entry):
                         if not def_source_dict:
                             raise ValueError("No sources found, can't add "
                                              "quantity.")
-                        source = self.add_source(allow_alias=allow_alias,
-                                                 **def_source_dict)
+                        source = self.add_source(
+                            allow_alias=allow_alias, **def_source_dict)
                         data[key][qi][QUANTITY.SOURCE] = source
 
         return data
@@ -687,7 +713,7 @@ class Supernova(Entry):
         newphotos = []
         for photo in self[SUPERNOVA.PHOTOMETRY]:
             if (PHOTOMETRY.MAGNITUDE in photo and
-                PHOTOMETRY.BAND not in photo and
+                    PHOTOMETRY.BAND not in photo and
                 (PHOTOMETRY.TIME not in photo or
                  PHOTOMETRY.U_TIME not in photo or
                  (float(photo[PHOTOMETRY.TIME]) >= minmjd and
@@ -705,7 +731,10 @@ class Supernova(Entry):
         bestsig = -1
         bestkind = 10
         for z in self['redshift']:
-            kind = PREF_KINDS.index(z['kind'] if 'kind' in z else '')
+            try:
+                kind = z.kind_preference().index(z.get(QUANTITY.KIND, ''))
+            except:
+                kind = 10
             sig = get_sig_digits(z[QUANTITY.VALUE])
             if sig > bestsig and kind <= bestkind:
                 bestz = z[QUANTITY.VALUE]
