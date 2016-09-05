@@ -3,7 +3,6 @@
 import csv
 import os
 import re
-import urllib
 
 from astrocats.catalog.utils import jd_to_mjd, pbar
 
