@@ -3,8 +3,9 @@
 import os
 import re
 
-from astrocats.catalog.utils import pbar
 from bs4 import BeautifulSoup
+
+from astrocats.catalog.utils import pbar
 
 from ..supernova import SUPERNOVA
 
@@ -38,8 +39,9 @@ def do_snhunt(catalog):
         cols = [str(xx.text) for xx in tr.findAll('td')]
         if not cols:
             continue
-        name = re.sub('<[^<]+?>', '', cols[4]
-                      ).strip().replace(' ', '').replace('SNHunt', 'SNhunt')
+        name = re.sub(
+            '<[^<]+?>', '',
+            cols[4]).strip().replace(' ', '').replace('SNHunt', 'SNhunt')
         name = catalog.add_entry(name)
         source = catalog.entries[name].add_source(
             name='Supernova Hunt', url=snh_url)
@@ -52,13 +54,14 @@ def do_snhunt(catalog):
             SUPERNOVA.DEC, cols[3], source, u_value='floatdegrees')
         dd = cols[0]
         discoverdate = dd[:4] + '/' + dd[4:6] + '/' + dd[6:8]
-        catalog.entries[name].add_quantity(
-            SUPERNOVA.DISCOVER_DATE, discoverdate, source)
+        catalog.entries[name].add_quantity(SUPERNOVA.DISCOVER_DATE,
+                                           discoverdate, source)
         discoverers = cols[5].split('/')
         for discoverer in discoverers:
-            catalog.entries[name].add_quantity('discoverer', 'CRTS', source)
-            catalog.entries[name].add_quantity(
-                'discoverer', discoverer, source)
+            catalog.entries[name].add_quantity(SUPERNOVA.DISCOVERER, 'CRTS',
+                                               source)
+            catalog.entries[name].add_quantity(SUPERNOVA.DISCOVERER,
+                                               discoverer, source)
         if catalog.args.update:
             catalog.journal_entries()
 

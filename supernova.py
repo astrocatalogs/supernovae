@@ -733,8 +733,8 @@ class Supernova(Entry):
             except:
                 kind = None
             sig = get_sig_digits(z[QUANTITY.VALUE])
-            if (sig > bestsig and (
-                    (kind is None and bestkind is None) or kind <= bestkind)):
+            if (sig > bestsig and ((kind is None and bestkind is None) or
+                                   kind <= bestkind)):
                 bestz = z[QUANTITY.VALUE]
                 bestkind = kind
                 bestsig = sig
@@ -768,9 +768,9 @@ class Supernova(Entry):
                 newname = alias
                 break
         # Otherwise, name based on the 'discoverer' survey
-        if not newname and 'discoverer' in self:
+        if not newname and SUPERNOVA.DISCOVERER in self:
             discoverer = ','.join([x['value'].upper()
-                                   for x in self['discoverer']])
+                                   for x in self[SUPERNOVA.DISCOVERER]])
             if 'ASAS' in discoverer:
                 for alias in aliases:
                     if 'ASASSN' in alias.upper():

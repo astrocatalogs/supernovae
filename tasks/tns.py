@@ -95,7 +95,7 @@ def do_tns(catalog):
                     SUPERNOVA.REDSHIFT, row[7], source, kind='host')
             if row[8]:
                 catalog.entries[name].add_quantity(
-                    'discoverer', row[8], source)
+                    SUPERNOVA.DISCOVERER, row[8], source)
             # Currently, all events listing all possible observers. TNS bug?
             # if row[9]:
             #    observers = row[9].split(',')

@@ -138,7 +138,7 @@ def do_rochester(catalog):
             if cols[11].contents[0] != 'n/a':
                 catalog.entries[name].add_quantity(SUPERNOVA.REDSHIFT, str(
                     cols[11].contents[0]).strip(), sources)
-            catalog.entries[name].add_quantity('discoverer', str(
+            catalog.entries[name].add_quantity(SUPERNOVA.DISCOVERER, str(
                 cols[13].contents[0]).strip(), sources)
             if catalog.args.update:
                 catalog.journal_entries()
