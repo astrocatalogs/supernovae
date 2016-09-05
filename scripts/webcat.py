@@ -1798,8 +1798,7 @@ for fcnt, eventfile in enumerate(tq(sorted(files, key=lambda s: s.lower()))):
 
     hasimage = False
     skyhtml = ''
-    if 'ra' in catalog[entry] and 'dec' in catalog[
-            entry] and args.collecthosts:
+    if 'ra' in catalog[entry] and 'dec' in catalog[entry]:
         snra = catalog[entry]['ra'][0]['value']
         sndec = catalog[entry]['dec'][0]['value']
         try:
@@ -1830,7 +1829,7 @@ for fcnt, eventfile in enumerate(tq(sorted(files, key=lambda s: s.lower()))):
             hasimage = True
             if eventname in hostimgdict:
                 imgsrc = hostimgdict[eventname]
-            else:
+            elif args.collecthosts:
                 try:
                     response = urllib.request.urlopen(
                         'http://skyservice.pha.jhu.edu/DR12/ImgCutout/getjpeg.aspx?ra='
@@ -1966,7 +1965,7 @@ for fcnt, eventfile in enumerate(tq(sorted(files, key=lambda s: s.lower()))):
         html = re.sub(r'(\<\/title\>)', r'''\1\n
             <base target="_parent" />\n
             <link rel="stylesheet" href="https://sne.space/astrocats/astrocats/supernovae/html/event.css" type="text/css">\n
-            <script type="text/javascript" src="https://sne.space/astrocats/astrocats/supernovae/scripts/marks.js" type="text/css"></script>\n
+            <script type="text/javascript" src="https://sne.space/wp-content/plugins/transient-table/transient-table.js" type="text/css"></script>\n
             <script type="text/javascript">\n
                 if(top==self)\n
                 this.location="''' + eventname + '''"\n
@@ -1987,6 +1986,10 @@ for fcnt, eventfile in enumerate(tq(sorted(files, key=lambda s: s.lower()))):
             eventname + r'</a></div>\n\1', html)
 
         newhtml = r'<div class="event-tab-div"><h3 class="event-tab-title">Event metadata</h3><table class="event-table"><tr><th width=100px class="event-cell">Quantity</th><th class="event-cell">Value<sup>Sources</sup> [Kind]</th></tr>\n'
+        edit = "true" if os.path.isfile(
+            'astrocats/supernovae/input/sne-internal/' +
+            get_event_filename(
+                entry) + '.json') else "false"
         for key in columnkey:
             if key in catalog[entry] and key not in eventignorekey and len(
                     catalog[entry][key]) > 0:
@@ -2025,7 +2028,7 @@ for fcnt, eventfile in enumerate(tq(sorted(files, key=lambda s: s.lower()))):
                                     (', ' if s > 0 else '') + r'<a href="#source' + \
                                     source + r'">' + source + r'</a>'
                             keyhtml = keyhtml + (r'<br>' if r > 0 else '')
-                            keyhtml = keyhtml + "<div class='singletooltip'>"
+                            keyhtml = keyhtml + "<div class='stt'>"
                             if 'derived' in row and row['derived']:
                                 keyhtml = keyhtml + '<span class="derived">'
                             keyhtml = keyhtml + row['value']
@@ -2056,13 +2059,9 @@ for fcnt, eventfile in enumerate(tq(sorted(files, key=lambda s: s.lower()))):
                                 raise (ValueError(
                                     'Unable to find associated source by alias!')
                                        )
-                            edit = "true" if os.path.isfile(
-                                'astrocats/supernovae/input/sne-internal/' +
-                                get_event_filename(
-                                    entry) + '.json') else "false"
                             keyhtml = (
                                 keyhtml +
-                                "<span class='singletooltiptext'><button class='singlemarkerror' type='button' onclick='markError(\""
+                                "<span class='sttt'><button class='sme' type='button' onclick='markError(\""
                                 + entry + "\", \"" + key + "\", \"" +
                                 ','.join(idtypes) + "\", \"" +
                                 ','.join(sourceids) + "\", \"" + edit +
@@ -2073,10 +2072,16 @@ for fcnt, eventfile in enumerate(tq(sorted(files, key=lambda s: s.lower()))):
                                 (r'<br>' if r > 0 else '') + row.strip()
 
                 if keyhtml:
-                    newhtml = (
-                        newhtml + r'<tr><td class="event-cell">' +
+                    newhtml = newhtml + r'<tr><td class="event-cell">'
+                    if key not in ['photolink', 'spectralink', 'radiolink', 'xraylink', 'name']:
+                        newhtml = (newhtml + '<div class="stt">' +
                         eventpageheader[key] +
-                        r'</td><td width=250px class="event-cell">' + keyhtml)
+                        "<span class='sttright'><button class='saq' type='button' onclick='addQuantity(\""
+                        + entry + "\", \"" + key + "\", \"" + edit +
+                        "\")'>Add new value</button></span></div>")
+                    else:
+                        newhtml = newhtml + eventpageheader[key]
+                    newhtml = newhtml + r'</td><td width=250px class="event-cell">' + keyhtml
 
                 newhtml = newhtml + r'</td></tr>\n'
         newhtml = newhtml + r'</table><em>Values that are colored <span class="derived">purple</span> were computed by the OSC using values provided by the specified sources.</em></div>\n\1'
