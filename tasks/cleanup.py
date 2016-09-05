@@ -313,7 +313,7 @@ def do_cleanup(catalog):
                 pnum = (float(catalog.entries[name][SUPERNOVA.MAX_APP_MAG][0][
                     QUANTITY.VALUE]) -
                     5.0 * (log10(float(bestld) * 1.0e6) - 1.0))
-                pnum = pretty_num(pnum, sig=bestsig)
+                pnum = pretty_num(pnum, sig=bestsig+1)
                 catalog.entries[name].add_quantity(
                     SUPERNOVA.MAX_ABS_MAG, pnum, sources, derived=True)
         if SUPERNOVA.REDSHIFT in catalog.entries[name]:
@@ -346,7 +346,7 @@ def do_cleanup(catalog):
                         sources = uniq_cdl(sources + bestsrc.split(','))
                         catalog.entries[name].add_quantity(
                             SUPERNOVA.LUM_DIST, pretty_num(dl.value,
-                                                           sig=bestsig),
+                                                           sig=bestsig+1),
                             sources, kind=PREF_KINDS[bestkind],
                             derived=True)
                         if (SUPERNOVA.MAX_ABS_MAG not in
@@ -359,7 +359,7 @@ def do_cleanup(catalog):
                                     SUPERNOVA.MAX_APP_MAG][0][
                                     QUANTITY.VALUE]) -
                                 5.0 * (log10(dl.to('pc').value) - 1.0),
-                                sig=bestsig)
+                                sig=bestsig+1)
                             catalog.entries[name].add_quantity(
                                 SUPERNOVA.MAX_ABS_MAG, pnum, sources,
                                 derived=True)
