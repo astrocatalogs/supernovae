@@ -306,7 +306,7 @@ def do_cleanup(catalog):
                 sig = get_sig_digits(ld[QUANTITY.VALUE])
                 if sig > bestsig:
                     bestld = ld[QUANTITY.VALUE]
-                    bestsrc = ld['source']
+                    bestsrc = ld[QUANTITY.SOURCE]
                     bestsig = sig
             if bestsig > 0 and is_number(bestld) and float(bestld) > 0.:
                 source = catalog.entries[name].add_self_source()
@@ -406,38 +406,42 @@ def do_cleanup(catalog):
                 pass
             else:
                 sources = uniq_cdl([catalog.entries[name].add_self_source(
-                )] + catalog.entries[name][SUPERNOVA.RA][0]['source'].split(
-                    ',') + catalog.entries[name][SUPERNOVA.DEC][0][
-                        'source'].split(',') + catalog.entries[name][
-                            SUPERNOVA.HOST_RA][0]['source'].split(',') +
-                                   catalog.entries[name][SUPERNOVA.HOST_DEC][
-                                       0]['source'].split(','))
-                if 'hostoffsetang' not in catalog.entries[name]:
+                )] + catalog.entries[name][SUPERNOVA.RA][0][
+                    QUANTITY.SOURCE].split(',') + catalog.entries[name][
+                        SUPERNOVA.DEC][0][QUANTITY.SOURCE].split(
+                            ',') + catalog.entries[name][SUPERNOVA.HOST_RA][0][
+                                QUANTITY.SOURCE].split(',') + catalog.entries[
+                                    name][SUPERNOVA.HOST_DEC][0][
+                                        QUANTITY.SOURCE].split(','))
+                if SUPERNOVA.HOST_OFFSET_ANG not in catalog.entries[name]:
                     hosa = Decimal(
                         hypot(c1.ra.degree - c2.ra.degree, c1.dec.degree -
                               c2.dec.degree))
                     hosa = pretty_num(hosa * Decimal(3600.))
                     catalog.entries[name].add_quantity(
-                        'hostoffsetang',
+                        SUPERNOVA.HOST_OFFSET_ANG,
                         hosa,
                         sources,
                         derived=True,
                         u_value='arcseconds')
                 if (SUPERNOVA.COMOVING_DIST in catalog.entries[name] and
                         SUPERNOVA.REDSHIFT in catalog.entries[name] and
-                        'hostoffsetdist' not in catalog.entries[name]):
+                        SUPERNOVA.HOST_OFFSET_DIST not in
+                        catalog.entries[name]):
                     offsetsig = get_sig_digits(catalog.entries[name][
-                        'hostoffsetang'][0][QUANTITY.VALUE])
+                        SUPERNOVA.HOST_OFFSET_ANG][0][QUANTITY.VALUE])
                     sources = uniq_cdl(
-                        sources.split(',') + (catalog.entries[name][
-                            SUPERNOVA.COMOVING_DIST][0]['source']).split(',') +
-                        (catalog.entries[name][SUPERNOVA.REDSHIFT][0]['source']
-                         ).split(','))
+                        sources.split(',') +
+                        (catalog.entries[name][SUPERNOVA.COMOVING_DIST][0][
+                            QUANTITY.SOURCE]).split(',') + (catalog.entries[
+                                name][SUPERNOVA.REDSHIFT][0][QUANTITY.SOURCE]
+                                                            ).split(','))
                     (catalog.entries[name].add_quantity(
-                        'hostoffsetdist',
+                        SUPERNOVA.HOST_OFFSET_DIST,
                         pretty_num(
-                            float(catalog.entries[name]['hostoffsetang'][0][
-                                QUANTITY.VALUE]) / 3600. * (pi / 180.) *
+                            float(catalog.entries[name][
+                                SUPERNOVA.HOST_OFFSET_ANG][0][QUANTITY.VALUE])
+                            / 3600. * (pi / 180.) *
                             float(catalog.entries[name][
                                 SUPERNOVA.COMOVING_DIST][0][QUANTITY.VALUE]) *
                             1000. / (1.0 + float(catalog.entries[name][

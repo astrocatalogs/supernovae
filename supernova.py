@@ -178,8 +178,7 @@ class Supernova(Entry):
 
         my_quantity_list = self.get(quantity, [])
 
-        if ((forcereplacebetter or
-             (type(quantity) == Key and quantity.replace_better)) and
+        if ((forcereplacebetter or quantity.replace_better) and
                 len(my_quantity_list) > 1):
 
             # The quantity that was just added should be last in the list
@@ -545,7 +544,7 @@ class Supernova(Entry):
                  isinstance(distincts[0], str))):
                 source = self.add_self_source()
                 for df in distincts:
-                    self.add_quantity(dist_key, df, source)
+                    self.add_quantity(self._KEYS.DISTINCT_FROM, df, source)
 
         # Go through all remaining keys in 'dirty' event, and make sure
         # everything is a quantity with a source (OSC if no other)
@@ -728,7 +727,7 @@ class Supernova(Entry):
     def get_best_redshift(self):
         bestsig = -1
         bestkind = None
-        for z in self['redshift']:
+        for z in self[SUPERNOVA.REDSHIFT]:
             try:
                 kind = z.kind_preference.index(z.get(QUANTITY.KIND, ''))
             except:
@@ -739,7 +738,7 @@ class Supernova(Entry):
                 bestz = z[QUANTITY.VALUE]
                 bestkind = kind
                 bestsig = sig
-                bestsrc = z['source']
+                bestsrc = z[QUANTITY.SOURCE]
 
         return bestz, bestkind, bestsig, bestsrc
 
