@@ -141,6 +141,8 @@ def do_crts(catalog):
                     mjd = str(Decimal(mjdstr) + Decimal(53249.0))
                 else:
                     continue
+                mag = ''
+                err = ''
                 if 'javascript:showy' in line:
                     mag = re.search("showy\('(.*?)'\)", line).group(1)
                 if 'javascript:showz' in line:
