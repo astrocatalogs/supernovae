@@ -46,6 +46,7 @@ def do_snls_photo(catalog):
             2.5 * log10(1.0 + float(err) / float(counts)), sig=sig)
         photodict = {
             PHOTOMETRY.TIME: row[2],
+            PHOTOMETRY.U_TIME: 'MJD',
             PHOTOMETRY.BAND: row[1],
             PHOTOMETRY.MAGNITUDE: magnitude,
             PHOTOMETRY.E_MAGNITUDE: e_mag,

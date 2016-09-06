@@ -42,6 +42,7 @@ def do_vizier(catalog):
                     not isnan(float(row[bandtag]))):
                 catalog.entries[name].add_photometry(
                     time=jd_to_mjd(Decimal(row['JD'])),
+                    u_time='MJD',
                     band=band,
                     magnitude=row[bandtag],
                     e_magnitude=row['e_' + bandtag],
@@ -78,6 +79,7 @@ def do_vizier(catalog):
                     not isnan(float(row[bandtag]))):
                 catalog.entries[name].add_photometry(
                     time=row['MJD-' + band],
+                    u_time='MJD',
                     band=band,
                     magnitude=magnitude,
                     e_magnitude=e_mag,
@@ -288,6 +290,7 @@ def do_vizier(catalog):
             telescope = 'Subaru'
         catalog.entries[name].add_photometry(
             time=str(row['MJD']),
+            u_time='MJD',
             band=band,
             system=system,
             telescope=telescope,
@@ -363,6 +366,7 @@ def do_vizier(catalog):
         upperlimit = True if row['l_mag'] == '>' else False
         catalog.entries[name].add_photometry(
             time=mjd,
+            u_time='MJD',
             band=band,
             magnitude=magnitude,
             e_magnitude=e_magnitude,
@@ -540,6 +544,7 @@ def do_vizier(catalog):
         if row['mag'] != '--':
             catalog.entries[name].add_photometry(
                 time=str(row['MJD']),
+                u_time='MJD',
                 band=row['Filt'],
                 magnitude=str(row['mag']),
                 e_magnitude=str(row['e_mag']),
@@ -587,6 +592,7 @@ def do_vizier(catalog):
 
         catalog.entries[name].add_photometry(
             time=mjd,
+            u_time='MJD',
             band=band,
             magnitude=mag,
             source=uniq_cdl([source, secsource]))
@@ -682,6 +688,7 @@ def do_vizier(catalog):
                     not isnan(float(row[bandtag]))):
                 catalog.entries[name].add_photometry(
                     time=row['MJD'],
+                    u_time='MJD',
                     band=band,
                     magnitude=row[bandtag],
                     e_magnitude=row['e_' + bandtag],
@@ -752,6 +759,7 @@ def do_vizier(catalog):
         catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
         catalog.entries[name].add_photometry(
             time=str(jd_to_mjd(Decimal(row['JD']))),
+            u_time='MJD',
             instrument='QUEST',
             observatory='La Silla',
             band=row['Filt'],
@@ -780,6 +788,7 @@ def do_vizier(catalog):
                     not isnan(float(row[bandtag]))):
                 catalog.entries[name].add_photometry(
                     time=row['MJD' + band + '_'],
+                    u_time='MJD',
                     band=band + "'",
                     magnitude=row[bandtag],
                     e_magnitude=row['e_' + bandtag],
@@ -802,6 +811,7 @@ def do_vizier(catalog):
                     not isnan(float(row[bandtag]))):
                 catalog.entries[name].add_photometry(
                     time=row['MJD' + band + '_'],
+                    u_time='MJD',
                     band=band + "'",
                     magnitude=row[bandtag],
                     e_magnitude=row['e_' + bandtag],
@@ -821,6 +831,7 @@ def do_vizier(catalog):
         catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
         catalog.entries[name].add_photometry(
             time=row['MJD'],
+            u_time='MJD',
             band=row['Filt'],
             telescope=row['Tel'],
             magnitude=row['mag'],
@@ -840,6 +851,7 @@ def do_vizier(catalog):
         row = convert_aq_output(row)
         catalog.entries[name].add_photometry(
             time=str(jd_to_mjd(Decimal(row['JD']))),
+            u_time='MJD',
             band=row['Filt'],
             telescope=row['Tel'],
             magnitude=row['mag'],
@@ -863,6 +875,7 @@ def do_vizier(catalog):
             row['JD'] = '2456151.456'
         catalog.entries[name].add_photometry(
             time=str(jd_to_mjd(Decimal(row['JD']))),
+            u_time='MJD',
             band=row['Filt'],
             telescope=row['Inst'],
             magnitude=row['mag'],
@@ -888,6 +901,7 @@ def do_vizier(catalog):
             telescope = row['Inst']
         catalog.entries[name].add_photometry(
             time=row['MJD'],
+            u_time='MJD',
             band=row['Filt'],
             telescope=telescope,
             instrument=instrument,
@@ -918,6 +932,7 @@ def do_vizier(catalog):
                 upl = row['l_' + bandtag] == '>'
                 catalog.entries[name].add_photometry(
                     time=str(jd_to_mjd(Decimal(row['JD']))),
+                    u_time='MJD',
                     band=band,
                     magnitude=row[bandtag],
                     e_magnitude=e_mag,
@@ -927,6 +942,7 @@ def do_vizier(catalog):
                 not isnan(float(row['zmag']))):
             catalog.entries[name].add_photometry(
                 time=str(jd_to_mjd(Decimal(row['JD']))),
+                u_time='MJD',
                 band='z',
                 magnitude=row['zmag'],
                 e_magnitude=row['e_zmag'],
@@ -946,6 +962,7 @@ def do_vizier(catalog):
                          if row['l_' + bandtag] != '>' else '')
                 catalog.entries[name].add_photometry(
                     time=time,
+                    u_time='MJD',
                     band=band,
                     magnitude=row[bandtag],
                     e_magnitude=e_mag,
@@ -963,6 +980,7 @@ def do_vizier(catalog):
                     not isnan(float(row[bandtag]))):
                 catalog.entries[name].add_photometry(
                     time=str(jd_to_mjd(Decimal(row['JD']))),
+                    u_time='MJD',
                     band=band,
                     magnitude=row[bandtag],
                     e_magnitude=row['e_' + bandtag],
@@ -985,6 +1003,7 @@ def do_vizier(catalog):
                     not isnan(float(row[bandtag]))):
                 catalog.entries[name].add_photometry(
                     time=row["MJD"],
+                    u_time='MJD',
                     band=band,
                     magnitude=row[bandtag],
                     e_magnitude=row["e_" + bandtag]
@@ -997,6 +1016,7 @@ def do_vizier(catalog):
                     not isnan(float(row[bandtag]))):
                 catalog.entries[name].add_photometry(
                     time=row["MJD"],
+                    u_time='MJD',
                     band=band,
                     magnitude=row[bandtag],
                     e_magnitude=row["e_" + bandtag]
@@ -1019,6 +1039,7 @@ def do_vizier(catalog):
         e_mag = row['e_mag'] if not row['l_mag'] else ''
         catalog.entries[name].add_photometry(
             time=row['MJD'],
+            u_time='MJD',
             band='ROTSE',
             telescope='ROTSE',
             magnitude=row['mag'],
@@ -1037,6 +1058,7 @@ def do_vizier(catalog):
                     not isnan(float(row[bandtag]))):
                 catalog.entries[name].add_photometry(
                     time=row["MJD"],
+                    u_time='MJD',
                     telescope="PAIRITEL",
                     band=band,
                     magnitude=row[bandtag],
@@ -1050,6 +1072,7 @@ def do_vizier(catalog):
         row = convert_aq_output(row)
         catalog.entries[name].add_photometry(
             time=row['MJD'],
+            u_time='MJD',
             band=row['Filt'],
             telescope='P60',
             magnitude=row['mag'],
@@ -1063,6 +1086,7 @@ def do_vizier(catalog):
         row = convert_aq_output(row)
         catalog.entries[name].add_photometry(
             time=row['MJD'],
+            u_time='MJD',
             band=row['Filt'],
             instrument='UVOT',
             telescope='Swift',
@@ -1088,6 +1112,7 @@ def do_vizier(catalog):
                     not isnan(float(row[bandtag]))):
                 catalog.entries[name].add_photometry(
                     time=str(jd_to_mjd(Decimal(row["JD"]))),
+                    u_time='MJD',
                     telescope=row["Tel"],
                     band=band,
                     magnitude=row[bandtag],
@@ -1105,6 +1130,7 @@ def do_vizier(catalog):
                     not isnan(float(row[bandtag]))):
                 catalog.entries[name].add_photometry(
                     time=str(jd_to_mjd(Decimal(row["JD"]))),
+                    u_time='MJD',
                     telescope=row["Tel"],
                     band=band + "'",
                     magnitude=row[bandtag],
@@ -1122,6 +1148,7 @@ def do_vizier(catalog):
                     not isnan(float(row[bandtag]))):
                 catalog.entries[name].add_photometry(
                     time=str(jd_to_mjd(Decimal(row["JD"]))),
+                    u_time='MJD',
                     instrument=row['Inst'],
                     band=band,
                     magnitude=row[bandtag],
@@ -1147,6 +1174,7 @@ def do_vizier(catalog):
                     not isnan(float(row[bandtag]))):
                 catalog.entries[name].add_photometry(
                     time=mjd,
+                    u_time='MJD',
                     telescope=row["Tel"],
                     band=band,
                     magnitude=row[bandtag],
@@ -1172,6 +1200,7 @@ def do_vizier(catalog):
                     not isnan(float(row[bandtag]))):
                 catalog.entries[name].add_photometry(
                     time=mjd,
+                    u_time='MJD',
                     telescope=row["Tel"],
                     band=band,
                     magnitude=row[bandtag],
@@ -1190,6 +1219,7 @@ def do_vizier(catalog):
                     not isnan(float(row[bandtag]))):
                 catalog.entries[name].add_photometry(
                     time=mjd,
+                    u_time='MJD',
                     telescope=row["Tel"],
                     band=band,
                     magnitude=row[bandtag],
@@ -1215,6 +1245,7 @@ def do_vizier(catalog):
                     not isnan(float(row[bandtag]))):
                 catalog.entries[name].add_photometry(
                     time=mjd,
+                    u_time='MJD',
                     telescope="LJT",
                     instrument="YFOSC",
                     band=band,
@@ -1234,6 +1265,7 @@ def do_vizier(catalog):
                     not isnan(float(row[bandtag]))):
                 catalog.entries[name].add_photometry(
                     time=mjd,
+                    u_time='MJD',
                     telescope="Swift",
                     instrument="UVOT",
                     band=band,
@@ -1253,6 +1285,7 @@ def do_vizier(catalog):
                     not isnan(float(row[bandtag]))):
                 catalog.entries[name].add_photometry(
                     time=mjd,
+                    u_time='MJD',
                     telescope="LJT",
                     band=band,
                     magnitude=row[bandtag],
@@ -1276,6 +1309,7 @@ def do_vizier(catalog):
                 not isnan(float(row['mag']))):
             catalog.entries[name].add_photometry(
                 time=mjd,
+                u_time='MJD',
                 telescope='Swift',
                 instrument='UVOT',
                 band=row['Filt'],
@@ -1286,6 +1320,7 @@ def do_vizier(catalog):
               not isnan(float(row['maglim']))):
             catalog.entries[name].add_photometry(
                 time=mjd,
+                u_time='MJD',
                 telescope='Swift',
                 instrument='UVOT',
                 band=row['Filt'],
@@ -1307,6 +1342,7 @@ def do_vizier(catalog):
         catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
         catalog.entries[name].add_photometry(
             time=str(jd_to_mjd(Decimal(row['JD']))),
+            u_time='MJD',
             band=row['Filt'],
             magnitude=row['mag'],
             e_magnitude=row['e_mag'] if is_number(row['e_mag']) else '',
@@ -1542,6 +1578,7 @@ def do_vizier(catalog):
                                            source)
         catalog.entries[name].add_photometry(
             time=row['MJD'],
+            u_time='MJD',
             band=row['Band'],
             magnitude=row['mag'],
             e_magnitude=row['e_mag'],
@@ -1948,6 +1985,7 @@ def do_vizier(catalog):
                     not isnan(float(row[bandtag]))):
                 catalog.entries[name].add_photometry(
                     time=str(row["MJD"]),
+                    u_time='MJD',
                     band=band,
                     magnitude=row[bandtag],
                     e_magnitude=row["e_" + bandtag],
@@ -1965,6 +2003,7 @@ def do_vizier(catalog):
                     not isnan(float(row[bandtag]))):
                 catalog.entries[name].add_photometry(
                     time=str(row["MJD"]),
+                    u_time='MJD',
                     band=band,
                     magnitude=row[bandtag],
                     e_magnitude=row["e_" + bandtag],
@@ -1981,6 +2020,7 @@ def do_vizier(catalog):
                     not isnan(float(row[bandtag]))):
                 catalog.entries[name].add_photometry(
                     time=str(row["MJD"]),
+                    u_time='MJD',
                     band=band,
                     magnitude=row[bandtag],
                     e_magnitude=row["e_" + bandtag],
@@ -2000,6 +2040,7 @@ def do_vizier(catalog):
                     upp = True
                 catalog.entries[name].add_photometry(
                     time=str(row["MJD"]),
+                    u_time='MJD',
                     band=band,
                     magnitude=row[bandtag],
                     upperlimit=upp,
@@ -2033,6 +2074,7 @@ def do_vizier(catalog):
         mjd = str(jd_to_mjd(Decimal(2000) + Decimal(row['HJD'])))
         catalog.entries[name].add_photometry(
             time=mjd,
+            u_time='MJD',
             band=row['Filt'],
             magnitude=row['Vega'],
             system='Vega',
@@ -2125,6 +2167,7 @@ def do_lennarz(catalog):
                     mjd = str(astrotime(datestr).mjd)
                     catalog.entries[name].add_photometry(
                         time=mjd,
+                        u_time='MJD',
                         band=row['Dband'],
                         magnitude=row['Dmag'],
                         source=source)
@@ -2147,6 +2190,7 @@ def do_lennarz(catalog):
                     mjd = str(astrotime(datestr).mjd)
                     catalog.entries[name].add_photometry(
                         time=mjd,
+                        u_time='MJD',
                         band=row['Mband'],
                         magnitude=row['Mmag'],
                         source=source)

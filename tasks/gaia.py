@@ -80,6 +80,7 @@ def do_gaia(catalog):
             band = 'G'
             catalog.entries[name].add_photometry(
                 time=mjd,
+                u_time='MJD',
                 telescope=telescope,
                 band=band,
                 magnitude=magnitude,

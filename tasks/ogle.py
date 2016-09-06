@@ -142,7 +142,7 @@ def do_ogle(catalog):
                         e_mag = ''
                         upperlimit = True
                     catalog.entries[name].add_photometry(
-                        time=mjd, band='I', magnitude=magnitude,
+                        time=mjd, u_time='MJD', band='I', magnitude=magnitude,
                         e_magnitude=e_mag,
                         system='Vega', source=sources, upperlimit=upperlimit)
                 if catalog.args.update:

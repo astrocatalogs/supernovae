@@ -141,14 +141,14 @@ def do_crts(catalog):
                     mjd = str(Decimal(mjdstr) + Decimal(53249.0))
                 else:
                     continue
+                mag = ''
+                err = ''
                 if 'javascript:showy' in line:
                     mag = re.search("showy\('(.*?)'\)", line).group(1)
                 if 'javascript:showz' in line:
                     err = re.search("showz\('(.*?)'\)", line).group(1)
                 if not is_number(mag) or (err and not is_number(err)):
                     continue
-                e_mag = err if float(err) > 0.0 else ''
-                upl = (float(err) == 0.0)
                 photodict = {
                     PHOTOMETRY.TIME: mjd,
                     PHOTOMETRY.U_TIME: 'MJD',
@@ -156,11 +156,13 @@ def do_crts(catalog):
                     PHOTOMETRY.BAND: 'C',
                     PHOTOMETRY.MAGNITUDE: mag,
                     PHOTOMETRY.SOURCE: source,
-                    PHOTOMETRY.INCLUDESHOST: True,
-                    PHOTOMETRY.TELESCOPE: teles,
-                    PHOTOMETRY.E_MAGNITUDE: e_mag,
-                    PHOTOMETRY.UPPER_LIMIT: upl
+                    PHOTOMETRY.INCLUDES_HOST: True,
+                    PHOTOMETRY.TELESCOPE: teles
                 }
+                if float(err) > 0.0:
+                    photodict[PHOTOMETRY.E_MAGNITUDE] = err
+                if float(err) == 0.0:
+                    photodict[PHOTOMETRY.UPPER_LIMIT] = True
                 catalog.entries[name].add_photometry(**photodict)
             if catalog.args.update:
                 catalog.journal_entries()

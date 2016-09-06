@@ -29,7 +29,7 @@ def do_pessto(catalog):
                 continue
             teles = 'Swift' if systems[hi] == 'Swift' else ''
             (catalog.entries[name]
-             .add_photometry(time=row[2], magnitude=row[ci],
+             .add_photometry(time=row[2], u_time='MJD', magnitude=row[ci],
                              e_magnitude=row[ci + 1],
                              band=bands[hi], system=systems[hi],
                              telescope=teles,

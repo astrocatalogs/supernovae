@@ -38,7 +38,7 @@ def do_cccp(catalog):
                             mag = row[2 * bb + 1].strip('>')
                             upl = (not row[2 * bb + 2])
                             (catalog.entries[name]
-                             .add_photometry(time=mjd, band=band,
+                             .add_photometry(time=mjd, u_time='MJD', band=band,
                                              magnitude=mag,
                                              e_magnitude=row[2 * bb + 2],
                                              upperlimit=upl, source=source))
@@ -88,7 +88,7 @@ def do_cccp(catalog):
                     for row in table:
                         catalog.entries[name].add_photometry(
                             time=str(Decimal(row[0]) + 53000),
-                            band=band, magnitude=row[1],
+                            u_time='MJD', band=band, magnitude=row[1],
                             e_magnitude=row[2], source=source)
 
     catalog.journal_entries()
