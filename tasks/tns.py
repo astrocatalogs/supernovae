@@ -112,7 +112,7 @@ def do_tns(catalog):
                 band = row[15].split('-')[0]
                 mjd = astrotime(row[16]).mjd
                 (catalog.entries[name]
-                 .add_photometry(time=mjd, magnitude=magnitude,
+                 .add_photometry(time=mjd, u_time='MJD', magnitude=magnitude,
                                  band=band, survey=survey, source=source))
             if row[16]:
                 date = row[16].split()[0].replace('-', '/')

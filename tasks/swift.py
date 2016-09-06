@@ -19,7 +19,6 @@ def do_swift(catalog):
     reference = 'Swift TOOs'
     years = range(2005, int(now.year) + 1)
     for year in years:
-        print(year)
         archived = True if year < years[-1] - 1 else False
         html = catalog.load_url(
             url,
@@ -41,6 +40,7 @@ def do_swift(catalog):
             col = row.findAll('td')
             records.append([utf8(x.renderContents()) for x in col])
 
+        loopcnt = 0
         for record in pbar(records, task_str):
             if len(record) > 1 and record[0] != '':
                 oldname = name_clean(record[0])
@@ -68,6 +68,10 @@ def do_swift(catalog):
                     u_value='floatdegrees',
                     source=source)
                 catalog.journal_entries()
+                loopcnt = loopcnt + 1
+                if (catalog.args.travis and loopcnt %
+                        catalog.TRAVIS_QUERY_LIMIT == 0):
+                    break
     catalog.journal_entries()
 
     return

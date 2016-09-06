@@ -4,6 +4,7 @@ import os
 import re
 
 from astrocats.catalog.utils import is_number, pbar
+from astrocats.catalog.photometry import PHOTOMETRY
 from bs4 import BeautifulSoup
 
 from cdecimal import Decimal
@@ -108,11 +109,16 @@ def do_crts(catalog):
                 # 1.0 magnitude error based on Drake 2009 assertion that SN are
                 # only considered
                 #    real if they are 2 mags brighter than host.
-                (catalog.entries[name]
-                 .add_photometry(band='C', magnitude=hostmag,
-                                 e_magnitude=1.0, source=source,
-                                 host=True, telescope='Catalina Schmidt',
-                                 upperlimit=hostupper))
+                photodict = {
+                    PHOTOMETRY.BAND: 'C',
+                    PHOTOMETRY.MAGNITUDE: hostmag,
+                    PHOTOMETRY.E_MAGNITUDE: '1.0',
+                    PHOTOMETRY.SOURCE: source,
+                    PHOTOMETRY.HOST: True,
+                    PHOTOMETRY.TELESCOPE: 'Catalina Schmidt',
+                    PHOTOMETRY.UPPER_LIMIT: hostupper
+                }
+                catalog.entries[name].add_photometry(**photodict)
 
             fname2 = (catalog.get_current_task_repo() + '/' + fold + '/' +
                       lclink.split('.')[-2].rstrip('p').split('/')[-1] +
@@ -143,11 +149,19 @@ def do_crts(catalog):
                     continue
                 e_mag = err if float(err) > 0.0 else ''
                 upl = (float(err) == 0.0)
-                (catalog.entries[name]
-                 .add_photometry(time=mjd, band='C', magnitude=mag,
-                                 source=source,
-                                 includeshost=True, telescope=teles,
-                                 e_magnitude=e_mag, upperlimit=upl))
+                photodict = {
+                    PHOTOMETRY.TIME: mjd,
+                    PHOTOMETRY.U_TIME: 'MJD',
+                    PHOTOMETRY.E_TIME: '0.125',  # 3 hr error
+                    PHOTOMETRY.BAND: 'C',
+                    PHOTOMETRY.MAGNITUDE: mag,
+                    PHOTOMETRY.SOURCE: source,
+                    PHOTOMETRY.INCLUDESHOST: True,
+                    PHOTOMETRY.TELESCOPE: teles,
+                    PHOTOMETRY.E_MAGNITUDE: e_mag,
+                    PHOTOMETRY.UPPER_LIMIT: upl
+                }
+                catalog.entries[name].add_photometry(**photodict)
             if catalog.args.update:
                 catalog.journal_entries()
 
