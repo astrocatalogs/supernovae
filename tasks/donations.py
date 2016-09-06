@@ -45,6 +45,7 @@ def do_donated_photo(catalog):
                     photodict = {
                         PHOTOMETRY.TIME: row[3],
                         PHOTOMETRY.U_TIME: 'MJD',
+                        PHOTOMETRY.BAND: ba,
                         PHOTOMETRY.MAGNITUDE: mag.strip('< '),
                         PHOTOMETRY.SOURCE: source
                     }
@@ -119,6 +120,8 @@ def do_donated_photo(catalog):
                         photodict[PHOTOMETRY.KCORRECTED] = True
                     catalog.entries[name].add_photometry(**photodict)
     catalog.journal_entries()
+
+    return
 
     # Maggi 04-11-16 donation (MC SNRs)
     with open(
