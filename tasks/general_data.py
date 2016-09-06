@@ -6,6 +6,7 @@ from collections import OrderedDict
 from glob import glob
 
 from astrocats.catalog.utils import pbar_strings
+
 from ..supernova import SUPERNOVA, Supernova
 
 
@@ -17,13 +18,13 @@ def do_external_radio(catalog):
         name = catalog.add_entry(oldname)
         radiosourcedict = OrderedDict()
         with open(datafile, 'r') as ff:
-            for li, line in enumerate([xx.strip() for xx in
-                                       ff.read().splitlines()]):
+            for li, line in enumerate([xx.strip()
+                                       for xx in ff.read().splitlines()]):
                 if line.startswith('(') and li <= len(radiosourcedict):
                     key = line.split()[0]
                     bibc = line.split()[-1]
-                    radiosourcedict[key] = catalog.entries[
-                        name].add_source(bibcode=bibc)
+                    radiosourcedict[key] = catalog.entries[name].add_source(
+                        bibcode=bibc)
                 elif li in [xx + len(radiosourcedict) for xx in range(3)]:
                     continue
                 else:
@@ -36,12 +37,18 @@ def do_external_radio(catalog):
                         eflux = cols[4]
                         upp = False
                     catalog.entries[name].add_photometry(
-                        time=cols[0], frequency=cols[2], u_frequency='GHz',
-                        fluxdensity=cols[3], e_fluxdensity=eflux,
-                        u_fluxdensity='µJy', upperlimit=upp, u_time='MJD',
-                        instrument=cols[5], source=source)
-                    catalog.entries[name].add_quantity(
-                        SUPERNOVA.ALIAS, oldname, source)
+                        time=cols[0],
+                        frequency=cols[2],
+                        u_frequency='GHz',
+                        fluxdensity=cols[3],
+                        e_fluxdensity=eflux,
+                        u_fluxdensity='µJy',
+                        upperlimit=upp,
+                        u_time='MJD',
+                        instrument=cols[5],
+                        source=source)
+                    catalog.entries[name].add_quantity(SUPERNOVA.ALIAS,
+                                                       oldname, source)
 
     catalog.journal_entries()
     return
@@ -63,15 +70,21 @@ def do_external_xray(catalog):
                 else:
                     cols = list(filter(None, line.split()))
                     catalog.entries[name].add_photometry(
-                        time=cols[:2], u_time='MJD',
-                        energy=cols[2:4], u_energy='keV', counts=cols[4],
+                        time=cols[:2],
+                        u_time='MJD',
+                        energy=cols[2:4],
+                        u_energy='keV',
+                        counts=cols[4],
                         flux=cols[6],
-                        unabsorbedflux=cols[8], u_flux='ergs/ss/cm^2',
-                        photonindex=cols[15], instrument=cols[
-                            17], nhmw=cols[11],
-                        upperlimit=(float(cols[5]) < 0), source=source)
-                    catalog.entries[name].add_quantity(
-                        SUPERNOVA.ALIAS, oldname, source)
+                        unabsorbedflux=cols[8],
+                        u_flux='ergs/ss/cm^2',
+                        photonindex=cols[15],
+                        instrument=cols[17],
+                        nhmw=cols[11],
+                        upperlimit=(float(cols[5]) < 0),
+                        source=source)
+                    catalog.entries[name].add_quantity(SUPERNOVA.ALIAS,
+                                                       oldname, source)
 
     catalog.journal_entries()
     return

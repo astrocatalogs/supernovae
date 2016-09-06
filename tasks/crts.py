@@ -156,7 +156,7 @@ def do_crts(catalog):
                     PHOTOMETRY.BAND: 'C',
                     PHOTOMETRY.MAGNITUDE: mag,
                     PHOTOMETRY.SOURCE: source,
-                    PHOTOMETRY.INCLUDESHOST: True,
+                    PHOTOMETRY.INCLUDES_HOST: True,
                     PHOTOMETRY.TELESCOPE: teles,
                     PHOTOMETRY.E_MAGNITUDE: e_mag,
                     PHOTOMETRY.UPPER_LIMIT: upl
