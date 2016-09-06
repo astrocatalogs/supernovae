@@ -116,7 +116,7 @@ def do_crts(catalog):
                     PHOTOMETRY.SOURCE: source,
                     PHOTOMETRY.HOST: True,
                     PHOTOMETRY.TELESCOPE: 'Catalina Schmidt',
-                    PHOTOMETRY.UPPERLIMIT: hostupper
+                    PHOTOMETRY.UPPER_LIMIT: hostupper
                 }
                 catalog.entries[name].add_photometry(**photodict)
 
@@ -159,7 +159,7 @@ def do_crts(catalog):
                     PHOTOMETRY.INCLUDESHOST: True,
                     PHOTOMETRY.TELESCOPE: teles,
                     PHOTOMETRY.E_MAGNITUDE: e_mag,
-                    PHOTOMETRY.UPPERLIMIT: upl
+                    PHOTOMETRY.UPPER_LIMIT: upl
                 }
                 catalog.entries[name].add_photometry(**photodict)
             if catalog.args.update:
