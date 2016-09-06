@@ -229,7 +229,7 @@ def do_ps_threepi(catalog):
                     continue
                 for obs in line:
                     catalog.entries[name].add_photometry(
-                        time=str(obs[0]), band=nslabels[li],
+                        time=str(obs[0]), u_time='MJD', band=nslabels[li],
                         magnitude=str(obs[1]), e_magnitude=str(obs[2]),
                         source=source, telescope=teles)
             for li, line in enumerate(nslines[2 * len(nslabels):]):
@@ -237,7 +237,7 @@ def do_ps_threepi(catalog):
                     continue
                 for obs in line:
                     catalog.entries[name].add_photometry(
-                        time=str(obs[0]), band=nslabels[li],
+                        time=str(obs[0]), u_time='MJD', band=nslabels[li],
                         magnitude=str(obs[1]), upperlimit=True, source=source,
                         telescope=teles)
             assoctab = bs2.find('table', {'class': 'generictable'})

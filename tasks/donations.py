@@ -295,6 +295,7 @@ def do_donated_photo(catalog):
                 upp = '' if not isupp else True
                 (catalog.entries[name].add_photometry(
                     time=mjd,
+                    u_time='MJD',
                     magnitude=mag,
                     e_magnitude=e_mag,
                     upperlimit=upp,

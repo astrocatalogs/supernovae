@@ -15,9 +15,8 @@ def do_cpcs(catalog):
                 'followup/list_of_alerts?format=json&num=100000&'
                 'published=1&observed_only=1'
                 '&hashtag=JG_530ad9462a0b8785bfb385614bf178c6')
-    jsontxt = catalog.load_url(
-        cpcs_url, os.path.join(catalog.get_current_task_repo(),
-                               'CPCS/index.json'))
+    jsontxt = catalog.load_url(cpcs_url, os.path.join(
+        catalog.get_current_task_repo(), 'CPCS/index.json'))
     if not jsontxt:
         return
     alertindex = json.loads(jsontxt, object_pairs_hook=OrderedDict)
@@ -49,19 +48,24 @@ def do_cpcs(catalog):
 
         sec_source = catalog.entries[name].add_source(
             name='Cambridge Photometric Calibration Server',
-            url='http://gsaweb.ast.cam.ac.uk/followup/', secondary=True)
-        catalog.entries[name].add_quantity(
-            SUPERNOVA.ALIAS, oldname, sec_source)
+            url='http://gsaweb.ast.cam.ac.uk/followup/',
+            secondary=True)
+        catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, oldname,
+                                           sec_source)
         unit_deg = 'floatdegrees'
         catalog.entries[name].add_quantity(
-            SUPERNOVA.RA, str(alertindex[ii][SUPERNOVA.RA]), sec_source,
+            SUPERNOVA.RA,
+            str(alertindex[ii][SUPERNOVA.RA]),
+            sec_source,
             u_value=unit_deg)
-        catalog.entries[name].add_quantity(SUPERNOVA.DEC, str(
-            alertindex[ii][SUPERNOVA.DEC]), sec_source, u_value=unit_deg)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.DEC,
+            str(alertindex[ii][SUPERNOVA.DEC]),
+            sec_source,
+            u_value=unit_deg)
 
         alerturl = ('http://gsaweb.ast.cam.ac.uk/'
-                    'followup/get_alert_lc_data?alert_id=' +
-                    str(ai))
+                    'followup/get_alert_lc_data?alert_id=' + str(ai))
         source = catalog.entries[name].add_source(
             name='CPCS Alert ' + str(ai), url=alerturl)
         fname = os.path.join(catalog.get_current_task_repo(),
@@ -73,20 +77,24 @@ def do_cpcs(catalog):
         try:
             cpcsalert = json.loads(jsonstr)
         except:
-            catalog.log.warning('Mangled CPCS data for alert {}.'
-                                .format(ai))
+            catalog.log.warning('Mangled CPCS data for alert {}.'.format(ai))
             continue
 
         mjds = [round_sig(xx, sig=9) for xx in cpcsalert['mjd']]
         mags = [round_sig(xx, sig=6) for xx in cpcsalert['mag']]
-        errs = [round_sig(xx, sig=6) if (is_number(xx) and float(xx) > 0.0)
-                else '' for xx in cpcsalert['magerr']]
+        errs = [round_sig(
+            xx, sig=6) if (is_number(xx) and float(xx) > 0.0) else ''
+                for xx in cpcsalert['magerr']]
         bnds = cpcsalert['filter']
         obs = cpcsalert['observatory']
         for mi, mjd in enumerate(mjds):
             catalog.entries[name].add_photometry(
-                time=mjd, magnitude=mags[mi], e_magnitude=errs[mi],
-                band=bnds[mi], observatory=obs[mi],
+                time=mjd,
+                u_time='MJD',
+                magnitude=mags[mi],
+                e_magnitude=errs[mi],
+                band=bnds[mi],
+                observatory=obs[mi],
                 source=uniq_cdl([source, sec_source]))
         if catalog.args.update:
             catalog.journal_entries()

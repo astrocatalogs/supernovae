@@ -223,6 +223,7 @@ def do_ascii(catalog):
                 time = str(jd_to_mjd(Decimal(row[0])))
                 catalog.entries[name].add_photometry(
                     time=time,
+                    u_time='MJD',
                     band='V',
                     magnitude=row[1],
                     e_magnitude=row[2],
@@ -255,6 +256,7 @@ def do_ascii(catalog):
             instr = 'MaCHO' if band in ['VM', 'RM'] else ''
             catalog.entries[name].add_photometry(
                 time=mjd,
+                u_time='MJD',
                 band=band,
                 magnitude=row[ci],
                 e_upper_magnitude=e_upper_magnitude,
@@ -291,7 +293,11 @@ def do_ascii(catalog):
         catalog.entries[name].add_quantity(SUPERNOVA.CLAIMED_TYPE, row[1],
                                            source)
         catalog.entries[name].add_photometry(
-            time=row[2], band=row[4], magnitude=row[3], source=source)
+            time=row[2],
+            u_time='MJD',
+            band=row[4],
+            magnitude=row[3],
+            source=source)
     catalog.journal_entries()
 
     # 2016MNRAS.459.1039T
@@ -321,6 +327,7 @@ def do_ascii(catalog):
                 continue
             catalog.entries[name].add_photometry(
                 time=mjd,
+                u_time='MJD',
                 band=bands[mi],
                 magnitude=mag,
                 e_magnitude=errs[mi],
@@ -352,6 +359,7 @@ def do_ascii(catalog):
         ins = row[5]
         catalog.entries[name].add_photometry(
             time=mjd,
+            u_time='MJD',
             band=row[0],
             magnitude=mag,
             e_magnitude=err,
@@ -407,6 +415,7 @@ def do_ascii(catalog):
         err = row[4]
         catalog.entries[name].add_photometry(
             time=mjd,
+            u_time='MJD',
             band=row[2],
             magnitude=mag,
             e_magnitude=err,
@@ -452,6 +461,7 @@ def do_ascii(catalog):
                 continue
             catalog.entries[name].add_photometry(
                 time=mjd,
+                u_time='MJD',
                 band=bands[mi],
                 magnitude=mag,
                 e_magnitude=errs[mi],
@@ -560,6 +570,7 @@ def do_ascii(catalog):
                     continue
                 catalog.entries[name].add_photometry(
                     time=mjd,
+                    u_time='MJD',
                     band=bands[mi],
                     magnitude=mag,
                     e_magnitude=errs[mi],
@@ -590,6 +601,7 @@ def do_ascii(catalog):
                     continue
                 catalog.entries[name].add_photometry(
                     time=mjd,
+                    u_time='MJD',
                     band=bands[mi],
                     magnitude=mag,
                     e_magnitude=errs[mi],
@@ -617,6 +629,7 @@ def do_ascii(catalog):
                     continue
                 catalog.entries[name].add_photometry(
                     time=mjd,
+                    u_time='MJD',
                     band=bands[mi],
                     magnitude=mag,
                     observatory='Mount Stromlo',

@@ -5,10 +5,10 @@ import os
 from glob import glob
 from math import floor
 
-from astrocats.catalog.utils import (is_number, jd_to_mjd, pbar, pbar_strings,
-                                     uniq_cdl)
 from astropy.time import Time as astrotime
 
+from astrocats.catalog.utils import (is_number, jd_to_mjd, pbar, pbar_strings,
+                                     uniq_cdl)
 from cdecimal import Decimal
 
 from ..supernova import SUPERNOVA
@@ -23,8 +23,8 @@ def do_cfa_photo(catalog):
     from html import unescape
     import re
     task_str = catalog.get_current_task_str()
-    file_names = glob(os.path.join(
-        catalog.get_current_task_repo(), 'cfa-input/*.dat'))
+    file_names = glob(
+        os.path.join(catalog.get_current_task_repo(), 'cfa-input/*.dat'))
     for fname in pbar_strings(file_names, task_str):
         f = open(fname, 'r')
         tsvin = csv.reader(f, delimiter=' ', skipinitialspace=True)
@@ -49,14 +49,16 @@ def do_cfa_photo(catalog):
         secondaryname = 'CfA Supernova Archive'
         secondaryurl = 'https://www.cfa.harvard.edu/supernova/SNarchive.html'
         secondarysource = catalog.entries[name].add_source(
-            name=secondaryname, url=secondaryurl, secondary=True,
+            name=secondaryname,
+            url=secondaryurl,
+            secondary=True,
             acknowledgment=ACKN_CFA)
-        catalog.entries[name].add_quantity(
-            SUPERNOVA.ALIAS, name, secondarysource)
+        catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name,
+                                           secondarysource)
 
         year = re.findall(r'\d+', name)[0]
-        catalog.entries[name].add_quantity(
-            SUPERNOVA.DISCOVER_DATE, year, secondarysource)
+        catalog.entries[name].add_quantity(SUPERNOVA.DISCOVER_DATE, year,
+                                           secondarysource)
 
         eventbands = list(eventparts[1])
 
@@ -77,8 +79,8 @@ def do_cfa_photo(catalog):
                             refstr = ' '.join(row[2 + ci:])
                             refstr = refstr.replace('(', '').replace(')', '')
                             bibcode = unescape(refstr)
-                            source = catalog.entries[
-                                name].add_source(bibcode=bibcode)
+                            source = catalog.entries[name].add_source(
+                                bibcode=bibcode)
                 elif len(row) > 1 and row[1] == 'HJD':
                     tu = 'HJD'
                 continue
@@ -100,15 +102,19 @@ def do_cfa_photo(catalog):
                         if float(row[v]) < 90.0:
                             src = secondarysource + ',' + source
                             catalog.entries[name].add_photometry(
-                                u_time=tuout, time=mjd, system='Standard',
+                                u_time=tuout,
+                                time=mjd,
+                                system='Standard',
                                 band=eventbands[(v - 1) // 2],
-                                magnitude=row[v], e_magnitude=row[v + 1],
+                                magnitude=row[v],
+                                e_magnitude=row[v + 1],
                                 source=src)
         f.close()
 
     # Hicken 2012
-    with open(os.path.join(catalog.get_current_task_repo(),
-                           'hicken-2012-standard.dat'), 'r') as infile:
+    with open(
+            os.path.join(catalog.get_current_task_repo(),
+                         'hicken-2012-standard.dat'), 'r') as infile:
         tsvin = list(csv.reader(infile, delimiter='|', skipinitialspace=True))
         for r, row in enumerate(pbar(tsvin, task_str)):
             if r <= 47:
@@ -124,17 +130,21 @@ def do_cfa_photo(catalog):
             source = catalog.entries[name].add_source(
                 bibcode='2012ApJS..200...12H')
             catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
-            catalog.entries[name].add_quantity(
-                SUPERNOVA.CLAIMED_TYPE, 'Ia', source)
+            catalog.entries[name].add_quantity(SUPERNOVA.CLAIMED_TYPE, 'Ia',
+                                               source)
             catalog.entries[name].add_photometry(
-                u_time='MJD', time=row[2].strip(),
-                band=row[1].strip(), system='Standard',
-                magnitude=row[6].strip(), e_magnitude=row[7].strip(),
+                u_time='MJD',
+                time=row[2].strip(),
+                band=row[1].strip(),
+                system='Standard',
+                magnitude=row[6].strip(),
+                e_magnitude=row[7].strip(),
                 source=source)
 
     # Bianco 2014
-    with open(os.path.join(catalog.get_current_task_repo(),
-                           'bianco-2014-standard.dat'), 'r') as infile:
+    with open(
+            os.path.join(catalog.get_current_task_repo(),
+                         'bianco-2014-standard.dat'), 'r') as infile:
         tsvin = list(csv.reader(infile, delimiter=' ', skipinitialspace=True))
         for row in pbar(tsvin, task_str):
             name = 'SN' + row[0]
@@ -144,9 +154,13 @@ def do_cfa_photo(catalog):
                 bibcode='2014ApJS..213...19B')
             catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
             catalog.entries[name].add_photometry(
-                u_time='MJD', time=row[2], band=row[1],
+                u_time='MJD',
+                time=row[2],
+                band=row[1],
                 magnitude=row[3],
-                e_magnitude=row[4], telescope=row[5], system='Standard',
+                e_magnitude=row[4],
+                telescope=row[5],
+                system='Standard',
                 source=source)
 
     catalog.journal_entries()
@@ -157,11 +171,11 @@ def do_cfa_spectra(catalog):
     task_str = catalog.get_current_task_str()
     # Ia spectra
     oldname = ''
-    file_names = next(os.walk(os.path.join(
-        catalog.get_current_task_repo(), 'CfA_SNIa')))[1]
+    file_names = next(
+        os.walk(os.path.join(catalog.get_current_task_repo(), 'CfA_SNIa')))[1]
     for ni, name in enumerate(pbar_strings(file_names, task_str)):
-        fullpath = os.path.join(
-            catalog.get_current_task_repo(), 'CfA_SNIa/') + name
+        fullpath = os.path.join(catalog.get_current_task_repo(),
+                                'CfA_SNIa/') + name
         origname = name
         if name.startswith('sn') and is_number(name[2:6]):
             name = 'SN' + name[2:]
@@ -175,11 +189,14 @@ def do_cfa_spectra(catalog):
         reference = 'CfA Supernova Archive'
         refurl = 'https://www.cfa.harvard.edu/supernova/SNarchive.html'
         source = catalog.entries[name].add_source(
-            name=reference, url=refurl, secondary=True,
+            name=reference,
+            url=refurl,
+            secondary=True,
             acknowledgment=ACKN_CFA)
         catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
-        for fi, fname in enumerate(sorted(glob(fullpath + '/*'),
-                                          key=lambda s: s.lower())):
+        for fi, fname in enumerate(
+                sorted(
+                    glob(fullpath + '/*'), key=lambda s: s.lower())):
             filename = os.path.basename(fname)
             fileparts = filename.split('-')
             if origname.startswith('sn') and is_number(origname[2:6]):
@@ -192,9 +209,9 @@ def do_cfa_spectra(catalog):
                 month = fileparts[2][4:6]
                 day = fileparts[2][6:]
                 instrument = fileparts[3].split('.')[0]
-            time = str(astrotime(year + '-' + month + '-' +
-                                 str(floor(float(day))).zfill(2)).mjd +
-                       float(day) - floor(float(day)))
+            time = str(
+                astrotime(year + '-' + month + '-' + str(floor(float(
+                    day))).zfill(2)).mjd + float(day) - floor(float(day)))
             f = open(fname, 'r')
             data = csv.reader(f, delimiter=' ', skipinitialspace=True)
             data = [list(i) for i in zip(*data)]
@@ -207,23 +224,30 @@ def do_cfa_spectra(catalog):
                                 (catalog.entries[name]
                                  .add_source(bibcode='2008AJ....135.1598M'))])
             catalog.entries[name].add_spectrum(
-                u_wavelengths='Angstrom', u_fluxes='erg/s/cm^2/Angstrom',
+                u_wavelengths='Angstrom',
+                u_fluxes='erg/s/cm^2/Angstrom',
                 filename=filename,
-                wavelengths=wavelengths, fluxes=fluxes, u_time='MJD' if time
-                else '', time=time, instrument=instrument,
-                u_errors='ergs/s/cm^2/Angstrom', errors=errors,
-                source=sources, dereddened=False, deredshifted=False)
+                wavelengths=wavelengths,
+                fluxes=fluxes,
+                u_time='MJD' if time else '',
+                time=time,
+                instrument=instrument,
+                u_errors='ergs/s/cm^2/Angstrom',
+                errors=errors,
+                source=sources,
+                dereddened=False,
+                deredshifted=False)
         if catalog.args.travis and ni >= catalog.TRAVIS_QUERY_LIMIT:
             break
     catalog.journal_entries()
 
     # Ibc spectra
     oldname = ''
-    file_names = next(os.walk(os.path.join(
-        catalog.get_current_task_repo(), 'CfA_SNIbc')))[1]
+    file_names = next(
+        os.walk(os.path.join(catalog.get_current_task_repo(), 'CfA_SNIbc')))[1]
     for ni, name in enumerate(pbar(file_names, task_str)):
-        fullpath = os.path.join(
-            catalog.get_current_task_repo(), 'CfA_SNIbc/') + name
+        fullpath = os.path.join(catalog.get_current_task_repo(),
+                                'CfA_SNIbc/') + name
         if name.startswith('sn') and is_number(name[2:6]):
             name = 'SN' + name[2:]
         name = catalog.get_preferred_name(name)
@@ -234,11 +258,14 @@ def do_cfa_spectra(catalog):
         reference = 'CfA Supernova Archive'
         refurl = 'https://www.cfa.harvard.edu/supernova/SNarchive.html'
         source = catalog.entries[name].add_source(
-            name=reference, url=refurl, secondary=True,
+            name=reference,
+            url=refurl,
+            secondary=True,
             acknowledgment=ACKN_CFA)
         catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
-        for fi, fname in enumerate(sorted(glob(fullpath + '/*'),
-                                          key=lambda s: s.lower())):
+        for fi, fname in enumerate(
+                sorted(
+                    glob(fullpath + '/*'), key=lambda s: s.lower())):
             filename = os.path.basename(fname)
             fileparts = filename.split('-')
             instrument = ''
@@ -247,35 +274,39 @@ def do_cfa_spectra(catalog):
             day = fileparts[1][6:].split('.')[0]
             if len(fileparts) > 2:
                 instrument = fileparts[-1].split('.')[0]
-            time = str(astrotime(year + '-' + month + '-' +
-                                 str(floor(float(day))).zfill(2)).mjd +
-                       float(day) - floor(float(day)))
+            time = str(
+                astrotime(year + '-' + month + '-' + str(floor(float(
+                    day))).zfill(2)).mjd + float(day) - floor(float(day)))
             f = open(fname, 'r')
             data = csv.reader(f, delimiter=' ', skipinitialspace=True)
             data = [list(i) for i in zip(*data)]
             wavelengths = data[0]
             fluxes = data[1]
-            sources = uniq_cdl(
-                [source,
-                 catalog.entries[name]
-                 .add_source(bibcode='2014AJ....147...99M')])
+            sources = uniq_cdl([source, catalog.entries[name]
+                                .add_source(bibcode='2014AJ....147...99M')])
             catalog.entries[name].add_spectrum(
-                u_wavelengths='Angstrom', u_fluxes='erg/s/cm^2/Angstrom',
-                wavelengths=wavelengths, filename=filename,
-                fluxes=fluxes, u_time='MJD' if time else '', time=time,
-                instrument=instrument, source=sources,
-                dereddened=False, deredshifted=False)
+                u_wavelengths='Angstrom',
+                u_fluxes='erg/s/cm^2/Angstrom',
+                wavelengths=wavelengths,
+                filename=filename,
+                fluxes=fluxes,
+                u_time='MJD' if time else '',
+                time=time,
+                instrument=instrument,
+                source=sources,
+                dereddened=False,
+                deredshifted=False)
         if catalog.args.travis and ni >= catalog.TRAVIS_QUERY_LIMIT:
             break
     catalog.journal_entries()
 
     # Other spectra
     oldname = ''
-    file_names = next(os.walk(os.path.join(
-        catalog.get_current_task_repo(), 'CfA_Extra')))[1]
+    file_names = next(
+        os.walk(os.path.join(catalog.get_current_task_repo(), 'CfA_Extra')))[1]
     for ni, name in enumerate(pbar_strings(file_names, task_str)):
-        fullpath = os.path.join(
-            catalog.get_current_task_repo(), 'CfA_Extra/') + name
+        fullpath = os.path.join(catalog.get_current_task_repo(),
+                                'CfA_Extra/') + name
         if name.startswith('sn') and is_number(name[2:6]):
             name = 'SN' + name[2:]
         name = catalog.get_preferred_name(name)
@@ -286,18 +317,21 @@ def do_cfa_spectra(catalog):
         reference = 'CfA Supernova Archive'
         refurl = 'https://www.cfa.harvard.edu/supernova/SNarchive.html'
         source = catalog.entries[name].add_source(
-            name=reference, url=refurl, secondary=True,
+            name=reference,
+            url=refurl,
+            secondary=True,
             acknowledgment=ACKN_CFA)
         catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
-        for fi, fname in enumerate(sorted(glob(fullpath + '/*'), key=lambda s:
-                                          s.lower())):
+        for fi, fname in enumerate(
+                sorted(
+                    glob(fullpath + '/*'), key=lambda s: s.lower())):
             if not os.path.isfile(fname):
                 continue
             filename = os.path.basename(fname)
             if ((not filename.startswith('sn') or
-                 not filename.endswith('flm') or
-                 any(x in filename for x in
-                     ['-interp', '-z', '-dered', '-obj', '-gal']))):
+                 not filename.endswith('flm') or any(
+                     x in filename
+                     for x in ['-interp', '-z', '-dered', '-obj', '-gal']))):
                 continue
             fileparts = filename.split('.')[0].split('-')
             instrument = ''
@@ -309,20 +343,27 @@ def do_cfa_spectra(catalog):
                 if is_number(year) and is_number(month) and is_number(day):
                     if len(fileparts) > 2:
                         instrument = fileparts[-1]
-                    time = str(astrotime(year + '-' + month + '-' +
-                                         str(floor(float(day))).zfill(2)).mjd +
-                               float(day) - floor(float(day)))
+                    time = str(
+                        astrotime(year + '-' + month + '-' + str(
+                            floor(float(day))).zfill(2)).mjd + float(day) -
+                        floor(float(day)))
             f = open(fname, 'r')
             data = csv.reader(f, delimiter=' ', skipinitialspace=True)
             data = [list(i) for i in zip(*data)]
             wavelengths = data[0]
             fluxes = [str(Decimal(x) * Decimal(1.0e-15)) for x in data[1]]
             catalog.entries[name].add_spectrum(
-                u_wavelengths='Angstrom', u_fluxes='erg/s/cm^2/Angstrom',
-                wavelengths=wavelengths, filename=filename,
-                fluxes=fluxes, u_time='MJD' if time else '', time=time,
-                instrument=instrument, source=source,
-                dereddened=False, deredshifted=False)
+                u_wavelengths='Angstrom',
+                u_fluxes='erg/s/cm^2/Angstrom',
+                wavelengths=wavelengths,
+                filename=filename,
+                fluxes=fluxes,
+                u_time='MJD' if time else '',
+                time=time,
+                instrument=instrument,
+                source=source,
+                dereddened=False,
+                deredshifted=False)
         if catalog.args.travis and ni >= catalog.TRAVIS_QUERY_LIMIT:
             break
 
