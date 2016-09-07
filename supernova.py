@@ -252,7 +252,8 @@ class Supernova(Entry):
             if (cleaned_value.startswith('SN') and
                     is_integer(cleaned_value[2:6]) and
                     int(cleaned_value[2:6]) >= 2016):
-                success = super().add_quantity('AT' + cleaned_value[2:], value,
+                success = super().add_quantity(SUPERNOVA.ALIAS,
+                                               'AT' + cleaned_value[2:], value,
                                                source, **kwargs)
 
         return True

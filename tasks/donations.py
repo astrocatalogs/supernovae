@@ -121,8 +121,6 @@ def do_donated_photo(catalog):
                     catalog.entries[name].add_photometry(**photodict)
     catalog.journal_entries()
 
-    return
-
     # Maggi 04-11-16 donation (MC SNRs)
     with open(
             os.path.join(catalog.get_current_task_repo(), 'Donations',

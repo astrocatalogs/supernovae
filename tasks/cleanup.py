@@ -30,14 +30,14 @@ def do_cleanup(catalog):
     cleanupcnt = 0
     for oname in pbar(keys, task_str):
         # Some events may be merged in cleanup process, skip them if
-        # non-existent
-        if not os.path.exists(catalog.entry_filename(oname)):
+        # non-existent.
+        try:
+            name = catalog.add_entry(oname)
+        except:
             catalog.log.warning(
                 '"{}" was not found, suggests merge occurred in cleanup '
-                'process.'.format(catalog.entry_filename(oname)))
+                'process.'.format(oname))
             continue
-
-        name = catalog.add_entry(oname)
 
         # Set the preferred name, switching to that name if name changed.
         name = catalog.entries[name].set_preferred_name()
