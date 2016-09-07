@@ -32,6 +32,9 @@ def do_cleanup(catalog):
         # Some events may be merged in cleanup process, skip them if
         # non-existent
         if not os.path.exists(catalog.entry_filename(oname)):
+            catalog.log.warning(
+                '"{}" was not found, suggests merge occurred in cleanup '
+                'process.'.format(catalog.entry_filename(oname)))
             continue
 
         name = catalog.add_entry(oname)
@@ -412,9 +415,10 @@ def do_cleanup(catalog):
                 pass
             else:
                 sources = uniq_cdl(
-                    [catalog.entries[name].add_self_source()] + catalog.
-                    entries[name][SUPERNOVA.RA][0][QUANTITY.SOURCE].split(',')
-                    + catalog.entries[name][SUPERNOVA.DEC][0][QUANTITY.SOURCE]
+                    [catalog.entries[name].add_self_source()
+                     ] + catalog.entries[name][SUPERNOVA.RA][0][
+                         QUANTITY.SOURCE].split(',') + catalog.entries[name][
+                             SUPERNOVA.DEC][0][QUANTITY.SOURCE]
                     .split(',') + catalog.entries[name][SUPERNOVA.HOST_RA][0][
                         QUANTITY.SOURCE].split(',') + catalog.entries[name][
                             SUPERNOVA.HOST_DEC][0][QUANTITY.SOURCE].split(','))
@@ -436,10 +440,11 @@ def do_cleanup(catalog):
                     offsetsig = get_sig_digits(catalog.entries[name][
                         SUPERNOVA.HOST_OFFSET_ANG][0][QUANTITY.VALUE])
                     sources = uniq_cdl(
-                        sources.split(',') + (catalog.entries[name][
-                            SUPERNOVA.COMOVING_DIST][0][QUANTITY.SOURCE]).
-                        split(',') + (catalog.entries[name][SUPERNOVA.REDSHIFT]
-                                      [0][QUANTITY.SOURCE]).split(','))
+                        sources.split(',') +
+                        (catalog.entries[name][SUPERNOVA.COMOVING_DIST][0][
+                            QUANTITY.SOURCE]).split(',') + (catalog.entries[
+                                name][SUPERNOVA.REDSHIFT][0][QUANTITY.SOURCE]
+                                                            ).split(','))
                     (catalog.entries[name].add_quantity(
                         SUPERNOVA.HOST_OFFSET_DIST,
                         pretty_num(
