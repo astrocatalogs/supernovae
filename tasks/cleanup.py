@@ -1,5 +1,6 @@
 """
 """
+import os
 import re
 import statistics
 import warnings
@@ -28,6 +29,11 @@ def do_cleanup(catalog):
 
     cleanupcnt = 0
     for oname in pbar(keys, task_str):
+        # Some events may be merged in cleanup process, skip them if
+        # non-existent
+        if not os.path.exists(catalog.entry_filename(oname)):
+            continue
+
         name = catalog.add_entry(oname)
 
         # Set the preferred name, switching to that name if name changed.
@@ -405,14 +411,13 @@ def do_cleanup(catalog):
             except:
                 pass
             else:
-                sources = uniq_cdl([catalog.entries[name].add_self_source(
-                )] + catalog.entries[name][SUPERNOVA.RA][0][
-                    QUANTITY.SOURCE].split(',') + catalog.entries[name][
-                        SUPERNOVA.DEC][0][QUANTITY.SOURCE].split(
-                            ',') + catalog.entries[name][SUPERNOVA.HOST_RA][0][
-                                QUANTITY.SOURCE].split(',') + catalog.entries[
-                                    name][SUPERNOVA.HOST_DEC][0][
-                                        QUANTITY.SOURCE].split(','))
+                sources = uniq_cdl(
+                    [catalog.entries[name].add_self_source()] + catalog.
+                    entries[name][SUPERNOVA.RA][0][QUANTITY.SOURCE].split(',')
+                    + catalog.entries[name][SUPERNOVA.DEC][0][QUANTITY.SOURCE]
+                    .split(',') + catalog.entries[name][SUPERNOVA.HOST_RA][0][
+                        QUANTITY.SOURCE].split(',') + catalog.entries[name][
+                            SUPERNOVA.HOST_DEC][0][QUANTITY.SOURCE].split(','))
                 if SUPERNOVA.HOST_OFFSET_ANG not in catalog.entries[name]:
                     hosa = Decimal(
                         hypot(c1.ra.degree - c2.ra.degree, c1.dec.degree -
@@ -431,11 +436,10 @@ def do_cleanup(catalog):
                     offsetsig = get_sig_digits(catalog.entries[name][
                         SUPERNOVA.HOST_OFFSET_ANG][0][QUANTITY.VALUE])
                     sources = uniq_cdl(
-                        sources.split(',') +
-                        (catalog.entries[name][SUPERNOVA.COMOVING_DIST][0][
-                            QUANTITY.SOURCE]).split(',') + (catalog.entries[
-                                name][SUPERNOVA.REDSHIFT][0][QUANTITY.SOURCE]
-                                                            ).split(','))
+                        sources.split(',') + (catalog.entries[name][
+                            SUPERNOVA.COMOVING_DIST][0][QUANTITY.SOURCE]).
+                        split(',') + (catalog.entries[name][SUPERNOVA.REDSHIFT]
+                                      [0][QUANTITY.SOURCE]).split(','))
                     (catalog.entries[name].add_quantity(
                         SUPERNOVA.HOST_OFFSET_DIST,
                         pretty_num(
