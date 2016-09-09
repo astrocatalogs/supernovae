@@ -23618,8 +23618,8 @@
 		"name1":"SN2016cnv",
 		"aliases1":[
 			"SN2016cnv",
-			"PTSS-16gyb",
-			"AT2016cnv"
+			"AT2016cnv",
+			"PTSS-16gyb"
 		],
 		"name2":"ASASSN-15ae",
 		"aliases2":[
@@ -23694,11 +23694,49 @@
 		"edit":false
 	},
 	{
+		"name1":"AT2016fwe",
+		"aliases1":[
+			"AT2016fwe",
+			"PS16ego"
+		],
+		"name2":"DES16X3km",
+		"aliases2":[
+			"DES16X3km"
+		],
+		"ra1":"02:26:13.94",
+		"dec1":"-04:40:35.83",
+		"ra2":"02:26:13.93",
+		"dec2":"-04:40:35.6",
+		"distdeg":"7.627516788079624e-05",
+		"maxdiffyear":"0.008333333333439441",
+		"discdiffyear":"0.009944444444499823",
+		"edit":false
+	},
+	{
+		"name1":"AT2016fxe",
+		"aliases1":[
+			"AT2016fxe",
+			"PS16egu"
+		],
+		"name2":"MASTER OT J180241.87+090312.9",
+		"aliases2":[
+			"MASTER OT J180241.87+090312.9"
+		],
+		"ra1":"18:02:41.84",
+		"dec1":"+09:03:12.59",
+		"ra2":"18:02:41.870",
+		"dec2":"+09:03:12.90",
+		"distdeg":"0.0001517897343799607",
+		"maxdiffyear":"0.20833333333325754",
+		"discdiffyear":"0.20643888333347604",
+		"edit":false
+	},
+	{
 		"name1":"SN2016cbx",
 		"aliases1":[
 			"SN2016cbx",
-			"ASASSN-16es",
-			"AT2016cbx"
+			"AT2016cbx",
+			"ASASSN-16es"
 		],
 		"name2":"CSS160528:115054+021826",
 		"aliases2":[
@@ -23711,6 +23749,26 @@
 		"distdeg":"0.0011960615668142364",
 		"maxdiffyear":"0.08333333333348492",
 		"discdiffyear":"0.08505555555575484",
+		"edit":false
+	},
+	{
+		"name1":"PS16dsz",
+		"aliases1":[
+			"PS16dsz",
+			"AT2016ezz",
+			"Gaia16bbs"
+		],
+		"name2":"CSS160904:173858+351920",
+		"aliases2":[
+			"CSS160904:173858+351920"
+		],
+		"ra1":"17:38:57.85",
+		"dec1":"+35:19:19.87",
+		"ra2":"17:38:57.84",
+		"dec2":"+35:19:20.28",
+		"distdeg":"0.00012127155527884063",
+		"maxdiffyear":"0.04166666666674246",
+		"discdiffyear":"0.06586111111118953",
 		"edit":false
 	},
 	{
@@ -23772,8 +23830,8 @@
 		"name1":"SN2016daj",
 		"aliases1":[
 			"SN2016daj",
-			"ASASSN-16hh",
-			"AT2016daj"
+			"AT2016daj",
+			"ASASSN-16hh"
 		],
 		"name2":"Gaia16baj",
 		"aliases2":[
@@ -23808,51 +23866,11 @@
 		"edit":false
 	},
 	{
-		"name1":"SN2016ffh",
-		"aliases1":[
-			"SN2016ffh",
-			"ATLAS16cpu",
-			"AT2016ffh"
-		],
-		"name2":"Gaia16bcm",
-		"aliases2":[
-			"Gaia16bcm"
-		],
-		"ra1":"15:11:49.48",
-		"dec1":"+46:15:03.22",
-		"ra2":"15:11:49.44",
-		"dec2":"+46:15:03.24",
-		"distdeg":"0.0001667592335874733",
-		"maxdiffyear":"0.002777777777737356",
-		"discdiffyear":"0.021461130555508134",
-		"edit":false
-	},
-	{
-		"name1":"SN2016fes",
-		"aliases1":[
-			"SN2016fes",
-			"PS16dwg",
-			"AT2016fes"
-		],
-		"name2":"Gaia16bct",
-		"aliases2":[
-			"Gaia16bct"
-		],
-		"ra1":"16:26:29.21",
-		"dec1":"+62:05:32.05",
-		"ra2":"16:26:29.28",
-		"dec2":"+62:05:31.92",
-		"distdeg":"0.0002938936147509352",
-		"maxdiffyear":"0.04166666666674246",
-		"discdiffyear":"0.040877797222265144",
-		"edit":false
-	},
-	{
 		"name1":"SN2016fez",
 		"aliases1":[
 			"SN2016fez",
-			"ASASSN-16je",
-			"AT2016fez"
+			"AT2016fez",
+			"ASASSN-16je"
 		],
 		"name2":"Gaia16bdb",
 		"aliases2":[
@@ -23871,8 +23889,8 @@
 		"name1":"SN2016eiy",
 		"aliases1":[
 			"SN2016eiy",
-			"ASASSN-16hp",
-			"AT2016eiy"
+			"AT2016eiy",
+			"ASASSN-16hp"
 		],
 		"name2":"Gaia16bef",
 		"aliases2":[
@@ -24055,24 +24073,6 @@
 		"edit":false
 	},
 	{
-		"name1":"PS1-15cdi",
-		"aliases1":[
-			"PS1-15cdi"
-		],
-		"name2":"PS15cdi",
-		"aliases2":[
-			"PS15cdi"
-		],
-		"ra1":"01:42:16.17",
-		"dec1":"-02:13:42.6",
-		"ra2":"01:42:16.17",
-		"dec2":"-02:13:42.6",
-		"distdeg":"0.0",
-		"maxdiffyear":"",
-		"discdiffyear":"0.8138888888888687",
-		"edit":false
-	},
-	{
 		"name1":"SNhunt294",
 		"aliases1":[
 			"SNhunt294",
@@ -24151,8 +24151,8 @@
 		"name1":"SN2016cpy",
 		"aliases1":[
 			"SN2016cpy",
-			"ASASSN-16fs",
-			"AT2016cpy"
+			"AT2016cpy",
+			"ASASSN-16fs"
 		],
 		"name2":"SNhunt317",
 		"aliases2":[

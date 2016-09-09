@@ -52,9 +52,9 @@ class SupernovaCatalog(Catalog):
             return repo_years
 
     class SCHEMA:
-        HASH = (check_output(['git', 'log', '-n', '1', '--format="%H"',
-                              '--',
-                              'SCHEMA.md'])
+        HASH = (check_output(['git', '-C', 'astrocats/supernovae',
+                              'log', '-n', '1', '--format="%h"',
+                              '--', 'SCHEMA.md'])
                 .decode('ascii').strip().strip('"').strip())
         URL = ('https://github.com/astrocatalogs/supernovae/blob/' + HASH +
                '/SCHEMA.md')
