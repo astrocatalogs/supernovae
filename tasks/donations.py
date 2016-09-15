@@ -270,7 +270,7 @@ def do_donated_photo(catalog):
     # Brown 05-14-16
     files = glob(
         os.path.join(catalog.get_current_task_repo(), 'Donations',
-                     'brown-05-14-16/*.dat'))
+                     'Brown-05-14-16/*.dat'))
     for fi in pbar(files, task_str):
         name = os.path.basename(fi).split('_')[0]
         name = catalog.add_entry(name)
