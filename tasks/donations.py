@@ -312,10 +312,14 @@ def do_donated_photo(catalog):
         os.path.join(catalog.get_current_task_repo(), 'Donations',
                      'Nicholl-05-03-16/*.txt'))
     name = catalog.add_entry('SN2015bn')
-    source = catalog.entries[name].add_source(bibcode='2016arXiv160304748N')
     catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
     catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, 'PS15ae', source)
     for fi in pbar(files, task_str):
+        if 'late' in fi:
+            bc = '2016ApJ...828L..18N'
+        else:
+            bc = '2016ApJ...826...39N'
+        source = catalog.entries[name].add_source(bibcode=bc)
         telescope = os.path.basename(fi).split('_')[1]
         with open(fi, 'r') as f:
             lines = f.read().splitlines()
@@ -334,23 +338,29 @@ def do_donated_photo(catalog):
                     if not is_number(col):
                         continue
 
+                    band = bands[ci]
+                    system = 'Vega'
+                    if bands[ci] in ["u'", "g'", "r'", "i'", "z'"]:
+                        system = 'SDSS'
+                    elif telescope == 'ASASSN':
+                        system = 'AB'
+                    photodict = {
+                        PHOTOMETRY.TIME: mjd,
+                        PHOTOMETRY.U_TIME: 'MJD',
+                        PHOTOMETRY.MAGNITUDE: col,
+                        PHOTOMETRY.BAND: bands[ci],
+                        PHOTOMETRY.SOURCE: source,
+                        PHOTOMETRY.TELESCOPE: telescope,
+                        PHOTOMETRY.SYSTEM: system
+                    }
                     emag = cols[2 * ci + 2]
-                    upp = ''
-                    if not is_number(emag):
-                        emag = ''
-                        upp = True
-                    instrument = 'UVOT' if telescope == 'Swift' else ''
-                    (catalog.entries[name].add_photometry(
-                        time=mjd,
-                        u_time='MJD',
-                        magnitude=col,
-                        e_magnitude=emag,
-                        upperlimit=upp,
-                        band=bands[ci],
-                        source=source,
-                        telescope=telescope,
-                        instrument=instrument,
-                        system='Vega' if telescope == 'Swift' else 'AB'))
+                    if is_number(emag):
+                        photodict[PHOTOMETRY.E_MAGNITUDE] = emag
+                    else:
+                        photodict[PHOTOMETRY.UPPER_LIMIT] = True
+                    if telescope == 'Swift':
+                        photodict[PHOTOMETRY.INSTRUMENT] = 'UVOT'
+                    catalog.entries[name].add_photometry(**photodict)
 
     catalog.journal_entries()
     return
