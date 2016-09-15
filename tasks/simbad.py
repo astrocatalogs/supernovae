@@ -14,8 +14,8 @@ def do_simbad(catalog):
     # Some coordinates that SIMBAD claims belong to the SNe actually belong to
     # the host.
     task_str = catalog.get_current_task_str()
-    simbadmirrors = ['http://simbad.harvard.edu/simbad/sim-script',
-                     'http://simbad.u-strasbg.fr/simbad/sim-script']
+    simbadmirrors = ['http://simbad.u-strasbg.fr/simbad/sim-script',
+                     'http://simbad.harvard.edu/simbad/sim-script']
     simbadbadcoordbib = ['2013ApJ...770..107C']
     simbadbadtypebib = ['2014ApJ...796...87I', '2015MNRAS.448.1206M',
                         '2015ApJ...807L..18N']
