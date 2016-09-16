@@ -225,23 +225,31 @@ class Supernova(Entry):
                             if newsig >= oldsig:
                                 isworse = False
                 elif quantity.type == KEY_TYPES.STRING:
-                    if len(quantity.kind_preference):
-                        for ct in my_quantity_list:
-                            if (ct.get(QUANTITY.KIND, '') in
+                    for ct in my_quantity_list:
+                        if (ct.get(QUANTITY.KIND, '') in
+                                quantity.kind_preference):
+                            if (added_quantity.get(QUANTITY.KIND, '') in
                                     quantity.kind_preference):
-                                if (added_quantity.get(QUANTITY.KIND, '') in
-                                        quantity.kind_preference):
-                                    if (quantity.kind_preference.index(
-                                            added_quantity[QUANTITY.KIND]) <=
-                                            quantity.kind_preference.index(ct[
-                                                QUANTITY.KIND])):
-                                        isworse = False
-                                        continue
-                            else:
-                                isworse = False
-                                continue
+                                aqi = quantity.kind_preference.index(
+                                    added_quantity[QUANTITY.KIND])
+                                qqi = quantity.kind_preference.index(ct[
+                                    QUANTITY.KIND])
+                                if aqi >= qqi:
+                                    newquantities.append(ct)
+                                if aqi <= qqi:
+                                    isworse = False
+                                    continue
+                            newquantities.append(ct)
+                        else:
+                            isworse = False
+                        newquantities.append(ct)
 
-            if not isworse:
+            if isworse:
+                self._log.info("Removing quantity '{}' with value '{}' "
+                               "determined to be worse than existing "
+                               "alternative values.".format(
+                                   quantity, added_quantity[QUANTITY.VALUE]))
+            else:
                 newquantities.append(added_quantity)
             self[quantity] = newquantities
 
@@ -252,9 +260,9 @@ class Supernova(Entry):
             if (cleaned_value.startswith('SN') and
                     is_integer(cleaned_value[2:6]) and
                     int(cleaned_value[2:6]) >= 2016):
-                success = super().add_quantity(
-                    SUPERNOVA.ALIAS, 'AT' + cleaned_value[2:], source, **
-                    kwargs)
+                success = super().add_quantity(SUPERNOVA.ALIAS,
+                                               'AT' + cleaned_value[2:],
+                                               source, **kwargs)
 
         return True
 

@@ -8,6 +8,7 @@ from astropy.time import Time as astrotime
 from astroquery.vizier import Vizier
 
 from astrocats.catalog.photometry import PHOTOMETRY
+from astrocats.catalog.quantity import QUANTITY
 from astrocats.catalog.utils import (convert_aq_output, get_sig_digits,
                                      is_number, jd_to_mjd, make_date_string,
                                      pbar, pretty_num, rep_chars, round_sig,
@@ -1631,7 +1632,10 @@ def do_vizier(catalog):
             '20' + row['SNSDF'][:2] + '/' + row['SNSDF'][2:4], source,
             kind='host')
         catalog.entries[name].add_quantity(
-            SUPERNOVA.HOST_OFFSET_ANG, row['Offset'], source, u_value='arcseconds')
+            SUPERNOVA.HOST_OFFSET_ANG,
+            row['Offset'],
+            source,
+            u_value='arcseconds')
         catalog.entries[name].add_quantity(
             SUPERNOVA.CLAIMED_TYPE, row['Type'], source, kind='photometric')
     catalog.journal_entries()
@@ -1681,7 +1685,10 @@ def do_vizier(catalog):
         catalog.entries[name].add_quantity(SUPERNOVA.HOST_DEC, row['DEG'],
                                            source)
         catalog.entries[name].add_quantity(
-            SUPERNOVA.HOST_OFFSET_ANG, row['ASep'], source, u_value='arcseconds')
+            SUPERNOVA.HOST_OFFSET_ANG,
+            row['ASep'],
+            source,
+            u_value='arcseconds')
         catalog.entries[name].add_quantity(
             SUPERNOVA.REDSHIFT,
             row['zhost'],
@@ -1712,7 +1719,10 @@ def do_vizier(catalog):
         catalog.entries[name].add_quantity(SUPERNOVA.HOST_DEC, row['DEG'],
                                            source)
         catalog.entries[name].add_quantity(
-            SUPERNOVA.HOST_OFFSET_ANG, row['ASep'], source, u_value='arcseconds')
+            SUPERNOVA.HOST_OFFSET_ANG,
+            row['ASep'],
+            source,
+            u_value='arcseconds')
         catalog.entries[name].add_quantity(
             SUPERNOVA.REDSHIFT,
             row['zhost'],
@@ -2128,25 +2138,25 @@ def do_lennarz(catalog):
             catalog.entries[name].add_quantity(SUPERNOVA.HOST, row['Gal'],
                                                source)
         if row['Type']:
-            claimedtypes = row['Type'].split('|')
+            claimedtypes = list(set(
+                [x.strip(' -') for x in row['Type'].split('|')]))
             for claimedtype in claimedtypes:
-                catalog.entries[name].add_quantity(
-                    SUPERNOVA.CLAIMED_TYPE, claimedtype.strip(' -'), source)
-        if row['z']:
+                catalog.entries[name].add_quantity(SUPERNOVA.CLAIMED_TYPE,
+                                                   claimedtype, source)
+        if row['z'] and is_number(row['z']):
             if name not in ['SN1985D', 'SN2004cq']:
                 catalog.entries[name].add_quantity(
                     SUPERNOVA.REDSHIFT, row['z'], source, kind='host')
-        if row['Dist']:
-            if row['e_Dist']:
-                catalog.entries[name].add_quantity(
-                    SUPERNOVA.LUM_DIST,
-                    row['Dist'],
-                    source,
-                    e_value=row['e_Dist'],
-                    kind='host')
-            else:
-                catalog.entries[name].add_quantity(
-                    SUPERNOVA.LUM_DIST, row['Dist'], source, kind='host')
+        if row['Dist'] and is_number(row['Dist']):
+            quantdict = {
+                QUANTITY.VALUE: row['Dist'],
+                QUANTITY.SOURCE: source,
+                QUANTITY.KIND: 'host'
+            }
+            if row['e_Dist'] and is_number(row['e_Dist']):
+                quantdict[QUANTITY.E_VALUE] = row['e_Dist']
+            catalog.entries[name].add_quantity(SUPERNOVA.LUM_DIST,
+                                               **quantdict)
 
         if row['Ddate']:
             datestring = row['Ddate'].replace('-', '/')
