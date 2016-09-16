@@ -239,10 +239,13 @@ class Supernova(Entry):
                                 if aqi <= qqi:
                                     isworse = False
                                     continue
-                            newquantities.append(ct)
+                            else:
+                                newquantities.append(ct)
                         else:
                             isworse = False
-                        newquantities.append(ct)
+                            if (added_quantity.get(QUANTITY.KIND, '') not in
+                                    quantity.kind_preference):
+                                newquantities.append(ct)
 
             if isworse:
                 self._log.info("Removing quantity '{}' with value '{}' "
