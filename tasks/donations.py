@@ -6,6 +6,7 @@ import os
 from glob import glob
 from math import floor, isnan
 
+import numpy as np
 from astropy.time import Time as astrotime
 
 from astrocats.catalog.photometry import PHOTOMETRY
@@ -335,7 +336,7 @@ def do_donated_photo(catalog):
 
                 mjd = cols[0]
                 for ci, col in enumerate(cols[1::2]):
-                    if not is_number(col):
+                    if not is_number(col) or np.isnan(float(col)):
                         continue
 
                     band = bands[ci]
