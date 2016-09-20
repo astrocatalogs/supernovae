@@ -26,7 +26,7 @@ before_install:
       then conda update -q conda;
       fi
 install:
-    - conda install --yes python=$TRAVIS_PYTHON_VERSION scipy matplotlib
+    - conda install --yes python=$TRAVIS_PYTHON_VERSION matplotlib scipy
     - pip install -r requirements.txt
     - pip install coveralls
 
