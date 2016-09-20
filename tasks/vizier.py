@@ -360,7 +360,7 @@ def do_vizier(catalog):
             astrotime(
                 float(Decimal(2450000.) + Decimal(row['JD'])), format='jd')
             .mjd)
-        band = row['Filt']
+        band = row['Filt'].upper()
         magnitude = str(row['mag'])
         e_magnitude = str(row['e_mag'])
         e_magnitude = '' if e_magnitude == '--' else e_magnitude
