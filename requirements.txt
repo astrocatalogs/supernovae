@@ -10,5 +10,5 @@ ads==0.12.1
 inflect==0.2.5
 tweepy==3.5.0
 seaborn==0.7.1
-GitPytho=>=2.0.6
+GitPython==2.0.6
 psutil==4.3.0

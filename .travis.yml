@@ -26,7 +26,8 @@ before_install:
       then conda update -q conda;
       fi
 install:
-    - conda install --yes python=$TRAVIS_PYTHON_VERSION pyqt matplotlib scipy
+    - conda install --yes python=$TRAVIS_PYTHON_VERSION matplotlib scipy
+    - conda install -c anaconda pyqt=4.11.4
     - pip install -r requirements.txt
     - pip install coveralls
 
