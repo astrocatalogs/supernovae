@@ -229,7 +229,7 @@ def do_ascii(catalog):
                     band='V',
                     magnitude=row[1],
                     e_magnitude=row[2],
-                    band_set=band_set,
+                    bandset=band_set,
                     system=system,
                     source=source)
     catalog.journal_entries()
@@ -425,7 +425,7 @@ def do_ascii(catalog):
             instrument='WHIRC',
             telescope='WIYN 3.5 m',
             observatory='NOAO',
-            band_set='Johnson-Cousins',
+            bandset='Johnson-Cousins',
             system='WHIRC',
             source=source)
     catalog.journal_entries()
