@@ -70,6 +70,7 @@ def do_itep(catalog):
         if e_magnitude:
             photodict[PHOTOMETRY.E_MAGNITUDE] = e_magnitude
         if band.endswith('_SDSS'):
+            photodict[PHOTOMETRY.BAND_SET] = 'SDSS'
             photodict[PHOTOMETRY.SYSTEM] = 'SDSS'
             band = band.replace('_SDSS', "'")
         photodict[PHOTOMETRY.BAND] = band

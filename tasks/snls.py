@@ -55,6 +55,7 @@ def do_snls_photo(catalog):
             PHOTOMETRY.SOURCE: source,
             PHOTOMETRY.TELESCOPE: 'CFHT',
             PHOTOMETRY.INSTRUMENT: 'MegaCam',
+            PHOTOMETRY.BAND_SET: 'MegaCam',
             PHOTOMETRY.SYSTEM: 'Natural'
         }
         catalog.entries[name].add_photometry(**photodict)

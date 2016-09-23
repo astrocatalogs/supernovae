@@ -118,6 +118,7 @@ def do_vizier(catalog):
                         PHOTOMETRY.TELESCOPE: row['Tel']
                     }
                     if ti == 0:
+                        photodict[PHOTOMETRY.BAND_SET] = 'SDSS'
                         photodict[PHOTOMETRY.SYSTEM] = 'SDSS'
                         band = band + "'"
                     photodict[PHOTOMETRY.BAND] = band

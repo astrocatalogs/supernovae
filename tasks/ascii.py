@@ -211,8 +211,10 @@ def do_ascii(catalog):
         catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
 
         if name in ['SN1999ca', 'SN2003dq', 'SN2008aw']:
+            band_set = 'Swope'
             system = 'Swope'
         else:
+            band_set = 'Johnson-Cousins'
             system = 'Landolt'
 
         with open(datafile, 'r') as ff:
@@ -227,6 +229,7 @@ def do_ascii(catalog):
                     band='V',
                     magnitude=row[1],
                     e_magnitude=row[2],
+                    band_set=band_set,
                     system=system,
                     source=source)
     catalog.journal_entries()
@@ -422,6 +425,7 @@ def do_ascii(catalog):
             instrument='WHIRC',
             telescope='WIYN 3.5 m',
             observatory='NOAO',
+            band_set='Johnson-Cousins',
             system='WHIRC',
             source=source)
     catalog.journal_entries()

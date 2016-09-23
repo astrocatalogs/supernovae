@@ -340,10 +340,13 @@ def do_donated_photo(catalog):
                         continue
 
                     band = bands[ci]
+                    band_set = ''
                     system = 'Vega'
                     if bands[ci] in ["u'", "g'", "r'", "i'", "z'"]:
+                        band_set = 'SDSS'
                         system = 'SDSS'
                     elif telescope == 'ASASSN':
+                        band_set = 'ASASSN'
                         system = 'AB'
                     photodict = {
                         PHOTOMETRY.TIME: mjd,
@@ -354,6 +357,8 @@ def do_donated_photo(catalog):
                         PHOTOMETRY.TELESCOPE: telescope,
                         PHOTOMETRY.SYSTEM: system
                     }
+                    if band_set:
+                        photodict[PHOTOMETRY.BAND_SET] = band_set
                     emag = cols[2 * ci + 2]
                     if is_number(emag):
                         photodict[PHOTOMETRY.E_MAGNITUDE] = emag

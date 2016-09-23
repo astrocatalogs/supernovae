@@ -186,6 +186,7 @@ def do_sdss_photo(catalog):
                     magnitude=magnitude,
                     e_magnitude=e_mag,
                     source=source,
+                    band_set='SDSS',
                     system='SDSS'))
         if not fi % 1000:
             catalog.journal_entries()
