@@ -23106,6 +23106,24 @@
 		"edit":false
 	},
 	{
+		"name1":"MLS151122:083521+181515",
+		"aliases1":[
+			"MLS151122:083521+181515"
+		],
+		"name2":"PS16dx",
+		"aliases2":[
+			"PS16dx"
+		],
+		"ra1":"08:35:20.88",
+		"dec1":"+18:15:15.48",
+		"ra2":"08:35:20.97",
+		"dec2":"+18:15:15.1",
+		"distdeg":"0.0003895728112701331",
+		"maxdiffyear":"0.1138888888888232",
+		"discdiffyear":"5.808333333333394",
+		"edit":false
+	},
+	{
 		"name1":"OGLE-2015-SN-078",
 		"aliases1":[
 			"OGLE-2015-SN-078"
@@ -23522,25 +23540,6 @@
 		"edit":false
 	},
 	{
-		"name1":"AT2016gfv",
-		"aliases1":[
-			"AT2016gfv",
-			"ATLAS16csa"
-		],
-		"name2":"Gaia16bha",
-		"aliases2":[
-			"Gaia16bha"
-		],
-		"ra1":"03:28:44.92",
-		"dec1":"-13:52:08.02",
-		"ra2":"03:28:44.952",
-		"dec2":"-13:52:08.04",
-		"distdeg":"0.00013344902388734222",
-		"maxdiffyear":"0.01666666666665151",
-		"discdiffyear":"0.012169463888767496",
-		"edit":false
-	},
-	{
 		"name1":"SN2016cbx",
 		"aliases1":[
 			"SN2016cbx",
@@ -23675,6 +23674,66 @@
 		"distdeg":"0.0005477859476537881",
 		"maxdiffyear":"0.05277777777769188",
 		"discdiffyear":"0.052292791666559424",
+		"edit":false
+	},
+	{
+		"name1":"SN2016esh",
+		"aliases1":[
+			"SN2016esh",
+			"AT2016esh",
+			"ASASSN-16ie"
+		],
+		"name2":"Gaia16bhs",
+		"aliases2":[
+			"Gaia16bhs"
+		],
+		"ra1":"16:04:14.35",
+		"dec1":"+16:41:24.07",
+		"ra2":"16:04:14.4",
+		"dec2":"+16:41:24.72",
+		"distdeg":"0.00027568657280618793",
+		"maxdiffyear":"0.027777777777828305",
+		"discdiffyear":"0.026916666666693345",
+		"edit":false
+	},
+	{
+		"name1":"SN2016fov",
+		"aliases1":[
+			"SN2016fov",
+			"AT2016fov",
+			"CSS160831:164821+061614"
+		],
+		"name2":"Gaia16bhu",
+		"aliases2":[
+			"Gaia16bhu"
+		],
+		"ra1":"16:48:21.28",
+		"dec1":"+06:16:14.50",
+		"ra2":"16:48:21.36",
+		"dec2":"+06:16:15.024",
+		"distdeg":"0.0003637272754021401",
+		"maxdiffyear":"0.041666666666515084",
+		"discdiffyear":"0.040375450000055935",
+		"edit":false
+	},
+	{
+		"name1":"SN2016enk",
+		"aliases1":[
+			"SN2016enk",
+			"AT2016enk",
+			"ASASSN-16hy"
+		],
+		"name2":"Gaia16bjg",
+		"aliases2":[
+			"Gaia16bjg"
+		],
+		"ra1":"15:26:29.54",
+		"dec1":"+41:44:03.85",
+		"ra2":"15:26:29.52",
+		"dec2":"+41:44:04.2",
+		"distdeg":"0.00012804922856671653",
+		"maxdiffyear":"0.13333333333321207",
+		"discdiffyear":"0.13250906666667106",
 		"edit":false
 	},
 	{

@@ -2026,7 +2026,7 @@ for fcnt, eventfile in enumerate(tq(sorted(files, key=lambda s: s.lower()))):
                             for s, source in enumerate(sources):
                                 sourcehtml = sourcehtml + \
                                     (', ' if s > 0 else '') + r'<a href="#source' + \
-                                    source + r'">' + source + r'</a>'
+                                    source + r'" target="_self">' + source + r'</a>'
                             keyhtml = keyhtml + (r'<br>' if r > 0 else '')
                             keyhtml = keyhtml + "<div class='stt'>"
                             if 'derived' in row and row['derived']:
