@@ -616,16 +616,12 @@ class Supernova(Entry):
         mlmag = None
 
         if visual:
-            band_list = MAX_VISUAL_BANDS
-        else:
-            band_list = list(set([x[3] for x in eventphoto]))
-
-        for mb in band_list:
-            leventphoto = [x for x in eventphoto if x[3] in mb]
-            if leventphoto:
-                mlmag = min([x[2] for x in leventphoto])
-                eventphoto = leventphoto
-                break
+            for mb in MAX_VISUAL_BANDS:
+                leventphoto = [x for x in eventphoto if x[3] in mb]
+                if leventphoto:
+                    mlmag = min([x[2] for x in leventphoto])
+                    eventphoto = leventphoto
+                    break
 
         if not mlmag:
             mlmag = min([x[2] for x in eventphoto])
