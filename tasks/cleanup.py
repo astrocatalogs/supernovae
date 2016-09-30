@@ -327,6 +327,27 @@ def do_cleanup(catalog):
                 pnum = pretty_num(pnum, sig=bestsig + 1)
                 catalog.entries[name].add_quantity(
                     SUPERNOVA.MAX_ABS_MAG, pnum, sources, derived=True)
+        if (SUPERNOVA.MAX_VISUAL_ABS_MAG not in catalog.entries[name] and
+                SUPERNOVA.MAX_VISUAL_APP_MAG in catalog.entries[name] and
+                SUPERNOVA.LUM_DIST in catalog.entries[name]):
+            # Find the "best" distance to use for this
+            bestsig = 0
+            for ld in catalog.entries[name][SUPERNOVA.LUM_DIST]:
+                sig = get_sig_digits(ld[QUANTITY.VALUE])
+                if sig > bestsig:
+                    bestld = ld[QUANTITY.VALUE]
+                    bestsrc = ld[QUANTITY.SOURCE]
+                    bestsig = sig
+            if bestsig > 0 and is_number(bestld) and float(bestld) > 0.:
+                source = catalog.entries[name].add_self_source()
+                sources = uniq_cdl([source] + bestsrc.split(','))
+                # FIX: what's happening here?!
+                pnum = (float(catalog.entries[name][
+                    SUPERNOVA.MAX_VISUAL_APP_MAG][0][QUANTITY.VALUE]) - 5.0 *
+                        (log10(float(bestld) * 1.0e6) - 1.0))
+                pnum = pretty_num(pnum, sig=bestsig + 1)
+                catalog.entries[name].add_quantity(
+                    SUPERNOVA.MAX_VISUAL_ABS_MAG, pnum, sources, derived=True)
         if SUPERNOVA.REDSHIFT in catalog.entries[name]:
             # Find the "best" redshift to use for this
             bestz, bestkind, bestsig, bestsrc = catalog.entries[
@@ -378,6 +399,22 @@ def do_cleanup(catalog):
                                 sig=bestsig + 1)
                             catalog.entries[name].add_quantity(
                                 SUPERNOVA.MAX_ABS_MAG,
+                                pnum,
+                                sources,
+                                derived=True)
+                        if (SUPERNOVA.MAX_VISUAL_ABS_MAG not in
+                                catalog.entries[name] and
+                                SUPERNOVA.MAX_VISUAL_APP_MAG in
+                                catalog.entries[name]):
+                            source = catalog.entries[name].add_self_source()
+                            pnum = pretty_num(
+                                float(catalog.entries[name][
+                                    SUPERNOVA.MAX_VISUAL_APP_MAG][0][
+                                        QUANTITY.VALUE]) - 5.0 *
+                                (log10(dl.to('pc').value) - 1.0),
+                                sig=bestsig + 1)
+                            catalog.entries[name].add_quantity(
+                                SUPERNOVA.MAX_VISUAL_ABS_MAG,
                                 pnum,
                                 sources,
                                 derived=True)

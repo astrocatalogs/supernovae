@@ -17,7 +17,7 @@ from astrocats.catalog.utils import (bib_priority, get_sig_digits,
                                      uniq_cdl)
 from cdecimal import Decimal
 
-from .constants import MAX_BANDS
+from .constants import MAX_VISUAL_BANDS
 from .utils import frame_priority, host_clean, radec_clean
 
 
@@ -27,6 +27,12 @@ class SUPERNOVA(ENTRY):
                        kind_preference=['spectroscopic', 'photometric'],
                        replace_better=True)
     DISCOVERY_DATE = Key('discoverdate', KEY_TYPES.STRING)
+    MAX_VISUAL_ABS_MAG = Key('maxvisualabsmag', KEY_TYPES.NUMERIC)
+    MAX_VISUAL_APP_MAG = Key('maxvisualappmag', KEY_TYPES.NUMERIC)
+    MAX_VISUAL_BAND = Key('maxvisualband', KEY_TYPES.STRING)
+    MAX_VISUAL_DATE = Key('maxvisualdate',
+                          KEY_TYPES.STRING,
+                          replace_better=True)
     ERRORS = Key('errors')
 
 
@@ -594,7 +600,7 @@ class Supernova(Entry):
 
         return data
 
-    def _get_max_light(self):
+    def _get_max_light(self, visual=False):
         if self._KEYS.PHOTOMETRY not in self:
             return (None, None, None, None)
 
@@ -608,7 +614,13 @@ class Supernova(Entry):
             return None, None, None, None
 
         mlmag = None
-        for mb in MAX_BANDS:
+
+        if visual:
+            band_list = MAX_VISUAL_BANDS
+        else:
+            band_list = list(set([x[3] for x in eventphoto]))
+
+        for mb in band_list:
             leventphoto = [x for x in eventphoto if x[3] in mb]
             if leventphoto:
                 mlmag = min([x[2] for x in leventphoto])
@@ -649,6 +661,7 @@ class Supernova(Entry):
 
     def set_first_max_light(self):
         if ENTRY.MAX_APP_MAG not in self:
+            # Get the maximum amongst all bands
             mldt, mlmag, mlband, mlsource = self._get_max_light()
             if mldt or mlmag or mlband:
                 source = self.add_self_source()
@@ -664,6 +677,24 @@ class Supernova(Entry):
             if mlband:
                 self.add_quantity(
                     ENTRY.MAX_BAND, mlband, uniq_src, derived=True)
+
+        if ENTRY.MAX_VISUAL_APP_MAG not in self:
+            # Get the "visual" maximum
+            mldt, mlmag, mlband, mlsource = self._get_max_light(visual=True)
+            if mldt or mlmag or mlband:
+                source = self.add_self_source()
+                uniq_src = uniq_cdl([source] + mlsource.split(','))
+            if mldt:
+                max_date = make_date_string(mldt.year, mldt.month, mldt.day)
+                self.add_quantity(
+                    ENTRY.MAX_VISUAL_DATE, max_date, uniq_src, derived=True)
+            if mlmag:
+                mlmag = pretty_num(mlmag)
+                self.add_quantity(
+                    ENTRY.MAX_VISUAL_APP_MAG, mlmag, uniq_src, derived=True)
+            if mlband:
+                self.add_quantity(
+                    ENTRY.MAX_VISUAL_BAND, mlband, uniq_src, derived=True)
 
         if (self._KEYS.DISCOVER_DATE not in self or
                 max([len(x[QUANTITY.VALUE].split('/'))
