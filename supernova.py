@@ -656,7 +656,7 @@ class Supernova(Entry):
         return flmjd, flsource
 
     def set_first_max_light(self):
-        if ENTRY.MAX_APP_MAG not in self:
+        if SUPERNOVA.MAX_APP_MAG not in self:
             # Get the maximum amongst all bands
             mldt, mlmag, mlband, mlsource = self._get_max_light()
             if mldt or mlmag or mlband:
@@ -665,16 +665,16 @@ class Supernova(Entry):
             if mldt:
                 max_date = make_date_string(mldt.year, mldt.month, mldt.day)
                 self.add_quantity(
-                    ENTRY.MAX_DATE, max_date, uniq_src, derived=True)
+                    SUPERNOVA.MAX_DATE, max_date, uniq_src, derived=True)
             if mlmag:
                 mlmag = pretty_num(mlmag)
                 self.add_quantity(
-                    ENTRY.MAX_APP_MAG, mlmag, uniq_src, derived=True)
+                    SUPERNOVA.MAX_APP_MAG, mlmag, uniq_src, derived=True)
             if mlband:
                 self.add_quantity(
-                    ENTRY.MAX_BAND, mlband, uniq_src, derived=True)
+                    SUPERNOVA.MAX_BAND, mlband, uniq_src, derived=True)
 
-        if ENTRY.MAX_VISUAL_APP_MAG not in self:
+        if SUPERNOVA.MAX_VISUAL_APP_MAG not in self:
             # Get the "visual" maximum
             mldt, mlmag, mlband, mlsource = self._get_max_light(visual=True)
             if mldt or mlmag or mlband:
@@ -683,14 +683,14 @@ class Supernova(Entry):
             if mldt:
                 max_date = make_date_string(mldt.year, mldt.month, mldt.day)
                 self.add_quantity(
-                    ENTRY.MAX_VISUAL_DATE, max_date, uniq_src, derived=True)
+                    SUPERNOVA.MAX_VISUAL_DATE, max_date, uniq_src, derived=True)
             if mlmag:
                 mlmag = pretty_num(mlmag)
                 self.add_quantity(
-                    ENTRY.MAX_VISUAL_APP_MAG, mlmag, uniq_src, derived=True)
+                    SUPERNOVA.MAX_VISUAL_APP_MAG, mlmag, uniq_src, derived=True)
             if mlband:
                 self.add_quantity(
-                    ENTRY.MAX_VISUAL_BAND, mlband, uniq_src, derived=True)
+                    SUPERNOVA.MAX_VISUAL_BAND, mlband, uniq_src, derived=True)
 
         if (self._KEYS.DISCOVER_DATE not in self or
                 max([len(x[QUANTITY.VALUE].split('/'))
