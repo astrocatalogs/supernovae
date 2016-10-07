@@ -2155,7 +2155,7 @@ for fcnt, eventfile in enumerate(tq(sorted(files, key=lambda s: s.lower()))):
         # date (gregorian), type, redshift (helio), redshift (host), r.a.,
         # dec., # obs., link
         snepages.append(
-            [entry, ",".join([x['value'] for x in catalog[entry]['alias']]),
+            [entry, ",".join([x['value'] for x in catalog[entry].get('alias', [])]),
              get_first_value(entry, 'maxappmag'),
              get_first_value(entry, 'maxdate'),
              get_first_value(entry, 'claimedtype'), get_first_value(
@@ -2385,7 +2385,7 @@ if args.writecatalog and not args.eventlist:
     if not args.boneyard:
         names = OrderedDict()
         for ev in catalog:
-            names[ev['name']] = [x['value'] for x in ev['alias']]
+            names[ev['name']] = [x['value'] for x in ev.get('alias', [])]
         jsonstring = json.dumps(names, separators=(',', ':'))
         with open(outdir + 'names.min.json' + testsuffix, 'w') as f:
             f.write(jsonstring)
