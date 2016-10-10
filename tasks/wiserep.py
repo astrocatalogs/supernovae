@@ -7,9 +7,10 @@ import warnings
 from glob import glob
 from html import unescape
 
-from astrocats.catalog.utils import is_number, pbar, pbar_strings, uniq_cdl
-from astrocats.catalog.source import SOURCE
 from astropy.time import Time as astrotime
+
+from astrocats.catalog.source import SOURCE
+from astrocats.catalog.utils import is_number, pbar, pbar_strings, uniq_cdl
 
 from ..supernova import SUPERNOVA
 
@@ -43,17 +44,14 @@ def do_wiserep_spectra(catalog):
                              'arXiv:1605.03136': '2016arXiv160503136T',
                              '10.1093/mnras/stt1839': '2013MNRAS.436.3614S'}
 
-    file_names = list(
-        glob(os.path.join(
-            catalog.get_current_task_repo(), '*')))
+    file_names = list(glob(os.path.join(catalog.get_current_task_repo(), '*')))
     for folder in pbar_strings(file_names, task_str):
         if '.txt' in folder or '.json' in folder:
             continue
         name = os.path.basename(folder).strip()
         if name.startswith('sn'):
             name = 'SN' + name[2:]
-        if (name.startswith(('CSS', 'SSS', 'MLS')) and
-                ':' not in name):
+        if (name.startswith(('CSS', 'SSS', 'MLS')) and ':' not in name):
             name = name.replace('-', ':', 1)
         if name.startswith('MASTERJ'):
             name = name.replace('MASTERJ', 'MASTER OT J')
@@ -64,20 +62,27 @@ def do_wiserep_spectra(catalog):
         secondarysource = catalog.entries[name].add_source(
             name=secondaryreference,
             url=secondaryrefurl,
-            bibcode=secondarybibcode, secondary=True)
-        catalog.entries[name].add_quantity(
-            SUPERNOVA.ALIAS, name, secondarysource)
+            bibcode=secondarybibcode,
+            secondary=True)
+        catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name,
+                                           secondarysource)
 
-        with open(os.path.join(folder, 'README.json'), 'r') as f:
+        readme_path = os.path.join(folder, 'README.json')
+        if not os.path.exists(readme_path):
+            catalog.log.warning(
+                'Metadata file not found for event "{}"'.format(name))
+            continue
+
+        with open(readme_path, 'r') as f:
             fileinfo = json.loads(f.read())
 
-        files = list(set(glob(folder + '/*')) -
-                     set(glob(folder + '/README.json')))
+        files = list(
+            set(glob(folder + '/*')) - set(glob(folder + '/README.json')))
         for fname in pbar(files, task_str):
             specfile = os.path.basename(fname)
             if specfile not in fileinfo:
-                catalog.log.warning(
-                    'Metadata not found for "{}"'.format(fname))
+                catalog.log.warning('Metadata not found for "{}"'.format(
+                    fname))
                 continue
             claimedtype = fileinfo[specfile]["Type"]
             instrument = fileinfo[specfile]["Instrument"]
@@ -98,8 +103,7 @@ def do_wiserep_spectra(catalog):
                         bibcode=unescape(newbibcode))
                 else:
                     bibname = unescape(bibcode)
-                    source = catalog.entries[name].add_source(
-                        name=bibname)
+                    source = catalog.entries[name].add_source(name=bibname)
                     catalog.log.warning('Bibcode "{}" is invalid, using as '
                                         '`{}` instead'.format(bibname,
                                                               SOURCE.NAME))
@@ -109,10 +113,9 @@ def do_wiserep_spectra(catalog):
 
             if claimedtype not in ['Other']:
                 catalog.entries[name].add_quantity(
-                    SUPERNOVA.CLAIMED_TYPE, claimedtype,
-                    secondarysource)
-            catalog.entries[name].add_quantity(
-                SUPERNOVA.REDSHIFT, redshift, secondarysource)
+                    SUPERNOVA.CLAIMED_TYPE, claimedtype, secondarysource)
+            catalog.entries[name].add_quantity(SUPERNOVA.REDSHIFT, redshift,
+                                               secondarysource)
 
             with open(fname, 'r') as f:
                 data = [x.split() for x in f]
@@ -122,17 +125,13 @@ def do_wiserep_spectra(catalog):
                 oldval = ''
                 for row in data:
                     if row and '#' not in row[0]:
-                        if (len(row) >= 2 and
-                                is_number(row[0]) and
-                                is_number(row[1]) and
-                                row[1] != oldval):
+                        if (len(row) >= 2 and is_number(row[0]) and
+                                is_number(row[1]) and row[1] != oldval):
                             newdata.append(row)
                             oldval = row[1]
 
                 if skipspec or not newdata:
-                    warnings.warn(
-                        'Skipped adding spectrum file ' +
-                        specfile)
+                    warnings.warn('Skipped adding spectrum file ' + specfile)
                     continue
 
                 data = [list(i) for i in zip(*newdata)]
@@ -155,17 +154,22 @@ def do_wiserep_spectra(catalog):
                     u_errors=fluxunit if errors else '',
                     wavelengths=wavelengths,
                     fluxes=fluxes,
-                    u_time='MJD', time=time,
-                    instrument=instrument, source=sources,
-                    observer=observer, reducer=reducer, reduction=reduction,
-                    filename=specfile, survey=survey, redshift=redshift)
+                    u_time='MJD',
+                    time=time,
+                    instrument=instrument,
+                    source=sources,
+                    observer=observer,
+                    reducer=reducer,
+                    reduction=reduction,
+                    filename=specfile,
+                    survey=survey,
+                    redshift=redshift)
 
         catalog.journal_entries()
 
         wiserepcnt = wiserepcnt + 1
         if (catalog.args.travis and
-                wiserepcnt %
-                catalog.TRAVIS_QUERY_LIMIT == 0):
+                wiserepcnt % catalog.TRAVIS_QUERY_LIMIT == 0):
             break
 
     return

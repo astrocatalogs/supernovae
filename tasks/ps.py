@@ -7,17 +7,19 @@ import warnings
 from glob import glob
 
 import requests
-from astrocats.catalog.utils import is_number, make_date_string, pbar, uniq_cdl
 from astropy.time import Time as astrotime
 from bs4 import BeautifulSoup
+
+from astrocats.catalog.utils import is_number, make_date_string, pbar, uniq_cdl
 
 from ..supernova import SUPERNOVA
 
 
 def do_ps_mds(catalog):
     task_str = catalog.get_current_task_str()
-    with open(os.path.join(catalog.get_current_task_repo(),
-                           'MDS/apj506838t1_mrt.txt')) as f:
+    with open(
+            os.path.join(catalog.get_current_task_repo(),
+                         'MDS/apj506838t1_mrt.txt')) as f:
         for ri, row in enumerate(pbar(f.read().splitlines(), task_str)):
             if ri < 35:
                 continue
@@ -30,12 +32,12 @@ def do_ps_mds(catalog):
             catalog.entries[name].add_quantity(SUPERNOVA.DEC, cols[3], source)
             astrot = astrotime(float(cols[4]), format='mjd').datetime
             ddate = make_date_string(astrot.year, astrot.month, astrot.day)
-            catalog.entries[name].add_quantity(
-                SUPERNOVA.DISCOVER_DATE, ddate, source)
+            catalog.entries[name].add_quantity(SUPERNOVA.DISCOVER_DATE, ddate,
+                                               source)
             catalog.entries[name].add_quantity(
                 SUPERNOVA.REDSHIFT, cols[5], source, kind='spectroscopic')
-            catalog.entries[name].add_quantity(
-                SUPERNOVA.CLAIMED_TYPE, 'II P', source)
+            catalog.entries[name].add_quantity(SUPERNOVA.CLAIMED_TYPE, 'II P',
+                                               source)
     catalog.journal_entries()
     return
 
@@ -150,12 +152,12 @@ def do_ps_threepi(catalog):
             if not name:
                 name = psname
             name = catalog.add_entry(name)
-            sources = [catalog.entries[name]
-                       .add_source(name='Pan-STARRS 3Pi',
-                                   url=('http://psweb.mp.qub.ac.uk/'
-                                        'ps1threepi/psdb/'))]
-            catalog.entries[name].add_quantity(
-                SUPERNOVA.ALIAS, name, sources[0])
+            sources = [catalog.entries[name].add_source(
+                name='Pan-STARRS 3Pi',
+                url=('http://psweb.mp.qub.ac.uk/'
+                     'ps1threepi/psdb/'))]
+            catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name,
+                                               sources[0])
             for ref in refs:
                 sources.append(catalog.entries[name].add_source(
                     name=ref[0], url=ref[1]))
@@ -165,15 +167,15 @@ def do_ps_threepi(catalog):
                 if alias[:3] in ['CSS', 'SSS', 'MLS']:
                     newalias = alias.replace('-', ':', 1)
                 newalias = newalias.replace('PSNJ', 'PSN J')
-                catalog.entries[name].add_quantity(
-                    SUPERNOVA.ALIAS, newalias, source)
+                catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, newalias,
+                                                   source)
             catalog.entries[name].add_quantity(SUPERNOVA.RA, ra, source)
             catalog.entries[name].add_quantity(SUPERNOVA.DEC, dec, source)
-            catalog.entries[name].add_quantity(
-                SUPERNOVA.CLAIMED_TYPE, ctype, source)
+            catalog.entries[name].add_quantity(SUPERNOVA.CLAIMED_TYPE, ctype,
+                                               source)
 
-            fname2 = os.path.join(
-                catalog.get_current_task_repo(), '3pi/candidate-')
+            fname2 = os.path.join(catalog.get_current_task_repo(),
+                                  '3pi/candidate-')
             fname2 += pslink.rstrip('/').split('/')[-1] + '.html'
             if offline:
                 if not os.path.isfile(fname2):
@@ -212,15 +214,13 @@ def do_ps_threepi(catalog):
                 slines = script.text.splitlines()
                 for line in slines:
                     if 'jslcdata.push' in line:
-                        json_fname = (line
-                                      .strip()
+                        json_fname = (line.strip()
                                       .replace('jslcdata.push(', '')
                                       .replace(');', ''))
                         nslines.append(json.loads(json_fname))
-                    if ('jslabels.push' in line and
-                            'blanks' not in line and 'non det' not in line):
-                        json_fname = (line
-                                      .strip()
+                    if ('jslabels.push' in line and 'blanks' not in line and
+                            'non det' not in line):
+                        json_fname = (line.strip()
                                       .replace('jslabels.push(', '')
                                       .replace(');', ''))
                         nslabels.append(json.loads(json_fname)['label'])
@@ -229,16 +229,24 @@ def do_ps_threepi(catalog):
                     continue
                 for obs in line:
                     catalog.entries[name].add_photometry(
-                        time=str(obs[0]), u_time='MJD', band=nslabels[li],
-                        magnitude=str(obs[1]), e_magnitude=str(obs[2]),
-                        source=source, telescope=teles)
+                        time=str(obs[0]),
+                        u_time='MJD',
+                        band=nslabels[li],
+                        magnitude=str(obs[1]),
+                        e_magnitude=str(obs[2]),
+                        source=source,
+                        telescope=teles)
             for li, line in enumerate(nslines[2 * len(nslabels):]):
                 if not line:
                     continue
                 for obs in line:
                     catalog.entries[name].add_photometry(
-                        time=str(obs[0]), u_time='MJD', band=nslabels[li],
-                        magnitude=str(obs[1]), upperlimit=True, source=source,
+                        time=str(obs[0]),
+                        u_time='MJD',
+                        band=nslabels[li],
+                        magnitude=str(obs[1]),
+                        upperlimit=True,
+                        source=source,
                         telescope=teles)
             assoctab = bs2.find('table', {'class': 'generictable'})
             hostname = ''
@@ -256,8 +264,8 @@ def do_ps_threepi(catalog):
             # Skip galaxies with just SDSS id
             if is_number(hostname):
                 continue
-            catalog.entries[name].add_quantity(
-                SUPERNOVA.HOST, hostname, source)
+            catalog.entries[name].add_quantity(SUPERNOVA.HOST, hostname,
+                                               source)
             if redshift:
                 catalog.entries[name].add_quantity(
                     SUPERNOVA.REDSHIFT, redshift, source, kind='host')
