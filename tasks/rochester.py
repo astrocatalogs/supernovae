@@ -112,7 +112,8 @@ def do_rochester(catalog):
                 type = str(cols[1].contents[0]).strip(' :,')
                 catalog.entries[name].add_quantity(
                     SUPERNOVA.CLAIMED_TYPE, type, sources)
-            if str(cols[2].contents[0]).strip() != 'anonymous':
+            if (len(cols[2].contents) > 0 and
+                    str(cols[2].contents[0]).strip() != 'anonymous'):
                 catalog.entries[name].add_quantity(SUPERNOVA.HOST, str(
                     cols[2].contents[0]).strip(), sources)
             catalog.entries[name].add_quantity(SUPERNOVA.RA, ra, sources)

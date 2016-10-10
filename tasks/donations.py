@@ -48,7 +48,8 @@ def do_donated_photo(catalog):
                         PHOTOMETRY.U_TIME: 'MJD',
                         PHOTOMETRY.BAND: ba,
                         PHOTOMETRY.MAGNITUDE: mag.strip('< '),
-                        PHOTOMETRY.SOURCE: source
+                        PHOTOMETRY.SOURCE: source,
+                        PHOTOMETRY.SYSTEM: 'AB'
                     }
                     if 'ATel' not in row[-1]:
                         photodict[PHOTOMETRY.TELESCOPE] = row[-1]
