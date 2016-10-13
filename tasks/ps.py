@@ -1,5 +1,6 @@
 """Import tasks for Pan-STARRS.
 """
+import csv
 import json
 import os
 import urllib
@@ -10,6 +11,7 @@ import requests
 from astropy.time import Time as astrotime
 from bs4 import BeautifulSoup
 
+from astrocats.catalog.photometry import PHOTOMETRY
 from astrocats.catalog.utils import is_number, make_date_string, pbar, uniq_cdl
 
 from ..supernova import SUPERNOVA
@@ -39,6 +41,115 @@ def do_ps_mds(catalog):
             catalog.entries[name].add_quantity(SUPERNOVA.CLAIMED_TYPE, 'II P',
                                                source)
     catalog.journal_entries()
+    return
+
+
+def do_ps_alerts(catalog):
+    task_str = catalog.get_current_task_str()
+    alertstables = ['alertstable-2010', 'alertstable-2011', 'alertstable']
+    rows = []
+    for at in alertstables:
+        with open(
+                os.path.join(catalog.get_current_task_repo(), 'ps1-clean',
+                             at)) as f:
+            rows.extend(
+                list(csv.reader(
+                    f, delimiter=' ', skipinitialspace=True)))
+    alertfiles = glob(
+        os.path.join(catalog.get_current_task_repo(), 'ps1-clean/*.dat'))
+    alertfilestag = dict(
+        [(x.split('/')[-1].split('.')[0], x) for x in alertfiles])
+    alertfilesid = dict([(x.split('/')[-1].split('.')[0].split('-')[-1], x)
+                         for x in alertfiles])
+    with open(
+            os.path.join(catalog.get_current_task_repo(),
+                         'ps1-clean/whitelist')) as f:
+        whitelist = list(csv.reader(f, delimiter=' ', skipinitialspace=True))
+    wlnames = [x[0] for x in whitelist]
+    wlnamesleft = wlnames.copy()
+    wlra = [x[1] for x in whitelist]
+    missing_confirmed = []
+    already_collected = []
+    for ri, row in enumerate(pbar(rows, task_str)):
+        if ri == 0:
+            continue
+        psname = row[50]
+        if psname == '-':
+            if row[4] in wlra:
+                psname = wlnames[wlra.index(row[4])]
+            else:
+                continue
+        sntype = row[21].replace('SN', '')
+        skip_photo = False
+        if psname not in wlnamesleft:
+            if row[1] == 'confirmed':
+                if (sntype != 'Ia' or
+                        not (psname.startswith(('PS1-12', 'PS1-13')) or
+                             (psname.startswith('PS1-10') and
+                             len(psname.replace('PS1-10', '')) == 3 and
+                             psname[-3:] > 'ams'))):
+                    if sntype == 'Ia' and psname.startswith('PS1-10'):
+                        already_collected.append((psname, row[21]))
+                    else:
+                        missing_confirmed.append((psname, row[21]))
+                    skip_photo = True
+            else:
+                skip_photo = True
+        if psname in wlnamesleft:
+            wlnamesleft.remove(psname)
+
+        name, source = catalog.new_entry(
+            psname,
+            srcname='Pan-STARRS Alerts',
+            url='http://telescopes.rc.fas.harvard.edu/ps1/')
+
+        catalog.entries[name].add_quantity(SUPERNOVA.RA, row[4], source)
+        catalog.entries[name].add_quantity(SUPERNOVA.DEC, row[5], source)
+        if sntype != '-':
+            catalog.entries[name].add_quantity(SUPERNOVA.CLAIMED_TYPE, sntype,
+                                               source)
+        if row[22] != '-':
+            catalog.entries[name].add_quantity(SUPERNOVA.REDSHIFT, row[22],
+                                               source)
+        if skip_photo:
+            continue
+        psinternal = row[-1].split('.')[0]
+        if not is_number(psinternal.split('-')[0]):
+            psid = row[0].zfill(6)
+            if psid not in alertfilesid:
+                continue
+            pspath = alertfilesid[psid]
+        else:
+            if psinternal not in alertfilestag:
+                continue
+            pspath = alertfilestag[psinternal]
+        with open(pspath) as f:
+            photrows = list(
+                csv.reader(
+                    f, delimiter=' ', skipinitialspace=True))
+        for pi, prow in enumerate(photrows):
+            if pi == 0 or prow[3] == '-':
+                continue
+            photodict = {
+                PHOTOMETRY.TIME: prow[1],
+                PHOTOMETRY.U_TIME: 'MJD',
+                PHOTOMETRY.BAND: prow[2],
+                PHOTOMETRY.MAGNITUDE: prow[3],
+                PHOTOMETRY.E_MAGNITUDE: prow[4],
+                PHOTOMETRY.COUNTS: prow[13],
+                PHOTOMETRY.E_COUNTS: prow[14],
+                PHOTOMETRY.ZERO_POINT: prow[15],
+                PHOTOMETRY.INSTRUMENT: 'GPC1',
+                PHOTOMETRY.OBSERVATORY: 'PS1',
+                PHOTOMETRY.SURVEY: 'MDS',
+                PHOTOMETRY.TELESCOPE: 'PS1',
+                PHOTOMETRY.SYSTEM: 'PS1',
+                PHOTOMETRY.SOURCE: source
+            }
+            catalog.entries[name].add_photometry(**photodict)
+    catalog.journal_entries()
+    # print(already_collected)
+    # print(missing_confirmed)
     return
 
 

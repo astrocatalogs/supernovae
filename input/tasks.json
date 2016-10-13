@@ -251,6 +251,16 @@
         "always_journal": true,
         "priority": 25
     },
+    "psalerts": {
+        "nice_name": "%pre Pan-STARRS Alerts",
+        "active": true,
+        "update": false,
+        "module": "supernovae.tasks.ps",
+        "function": "do_ps_alerts",
+        "repo": "input/sne-external",
+        "always_journal": true,
+        "priority": 25
+    },
     "psst": {
         "nice_name": "%pre PSST",
         "active": true,
