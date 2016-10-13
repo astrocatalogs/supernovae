@@ -94,7 +94,7 @@ def do_ps_alerts(catalog):
                         missing_confirmed.append((psname, row[21]))
                     skip_photo = True
             else:
-                skip_photo = True
+                continue
         if psname in wlnamesleft:
             wlnamesleft.remove(psname)
 
