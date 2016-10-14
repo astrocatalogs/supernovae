@@ -12,7 +12,7 @@ from tqdm import tqdm
 
 from astrocats.supernovae.scripts.repos import repo_file_list
 
-from ...catalog.utils import get_entry_filename
+from ...catalog.utils import get_entry_filename, is_number
 
 dupes = OrderedDict()
 
@@ -74,7 +74,11 @@ for fcnt, eventfile in enumerate(
         newitem['name'] = item['name']
         newitem['alias'] = [x['value'] for x in item['alias']]
         newitem['ra'] = item['ra'][0]['value']
+        if not is_number(newitem['ra'].split(':')[0]):
+            continue
         newitem['dec'] = item['dec'][0]['value']
+        if not is_number(newitem['dec'].split(':')[0]):
+            continue
         newitem['raerr'] = float(item['ra'][0].get('e_value', 0))
         newitem['decerr'] = float(item['dec'][0].get('e_value', 0))
         # Temporary fix for David's typo

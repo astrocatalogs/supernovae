@@ -2052,6 +2052,9 @@ for fcnt, eventfile in enumerate(tq(sorted(files, key=lambda s: s.lower()))):
                                         if 'bibcode' in source:
                                             sourceids.append(source['bibcode'])
                                             idtypes.append('bibcode')
+                                        elif 'arxivid' in source:
+                                            sourceids.append(source['arxivid'])
+                                            idtypes.append('arxivid')
                                         else:
                                             sourceids.append(source['name'])
                                             idtypes.append('name')
@@ -2101,7 +2104,7 @@ for fcnt, eventfile in enumerate(tq(sorted(files, key=lambda s: s.lower()))):
                     refurl = source['url']
 
                 sourcename = source['name'] if 'name' in source else source[
-                    'bibcode']
+                    'bibcode'] if 'bibcode' in source else source['arxivid']
                 if not first_secondary and source.get('secondary', False):
                     first_secondary = True
                     newhtml += r'<tr><th colspan="2" class="event-cell">Secondary Sources</th></tr>\n'
