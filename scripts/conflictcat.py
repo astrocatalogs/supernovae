@@ -56,8 +56,10 @@ for fcnt, eventfile in enumerate(tqdm(sorted(files, key=lambda s: s.lower()))):
                 for alias in quantum['source'].split(','):
                     for source in item['sources']:
                         if source['alias'] == alias:
-                            newsources.append({'idtype': 'bibcode' if 'bibcode' in source else 'name',
-                                               'id': source['bibcode'] if 'bibcode' in source else source['name']})
+                            newsources.append({'idtype': 'bibcode' if 'bibcode' in source else
+                                'name' if 'name' in source else 'arxivid',
+                                'id': source['bibcode'] if 'bibcode' in source else
+                                source['name'] if 'name' in source else source['arxivid']})
                 if newsources:
                     ras.append(quantum['value'])
                     rasources.append({'idtype': ','.join(
@@ -67,8 +69,10 @@ for fcnt, eventfile in enumerate(tqdm(sorted(files, key=lambda s: s.lower()))):
                 for alias in quantum['source'].split(','):
                     for source in item['sources']:
                         if source['alias'] == alias:
-                            newsources.append({'idtype': 'bibcode' if 'bibcode' in source else 'name',
-                                               'id': source['bibcode'] if 'bibcode' in source else source['name']})
+                            newsources.append({'idtype': 'bibcode' if 'bibcode' in source else
+                                'name' if 'name' in source else 'arxivid',
+                                'id': source['bibcode'] if 'bibcode' in source else
+                                source['name'] if 'name' in source else source['arxivid']})
                 if newsources:
                     decs.append(quantum['value'])
                     # Temporary fix for David's typo
@@ -81,8 +85,10 @@ for fcnt, eventfile in enumerate(tqdm(sorted(files, key=lambda s: s.lower()))):
                 for alias in quantum['source'].split(','):
                     for source in item['sources']:
                         if source['alias'] == alias:
-                            newsources.append({'idtype': 'bibcode' if 'bibcode' in source else 'name',
-                                               'id': source['bibcode'] if 'bibcode' in source else source['name']})
+                            newsources.append({'idtype': 'bibcode' if 'bibcode' in source else
+                                'name' if 'name' in source else 'arxivid',
+                                'id': source['bibcode'] if 'bibcode' in source else
+                                source['name'] if 'name' in source else source['arxivid']})
                 if newsources:
                     zs.append(float(quantum['value']))
                     zsources.append({'idtype': ','.join(
@@ -92,8 +98,10 @@ for fcnt, eventfile in enumerate(tqdm(sorted(files, key=lambda s: s.lower()))):
                 for alias in quantum['source'].split(','):
                     for source in item['sources']:
                         if source['alias'] == alias:
-                            newsources.append({'idtype': 'bibcode' if 'bibcode' in source else 'name',
-                                               'id': source['bibcode'] if 'bibcode' in source else source['name']})
+                            newsources.append({'idtype': 'bibcode' if 'bibcode' in source else
+                                'name' if 'name' in source else 'arxivid',
+                                'id': source['bibcode'] if 'bibcode' in source else
+                                source['name'] if 'name' in source else source['arxivid']})
                 if newsources:
                     cts.append(quantum['value'])
                     ctsources.append({'idtype': ','.join(
