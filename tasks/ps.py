@@ -54,7 +54,7 @@ def do_ps_alerts(catalog):
                              at)) as f:
             rows.extend(
                 list(csv.reader(
-                    f, delimiter=' ', skipinitialspace=True)))
+                    f, delimiter=' ', skipinitialspace=True))[1:])
     alertfiles = glob(
         os.path.join(catalog.get_current_task_repo(), 'ps1-clean/*.dat'))
     alertfilestag = dict(
@@ -71,8 +71,6 @@ def do_ps_alerts(catalog):
     missing_confirmed = []
     already_collected = []
     for ri, row in enumerate(pbar(rows, task_str)):
-        if ri == 0:
-            continue
         psname = row[50]
         if psname == '-':
             if row[4] in wlra:
