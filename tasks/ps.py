@@ -83,7 +83,9 @@ def do_ps_alerts(catalog):
         skip_photo = False
         if psname not in wlnamesleft:
             if row[1] == 'confirmed':
-                if (sntype != 'Ia' or
+                if 'II' in sntype:
+                    pass
+                elif (sntype != 'Ia' or
                         not (psname.startswith(('PS1-12', 'PS1-13')) or
                              (psname.startswith('PS1-10') and
                              len(psname.replace('PS1-10', '')) == 3 and
