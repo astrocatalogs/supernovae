@@ -230,6 +230,17 @@
         "always_journal": true,
         "priority": 23
     },
+    "essence_photo": {
+        "nice_name": "%pre ESSENCE Photometry",
+        "active": true,
+        "update": false,
+        "module": "supernovae.tasks.essence",
+        "function": "do_essence_photo",
+        "groups": ["photometry"],
+        "repo": "input/sne-external",
+        "always_journal": true,
+        "priority": 23
+    },
     "psthreepi": {
         "nice_name": "%pre Pan-STARRS 3π",
         "active": true,

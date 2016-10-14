@@ -33,7 +33,7 @@
     "SLSN-II":       ["SLSN II", "SL-II", "SLII"],
     "Ia-91bg":       ["Ia-pec (1991bg)", "Ia-91bg-like", "Ia-91bg like"],
     "Ia-91T":        ["Ia-pec 1991T", "Ia-91T-like", "Ia-91T like",
-                      "Ia 91T-like", "Ia-T"],
+                      "Ia 91T-like", "Ia-T", "IaT"],
     "Ia-02cx":       ["Ia-02cx-like", "Iax"],
     "Ib-Ca":         ["Ib - Ca-rich"],
     "II P-97D":      ["IIP-pec 1997D"],
