@@ -47,8 +47,10 @@ def name_clean(name):
             newname = 'SDSS-II SN ' + namesp[2].lstrip('0')
     if newname.startswith('SN CL'):
         newname = newname.replace('SN CL', 'CL', 1)
-    if newname.startswith('SN HiTS '):
-        newname = newname.replace('SN HiTS ', 'SNHiTS', 1)
+    if newname.startswith('SN HiTS'):
+        newname = newname.replace('SN HiTS', 'SNHiTS', 1)
+    if newname.startswith('SNHiTS '):
+        newname = newname.replace('SNHiTS ', 'SNHiTS', 1)
     if newname.startswith('GAIA'):
         newname = newname.replace('GAIA', 'Gaia', 1)
     if newname.startswith('Gaia '):
