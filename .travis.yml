@@ -48,7 +48,7 @@ script:
     - echo "travis_fold:end:COUNT Counting data done"
 
     - echo "travis_fold:start:WEBCAT Creating web catalog"
-    - coverage run --source astrocats/supernovae -a -m astrocats.supernovae.scripts.webcat --travis
+    - coverage run --source astrocats/supernovae -a -m astrocats.scripts.webcat -c sne --travis
     - echo "travis_fold:end:WEBCAT Web catalog created"
 
 # Run coveralls
