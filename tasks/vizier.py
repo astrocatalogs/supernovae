@@ -26,6 +26,7 @@ def do_vizier(catalog):
     task_str = catalog.get_current_task_str()
 
     Vizier.ROW_LIMIT = -1
+    Vizier.VIZIER_SERVER = 'vizier.cfa.harvard.edu'
 
     # 2008ApJ...686..749K
     result = Vizier.get_catalogs('J/ApJ/686/749/table10')
