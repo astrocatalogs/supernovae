@@ -195,7 +195,7 @@ def do_sdss_photo(catalog):
                     PHOTOMETRY.SYSTEM: 'SDSS'
                 }
                 ul_sigma = 3.0
-                if float(fluxd) < ul_sigma*float(e_fluxd):
+                if int(row[0]) & 32 or float(fluxd) < ul_sigma*float(e_fluxd):
                     photodict[PHOTOMETRY.UPPER_LIMIT] = True
                     photodict[
                         PHOTOMETRY.UPPER_LIMIT_SIGMA] = str(ul_sigma)
