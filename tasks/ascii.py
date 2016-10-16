@@ -10,7 +10,7 @@ from glob import glob
 
 from astropy.time import Time as astrotime
 
-from astrocats.catalog.photometry import PHOTOMETRY
+from astrocats.catalog.photometry import PHOTOMETRY, set_pd_mag_from_counts
 from astrocats.catalog.utils import (is_number, jd_to_mjd, make_date_string,
                                      pbar, pbar_strings)
 from cdecimal import Decimal
@@ -89,21 +89,7 @@ def do_ascii(catalog):
             PHOTOMETRY.SOURCE: source
         }
         zp = row[5].rstrip('0')
-        # Use 3-sigma as upper limit
-        if float(e_counts) > float(counts):
-            photodict[PHOTOMETRY.UPPER_LIMIT] = True
-            photodict[PHOTOMETRY.MAGNITUDE] = (
-                Decimal(zp) - (Decimal(2.5) *
-                               (Decimal(3.0) * Decimal(e_counts)).log10()))
-        else:
-            photodict[PHOTOMETRY.MAGNITUDE] = (
-                Decimal(zp) - Decimal(2.5) * Decimal(counts).log10())
-            photodict[PHOTOMETRY.E_UPPER_MAGNITUDE] = (Decimal(2.5) * (
-                (Decimal(counts) + Decimal(e_counts)
-                 ).log10() - Decimal(counts).log10()))
-            photodict[PHOTOMETRY.E_LOWER_MAGNITUDE] = (
-                Decimal(2.5) * (Decimal(counts).log10() -
-                                (Decimal(counts) - Decimal(e_counts)).log10()))
+        set_pd_mag_from_counts(photodict, counts, ec=e_counts, zp=zp)
         catalog.entries[name].add_photometry(**photodict)
     catalog.journal_entries()
 
@@ -323,8 +309,10 @@ def do_ascii(catalog):
         mags = [re.sub(r'\([^)]*\)', '', xx) for xx in row[3:-1]]
         upps = [True if '>' in xx else '' for xx in mags]
         mags = [xx.replace('>', '') for xx in mags]
-        errs = [xx[xx.find('(') + 1:xx.find(')')] if '(' in xx else ''
-                for xx in row[3:-1]]
+        errs = [
+            xx[xx.find('(') + 1:xx.find(')')] if '(' in xx else ''
+            for xx in row[3:-1]
+        ]
         for mi, mag in enumerate(mags):
             if not is_number(mag):
                 continue
@@ -449,8 +437,9 @@ def do_ascii(catalog):
         catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
         mjd = row[1]
         mags = [xx.split('±')[0].strip() for xx in row[2:]]
-        errs = [xx.split('±')[1].strip() if '±' in xx else ''
-                for xx in row[2:]]
+        errs = [
+            xx.split('±')[1].strip() if '±' in xx else '' for xx in row[2:]
+        ]
         if row[0] == 'PTF09dlc':
             ins = 'HAWK-I'
             tel = 'VLT 8.1m'
@@ -564,8 +553,9 @@ def do_ascii(catalog):
             mjd = str(jd_to_mjd(Decimal(row[0])))
             mags = [x.split('±')[0].strip() for x in row[2:]]
             upps = [('<' in x.split('±')[0]) for x in row[2:]]
-            errs = [x.split('±')[1].strip() if '±' in x else ''
-                    for x in row[2:]]
+            errs = [
+                x.split('±')[1].strip() if '±' in x else '' for x in row[2:]
+            ]
 
             instrument = row[-1]
 
@@ -597,8 +587,9 @@ def do_ascii(catalog):
                 'SN2008S', bibcode='2010arXiv1007.0011P')
             mjd = row[0]
             mags = [x.split('±')[0].strip() for x in row[1:]]
-            errs = [x.split('±')[1].strip() if '±' in x else ''
-                    for x in row[1:]]
+            errs = [
+                x.split('±')[1].strip() if '±' in x else '' for x in row[1:]
+            ]
 
             for mi, mag in enumerate(mags):
                 if not is_number(mag):

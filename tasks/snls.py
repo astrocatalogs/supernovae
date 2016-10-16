@@ -8,7 +8,7 @@ from math import log10
 from astropy.time import Time as astrotime
 from astroquery.vizier import Vizier
 
-from astrocats.catalog.photometry import PHOTOMETRY
+from astrocats.catalog.photometry import PHOTOMETRY, set_pd_mag_from_counts
 from astrocats.catalog.spectrum import SPECTRUM
 from astrocats.catalog.utils import (get_sig_digits, pbar, pbar_strings,
                                      pretty_num)
@@ -28,28 +28,19 @@ def do_snls_photo(catalog):
     for row in pbar(data, task_str):
         counts = row[3]
         err = row[4]
-        # Being extra strict here with the flux constraint, see note below.
-        if float(counts) < 3.0 * float(err):
-            continue
         name = 'SNLS-' + row[0]
         name = catalog.add_entry(name)
         source = catalog.entries[name].add_source(
             bibcode='2010A&A...523A...7G')
         catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
-        sig = get_sig_digits(counts.split('E')[0]) + 1
         # Conversion comes from SNLS-Readme
         # NOTE: Datafiles avail for download suggest diff zeropoints than 30,
         # but README states mags should be calculated assuming 30. Need to
         # inquire.
-        magnitude = pretty_num(30.0 - 2.5 * log10(float(counts)), sig=sig)
-        e_mag = pretty_num(
-            2.5 * log10(1.0 + float(err) / float(counts)), sig=sig)
         photodict = {
             PHOTOMETRY.TIME: row[2],
             PHOTOMETRY.U_TIME: 'MJD',
             PHOTOMETRY.BAND: row[1],
-            PHOTOMETRY.MAGNITUDE: magnitude,
-            PHOTOMETRY.E_MAGNITUDE: e_mag,
             PHOTOMETRY.COUNTS: counts,
             PHOTOMETRY.E_COUNTS: err,
             PHOTOMETRY.SOURCE: source,
@@ -58,6 +49,7 @@ def do_snls_photo(catalog):
             PHOTOMETRY.BAND_SET: 'MegaCam',
             PHOTOMETRY.SYSTEM: 'Natural'
         }
+        set_pd_mag_from_counts(photodict, counts, ec=err, zp=30.0)
         catalog.entries[name].add_photometry(**photodict)
 
     catalog.journal_entries()
@@ -109,11 +101,15 @@ def do_snls_spectra(catalog):
         specdata = [list(i) for i in zip(*specdata)]
         wavelengths = specdata[1]
 
-        fluxes = [pretty_num(
-            float(x) * 1.e-16, sig=get_sig_digits(x)) for x in specdata[2]]
+        fluxes = [
+            pretty_num(
+                float(x) * 1.e-16, sig=get_sig_digits(x)) for x in specdata[2]
+        ]
         # FIX: this isnt being used
-        errors = [pretty_num(
-            float(x) * 1.e-16, sig=get_sig_digits(x)) for x in specdata[3]]
+        errors = [
+            pretty_num(
+                float(x) * 1.e-16, sig=get_sig_digits(x)) for x in specdata[3]
+        ]
 
         fluxunit = 'erg/s/cm^2/Angstrom'
 

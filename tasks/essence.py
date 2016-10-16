@@ -5,7 +5,7 @@ import os
 from glob import glob
 from math import log10
 
-from astrocats.catalog.photometry import PHOTOMETRY
+from astrocats.catalog.photometry import PHOTOMETRY, set_pd_mag_from_counts
 from astrocats.catalog.utils import pbar, pretty_num
 
 from ..supernova import SUPERNOVA
@@ -64,34 +64,22 @@ def do_essence_photo(catalog):
                 continue
             if row[0].startswith('#'):
                 continue
-            counts = row[3]
-            lerr = row[4]
-            uerr = row[5]
-            # Being extra strict here with the flux constraint.
-            if float(counts) < 3.0 * float(lerr):
-                continue
-            sig = 5
-            magnitude = pretty_num(25.0 - 2.5 * log10(float(counts)), sig=sig)
-            e_l_mag = pretty_num(
-                2.5 * log10(float(counts) / (float(counts) - float(lerr))),
-                sig=sig)
-            e_u_mag = pretty_num(
-                2.5 * log10(1.0 + float(uerr) / float(counts)), sig=sig)
+            counts = row[3][:6]
+            lerr = row[4][:6]
+            uerr = row[5][:6]
             photodict = {
                 PHOTOMETRY.TIME: row[1],
                 PHOTOMETRY.U_TIME: 'MJD',
                 PHOTOMETRY.BAND: row[2][0],
-                PHOTOMETRY.MAGNITUDE: magnitude,
-                PHOTOMETRY.E_LOWER_MAGNITUDE: e_l_mag,
-                PHOTOMETRY.E_UPPER_MAGNITUDE: e_u_mag,
                 PHOTOMETRY.COUNTS: counts,
                 PHOTOMETRY.E_LOWER_COUNTS: lerr,
                 PHOTOMETRY.E_UPPER_COUNTS: uerr,
-                PHOTOMETRY.ZERO_POINT: '25.0',
                 PHOTOMETRY.SOURCE: source,
                 PHOTOMETRY.TELESCOPE: 'CTIO 4m',
                 PHOTOMETRY.SYSTEM: 'Natural'
             }
+            set_pd_mag_from_counts(
+                photodict, counts, ec='', lec=lerr, uec=uerr, zp=25.0)
             catalog.entries[name].add_photometry(**photodict)
 
     catalog.journal_entries()
