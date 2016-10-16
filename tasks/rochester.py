@@ -61,15 +61,16 @@ def do_rochester(catalog):
 
             name = ''
             if cols[14 + coff].contents:
-                aka = str(cols[14 + coff].contents[0]).strip()
-                if is_number(aka.strip('?')):
-                    aka = 'SN' + aka.strip('?') + 'A'
-                    oldname = aka
-                    name = catalog.add_entry(aka)
-                elif len(aka) == 4 and is_number(aka[:4]):
-                    aka = 'SN' + aka
-                    oldname = aka
-                    name = catalog.add_entry(aka)
+                for rawaka in str(cols[14 + coff].contents[0]).split(','):
+                    aka = rawaka.strip()
+                    if is_number(aka.strip('?')):
+                        aka = 'SN' + aka.strip('?') + 'A'
+                        oldname = aka
+                        name = catalog.add_entry(aka)
+                    elif len(aka) == 4 and is_number(aka[:4]):
+                        aka = 'SN' + aka
+                        oldname = aka
+                        name = catalog.add_entry(aka)
 
             ra = str(cols[3].contents[0]).strip()
             dec = str(cols[4].contents[0]).strip()
@@ -102,18 +103,20 @@ def do_rochester(catalog):
             catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, sn, sources)
 
             if cols[14 + coff].contents:
-                if aka == 'SNR G1.9+0.3':
-                    aka = 'G001.9+00.3'
-                if aka[:4] == 'PS1 ':
-                    aka = 'PS1-' + aka[4:]
-                if aka[:8] == 'MASTER J':
-                    aka = aka.replace('MASTER J', 'MASTER OT J').replace(
-                        'SNHunt', 'SNhunt')
-                if 'POSSIBLE' in aka.upper() and ra and dec:
-                    aka = 'PSN J' + ra.replace(':', '').replace('.', '')
-                    aka += dec.replace(':', '').replace('.', '')
-                catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, aka,
-                                                   sources)
+                for rawaka in str(cols[14 + coff].contents[0]).split(','):
+                    aka = rawaka.strip()
+                    if aka == 'SNR G1.9+0.3':
+                        aka = 'G001.9+00.3'
+                    if aka[:4] == 'PS1 ':
+                        aka = 'PS1-' + aka[4:]
+                    if aka[:8] == 'MASTER J':
+                        aka = aka.replace('MASTER J', 'MASTER OT J').replace(
+                            'SNHunt', 'SNhunt')
+                    if 'POSSIBLE' in aka.upper() and ra and dec:
+                        aka = 'PSN J' + ra.replace(':', '').replace('.', '')
+                        aka += dec.replace(':', '').replace('.', '')
+                    catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, aka,
+                                                       sources)
 
             if str(cols[1].contents[0]).strip() != 'unk':
                 type = str(cols[1].contents[0]).strip(' :,')
