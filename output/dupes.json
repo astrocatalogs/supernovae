@@ -1167,15 +1167,15 @@
 		"aliases1":[
 			"GRB 910904A"
 		],
-		"name2":"ESSENCE p425",
+		"name2":"ESSENCE p458",
 		"aliases2":[
-			"ESSENCE p425"
+			"ESSENCE p458"
 		],
 		"ra1":"23:36:36",
 		"dec1":"-17:05:24",
-		"ra2":"23:29:56.19",
-		"dec2":"-08:34:24.3",
-		"distdeg":"8.677979672091668",
+		"ra2":"23:25:30.268",
+		"dec2":"-08:52:04.940",
+		"distdeg":"8.677273377021606",
 		"maxdiffyear":"",
 		"discdiffyear":"",
 		"edit":false
@@ -1835,15 +1835,15 @@
 		"aliases1":[
 			"GRB 930709B"
 		],
-		"name2":"ESSENCE p425",
+		"name2":"ESSENCE p458",
 		"aliases2":[
-			"ESSENCE p425"
+			"ESSENCE p458"
 		],
 		"ra1":"23:27:14.4",
 		"dec1":"-08:23:24",
-		"ra2":"23:29:56.19",
-		"dec2":"-08:34:24.3",
-		"distdeg":"0.698631654905585",
+		"ra2":"23:25:30.268",
+		"dec2":"-08:52:04.940",
+		"distdeg":"0.6455818509178771",
 		"maxdiffyear":"",
 		"discdiffyear":"",
 		"edit":false
@@ -2559,15 +2559,15 @@
 		"aliases1":[
 			"GRB 920430B"
 		],
-		"name2":"ESSENCE p524",
+		"name2":"ESSENCE z195",
 		"aliases2":[
-			"ESSENCE p524"
+			"ESSENCE z195"
 		],
 		"ra1":"02:30:26.4",
 		"dec1":"-08:13:12",
-		"ra2":"02:30:10.16",
-		"dec2":"-08:52:50.8",
-		"distdeg":"0.6642334298894607",
+		"ra2":"02:29:47.674",
+		"dec2":"-09:01:08.431",
+		"distdeg":"0.8151388055821042",
 		"maxdiffyear":"",
 		"discdiffyear":"",
 		"edit":false
@@ -5108,15 +5108,15 @@
 		"aliases1":[
 			"GRB 930517B"
 		],
-		"name2":"ESSENCE n263",
+		"name2":"ESSENCE m003",
 		"aliases2":[
-			"ESSENCE n263"
+			"ESSENCE m003"
 		],
 		"ra1":"01:57:21.6",
 		"dec1":"-05:57:36",
-		"ra2":"02:05:14.95",
-		"dec2":"-04:56:39.1",
-		"distdeg":"2.2185119664090864",
+		"ra2":"02:05:27.31",
+		"dec2":"-04:42:54.1",
+		"distdeg":"2.376065770170178",
 		"maxdiffyear":"",
 		"discdiffyear":"",
 		"edit":false
@@ -14180,15 +14180,15 @@
 		"aliases1":[
 			"GRB 970415A"
 		],
-		"name2":"ESSENCE p524",
+		"name2":"ESSENCE z195",
 		"aliases2":[
-			"ESSENCE p524"
+			"ESSENCE z195"
 		],
 		"ra1":"02:50:07.2",
 		"dec1":"-11:45:36",
-		"ra2":"02:30:10.16",
-		"dec2":"-08:52:50.8",
-		"distdeg":"5.759057160917582",
+		"ra2":"02:29:47.674",
+		"dec2":"-09:01:08.431",
+		"distdeg":"5.773494289050537",
 		"maxdiffyear":"",
 		"discdiffyear":"",
 		"edit":false
@@ -21273,6 +21273,26 @@
 		"edit":false
 	},
 	{
+		"name1":"SN2004fl",
+		"aliases1":[
+			"SN2004fl",
+			"ESSENCE g053"
+		],
+		"name2":"SN2004fm",
+		"aliases2":[
+			"SN2004fm",
+			"ESSENCE g052"
+		],
+		"ra1":"23:26:57.92",
+		"dec1":"-09:37:19.1",
+		"ra2":"23:26:58.14",
+		"dec2":"-09:37:19.4",
+		"distdeg":"0.0009204467514485141",
+		"maxdiffyear":"0.03888888888877773",
+		"discdiffyear":"0.0",
+		"edit":false
+	},
+	{
 		"name1":"SN2004gb",
 		"aliases1":[
 			"SN2004gb"
@@ -21580,6 +21600,79 @@
 		"distdeg":"9.316949905922885e-05",
 		"maxdiffyear":"0.013888888888686779",
 		"discdiffyear":"5.852777777777874",
+		"edit":false
+	},
+	{
+		"name1":"SDSS-II SN 13898",
+		"aliases1":[
+			"SDSS-II SN 13898"
+		],
+		"name2":"ESSENCE q022",
+		"aliases2":[
+			"ESSENCE q022"
+		],
+		"ra1":"01:12:03.864",
+		"dec1":"-00:01:28.9452",
+		"ra2":"01:12:03.875",
+		"dec2":"-00:01:29.045",
+		"distdeg":"5.356506370618601e-05",
+		"maxdiffyear":"0.013888888888914153",
+		"discdiffyear":"0.008333333333212067",
+		"edit":false
+	},
+	{
+		"name1":"SDSS-II SN 16362",
+		"aliases1":[
+			"SDSS-II SN 16362",
+			"2MASS J01114824-0029494"
+		],
+		"name2":"ESSENCE r185",
+		"aliases2":[
+			"ESSENCE r185"
+		],
+		"ra1":"01:11:48.245",
+		"dec1":"-00:29:49.46",
+		"ra2":"01:11:48.238",
+		"dec2":"-00:29:49.579",
+		"distdeg":"4.4083604632331735e-05",
+		"maxdiffyear":"0.04166666666674246",
+		"discdiffyear":"0.13888888888891415",
+		"edit":false
+	},
+	{
+		"name1":"SDSS-II SN 19556",
+		"aliases1":[
+			"SDSS-II SN 19556"
+		],
+		"name2":"ESSENCE x103",
+		"aliases2":[
+			"ESSENCE x103"
+		],
+		"ra1":"01:10:48.010",
+		"dec1":"+00:13:36.76",
+		"ra2":"01:10:48.009",
+		"dec2":"+00:13:36.806",
+		"distdeg":"1.3439967114935464e-05",
+		"maxdiffyear":"0.025000000000318323",
+		"discdiffyear":"0.09722222222194432",
+		"edit":false
+	},
+	{
+		"name1":"SN2007tr",
+		"aliases1":[
+			"SN2007tr"
+		],
+		"name2":"SDSS-II SN 19556",
+		"aliases2":[
+			"SDSS-II SN 19556"
+		],
+		"ra1":"01:10:48.01",
+		"dec1":"+00:13:36.7",
+		"ra2":"01:10:48.010",
+		"dec2":"+00:13:36.76",
+		"distdeg":"1.666666666666483e-05",
+		"maxdiffyear":"0.019444444444388864",
+		"discdiffyear":"0.12499999999977263",
 		"edit":false
 	},
 	{
@@ -22114,6 +22207,24 @@
 		"edit":false
 	},
 	{
+		"name1":"SDSS-II SN 14999",
+		"aliases1":[
+			"SDSS-II SN 14999"
+		],
+		"name2":"ESSENCE q060",
+		"aliases2":[
+			"ESSENCE q060"
+		],
+		"ra1":"01:14:48.936",
+		"dec1":"+00:44:47.18",
+		"ra2":"01:14:48.945",
+		"dec2":"+00:44:47.120",
+		"distdeg":"4.1036907508620604e-05",
+		"maxdiffyear":"",
+		"discdiffyear":"",
+		"edit":false
+	},
+	{
 		"name1":"SDSS-II SN 15376",
 		"aliases1":[
 			"SDSS-II SN 15376"
@@ -22134,7 +22245,8 @@
 	{
 		"name1":"SN2007tf",
 		"aliases1":[
-			"SN2007tf"
+			"SN2007tf",
+			"ESSENCE x033"
 		],
 		"name2":"SDSS-II SN 18942",
 		"aliases2":[
@@ -22145,7 +22257,7 @@
 		"ra2":"01:09:59.334",
 		"dec2":"-00:01:06.90",
 		"distdeg":"6.666666666887977e-05",
-		"maxdiffyear":"0.03055555555556566",
+		"maxdiffyear":"0.0",
 		"discdiffyear":"0.09166666666646961",
 		"edit":false
 	},
@@ -22165,24 +22277,6 @@
 		"distdeg":"0.0",
 		"maxdiffyear":"0.20277777777778283",
 		"discdiffyear":"0.0",
-		"edit":false
-	},
-	{
-		"name1":"SN2007tr",
-		"aliases1":[
-			"SN2007tr"
-		],
-		"name2":"SDSS-II SN 19556",
-		"aliases2":[
-			"SDSS-II SN 19556"
-		],
-		"ra1":"01:10:48.01",
-		"dec1":"+00:13:36.7",
-		"ra2":"01:10:48.010",
-		"dec2":"+00:13:36.76",
-		"distdeg":"1.666666666666483e-05",
-		"maxdiffyear":"0.019444444444388864",
-		"discdiffyear":"0.12499999999977263",
 		"edit":false
 	},
 	{
@@ -22256,6 +22350,24 @@
 		"distdeg":"0.00022527418136636761",
 		"maxdiffyear":"0.7250000000001364",
 		"discdiffyear":"0.6055555555556111",
+		"edit":false
+	},
+	{
+		"name1":"SDSS-II SN 4676",
+		"aliases1":[
+			"SDSS-II SN 4676"
+		],
+		"name2":"ESSENCE m142",
+		"aliases2":[
+			"ESSENCE m142"
+		],
+		"ra1":"01:15:17.68",
+		"dec1":"+00:47:17.5",
+		"ra2":"01:15:17.691",
+		"dec2":"+00:47:17.513",
+		"distdeg":"4.5975369145237726e-05",
+		"maxdiffyear":"",
+		"discdiffyear":"",
 		"edit":false
 	},
 	{
@@ -23646,6 +23758,27 @@
 		"edit":false
 	},
 	{
+		"name1":"SN2016hbd",
+		"aliases1":[
+			"SN2016hbd",
+			"AT2016hbd",
+			"PS16eoa",
+			"MASTER OT J025606.21+274206.8"
+		],
+		"name2":"CSS161007:025606+274205",
+		"aliases2":[
+			"CSS161007:025606+274205"
+		],
+		"ra1":"02:56:06.20",
+		"dec1":"+27:42:05.55",
+		"ra2":"02:56:06.264",
+		"dec2":"+27:42:05.4",
+		"distdeg":"0.00026990224568030035",
+		"maxdiffyear":"0.002777777777737356",
+		"discdiffyear":"0.6094583333331229",
+		"edit":false
+	},
+	{
 		"name1":"SNhunt325",
 		"aliases1":[
 			"SNhunt325",
@@ -23699,6 +23832,25 @@
 		"distdeg":"3.859012219382424e-05",
 		"maxdiffyear":"0.11666666666656056",
 		"discdiffyear":"0.13908056944433156",
+		"edit":false
+	},
+	{
+		"name1":"SNhunt326",
+		"aliases1":[
+			"SNhunt326",
+			"AT2016gxq"
+		],
+		"name2":"Gaia16bnf",
+		"aliases2":[
+			"Gaia16bnf"
+		],
+		"ra1":"08:17:26.83",
+		"dec1":"+21:41:25.55",
+		"ra2":"08:17:26.88",
+		"dec2":"+21:41:25.8",
+		"distdeg":"0.00021960261528964554",
+		"maxdiffyear":"0.0027777777779647295",
+		"discdiffyear":"0.04014920833310498",
 		"edit":false
 	},
 	{
@@ -24107,6 +24259,42 @@
 		"ra2":"15:34:57.24",
 		"dec2":"+22:30:11.4",
 		"distdeg":"5.0077101055028523e-05",
+		"maxdiffyear":"",
+		"discdiffyear":"",
+		"edit":false
+	},
+	{
+		"name1":"EQ J233059-083734",
+		"aliases1":[
+			"EQ J233059-083734"
+		],
+		"name2":"ESSENCE e510",
+		"aliases2":[
+			"ESSENCE e510"
+		],
+		"ra1":"23:30:59.97",
+		"dec1":"-08:37:34.4",
+		"ra2":"23:30:59.971",
+		"dec2":"-08:37:34.344",
+		"distdeg":"1.6103925613648338e-05",
+		"maxdiffyear":"",
+		"discdiffyear":"",
+		"edit":false
+	},
+	{
+		"name1":"ESSENCE d115",
+		"aliases1":[
+			"ESSENCE d115"
+		],
+		"name2":"ESSENCE e106",
+		"aliases2":[
+			"ESSENCE e106"
+		],
+		"ra1":"01:09:45.163",
+		"dec1":"+00:02:02.740",
+		"ra2":"01:09:45.163",
+		"dec2":"+00:02:02.740",
+		"distdeg":"0.0",
 		"maxdiffyear":"",
 		"discdiffyear":"",
 		"edit":false
