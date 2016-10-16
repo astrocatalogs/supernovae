@@ -3,8 +3,10 @@
 import json
 import os
 
-from astrocats.catalog.utils import pbar
 from bs4 import BeautifulSoup
+
+from astrocats.catalog.photometry import PHOTOMETRY
+from astrocats.catalog.utils import pbar
 
 from ..supernova import SUPERNOVA
 
@@ -41,29 +43,28 @@ def do_des(catalog):
                 else:
                     atellink = ''
 
-        sources = [catalog.entries[name]
-                   .add_source(url=des_url, name='DES Bright Transients',
-                               acknowledgment=ackn_url)]
+        sources = [
+            catalog.entries[name].add_source(
+                url=des_url,
+                name='DES Bright Transients',
+                acknowledgment=ackn_url)
+        ]
         if atellink:
-            sources.append(
-                catalog.entries[name]
-                .add_source(name='ATel ' + atellink.split('=')[-1],
-                            url=atellink))
-        sources += [catalog.entries[name]
-                    .add_source(bibcode='2012ApJ...753..152B'),
-                    catalog.entries[name].add_source(
-                        bibcode='2015AJ....150..150F'),
-                    catalog.entries[name].add_source(
-                        bibcode='2015AJ....150...82G'),
-                    catalog.entries[name]
-                    .add_source(bibcode='2015AJ....150..172K')]
+            sources.append(catalog.entries[name].add_source(
+                name='ATel ' + atellink.split('=')[-1], url=atellink))
+        sources += [
+            catalog.entries[name].add_source(bibcode='2012ApJ...753..152B'),
+            catalog.entries[name].add_source(bibcode='2015AJ....150..150F'),
+            catalog.entries[name].add_source(bibcode='2015AJ....150...82G'),
+            catalog.entries[name].add_source(bibcode='2015AJ....150..172K')
+        ]
         sources = ','.join(sources)
         catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, sources)
         catalog.entries[name].add_quantity(SUPERNOVA.RA, ra, sources)
         catalog.entries[name].add_quantity(SUPERNOVA.DEC, dec, sources)
 
-        html2 = catalog.load_url(
-            des_trans_url + name, des_path + name + '.html')
+        html2 = catalog.load_url(des_trans_url + name,
+                                 des_path + name + '.html')
         if not html2:
             continue
         lines = html2.splitlines()
@@ -71,14 +72,22 @@ def do_des(catalog):
             if 'var data = ' in line:
                 jsontxt = json.loads(line.split('=')[-1].rstrip(';'))
                 for ii, band in enumerate(jsontxt['band']):
-                    upl = True if float(jsontxt['snr'][ii]) <= 3.0 else ''
-                    (catalog.entries[name]
-                     .add_photometry(time=jsontxt['mjd'][ii], u_time='MJD',
-                                     magnitude=jsontxt['mag'][ii],
-                                     e_magnitude=jsontxt['mag_error'][ii],
-                                     band=band, observatory='CTIO',
-                                     telescope='Blanco 4m', instrument='DECam',
-                                     upperlimit=upl, source=sources))
+                    photodict = {
+                        PHOTOMETRY.TIME: jsontxt['mjd'][ii],
+                        PHOTOMETRY.U_TIME: 'MJD',
+                        PHOTOMETRY.MAGNITUDE: jsontxt['mag'][ii],
+                        PHOTOMETRY.E_MAGNITUDE: jsontxt['mag_error'][ii],
+                        PHOTOMETRY.BAND: band,
+                        PHOTOMETRY.OBSERVATORY: 'CTIO',
+                        PHOTOMETRY.TELESCOPE: 'Blanco 4m',
+                        PHOTOMETRY.INSTRUMENT: 'DECam',
+                        PHOTOMETRY.SOURCE: sources
+                    }
+                    ul_sigma = 3.0
+                    if float(jsontxt['snr'][ii]) <= ul_sigma:
+                        photodict[PHOTOMETRY.UPPER_LIMIT] = True
+                        photodict[PHOTOMETRY.UPPER_LIMIT_SIGMA] = str(ul_sigma)
+                    catalog.entries[name].add_photometry(**photodict)
 
     catalog.journal_entries()
     return

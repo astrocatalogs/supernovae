@@ -5,9 +5,9 @@ import os
 from glob import glob
 
 from astropy.coordinates import SkyCoord as coord
-# from astropy.io import fits
 from astropy.time import Time as astrotime
 
+from astrocats.catalog.photometry import PHOTOMETRY
 from astrocats.catalog.quantity import QUANTITY
 from astrocats.catalog.utils import make_date_string, pbar, pbar_strings
 from cdecimal import Decimal
@@ -177,17 +177,29 @@ def do_sdss_photo(catalog):
                 band = sdssbands[int(row[2])] + "'"
                 magnitude = row[3]
                 e_mag = row[4]
+                fluxd = row[7]
+                e_fluxd = row[8]
                 telescope = 'SDSS'
-                (catalog.entries[name].add_photometry(
-                    time=mjd,
-                    u_time='MJD',
-                    telescope=telescope,
-                    band=band,
-                    magnitude=magnitude,
-                    e_magnitude=e_mag,
-                    source=source,
-                    bandset='SDSS',
-                    system='SDSS'))
+                photodict = {
+                    PHOTOMETRY.TIME: mjd,
+                    PHOTOMETRY.U_TIME: 'MJD',
+                    PHOTOMETRY.TELESCOPE: telescope,
+                    PHOTOMETRY.BAND: band,
+                    PHOTOMETRY.MAGNITUDE: magnitude,
+                    PHOTOMETRY.E_MAGNITUDE: e_mag,
+                    PHOTOMETRY.FLUX_DENSITY: fluxd,
+                    PHOTOMETRY.E_FLUX_DENSITY: e_fluxd,
+                    PHOTOMETRY.U_FLUX_DENSITY: 'μJy',
+                    PHOTOMETRY.SOURCE: source,
+                    PHOTOMETRY.BAND_SET: 'SDSS',
+                    PHOTOMETRY.SYSTEM: 'SDSS'
+                }
+                ul_sigma = 3.0
+                if int(row[0]) & 32 or float(fluxd) < ul_sigma*float(e_fluxd):
+                    photodict[PHOTOMETRY.UPPER_LIMIT] = True
+                    photodict[
+                        PHOTOMETRY.UPPER_LIMIT_SIGMA] = str(ul_sigma)
+                catalog.entries[name].add_photometry(**photodict)
         if not fi % 1000:
             catalog.journal_entries()
 
