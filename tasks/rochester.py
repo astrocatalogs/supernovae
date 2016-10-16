@@ -6,18 +6,23 @@ import re
 from math import floor
 from string import ascii_letters
 
-from astrocats.catalog.utils import is_number, make_date_string, pbar, uniq_cdl
 from astropy.time import Time as astrotime
 from bs4 import BeautifulSoup
+
+from astrocats.catalog.utils import is_number, make_date_string, pbar, uniq_cdl
 
 from ..supernova import SUPERNOVA
 
 
 def do_rochester(catalog):
-    rochestermirrors = ['http://www.rochesterastronomy.org/',
-                        'http://www.supernova.thistlethwaites.com/']
-    rochesterpaths = ['snimages/snredshiftall.html',
-                      'sn2016/snredshift.html', 'snimages/snredboneyard.html']
+    rochestermirrors = [
+        'http://www.rochesterastronomy.org/',
+        'http://www.supernova.thistlethwaites.com/'
+    ]
+    rochesterpaths = [
+        'snimages/snredshiftall.html', 'sn2016/snredshift.html',
+        'snimages/snredboneyard.html'
+    ]
     rochesterupdate = [False, True, True]
     task_str = catalog.get_current_task_str()
 
@@ -25,13 +30,11 @@ def do_rochester(catalog):
         if catalog.args.update and not rochesterupdate[pp]:
             continue
 
-        filepath = (os.path.join(
-            catalog.get_current_task_repo(), 'rochester/') +
-            os.path.basename(path))
+        filepath = (os.path.join(catalog.get_current_task_repo(), 'rochester/')
+                    + path.replace('/', '-'))
         for mirror in rochestermirrors:
             html = catalog.load_url(
-                mirror + path, filepath,
-                fail=(mirror != rochestermirrors[-1]))
+                mirror + path, filepath, fail=(mirror != rochestermirrors[-1]))
             if html:
                 break
 
@@ -51,9 +54,14 @@ def do_rochester(catalog):
             if not len(cols):
                 continue
 
+            if '2016' in path:
+                coff = 1
+            else:
+                coff = 0
+
             name = ''
-            if cols[14].contents:
-                aka = str(cols[14].contents[0]).strip()
+            if cols[14 + coff].contents:
+                aka = str(cols[14 + coff].contents[0]).strip()
                 if is_number(aka.strip('?')):
                     aka = 'SN' + aka.strip('?') + 'A'
                     oldname = aka
@@ -82,19 +90,18 @@ def do_rochester(catalog):
                     sn += dec.replace(':', '').replace('.', '')
                 oldname = sn
                 name = catalog.add_entry(sn)
-
-            reference = cols[12].findAll('a')[0].contents[0].strip()
-            refurl = cols[12].findAll('a')[0]['href'].strip()
+            reference = cols[12 + coff].findAll('a')[0].contents[0].strip()
+            refurl = cols[12 + coff].findAll('a')[0]['href'].strip()
             source = catalog.entries[name].add_source(
                 name=reference, url=refurl)
             sec_source = catalog.entries[name].add_source(
                 name=sec_ref, url=sec_refurl, secondary=True)
             sources = uniq_cdl(list(filter(None, [source, sec_source])))
-            catalog.entries[name].add_quantity(
-                SUPERNOVA.ALIAS, oldname, sources)
+            catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, oldname,
+                                               sources)
             catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, sn, sources)
 
-            if cols[14].contents:
+            if cols[14 + coff].contents:
                 if aka == 'SNR G1.9+0.3':
                     aka = 'G001.9+00.3'
                 if aka[:4] == 'PS1 ':
@@ -105,43 +112,52 @@ def do_rochester(catalog):
                 if 'POSSIBLE' in aka.upper() and ra and dec:
                     aka = 'PSN J' + ra.replace(':', '').replace('.', '')
                     aka += dec.replace(':', '').replace('.', '')
-                catalog.entries[name].add_quantity(
-                    SUPERNOVA.ALIAS, aka, sources)
+                catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, aka,
+                                                   sources)
 
             if str(cols[1].contents[0]).strip() != 'unk':
                 type = str(cols[1].contents[0]).strip(' :,')
-                catalog.entries[name].add_quantity(
-                    SUPERNOVA.CLAIMED_TYPE, type, sources)
+                catalog.entries[name].add_quantity(SUPERNOVA.CLAIMED_TYPE,
+                                                   type, sources)
             if (len(cols[2].contents) > 0 and
                     str(cols[2].contents[0]).strip() != 'anonymous'):
-                catalog.entries[name].add_quantity(SUPERNOVA.HOST, str(
-                    cols[2].contents[0]).strip(), sources)
+                catalog.entries[name].add_quantity(
+                    SUPERNOVA.HOST, str(cols[2].contents[0]).strip(), sources)
             catalog.entries[name].add_quantity(SUPERNOVA.RA, ra, sources)
             catalog.entries[name].add_quantity(SUPERNOVA.DEC, dec, sources)
             if (str(cols[6].contents[0]).strip() not in
-                    ['2440587', '2440587.292']):
+                ['2440587', '2440587.292']):
                 astrot = astrotime(
                     float(str(cols[6].contents[0]).strip()),
                     format='jd').datetime
                 ddate = make_date_string(astrot.year, astrot.month, astrot.day)
-                catalog.entries[name].add_quantity(
-                    SUPERNOVA.DISCOVER_DATE, ddate, sources)
+                catalog.entries[name].add_quantity(SUPERNOVA.DISCOVER_DATE,
+                                                   ddate, sources)
             if (str(cols[7].contents[0]).strip() not in
-                    ['2440587', '2440587.292']):
+                ['2440587', '2440587.292']):
                 astrot = astrotime(
                     float(str(cols[7].contents[0]).strip()), format='jd')
                 if ((float(str(cols[8].contents[0]).strip()) <= 90.0 and
-                     not any('GRB' in xx for xx in
-                             catalog.entries[name].get_aliases()))):
+                     not any('GRB' in xx
+                             for xx in catalog.entries[name].get_aliases()))):
                     mag = str(cols[8].contents[0]).strip()
                     catalog.entries[name].add_photometry(
-                        time=str(astrot.mjd), u_time='MJD', magnitude=mag,
+                        time=str(astrot.mjd),
+                        u_time='MJD',
+                        magnitude=mag,
                         source=sources)
             if cols[11].contents[0] != 'n/a':
-                catalog.entries[name].add_quantity(SUPERNOVA.REDSHIFT, str(
-                    cols[11].contents[0]).strip(), sources)
-            catalog.entries[name].add_quantity(SUPERNOVA.DISCOVERER, str(
-                cols[13].contents[0]).strip(), sources)
+                catalog.entries[name].add_quantity(
+                    SUPERNOVA.REDSHIFT,
+                    str(cols[11].contents[0]).strip(), sources)
+            if '2016' in path:
+                zhost = str(cols[12].contents[0]).strip()
+                if is_number(zhost):
+                    catalog.entries[name].add_quantity(SUPERNOVA.REDSHIFT,
+                                                       zhost, sources)
+            catalog.entries[name].add_quantity(
+                SUPERNOVA.DISCOVERER,
+                str(cols[13 + coff].contents[0]).strip(), sources)
             if catalog.args.update:
                 catalog.journal_entries()
             loopcnt = loopcnt + 1
@@ -152,11 +168,11 @@ def do_rochester(catalog):
     if not catalog.args.update:
         vsnetfiles = ['latestsne.dat']
         for vsnetfile in vsnetfiles:
-            file_name = os.path.join(
-                catalog.get_current_task_repo(), "" + vsnetfile)
+            file_name = os.path.join(catalog.get_current_task_repo(),
+                                     "" + vsnetfile)
             with open(file_name, 'r', encoding='latin1') as csv_file:
-                tsvin = csv.reader(csv_file, delimiter=' ',
-                                   skipinitialspace=True)
+                tsvin = csv.reader(
+                    csv_file, delimiter=' ', skipinitialspace=True)
                 loopcnt = 0
                 for rr, row in enumerate(tsvin):
                     if (not row or row[0] in ['Transient'] or
@@ -172,8 +188,8 @@ def do_rochester(catalog):
                     name = catalog.add_entry(name)
                     sec_source = catalog.entries[name].add_source(
                         name=sec_ref, url=sec_refurl, secondary=True)
-                    catalog.entries[name].add_quantity(
-                        SUPERNOVA.ALIAS, name, sec_source)
+                    catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name,
+                                                       sec_source)
 
                     if not is_number(row[1]):
                         continue
@@ -182,8 +198,8 @@ def do_rochester(catalog):
                     day = row[1][6:]
                     if '.' not in day:
                         day = day[:2] + '.' + day[2:]
-                    mjd = astrotime(year + '-' + month + '-' +
-                                    str(floor(float(day))).zfill(2)).mjd
+                    mjd = astrotime(year + '-' + month + '-' + str(
+                        floor(float(day))).zfill(2)).mjd
                     mjd += float(day) - floor(float(day))
                     magnitude = row[2].rstrip(ascii_letters)
                     if not is_number(magnitude):
@@ -207,8 +223,8 @@ def do_rochester(catalog):
                             sources = sec_source
                         else:
                             reference = ' '.join(row[refind:])
-                            source = catalog.entries[
-                                name].add_source(name=reference)
+                            source = catalog.entries[name].add_source(
+                                name=reference)
                             catalog.entries[name].add_quantity(
                                 SUPERNOVA.ALIAS, name, sec_source)
                             sources = uniq_cdl([source, sec_source])
@@ -218,8 +234,12 @@ def do_rochester(catalog):
                     band = row[2].lstrip('1234567890.')
 
                     catalog.entries[name].add_photometry(
-                        time=mjd, u_time='MJD', band=band, magnitude=magnitude,
-                        e_magnitude=e_magnitude, source=sources)
+                        time=mjd,
+                        u_time='MJD',
+                        band=band,
+                        magnitude=magnitude,
+                        e_magnitude=e_magnitude,
+                        source=sources)
 
                     if (catalog.args.travis and
                             loopcnt % catalog.TRAVIS_QUERY_LIMIT == 0):
