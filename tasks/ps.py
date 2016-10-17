@@ -69,7 +69,7 @@ def do_ps_alerts(catalog):
     wlnamesleft = wlnames.copy()
     wlra = [x[1] for x in whitelist]
     missing_confirmed = []
-    already_collected = []
+    # already_collected = []
     for ri, row in enumerate(pbar(rows, task_str)):
         psname = row[50]
         if psname == '-':
@@ -81,18 +81,19 @@ def do_ps_alerts(catalog):
         skip_photo = False
         if psname not in wlnamesleft:
             if row[1] == 'confirmed':
-                if 'II' in sntype:
-                    pass
-                elif (sntype != 'Ia' or
-                        not (psname.startswith(('PS1-12', 'PS1-13')) or
-                             (psname.startswith('PS1-10') and
-                             len(psname.replace('PS1-10', '')) == 3 and
-                             psname[-3:] > 'ams'))):
-                    if sntype == 'Ia' and psname.startswith('PS1-10'):
-                        already_collected.append((psname, row[21]))
-                    else:
-                        missing_confirmed.append((psname, row[21]))
-                    skip_photo = True
+                missing_confirmed.append((psname, row[21]))
+                # if 'II' in sntype:
+                #     pass
+                # elif (sntype != 'Ia' or
+                #         not (psname.startswith(('PS1-12', 'PS1-13')) or
+                #              (psname.startswith('PS1-10') and
+                #              len(psname.replace('PS1-10', '')) == 3 and
+                #              psname[-3:] > 'ams'))):
+                #     if sntype == 'Ia' and psname.startswith('PS1-10'):
+                #         already_collected.append((psname, row[21]))
+                #     else:
+                #         missing_confirmed.append((psname, row[21]))
+                skip_photo = True
             else:
                 continue
         if psname in wlnamesleft:
@@ -130,14 +131,16 @@ def do_ps_alerts(catalog):
         for pi, prow in enumerate(photrows):
             if pi == 0 or prow[3] == '-':
                 continue
+            counts = prow[13]
+            e_counts = prow[14]
             photodict = {
                 PHOTOMETRY.TIME: prow[1],
                 PHOTOMETRY.U_TIME: 'MJD',
                 PHOTOMETRY.BAND: prow[2],
                 PHOTOMETRY.MAGNITUDE: prow[3],
                 PHOTOMETRY.E_MAGNITUDE: prow[4],
-                PHOTOMETRY.COUNTS: prow[13],
-                PHOTOMETRY.E_COUNTS: prow[14],
+                PHOTOMETRY.COUNTS: counts,
+                PHOTOMETRY.E_COUNTS: e_counts,
                 PHOTOMETRY.ZERO_POINT: prow[15],
                 PHOTOMETRY.INSTRUMENT: 'GPC1',
                 PHOTOMETRY.OBSERVATORY: 'PS1',
@@ -146,6 +149,10 @@ def do_ps_alerts(catalog):
                 PHOTOMETRY.SYSTEM: 'PS1',
                 PHOTOMETRY.SOURCE: source
             }
+            ul_sigma = 3.0
+            if float(counts) < ul_sigma * float(e_counts):
+                photodict[PHOTOMETRY.UPPER_LIMIT] = True
+                photodict[PHOTOMETRY.UPPER_LIMIT_SIGMA] = ul_sigma
             catalog.entries[name].add_photometry(**photodict)
     catalog.journal_entries()
     # print(already_collected)
