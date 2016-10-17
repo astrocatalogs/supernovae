@@ -54,10 +54,7 @@ def do_rochester(catalog):
             if not len(cols):
                 continue
 
-            if '2016' in path:
-                coff = 1
-            else:
-                coff = 0
+            coff = 1
 
             name = ''
             if cols[14 + coff].contents:
@@ -129,7 +126,7 @@ def do_rochester(catalog):
             catalog.entries[name].add_quantity(SUPERNOVA.RA, ra, sources)
             catalog.entries[name].add_quantity(SUPERNOVA.DEC, dec, sources)
             if (str(cols[6].contents[0]).strip() not in
-                ['2440587', '2440587.292']):
+                    ['2440587', '2440587.292']):
                 astrot = astrotime(
                     float(str(cols[6].contents[0]).strip()),
                     format='jd').datetime
@@ -137,7 +134,7 @@ def do_rochester(catalog):
                 catalog.entries[name].add_quantity(SUPERNOVA.DISCOVER_DATE,
                                                    ddate, sources)
             if (str(cols[7].contents[0]).strip() not in
-                ['2440587', '2440587.292']):
+                    ['2440587', '2440587.292']):
                 astrot = astrotime(
                     float(str(cols[7].contents[0]).strip()), format='jd')
                 if ((float(str(cols[8].contents[0]).strip()) <= 90.0 and
@@ -153,11 +150,10 @@ def do_rochester(catalog):
                 catalog.entries[name].add_quantity(
                     SUPERNOVA.REDSHIFT,
                     str(cols[11].contents[0]).strip(), sources)
-            if '2016' in path:
-                zhost = str(cols[12].contents[0]).strip()
-                if is_number(zhost):
-                    catalog.entries[name].add_quantity(SUPERNOVA.REDSHIFT,
-                                                       zhost, sources)
+            zhost = str(cols[12].contents[0]).strip()
+            if is_number(zhost):
+                catalog.entries[name].add_quantity(SUPERNOVA.REDSHIFT,
+                                                   zhost, sources)
             catalog.entries[name].add_quantity(
                 SUPERNOVA.DISCOVERER,
                 str(cols[13 + coff].contents[0]).strip(), sources)
