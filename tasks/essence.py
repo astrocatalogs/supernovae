@@ -3,10 +3,9 @@
 import csv
 import os
 from glob import glob
-from math import log10
 
 from astrocats.catalog.photometry import PHOTOMETRY, set_pd_mag_from_counts
-from astrocats.catalog.utils import pbar, pretty_num
+from astrocats.catalog.utils import pbar
 
 from ..supernova import SUPERNOVA
 
@@ -21,7 +20,7 @@ def do_essence_photo(catalog):
             delimiter=' ',
             quotechar='"',
             skipinitialspace=True))
-    for row in pbar(data, task_str):
+    for row in pbar(data[1:], task_str):
         etype = row[2]
         if etype.upper().replace('?', '') in catalog.nonsnetypes:
             continue
