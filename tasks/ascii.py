@@ -24,6 +24,32 @@ def do_ascii(catalog):
     """
     task_str = catalog.get_current_task_str()
 
+    # 2007ApJ...666.1116S
+    file_path = os.path.join(catalog.get_current_task_repo(),
+                             '2007ApJ...666.1116S-tab1.csv')
+    tsvin = list(
+        csv.reader(
+            open(file_path, 'r'), delimiter=' ', skipinitialspace=True))
+    (name, source) = catalog.new_entry(
+        'SN2006gy', bibcode='2007ApJ...666.1116S')
+    for ri, row in enumerate(pbar(tsvin, task_str)):
+        for ci, col in enumerate(row[1:]):
+            if col == '-':
+                continue
+            time, mag, err, upp = row[0], row[1], row[2], row[3]
+            photodict = {
+                PHOTOMETRY.MAGNITUDE: mag,
+                PHOTOMETRY.E_MAGNITUDE: err,
+                PHOTOMETRY.TELESCOPE: 'KAIT',
+                PHOTOMETRY.BAND: 'R',
+                PHOTOMETRY.TIME: time,
+                PHOTOMETRY.SOURCE: source
+            }
+            if upp == '1':
+                photodict[PHOTOMETRY.UPPER_LIMIT] = True
+            catalog.entries[name].add_photometry(**photodict)
+    catalog.journal_entries()
+
     # 2015ApJ...799...51M
     file_path = os.path.join(catalog.get_current_task_repo(),
                              '2015ApJ...799...51M-tab1.tsv')

@@ -18,6 +18,7 @@ from ..supernova import SUPERNOVA
 def do_itep(catalog):
     task_str = catalog.get_current_task_str()
     itepbadsources = ['2004ApJ...602..571B']
+    itepignorephot = ['SN2006gy']
     needsbib = []
     with open(os.path.join(catalog.get_current_task_repo(),
                            'itep-refs.txt'), 'r') as refs_file:
@@ -60,6 +61,8 @@ def do_itep(catalog):
             needsbib.append(reference)
             source = catalog.entries[name].add_source(
                 name=reference) if reference else ''
+        if oldname in itepignorephot:
+            continue
 
         photodict = {
             PHOTOMETRY.TIME: mjd,
