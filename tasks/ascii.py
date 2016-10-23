@@ -25,6 +25,36 @@ def do_ascii(catalog):
     """
     task_str = catalog.get_current_task_str()
 
+    # 2011ApJ...730..134K
+    datafile = os.path.join(catalog.get_current_task_repo(), 'ASCII',
+                            '2011ApJ...730..134K-tab2.txt')
+
+    tsvin = list(
+        csv.reader(
+            open(datafile, 'r'), delimiter='\t', skipinitialspace=True))
+    name, source = catalog.new_entry(
+        'PTF10fqs', bibcode='2011ApJ...730..134K')
+    for row in pbar(tsvin[1:], task_str):
+        if len(row) == 1:
+            continue
+        me = row[2].split(' +or- ')
+        mag = me[0].replace('>', '').strip()
+        photodict = {
+            PHOTOMETRY.MAGNITUDE: mag,
+            PHOTOMETRY.TIME: str(row[0]),
+            PHOTOMETRY.U_TIME: 'MJD',
+            PHOTOMETRY.BAND: row[1].replace('Mould-', ''),
+            PHOTOMETRY.TELESCOPE: row[3],
+            PHOTOMETRY.SOURCE: source
+        }
+        if '>' in me[0]:
+            photodict[PHOTOMETRY.UPPER_LIMIT] = True
+        else:
+            photodict[PHOTOMETRY.E_MAGNITUDE] = me[1].strip()
+        if 'Mould' in row[1]:
+            photodict[PHOTOMETRY.BAND_SET] = 'Mould'
+        catalog.entries[name].add_photometry(**photodict)
+
     # 2012ApJ...755..161K
     datafile = os.path.join(catalog.get_current_task_repo(), 'ASCII',
                             '2012ApJ...755..161K-tab3.txt')
