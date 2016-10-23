@@ -8,6 +8,7 @@ import re
 from datetime import datetime
 from glob import glob
 
+from astropy.io.ascii import read
 from astropy.time import Time as astrotime
 
 from astrocats.catalog.photometry import PHOTOMETRY, set_pd_mag_from_counts
@@ -23,6 +24,57 @@ def do_ascii(catalog):
     published works.
     """
     task_str = catalog.get_current_task_str()
+
+    # 2012ApJ...755..161K
+    datafile = os.path.join(catalog.get_current_task_repo(), 'ASCII',
+                            '2012ApJ...755..161K-tab3.txt')
+
+    tsvin = list(
+        csv.reader(
+            open(datafile, 'r'), delimiter='\t', skipinitialspace=True))
+    for row in pbar(tsvin[1:], task_str):
+        if len(row) == 1:
+            name, source = catalog.new_entry(
+                row[0], bibcode='2012ApJ...755..161K')
+            continue
+        me = row[2].split(' +or- ')
+        mag = me[0].replace('>', '').strip()
+        photodict = {
+            PHOTOMETRY.MAGNITUDE: mag,
+            PHOTOMETRY.TIME: str(row[0]),
+            PHOTOMETRY.U_TIME: 'MJD',
+            PHOTOMETRY.BAND: row[1],
+            PHOTOMETRY.TELESCOPE: row[3],
+            PHOTOMETRY.SOURCE: source
+        }
+        if '>' in me[0]:
+            photodict[PHOTOMETRY.UPPER_LIMIT] = True
+        else:
+            photodict[PHOTOMETRY.E_MAGNITUDE] = me[1].strip()
+        catalog.entries[name].add_photometry(**photodict)
+
+    # 2010ApJ...723L..98K
+    datafile = os.path.join(catalog.get_current_task_repo(), 'ASCII',
+                            '2010ApJ...723L..98K.tex')
+
+    data = read(datafile, format='latex')
+    name, source = catalog.new_entry('SN2010X', bibcode='2010ApJ...723L..98K')
+    for row in pbar(data, task_str):
+        me = row[2].split(' $\\pm$ ')
+        mag = me[0].replace('<', '').replace('$', '').strip()
+        photodict = {
+            PHOTOMETRY.MAGNITUDE: mag,
+            PHOTOMETRY.TIME: str(row[0]),
+            PHOTOMETRY.U_TIME: 'MJD',
+            PHOTOMETRY.BAND: row[1],
+            PHOTOMETRY.TELESCOPE: row[3],
+            PHOTOMETRY.SOURCE: source
+        }
+        if '<' in me[0]:
+            photodict[PHOTOMETRY.UPPER_LIMIT] = True
+        else:
+            photodict[PHOTOMETRY.E_MAGNITUDE] = me[1].strip()
+        catalog.entries[name].add_photometry(**photodict)
 
     # 2007ApJ...666.1116S
     file_path = os.path.join(catalog.get_current_task_repo(),
