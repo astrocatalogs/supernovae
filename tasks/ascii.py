@@ -25,6 +25,71 @@ def do_ascii(catalog):
     """
     task_str = catalog.get_current_task_str()
 
+    # 2016arXiv160904444J
+    bandrep = {
+        '[3.6]': 'I1',
+        '[4.5]': 'I2',
+        '\\text{WB6226-7171}': 'WB6226-7171'
+    }
+
+    datafile = os.path.join(catalog.get_current_task_repo(), 'ASCII',
+                            '2016arXiv160904444J-tab1.tex')
+
+    data = read(datafile, format='latex')
+    name, source = catalog.new_entry(
+        'SPIRITS 15c', bibcode='2016arXiv160904444J')
+    for row in pbar(data, task_str):
+        me = row[5].split('$ $')
+        mag = me[0].replace('>', '').replace('$', '').strip()
+        band = row[4].replace('$', '').strip()
+        band = bandrep[band] if band in bandrep else band
+        tel = row[3].split('/')[0]
+        tel = 'Spitzer' if 'Spitzer' in tel else tel
+        photodict = {
+            PHOTOMETRY.MAGNITUDE: mag,
+            PHOTOMETRY.TIME: str(row[1]),
+            PHOTOMETRY.U_TIME: 'MJD',
+            PHOTOMETRY.BAND: band,
+            PHOTOMETRY.TELESCOPE: tel,
+            PHOTOMETRY.SOURCE: source
+        }
+        if '>' in me[0]:
+            photodict[PHOTOMETRY.UPPER_LIMIT] = True
+        else:
+            photodict[PHOTOMETRY.E_MAGNITUDE] = me[1].strip()
+        if len(row[3].split('/')) == 2:
+            photodict[PHOTOMETRY.INSTRUMENT] = row[3].split('/')[-1]
+        catalog.entries[name].add_photometry(**photodict)
+
+    datafile = os.path.join(catalog.get_current_task_repo(), 'ASCII',
+                            '2016arXiv160904444J-tab2.tex')
+
+    data = read(datafile, format='latex')
+    name, source = catalog.new_entry(
+        'SPIRITS 14buu', bibcode='2016arXiv160904444J')
+    for row in pbar(data, task_str):
+        me = row[5].split('$ $')
+        mag = me[0].replace('>', '').replace('$', '').strip()
+        band = row[4].replace('$', '').strip()
+        band = bandrep[band] if band in bandrep else band
+        tel = row[3].split('/')[0]
+        tel = 'Spitzer' if 'Spitzer' in tel else tel
+        photodict = {
+            PHOTOMETRY.MAGNITUDE: mag,
+            PHOTOMETRY.TIME: str(row[1]),
+            PHOTOMETRY.U_TIME: 'MJD',
+            PHOTOMETRY.BAND: band,
+            PHOTOMETRY.TELESCOPE: tel,
+            PHOTOMETRY.SOURCE: source
+        }
+        if '>' in me[0]:
+            photodict[PHOTOMETRY.UPPER_LIMIT] = True
+        else:
+            photodict[PHOTOMETRY.E_MAGNITUDE] = me[1].strip()
+        if len(row[3].split('/')) == 2:
+            photodict[PHOTOMETRY.INSTRUMENT] = row[3].split('/')[-1]
+        catalog.entries[name].add_photometry(**photodict)
+
     # 2011PhDT........35K
     datafile = os.path.join(catalog.get_current_task_repo(), 'ASCII',
                             '2011PhDT........35K-tab2.2.txt')
@@ -32,8 +97,7 @@ def do_ascii(catalog):
     tsvin = list(
         csv.reader(
             open(datafile, 'r'), delimiter='\t', skipinitialspace=True))
-    name, source = catalog.new_entry(
-        'SN2007ax', bibcode='2011PhDT........35K')
+    name, source = catalog.new_entry('SN2007ax', bibcode='2011PhDT........35K')
     for row in pbar(tsvin[1:], task_str):
         if len(row) == 1:
             continue
@@ -55,8 +119,7 @@ def do_ascii(catalog):
     tsvin = list(
         csv.reader(
             open(datafile, 'r'), delimiter='\t', skipinitialspace=True))
-    name, source = catalog.new_entry(
-        'PTF10fqs', bibcode='2011ApJ...730..134K')
+    name, source = catalog.new_entry('PTF10fqs', bibcode='2011ApJ...730..134K')
     for row in pbar(tsvin[1:], task_str):
         if len(row) == 1:
             continue
