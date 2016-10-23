@@ -4536,8 +4536,8 @@
 		"difference":"",
 		"values":[
 			"Ic",
-			"IIc",
 			"II",
+			"IIc",
 			"II Pec"
 		],
 		"sources":[
@@ -5938,36 +5938,6 @@
 		]
 	},
 	{
-		"name":"SDSS-II SN 13071",
-		"alias":[
-			{
-				"value":"SDSS-II SN 13071",
-				"source":"2,3,6,8"
-			},
-			{
-				"value":"2MASS J23542825-0043071",
-				"source":"8"
-			}
-		],
-		"edit":false,
-		"quantity":"claimedtype",
-		"difference":"",
-		"values":[
-			"II",
-			"Ia"
-		],
-		"sources":[
-			{
-				"id":"2014arXiv1401.3317S",
-				"idtype":"bibcode"
-			},
-			{
-				"id":"2011ApJ...738..162S",
-				"idtype":"bibcode"
-			}
-		]
-	},
-	{
 		"name":"SDSS-II SN 13076",
 		"alias":[
 			{
@@ -6251,32 +6221,6 @@
 		"values":[
 			"+00:00:56.32",
 			"+00:00:55.77"
-		],
-		"sources":[
-			{
-				"id":"2014arXiv1401.3317S",
-				"idtype":"bibcode"
-			},
-			{
-				"id":"2014arXiv1401.3317S",
-				"idtype":"bibcode"
-			}
-		]
-	},
-	{
-		"name":"SDSS-II SN 13252",
-		"alias":[
-			{
-				"value":"SDSS-II SN 13252",
-				"source":"1"
-			}
-		],
-		"edit":false,
-		"quantity":"dec",
-		"difference":"0.003375",
-		"values":[
-			"+00:03:10.25",
-			"+00:03:09.61"
 		],
 		"sources":[
 			{
@@ -7097,32 +7041,6 @@
 		]
 	},
 	{
-		"name":"SDSS-II SN 13895",
-		"alias":[
-			{
-				"value":"SDSS-II SN 13895",
-				"source":"2"
-			}
-		],
-		"edit":false,
-		"quantity":"dec",
-		"difference":"0.002673",
-		"values":[
-			"-00:01:12.5436",
-			"-00:01:12.738"
-		],
-		"sources":[
-			{
-				"id":"2014arXiv1401.3317S",
-				"idtype":"bibcode"
-			},
-			{
-				"id":"2014arXiv1401.3317S",
-				"idtype":"bibcode"
-			}
-		]
-	},
-	{
 		"name":"SDSS-II SN 13896",
 		"alias":[
 			{
@@ -7148,42 +7066,6 @@
 			{
 				"id":"2010ApJ...713.1026D",
 				"idtype":"bibcode"
-			},
-			{
-				"id":"2011ApJ...738..162S",
-				"idtype":"bibcode"
-			},
-			{
-				"id":"2014arXiv1401.3317S",
-				"idtype":"bibcode"
-			},
-			{
-				"id":"2014arXiv1401.3317S",
-				"idtype":"bibcode"
-			}
-		]
-	},
-	{
-		"name":"SDSS-II SN 13897",
-		"alias":[
-			{
-				"value":"SDSS-II SN 13897",
-				"source":"2,4,6,8"
-			}
-		],
-		"edit":false,
-		"quantity":"dec",
-		"difference":"0.003613",
-		"values":[
-			"-00:01:34.22",
-			"-00:01:34.2228",
-			"-00:01:34.3128",
-			"-00:01:34.6548"
-		],
-		"sources":[
-			{
-				"id":"2011ApJ...738..162S,2000A&AS..143....9W",
-				"idtype":"bibcode,bibcode"
 			},
 			{
 				"id":"2011ApJ...738..162S",
@@ -7382,58 +7264,6 @@
 		]
 	},
 	{
-		"name":"SDSS-II SN 14030",
-		"alias":[
-			{
-				"value":"SDSS-II SN 14030",
-				"source":"2,4"
-			}
-		],
-		"edit":false,
-		"quantity":"dec",
-		"difference":"0.001322",
-		"values":[
-			"+00:05:08.207",
-			"+00:05:07.8"
-		],
-		"sources":[
-			{
-				"id":"2014arXiv1401.3317S",
-				"idtype":"bibcode"
-			},
-			{
-				"id":"2014arXiv1401.3317S",
-				"idtype":"bibcode"
-			}
-		]
-	},
-	{
-		"name":"SDSS-II SN 14050",
-		"alias":[
-			{
-				"value":"SDSS-II SN 14050",
-				"source":"2"
-			}
-		],
-		"edit":false,
-		"quantity":"dec",
-		"difference":"0.001388",
-		"values":[
-			"+00:11:34.174",
-			"+00:11:33.212"
-		],
-		"sources":[
-			{
-				"id":"2014arXiv1401.3317S",
-				"idtype":"bibcode"
-			},
-			{
-				"id":"2014arXiv1401.3317S",
-				"idtype":"bibcode"
-			}
-		]
-	},
-	{
 		"name":"SDSS-II SN 14141",
 		"alias":[
 			{
@@ -7455,32 +7285,6 @@
 			},
 			{
 				"id":"2011ApJ...738..162S",
-				"idtype":"bibcode"
-			}
-		]
-	},
-	{
-		"name":"SDSS-II SN 14143",
-		"alias":[
-			{
-				"value":"SDSS-II SN 14143",
-				"source":"2,4"
-			}
-		],
-		"edit":false,
-		"quantity":"dec",
-		"difference":"0.001071",
-		"values":[
-			"+00:05:36.44",
-			"+00:05:36.08"
-		],
-		"sources":[
-			{
-				"id":"2014arXiv1401.3317S",
-				"idtype":"bibcode"
-			},
-			{
-				"id":"2014arXiv1401.3317S",
 				"idtype":"bibcode"
 			}
 		]
@@ -7863,46 +7667,6 @@
 			},
 			{
 				"id":"2011ApJ...738..162S",
-				"idtype":"bibcode"
-			},
-			{
-				"id":"2014arXiv1401.3317S",
-				"idtype":"bibcode"
-			}
-		]
-	},
-	{
-		"name":"SDSS-II SN 14340",
-		"alias":[
-			{
-				"value":"SDSS-II SN 14340",
-				"source":"2,6,8,10"
-			},
-			{
-				"value":"2MASS J23031846-0051268",
-				"source":"10"
-			}
-		],
-		"edit":false,
-		"quantity":"dec",
-		"difference":"0.00243",
-		"values":[
-			"-00:51:26.85",
-			"-00:51:19.368",
-			"-00:51:19.1124",
-			"-00:51:19.3536"
-		],
-		"sources":[
-			{
-				"id":"2003yCat.2246....0C,2000A&AS..143....9W",
-				"idtype":"bibcode,bibcode"
-			},
-			{
-				"id":"2010ApJ...713.1026D",
-				"idtype":"bibcode"
-			},
-			{
-				"id":"2014arXiv1401.3317S",
 				"idtype":"bibcode"
 			},
 			{
@@ -9301,32 +9065,6 @@
 		]
 	},
 	{
-		"name":"SDSS-II SN 14938",
-		"alias":[
-			{
-				"value":"SDSS-II SN 14938",
-				"source":"2,3,5"
-			}
-		],
-		"edit":false,
-		"quantity":"claimedtype",
-		"difference":"",
-		"values":[
-			"II",
-			"Ia"
-		],
-		"sources":[
-			{
-				"id":"2014arXiv1401.3317S",
-				"idtype":"bibcode"
-			},
-			{
-				"id":"2011ApJ...738..162S",
-				"idtype":"bibcode"
-			}
-		]
-	},
-	{
 		"name":"SDSS-II SN 14951",
 		"alias":[
 			{
@@ -9861,42 +9599,6 @@
 		]
 	},
 	{
-		"name":"SDSS-II SN 15351",
-		"alias":[
-			{
-				"value":"SDSS-II SN 15351",
-				"source":"2,4,6,7,9"
-			}
-		],
-		"edit":false,
-		"quantity":"dec",
-		"difference":"0.001521",
-		"values":[
-			"-00:03:11.66",
-			"-00:03:11.952",
-			"-00:03:11.664",
-			"-00:03:11.5596"
-		],
-		"sources":[
-			{
-				"id":"2011ApJ...738..162S,2000A&AS..143....9W",
-				"idtype":"bibcode,bibcode"
-			},
-			{
-				"id":"2014arXiv1401.3317S,2010ApJ...713.1026D",
-				"idtype":"bibcode,bibcode"
-			},
-			{
-				"id":"2011ApJ...738..162S",
-				"idtype":"bibcode"
-			},
-			{
-				"id":"2014arXiv1401.3317S",
-				"idtype":"bibcode"
-			}
-		]
-	},
-	{
 		"name":"SDSS-II SN 15357",
 		"alias":[
 			{
@@ -10327,32 +10029,6 @@
 		]
 	},
 	{
-		"name":"SDSS-II SN 15657",
-		"alias":[
-			{
-				"value":"SDSS-II SN 15657",
-				"source":"2,3,5"
-			}
-		],
-		"edit":false,
-		"quantity":"redshift",
-		"difference":"0.1367",
-		"values":[
-			0.316,
-			0.278
-		],
-		"sources":[
-			{
-				"id":"2011ApJ...738..162S",
-				"idtype":"bibcode"
-			},
-			{
-				"id":"2015arXiv150201589P,2011ApJ...738..162S,NED-D",
-				"idtype":"bibcode,bibcode,name"
-			}
-		]
-	},
-	{
 		"name":"SDSS-II SN 15660",
 		"alias":[
 			{
@@ -10732,37 +10408,6 @@
 			{
 				"id":"2015arXiv150201589P,2011ApJ...738..162S,NED-D",
 				"idtype":"bibcode,bibcode,name"
-			}
-		]
-	},
-	{
-		"name":"SDSS-II SN 15753",
-		"alias":[
-			{
-				"value":"SDSS-II SN 15753",
-				"source":"2,3,5"
-			}
-		],
-		"edit":false,
-		"quantity":"dec",
-		"difference":"0.002109",
-		"values":[
-			"-00:01:40.494",
-			"-00:01:40.4796",
-			"-00:01:40.692"
-		],
-		"sources":[
-			{
-				"id":"2011ApJ...738..162S",
-				"idtype":"bibcode"
-			},
-			{
-				"id":"2014arXiv1401.3317S",
-				"idtype":"bibcode"
-			},
-			{
-				"id":"2014arXiv1401.3317S",
-				"idtype":"bibcode"
 			}
 		]
 	},
@@ -12036,32 +11681,6 @@
 		]
 	},
 	{
-		"name":"SDSS-II SN 16481",
-		"alias":[
-			{
-				"value":"SDSS-II SN 16481",
-				"source":"2,3,5"
-			}
-		],
-		"edit":false,
-		"quantity":"redshift",
-		"difference":"0.1318",
-		"values":[
-			0.292,
-			0.258
-		],
-		"sources":[
-			{
-				"id":"2011ApJ...738..162S",
-				"idtype":"bibcode"
-			},
-			{
-				"id":"2015arXiv150201589P,2011ApJ...738..162S,NED-D",
-				"idtype":"bibcode,bibcode,name"
-			}
-		]
-	},
-	{
 		"name":"SDSS-II SN 16582",
 		"alias":[
 			{
@@ -12399,32 +12018,6 @@
 		]
 	},
 	{
-		"name":"SDSS-II SN 16958",
-		"alias":[
-			{
-				"value":"SDSS-II SN 16958",
-				"source":"2,3,5"
-			}
-		],
-		"edit":false,
-		"quantity":"redshift",
-		"difference":"0.1306",
-		"values":[
-			0.303,
-			0.268
-		],
-		"sources":[
-			{
-				"id":"2011ApJ...738..162S",
-				"idtype":"bibcode"
-			},
-			{
-				"id":"2015arXiv150201589P,2011ApJ...738..162S,NED-D",
-				"idtype":"bibcode,bibcode,name"
-			}
-		]
-	},
-	{
 		"name":"SDSS-II SN 16973",
 		"alias":[
 			{
@@ -12451,32 +12044,6 @@
 			},
 			{
 				"id":"2015arXiv150201589P,2013ApJ...763...88C,NED-D",
-				"idtype":"bibcode,bibcode,name"
-			}
-		]
-	},
-	{
-		"name":"SDSS-II SN 16981",
-		"alias":[
-			{
-				"value":"SDSS-II SN 16981",
-				"source":"2,3,5"
-			}
-		],
-		"edit":false,
-		"quantity":"redshift",
-		"difference":"0.1116",
-		"values":[
-			0.239,
-			0.215
-		],
-		"sources":[
-			{
-				"id":"2011ApJ...738..162S",
-				"idtype":"bibcode"
-			},
-			{
-				"id":"2015arXiv150201589P,2011ApJ...738..162S,NED-D",
 				"idtype":"bibcode,bibcode,name"
 			}
 		]
@@ -12564,32 +12131,6 @@
 		"alias":[
 			{
 				"value":"SDSS-II SN 17396",
-				"source":"2,3,5"
-			}
-		],
-		"edit":false,
-		"quantity":"claimedtype",
-		"difference":"",
-		"values":[
-			"II",
-			"Ia"
-		],
-		"sources":[
-			{
-				"id":"2014arXiv1401.3317S",
-				"idtype":"bibcode"
-			},
-			{
-				"id":"2011ApJ...738..162S",
-				"idtype":"bibcode"
-			}
-		]
-	},
-	{
-		"name":"SDSS-II SN 1741",
-		"alias":[
-			{
-				"value":"SDSS-II SN 1741",
 				"source":"2,3,5"
 			}
 		],
@@ -13277,32 +12818,6 @@
 		"values":[
 			"+00:01:55.06",
 			"+00:01:54.63"
-		],
-		"sources":[
-			{
-				"id":"2014arXiv1401.3317S",
-				"idtype":"bibcode"
-			},
-			{
-				"id":"2014arXiv1401.3317S",
-				"idtype":"bibcode"
-			}
-		]
-	},
-	{
-		"name":"SDSS-II SN 18169",
-		"alias":[
-			{
-				"value":"SDSS-II SN 18169",
-				"source":"1"
-			}
-		],
-		"edit":false,
-		"quantity":"dec",
-		"difference":"0.001239",
-		"values":[
-			"+00:03:00.3672",
-			"+00:03:00.144"
 		],
 		"sources":[
 			{
@@ -14198,58 +13713,6 @@
 		]
 	},
 	{
-		"name":"SDSS-II SN 18933",
-		"alias":[
-			{
-				"value":"SDSS-II SN 18933",
-				"source":"2,3,5"
-			}
-		],
-		"edit":false,
-		"quantity":"redshift",
-		"difference":"0.1191",
-		"values":[
-			0.263,
-			0.235
-		],
-		"sources":[
-			{
-				"id":"2011ApJ...738..162S",
-				"idtype":"bibcode"
-			},
-			{
-				"id":"2015arXiv150201589P,2011ApJ...738..162S,NED-D",
-				"idtype":"bibcode,bibcode,name"
-			}
-		]
-	},
-	{
-		"name":"SDSS-II SN 18933",
-		"alias":[
-			{
-				"value":"SDSS-II SN 18933",
-				"source":"2,3,5"
-			}
-		],
-		"edit":false,
-		"quantity":"claimedtype",
-		"difference":"",
-		"values":[
-			"II",
-			"Ia"
-		],
-		"sources":[
-			{
-				"id":"2014arXiv1401.3317S",
-				"idtype":"bibcode"
-			},
-			{
-				"id":"2011ApJ...738..162S",
-				"idtype":"bibcode"
-			}
-		]
-	},
-	{
 		"name":"SDSS-II SN 18942",
 		"alias":[
 			{
@@ -15006,32 +14469,6 @@
 		]
 	},
 	{
-		"name":"SDSS-II SN 19435",
-		"alias":[
-			{
-				"value":"SDSS-II SN 19435",
-				"source":"2,4"
-			}
-		],
-		"edit":false,
-		"quantity":"dec",
-		"difference":"0.001931",
-		"values":[
-			"+00:05:09.769",
-			"+00:05:09.172"
-		],
-		"sources":[
-			{
-				"id":"2014arXiv1401.3317S",
-				"idtype":"bibcode"
-			},
-			{
-				"id":"2014arXiv1401.3317S",
-				"idtype":"bibcode"
-			}
-		]
-	},
-	{
 		"name":"SDSS-II SN 19438",
 		"alias":[
 			{
@@ -15593,96 +15030,6 @@
 		]
 	},
 	{
-		"name":"SDSS-II SN 19787",
-		"alias":[
-			{
-				"value":"SDSS-II SN 19787",
-				"source":"2,3,4,6,8,10"
-			},
-			{
-				"value":"2MASS J00010753-0005523",
-				"source":"10"
-			}
-		],
-		"edit":false,
-		"quantity":"ra",
-		"difference":"0.001008",
-		"values":[
-			"00:01:07.534",
-			"00:01:07.466",
-			"00:01:07.4964",
-			"00:01:07.4947",
-			"00:01:07.4654"
-		],
-		"sources":[
-			{
-				"id":"2003yCat.2246....0C,2000A&AS..143....9W",
-				"idtype":"bibcode,bibcode"
-			},
-			{
-				"id":"2010ApJ...713.1026D",
-				"idtype":"bibcode"
-			},
-			{
-				"id":"2011ApJ...738..162S",
-				"idtype":"bibcode"
-			},
-			{
-				"id":"2014arXiv1401.3317S",
-				"idtype":"bibcode"
-			},
-			{
-				"id":"2014arXiv1401.3317S",
-				"idtype":"bibcode"
-			}
-		]
-	},
-	{
-		"name":"SDSS-II SN 19787",
-		"alias":[
-			{
-				"value":"SDSS-II SN 19787",
-				"source":"2,3,4,6,8,10"
-			},
-			{
-				"value":"2MASS J00010753-0005523",
-				"source":"10"
-			}
-		],
-		"edit":false,
-		"quantity":"dec",
-		"difference":"0.002514",
-		"values":[
-			"-00:05:52.38",
-			"-00:05:53.268",
-			"-00:05:52.998",
-			"-00:05:53.0124",
-			"-00:05:53.2572"
-		],
-		"sources":[
-			{
-				"id":"2003yCat.2246....0C,2000A&AS..143....9W",
-				"idtype":"bibcode,bibcode"
-			},
-			{
-				"id":"2010ApJ...713.1026D",
-				"idtype":"bibcode"
-			},
-			{
-				"id":"2011ApJ...738..162S",
-				"idtype":"bibcode"
-			},
-			{
-				"id":"2014arXiv1401.3317S",
-				"idtype":"bibcode"
-			},
-			{
-				"id":"2014arXiv1401.3317S",
-				"idtype":"bibcode"
-			}
-		]
-	},
-	{
 		"name":"SDSS-II SN 19788",
 		"alias":[
 			{
@@ -15704,32 +15051,6 @@
 			},
 			{
 				"id":"2014arXiv1401.3317S",
-				"idtype":"bibcode"
-			}
-		]
-	},
-	{
-		"name":"SDSS-II SN 1985",
-		"alias":[
-			{
-				"value":"SDSS-II SN 1985",
-				"source":"2,3,5"
-			}
-		],
-		"edit":false,
-		"quantity":"claimedtype",
-		"difference":"",
-		"values":[
-			"II",
-			"Ia"
-		],
-		"sources":[
-			{
-				"id":"2014arXiv1401.3317S",
-				"idtype":"bibcode"
-			},
-			{
-				"id":"2011ApJ...738..162S",
 				"idtype":"bibcode"
 			}
 		]
@@ -16921,32 +16242,6 @@
 		]
 	},
 	{
-		"name":"SDSS-II SN 20999",
-		"alias":[
-			{
-				"value":"SDSS-II SN 20999",
-				"source":"2,4"
-			}
-		],
-		"edit":false,
-		"quantity":"dec",
-		"difference":"0.004458",
-		"values":[
-			"+00:02:48.97",
-			"+00:02:48.22"
-		],
-		"sources":[
-			{
-				"id":"2014arXiv1401.3317S",
-				"idtype":"bibcode"
-			},
-			{
-				"id":"2014arXiv1401.3317S",
-				"idtype":"bibcode"
-			}
-		]
-	},
-	{
 		"name":"SDSS-II SN 21001",
 		"alias":[
 			{
@@ -17343,32 +16638,6 @@
 			{
 				"id":"2014arXiv1401.3317S",
 				"idtype":"bibcode"
-			},
-			{
-				"id":"2014arXiv1401.3317S",
-				"idtype":"bibcode"
-			}
-		]
-	},
-	{
-		"name":"SDSS-II SN 21396",
-		"alias":[
-			{
-				"value":"SDSS-II SN 21396",
-				"source":"2,3,5"
-			}
-		],
-		"edit":false,
-		"quantity":"dec",
-		"difference":"0.004043",
-		"values":[
-			"+00:01:29.4",
-			"+00:01:29.04"
-		],
-		"sources":[
-			{
-				"id":"2014arXiv1401.3317S,2011ApJ...738..162S",
-				"idtype":"bibcode,bibcode"
 			},
 			{
 				"id":"2014arXiv1401.3317S",
@@ -17849,32 +17118,6 @@
 		]
 	},
 	{
-		"name":"SDSS-II SN 2342",
-		"alias":[
-			{
-				"value":"SDSS-II SN 2342",
-				"source":"2,3,5"
-			}
-		],
-		"edit":false,
-		"quantity":"redshift",
-		"difference":"0.1116",
-		"values":[
-			0.239,
-			0.215
-		],
-		"sources":[
-			{
-				"id":"2011ApJ...738..162S",
-				"idtype":"bibcode"
-			},
-			{
-				"id":"2015arXiv150201589P,2011ApJ...738..162S,NED-D",
-				"idtype":"bibcode,bibcode,name"
-			}
-		]
-	},
-	{
 		"name":"SDSS-II SN 2464",
 		"alias":[
 			{
@@ -17983,32 +17226,6 @@
 				"id":"2008AJ....135..348S",
 				"idtype":"bibcode"
 			},
-			{
-				"id":"2014arXiv1401.3317S",
-				"idtype":"bibcode"
-			},
-			{
-				"id":"2014arXiv1401.3317S",
-				"idtype":"bibcode"
-			}
-		]
-	},
-	{
-		"name":"SDSS-II SN 2722",
-		"alias":[
-			{
-				"value":"SDSS-II SN 2722",
-				"source":"2"
-			}
-		],
-		"edit":false,
-		"quantity":"dec",
-		"difference":"0.00214",
-		"values":[
-			"+00:02:29.84",
-			"+00:02:29.52"
-		],
-		"sources":[
 			{
 				"id":"2014arXiv1401.3317S",
 				"idtype":"bibcode"
@@ -18611,32 +17828,6 @@
 		]
 	},
 	{
-		"name":"SDSS-II SN 4539",
-		"alias":[
-			{
-				"value":"SDSS-II SN 4539",
-				"source":"2,3,5"
-			}
-		],
-		"edit":false,
-		"quantity":"redshift",
-		"difference":"0.1939",
-		"values":[
-			0.468,
-			0.392
-		],
-		"sources":[
-			{
-				"id":"2011ApJ...738..162S",
-				"idtype":"bibcode"
-			},
-			{
-				"id":"2015arXiv150201589P,2011ApJ...738..162S,NED-D",
-				"idtype":"bibcode,bibcode,name"
-			}
-		]
-	},
-	{
 		"name":"SDSS-II SN 4579",
 		"alias":[
 			{
@@ -18705,32 +17896,6 @@
 			{
 				"id":"2014arXiv1401.3317S",
 				"idtype":"bibcode"
-			}
-		]
-	},
-	{
-		"name":"SDSS-II SN 4690",
-		"alias":[
-			{
-				"value":"SDSS-II SN 4690",
-				"source":"2,3,6,7,9"
-			}
-		],
-		"edit":false,
-		"quantity":"claimedtype",
-		"difference":"",
-		"values":[
-			"II",
-			"Ia"
-		],
-		"sources":[
-			{
-				"id":"2014arXiv1401.3317S",
-				"idtype":"bibcode"
-			},
-			{
-				"id":"2010ApJ...722..566L,2000A&AS..143....9W",
-				"idtype":"bibcode,bibcode"
 			}
 		]
 	},
@@ -18927,32 +18092,6 @@
 		]
 	},
 	{
-		"name":"SDSS-II SN 5311",
-		"alias":[
-			{
-				"value":"SDSS-II SN 5311",
-				"source":"2,3,5"
-			}
-		],
-		"edit":false,
-		"quantity":"redshift",
-		"difference":"0.1184",
-		"values":[
-			0.274,
-			0.245
-		],
-		"sources":[
-			{
-				"id":"2011ApJ...738..162S",
-				"idtype":"bibcode"
-			},
-			{
-				"id":"2015arXiv150201589P,2011ApJ...738..162S,NED-D",
-				"idtype":"bibcode,bibcode,name"
-			}
-		]
-	},
-	{
 		"name":"SDSS-II SN 5359",
 		"alias":[
 			{
@@ -19051,32 +18190,6 @@
 				"id":"2010ApJ...713.1026D",
 				"idtype":"bibcode"
 			},
-			{
-				"id":"2011ApJ...738..162S",
-				"idtype":"bibcode"
-			},
-			{
-				"id":"2015arXiv150201589P,2011ApJ...738..162S,NED-D",
-				"idtype":"bibcode,bibcode,name"
-			}
-		]
-	},
-	{
-		"name":"SDSS-II SN 5641",
-		"alias":[
-			{
-				"value":"SDSS-II SN 5641",
-				"source":"2,3,5"
-			}
-		],
-		"edit":false,
-		"quantity":"redshift",
-		"difference":"0.28",
-		"values":[
-			0.672,
-			0.525
-		],
-		"sources":[
 			{
 				"id":"2011ApJ...738..162S",
 				"idtype":"bibcode"
@@ -20009,32 +19122,6 @@
 		]
 	},
 	{
-		"name":"SDSS-II SN 7630",
-		"alias":[
-			{
-				"value":"SDSS-II SN 7630",
-				"source":"2,3,5"
-			}
-		],
-		"edit":false,
-		"quantity":"redshift",
-		"difference":"0.1156",
-		"values":[
-			0.251,
-			0.225
-		],
-		"sources":[
-			{
-				"id":"2011ApJ...738..162S",
-				"idtype":"bibcode"
-			},
-			{
-				"id":"2015arXiv150201589P,2011ApJ...738..162S,NED-D",
-				"idtype":"bibcode,bibcode,name"
-			}
-		]
-	},
-	{
 		"name":"SDSS-II SN 7636",
 		"alias":[
 			{
@@ -20412,42 +19499,6 @@
 			"-00:04:08.4576"
 		],
 		"sources":[
-			{
-				"id":"2014arXiv1401.3317S",
-				"idtype":"bibcode"
-			},
-			{
-				"id":"2014arXiv1401.3317S",
-				"idtype":"bibcode"
-			}
-		]
-	},
-	{
-		"name":"SDSS-II SN 7841",
-		"alias":[
-			{
-				"value":"SDSS-II SN 7841",
-				"source":"2,5,6,8"
-			}
-		],
-		"edit":false,
-		"quantity":"dec",
-		"difference":"0.00343",
-		"values":[
-			"-00:03:04.8",
-			"-00:03:05.436",
-			"-00:03:05.0148",
-			"-00:03:05.4288"
-		],
-		"sources":[
-			{
-				"id":"2013ApJ...763...88C,2000A&AS..143....9W",
-				"idtype":"bibcode,bibcode"
-			},
-			{
-				"id":"2010ApJ...713.1026D",
-				"idtype":"bibcode"
-			},
 			{
 				"id":"2014arXiv1401.3317S",
 				"idtype":"bibcode"
@@ -21231,32 +20282,6 @@
 		]
 	},
 	{
-		"name":"SDSS-II SN 9414",
-		"alias":[
-			{
-				"value":"SDSS-II SN 9414",
-				"source":"1"
-			}
-		],
-		"edit":false,
-		"quantity":"dec",
-		"difference":"0.002695",
-		"values":[
-			"-00:03:38.4516",
-			"-00:03:39.042"
-		],
-		"sources":[
-			{
-				"id":"2014arXiv1401.3317S",
-				"idtype":"bibcode"
-			},
-			{
-				"id":"2014arXiv1401.3317S",
-				"idtype":"bibcode"
-			}
-		]
-	},
-	{
 		"name":"SDSS-II SN 9433",
 		"alias":[
 			{
@@ -21362,58 +20387,6 @@
 			{
 				"id":"2015arXiv150201589P,2011ApJ...738..162S,NED-D",
 				"idtype":"bibcode,bibcode,name"
-			}
-		]
-	},
-	{
-		"name":"SDSS-II SN 9652",
-		"alias":[
-			{
-				"value":"SDSS-II SN 9652",
-				"source":"2,3,5"
-			}
-		],
-		"edit":false,
-		"quantity":"redshift",
-		"difference":"0.162",
-		"values":[
-			0.373,
-			0.321
-		],
-		"sources":[
-			{
-				"id":"2011ApJ...738..162S",
-				"idtype":"bibcode"
-			},
-			{
-				"id":"2015arXiv150201589P,2011ApJ...738..162S,NED-D",
-				"idtype":"bibcode,bibcode,name"
-			}
-		]
-	},
-	{
-		"name":"SDSS-II SN 9739",
-		"alias":[
-			{
-				"value":"SDSS-II SN 9739",
-				"source":"2,3,5,6,8"
-			}
-		],
-		"edit":false,
-		"quantity":"claimedtype",
-		"difference":"",
-		"values":[
-			"II",
-			"Ia"
-		],
-		"sources":[
-			{
-				"id":"2014arXiv1401.3317S",
-				"idtype":"bibcode"
-			},
-			{
-				"id":"2011ApJ...738..162S",
-				"idtype":"bibcode"
 			}
 		]
 	},
@@ -29015,7 +27988,7 @@
 			},
 			{
 				"value":"CSS090802:144910+292510",
-				"source":"13"
+				"source":"7,11,13"
 			},
 			{
 				"value":"PTF09cwl",
@@ -29990,10 +28963,6 @@
 			{
 				"value":"PS1-14abq",
 				"source":"2,8"
-			},
-			{
-				"value":"MASTER OT JJ044212.20+230616.7",
-				"source":"2,6"
 			}
 		],
 		"edit":false,
@@ -30403,6 +29372,10 @@
 			{
 				"value":"PS1-13dhc",
 				"source":"3,5"
+			},
+			{
+				"value":"PSN J00051786+3238326",
+				"source":"3,5"
 			}
 		],
 		"edit":false,
@@ -30596,10 +29569,9 @@
 		],
 		"edit":false,
 		"quantity":"ra",
-		"difference":"0.008498",
+		"difference":"0.008497",
 		"values":[
 			"21:23:21.21",
-			"21:23:21.12",
 			"21:34:21.12"
 		],
 		"sources":[
@@ -30608,12 +29580,8 @@
 				"idtype":"bibcode,bibcode"
 			},
 			{
-				"id":"2014MNRAS.444.3258M",
-				"idtype":"bibcode"
-			},
-			{
-				"id":"2014MNRAS.438.1391P",
-				"idtype":"bibcode"
+				"id":"2014MNRAS.444.3258M,2014MNRAS.438.1391P",
+				"idtype":"bibcode,bibcode"
 			}
 		]
 	},
@@ -31436,6 +30404,117 @@
 		]
 	},
 	{
+		"name":"SN2010kj",
+		"alias":[
+			{
+				"value":"SN2010kj",
+				"source":"5,8,9,11,12"
+			},
+			{
+				"value":"CSS101108:003641-033660",
+				"source":"2,4,6,9"
+			},
+			{
+				"value":"MLS101102:024837+072411",
+				"source":"4,5,9"
+			},
+			{
+				"value":"CSS101110:024837+072412",
+				"source":"5,9"
+			}
+		],
+		"edit":false,
+		"quantity":"ra",
+		"difference":"3.597",
+		"values":[
+			"02:48:37.15",
+			"00:36:40.74",
+			"02:48:37.152",
+			"00:36:40.735"
+		],
+		"sources":[
+			{
+				"id":"2012A&A...538A.120L,2010CBET.2566....1F,2008yCat....1.2024B,Transient Name Server,Latest Supernovae,2000A&AS..143....9W,1989A&AS...81..421B",
+				"idtype":"bibcode,bibcode,bibcode,name,name,bibcode,bibcode"
+			},
+			{
+				"id":"2010ATel.3031....1D,Latest Supernovae",
+				"idtype":"bibcode,name"
+			},
+			{
+				"id":"2009ApJ...696..870D",
+				"idtype":"bibcode"
+			},
+			{
+				"id":"2009ApJ...696..870D",
+				"idtype":"bibcode"
+			}
+		]
+	},
+	{
+		"name":"SN2010kj",
+		"alias":[
+			{
+				"value":"SN2010kj",
+				"source":"5,8,9,11,12"
+			},
+			{
+				"value":"CSS101108:003641-033660",
+				"source":"2,4,6,9"
+			},
+			{
+				"value":"MLS101102:024837+072411",
+				"source":"4,5,9"
+			},
+			{
+				"value":"CSS101110:024837+072412",
+				"source":"5,9"
+			}
+		],
+		"edit":false,
+		"quantity":"dec",
+		"difference":"3.047",
+		"values":[
+			"+07:24:10.8",
+			"+07:24:10.80",
+			"+07:24:11.8",
+			"-03:36:59.9",
+			"+07:24:11.808",
+			"-03:36:59.868",
+			"+07:24:10.836"
+		],
+		"sources":[
+			{
+				"id":"2012A&A...538A.120L,2008yCat....1.2024B,2000A&AS..143....9W,1989A&AS...81..421B",
+				"idtype":"bibcode,bibcode,bibcode,bibcode"
+			},
+			{
+				"id":"Transient Name Server",
+				"idtype":"name"
+			},
+			{
+				"id":"2010CBET.2566....1F,Latest Supernovae",
+				"idtype":"bibcode,name"
+			},
+			{
+				"id":"2010ATel.3031....1D,Latest Supernovae",
+				"idtype":"bibcode,name"
+			},
+			{
+				"id":"2009ApJ...696..870D",
+				"idtype":"bibcode"
+			},
+			{
+				"id":"2009ApJ...696..870D",
+				"idtype":"bibcode"
+			},
+			{
+				"id":"2009ApJ...696..870D",
+				"idtype":"bibcode"
+			}
+		]
+	},
+	{
 		"name":"SN2010ma",
 		"alias":[
 			{
@@ -31522,7 +30601,11 @@
 			},
 			{
 				"value":"PSN J14333737-1202209",
-				"source":"10"
+				"source":"2,8,10"
+			},
+			{
+				"value":"SSS110503:204711-355448",
+				"source":"6,8"
 			}
 		],
 		"edit":false,
@@ -31531,7 +30614,8 @@
 		"values":[
 			"14:33:37.37",
 			"20:47:10.88",
-			"14:33:37.44"
+			"14:33:37.44",
+			"20:47:10.8"
 		],
 		"sources":[
 			{
@@ -31541,6 +30625,10 @@
 			{
 				"id":"CBAT TOCP,Latest Supernovae",
 				"idtype":"name,name"
+			},
+			{
+				"id":"2009ApJ...696..870D",
+				"idtype":"bibcode"
 			},
 			{
 				"id":"2009ApJ...696..870D",
@@ -31565,7 +30653,11 @@
 			},
 			{
 				"value":"PSN J14333737-1202209",
-				"source":"10"
+				"source":"2,8,10"
+			},
+			{
+				"value":"SSS110503:204711-355448",
+				"source":"6,8"
 			}
 		],
 		"edit":false,
@@ -31575,7 +30667,8 @@
 			"-12:02:20.9",
 			"-12:02:20.90",
 			"-35:54:48.4",
-			"-12:02:20.76"
+			"-12:02:20.76",
+			"-35:54:48.24"
 		],
 		"sources":[
 			{
@@ -31589,6 +30682,10 @@
 			{
 				"id":"CBAT TOCP,Latest Supernovae",
 				"idtype":"name,name"
+			},
+			{
+				"id":"2009ApJ...696..870D",
+				"idtype":"bibcode"
 			},
 			{
 				"id":"2009ApJ...696..870D",
@@ -31943,7 +31040,11 @@
 			},
 			{
 				"value":"PTF11pbp",
-				"source":"4,13"
+				"source":"4,5,10,13"
+			},
+			{
+				"value":"SNhunt86",
+				"source":"5,10"
 			}
 		],
 		"edit":false,
@@ -31977,7 +31078,7 @@
 			},
 			{
 				"value":"PSN J20121007-1121577",
-				"source":"11,12"
+				"source":"2,8,11,12"
 			}
 		],
 		"edit":false,
@@ -32072,7 +31173,7 @@
 			},
 			{
 				"value":"CSS111030:024850-080430",
-				"source":"8"
+				"source":"2,7,8"
 			},
 			{
 				"value":"MASTER OT J024849.72-080430.3",
@@ -32407,7 +31508,7 @@
 			},
 			{
 				"value":"PS1-12pd",
-				"source":"11"
+				"source":"3,8,11"
 			}
 		],
 		"edit":false,
@@ -32600,7 +31701,7 @@
 			},
 			{
 				"value":"PTF12os",
-				"source":"4,10"
+				"source":"3,4,8,10"
 			}
 		],
 		"edit":false,
@@ -32798,6 +31899,10 @@
 			{
 				"value":"iPTF13adc",
 				"source":"2,3,4,8,10"
+			},
+			{
+				"value":"PSN J12472422+3232500",
+				"source":"2,8"
 			}
 		],
 		"edit":false,
@@ -32832,6 +31937,10 @@
 			{
 				"value":"iPTF13adc",
 				"source":"2,3,4,8,10"
+			},
+			{
+				"value":"PSN J12472422+3232500",
+				"source":"2,8"
 			}
 		],
 		"edit":false,
@@ -32871,6 +31980,10 @@
 			{
 				"value":"iPTF13adc",
 				"source":"2,3,4,8,10"
+			},
+			{
+				"value":"PSN J12472422+3232500",
+				"source":"2,8"
 			}
 		],
 		"edit":false,
@@ -33034,7 +32147,7 @@
 			},
 			{
 				"value":"SNhunt168",
-				"source":"11,12"
+				"source":"2,8,11,12"
 			}
 		],
 		"edit":false,
@@ -33224,7 +32337,7 @@
 		"alias":[
 			{
 				"value":"SNhunt174",
-				"source":"7"
+				"source":"4,6,7"
 			},
 			{
 				"value":"PSN J08384182-6420485",
@@ -33263,7 +32376,7 @@
 		"alias":[
 			{
 				"value":"SNhunt271",
-				"source":"5,6,7,8,9,10,11"
+				"source":"4,5,6,7,8,9,10,11"
 			},
 			{
 				"value":"PSN J02490078+1544058",
@@ -33362,6 +32475,10 @@
 			{
 				"value":"Gaia15afw",
 				"source":"1,7"
+			},
+			{
+				"value":"PSN J09595957-0253167",
+				"source":"1,7"
 			}
 		],
 		"edit":false,
@@ -33431,7 +32548,7 @@
 			},
 			{
 				"value":"Gaia16ajy",
-				"source":"5"
+				"source":"1,5,8"
 			}
 		],
 		"edit":false,
@@ -33504,7 +32621,7 @@
 			},
 			{
 				"value":"Gaia16acn",
-				"source":"5"
+				"source":"5,6,8"
 			},
 			{
 				"value":"AT2016dqd",
@@ -33566,7 +32683,7 @@
 			},
 			{
 				"value":"Gaia16acn",
-				"source":"5"
+				"source":"5,6,8"
 			},
 			{
 				"value":"AT2016dqd",
@@ -33675,6 +32792,44 @@
 			{
 				"id":"Gaia Photometric Science Alerts",
 				"idtype":"name"
+			}
+		]
+	},
+	{
+		"name":"iPTF15dqp",
+		"alias":[
+			{
+				"value":"iPTF15dqp",
+				"source":"4,6,9,11"
+			},
+			{
+				"value":"PSN J00545681+1048036",
+				"source":"2,4,6,7,8,9,11"
+			},
+			{
+				"value":"PS15cxi",
+				"source":"6,9"
+			},
+			{
+				"value":"PSN J00545681+104803",
+				"source":"2,7"
+			}
+		],
+		"edit":false,
+		"quantity":"redshift",
+		"difference":"3.944",
+		"values":[
+			0.089,
+			0.018
+		],
+		"sources":[
+			{
+				"id":"2012PASP..124..668Y,CBAT TOCP,Latest Supernovae",
+				"idtype":"bibcode,name,name"
+			},
+			{
+				"id":"2012PASP..124..668Y",
+				"idtype":"bibcode"
 			}
 		]
 	},
@@ -33803,7 +32958,7 @@
 			},
 			{
 				"value":"Gaia16abb",
-				"source":"3"
+				"source":"3,4,6"
 			}
 		],
 		"edit":false,
@@ -33865,7 +33020,7 @@
 			},
 			{
 				"value":"Gaia16abb",
-				"source":"3"
+				"source":"3,4,6"
 			}
 		],
 		"edit":false,
@@ -34356,44 +33511,6 @@
 		]
 	},
 	{
-		"name":"PS15cxi",
-		"alias":[
-			{
-				"value":"PS15cxi",
-				"source":"4,6,8"
-			},
-			{
-				"value":"PSN J00545681+104803",
-				"source":"1,6"
-			},
-			{
-				"value":"PSN J00545681+1048036",
-				"source":"1,6,7,8,9,11"
-			},
-			{
-				"value":"iPTF15dqp",
-				"source":"4,7,9,11"
-			}
-		],
-		"edit":false,
-		"quantity":"redshift",
-		"difference":"3.944",
-		"values":[
-			0.089,
-			0.018
-		],
-		"sources":[
-			{
-				"id":"2012PASP..124..668Y,CBAT TOCP,Latest Supernovae",
-				"idtype":"bibcode,name,name"
-			},
-			{
-				"id":"2012PASP..124..668Y",
-				"idtype":"bibcode"
-			}
-		]
-	},
-	{
 		"name":"PS15dlq",
 		"alias":[
 			{
@@ -34786,7 +33903,7 @@
 			},
 			{
 				"value":"MASTER OT J230024.63+013736.8",
-				"source":"8"
+				"source":"5,6,8"
 			},
 			{
 				"value":"PSN J23002463+0137368",
@@ -34855,7 +33972,7 @@
 			},
 			{
 				"value":"iPTF13efv",
-				"source":"10"
+				"source":"6,7,10"
 			},
 			{
 				"value":"PSN J09093496+3307204",
@@ -34863,7 +33980,11 @@
 			},
 			{
 				"value":"SNhunt275",
-				"source":"10"
+				"source":"6,7,10"
+			},
+			{
+				"value":"PSN J09093506+3307221",
+				"source":"6,7"
 			}
 		],
 		"edit":false,
@@ -34894,19 +34015,19 @@
 		"alias":[
 			{
 				"value":"SN2015bs",
-				"source":"4,5,6,8,10"
-			},
-			{
-				"value":"PS15dsr",
-				"source":"5,8"
+				"source":"6,8"
 			},
 			{
 				"value":"CSS140925:223344-062208",
-				"source":"2,6,7,8,11"
+				"source":"2,4,5,7,8,10,11"
 			},
 			{
 				"value":"MLS141116:223344-062208",
-				"source":"7,8"
+				"source":"5,8"
+			},
+			{
+				"value":"PS15dsr",
+				"source":"5,6,8"
 			}
 		],
 		"edit":false,
@@ -34941,7 +34062,7 @@
 			},
 			{
 				"value":"Gaia15aet",
-				"source":"9"
+				"source":"5,7,9"
 			},
 			{
 				"value":"PSN J09023787+2556042",
@@ -35036,28 +34157,92 @@
 		]
 	},
 	{
-		"name":"SN2016bhr",
+		"name":"SN2016blz",
 		"alias":[
 			{
-				"value":"SN2016bhr",
-				"source":"3,4,5,7"
+				"value":"SN2016blz",
+				"source":"1,5,6,7,8,10,11,12"
 			},
 			{
-				"value":"AT2016bhr",
-				"source":"3"
+				"value":"Gaia16avs",
+				"source":"1,10,11"
 			},
 			{
-				"value":"PS16bho",
-				"source":"3,4,5"
+				"value":"ASASSN-16eh",
+				"source":"1,5,10"
+			},
+			{
+				"value":"PS16ccd",
+				"source":"1,10"
+			},
+			{
+				"value":"SMT16aec",
+				"source":"2,7,10"
+			},
+			{
+				"value":"AT2016blz",
+				"source":"11"
 			}
 		],
 		"edit":false,
-		"quantity":"redshift",
-		"difference":"0.07143",
+		"quantity":"ra",
+		"difference":"0.1628",
 		"values":[
-			0.014,
-			0.015,
-			0.014
+			"15:40:29.23",
+			"15:40:29.28",
+			"13:28:47.00"
+		],
+		"sources":[
+			{
+				"id":"2016ATel.8930....1B,Transient Name Server,Latest Supernovae",
+				"idtype":"bibcode,name,name"
+			},
+			{
+				"id":"2016ATel.8930....1B,Gaia Photometric Science Alerts,ASAS-SN Supernovae",
+				"idtype":"bibcode,name,name"
+			},
+			{
+				"id":"2016ATel.8935....1M,Pan-STARRS 3Pi,Latest Supernovae",
+				"idtype":"bibcode,name,name"
+			}
+		]
+	},
+	{
+		"name":"SN2016blz",
+		"alias":[
+			{
+				"value":"SN2016blz",
+				"source":"1,5,6,7,8,10,11,12"
+			},
+			{
+				"value":"Gaia16avs",
+				"source":"1,10,11"
+			},
+			{
+				"value":"ASASSN-16eh",
+				"source":"1,5,10"
+			},
+			{
+				"value":"PS16ccd",
+				"source":"1,10"
+			},
+			{
+				"value":"SMT16aec",
+				"source":"2,7,10"
+			},
+			{
+				"value":"AT2016blz",
+				"source":"11"
+			}
+		],
+		"edit":false,
+		"quantity":"dec",
+		"difference":"1.033",
+		"values":[
+			"+00:54:36.36",
+			"+00:54:36.4",
+			"+00:54:37.12",
+			"-27:39:04.5"
 		],
 		"sources":[
 			{
@@ -35065,12 +34250,62 @@
 				"idtype":"name"
 			},
 			{
-				"id":"Pan-STARRS 3Pi,Latest Supernovae",
-				"idtype":"name,name"
+				"id":"2016ATel.8930....1B,ASAS-SN Supernovae,Latest Supernovae",
+				"idtype":"bibcode,name,name"
 			},
 			{
-				"id":"2012PASP..124..668Y",
-				"idtype":"bibcode"
+				"id":"Gaia Photometric Science Alerts",
+				"idtype":"name"
+			},
+			{
+				"id":"2016ATel.8935....1M,Pan-STARRS 3Pi,Latest Supernovae",
+				"idtype":"bibcode,name,name"
+			}
+		]
+	},
+	{
+		"name":"SN2016blz",
+		"alias":[
+			{
+				"value":"SN2016blz",
+				"source":"1,5,6,7,8,10,11,12"
+			},
+			{
+				"value":"Gaia16avs",
+				"source":"1,10,11"
+			},
+			{
+				"value":"ASASSN-16eh",
+				"source":"1,5,10"
+			},
+			{
+				"value":"PS16ccd",
+				"source":"1,10"
+			},
+			{
+				"value":"SMT16aec",
+				"source":"2,7,10"
+			},
+			{
+				"value":"AT2016blz",
+				"source":"11"
+			}
+		],
+		"edit":false,
+		"quantity":"claimedtype",
+		"difference":"",
+		"values":[
+			"II",
+			"Ic"
+		],
+		"sources":[
+			{
+				"id":"2016ATel.8930....1B,Transient Name Server,Gaia Photometric Science Alerts,ASAS-SN Supernovae,ATel https://wis-tns.weizmann.ac.il/object/2016blz,Latest Supernovae,2012PASP..124..668Y",
+				"idtype":"bibcode,name,name,name,name,name,bibcode"
+			},
+			{
+				"id":"2016ATel.8935....1M,Latest Supernovae,2012PASP..124..668Y",
+				"idtype":"bibcode,name,bibcode"
 			}
 		]
 	},
@@ -35087,6 +34322,10 @@
 			},
 			{
 				"value":"Gaia16alk",
+				"source":"4,7"
+			},
+			{
+				"value":"PS16cnc",
 				"source":"4,7"
 			}
 		],
@@ -35122,11 +34361,11 @@
 			},
 			{
 				"value":"CSS160427:140959+174549",
-				"source":"8"
+				"source":"1,7,8"
 			},
 			{
 				"value":"Gaia16aql",
-				"source":"8"
+				"source":"1,7,8"
 			},
 			{
 				"value":"MASTER OT J140958.91+174549.4",
@@ -35169,7 +34408,7 @@
 			},
 			{
 				"value":"Gaia16aty",
-				"source":"9"
+				"source":"1,8,9"
 			},
 			{
 				"value":"ASASSN-16gn",
@@ -35245,11 +34484,11 @@
 			},
 			{
 				"value":"Gaia16avq",
-				"source":"4"
+				"source":"4,5,6"
 			},
 			{
 				"value":"Gaia16avr",
-				"source":"4,5,6"
+				"source":"1,4,5,6"
 			},
 			{
 				"value":"MASTER OT J83637.5+733504.8",
@@ -35311,11 +34550,11 @@
 			},
 			{
 				"value":"Gaia16avq",
-				"source":"4"
+				"source":"4,5,6"
 			},
 			{
 				"value":"Gaia16avr",
-				"source":"4,5,6"
+				"source":"1,4,5,6"
 			},
 			{
 				"value":"MASTER OT J83637.5+733504.8",
@@ -35377,11 +34616,11 @@
 			},
 			{
 				"value":"Gaia16avq",
-				"source":"4"
+				"source":"4,5,6"
 			},
 			{
 				"value":"Gaia16avr",
-				"source":"4,5,6"
+				"source":"1,4,5,6"
 			},
 			{
 				"value":"MASTER OT J83637.5+733504.8",
@@ -35419,7 +34658,7 @@
 			},
 			{
 				"value":"Gaia16azu",
-				"source":"10"
+				"source":"1,9,10"
 			},
 			{
 				"value":"ASASSN-16hr",
@@ -35567,6 +34806,10 @@
 			{
 				"value":"ASASSN-16io",
 				"source":"1,4,5,8"
+			},
+			{
+				"value":"PS16dwu",
+				"source":"1,8"
 			}
 		],
 		"edit":false,
@@ -35584,6 +34827,45 @@
 			{
 				"id":"2016ATel.9349....1N,ASAS-SN Supernovae,Latest Supernovae",
 				"idtype":"bibcode,name,name"
+			}
+		]
+	},
+	{
+		"name":"SN2016faa",
+		"alias":[
+			{
+				"value":"SN2016faa",
+				"source":"3,4,5,7,8"
+			},
+			{
+				"value":"AT2016faa",
+				"source":"3,4,5,7"
+			},
+			{
+				"value":"PS16dsy",
+				"source":"3,4,8"
+			}
+		],
+		"edit":false,
+		"quantity":"redshift",
+		"difference":"0.1724",
+		"values":[
+			0.034,
+			0.034,
+			0.029
+		],
+		"sources":[
+			{
+				"id":"Transient Name Server",
+				"idtype":"name"
+			},
+			{
+				"id":"Pan-STARRS 3Pi,ATel 9403,Asiago Supernova Catalogue,Latest Supernovae",
+				"idtype":"name,name,name,name"
+			},
+			{
+				"id":"Pan-STARRS 3Pi,Latest Supernovae",
+				"idtype":"name,name"
 			}
 		]
 	},
@@ -35679,6 +34961,45 @@
 		]
 	},
 	{
+		"name":"SN2016geu",
+		"alias":[
+			{
+				"value":"SN2016geu",
+				"source":"2,4,5,6"
+			},
+			{
+				"value":"AT2016geu",
+				"source":"4"
+			},
+			{
+				"value":"iPTF16geu",
+				"source":"2,4,5,6"
+			}
+		],
+		"edit":false,
+		"quantity":"redshift",
+		"difference":"0.8935",
+		"values":[
+			0.409,
+			0.409,
+			0.216
+		],
+		"sources":[
+			{
+				"id":"Transient Name Server",
+				"idtype":"name"
+			},
+			{
+				"id":"ATel 9603,Latest Supernovae",
+				"idtype":"name,name"
+			},
+			{
+				"id":"ATel 9603,Latest Supernovae",
+				"idtype":"name,name"
+			}
+		]
+	},
+	{
 		"name":"SNHiTS15az",
 		"alias":[
 			{
@@ -35740,6 +35061,41 @@
 			{
 				"id":"2015ATel.7289....1F,Latest Supernovae",
 				"idtype":"bibcode,name"
+			}
+		]
+	},
+	{
+		"name":"SNhunt327",
+		"alias":[
+			{
+				"value":"SNhunt327",
+				"source":"3,5"
+			},
+			{
+				"value":"AT2016hgm",
+				"source":"3,4,5"
+			}
+		],
+		"edit":false,
+		"quantity":"ra",
+		"difference":"36.44",
+		"values":[
+			"01:22:11.73",
+			"01:22:11.730",
+			"00:02:11.73"
+		],
+		"sources":[
+			{
+				"id":"Transient Name Server",
+				"idtype":"name"
+			},
+			{
+				"id":"Transient Name Server,Latest Supernovae",
+				"idtype":"name,name"
+			},
+			{
+				"id":"Supernova Hunt",
+				"idtype":"name"
 			}
 		]
 	},
@@ -36717,6 +36073,62 @@
 		]
 	},
 	{
+		"name":"SDSS-II SN 13071",
+		"alias":[
+			{
+				"value":"SDSS-II SN 13071",
+				"source":"2,3,6,8"
+			},
+			{
+				"value":"2MASS J23542825-0043071",
+				"source":"8"
+			}
+		],
+		"edit":false,
+		"quantity":"claimedtype",
+		"difference":"",
+		"values":[
+			"II",
+			"Ia"
+		],
+		"sources":[
+			{
+				"id":"2014arXiv1401.3317S",
+				"idtype":"bibcode"
+			},
+			{
+				"id":"2011ApJ...738..162S",
+				"idtype":"bibcode"
+			}
+		]
+	},
+	{
+		"name":"SDSS-II SN 13252",
+		"alias":[
+			{
+				"value":"SDSS-II SN 13252",
+				"source":"1"
+			}
+		],
+		"edit":false,
+		"quantity":"dec",
+		"difference":"0.003375",
+		"values":[
+			"+00:03:10.25",
+			"+00:03:09.61"
+		],
+		"sources":[
+			{
+				"id":"2014arXiv1401.3317S",
+				"idtype":"bibcode"
+			},
+			{
+				"id":"2014arXiv1401.3317S",
+				"idtype":"bibcode"
+			}
+		]
+	},
+	{
 		"name":"SDSS-II SN 13593",
 		"alias":[
 			{
@@ -36743,6 +36155,68 @@
 		]
 	},
 	{
+		"name":"SDSS-II SN 13895",
+		"alias":[
+			{
+				"value":"SDSS-II SN 13895",
+				"source":"2"
+			}
+		],
+		"edit":false,
+		"quantity":"dec",
+		"difference":"0.002673",
+		"values":[
+			"-00:01:12.5436",
+			"-00:01:12.738"
+		],
+		"sources":[
+			{
+				"id":"2014arXiv1401.3317S",
+				"idtype":"bibcode"
+			},
+			{
+				"id":"2014arXiv1401.3317S",
+				"idtype":"bibcode"
+			}
+		]
+	},
+	{
+		"name":"SDSS-II SN 13897",
+		"alias":[
+			{
+				"value":"SDSS-II SN 13897",
+				"source":"2,4,6,8"
+			}
+		],
+		"edit":false,
+		"quantity":"dec",
+		"difference":"0.003613",
+		"values":[
+			"-00:01:34.22",
+			"-00:01:34.2228",
+			"-00:01:34.3128",
+			"-00:01:34.6548"
+		],
+		"sources":[
+			{
+				"id":"2011ApJ...738..162S,2000A&AS..143....9W",
+				"idtype":"bibcode,bibcode"
+			},
+			{
+				"id":"2011ApJ...738..162S",
+				"idtype":"bibcode"
+			},
+			{
+				"id":"2014arXiv1401.3317S",
+				"idtype":"bibcode"
+			},
+			{
+				"id":"2014arXiv1401.3317S",
+				"idtype":"bibcode"
+			}
+		]
+	},
+	{
 		"name":"SDSS-II SN 14014",
 		"alias":[
 			{
@@ -36756,6 +36230,212 @@
 		"values":[
 			0.354,
 			0.307
+		],
+		"sources":[
+			{
+				"id":"2011ApJ...738..162S",
+				"idtype":"bibcode"
+			},
+			{
+				"id":"2015arXiv150201589P,2011ApJ...738..162S,NED-D",
+				"idtype":"bibcode,bibcode,name"
+			}
+		]
+	},
+	{
+		"name":"SDSS-II SN 14030",
+		"alias":[
+			{
+				"value":"SDSS-II SN 14030",
+				"source":"2,4"
+			}
+		],
+		"edit":false,
+		"quantity":"dec",
+		"difference":"0.001322",
+		"values":[
+			"+00:05:08.207",
+			"+00:05:07.8"
+		],
+		"sources":[
+			{
+				"id":"2014arXiv1401.3317S",
+				"idtype":"bibcode"
+			},
+			{
+				"id":"2014arXiv1401.3317S",
+				"idtype":"bibcode"
+			}
+		]
+	},
+	{
+		"name":"SDSS-II SN 14050",
+		"alias":[
+			{
+				"value":"SDSS-II SN 14050",
+				"source":"2"
+			}
+		],
+		"edit":false,
+		"quantity":"dec",
+		"difference":"0.001388",
+		"values":[
+			"+00:11:34.174",
+			"+00:11:33.212"
+		],
+		"sources":[
+			{
+				"id":"2014arXiv1401.3317S",
+				"idtype":"bibcode"
+			},
+			{
+				"id":"2014arXiv1401.3317S",
+				"idtype":"bibcode"
+			}
+		]
+	},
+	{
+		"name":"SDSS-II SN 14143",
+		"alias":[
+			{
+				"value":"SDSS-II SN 14143",
+				"source":"2,4"
+			}
+		],
+		"edit":false,
+		"quantity":"dec",
+		"difference":"0.001071",
+		"values":[
+			"+00:05:36.44",
+			"+00:05:36.08"
+		],
+		"sources":[
+			{
+				"id":"2014arXiv1401.3317S",
+				"idtype":"bibcode"
+			},
+			{
+				"id":"2014arXiv1401.3317S",
+				"idtype":"bibcode"
+			}
+		]
+	},
+	{
+		"name":"SDSS-II SN 14340",
+		"alias":[
+			{
+				"value":"SDSS-II SN 14340",
+				"source":"2,6,8,10"
+			},
+			{
+				"value":"2MASS J23031846-0051268",
+				"source":"10"
+			}
+		],
+		"edit":false,
+		"quantity":"dec",
+		"difference":"0.00243",
+		"values":[
+			"-00:51:26.85",
+			"-00:51:19.368",
+			"-00:51:19.1124",
+			"-00:51:19.3536"
+		],
+		"sources":[
+			{
+				"id":"2003yCat.2246....0C,2000A&AS..143....9W",
+				"idtype":"bibcode,bibcode"
+			},
+			{
+				"id":"2010ApJ...713.1026D",
+				"idtype":"bibcode"
+			},
+			{
+				"id":"2014arXiv1401.3317S",
+				"idtype":"bibcode"
+			},
+			{
+				"id":"2014arXiv1401.3317S",
+				"idtype":"bibcode"
+			}
+		]
+	},
+	{
+		"name":"SDSS-II SN 14938",
+		"alias":[
+			{
+				"value":"SDSS-II SN 14938",
+				"source":"2,3,5"
+			}
+		],
+		"edit":false,
+		"quantity":"claimedtype",
+		"difference":"",
+		"values":[
+			"II",
+			"Ia"
+		],
+		"sources":[
+			{
+				"id":"2014arXiv1401.3317S",
+				"idtype":"bibcode"
+			},
+			{
+				"id":"2011ApJ...738..162S",
+				"idtype":"bibcode"
+			}
+		]
+	},
+	{
+		"name":"SDSS-II SN 15351",
+		"alias":[
+			{
+				"value":"SDSS-II SN 15351",
+				"source":"2,4,6,7,9"
+			}
+		],
+		"edit":false,
+		"quantity":"dec",
+		"difference":"0.001521",
+		"values":[
+			"-00:03:11.66",
+			"-00:03:11.952",
+			"-00:03:11.664",
+			"-00:03:11.5596"
+		],
+		"sources":[
+			{
+				"id":"2011ApJ...738..162S,2000A&AS..143....9W",
+				"idtype":"bibcode,bibcode"
+			},
+			{
+				"id":"2014arXiv1401.3317S,2010ApJ...713.1026D",
+				"idtype":"bibcode,bibcode"
+			},
+			{
+				"id":"2011ApJ...738..162S",
+				"idtype":"bibcode"
+			},
+			{
+				"id":"2014arXiv1401.3317S",
+				"idtype":"bibcode"
+			}
+		]
+	},
+	{
+		"name":"SDSS-II SN 15657",
+		"alias":[
+			{
+				"value":"SDSS-II SN 15657",
+				"source":"2,3,5"
+			}
+		],
+		"edit":false,
+		"quantity":"redshift",
+		"difference":"0.1367",
+		"values":[
+			0.316,
+			0.278
 		],
 		"sources":[
 			{
@@ -36795,6 +36475,115 @@
 		]
 	},
 	{
+		"name":"SDSS-II SN 15753",
+		"alias":[
+			{
+				"value":"SDSS-II SN 15753",
+				"source":"2,3,5"
+			}
+		],
+		"edit":false,
+		"quantity":"dec",
+		"difference":"0.002109",
+		"values":[
+			"-00:01:40.494",
+			"-00:01:40.4796",
+			"-00:01:40.692"
+		],
+		"sources":[
+			{
+				"id":"2011ApJ...738..162S",
+				"idtype":"bibcode"
+			},
+			{
+				"id":"2014arXiv1401.3317S",
+				"idtype":"bibcode"
+			},
+			{
+				"id":"2014arXiv1401.3317S",
+				"idtype":"bibcode"
+			}
+		]
+	},
+	{
+		"name":"SDSS-II SN 16481",
+		"alias":[
+			{
+				"value":"SDSS-II SN 16481",
+				"source":"2,3,5"
+			}
+		],
+		"edit":false,
+		"quantity":"redshift",
+		"difference":"0.1318",
+		"values":[
+			0.292,
+			0.258
+		],
+		"sources":[
+			{
+				"id":"2011ApJ...738..162S",
+				"idtype":"bibcode"
+			},
+			{
+				"id":"2015arXiv150201589P,2011ApJ...738..162S,NED-D",
+				"idtype":"bibcode,bibcode,name"
+			}
+		]
+	},
+	{
+		"name":"SDSS-II SN 16958",
+		"alias":[
+			{
+				"value":"SDSS-II SN 16958",
+				"source":"2,3,5"
+			}
+		],
+		"edit":false,
+		"quantity":"redshift",
+		"difference":"0.1306",
+		"values":[
+			0.303,
+			0.268
+		],
+		"sources":[
+			{
+				"id":"2011ApJ...738..162S",
+				"idtype":"bibcode"
+			},
+			{
+				"id":"2015arXiv150201589P,2011ApJ...738..162S,NED-D",
+				"idtype":"bibcode,bibcode,name"
+			}
+		]
+	},
+	{
+		"name":"SDSS-II SN 16981",
+		"alias":[
+			{
+				"value":"SDSS-II SN 16981",
+				"source":"2,3,5"
+			}
+		],
+		"edit":false,
+		"quantity":"redshift",
+		"difference":"0.1116",
+		"values":[
+			0.239,
+			0.215
+		],
+		"sources":[
+			{
+				"id":"2011ApJ...738..162S",
+				"idtype":"bibcode"
+			},
+			{
+				"id":"2015arXiv150201589P,2011ApJ...738..162S,NED-D",
+				"idtype":"bibcode,bibcode,name"
+			}
+		]
+	},
+	{
 		"name":"SDSS-II SN 17345",
 		"alias":[
 			{
@@ -36817,6 +36606,32 @@
 			{
 				"id":"2015arXiv150201589P,2011ApJ...738..162S,NED-D",
 				"idtype":"bibcode,bibcode,name"
+			}
+		]
+	},
+	{
+		"name":"SDSS-II SN 1741",
+		"alias":[
+			{
+				"value":"SDSS-II SN 1741",
+				"source":"2,3,5"
+			}
+		],
+		"edit":false,
+		"quantity":"claimedtype",
+		"difference":"",
+		"values":[
+			"II",
+			"Ia"
+		],
+		"sources":[
+			{
+				"id":"2014arXiv1401.3317S",
+				"idtype":"bibcode"
+			},
+			{
+				"id":"2011ApJ...738..162S",
+				"idtype":"bibcode"
 			}
 		]
 	},
@@ -36851,6 +36666,32 @@
 		]
 	},
 	{
+		"name":"SDSS-II SN 18169",
+		"alias":[
+			{
+				"value":"SDSS-II SN 18169",
+				"source":"1"
+			}
+		],
+		"edit":false,
+		"quantity":"dec",
+		"difference":"0.001239",
+		"values":[
+			"+00:03:00.3672",
+			"+00:03:00.144"
+		],
+		"sources":[
+			{
+				"id":"2014arXiv1401.3317S",
+				"idtype":"bibcode"
+			},
+			{
+				"id":"2014arXiv1401.3317S",
+				"idtype":"bibcode"
+			}
+		]
+	},
+	{
 		"name":"SDSS-II SN 18852",
 		"alias":[
 			{
@@ -36873,6 +36714,174 @@
 			{
 				"id":"2015arXiv150201589P,2011ApJ...738..162S,NED-D",
 				"idtype":"bibcode,bibcode,name"
+			}
+		]
+	},
+	{
+		"name":"SDSS-II SN 18933",
+		"alias":[
+			{
+				"value":"SDSS-II SN 18933",
+				"source":"2,3,5"
+			}
+		],
+		"edit":false,
+		"quantity":"redshift",
+		"difference":"0.1191",
+		"values":[
+			0.263,
+			0.235
+		],
+		"sources":[
+			{
+				"id":"2011ApJ...738..162S",
+				"idtype":"bibcode"
+			},
+			{
+				"id":"2015arXiv150201589P,2011ApJ...738..162S,NED-D",
+				"idtype":"bibcode,bibcode,name"
+			}
+		]
+	},
+	{
+		"name":"SDSS-II SN 18933",
+		"alias":[
+			{
+				"value":"SDSS-II SN 18933",
+				"source":"2,3,5"
+			}
+		],
+		"edit":false,
+		"quantity":"claimedtype",
+		"difference":"",
+		"values":[
+			"II",
+			"Ia"
+		],
+		"sources":[
+			{
+				"id":"2014arXiv1401.3317S",
+				"idtype":"bibcode"
+			},
+			{
+				"id":"2011ApJ...738..162S",
+				"idtype":"bibcode"
+			}
+		]
+	},
+	{
+		"name":"SDSS-II SN 19435",
+		"alias":[
+			{
+				"value":"SDSS-II SN 19435",
+				"source":"2,4"
+			}
+		],
+		"edit":false,
+		"quantity":"dec",
+		"difference":"0.001931",
+		"values":[
+			"+00:05:09.769",
+			"+00:05:09.172"
+		],
+		"sources":[
+			{
+				"id":"2014arXiv1401.3317S",
+				"idtype":"bibcode"
+			},
+			{
+				"id":"2014arXiv1401.3317S",
+				"idtype":"bibcode"
+			}
+		]
+	},
+	{
+		"name":"SDSS-II SN 19787",
+		"alias":[
+			{
+				"value":"SDSS-II SN 19787",
+				"source":"2,3,4,6,8,10"
+			},
+			{
+				"value":"2MASS J00010753-0005523",
+				"source":"10"
+			}
+		],
+		"edit":false,
+		"quantity":"ra",
+		"difference":"0.001008",
+		"values":[
+			"00:01:07.534",
+			"00:01:07.466",
+			"00:01:07.4964",
+			"00:01:07.4947",
+			"00:01:07.4654"
+		],
+		"sources":[
+			{
+				"id":"2003yCat.2246....0C,2000A&AS..143....9W",
+				"idtype":"bibcode,bibcode"
+			},
+			{
+				"id":"2010ApJ...713.1026D",
+				"idtype":"bibcode"
+			},
+			{
+				"id":"2011ApJ...738..162S",
+				"idtype":"bibcode"
+			},
+			{
+				"id":"2014arXiv1401.3317S",
+				"idtype":"bibcode"
+			},
+			{
+				"id":"2014arXiv1401.3317S",
+				"idtype":"bibcode"
+			}
+		]
+	},
+	{
+		"name":"SDSS-II SN 19787",
+		"alias":[
+			{
+				"value":"SDSS-II SN 19787",
+				"source":"2,3,4,6,8,10"
+			},
+			{
+				"value":"2MASS J00010753-0005523",
+				"source":"10"
+			}
+		],
+		"edit":false,
+		"quantity":"dec",
+		"difference":"0.002514",
+		"values":[
+			"-00:05:52.38",
+			"-00:05:53.268",
+			"-00:05:52.998",
+			"-00:05:53.0124",
+			"-00:05:53.2572"
+		],
+		"sources":[
+			{
+				"id":"2003yCat.2246....0C,2000A&AS..143....9W",
+				"idtype":"bibcode,bibcode"
+			},
+			{
+				"id":"2010ApJ...713.1026D",
+				"idtype":"bibcode"
+			},
+			{
+				"id":"2011ApJ...738..162S",
+				"idtype":"bibcode"
+			},
+			{
+				"id":"2014arXiv1401.3317S",
+				"idtype":"bibcode"
+			},
+			{
+				"id":"2014arXiv1401.3317S",
+				"idtype":"bibcode"
 			}
 		]
 	},
@@ -36903,6 +36912,32 @@
 		]
 	},
 	{
+		"name":"SDSS-II SN 1985",
+		"alias":[
+			{
+				"value":"SDSS-II SN 1985",
+				"source":"2,3,5"
+			}
+		],
+		"edit":false,
+		"quantity":"claimedtype",
+		"difference":"",
+		"values":[
+			"II",
+			"Ia"
+		],
+		"sources":[
+			{
+				"id":"2014arXiv1401.3317S",
+				"idtype":"bibcode"
+			},
+			{
+				"id":"2011ApJ...738..162S",
+				"idtype":"bibcode"
+			}
+		]
+	},
+	{
 		"name":"SDSS-II SN 20105",
 		"alias":[
 			{
@@ -36929,6 +36964,58 @@
 		]
 	},
 	{
+		"name":"SDSS-II SN 20999",
+		"alias":[
+			{
+				"value":"SDSS-II SN 20999",
+				"source":"2,4"
+			}
+		],
+		"edit":false,
+		"quantity":"dec",
+		"difference":"0.004458",
+		"values":[
+			"+00:02:48.97",
+			"+00:02:48.22"
+		],
+		"sources":[
+			{
+				"id":"2014arXiv1401.3317S",
+				"idtype":"bibcode"
+			},
+			{
+				"id":"2014arXiv1401.3317S",
+				"idtype":"bibcode"
+			}
+		]
+	},
+	{
+		"name":"SDSS-II SN 21396",
+		"alias":[
+			{
+				"value":"SDSS-II SN 21396",
+				"source":"2,3,5"
+			}
+		],
+		"edit":false,
+		"quantity":"dec",
+		"difference":"0.004043",
+		"values":[
+			"+00:01:29.4",
+			"+00:01:29.04"
+		],
+		"sources":[
+			{
+				"id":"2014arXiv1401.3317S,2011ApJ...738..162S",
+				"idtype":"bibcode,bibcode"
+			},
+			{
+				"id":"2014arXiv1401.3317S",
+				"idtype":"bibcode"
+			}
+		]
+	},
+	{
 		"name":"SDSS-II SN 21661",
 		"alias":[
 			{
@@ -36942,6 +37029,32 @@
 		"values":[
 			0.305,
 			0.268
+		],
+		"sources":[
+			{
+				"id":"2011ApJ...738..162S",
+				"idtype":"bibcode"
+			},
+			{
+				"id":"2015arXiv150201589P,2011ApJ...738..162S,NED-D",
+				"idtype":"bibcode,bibcode,name"
+			}
+		]
+	},
+	{
+		"name":"SDSS-II SN 2342",
+		"alias":[
+			{
+				"value":"SDSS-II SN 2342",
+				"source":"2,3,5"
+			}
+		],
+		"edit":false,
+		"quantity":"redshift",
+		"difference":"0.1116",
+		"values":[
+			0.239,
+			0.215
 		],
 		"sources":[
 			{
@@ -36977,6 +37090,32 @@
 			{
 				"id":"2015arXiv150201589P,2011ApJ...738..162S,NED-D",
 				"idtype":"bibcode,bibcode,name"
+			}
+		]
+	},
+	{
+		"name":"SDSS-II SN 2722",
+		"alias":[
+			{
+				"value":"SDSS-II SN 2722",
+				"source":"2"
+			}
+		],
+		"edit":false,
+		"quantity":"dec",
+		"difference":"0.00214",
+		"values":[
+			"+00:02:29.84",
+			"+00:02:29.52"
+		],
+		"sources":[
+			{
+				"id":"2014arXiv1401.3317S",
+				"idtype":"bibcode"
+			},
+			{
+				"id":"2014arXiv1401.3317S",
+				"idtype":"bibcode"
 			}
 		]
 	},
@@ -37059,6 +37198,58 @@
 		]
 	},
 	{
+		"name":"SDSS-II SN 4539",
+		"alias":[
+			{
+				"value":"SDSS-II SN 4539",
+				"source":"2,3,5"
+			}
+		],
+		"edit":false,
+		"quantity":"redshift",
+		"difference":"0.1939",
+		"values":[
+			0.468,
+			0.392
+		],
+		"sources":[
+			{
+				"id":"2011ApJ...738..162S",
+				"idtype":"bibcode"
+			},
+			{
+				"id":"2015arXiv150201589P,2011ApJ...738..162S,NED-D",
+				"idtype":"bibcode,bibcode,name"
+			}
+		]
+	},
+	{
+		"name":"SDSS-II SN 4690",
+		"alias":[
+			{
+				"value":"SDSS-II SN 4690",
+				"source":"2,3,6,7,9"
+			}
+		],
+		"edit":false,
+		"quantity":"claimedtype",
+		"difference":"",
+		"values":[
+			"II",
+			"Ia"
+		],
+		"sources":[
+			{
+				"id":"2014arXiv1401.3317S",
+				"idtype":"bibcode"
+			},
+			{
+				"id":"2010ApJ...722..566L,2000A&AS..143....9W",
+				"idtype":"bibcode,bibcode"
+			}
+		]
+	},
+	{
 		"name":"SDSS-II SN 5144",
 		"alias":[
 			{
@@ -37072,6 +37263,58 @@
 		"values":[
 			0.222,
 			0.201
+		],
+		"sources":[
+			{
+				"id":"2011ApJ...738..162S",
+				"idtype":"bibcode"
+			},
+			{
+				"id":"2015arXiv150201589P,2011ApJ...738..162S,NED-D",
+				"idtype":"bibcode,bibcode,name"
+			}
+		]
+	},
+	{
+		"name":"SDSS-II SN 5311",
+		"alias":[
+			{
+				"value":"SDSS-II SN 5311",
+				"source":"2,3,5"
+			}
+		],
+		"edit":false,
+		"quantity":"redshift",
+		"difference":"0.1184",
+		"values":[
+			0.274,
+			0.245
+		],
+		"sources":[
+			{
+				"id":"2011ApJ...738..162S",
+				"idtype":"bibcode"
+			},
+			{
+				"id":"2015arXiv150201589P,2011ApJ...738..162S,NED-D",
+				"idtype":"bibcode,bibcode,name"
+			}
+		]
+	},
+	{
+		"name":"SDSS-II SN 5641",
+		"alias":[
+			{
+				"value":"SDSS-II SN 5641",
+				"source":"2,3,5"
+			}
+		],
+		"edit":false,
+		"quantity":"redshift",
+		"difference":"0.28",
+		"values":[
+			0.672,
+			0.525
 		],
 		"sources":[
 			{
@@ -37137,6 +37380,146 @@
 			{
 				"id":"2015arXiv150201589P,2011ApJ...738..162S,NED-D",
 				"idtype":"bibcode,bibcode,name"
+			}
+		]
+	},
+	{
+		"name":"SDSS-II SN 7630",
+		"alias":[
+			{
+				"value":"SDSS-II SN 7630",
+				"source":"2,3,5"
+			}
+		],
+		"edit":false,
+		"quantity":"redshift",
+		"difference":"0.1156",
+		"values":[
+			0.251,
+			0.225
+		],
+		"sources":[
+			{
+				"id":"2011ApJ...738..162S",
+				"idtype":"bibcode"
+			},
+			{
+				"id":"2015arXiv150201589P,2011ApJ...738..162S,NED-D",
+				"idtype":"bibcode,bibcode,name"
+			}
+		]
+	},
+	{
+		"name":"SDSS-II SN 7841",
+		"alias":[
+			{
+				"value":"SDSS-II SN 7841",
+				"source":"2,5,6,8"
+			}
+		],
+		"edit":false,
+		"quantity":"dec",
+		"difference":"0.00343",
+		"values":[
+			"-00:03:04.8",
+			"-00:03:05.436",
+			"-00:03:05.0148",
+			"-00:03:05.4288"
+		],
+		"sources":[
+			{
+				"id":"2013ApJ...763...88C,2000A&AS..143....9W",
+				"idtype":"bibcode,bibcode"
+			},
+			{
+				"id":"2010ApJ...713.1026D",
+				"idtype":"bibcode"
+			},
+			{
+				"id":"2014arXiv1401.3317S",
+				"idtype":"bibcode"
+			},
+			{
+				"id":"2014arXiv1401.3317S",
+				"idtype":"bibcode"
+			}
+		]
+	},
+	{
+		"name":"SDSS-II SN 9414",
+		"alias":[
+			{
+				"value":"SDSS-II SN 9414",
+				"source":"1"
+			}
+		],
+		"edit":false,
+		"quantity":"dec",
+		"difference":"0.002695",
+		"values":[
+			"-00:03:38.4516",
+			"-00:03:39.042"
+		],
+		"sources":[
+			{
+				"id":"2014arXiv1401.3317S",
+				"idtype":"bibcode"
+			},
+			{
+				"id":"2014arXiv1401.3317S",
+				"idtype":"bibcode"
+			}
+		]
+	},
+	{
+		"name":"SDSS-II SN 9652",
+		"alias":[
+			{
+				"value":"SDSS-II SN 9652",
+				"source":"2,3,5"
+			}
+		],
+		"edit":false,
+		"quantity":"redshift",
+		"difference":"0.162",
+		"values":[
+			0.373,
+			0.321
+		],
+		"sources":[
+			{
+				"id":"2011ApJ...738..162S",
+				"idtype":"bibcode"
+			},
+			{
+				"id":"2015arXiv150201589P,2011ApJ...738..162S,NED-D",
+				"idtype":"bibcode,bibcode,name"
+			}
+		]
+	},
+	{
+		"name":"SDSS-II SN 9739",
+		"alias":[
+			{
+				"value":"SDSS-II SN 9739",
+				"source":"2,3,5,6,8"
+			}
+		],
+		"edit":false,
+		"quantity":"claimedtype",
+		"difference":"",
+		"values":[
+			"II",
+			"Ia"
+		],
+		"sources":[
+			{
+				"id":"2014arXiv1401.3317S",
+				"idtype":"bibcode"
+			},
+			{
+				"id":"2011ApJ...738..162S",
+				"idtype":"bibcode"
 			}
 		]
 	},
@@ -37365,7 +37748,7 @@
 			},
 			{
 				"value":"Tycho's supernova",
-				"source":"8"
+				"source":"6,7,8"
 			},
 			{
 				"value":"b\"SN 1572A",
