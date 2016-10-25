@@ -39,7 +39,7 @@ def do_ascii(catalog):
     name, source = catalog.new_entry(
         'SPIRITS 15c', bibcode='2016arXiv160904444J')
     for row in pbar(data, task_str):
-        me = row[5].split('$ $')
+        me = [x.replace('$', '') for x in row[5].split('$ $')]
         mag = me[0].replace('>', '').replace('$', '').strip()
         band = row[4].replace('$', '').strip()
         band = bandrep[band] if band in bandrep else band
@@ -56,7 +56,8 @@ def do_ascii(catalog):
         if '>' in me[0]:
             photodict[PHOTOMETRY.UPPER_LIMIT] = True
         else:
-            photodict[PHOTOMETRY.E_MAGNITUDE] = me[1].strip()
+            photodict[PHOTOMETRY.E_MAGNITUDE] = me[1].strip().replace(
+                '(', '').replace(')', '')
         if len(row[3].split('/')) == 2:
             photodict[PHOTOMETRY.INSTRUMENT] = row[3].split('/')[-1]
         catalog.entries[name].add_photometry(**photodict)
@@ -68,7 +69,7 @@ def do_ascii(catalog):
     name, source = catalog.new_entry(
         'SPIRITS 14buu', bibcode='2016arXiv160904444J')
     for row in pbar(data, task_str):
-        me = row[5].split('$ $')
+        me = [x.replace('$', '') for x in row[5].split('$ $')]
         mag = me[0].replace('>', '').replace('$', '').strip()
         band = row[4].replace('$', '').strip()
         band = bandrep[band] if band in bandrep else band
@@ -85,7 +86,8 @@ def do_ascii(catalog):
         if '>' in me[0]:
             photodict[PHOTOMETRY.UPPER_LIMIT] = True
         else:
-            photodict[PHOTOMETRY.E_MAGNITUDE] = me[1].strip()
+            photodict[PHOTOMETRY.E_MAGNITUDE] = me[1].strip().replace(
+                '(', '').replace(')', '')
         if len(row[3].split('/')) == 2:
             photodict[PHOTOMETRY.INSTRUMENT] = row[3].split('/')[-1]
         catalog.entries[name].add_photometry(**photodict)
