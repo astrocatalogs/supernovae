@@ -112,6 +112,9 @@ def do_ps_alerts(catalog):
         if row[22] != '-':
             catalog.entries[name].add_quantity(SUPERNOVA.REDSHIFT, row[22],
                                                source)
+        # Disabling photometry import
+        continue
+
         if skip_photo:
             continue
         psinternal = row[-1].split('.')[0]
