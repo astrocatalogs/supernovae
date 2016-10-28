@@ -17,7 +17,7 @@ from ..supernova import SUPERNOVA
 
 def do_itep(catalog):
     task_str = catalog.get_current_task_str()
-    itepbadsources = ['2004ApJ...602..571B']
+    itepignoresources = ['2004ApJ...602..571B', '2013NewA...20...30M']
     itepignorephot = ['SN2006gy']
     needsbib = []
     with open(os.path.join(catalog.get_current_task_repo(),
@@ -61,7 +61,7 @@ def do_itep(catalog):
             needsbib.append(reference)
             source = catalog.entries[name].add_source(
                 name=reference) if reference else ''
-        if oldname in itepignorephot:
+        if oldname in itepignorephot or bibcode in itepignoresources:
             continue
 
         photodict = {
@@ -77,8 +77,7 @@ def do_itep(catalog):
             photodict[PHOTOMETRY.SYSTEM] = 'SDSS'
             band = band.replace('_SDSS', "'")
         photodict[PHOTOMETRY.BAND] = band
-        if bibcode not in itepbadsources:
-            catalog.entries[name].add_photometry(**photodict)
+        catalog.entries[name].add_photometry(**photodict)
 
     # Write out references that could use aa bibcode
     needsbib = list(OrderedDict.fromkeys(needsbib))
