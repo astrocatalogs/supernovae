@@ -25,6 +25,27 @@ def do_ascii(catalog):
     """
     task_str = catalog.get_current_task_str()
 
+    # 2014ApJ...797...24V
+    datafile = os.path.join(catalog.get_current_task_repo(), 'ASCII',
+                            '2014ApJ...797...24V-tab1.txt')
+    data = read(datafile, format='cds')
+    name, source = catalog.new_entry(
+        'iPTF13ajg', bibcode='2014ApJ...797...24V')
+    for row in pbar(data, task_str):
+        photodict = {
+            PHOTOMETRY.TIME: str(row['MJD']),
+            PHOTOMETRY.U_TIME: 'MJD',
+            PHOTOMETRY.MAGNITUDE: str(row['mag']),
+            PHOTOMETRY.BAND: row['Filter'],
+            PHOTOMETRY.TELESCOPE: row['Tel'],
+            PHOTOMETRY.SOURCE: source
+        }
+        if row['l_mag'] == '>':
+            photodict[PHOTOMETRY.UPPER_LIMIT] = True
+        else:
+            photodict[PHOTOMETRY.E_MAGNITUDE] = str(row['e_mag'])
+        catalog.entries[name].add_photometry(**photodict)
+
     # 2016arXiv160904444J
     bandrep = {
         '[3.6]': 'I1',
