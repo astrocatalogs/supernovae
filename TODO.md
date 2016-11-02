@@ -33,7 +33,6 @@ Other multiple SN datasets:
 * http://adsabs.harvard.edu/abs/1979AcC.....8....5F (Lists references for many historical LCs)
 * http://adsabs.harvard.edu/abs/2006ApJ...645..841N (SNLS LCs)
 * http://adsabs.harvard.edu/abs/2016arXiv160105955F (Late-time Iax spectra)
-* http://adsabs.harvard.edu/abs/2016ApJ...819...35A (rapid risers)
 * http://adsabs.harvard.edu/abs/2015arXiv151201303C (radio upper limits for Ibc SNe)
 * http://adsabs.harvard.edu/abs/2016arXiv160908145V (a couple SLSN)
 
