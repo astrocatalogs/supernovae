@@ -25,6 +25,42 @@ def do_ascii(catalog):
     """
     task_str = catalog.get_current_task_str()
 
+    # 2016MNRAS.459.3939V
+    file_path = os.path.join(catalog.get_current_task_repo(), 'ASCII',
+                             'Valenti2016_data.txt')
+    tsvin = list(
+        csv.reader(
+            open(file_path, 'r'), delimiter=' ', skipinitialspace=True))
+    for ri, row in enumerate(pbar(tsvin, task_str)):
+        if row[0].startswith('###'):
+            continue
+        if row[0][0] == '#':
+            (name, source) = catalog.new_entry(
+                ' '.join(row[1:]).strip().replace('~', ' '),
+                bibcode='2016MNRAS.459.3939V')
+            continue
+        for off in [0, 6]:
+            mjd = jd_to_mjd(Decimal(row[1 + off]))
+            band = row[4 + off]
+            tel = row[5 + off]
+            band = band.upper() if tel == 'Swift' else band
+            photodict = {
+                PHOTOMETRY.TELESCOPE: tel,
+                PHOTOMETRY.BAND: band,
+                PHOTOMETRY.TIME: mjd,
+                PHOTOMETRY.U_TIME: 'MJD',
+                PHOTOMETRY.SOURCE: source
+            }
+            if row[2 + off] == '<':
+                photodict[PHOTOMETRY.UPPER_LIMIT] = True
+                photodict[PHOTOMETRY.MAGNITUDE] = row[3 + off]
+            else:
+                photodict[PHOTOMETRY.MAGNITUDE] = row[2 + off]
+                photodict[PHOTOMETRY.E_MAGNITUDE] = row[3 + off]
+            catalog.entries[name].add_photometry(**photodict)
+    catalog.journal_entries()
+    return
+
     # 2014ApJ...797...24V
     datafile = os.path.join(catalog.get_current_task_repo(), 'ASCII',
                             '2014ApJ...797...24V-tab1.txt')
