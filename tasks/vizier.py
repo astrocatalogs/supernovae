@@ -27,6 +27,42 @@ def do_vizier(catalog):
     Vizier.ROW_LIMIT = -1
     Vizier.VIZIER_SERVER = 'vizier.cfa.harvard.edu'
 
+    # 2012ApJ...756..173S
+    results = Vizier.get_catalogs(
+        ['J/ApJ/756/173/table2', 'J/ApJ/756/173/table3'])
+    for ti, table in enumerate(results):
+        table.convert_bytestring_to_unicode(python3_only=True)
+        for row in pbar(table, task_str):
+            row = convert_aq_output(row)
+            name = row['SN']
+            if is_number(name[:4]):
+                name = 'SN' + name
+            name, source = catalog.new_entry(
+                name, bibcode='2012ApJ...756..173S')
+            bands = [
+                x for x in row if x.endswith('mag') and not x.startswith('e_')
+            ]
+            for bandtag in bands:
+                band = bandtag.replace('mag', '')
+                if (bandtag in row and is_number(row[bandtag]) and
+                        not isnan(float(row[bandtag]))):
+                    photodict = {
+                        PHOTOMETRY.TIME: str(
+                            jd_to_mjd(
+                                Decimal(str(row['JD'])) + Decimal(
+                                    '2450000'))),
+                        PHOTOMETRY.U_TIME: 'MJD',
+                        PHOTOMETRY.MAGNITUDE: row[bandtag],
+                        PHOTOMETRY.SOURCE: source,
+                        PHOTOMETRY.TELESCOPE: row['Tel']
+                    }
+                    photodict[PHOTOMETRY.BAND] = band
+                    emag = '0.' + row['e_' + bandtag]
+                    if is_number(emag) and not isnan(float(emag)):
+                        photodict[PHOTOMETRY.E_MAGNITUDE] = emag
+                    catalog.entries[name].add_photometry(**photodict)
+    catalog.journal_entries()
+
     # 2016ApJ...819...35A
     result = Vizier.get_catalogs('J/ApJ/819/35/table2')
     table = result[list(result.keys())[0]]
