@@ -8,7 +8,7 @@ notifications:
         on_success: change
     slack: astrochats:tV2KNwL9jXSGSv5KhulGNVro
 git:
-    depth: 5
+    depth: 3
 
 # Setup anaconda
 before_install:
@@ -40,7 +40,7 @@ script:
     - python -m astrocats setup
 
     - echo "travis_fold:start:IMPORT Importing data"
-    - coverage run --source astrocats/supernovae -a -m astrocats supernovae import --clone-depth 1 --travis
+    - coverage run --source astrocats/supernovae -a -m astrocats supernovae import --clone-depth 0 --travis
     - echo "travis_fold:end:IMPORT Importing data done"
 
     - echo "travis_fold:start:COUNT Counting data"
