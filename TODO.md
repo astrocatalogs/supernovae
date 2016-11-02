@@ -23,17 +23,14 @@ Other multiple SN datasets:
 * http://mnras.oxfordjournals.org/content/444/3/2096.full (LSQ12dlf, SSS120810, SN2013dg)
 * http://adsabs.harvard.edu/abs/2014arXiv1401.3317S (SDSS SNe light curves, broken link - http://sdssdp62.fnal.gov/sdsssn/DataRelease/index.html)
 * http://mnras.oxfordjournals.org/content/446/4/3895 (18 Ia SNe, but counts not magnitudes)
-* http://arxiv.org/abs/1603.03823
 * http://arxiv.org/abs/1603.05657 (KSN2011a, KSN2011d)
-* http://thesis.library.caltech.edu/6395/1/Kasliwal_PhD_Thesis.pdf
-* http://arxiv.org/abs/1603.08953
-* http://adsabs.harvard.edu/abs/2014A%26A...568A..19C (SN2013ez, SN2013fu)
+* http://arxiv.org/abs/1603.08953 (12 II SNe, datatable missing)
+* http://adsabs.harvard.edu/abs/2014A%26A...568A..19C (SN2013ez, SN2013fu, missing t0)
 * http://adsabs.harvard.edu/abs/1997AJ....114.2054A (SN 1995al, 1997Y, 1997bp)
 * http://adsabs.harvard.edu/abs/2012A%26A...545L...7T (SN 2006V, 2006au)
 * http://adsabs.harvard.edu/abs/1979AcC.....8....5F (Lists references for many historical LCs)
 * http://adsabs.harvard.edu/abs/2006ApJ...645..841N (SNLS LCs)
 * http://adsabs.harvard.edu/abs/2016arXiv160105955F (Late-time Iax spectra)
-* http://adsabs.harvard.edu/abs/2016ApJ...819...35A (rapid risers)
 * http://adsabs.harvard.edu/abs/2015arXiv151201303C (radio upper limits for Ibc SNe)
 * http://adsabs.harvard.edu/abs/2016arXiv160908145V (a couple SLSN)
 
