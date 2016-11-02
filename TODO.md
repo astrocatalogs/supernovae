@@ -18,7 +18,6 @@ Other multiple SN datasets:
 * http://adsabs.harvard.edu/abs/1989AJ.....97..726F (spectra for 1987F and 1988I)
 * http://adsabs.harvard.edu/abs/1990Ap&SS.169..275R (spectra for 1987N, 1988Y, 1988D, 1989D)
 * http://arxiv.org/abs/1603.05657 (KSN2011a, KSN2011d)
-* http://arxiv.org/abs/1603.08953 (12 II SNe, datatable missing)
 * http://adsabs.harvard.edu/abs/2014A%26A...568A..19C (SN2013ez, SN2013fu, missing t0)
 * http://adsabs.harvard.edu/abs/1997AJ....114.2054A (SN 1995al, 1997Y, 1997bp)
 * http://adsabs.harvard.edu/abs/2012A%26A...545L...7T (SN 2006V, 2006au)
