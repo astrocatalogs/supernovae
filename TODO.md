@@ -4,7 +4,6 @@ Donated datasets:
 * None to add at this time.
 
 Multiple SN datasets on VizieR:
-* http://vizier.cfa.harvard.edu/viz-bin/VizieR?-source=J/ApJ/756/173 (Data in text files attached to catalog)
 * http://vizier.cfa.harvard.edu/viz-bin/VizieR?-source=J/other/NewA/20.30/sources (Data in text files attached to catalog)
 
 Single SN dataset on VizieR:
@@ -18,11 +17,6 @@ Other multiple SN datasets:
 * http://adsabs.harvard.edu/abs/1987Ap&SS.134..329P (spectra for 1985G and 1985H)
 * http://adsabs.harvard.edu/abs/1989AJ.....97..726F (spectra for 1987F and 1988I)
 * http://adsabs.harvard.edu/abs/1990Ap&SS.169..275R (spectra for 1987N, 1988Y, 1988D, 1989D)
-* http://iopscience.iop.org/article/10.1088/0004-637X/743/2/114/meta (PS1-10awh, PS1-10ky)
-* http://mnras.oxfordjournals.org/content/452/4/3869.full (24 SLSNe) [Erratum: http://mnras.oxfordjournals.org/content/457/3/2514.full]
-* http://mnras.oxfordjournals.org/content/444/3/2096.full (LSQ12dlf, SSS120810, SN2013dg)
-* http://adsabs.harvard.edu/abs/2014arXiv1401.3317S (SDSS SNe light curves, broken link - http://sdssdp62.fnal.gov/sdsssn/DataRelease/index.html)
-* http://mnras.oxfordjournals.org/content/446/4/3895 (18 Ia SNe, but counts not magnitudes)
 * http://arxiv.org/abs/1603.05657 (KSN2011a, KSN2011d)
 * http://arxiv.org/abs/1603.08953 (12 II SNe, datatable missing)
 * http://adsabs.harvard.edu/abs/2014A%26A...568A..19C (SN2013ez, SN2013fu, missing t0)
