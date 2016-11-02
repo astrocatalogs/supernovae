@@ -31,6 +31,9 @@ def do_ascii(catalog):
     tsvin = list(
         csv.reader(
             open(file_path, 'r'), delimiter=' ', skipinitialspace=True))
+    bandsub = {
+        'BS': 'B', 'VS': 'V', 'US': 'U', 'UM2': 'M2', 'UW1': 'W1', 'UW2': 'W2'
+    }
     for ri, row in enumerate(pbar(tsvin, task_str)):
         if row[0].startswith('###'):
             continue
@@ -43,7 +46,10 @@ def do_ascii(catalog):
             mjd = jd_to_mjd(Decimal(row[1 + off]))
             band = row[4 + off]
             tel = row[5 + off]
-            band = band.upper() if tel == 'Swift' else band
+            if tel == 'Swift':
+                band = band.upper()
+                if band in bandsub:
+                    band = bandsub[band]
             photodict = {
                 PHOTOMETRY.TELESCOPE: tel,
                 PHOTOMETRY.BAND: band,
@@ -51,6 +57,8 @@ def do_ascii(catalog):
                 PHOTOMETRY.U_TIME: 'MJD',
                 PHOTOMETRY.SOURCE: source
             }
+            if tel == 'Swift':
+                photodict[PHOTOMETRY.INSTRUMENT] = 'UVOT'
             if row[2 + off] == '<':
                 photodict[PHOTOMETRY.UPPER_LIMIT] = True
                 photodict[PHOTOMETRY.MAGNITUDE] = row[3 + off]
