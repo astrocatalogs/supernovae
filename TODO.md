@@ -35,6 +35,7 @@ Other multiple SN datasets:
 * http://adsabs.harvard.edu/abs/2016arXiv160105955F (Late-time Iax spectra)
 * http://adsabs.harvard.edu/abs/2016ApJ...819...35A (rapid risers)
 * http://adsabs.harvard.edu/abs/2015arXiv151201303C (radio upper limits for Ibc SNe)
+* http://adsabs.harvard.edu/abs/2016arXiv160908145V (a couple SLSN)
 
 Other single SN datasets:
 * SN1885A - 2011ApJ...730...89P (from Perets e-mail)
@@ -152,6 +153,7 @@ Other single SN datasets:
 * SN2015bh - http://arxiv.org/abs/1609.00731
 * SN2015bn - http://arxiv.org/abs/1603.04748
 * iPTF15dtg - http://arxiv.org/abs/1605.02491
+* iPTF16geu - http://arxiv.org/abs/1611.00014
 
 Spectra to recover that were donated to SuSpect (bad wavelength solutions, etc):
 * 2000E_20000130_3274_7356_00.dat
