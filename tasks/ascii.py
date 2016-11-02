@@ -59,7 +59,6 @@ def do_ascii(catalog):
                 photodict[PHOTOMETRY.E_MAGNITUDE] = row[3 + off]
             catalog.entries[name].add_photometry(**photodict)
     catalog.journal_entries()
-    return
 
     # 2014ApJ...797...24V
     datafile = os.path.join(catalog.get_current_task_repo(), 'ASCII',
