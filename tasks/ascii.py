@@ -32,7 +32,12 @@ def do_ascii(catalog):
         csv.reader(
             open(file_path, 'r'), delimiter=' ', skipinitialspace=True))
     bandsub = {
-        'BS': 'B', 'VS': 'V', 'US': 'U', 'UM2': 'M2', 'UW1': 'W1', 'UW2': 'W2'
+        'BS': 'B',
+        'VS': 'V',
+        'US': 'U',
+        'UM2': 'M2',
+        'UW1': 'W1',
+        'UW2': 'W2'
     }
     for ri, row in enumerate(pbar(tsvin, task_str)):
         if row[0].startswith('###'):
@@ -370,6 +375,24 @@ def do_ascii(catalog):
         catalog.entries[name].add_quantity(SUPERNOVA.CLAIMED_TYPE, ct, source)
     catalog.journal_entries()
 
+    # 2003ApJ...599..394M
+    datafile = os.path.join(catalog.get_current_task_repo(), 'ASCII',
+                            '2003ApJ...599..394M-tab1.txt')
+    data = read(datafile, format='cds')
+    name, source = catalog.new_entry('SN2003dh', bibcode='2003ApJ...599..394M')
+    for row in pbar(data, task_str):
+        photodict = {
+            PHOTOMETRY.TIME:
+            str(Decimal(str(row['DelT'])) + Decimal("52727.4842")),
+            PHOTOMETRY.U_TIME: 'MJD',
+            PHOTOMETRY.MAGNITUDE: str(row['mag']),
+            PHOTOMETRY.E_MAGNITUDE: str(row['e_mag']),
+            PHOTOMETRY.BAND: row['Filt'],
+            PHOTOMETRY.OBSERVATORY: row['Obs'],
+            PHOTOMETRY.SOURCE: source
+        }
+        catalog.entries[name].add_photometry(**photodict)
+
     # 2004ApJ...606..381L
     file_path = os.path.join(catalog.get_current_task_repo(),
                              '2004ApJ...606..381L-table3.txt')
@@ -401,9 +424,12 @@ def do_ascii(catalog):
         elif ri >= 40 and ri <= 43:
             banddict[row[0]] = row[2]
         elif ri >= 45:
-            time = str(astrotime(float(row[2]) + 2450000., format='jd').mjd)
+            time = str(jd_to_mjd(Decimal(row[2]) + Decimal('2450000')))
             ssource = ''
             if bibdict[row[0]]:
+                # Skip Matheson as it's added directly above
+                if bibdict[row[0]] == '2003ApJ...599..394M':
+                    continue
                 ssource = catalog.entries[name].add_source(
                     bibcode=bibdict[row[0]])
             photodict = {
