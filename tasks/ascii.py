@@ -401,7 +401,7 @@ def do_ascii(catalog):
         elif ri >= 40 and ri <= 43:
             banddict[row[0]] = row[2]
         elif ri >= 45:
-            time = str(astrotime(float(row[3]) + 2450000., format='jd').mjd)
+            time = str(astrotime(float(row[2]) + 2450000., format='jd').mjd)
             ssource = ''
             if bibdict[row[0]]:
                 ssource = catalog.entries[name].add_source(
