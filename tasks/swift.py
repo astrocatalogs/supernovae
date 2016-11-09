@@ -1,5 +1,4 @@
-"""Import tasks related to the Asiago supernova catalog and spectroscopic
-follow-up programs.
+"""Import tasks related to the Swift TOO page.
 """
 import datetime
 import os
@@ -8,7 +7,7 @@ import os
 from bs4 import BeautifulSoup
 
 from astrocats.catalog.utils import pbar, utf8
-from astrocats.supernovae.supernova import SUPERNOVA
+from astrocats.catalog.entry import ENTRY
 from astrocats.supernovae.utils import name_clean
 
 
@@ -44,8 +43,8 @@ def do_swift(catalog):
         for record in pbar(records, task_str):
             if len(record) > 1 and record[0] != '':
                 oldname = name_clean(record[0])
-                radeg = record[1]
-                decdeg = record[2]
+                radeg = record[1].strip()
+                decdeg = record[2].strip()
 
                 if not catalog.entry_exists(oldname):
                     continue
@@ -53,17 +52,17 @@ def do_swift(catalog):
                     continue
 
                 name = catalog.add_entry(oldname)
-                if (SUPERNOVA.RA in catalog.entries[name] and
-                        SUPERNOVA.DEC in catalog.entries[name]):
+                if (ENTRY.RA in catalog.entries[name] and
+                        ENTRY.DEC in catalog.entries[name]):
                     catalog.journal_entries()
                     continue
                 source = catalog.entries[name].add_source(
                     name=reference, url=url)
 
                 catalog.entries[name].add_quantity(
-                    SUPERNOVA.RA, radeg, u_value='floatdegrees', source=source)
+                    ENTRY.RA, radeg, u_value='floatdegrees', source=source)
                 catalog.entries[name].add_quantity(
-                    SUPERNOVA.DEC,
+                    ENTRY.DEC,
                     decdeg,
                     u_value='floatdegrees',
                     source=source)

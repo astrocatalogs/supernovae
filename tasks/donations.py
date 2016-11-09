@@ -269,46 +269,6 @@ def do_donated_photo(catalog):
                             source=source)
     catalog.journal_entries()
 
-    # Brown 05-14-16
-    files = glob(
-        os.path.join(catalog.get_current_task_repo(), 'Donations',
-                     'Brown-05-14-16/*.dat'))
-    for fi in pbar(files, task_str):
-        name = os.path.basename(fi).split('_')[0]
-        name = catalog.add_entry(name)
-        source = catalog.entries[name].add_source(
-            name='Swift Supernovae',
-            bibcode='2014Ap&SS.354...89B',
-            url='http://people.physics.tamu.edu/pbrown/SwiftSN/swift_sn.html')
-        catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
-        with open(fi, 'r') as f:
-            lines = f.read().splitlines()
-            for line in lines:
-                if not line or line[0] == '#':
-                    continue
-                cols = list(filter(None, line.split()))
-                band = cols[0]
-                mjd = cols[1]
-                # Skip lower limit entries for now
-                if cols[2] == 'NULL' and cols[6] == 'NULL':
-                    continue
-                isupp = cols[2] == 'NULL' and cols[6] != 'NULL'
-                mag = cols[2] if not isupp else cols[4]
-                e_mag = cols[3] if not isupp else ''
-                upp = '' if not isupp else True
-                (catalog.entries[name].add_photometry(
-                    time=mjd,
-                    u_time='MJD',
-                    magnitude=mag,
-                    e_magnitude=e_mag,
-                    upperlimit=upp,
-                    band=band,
-                    source=source,
-                    telescope='Swift',
-                    instrument='UVOT',
-                    system='Vega'))
-    catalog.journal_entries()
-
     # Nicholl 05-03-16
     files = glob(
         os.path.join(catalog.get_current_task_repo(), 'Donations',

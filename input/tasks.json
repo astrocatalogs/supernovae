@@ -45,6 +45,15 @@
         "repo": "input/sne-external",
         "priority": 4
     },
+    "sousa": {
+        "nice_name": "%pre sousa",
+        "active": true,
+        "update": true,
+        "module": "supernovae.tasks.sousa",
+        "function": "do_sousa",
+        "repo": "input/sne-external",
+        "priority": 5
+    },
     "donated_photo": {
         "nice_name": "%pre donations",
         "active": true,
