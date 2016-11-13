@@ -34,7 +34,7 @@ def do_asiago_photo(catalog):
         col = row.findAll('td')
         records.append([utf8(x.renderContents()) for x in col])
 
-    for record in pbar(records, task_str):
+    for ri, record in enumerate(pbar(records, task_str)):
         if len(record) > 1 and record[1] != '':
             oldname = clean_snname("SN" + record[1]).strip('?')
 
@@ -120,6 +120,8 @@ def do_asiago_photo(catalog):
                 catalog.entries[name].add_quantity(SUPERNOVA.DISCOVERER,
                                                    discoverer,
                                                    source)
+        if catalog.args.travis and ri >= catalog.TRAVIS_QUERY_LIMIT:
+            break
 
     catalog.journal_entries()
     return

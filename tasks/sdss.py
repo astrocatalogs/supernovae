@@ -200,6 +200,8 @@ def do_sdss_photo(catalog):
                     photodict[
                         PHOTOMETRY.UPPER_LIMIT_SIGMA] = str(ul_sigma)
                 catalog.entries[name].add_photometry(**photodict)
+        if catalog.args.travis and fi >= catalog.TRAVIS_QUERY_LIMIT:
+            break
         if not fi % 1000:
             catalog.journal_entries()
 

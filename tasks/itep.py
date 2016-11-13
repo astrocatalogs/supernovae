@@ -78,6 +78,8 @@ def do_itep(catalog):
             band = band.replace('_SDSS', "'")
         photodict[PHOTOMETRY.BAND] = band
         catalog.entries[name].add_photometry(**photodict)
+        if catalog.args.travis and rr >= catalog.TRAVIS_QUERY_LIMIT:
+            break
 
     # Write out references that could use aa bibcode
     needsbib = list(OrderedDict.fromkeys(needsbib))
