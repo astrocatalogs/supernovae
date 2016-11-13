@@ -46,7 +46,7 @@ def do_ogle(catalog):
         ec = -1
         reference = 'OGLE-IV Transient Detection System'
         refurl = 'http://ogle.astrouw.edu.pl/ogle4/transients/transients.html'
-        for br in pbar(breaks, task_str):
+        for bi, br in enumerate(pbar(breaks, task_str)):
             sibling = br.nextSibling
             if 'Ra,Dec=' in sibling:
                 line = sibling.replace('\n', '').split('Ra,Dec=')
@@ -147,6 +147,8 @@ def do_ogle(catalog):
                         system='Vega', source=sources, upperlimit=upperlimit)
                 if catalog.args.update:
                     catalog.journal_entries()
+                if catalog.args.travis and bi >= catalog.TRAVIS_QUERY_LIMIT:
+                    break
 
         catalog.journal_entries()
     return
