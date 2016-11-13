@@ -7,20 +7,24 @@ LD_LIBRARY_PATH=/usr/local/lib:/opt/local/lib ; export LD_LIBRARY_PATH
 cd /var/www/html/sne/astrocats
 python3.5 -m astrocats.scripts.webcat -c sne &
 $pids[0]=$!
-python3.5 -m astrocats.supernovae.scripts.dupecat &
+python3.5 -m astrocats.scripts.webcat -c sne -by &
 $pids[1]=$!
-python3.5 -m astrocats.supernovae.scripts.conflictcat &
+python3.5 -m astrocats.supernovae.scripts.dupecat &
 $pids[2]=$!
-python3.5 -m astrocats.supernovae.scripts.bibliocat &
+python3.5 -m astrocats.supernovae.scripts.conflictcat &
 $pids[3]=$!
-python3.5 -m astrocats.supernovae.scripts.erratacat &
+python3.5 -m astrocats.supernovae.scripts.bibliocat &
 $pids[4]=$!
-python3.5 -m astrocats.supernovae.scripts.hostcat &
+python3.5 -m astrocats.supernovae.scripts.erratacat &
 $pids[5]=$!
-python3.5 -m astrocats.supernovae.scripts.hammertime &
+python3.5 -m astrocats.supernovae.scripts.hostcat &
 $pids[6]=$!
-python3.5 -m astrocats.supernovae.scripts.histograms &
+python3.5 -m astrocats.supernovae.scripts.hammertime &
 $pids[7]=$!
+python3.5 -m astrocats.supernovae.scripts.histograms &
+$pids[8]=$!
+python3.5 -m astrocats.supernovae.scripts.atelscbetsiaucs &
+$pids[9]=$!
 for pid in ${pids[*]}; do
 	do wait $pid
 done
