@@ -127,6 +127,8 @@ def do_tns(catalog):
                                            (24 * 60 * 60), sig=6).lstrip('0')
                     catalog.entries[name].add_quantity(
                         SUPERNOVA.DISCOVER_DATE, date, source)
+            if catalog.args.travis and ri >= catalog.TRAVIS_QUERY_LIMIT:
+                break
             if catalog.args.update:
                 catalog.journal_entries()
 

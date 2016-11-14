@@ -98,6 +98,8 @@ def do_cpcs(catalog):
                 source=uniq_cdl([source, sec_source]))
         if catalog.args.update:
             catalog.journal_entries()
+        if catalog.args.travis and ii >= catalog.TRAVIS_QUERY_LIMIT:
+            break
 
     catalog.journal_entries()
     return

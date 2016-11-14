@@ -2191,7 +2191,7 @@ def do_lennarz(catalog):
     table.convert_bytestring_to_unicode(python3_only=True)
 
     bibcode = '2012A&A...538A.120L'
-    for row in pbar(table, task_str):
+    for ri, row in enumerate(pbar(table, task_str)):
         row = convert_aq_output(row)
         name = 'SN' + row['SN']
         name = catalog.add_entry(name)
@@ -2280,6 +2280,9 @@ def do_lennarz(catalog):
                         band=row['Mband'],
                         magnitude=row['Mmag'],
                         source=source)
+
+        if catalog.args.travis and ri >= catalog.TRAVIS_QUERY_LIMIT:
+            break
 
     catalog.journal_entries()
     return
