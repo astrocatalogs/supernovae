@@ -23,7 +23,7 @@ python3.5 -m astrocats.scripts.hammertime -c sne &
 pids[7]=$!
 python3.5 -m astrocats.supernovae.scripts.histograms &
 pids[8]=$!
-python3.5 -m astrocats.supernovae.scripts.atelscbetsiaucs &
+python3.5 -m astrocats.scripts.atelscbetsiaucs -c sne &
 pids[9]=$!
 for pid in ${pids[*]}; do
 	wait $pid

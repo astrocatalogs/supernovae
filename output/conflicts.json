@@ -31744,19 +31744,19 @@
 			},
 			{
 				"value":"PSN J14014169+3349339",
-				"source":"11"
+				"source":"9,11"
 			},
 			{
 				"value":"PSN J13101968+3228257",
-				"source":"11,12"
+				"source":"9,11,12"
+			},
+			{
+				"value":"MASTER OT J131019.64+322825.4",
+				"source":"9,11"
 			},
 			{
 				"value":"SN2013T",
 				"source":"6,7,11,12"
-			},
-			{
-				"value":"MASTER OT J131019.64+322825.4",
-				"source":"11"
 			}
 		],
 		"edit":false,
@@ -31786,19 +31786,19 @@
 			},
 			{
 				"value":"PSN J14014169+3349339",
-				"source":"11"
+				"source":"9,11"
 			},
 			{
 				"value":"PSN J13101968+3228257",
-				"source":"11,12"
+				"source":"9,11,12"
+			},
+			{
+				"value":"MASTER OT J131019.64+322825.4",
+				"source":"9,11"
 			},
 			{
 				"value":"SN2013T",
 				"source":"6,7,11,12"
-			},
-			{
-				"value":"MASTER OT J131019.64+322825.4",
-				"source":"11"
 			}
 		],
 		"edit":false,
@@ -35089,15 +35089,15 @@
 		"alias":[
 			{
 				"value":"SN2016hpe",
-				"source":"3,4,5,6,8"
+				"source":"1,4,5,6,8"
 			},
 			{
 				"value":"AT2016hpe",
-				"source":"3"
+				"source":"4"
 			},
 			{
 				"value":"ASASSN-16mj",
-				"source":"3,4,6"
+				"source":"1,4,6"
 			}
 		],
 		"edit":false,
@@ -35114,12 +35114,12 @@
 				"idtype":"name"
 			},
 			{
-				"id":"ATel 9697,Latest Supernovae,2012PASP..124..668Y",
-				"idtype":"name,name,bibcode"
+				"id":"2016ATel.9697....1B,Latest Supernovae,2012PASP..124..668Y",
+				"idtype":"bibcode,name,bibcode"
 			},
 			{
-				"id":"ATel 9697,ASAS-SN Supernovae",
-				"idtype":"name,name"
+				"id":"2016ATel.9697....1B,ASAS-SN Supernovae",
+				"idtype":"bibcode,name"
 			}
 		]
 	},
