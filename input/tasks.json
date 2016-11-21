@@ -510,6 +510,17 @@
         "always_journal": true,
         "priority": 208
     },
+    "hst": {
+        "nice_name": "Coordinates from HST pointings",
+        "active": true,
+        "update": false,
+        "module": "supernovae.tasks.hst",
+        "function": "do_hst",
+        "groups": ["meta"],
+        "repo": "input/sne-external",
+        "always_journal": true,
+        "priority": -300
+    },
     "swift": {
         "nice_name": "Coordinates from Swift TOO",
         "active": true,

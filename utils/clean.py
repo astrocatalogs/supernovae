@@ -63,6 +63,10 @@ def name_clean(name):
         newname = 'GRB ' + newname[4:].strip() + 'A'
     if newname.startswith('LSQ '):
         newname = newname.replace('LSQ ', 'LSQ', 1)
+    if newname.startswith('LSQ') and is_number(newname[3]):
+        newname = newname[:3] + newname[3:].lower()
+    if newname.startswith('DES') and is_number(newname[3]):
+        newname = newname[:7] + newname[7:].lower()
     if newname.startswith('KSN '):
         newname = newname.replace('KSN ', 'KSN-', 1)
     if newname.startswith('SNSDF '):
@@ -107,6 +111,10 @@ def name_clean(name):
         newname = newname.replace('PS1 SN PS', 'PS', 1)
     if newname.startswith('PS1 SN'):
         newname = newname.replace('PS1 SN', 'PS1', 1)
+    if newname.startswith('PS1') and is_number(newname[3]):
+        newname = newname[:3] + newname[3:].lower()
+    elif newname.startswith('PS1-') and is_number(newname[4]):
+        newname = newname[:4] + newname[4:].lower()
     if newname.startswith('PSN K'):
         newname = newname.replace('PSN K', 'K', 1)
     if newname.startswith('K') and is_number(newname[1:5]):
@@ -125,10 +133,14 @@ def name_clean(name):
         newname = newname.replace('PSN20J', 'PSN J', 1)
     if newname.startswith('SN ASASSN'):
         newname = newname.replace('SN ASASSN', 'ASASSN', 1)
+    if newname.startswith('ASASSN-20') and is_number(newname[9]):
+        newname = newname.replace('ASASSN-20', 'ASASSN-', 1)
     if newname.startswith('ASASSN '):
         newname = newname.replace('ASASSN ', 'ASASSN-', 1).replace('--', '-')
     if newname.startswith('ASASSN') and newname[6] != '-':
         newname = newname.replace('ASASSN', 'ASASSN-', 1)
+    if newname.startswith('ASASSN-') and is_number(newname[7]):
+        newname = newname[:7] + newname[7:].lower()
     if newname.startswith('ROTSE3J'):
         newname = newname.replace('ROTSE3J', 'ROTSE3 J', 1)
     if newname.startswith('MACSJ'):
@@ -149,8 +161,14 @@ def name_clean(name):
         newname = newname.replace('SN PTF', 'PTF', 1)
     if newname.startswith('PTF '):
         newname = newname.replace('PTF ', 'PTF', 1)
+    if newname.startswith('PTF') and is_number(newname[3]):
+        newname = newname[:3] + newname[3:].lower()
+    if newname.startswith('IPTF'):
+        newname = newname.replace('IPTF', 'iPTF', 1)
     if newname.startswith('iPTF '):
         newname = newname.replace('iPTF ', 'iPTF', 1)
+    if newname.startswith('iPTF') and is_number(newname[4]):
+        newname = newname[:4] + newname[4:].lower()
     if newname.startswith('PESSTOESO'):
         newname = newname.replace('PESSTOESO', 'PESSTO ESO ', 1)
     if newname.startswith('snf'):
@@ -195,6 +213,13 @@ def name_clean(name):
     elif (newname.startswith('SN') and is_number(newname[2:6]) and
           (len(newname) == 8 or len(newname) == 9) and newname[6:].isupper()):
         newname = 'SN' + newname[2:6] + newname[6:].lower()
+    if (newname.startswith('AT') and
+            is_number(newname[2:6]) and len(newname) == 7 and
+            newname[6].islower()):
+        newname = 'AT' + newname[2:6] + newname[6].upper()
+    elif (newname.startswith('AT') and is_number(newname[2:6]) and
+          (len(newname) == 8 or len(newname) == 9) and newname[6:].isupper()):
+        newname = 'AT' + newname[2:6] + newname[6:].lower()
 
     newname = (' '.join(newname.split())).strip()
     return newname

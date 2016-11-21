@@ -59,7 +59,7 @@ def do_simbad(catalog):
         name = single_spaces(re.sub(r'\[[^)]*\]', '', row['MAIN_ID']).strip())
         if name in simbadbannednames:
             continue
-        if is_number(name):
+        if is_number(name.replace(' ', '')):
             continue
         name = catalog.add_entry(name)
         source = (catalog.entries[name]
@@ -72,7 +72,7 @@ def do_simbad(catalog):
             if any([x in alias for x in simbadbannedcats]):
                 continue
             ali = single_spaces(re.sub(r'\[[^)]*\]', '', alias).strip())
-            if is_number(ali):
+            if is_number(ali.replace(' ', '')):
                 continue
             if ali in simbadbannednames:
                 continue
