@@ -28,9 +28,7 @@ If you are interested in reproducing the catalog on your own machine, you must f
 
 ```shell
 conda install matplotlib scipy
-conda install -c anaconda pyqt=4.11.4
 pip install -r requirements.txt
-pip install coveralls
 git clone https://github.com/astrocatalogs/astrocats.git
 cd astrocats/astrocats
 git clone https://github.com/astrocatalogs/supernovae.git
