@@ -6,7 +6,6 @@ from html import unescape
 
 from bs4 import BeautifulSoup
 
-from astrocats.catalog.entry import ENTRY
 from astrocats.catalog.photometry import PHOTOMETRY
 from astrocats.catalog.utils import pbar
 
