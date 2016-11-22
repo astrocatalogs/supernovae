@@ -111,8 +111,9 @@ class Supernova(Entry):
         elif key == self._KEYS.HOST:
             if is_number(value):
                 return False
-            if value.lower() in ['anonymous', 'anon.', 'anon', 'intergalactic'
-                                 ]:
+            if value.lower() in [
+                    'anonymous', 'anon.', 'anon', 'intergalactic'
+            ]:
                 return False
             value = host_clean(value)
             if ((not kind and ((value.lower().startswith('abell') and
@@ -135,8 +136,10 @@ class Supernova(Entry):
                 value = value + '?'
             if not value:
                 return False
-        elif key in [self._KEYS.RA, self._KEYS.DEC, self._KEYS.HOST_RA,
-                     self._KEYS.HOST_DEC]:
+        elif key in [
+                self._KEYS.RA, self._KEYS.DEC, self._KEYS.HOST_RA,
+                self._KEYS.HOST_DEC
+        ]:
             (value, unit) = radec_clean(value, key, unit=unit)
         elif key == self._KEYS.MAX_DATE or key == self._KEYS.DISCOVER_DATE:
             # Make sure month and day have leading zeroes
@@ -423,10 +426,12 @@ class Supernova(Entry):
                                PHOTOMETRY.MAGNITUDE in x else ''))
 
         if (self._KEYS.SPECTRA in self and list(
-                filter(None, [SPECTRUM.TIME in x
-                              for x in self[self._KEYS.SPECTRA]]))):
+                filter(None, [
+                    SPECTRUM.TIME in x for x in self[self._KEYS.SPECTRA]
+                ]))):
             self[self._KEYS.SPECTRA].sort(
-                key=lambda x: (float(x[SPECTRUM.TIME]) if SPECTRUM.TIME in x else 0.0, x[SPECTRUM.FILENAME] if SPECTRUM.FILENAME in x else ''))
+                key=lambda x: (float(x[SPECTRUM.TIME]) if SPECTRUM.TIME in x else 0.0, x[SPECTRUM.FILENAME] if SPECTRUM.FILENAME in x else '')
+            )
 
         if self._KEYS.SOURCES in self:
             for source in self[self._KEYS.SOURCES]:
@@ -511,11 +516,12 @@ class Supernova(Entry):
                 if self._KEYS.get_key_by_name(key).no_source:
                     continue
                 for item in self[key]:
-                    aliases = [str(y)
-                               for y in sorted(
-                                   int(source_reps[x])
-                                   for x in item[item._KEYS.SOURCE].split(','))
-                               ]
+                    aliases = [
+                        str(y)
+                        for y in sorted(
+                            int(source_reps[x])
+                            for x in item[item._KEYS.SOURCE].split(','))
+                    ]
                     item[item._KEYS.SOURCE] = ','.join(aliases)
 
     def clean_internal(self, data):
@@ -565,6 +571,8 @@ class Supernova(Entry):
                 source = self.add_self_source()
                 for df in distincts:
                     self.add_quantity(self._KEYS.DISTINCT_FROM, df, source)
+            else:
+                data[dist_key] = distincts.copy()
 
         # Go through all remaining keys in 'dirty' event, and make sure
         # everything is a quantity with a source (OSC if no other)
@@ -683,18 +691,25 @@ class Supernova(Entry):
             if mldt:
                 max_date = make_date_string(mldt.year, mldt.month, mldt.day)
                 self.add_quantity(
-                    SUPERNOVA.MAX_VISUAL_DATE, max_date, uniq_src, derived=True)
+                    SUPERNOVA.MAX_VISUAL_DATE,
+                    max_date,
+                    uniq_src,
+                    derived=True)
             if mlmag:
                 mlmag = pretty_num(mlmag)
                 self.add_quantity(
-                    SUPERNOVA.MAX_VISUAL_APP_MAG, mlmag, uniq_src, derived=True)
+                    SUPERNOVA.MAX_VISUAL_APP_MAG,
+                    mlmag,
+                    uniq_src,
+                    derived=True)
             if mlband:
                 self.add_quantity(
                     SUPERNOVA.MAX_VISUAL_BAND, mlband, uniq_src, derived=True)
 
-        if (self._KEYS.DISCOVER_DATE not in self or
-                max([len(x[QUANTITY.VALUE].split('/'))
-                     for x in self[self._KEYS.DISCOVER_DATE]]) < 3):
+        if (self._KEYS.DISCOVER_DATE not in self or max([
+                len(x[QUANTITY.VALUE].split('/'))
+                for x in self[self._KEYS.DISCOVER_DATE]
+        ]) < 3):
             fldt, flsource = self._get_first_light()
             if fldt:
                 source = self.add_self_source()
@@ -810,8 +825,8 @@ class Supernova(Entry):
                 break
         # Otherwise, name based on the 'discoverer' survey
         if not newname and SUPERNOVA.DISCOVERER in self:
-            discoverer = ','.join([x['value'].upper()
-                                   for x in self[SUPERNOVA.DISCOVERER]])
+            discoverer = ','.join(
+                [x['value'].upper() for x in self[SUPERNOVA.DISCOVERER]])
             if 'ASAS' in discoverer:
                 for alias in aliases:
                     if 'ASASSN' in alias.upper():
@@ -824,8 +839,10 @@ class Supernova(Entry):
                         break
             if not newname and 'CRTS' in discoverer:
                 for alias in aliases:
-                    if True in [x in alias.upper()
-                                for x in ['CSS', 'MLS', 'SSS', 'SNHUNT']]:
+                    if True in [
+                            x in alias.upper()
+                            for x in ['CSS', 'MLS', 'SSS', 'SNHUNT']
+                    ]:
                         newname = alias
                         break
             if not newname and 'PS1' in discoverer:
