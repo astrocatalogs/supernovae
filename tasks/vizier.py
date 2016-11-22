@@ -164,16 +164,18 @@ def do_vizier(catalog):
             err = str(row['e_' + bandtag])
             if (bandtag in row and is_number(row[bandtag]) and
                     not isnan(float(row[bandtag]))):
+                zp = 30.0
                 photodict = {
                     PHOTOMETRY.TIME: row['MJD-' + band],
                     PHOTOMETRY.U_TIME: 'MJD',
                     PHOTOMETRY.BAND: band,
                     PHOTOMETRY.COUNTS: str(flux),
                     PHOTOMETRY.E_COUNTS: str(err),
+                    PHOTOMETRY.ZERO_POINT: str(zp),
                     PHOTOMETRY.SOURCE: source,
                     PHOTOMETRY.SURVEY: 'SCP'
                 }
-                set_pd_mag_from_counts(photodict, flux, ec=err, zp=30.0)
+                set_pd_mag_from_counts(photodict, flux, ec=err, zp=zp)
                 catalog.entries[name].add_photometry(**photodict)
     catalog.journal_entries()
 
@@ -336,6 +338,7 @@ def do_vizier(catalog):
             PHOTOMETRY.BAND: row['Filter'],
             PHOTOMETRY.COUNTS: str(flux),
             PHOTOMETRY.E_COUNTS: str(err),
+            PHOTOMETRY.ZERO_POINT: str(zp),
             PHOTOMETRY.SOURCE: source,
             PHOTOMETRY.INSTRUMENT: row['Inst']
         }
@@ -363,6 +366,7 @@ def do_vizier(catalog):
             system = 'Cousins'
         if band == 'Z':
             telescope = 'Subaru'
+        zp = 25.0
         photodict = {
             PHOTOMETRY.TIME: str(row['MJD']),
             PHOTOMETRY.U_TIME: 'MJD',
@@ -370,10 +374,11 @@ def do_vizier(catalog):
             PHOTOMETRY.SYSTEM: system,
             PHOTOMETRY.COUNTS: flux,
             PHOTOMETRY.E_COUNTS: err,
+            PHOTOMETRY.ZERO_POINT: str(zp),
             PHOTOMETRY.TELESCOPE: telescope,
             PHOTOMETRY.SOURCE: source
         }
-        set_pd_mag_from_counts(photodict, flux, ec=err, zp=25.0)
+        set_pd_mag_from_counts(photodict, flux, ec=err, zp=zp)
         catalog.entries[name].add_photometry(**photodict)
 
     # 2014MNRAS.444.3258M

@@ -37,19 +37,21 @@ def do_snls_photo(catalog):
         # NOTE: Datafiles avail for download suggest diff zeropoints than 30,
         # but README states mags should be calculated assuming 30. Need to
         # inquire.
+        zp = 30.0
         photodict = {
             PHOTOMETRY.TIME: row[2],
             PHOTOMETRY.U_TIME: 'MJD',
             PHOTOMETRY.BAND: row[1],
             PHOTOMETRY.COUNTS: counts,
             PHOTOMETRY.E_COUNTS: err,
+            PHOTOMETRY.ZERO_POINT: str(zp),
             PHOTOMETRY.SOURCE: source,
             PHOTOMETRY.TELESCOPE: 'CFHT',
             PHOTOMETRY.INSTRUMENT: 'MegaCam',
             PHOTOMETRY.BAND_SET: 'MegaCam',
             PHOTOMETRY.SYSTEM: 'Natural'
         }
-        set_pd_mag_from_counts(photodict, counts, ec=err, zp=30.0)
+        set_pd_mag_from_counts(photodict, counts, ec=err, zp=zp)
         catalog.entries[name].add_photometry(**photodict)
 
     catalog.journal_entries()

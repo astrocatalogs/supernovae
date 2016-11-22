@@ -66,6 +66,7 @@ def do_essence_photo(catalog):
             counts = row[3][:6]
             lerr = row[4][:6]
             uerr = row[5][:6]
+            zp = 25.0
             photodict = {
                 PHOTOMETRY.TIME: row[1],
                 PHOTOMETRY.U_TIME: 'MJD',
@@ -73,12 +74,13 @@ def do_essence_photo(catalog):
                 PHOTOMETRY.COUNTS: counts,
                 PHOTOMETRY.E_LOWER_COUNTS: lerr,
                 PHOTOMETRY.E_UPPER_COUNTS: uerr,
+                PHOTOMETRY.ZERO_POINT: str(zp),
                 PHOTOMETRY.SOURCE: source,
                 PHOTOMETRY.TELESCOPE: 'CTIO 4m',
                 PHOTOMETRY.SYSTEM: 'Natural'
             }
             set_pd_mag_from_counts(
-                photodict, counts, ec='', lec=lerr, uec=uerr, zp=25.0)
+                photodict, counts, ec='', lec=lerr, uec=uerr, zp=zp)
             catalog.entries[name].add_photometry(**photodict)
 
     catalog.journal_entries()

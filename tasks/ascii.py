@@ -345,15 +345,16 @@ def do_ascii(catalog):
             off = 2
         else:
             off = 1
+        zp = row[5].rstrip('0')
         photodict = {
             PHOTOMETRY.INSTRUMENT: row[1][:-off],
             PHOTOMETRY.BAND: row[1][-off:],
             PHOTOMETRY.TIME: row[2],
             PHOTOMETRY.COUNTS: counts,
             PHOTOMETRY.E_COUNTS: e_counts,
+            PHOTOMETRY.ZERO_POINT: zp,
             PHOTOMETRY.SOURCE: source
         }
-        zp = row[5].rstrip('0')
         set_pd_mag_from_counts(photodict, counts, ec=e_counts, zp=zp)
         catalog.entries[name].add_photometry(**photodict)
     catalog.journal_entries()
