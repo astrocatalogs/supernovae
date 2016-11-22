@@ -510,6 +510,17 @@
         "always_journal": true,
         "priority": 208
     },
+    "fits_spectra": {
+        "nice_name": "%pre FITS spectra",
+        "active": true,
+        "update": false,
+        "module": "supernovae.tasks.general_data",
+        "function": "do_external_fits_spectra",
+        "groups": ["spectra"],
+        "repo": "input/sne-external-fits-spectra",
+        "always_journal": true,
+        "priority": 209
+    },
     "hst": {
         "nice_name": "Coordinates from HST pointings",
         "active": true,

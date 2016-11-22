@@ -5,7 +5,11 @@ import os
 from collections import OrderedDict
 from glob import glob
 
-from astrocats.catalog.utils import pbar_strings
+from astropy.io import fits
+
+from astrocats.catalog.spectrum import SPECTRUM
+from astrocats.catalog.utils import jd_to_mjd, pbar_strings
+from cdecimal import Decimal
 
 from ..supernova import SUPERNOVA, Supernova
 
@@ -18,8 +22,8 @@ def do_external_radio(catalog):
         name = catalog.add_entry(oldname)
         radiosourcedict = OrderedDict()
         with open(datafile, 'r') as ff:
-            for li, line in enumerate([xx.strip()
-                                       for xx in ff.read().splitlines()]):
+            for li, line in enumerate(
+                [xx.strip() for xx in ff.read().splitlines()]):
                 if line.startswith('(') and li <= len(radiosourcedict):
                     key = line.split()[0]
                     bibc = line.split()[-1]
@@ -85,6 +89,65 @@ def do_external_xray(catalog):
                         source=source)
                     catalog.entries[name].add_quantity(SUPERNOVA.ALIAS,
                                                        oldname, source)
+
+    catalog.journal_entries()
+    return
+
+
+def do_external_fits_spectra(catalog):
+    fureps = {
+        'erg/cm2/s/A': 'erg/s/cm^2/Angstrom'
+    }
+    task_str = catalog.get_current_task_str()
+    path_pattern = os.path.join(catalog.get_current_task_repo(), '*.fits')
+    files = glob(path_pattern)
+    for datafile in files:
+        hdulist = fits.open(datafile)
+        filename = datafile.split('/')[-1]
+        hdulist[0].verify('silentfix')
+        name = hdulist[0].header['OBJECT']
+        observer = hdulist[0].header['OBSERVER']
+        name, source = catalog.new_entry(name, srcname=observer)
+        # for key in hdulist[0].header.keys():
+        #     print(key, hdulist[0].header[key])
+        if hdulist[0].header['SIMPLE']:
+            fluxes = [str(x) for x in list(hdulist[0].data)]
+            mjd = str(jd_to_mjd(Decimal(str(hdulist[0].header['JD']))))
+            w0 = hdulist[0].header['CRVAL1']
+            wd = hdulist[0].header['CDELT1']
+            waves = [str(w0 + wd * x) for x in range(0, len(fluxes))]
+        else:
+            raise ValueError('Non-simple FITS import not yet supported.')
+        tel = hdulist[0].header['TELESCOP']
+        observatory = hdulist[0].header['SITENAME']
+        inst = hdulist[0].header['INSTRUME']
+        airmass = hdulist[0].header['AIRMASS']
+        if 'BUNIT' in hdulist[0].header:
+            fluxunit = hdulist[0].header['BUNIT']
+            if fluxunit in fureps:
+                fluxunit = fureps[fluxunit]
+        else:
+            if max([float(x) for x in fluxes]) < 1.0e-5:
+                fluxunit = 'erg/s/cm^2/Angstrom'
+            else:
+                fluxunit = 'Uncalibrated'
+        specdict = {
+            SPECTRUM.U_WAVELENGTHS: 'Angstrom',
+            SPECTRUM.WAVELENGTHS: waves,
+            SPECTRUM.TIME: mjd,
+            SPECTRUM.U_TIME: 'MJD',
+            SPECTRUM.FLUXES: fluxes,
+            SPECTRUM.U_FLUXES: fluxunit,
+            SPECTRUM.TELESCOPE: tel,
+            SPECTRUM.OBSERVER: observer,
+            SPECTRUM.OBSERVATORY: observatory,
+            SPECTRUM.INSTRUMENT: inst,
+            SPECTRUM.AIRMASS: airmass,
+            SPECTRUM.FILENAME: filename,
+            SPECTRUM.SOURCE: source
+        }
+        catalog.entries[name].add_spectrum(**specdict)
+        hdulist.close()
 
     catalog.journal_entries()
     return

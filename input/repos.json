@@ -15,7 +15,8 @@
         "sne-external-radio",
         "sne-external-WISEREP",
         "sne-external-xray",
-        "sne-external-spectra"
+        "sne-external-spectra",
+        "sne-external-fits-spectra"
     ],
     "internal":[
         "sne-internal"
