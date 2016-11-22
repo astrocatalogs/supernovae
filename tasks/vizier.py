@@ -168,6 +168,8 @@ def do_vizier(catalog):
                     PHOTOMETRY.TIME: row['MJD-' + band],
                     PHOTOMETRY.U_TIME: 'MJD',
                     PHOTOMETRY.BAND: band,
+                    PHOTOMETRY.COUNTS: str(flux),
+                    PHOTOMETRY.E_COUNTS: str(err),
                     PHOTOMETRY.SOURCE: source,
                     PHOTOMETRY.SURVEY: 'SCP'
                 }
@@ -366,6 +368,8 @@ def do_vizier(catalog):
             PHOTOMETRY.U_TIME: 'MJD',
             PHOTOMETRY.BAND: band,
             PHOTOMETRY.SYSTEM: system,
+            PHOTOMETRY.COUNTS: flux,
+            PHOTOMETRY.E_COUNTS: err,
             PHOTOMETRY.TELESCOPE: telescope,
             PHOTOMETRY.SOURCE: source
         }
