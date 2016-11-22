@@ -1,14 +1,14 @@
 """Import tasks for data directly donated to the Open Supernova Catalog.
 """
 import os
-from html import unescape
 from glob import glob
+from html import unescape
 
 from bs4 import BeautifulSoup
 
+from astrocats.catalog.entry import ENTRY
 from astrocats.catalog.photometry import PHOTOMETRY
 from astrocats.catalog.utils import pbar
-from astrocats.catalog.entry import ENTRY
 
 
 def do_sousa(catalog):
@@ -27,20 +27,23 @@ def do_sousa(catalog):
             continue
         if '.dat' in link['href']:
             ulink = unescape(link['href']).replace('\n', '')
-            catalog.load_url(
-                ulink,
-                os.path.join(catalog.get_current_task_repo(),
-                             'SOUSA/') + ulink.split('/')[-1])
+            catalog.load_url(ulink,
+                             os.path.join(catalog.get_current_task_repo(),
+                                          'SOUSA/') + ulink.split('/')[-1])
 
     files = glob(os.path.join(catalog.get_current_task_repo(), 'SOUSA/*.dat'))
+    namereps = {
+        'CSS140914': 'CSS140914:010107-101840'
+    }
     for fi in pbar(files, task_str):
         name = os.path.basename(fi).split('_')[0]
-        name = catalog.add_entry(name)
-        source = catalog.entries[name].add_source(
-            name='SOUSA',
+        if name in namereps:
+            name = namereps[name]
+        name, source = catalog.new_entry(
+            name,
+            srcname='SOUSA',
             bibcode='2014Ap&SS.354...89B',
             url='http://people.physics.tamu.edu/pbrown/SwiftSN/swift_sn.html')
-        catalog.entries[name].add_quantity(ENTRY.ALIAS, name, source)
         with open(fi, 'r') as f:
             lines = f.read().splitlines()
             for line in lines:
