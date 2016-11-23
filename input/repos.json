@@ -18,6 +18,10 @@
         "sne-external-spectra",
         "sne-external-fits-spectra"
     ],
+    "private":[
+        "sne-private-iair-arcavi",
+        "sne-private-matt-nicholl"
+    ],
     "internal":[
         "sne-internal"
     ]

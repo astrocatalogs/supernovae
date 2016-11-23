@@ -8,17 +8,72 @@ from math import floor, isnan
 
 import numpy as np
 from astropy.time import Time as astrotime
+from astropy.io.ascii import read
 
 from astrocats.catalog.photometry import PHOTOMETRY
 from astrocats.catalog.spectrum import SPECTRUM
-from astrocats.catalog.utils import (get_sig_digits, is_number, pbar,
-                                     pbar_strings, pretty_num, rep_chars)
+from astrocats.catalog.utils import (get_sig_digits, is_number, jd_to_mjd,
+                                     pbar, pbar_strings, pretty_num, rep_chars)
+from cdecimal import Decimal
 
 from ..supernova import SUPERNOVA
 
 
 def do_donated_photo(catalog):
     task_str = catalog.get_current_task_str()
+
+    # Nicholl Gaia16apd donation
+    path = os.path.join(catalog.get_current_task_repo(), '..',
+                        'sne-private-matt-nicholl', 'gaia16apd_phot.txt')
+
+    data = read(path, format='cds')
+    name, source = catalog.new_entry(
+        'Gaia16apd', bibcode='2016arXiv161106993N', private=True)
+    for row in pbar(data, task_str + ': Nicholl Gaia16apd'):
+        photodict = {
+            PHOTOMETRY.TIME: str(row['MJD']),
+            PHOTOMETRY.U_TIME: 'MJD',
+            PHOTOMETRY.MAGNITUDE: str(row['mag']),
+            PHOTOMETRY.E_MAGNITUDE: str(row['e_mag']),
+            PHOTOMETRY.BAND: row['Filter'],
+            PHOTOMETRY.TELESCOPE: row['Telescope'],
+            PHOTOMETRY.SOURCE: source
+        }
+        if row['l_mag'] == '>':
+            photodict[PHOTOMETRY.UPPER_LIMIT] = True
+        else:
+            photodict[PHOTOMETRY.E_MAGNITUDE] = str(row['e_mag'])
+        catalog.entries[name].add_photometry(**photodict)
+
+    # Arcavi 2016gkg donation
+    path = os.path.join(catalog.get_current_task_repo(), '..',
+                        'sne-private-iair-arcavi', 'SN2016gkg.txt')
+    with open(path, 'r') as f:
+        tsvin = list(csv.reader(f, delimiter=' ', skipinitialspace=True))
+        name, source = catalog.new_entry(
+            'SN2016gkg', bibcode='2016arXiv161106451A', private=True)
+        for row in tsvin:
+            if row[0][0] == '#':
+                continue
+            mjd = str(jd_to_mjd(Decimal(row[0])))
+            tel = row[1]
+            band = row[3]
+            mag = row[4]
+            err = row[5]
+            limit = row[6] == 'True'
+            photodict = {
+                PHOTOMETRY.TIME: mjd,
+                PHOTOMETRY.U_TIME: 'MJD',
+                PHOTOMETRY.TELESCOPE: tel,
+                PHOTOMETRY.BAND: band,
+                PHOTOMETRY.MAGNITUDE: mag,
+                PHOTOMETRY.SOURCE: source
+            }
+            if limit:
+                photodict[PHOTOMETRY.UPPER_LIMIT] = True
+            else:
+                photodict[PHOTOMETRY.E_MAGNITUDE] = err
+            catalog.entries[name].add_photometry(**photodict)
 
     # Inserra 09-04-16 donation
     file_names = glob(
@@ -274,14 +329,14 @@ def do_donated_photo(catalog):
         os.path.join(catalog.get_current_task_repo(), 'Donations',
                      'Nicholl-05-03-16/*.txt'))
     name = catalog.add_entry('SN2015bn')
-    catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
-    catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, 'PS15ae', source)
-    for fi in pbar(files, task_str):
+    for fi in pbar(files, task_str + ': Nicholl-05-03-16'):
         if 'late' in fi:
             bc = '2016ApJ...828L..18N'
         else:
             bc = '2016ApJ...826...39N'
         source = catalog.entries[name].add_source(bibcode=bc)
+        catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
+        catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, 'PS15ae', source)
         telescope = os.path.basename(fi).split('_')[1]
         with open(fi, 'r') as f:
             lines = f.read().splitlines()

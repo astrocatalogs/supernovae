@@ -11,12 +11,7 @@
 *.sw*
 *-needsbib.txt
 sne-internal
-sne-external
-sne-external-spectra
-sne-external-WISEREP
-sne-external-radio
-sne-external-xray
-sne-external-fits-spectra
+sne-external*
 sne-pre-1990
 sne-1990-1999
 sne-2000-2004
@@ -24,6 +19,7 @@ sne-2005-2009
 sne-2010-2014
 sne-2015-2019
 sne-boneyard
+sne-private*
 *.log
 *.bak
 WISeWEBSpider
