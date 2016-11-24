@@ -440,7 +440,7 @@ def do_vizier(catalog):
         catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
         mjd = str(
             astrotime(
-                float(Decimal(2450000.) + Decimal(row['JD'])), format='jd')
+                float(Decimal('2450000') + Decimal(row['JD'])), format='jd')
             .mjd)
         band = row['Filt'].upper()
         magnitude = str(row['mag'])
@@ -472,7 +472,7 @@ def do_vizier(catalog):
             bibcode='2010A&A...523A...7G')
         catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
         astrot = astrotime(
-            float(Decimal(2450000.) + Decimal(row['Date1'])),
+            float(Decimal('2450000') + Decimal(row['Date1'])),
             format='jd').datetime
         catalog.entries[name].add_quantity(
             SUPERNOVA.DISCOVER_DATE,
@@ -1251,7 +1251,7 @@ def do_vizier(catalog):
     table.convert_bytestring_to_unicode(python3_only=True)
     for row in pbar(table, task_str):
         row = convert_aq_output(row)
-        mjd = str(jd_to_mjd(Decimal(row['JD']) + 2455000))
+        mjd = str(jd_to_mjd(Decimal(row['JD']) + Decimal('2455000')))
         for band in ['U', 'B', 'V', 'R', 'I']:
             bandtag = band + 'mag'
             if (bandtag in row and is_number(row[bandtag]) and
@@ -1277,7 +1277,7 @@ def do_vizier(catalog):
     table.convert_bytestring_to_unicode(python3_only=True)
     for row in pbar(table, task_str):
         row = convert_aq_output(row)
-        mjd = str(jd_to_mjd(Decimal(row['JD']) + 2456000))
+        mjd = str(jd_to_mjd(Decimal(row['JD']) + Decimal('2456000')))
         for band in ['U', 'B', 'V', 'Rc', 'Ic']:
             bandtag = band + 'mag'
             if (bandtag in row and is_number(row[bandtag]) and
@@ -1296,7 +1296,7 @@ def do_vizier(catalog):
     table.convert_bytestring_to_unicode(python3_only=True)
     for row in pbar(table, task_str):
         row = convert_aq_output(row)
-        mjd = str(jd_to_mjd(Decimal(row['JD']) + 2456000))
+        mjd = str(jd_to_mjd(Decimal(row['JD']) + Decimal('2456000')))
         for band in ['g', 'r', 'i', 'z']:
             bandtag = band + 'mag'
             if (bandtag in row and is_number(row[bandtag]) and
@@ -1924,7 +1924,7 @@ def do_vizier(catalog):
         catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, sdssname, source)
         fra = Decimal(row['RAJ2000'])
         if fra < Decimal(0.0):
-            fra = Decimal(360.0) + fra
+            fra = Decimal('360') + fra
         catalog.entries[name].add_quantity(
             SUPERNOVA.RA, str(fra), source, u_value='floatdegrees')
         catalog.entries[name].add_quantity(
@@ -1987,7 +1987,7 @@ def do_vizier(catalog):
         name, source = catalog.new_entry(name, bibcode="2011ApJ...738..162S")
         fra = Decimal(row['RAJ2000'])
         if fra < Decimal(0.0):
-            fra = Decimal(360.0) + fra
+            fra = Decimal('360') + fra
         catalog.entries[name].add_quantity(
             SUPERNOVA.RA, str(fra), source, u_value='floatdegrees')
         catalog.entries[name].add_quantity(
@@ -2009,7 +2009,7 @@ def do_vizier(catalog):
         name, source = catalog.new_entry(name, bibcode="2011ApJ...738..162S")
         fra = Decimal(row['RAJ2000'])
         if fra < Decimal(0.0):
-            fra = Decimal(360.0) + fra
+            fra = Decimal('360') + fra
         catalog.entries[name].add_quantity(
             SUPERNOVA.RA, str(fra), source, u_value='floatdegrees')
         catalog.entries[name].add_quantity(
@@ -2167,7 +2167,7 @@ def do_vizier(catalog):
         row = convert_aq_output(row)
         name = row['Name'].replace('SN ', 'SN')
         name, source = catalog.new_entry(name, bibcode="2004ApJ...607..665R")
-        mjd = str(jd_to_mjd(Decimal(2000) + Decimal(row['HJD'])))
+        mjd = str(jd_to_mjd(Decimal('2000') + Decimal(row['HJD'])))
         catalog.entries[name].add_photometry(
             time=mjd,
             u_time='MJD',
