@@ -32576,48 +32576,6 @@
 		]
 	},
 	{
-		"name":"iPTF15dqp",
-		"alias":[
-			{
-				"value":"iPTF15dqp",
-				"source":"4,7,10,11,12"
-			},
-			{
-				"value":"AT2015bz",
-				"source":"11"
-			},
-			{
-				"value":"PSN J00545681+1048036",
-				"source":"2,4,6,7,8,9,10,12"
-			},
-			{
-				"value":"PS15cxi",
-				"source":"7,10"
-			},
-			{
-				"value":"PSN J00545681+104803",
-				"source":"2,8"
-			}
-		],
-		"edit":false,
-		"quantity":"redshift",
-		"difference":"3.944",
-		"values":[
-			0.089,
-			0.018
-		],
-		"sources":[
-			{
-				"id":"2012PASP..124..668Y,CBAT TOCP,Latest Supernovae",
-				"idtype":"bibcode,name,name"
-			},
-			{
-				"id":"2012PASP..124..668Y",
-				"idtype":"bibcode"
-			}
-		]
-	},
-	{
 		"name":"LSQ15hj",
 		"alias":[
 			{
@@ -33840,6 +33798,52 @@
 		]
 	},
 	{
+		"name":"SN2015bz",
+		"alias":[
+			{
+				"value":"SN2015bz",
+				"source":"4,6,8,9,10"
+			},
+			{
+				"value":"PSN J00545681+1048036",
+				"source":"2,6,7,8,9,10,12"
+			},
+			{
+				"value":"iPTF15dqp",
+				"source":"4,6,10,11,12"
+			},
+			{
+				"value":"AT2015bz",
+				"source":"11"
+			},
+			{
+				"value":"PS15cxi",
+				"source":"6,10"
+			},
+			{
+				"value":"PSN J00545681+104803",
+				"source":"2,8"
+			}
+		],
+		"edit":false,
+		"quantity":"redshift",
+		"difference":"3.944",
+		"values":[
+			0.089,
+			0.018
+		],
+		"sources":[
+			{
+				"id":"2012PASP..124..668Y,CBAT TOCP,Latest Supernovae",
+				"idtype":"bibcode,name,name"
+			},
+			{
+				"id":"2012PASP..124..668Y",
+				"idtype":"bibcode"
+			}
+		]
+	},
+	{
 		"name":"SN2015Y",
 		"alias":[
 			{
@@ -34266,196 +34270,6 @@
 		]
 	},
 	{
-		"name":"SN2016ehw",
-		"alias":[
-			{
-				"value":"SN2016ehw",
-				"source":"1,5,6,8"
-			},
-			{
-				"value":"AT2016ehw",
-				"source":"1,4,6"
-			},
-			{
-				"value":"SN2016ehv",
-				"source":"4,5,6"
-			},
-			{
-				"value":"AT2016ehv",
-				"source":"4,5,6"
-			},
-			{
-				"value":"Gaia16avq",
-				"source":"4,5,6"
-			},
-			{
-				"value":"Gaia16avr",
-				"source":"1,4,5,6"
-			},
-			{
-				"value":"MASTER OT J83637.5+733504.8",
-				"source":"1,6"
-			}
-		],
-		"edit":false,
-		"quantity":"ra",
-		"difference":"1.449",
-		"values":[
-			"21:05:03.90",
-			"08:36:37.60",
-			"08:36:37.500",
-			"21:05:03.923",
-			"08:36:37.68",
-			"21:05:03.84"
-		],
-		"sources":[
-			{
-				"id":"Transient Name Server",
-				"idtype":"name"
-			},
-			{
-				"id":"Transient Name Server",
-				"idtype":"name"
-			},
-			{
-				"id":"2016ATel.9119....1V,Latest Supernovae",
-				"idtype":"bibcode,name"
-			},
-			{
-				"id":"Gaia Photometric Science Alerts,Latest Supernovae",
-				"idtype":"name,name"
-			},
-			{
-				"id":"Gaia Photometric Science Alerts",
-				"idtype":"name"
-			},
-			{
-				"id":"Gaia Photometric Science Alerts",
-				"idtype":"name"
-			}
-		]
-	},
-	{
-		"name":"SN2016ehw",
-		"alias":[
-			{
-				"value":"SN2016ehw",
-				"source":"1,5,6,8"
-			},
-			{
-				"value":"AT2016ehw",
-				"source":"1,4,6"
-			},
-			{
-				"value":"SN2016ehv",
-				"source":"4,5,6"
-			},
-			{
-				"value":"AT2016ehv",
-				"source":"4,5,6"
-			},
-			{
-				"value":"Gaia16avq",
-				"source":"4,5,6"
-			},
-			{
-				"value":"Gaia16avr",
-				"source":"1,4,5,6"
-			},
-			{
-				"value":"MASTER OT J83637.5+733504.8",
-				"source":"1,6"
-			}
-		],
-		"edit":false,
-		"quantity":"dec",
-		"difference":"2.01",
-		"values":[
-			"-72:53:15.10",
-			"+73:35:03.70",
-			"+73:35:04.80",
-			"-72:53:15.15",
-			"+73:35:03.84",
-			"-72:53:15"
-		],
-		"sources":[
-			{
-				"id":"Transient Name Server",
-				"idtype":"name"
-			},
-			{
-				"id":"Transient Name Server",
-				"idtype":"name"
-			},
-			{
-				"id":"2016ATel.9119....1V,Latest Supernovae",
-				"idtype":"bibcode,name"
-			},
-			{
-				"id":"Gaia Photometric Science Alerts,Latest Supernovae",
-				"idtype":"name,name"
-			},
-			{
-				"id":"Gaia Photometric Science Alerts",
-				"idtype":"name"
-			},
-			{
-				"id":"Gaia Photometric Science Alerts",
-				"idtype":"name"
-			}
-		]
-	},
-	{
-		"name":"SN2016ehw",
-		"alias":[
-			{
-				"value":"SN2016ehw",
-				"source":"1,5,6,8"
-			},
-			{
-				"value":"AT2016ehw",
-				"source":"1,4,6"
-			},
-			{
-				"value":"SN2016ehv",
-				"source":"4,5,6"
-			},
-			{
-				"value":"AT2016ehv",
-				"source":"4,5,6"
-			},
-			{
-				"value":"Gaia16avq",
-				"source":"4,5,6"
-			},
-			{
-				"value":"Gaia16avr",
-				"source":"1,4,5,6"
-			},
-			{
-				"value":"MASTER OT J83637.5+733504.8",
-				"source":"1,6"
-			}
-		],
-		"edit":false,
-		"quantity":"claimedtype",
-		"difference":"",
-		"values":[
-			"IIn",
-			"Ia"
-		],
-		"sources":[
-			{
-				"id":"2016ATel.9119....1V,Latest Supernovae",
-				"idtype":"bibcode,name"
-			},
-			{
-				"id":"Transient Name Server,Gaia Photometric Science Alerts,Latest Supernovae,2012PASP..124..668Y",
-				"idtype":"name,name,name,bibcode"
-			}
-		]
-	},
-	{
 		"name":"SN2016eja",
 		"alias":[
 			{
@@ -34724,131 +34538,6 @@
 		]
 	},
 	{
-		"name":"SN2016gmw",
-		"alias":[
-			{
-				"value":"SN2016gmw",
-				"source":"1,5,6,7"
-			},
-			{
-				"value":"AT2016idy",
-				"source":"1,3,5,6,7"
-			},
-			{
-				"value":"PS16fbm",
-				"source":"1,5,7"
-			},
-			{
-				"value":"MASTER OT J013415.01-174843.9",
-				"source":"1,7"
-			},
-			{
-				"value":"AT2016gmw",
-				"source":"5,6,7"
-			},
-			{
-				"value":"iPTF16gmw",
-				"source":"3,5,6,7"
-			},
-			{
-				"value":"PS16evc",
-				"source":"1,6,7"
-			}
-		],
-		"edit":false,
-		"quantity":"ra",
-		"difference":"0.4599",
-		"values":[
-			"01:34:15.05",
-			"01:04:33.54",
-			"01:04:33.540",
-			"01:34:15.010",
-			"01:04:33.52"
-		],
-		"sources":[
-			{
-				"id":"Transient Name Server",
-				"idtype":"name"
-			},
-			{
-				"id":"Transient Name Server",
-				"idtype":"name"
-			},
-			{
-				"id":"Transient Name Server,Pan-STARRS 3Pi,Latest Supernovae",
-				"idtype":"name,name,name"
-			},
-			{
-				"id":"2016ATel.9540....1P,Latest Supernovae",
-				"idtype":"bibcode,name"
-			},
-			{
-				"id":"2016ATel.9540....1P,Pan-STARRS 3Pi",
-				"idtype":"bibcode,name"
-			}
-		]
-	},
-	{
-		"name":"SN2016gmw",
-		"alias":[
-			{
-				"value":"SN2016gmw",
-				"source":"1,5,6,7"
-			},
-			{
-				"value":"AT2016idy",
-				"source":"1,3,5,6,7"
-			},
-			{
-				"value":"PS16fbm",
-				"source":"1,5,7"
-			},
-			{
-				"value":"MASTER OT J013415.01-174843.9",
-				"source":"1,7"
-			},
-			{
-				"value":"AT2016gmw",
-				"source":"5,6,7"
-			},
-			{
-				"value":"iPTF16gmw",
-				"source":"3,5,6,7"
-			},
-			{
-				"value":"PS16evc",
-				"source":"1,6,7"
-			}
-		],
-		"edit":false,
-		"quantity":"dec",
-		"difference":"7.978",
-		"values":[
-			"-17:48:43.49",
-			"-01:59:01.92",
-			"-17:48:43.90",
-			"-01:59:02.1"
-		],
-		"sources":[
-			{
-				"id":"Transient Name Server",
-				"idtype":"name"
-			},
-			{
-				"id":"Transient Name Server,Pan-STARRS 3Pi,Latest Supernovae",
-				"idtype":"name,name,name"
-			},
-			{
-				"id":"2016ATel.9540....1P,Latest Supernovae",
-				"idtype":"bibcode,name"
-			},
-			{
-				"id":"2016ATel.9540....1P,Pan-STARRS 3Pi",
-				"idtype":"bibcode,name"
-			}
-		]
-	},
-	{
 		"name":"SN2016gtd",
 		"alias":[
 			{
@@ -34877,7 +34566,7 @@
 			},
 			{
 				"value":"MLS161021:023530-053206",
-				"source":"5,6,8"
+				"source":"6,8"
 			}
 		],
 		"edit":false,
@@ -34909,8 +34598,8 @@
 				"idtype":"name,name"
 			},
 			{
-				"id":"Transient Name Server,Pan-STARRS 3Pi,Latest Supernovae",
-				"idtype":"name,name,name"
+				"id":"Pan-STARRS 3Pi,Latest Supernovae",
+				"idtype":"name,name"
 			},
 			{
 				"id":"2009ApJ...696..870D",
@@ -34947,7 +34636,7 @@
 			},
 			{
 				"value":"MLS161021:023530-053206",
-				"source":"5,6,8"
+				"source":"6,8"
 			}
 		],
 		"edit":false,
@@ -35104,7 +34793,7 @@
 		"alias":[
 			{
 				"value":"SN2016iil",
-				"source":"1,6"
+				"source":"1,5,6"
 			},
 			{
 				"value":"AT2016gwu",
@@ -35132,44 +34821,36 @@
 			},
 			{
 				"value":"AT2016hwv",
-				"source":"4,5"
+				"source":"4,5,6"
 			},
 			{
 				"value":"Gaia16brn",
-				"source":"4"
+				"source":"4,5,6"
 			},
 			{
 				"value":"AT2016iba",
-				"source":"4,5"
+				"source":"4,5,6"
 			},
 			{
 				"value":"Gaia16bsv",
-				"source":"4"
-			},
-			{
-				"value":"AT2016iik",
 				"source":"4,5,6"
-			},
-			{
-				"value":"Gaia16bwu",
-				"source":"4,5,6"
-			},
-			{
-				"value":"MASTER OT J033333.26-623314.7",
-				"source":"1,5,6"
 			},
 			{
 				"value":"AT2016iil",
-				"source":"1,4,6"
+				"source":"1,4,5,6"
 			},
 			{
 				"value":"Gaia16bwv",
 				"source":"1,4,6"
+			},
+			{
+				"value":"MASTER OT J033333.26-623314.7",
+				"source":"1,6"
 			}
 		],
 		"edit":false,
 		"quantity":"ra",
-		"difference":"1.618",
+		"difference":"4.034",
 		"values":[
 			"21:26:24.13",
 			"21:26:24.126",
@@ -35178,15 +34859,14 @@
 			"21:01:40.436",
 			"21:01:40.32",
 			"17:42:22.91",
+			"17:42:22.902",
 			"17:42:22.8",
 			"17:55:02.08",
+			"17:55:02.078",
 			"17:55:02.16",
-			"06:50:33.68",
 			"03:33:33.21",
 			"03:33:33.260",
-			"06:50:33.677",
-			"03:33:33.216",
-			"06:50:33.6"
+			"03:33:33.216"
 		],
 		"sources":[
 			{
@@ -35218,12 +34898,8 @@
 				"idtype":"name"
 			},
 			{
-				"id":"Gaia Photometric Science Alerts",
-				"idtype":"name"
-			},
-			{
-				"id":"Transient Name Server",
-				"idtype":"name"
+				"id":"Gaia Photometric Science Alerts,Latest Supernovae",
+				"idtype":"name,name"
 			},
 			{
 				"id":"Gaia Photometric Science Alerts",
@@ -35231,6 +34907,14 @@
 			},
 			{
 				"id":"Transient Name Server",
+				"idtype":"name"
+			},
+			{
+				"id":"Gaia Photometric Science Alerts,Latest Supernovae",
+				"idtype":"name,name"
+			},
+			{
+				"id":"Gaia Photometric Science Alerts",
 				"idtype":"name"
 			},
 			{
@@ -35240,14 +34924,6 @@
 			{
 				"id":"2016ATel.9654....1S,Latest Supernovae",
 				"idtype":"bibcode,name"
-			},
-			{
-				"id":"Gaia Photometric Science Alerts,Latest Supernovae",
-				"idtype":"name,name"
-			},
-			{
-				"id":"Gaia Photometric Science Alerts",
-				"idtype":"name"
 			},
 			{
 				"id":"Gaia Photometric Science Alerts",
@@ -35260,7 +34936,7 @@
 		"alias":[
 			{
 				"value":"SN2016iil",
-				"source":"1,6"
+				"source":"1,5,6"
 			},
 			{
 				"value":"AT2016gwu",
@@ -35288,39 +34964,31 @@
 			},
 			{
 				"value":"AT2016hwv",
-				"source":"4,5"
+				"source":"4,5,6"
 			},
 			{
 				"value":"Gaia16brn",
-				"source":"4"
+				"source":"4,5,6"
 			},
 			{
 				"value":"AT2016iba",
-				"source":"4,5"
+				"source":"4,5,6"
 			},
 			{
 				"value":"Gaia16bsv",
-				"source":"4"
-			},
-			{
-				"value":"AT2016iik",
 				"source":"4,5,6"
-			},
-			{
-				"value":"Gaia16bwu",
-				"source":"4,5,6"
-			},
-			{
-				"value":"MASTER OT J033333.26-623314.7",
-				"source":"1,5,6"
 			},
 			{
 				"value":"AT2016iil",
-				"source":"1,4,6"
+				"source":"1,4,5,6"
 			},
 			{
 				"value":"Gaia16bwv",
 				"source":"1,4,6"
+			},
+			{
+				"value":"MASTER OT J033333.26-623314.7",
+				"source":"1,6"
 			}
 		],
 		"edit":false,
@@ -35332,14 +35000,13 @@
 			"+21:57:31.75",
 			"+21:57:31.68",
 			"-51:58:06.38",
+			"-51:58:06.39",
 			"-51:58:06.24",
 			"-00:51:41.00",
 			"-00:51:41.004",
-			"+63:09:24.41",
 			"-62:33:15.44",
 			"-62:33:14.70",
-			"-62:33:15.48",
-			"+63:09:24.48"
+			"-62:33:15.48"
 		],
 		"sources":[
 			{
@@ -35363,12 +35030,8 @@
 				"idtype":"name"
 			},
 			{
-				"id":"Gaia Photometric Science Alerts",
-				"idtype":"name"
-			},
-			{
-				"id":"Transient Name Server",
-				"idtype":"name"
+				"id":"Gaia Photometric Science Alerts,Latest Supernovae",
+				"idtype":"name,name"
 			},
 			{
 				"id":"Gaia Photometric Science Alerts",
@@ -35379,16 +35042,16 @@
 				"idtype":"name,name,name"
 			},
 			{
+				"id":"Gaia Photometric Science Alerts",
+				"idtype":"name"
+			},
+			{
 				"id":"Transient Name Server",
 				"idtype":"name"
 			},
 			{
 				"id":"2016ATel.9654....1S,Latest Supernovae",
 				"idtype":"bibcode,name"
-			},
-			{
-				"id":"Gaia Photometric Science Alerts",
-				"idtype":"name"
 			},
 			{
 				"id":"Gaia Photometric Science Alerts",
@@ -38102,6 +37765,48 @@
 		]
 	},
 	{
+		"name":"SN1181A",
+		"alias":[
+			{
+				"value":"SN1181A",
+				"source":"1,3,4,5,6"
+			},
+			{
+				"value":"SN1181",
+				"source":"1,3,4"
+			},
+			{
+				"value":"G130.7+03.1",
+				"source":"1,4"
+			},
+			{
+				"value":"MWSNR 130.7+03.1",
+				"source":"1,4"
+			},
+			{
+				"value":"3C58",
+				"source":"1,4"
+			}
+		],
+		"edit":false,
+		"quantity":"ra",
+		"difference":"0.002513",
+		"values":[
+			"02:05:41",
+			"02:06:00.000"
+		],
+		"sources":[
+			{
+				"id":"2014BASI...42...47G,Galactic SNRs",
+				"idtype":"bibcode,name"
+			},
+			{
+				"id":"SEDS,Latest Supernovae",
+				"idtype":"name,name"
+			}
+		]
+	},
+	{
 		"name":"SN1572A",
 		"alias":[
 			{
@@ -38394,15 +38099,15 @@
 		"alias":[
 			{
 				"value":"SN185A",
-				"source":"6"
+				"source":"6,7,8"
 			},
 			{
 				"value":"RCW 86",
-				"source":"1,5,6"
+				"source":"1,5,8"
 			},
 			{
 				"value":"G315.4-00.3",
-				"source":"1,5,6"
+				"source":"1,5,8"
 			},
 			{
 				"value":"G315.4-02.3",
@@ -38423,10 +38128,11 @@
 		],
 		"edit":false,
 		"quantity":"ra",
-		"difference":"0.008087",
+		"difference":"0.008583",
 		"values":[
 			"14:43:00",
-			"14:35:55"
+			"14:35:55",
+			"14:43:30.000"
 		],
 		"sources":[
 			{
@@ -38436,6 +38142,10 @@
 			{
 				"id":"2014BASI...42...47G,Galactic SNRs",
 				"idtype":"bibcode,name"
+			},
+			{
+				"id":"SEDS,Latest Supernovae",
+				"idtype":"name,name"
 			}
 		]
 	},
@@ -38444,15 +38154,15 @@
 		"alias":[
 			{
 				"value":"SN185A",
-				"source":"6"
+				"source":"6,7,8"
 			},
 			{
 				"value":"RCW 86",
-				"source":"1,5,6"
+				"source":"1,5,8"
 			},
 			{
 				"value":"G315.4-00.3",
-				"source":"1,5,6"
+				"source":"1,5,8"
 			},
 			{
 				"value":"G315.4-02.3",
@@ -38476,7 +38186,8 @@
 		"difference":"0.03135",
 		"values":[
 			"-62:30",
-			"-60:36"
+			"-60:36",
+			"-62:28:00.00"
 		],
 		"sources":[
 			{
@@ -38486,6 +38197,10 @@
 			{
 				"id":"2014BASI...42...47G,Galactic SNRs",
 				"idtype":"bibcode,name"
+			},
+			{
+				"id":"SEDS,Latest Supernovae",
+				"idtype":"name,name"
 			}
 		]
 	},
