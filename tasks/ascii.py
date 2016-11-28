@@ -25,6 +25,37 @@ def do_ascii(catalog):
     """
     task_str = catalog.get_current_task_str()
 
+    # 2015MNRAS.449.1215P
+    file_path = os.path.join(catalog.get_current_task_repo(), 'ASCII',
+                             '2015MNRAS.449.1215P.tsv')
+    tsvin = list(
+        csv.reader(
+            open(file_path, 'r'), delimiter='\t', skipinitialspace=True))
+    for ri, row in enumerate(pbar(tsvin, task_str)):
+        if row[0][0] == '#':
+            continue
+        (name, source) = catalog.new_entry(
+            'DES13S2cmm', bibcode='2015MNRAS.449.1215P')
+        mjd = row[1]
+        for bi, band in enumerate(['g', 'r', 'i', 'z']):
+            counts = row[3 + bi].split('±')[0].strip()
+            e_counts = row[3 + bi].split('±')[-1].strip()
+            if not counts or not e_counts:
+                continue
+            zp = '31'
+            photodict = {
+                PHOTOMETRY.TELESCOPE: 'DES',
+                PHOTOMETRY.BAND: band,
+                PHOTOMETRY.TIME: mjd,
+                PHOTOMETRY.COUNTS: counts,
+                PHOTOMETRY.E_COUNTS: e_counts,
+                PHOTOMETRY.ZERO_POINT: zp,
+                PHOTOMETRY.SOURCE: source
+            }
+            set_pd_mag_from_counts(photodict, counts, ec=e_counts, zp=zp)
+            catalog.entries[name].add_photometry(**photodict)
+    catalog.journal_entries()
+
     # 2016MNRAS.459.3939V
     file_path = os.path.join(catalog.get_current_task_repo(), 'ASCII',
                              'Valenti2016_data.txt')

@@ -28,3 +28,6 @@ pids[9]=$!
 for pid in ${pids[*]}; do
 	wait $pid
 done
+cd /var/www/html/sne/astrocats/astrocats/supernovae/output/html
+bash thumbs.sh
+cd /var/www/html/sne/astrocats
