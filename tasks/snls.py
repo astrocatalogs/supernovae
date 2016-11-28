@@ -48,7 +48,7 @@ def do_snls_photo(catalog):
             PHOTOMETRY.TELESCOPE: 'CFHT',
             PHOTOMETRY.INSTRUMENT: 'MegaCam',
             PHOTOMETRY.BAND_SET: 'MegaCam',
-            PHOTOMETRY.SYSTEM: 'Natural'
+            PHOTOMETRY.SYSTEM: 'BD17'
         }
         set_pd_mag_from_counts(photodict, counts, ec=err, zp=zp)
         catalog.entries[name].add_photometry(**photodict)
