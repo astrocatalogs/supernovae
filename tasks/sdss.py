@@ -17,6 +17,7 @@ from ..supernova import SUPERNOVA
 
 def do_sdss_photo(catalog):
     task_str = catalog.get_current_task_str()
+    D25 = Decimal('2.5')
 
     # fits_path = os.path.join(catalog.get_current_task_repo(),
     #                          'SDSS/SDSS_allCandidates+BOSS_HEAD.FITS')
@@ -54,9 +55,11 @@ def do_sdss_photo(catalog):
 
         co = [[x[0], x[99], x[100]] for x in rows if x[99] and x[100]]
         coo = coord([x[1] for x in co], [x[2] for x in co], unit="deg")
-        coo = [''.join([y[:9] for y in x.split()])
-               for x in coo.to_string(
-                   'hmsdms', sep='')]
+        coo = [
+            ''.join([y[:9] for y in x.split()])
+            for x in coo.to_string(
+                'hmsdms', sep='')
+        ]
         hostdict = dict(
             zip([x[0] for x in co], ['SDSS J' + x[1:] for x in coo]))
 
@@ -95,8 +98,10 @@ def do_sdss_photo(catalog):
                 kwargs = {}
                 if key == SUPERNOVA.ALIAS:
                     val = 'SN' + val
-                elif key in [SUPERNOVA.RA, SUPERNOVA.DEC, SUPERNOVA.HOST_RA,
-                             SUPERNOVA.HOST_DEC]:
+                elif key in [
+                        SUPERNOVA.RA, SUPERNOVA.DEC, SUPERNOVA.HOST_RA,
+                        SUPERNOVA.HOST_DEC
+                ]:
                     kwargs = {QUANTITY.U_VALUE: 'floatdegrees'}
                     if key in [SUPERNOVA.RA, SUPERNOVA.HOST_RA]:
                         fval = float(val)
@@ -194,11 +199,14 @@ def do_sdss_photo(catalog):
                     PHOTOMETRY.BAND_SET: 'SDSS',
                     PHOTOMETRY.SYSTEM: 'SDSS'
                 }
+                if float(fluxd) > 0.0:
+                    photodict[PHOTOMETRY.ZERO_POINT] = str(D25 * Decimal(
+                        fluxd).log10() + Decimal(magnitude))
                 ul_sigma = 3.0
-                if int(row[0]) & 32 or float(fluxd) < ul_sigma*float(e_fluxd):
+                if int(row[0]) & 32 or float(fluxd) < ul_sigma * float(
+                        e_fluxd):
                     photodict[PHOTOMETRY.UPPER_LIMIT] = True
-                    photodict[
-                        PHOTOMETRY.UPPER_LIMIT_SIGMA] = str(ul_sigma)
+                    photodict[PHOTOMETRY.UPPER_LIMIT_SIGMA] = str(ul_sigma)
                 catalog.entries[name].add_photometry(**photodict)
         if catalog.args.travis and fi >= catalog.TRAVIS_QUERY_LIMIT:
             break
