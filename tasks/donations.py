@@ -22,58 +22,60 @@ from ..supernova import SUPERNOVA
 def do_donated_photo(catalog):
     task_str = catalog.get_current_task_str()
 
-    # Nicholl Gaia16apd donation
-    path = os.path.join(catalog.get_current_task_repo(), '..',
-                        'sne-private-matt-nicholl', 'gaia16apd_phot.txt')
+    # Private donations here
+    if not catalog.args.travis:
+        # Nicholl Gaia16apd donation
+        path = os.path.join(catalog.get_current_task_repo(), '..',
+                            'sne-private-matt-nicholl', 'gaia16apd_phot.txt')
 
-    data = read(path, format='cds')
-    name, source = catalog.new_entry(
-        'Gaia16apd', bibcode='2016arXiv161106993N', private=True)
-    for row in pbar(data, task_str + ': Nicholl Gaia16apd'):
-        photodict = {
-            PHOTOMETRY.TIME: str(row['MJD']),
-            PHOTOMETRY.U_TIME: 'MJD',
-            PHOTOMETRY.MAGNITUDE: str(row['mag']),
-            PHOTOMETRY.E_MAGNITUDE: str(row['e_mag']),
-            PHOTOMETRY.BAND: row['Filter'],
-            PHOTOMETRY.TELESCOPE: row['Telescope'],
-            PHOTOMETRY.SOURCE: source
-        }
-        if row['l_mag'] == '>':
-            photodict[PHOTOMETRY.UPPER_LIMIT] = True
-        else:
-            photodict[PHOTOMETRY.E_MAGNITUDE] = str(row['e_mag'])
-        catalog.entries[name].add_photometry(**photodict)
-
-    # Arcavi 2016gkg donation
-    path = os.path.join(catalog.get_current_task_repo(), '..',
-                        'sne-private-iair-arcavi', 'SN2016gkg.txt')
-    with open(path, 'r') as f:
-        tsvin = list(csv.reader(f, delimiter=' ', skipinitialspace=True))
+        data = read(path, format='cds')
         name, source = catalog.new_entry(
-            'SN2016gkg', bibcode='2016arXiv161106451A', private=True)
-        for row in tsvin:
-            if row[0][0] == '#':
-                continue
-            mjd = str(jd_to_mjd(Decimal(row[0])))
-            tel = row[1]
-            band = row[3]
-            mag = row[4]
-            err = row[5]
-            limit = row[6] == 'True'
+            'Gaia16apd', bibcode='2016arXiv161106993N', private=True)
+        for row in pbar(data, task_str + ': Nicholl Gaia16apd'):
             photodict = {
-                PHOTOMETRY.TIME: mjd,
+                PHOTOMETRY.TIME: str(row['MJD']),
                 PHOTOMETRY.U_TIME: 'MJD',
-                PHOTOMETRY.TELESCOPE: tel,
-                PHOTOMETRY.BAND: band,
-                PHOTOMETRY.MAGNITUDE: mag,
+                PHOTOMETRY.MAGNITUDE: str(row['mag']),
+                PHOTOMETRY.E_MAGNITUDE: str(row['e_mag']),
+                PHOTOMETRY.BAND: row['Filter'],
+                PHOTOMETRY.TELESCOPE: row['Telescope'],
                 PHOTOMETRY.SOURCE: source
             }
-            if limit:
+            if row['l_mag'] == '>':
                 photodict[PHOTOMETRY.UPPER_LIMIT] = True
             else:
-                photodict[PHOTOMETRY.E_MAGNITUDE] = err
+                photodict[PHOTOMETRY.E_MAGNITUDE] = str(row['e_mag'])
             catalog.entries[name].add_photometry(**photodict)
+
+        # Arcavi 2016gkg donation
+        path = os.path.join(catalog.get_current_task_repo(), '..',
+                            'sne-private-iair-arcavi', 'SN2016gkg.txt')
+        with open(path, 'r') as f:
+            tsvin = list(csv.reader(f, delimiter=' ', skipinitialspace=True))
+            name, source = catalog.new_entry(
+                'SN2016gkg', bibcode='2016arXiv161106451A', private=True)
+            for row in tsvin:
+                if row[0][0] == '#':
+                    continue
+                mjd = str(jd_to_mjd(Decimal(row[0])))
+                tel = row[1]
+                band = row[3]
+                mag = row[4]
+                err = row[5]
+                limit = row[6] == 'True'
+                photodict = {
+                    PHOTOMETRY.TIME: mjd,
+                    PHOTOMETRY.U_TIME: 'MJD',
+                    PHOTOMETRY.TELESCOPE: tel,
+                    PHOTOMETRY.BAND: band,
+                    PHOTOMETRY.MAGNITUDE: mag,
+                    PHOTOMETRY.SOURCE: source
+                }
+                if limit:
+                    photodict[PHOTOMETRY.UPPER_LIMIT] = True
+                else:
+                    photodict[PHOTOMETRY.E_MAGNITUDE] = err
+                catalog.entries[name].add_photometry(**photodict)
 
     # Inserra 09-04-16 donation
     file_names = glob(
