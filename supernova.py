@@ -612,12 +612,26 @@ class Supernova(Entry):
         if self._KEYS.PHOTOMETRY not in self:
             return (None, None, None, None)
 
-        # FIX: THIS
-        eventphoto = [(x['u_time'], x['time'], Decimal(x['magnitude']),
-                       x['band'] if 'band' in x else '', x['source'])
+        eventphoto = [(x[PHOTOMETRY.U_TIME], Decimal(x[PHOTOMETRY.U_TIME])
+                       if isinstance(x[PHOTOMETRY.TIME], str) else
+                       Decimal(min(float(y) for y in x[PHOTOMETRY.TIME])),
+                       Decimal(x[PHOTOMETRY.MAGNITUDE]),
+                       x.get(PHOTOMETRY.BAND, ''), x[PHOTOMETRY.SOURCE])
                       for x in self[self._KEYS.PHOTOMETRY]
-                      if ('magnitude' in x and 'time' in x and 'u_time' in x
-                          and 'upperlimit' not in x)]
+                      if (PHOTOMETRY.MAGNITUDE in x and PHOTOMETRY.TIME in x
+                          and PHOTOMETRY.U_TIME in x and PHOTOMETRY.UPPER_LIMIT
+                          not in x and PHOTOMETRY.INCLUDES_HOST not in x)]
+        # Use photometry that includes host if no other photometry available.
+        if not eventphoto:
+            eventphoto = [
+                (x[PHOTOMETRY.U_TIME], Decimal(x[PHOTOMETRY.U_TIME])
+                 if isinstance(x[PHOTOMETRY.TIME], str) else
+                 Decimal(min(float(y) for y in x[PHOTOMETRY.TIME])),
+                 Decimal(x[PHOTOMETRY.MAGNITUDE]), x.get(PHOTOMETRY.BAND, ''),
+                 x[PHOTOMETRY.SOURCE]) for x in self[self._KEYS.PHOTOMETRY]
+                if (PHOTOMETRY.MAGNITUDE in x and PHOTOMETRY.TIME in x and
+                    PHOTOMETRY.U_TIME in x and PHOTOMETRY.UPPER_LIMIT not in x)
+            ]
         if not eventphoto:
             return None, None, None, None
 
@@ -649,12 +663,25 @@ class Supernova(Entry):
         if self._KEYS.PHOTOMETRY not in self:
             return None, None
 
-        # FIX THIS
-        eventphoto = [(Decimal(x['time']) if isinstance(x['time'], str) else
-                       Decimal(min(float(y) for y in x['time'])), x['source'])
+        eventphoto = [(Decimal(x[PHOTOMETRY.U_TIME])
+                       if isinstance(x[PHOTOMETRY.TIME], str) else
+                       Decimal(min(float(y) for y in x[PHOTOMETRY.TIME])),
+                       x[PHOTOMETRY.SOURCE])
                       for x in self[self._KEYS.PHOTOMETRY]
-                      if 'upperlimit' not in x and 'time' in x and 'u_time' in
-                      x and x['u_time'] == 'MJD']
+                      if PHOTOMETRY.UPPER_LIMIT not in x and PHOTOMETRY.TIME in
+                      x and PHOTOMETRY.U_TIME in x and x[PHOTOMETRY.U_TIME] ==
+                      'MJD' and PHOTOMETRY.INCLUDES_HOST not in x]
+        # Use photometry that includes host if no other photometry available.
+        if not eventphoto:
+            eventphoto = [
+                (Decimal(x[PHOTOMETRY.U_TIME])
+                 if isinstance(x[PHOTOMETRY.TIME], str) else
+                 Decimal(min(float(y) for y in x[PHOTOMETRY.TIME])),
+                 x[PHOTOMETRY.SOURCE]) for x in self[self._KEYS.PHOTOMETRY]
+                if PHOTOMETRY.UPPER_LIMIT not in x and PHOTOMETRY.TIME in x and
+                PHOTOMETRY.U_TIME in x and x[PHOTOMETRY.U_TIME] == 'MJD' and
+                PHOTOMETRY.INCLUDES_HOST not in x
+            ]
         if not eventphoto:
             return None, None
         flmjd = min([x[0] for x in eventphoto])
