@@ -3,6 +3,7 @@
 import warnings
 from collections import OrderedDict
 
+import numpy as np
 from astropy.time import Time as astrotime
 
 from astrocats.catalog.entry import ENTRY, Entry
@@ -612,25 +613,27 @@ class Supernova(Entry):
         if self._KEYS.PHOTOMETRY not in self:
             return (None, None, None, None)
 
-        eventphoto = [(x[PHOTOMETRY.U_TIME], Decimal(x[PHOTOMETRY.U_TIME])
-                       if isinstance(x[PHOTOMETRY.TIME], str) else
-                       Decimal(min(float(y) for y in x[PHOTOMETRY.TIME])),
-                       Decimal(x[PHOTOMETRY.MAGNITUDE]),
-                       x.get(PHOTOMETRY.BAND, ''), x[PHOTOMETRY.SOURCE])
-                      for x in self[self._KEYS.PHOTOMETRY]
-                      if (PHOTOMETRY.MAGNITUDE in x and PHOTOMETRY.TIME in x
-                          and PHOTOMETRY.U_TIME in x and PHOTOMETRY.UPPER_LIMIT
-                          not in x and PHOTOMETRY.INCLUDES_HOST not in x)]
+        eventphoto = [
+            (x[PHOTOMETRY.U_TIME], Decimal(x[PHOTOMETRY.TIME])
+             if not isinstance(x[PHOTOMETRY.TIME], list) else
+             Decimal(np.mean(float(y) for y in x[PHOTOMETRY.TIME])),
+             Decimal(x[PHOTOMETRY.MAGNITUDE]), x.get(PHOTOMETRY.BAND, ''),
+             x[PHOTOMETRY.SOURCE]) for x in self[self._KEYS.PHOTOMETRY]
+            if (PHOTOMETRY.MAGNITUDE in x and PHOTOMETRY.TIME in x and x.get(
+                PHOTOMETRY.U_TIME, '') == 'MJD' and PHOTOMETRY.UPPER_LIMIT
+                not in x and not x.get(PHOTOMETRY.INCLUDES_HOST, False))
+        ]
         # Use photometry that includes host if no other photometry available.
         if not eventphoto:
             eventphoto = [
-                (x[PHOTOMETRY.U_TIME], Decimal(x[PHOTOMETRY.U_TIME])
-                 if isinstance(x[PHOTOMETRY.TIME], str) else
-                 Decimal(min(float(y) for y in x[PHOTOMETRY.TIME])),
+                (x[PHOTOMETRY.U_TIME], Decimal(x[PHOTOMETRY.TIME])
+                 if not isinstance(x[PHOTOMETRY.TIME], list) else
+                 Decimal(np.mean(float(y) for y in x[PHOTOMETRY.TIME])),
                  Decimal(x[PHOTOMETRY.MAGNITUDE]), x.get(PHOTOMETRY.BAND, ''),
                  x[PHOTOMETRY.SOURCE]) for x in self[self._KEYS.PHOTOMETRY]
                 if (PHOTOMETRY.MAGNITUDE in x and PHOTOMETRY.TIME in x and
-                    PHOTOMETRY.U_TIME in x and PHOTOMETRY.UPPER_LIMIT not in x)
+                    x.get(PHOTOMETRY.U_TIME, '') == 'MJD' and not x.get(
+                        PHOTOMETRY.INCLUDES_HOST, False))
             ]
         if not eventphoto:
             return None, None, None, None
@@ -663,24 +666,23 @@ class Supernova(Entry):
         if self._KEYS.PHOTOMETRY not in self:
             return None, None
 
-        eventphoto = [(Decimal(x[PHOTOMETRY.U_TIME])
-                       if isinstance(x[PHOTOMETRY.TIME], str) else
+        eventphoto = [(Decimal(x[PHOTOMETRY.TIME])
+                       if not isinstance(x[PHOTOMETRY.TIME], list) else
                        Decimal(min(float(y) for y in x[PHOTOMETRY.TIME])),
                        x[PHOTOMETRY.SOURCE])
                       for x in self[self._KEYS.PHOTOMETRY]
                       if PHOTOMETRY.UPPER_LIMIT not in x and PHOTOMETRY.TIME in
-                      x and PHOTOMETRY.U_TIME in x and x[PHOTOMETRY.U_TIME] ==
-                      'MJD' and PHOTOMETRY.INCLUDES_HOST not in x]
+                      x and x.get(PHOTOMETRY.U_TIME, '') == 'MJD' and
+                      PHOTOMETRY.INCLUDES_HOST not in x]
         # Use photometry that includes host if no other photometry available.
         if not eventphoto:
             eventphoto = [
-                (Decimal(x[PHOTOMETRY.U_TIME])
-                 if isinstance(x[PHOTOMETRY.TIME], str) else
+                (Decimal(x[PHOTOMETRY.TIME])
+                 if not isinstance(x[PHOTOMETRY.TIME], list) else
                  Decimal(min(float(y) for y in x[PHOTOMETRY.TIME])),
                  x[PHOTOMETRY.SOURCE]) for x in self[self._KEYS.PHOTOMETRY]
                 if PHOTOMETRY.UPPER_LIMIT not in x and PHOTOMETRY.TIME in x and
-                PHOTOMETRY.U_TIME in x and x[PHOTOMETRY.U_TIME] == 'MJD' and
-                PHOTOMETRY.INCLUDES_HOST not in x
+                x.get(PHOTOMETRY.U_TIME, '') == 'MJD'
             ]
         if not eventphoto:
             return None, None
