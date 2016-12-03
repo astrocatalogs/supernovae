@@ -4,6 +4,7 @@ import csv
 import os
 
 from astrocats.catalog.utils import pbar
+from astrocats.catalog.photometry import PHOTOMETRY
 
 from ..supernova import SUPERNOVA
 
@@ -28,12 +29,19 @@ def do_pessto(catalog):
             if not row[ci]:
                 continue
             teles = 'Swift' if systems[hi] == 'Swift' else ''
-            (catalog.entries[name]
-             .add_photometry(time=row[2], u_time='MJD', magnitude=row[ci],
-                             e_magnitude=row[ci + 1],
-                             band=bands[hi], system=systems[hi],
-                             telescope=teles,
-                             source=source))
+            bandset = 'Swift' if systems[hi] == 'Swift' else 'Johnson'
+            photodict = {
+                PHOTOMETRY.TIME: row[2],
+                PHOTOMETRY.U_TIME: 'MJD',
+                PHOTOMETRY.MAGNITUDE: row[ci],
+                PHOTOMETRY.E_MAGNITUDE: row[ci + 1],
+                PHOTOMETRY.BAND: bands[hi],
+                PHOTOMETRY.SYSTEM: systems[hi],
+                PHOTOMETRY.BAND_SET: bandset,
+                PHOTOMETRY.TELESCOPE: teles,
+                PHOTOMETRY.SOURCE: source
+            }
+            catalog.entries[name].add_photometry(**photodict)
 
     catalog.journal_entries()
     return
