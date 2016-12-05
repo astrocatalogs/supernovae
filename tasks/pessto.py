@@ -28,8 +28,14 @@ def do_pessto(catalog):
         for hi, ci in enumerate(range(3, len(row) - 1, 2)):
             if not row[ci]:
                 continue
-            teles = 'Swift' if systems[hi] == 'Swift' else ''
-            bandset = 'Swift' if systems[hi] == 'Swift' else 'Johnson'
+            if systems[hi] == 'Swift':
+                teles = 'Swift'
+                instrument = 'UVOT'
+                bandset = 'Swift'
+            else:
+                teles = 'NTT'
+                instrument = 'EFOSC'
+                bandset = 'Johnson'
             photodict = {
                 PHOTOMETRY.TIME: row[2],
                 PHOTOMETRY.U_TIME: 'MJD',
@@ -39,6 +45,7 @@ def do_pessto(catalog):
                 PHOTOMETRY.SYSTEM: systems[hi],
                 PHOTOMETRY.BAND_SET: bandset,
                 PHOTOMETRY.TELESCOPE: teles,
+                PHOTOMETRY.INSTRUMENT: instrument,
                 PHOTOMETRY.SOURCE: source
             }
             catalog.entries[name].add_photometry(**photodict)
