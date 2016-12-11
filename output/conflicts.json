@@ -3621,7 +3621,7 @@
 				"source":"2,9,10,11,12,13,15,16"
 			},
 			{
-				"value":"SCP-C00-008",
+				"value":"SCP-C00-8",
 				"source":"15"
 			}
 		],
@@ -28940,6 +28940,10 @@
 			{
 				"value":"PS1-14abq",
 				"source":"2,8"
+			},
+			{
+				"value":"MASTER OT JJ044212.20+230616.7",
+				"source":"2,6"
 			}
 		],
 		"edit":false,
@@ -34194,6 +34198,44 @@
 		]
 	},
 	{
+		"name":"SN2016csd",
+		"alias":[
+			{
+				"value":"SN2016csd",
+				"source":"1,5,6,7,8,9"
+			},
+			{
+				"value":"Gaia16avj",
+				"source":"1,8,9"
+			},
+			{
+				"value":"ASASSN-16fx",
+				"source":"1,5,8"
+			},
+			{
+				"value":"AT2016csd",
+				"source":"9"
+			}
+		],
+		"edit":false,
+		"quantity":"redshift",
+		"difference":"0.05128",
+		"values":[
+			0.037,
+			0.039
+		],
+		"sources":[
+			{
+				"id":"Transient Name Server",
+				"idtype":"name"
+			},
+			{
+				"id":"2016ATel.9127....1B,ASAS-SN Supernovae,Latest Supernovae",
+				"idtype":"bibcode,name,name"
+			}
+		]
+	},
+	{
 		"name":"SN2016cyj",
 		"alias":[
 			{
@@ -35056,6 +35098,45 @@
 			{
 				"id":"Gaia Photometric Science Alerts",
 				"idtype":"name"
+			}
+		]
+	},
+	{
+		"name":"SN2016isg",
+		"alias":[
+			{
+				"value":"SN2016isg",
+				"source":"3,4,5,7,9"
+			},
+			{
+				"value":"AT2016isg",
+				"source":"3"
+			},
+			{
+				"value":"ASASSN-16oo",
+				"source":"3,4,7"
+			}
+		],
+		"edit":false,
+		"quantity":"dec",
+		"difference":"0.00107",
+		"values":[
+			"-00:12:36.07",
+			"-00:12:36.88",
+			"-00:12:36.8784"
+		],
+		"sources":[
+			{
+				"id":"Transient Name Server",
+				"idtype":"name"
+			},
+			{
+				"id":"ATel 9837,Latest Supernovae",
+				"idtype":"name,name"
+			},
+			{
+				"id":"ATel 9837,ASAS-SN Supernovae",
+				"idtype":"name,name"
 			}
 		]
 	},
@@ -40157,7 +40238,19 @@
 		"alias":[
 			{
 				"value":"SN1968L",
-				"source":"2,9,10,11,12,13,15,16"
+				"source":"3,9,10,11,12,13,15,16"
+			},
+			{
+				"value":"CXOU J133700.4-295159",
+				"source":"15"
+			},
+			{
+				"value":"M83-116",
+				"source":"15"
+			},
+			{
+				"value":"X216",
+				"source":"15"
 			}
 		],
 		"edit":false,
