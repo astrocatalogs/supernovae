@@ -414,26 +414,6 @@ class Supernova(Entry):
             source = self.add_self_source()
             self.add_quantity(self._KEYS.CLAIMED_TYPE, 'Candidate', source)
 
-        if self._KEYS.PHOTOMETRY in self:
-            self[self._KEYS.PHOTOMETRY].sort(
-                key=lambda x: ((float(x[PHOTOMETRY.TIME]) if
-                                isinstance(x[PHOTOMETRY.TIME], str)
-                                else min([float(y) for y in
-                                          x[PHOTOMETRY.TIME]])) if
-                               PHOTOMETRY.TIME in x else 0.0,
-                               x[PHOTOMETRY.BAND] if PHOTOMETRY.BAND in
-                               x else '',
-                               float(x[PHOTOMETRY.MAGNITUDE]) if
-                               PHOTOMETRY.MAGNITUDE in x else ''))
-
-        if (self._KEYS.SPECTRA in self and list(
-                filter(None, [
-                    SPECTRUM.TIME in x for x in self[self._KEYS.SPECTRA]
-                ]))):
-            self[self._KEYS.SPECTRA].sort(
-                key=lambda x: (float(x[SPECTRUM.TIME]) if SPECTRUM.TIME in x else 0.0, x[SPECTRUM.FILENAME] if SPECTRUM.FILENAME in x else '')
-            )
-
         if self._KEYS.SOURCES in self:
             for source in self[self._KEYS.SOURCES]:
                 if SOURCE.BIBCODE in source:
