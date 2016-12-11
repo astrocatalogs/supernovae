@@ -543,6 +543,17 @@
         "always_journal": true,
         "priority": -200
     },
+    "sncosmo": {
+        "nice_name": "LC fits from SNCosmo",
+        "active": false,
+        "update": false,
+        "module": "supernovae.tasks.sncosmo",
+        "function": "do_sncosmo",
+        "groups": ["meta"],
+        "repo": "input/sne-external",
+        "always_journal": true,
+        "priority": -150
+    },
     "merge_duplicates": {
         "nice_name": "Merging duplicates",
         "active": false,

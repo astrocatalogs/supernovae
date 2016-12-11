@@ -5,10 +5,11 @@ import os
 from glob import glob
 from math import floor
 
-from astropy.time import Time as astrotime
-
+from astrocats.catalog.photometry import PHOTOMETRY
 from astrocats.catalog.utils import (is_number, jd_to_mjd, pbar, pbar_strings,
                                      uniq_cdl)
+from astropy.time import Time as astrotime
+
 from cdecimal import Decimal
 
 from ..supernova import SUPERNOVA
@@ -101,14 +102,16 @@ def do_cfa_photo(catalog):
                     elif v % 2 != 0:
                         if float(row[v]) < 90.0:
                             src = secondarysource + ',' + source
-                            catalog.entries[name].add_photometry(
-                                u_time=tuout,
-                                time=mjd,
-                                system='Standard',
-                                band=eventbands[(v - 1) // 2],
-                                magnitude=row[v],
-                                e_magnitude=row[v + 1],
-                                source=src)
+                            photodict = {
+                                PHOTOMETRY.U_TIME: tuout,
+                                PHOTOMETRY.TIME: mjd,
+                                PHOTOMETRY.BAND_SET: 'Standard',
+                                PHOTOMETRY.BAND: eventbands[(v - 1) // 2],
+                                PHOTOMETRY.MAGNITUDE: row[v],
+                                PHOTOMETRY.E_MAGNITUDE: row[v + 1],
+                                PHOTOMETRY.SOURCE: src
+                            }
+                            catalog.entries[name].add_photometry(**photodict)
         f.close()
 
     # Hicken 2012
@@ -132,14 +135,16 @@ def do_cfa_photo(catalog):
             catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
             catalog.entries[name].add_quantity(SUPERNOVA.CLAIMED_TYPE, 'Ia',
                                                source)
-            catalog.entries[name].add_photometry(
-                u_time='MJD',
-                time=row[2].strip(),
-                band=row[1].strip(),
-                system='Standard',
-                magnitude=row[6].strip(),
-                e_magnitude=row[7].strip(),
-                source=source)
+            photodict = {
+                PHOTOMETRY.U_TIME: 'MJD',
+                PHOTOMETRY.TIME: row[2].strip(),
+                PHOTOMETRY.BAND: row[1].strip(),
+                PHOTOMETRY.BAND_SET: 'Standard',
+                PHOTOMETRY.MAGNITUDE: row[6].strip(),
+                PHOTOMETRY.E_MAGNITUDE: row[7].strip(),
+                PHOTOMETRY.SOURCE: source
+            }
+            catalog.entries[name].add_photometry(**photodict)
 
     # Bianco 2014
     with open(
@@ -153,15 +158,17 @@ def do_cfa_photo(catalog):
             source = catalog.entries[name].add_source(
                 bibcode='2014ApJS..213...19B')
             catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
-            catalog.entries[name].add_photometry(
-                u_time='MJD',
-                time=row[2],
-                band=row[1],
-                magnitude=row[3],
-                e_magnitude=row[4],
-                telescope=row[5],
-                system='Standard',
-                source=source)
+            photodict = {
+                PHOTOMETRY.U_TIME: 'MJD',
+                PHOTOMETRY.TIME: row[2],
+                PHOTOMETRY.BAND: row[1],
+                PHOTOMETRY.MAGNITUDE: row[3],
+                PHOTOMETRY.E_MAGNITUDE: row[4],
+                PHOTOMETRY.TELESCOPE: row[5],
+                PHOTOMETRY.BAND_SET: 'Standard',
+                PHOTOMETRY.SOURCE: source
+            }
+            catalog.entries[name].add_photometry(**photodict)
 
     catalog.journal_entries()
     return
@@ -210,19 +217,20 @@ def do_cfa_spectra(catalog):
                 day = fileparts[2][6:]
                 instrument = fileparts[3].split('.')[0]
             time = str(
-                astrotime(year + '-' + month + '-' + str(floor(float(
-                    day))).zfill(2)).mjd + float(day) - floor(float(day)))
+                astrotime(year + '-' + month + '-' + str(floor(float(day)))
+                          .zfill(2)).mjd + float(day) - floor(float(day)))
             f = open(fname, 'r')
             data = csv.reader(f, delimiter=' ', skipinitialspace=True)
             data = [list(i) for i in zip(*data)]
             wavelengths = data[0]
             fluxes = data[1]
             errors = data[2]
-            sources = uniq_cdl([source,
-                                (catalog.entries[name]
-                                 .add_source(bibcode='2012AJ....143..126B')),
-                                (catalog.entries[name]
-                                 .add_source(bibcode='2008AJ....135.1598M'))])
+            sources = uniq_cdl([
+                source, (catalog.entries[name]
+                         .add_source(bibcode='2012AJ....143..126B')),
+                (catalog.entries[name]
+                 .add_source(bibcode='2008AJ....135.1598M'))
+            ])
             catalog.entries[name].add_spectrum(
                 u_wavelengths='Angstrom',
                 u_fluxes='erg/s/cm^2/Angstrom',
@@ -275,15 +283,17 @@ def do_cfa_spectra(catalog):
             if len(fileparts) > 2:
                 instrument = fileparts[-1].split('.')[0]
             time = str(
-                astrotime(year + '-' + month + '-' + str(floor(float(
-                    day))).zfill(2)).mjd + float(day) - floor(float(day)))
+                astrotime(year + '-' + month + '-' + str(floor(float(day)))
+                          .zfill(2)).mjd + float(day) - floor(float(day)))
             f = open(fname, 'r')
             data = csv.reader(f, delimiter=' ', skipinitialspace=True)
             data = [list(i) for i in zip(*data)]
             wavelengths = data[0]
             fluxes = data[1]
-            sources = uniq_cdl([source, catalog.entries[name]
-                                .add_source(bibcode='2014AJ....147...99M')])
+            sources = uniq_cdl([
+                source, catalog.entries[name]
+                .add_source(bibcode='2014AJ....147...99M')
+            ])
             catalog.entries[name].add_spectrum(
                 u_wavelengths='Angstrom',
                 u_fluxes='erg/s/cm^2/Angstrom',

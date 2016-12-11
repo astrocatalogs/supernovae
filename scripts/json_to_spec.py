@@ -25,7 +25,7 @@ for i in range(len(data[sn]['spectra'])):
         try:
             np.savetxt(sn+'_'+data[sn]['spectra'][i]['time']+'.dat',test2,fmt='%.4e',delimiter='\t')
         except:
-            print 'Spectrum with index '+str(i)+' not saved'
+            print ('Spectrum with index ' + str(i) + ' not saved')
 
 
 plt.show()

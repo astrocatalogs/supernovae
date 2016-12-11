@@ -74,7 +74,7 @@ for ci, co in enumerate(tqdm(coo)):
             print(newcatalog[ci]['redshift'])
         print(result_table)
 
-Convert to array since that's what datatables expects
+# Convert to array since that's what datatables expects
 dupes = list(dupes.values())
 jsonstring = json.dumps(dupes, indent='\t', separators=(',', ':'),
                         ensure_ascii=False)
