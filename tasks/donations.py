@@ -168,6 +168,7 @@ def do_donated_photo(catalog):
                         continue
                     band = bands[v]
                     instrument = ''
+                    survey = ''
                     telescope = rtelescope
                     if telescope == 'LSQ':
                         instrument = 'QUEST'
@@ -186,8 +187,10 @@ def do_donated_photo(catalog):
                             if inpname.startswith('PS1'):
                                 instrument = 'GPC'
                                 telescope = 'PS1'
+                                survey = 'Pan-STARRS'
                             elif inpname.startswith('PTF'):
-                                telescope = 'PTF'
+                                telescope = 'P60'
+                                survey = 'PTF'
                         elif band.upper() in ['UW2', 'UW1', 'UM2']:
                             instrument = 'UVOT'
                             telescope = 'Swift'
@@ -203,6 +206,8 @@ def do_donated_photo(catalog):
                         photodict[PHOTOMETRY.INSTRUMENT] = instrument
                     if telescope:
                         photodict[PHOTOMETRY.TELESCOPE] = telescope
+                    if survey:
+                        photodict[PHOTOMETRY.SURVEY] = survey
                     if (is_number(row[2 * v + 2]) and
                             not isnan(float(row[2 * v + 2]))):
                         photodict[PHOTOMETRY.E_MAGNITUDE] = row[2 * v + 2]
@@ -396,7 +401,7 @@ def do_donated_photo(catalog):
                         system = 'SDSS'
                     elif telescope == 'ASASSN':
                         band_set = 'ASASSN'
-                        system = 'AB'
+                        system = 'Vega'
                     photodict = {
                         PHOTOMETRY.TIME: mjd,
                         PHOTOMETRY.U_TIME: 'MJD',
