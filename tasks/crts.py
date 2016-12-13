@@ -101,9 +101,9 @@ def do_crts(catalog):
                 catalog.entries[name].add_quantity(
                     SUPERNOVA.ALIAS, alias, source)
             catalog.entries[name].add_quantity(
-                SUPERNOVA.RA, ra, source, u_value='floatdegrees')
+                SUPERNOVA.RA, ra.strip(), source, u_value='floatdegrees')
             catalog.entries[name].add_quantity(
-                SUPERNOVA.DEC, dec, source, u_value='floatdegrees')
+                SUPERNOVA.DEC, dec.strip(), source, u_value='floatdegrees')
 
             if hostmag:
                 # 1.0 magnitude error based on Drake 2009 assertion that SN are
