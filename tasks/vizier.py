@@ -634,7 +634,7 @@ def do_vizier(catalog):
                 source=source,
                 system='AB',
                 telescope='PS1',
-                instrument='PS1')
+                instrument='GPC')
     catalog.journal_entries()
 
     # 1990A&AS...82..145C
