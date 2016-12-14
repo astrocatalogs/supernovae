@@ -1134,15 +1134,18 @@ def do_vizier(catalog):
     for row in pbar(table, task_str):
         row = convert_aq_output(row)
         e_mag = row['e_mag'] if not row['l_mag'] else ''
-        catalog.entries[name].add_photometry(
-            time=row['MJD'],
-            u_time='MJD',
-            band='ROTSE',
-            telescope='ROTSE',
-            magnitude=row['mag'],
-            e_magnitude=e_mag,
-            upperlimit=(row['l_mag'] == '<'),
-            source=source)
+        photodict = {
+            PHOTOMETRY.TIME: row['MJD'],
+            PHOTOMETRY.U_TIME: 'MJD',
+            PHOTOMETRY.BAND: 'ROTSE',
+            PHOTOMETRY.TELESCOPE: 'ROTSE',
+            PHOTOMETRY.MAGNITUDE: row['mag'],
+            PHOTOMETRY.E_MAGNITUDE: e_mag,
+            PHOTOMETRY.UPPER_LIMIT: (row['l_mag'] == '<'),
+            PHOTOMETRY.SYSTEM: 'Vega',
+            PHOTOMETRY.SOURCE: source
+        }
+        catalog.entries[name].add_photometry(**photodict)
 
     result = Vizier.get_catalogs('J/ApJ/729/143/table2')
     table = result[list(result.keys())[0]]
@@ -1153,28 +1156,34 @@ def do_vizier(catalog):
             bandtag = band + 'mag'
             if (bandtag in row and is_number(row[bandtag]) and
                     not isnan(float(row[bandtag]))):
-                catalog.entries[name].add_photometry(
-                    time=row["MJD"],
-                    u_time='MJD',
-                    telescope="PAIRITEL",
-                    band=band,
-                    magnitude=row[bandtag],
-                    e_magnitude=row["e_" + bandtag],
-                    source=source)
+                photodict = {
+                    PHOTOMETRY.TIME: row["MJD"],
+                    PHOTOMETRY.U_TIME: 'MJD',
+                    PHOTOMETRY.TELESCOPE: "PAIRITEL",
+                    PHOTOMETRY.BAND: band,
+                    PHOTOMETRY.MAGNITUDE: row[bandtag],
+                    PHOTOMETRY.E_MAGNITUDE: row["e_" + bandtag],
+                    PHOTOMETRY.SYSTEM: 'Vega',
+                    PHOTOMETRY.SOURCE: source
+                }
+                catalog.entries[name].add_photometry(**photodict)
 
     result = Vizier.get_catalogs('J/ApJ/729/143/table4')
     table = result[list(result.keys())[0]]
     table.convert_bytestring_to_unicode(python3_only=True)
     for row in pbar(table, task_str):
         row = convert_aq_output(row)
-        catalog.entries[name].add_photometry(
-            time=row['MJD'],
-            u_time='MJD',
-            band=row['Filt'],
-            telescope='P60',
-            magnitude=row['mag'],
-            e_magnitude=row['e_mag'],
-            source=source)
+        photodict = {
+            PHOTOMETRY.TIME: row['MJD'],
+            PHOTOMETRY.U_TIME: 'MJD',
+            PHOTOMETRY.BAND: row['Filt'],
+            PHOTOMETRY.TELESCOPE: 'P60',
+            PHOTOMETRY.MAGNITUDE: row['mag'],
+            PHOTOMETRY.E_MAGNITUDE: row['e_mag'],
+            PHOTOMETRY.SYSTEM: 'AB',
+            PHOTOMETRY.SOURCE: source
+        }
+        catalog.entries[name].add_photometry(**photodict)
 
     result = Vizier.get_catalogs('J/ApJ/729/143/table5')
     table = result[list(result.keys())[0]]
@@ -1189,6 +1198,7 @@ def do_vizier(catalog):
             PHOTOMETRY.TELESCOPE: 'Swift',
             PHOTOMETRY.MAGNITUDE: row['mag'],
             PHOTOMETRY.E_MAGNITUDE: row['e_mag'],
+            PHOTOMETRY.SYSTEM: 'Vega',
             PHOTOMETRY.SOURCE: source
         }
         catalog.entries[name].add_photometry(**photodict)
