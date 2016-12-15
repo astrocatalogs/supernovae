@@ -19,11 +19,11 @@ To comply with the standard, the object should contain a `schema` key, where `sc
 }
 ```
 
-As JSON is a serialized format, *field order does not matter*, but the OSC's import scripts will automatically organize the data in the output JSON files to make them more readable (for instance we sort photometry and spectra within each file by date, the data quantity fields by name, etc.).
+As JSON is a serialized format, *field order does not matter*, but the OSC's import scripts will automatically organize the data in the output JSON files to make them more readable (for instance we sort photometry and spectra within each file by date, the data quantity fields by name, etc.), and to make the outputs more friendly to version control.
 
-Sources are extremely important in the OSC, and every single piece of data added to an event JSON file **must have a source attribution**, with the sole exception of the supernova name, aliases, and the sources themselves. Published data sources are preferred over secondary sources (the OSC falls into a secondary source category), but if the data was collected by a secondary source intermediate to being added to the OSC, these sources should also be attributed in the source list.
+Sources are extremely important in the OSC, and every single piece of data added to an event JSON file **must have a source attribution**. Published data sources are preferred over secondary sources (the OSC falls into a secondary source category), but if the data was collected by a secondary source intermediate to being added to the OSC, these sources should also be attributed in the source list.
 
-Sources of data contain five fields, three of which are optional:
+Sources of data contain several fields:
 
 | Field | Value | Optional?
 | :--- | :--- | :---
@@ -31,6 +31,7 @@ Sources of data contain five fields, three of which are optional:
 `alias` | Integer unique to this source to be used as an alias | no
 `url` | Web address of source | yes
 `bibcode` | 19 character NASA ADS bibcode | yes
+`arxivid` | ArXiv ID number | yes
 `secondary` | Boolean specifying if source collected rather than generated data | yes
 `acknowledgment` | Acknowledgment requested by source if data is used in publication | yes
 
@@ -75,7 +76,7 @@ where in this example we have two different redshift values quoted from three di
 
 In general, the data stored in a given JSON file are presented in the observer frame, uncorrected for extinction or redshift, with times provided in MJD or as a calendar date (YYYY/MM/DD). In some instances, only corrected data will be available, or will be available as a supplement to the raw data, but in these cases the corrected data should be tagged with additional qualifiers (e.g. `kcorrected`, `deredshifted`, etc.) to indicate that it has been manipulated. As with all tags, the source material is often unclear in how they provided the data; we attempt to figure this out from the original publication when possible, but this cannot always be determined.
 
-Data quantities have five standard fields:
+Data quantities their own set of standard fields:
 
 | Field | Value | Optional?
 | :--- | :--- | :---
@@ -87,31 +88,40 @@ Data quantities have five standard fields:
 | `upperlimit` | Value is an upper limit | yes
 | `u_value` | The unit of the value | yes
 | `kind` | Variant of the quantity | yes
+| `derived` | Quantity is derived from other data present in file | yes
+| `description` | A description of the quantity | yes
+| `probability` | Probability of the given value being true | yes
 | `source` | A list of integer aliases to sources for the data | no
+| `model` | A list of integer aliases of which models the data orignated from | yes
+| `realization` | A numeric ID for the realization of the denoted model (e.g. from Monte Carlo) | yes
 
-Currently, the OSC explicitly tracks the following quantities for each event, if available:
+Currently, the OSC explicitly tracks the following quantities for each supernova, if available (items marked with a 🌟 are supernova-specific):
 
 | Quantity | Description | Kinds
 | :--- | :--- | :---
-| `alias` | Other names this supernova goes by |
-| `distinctfrom` | Names of events SN is *not* associated with, usually very nearby supernovae that may be confused with the given supernova |
+| `alias` | Other names this event goes by |
+| `distinctfrom` | Names of events that this event is *not* associated with, usually very nearby events that may be confused with the given event |
 | `error` | Known errors in sources of data that are ignored on import |
-| `ra` | Right ascension of supernova in hours (`hh:mm:ss`) |
-| `dec` | Declination of supernova in degrees |
-| `discoverdate` | Date that the supernova was first observed |
-| `maxdate` | Date of the supernova's maximum light |
-| `redshift` | Redshift of supernova or its host in various frames | `heliocentric`, `cmb`, `host`
-| `lumdist` | Luminosity distance to the supernova |
-| `comovingdist` | Comoving distance to the supernova |
-| `velocity` | Recessional velocity of supernova | `heliocentric`, `cmb`, `host`
-| `claimedtype` | Claimed type of the supernova |
-| `discoverer` | Person(s) who discovered the supernova |
+| `ra` | Right ascension of event in hours (`hh:mm:ss`) |
+| `dec` | Declination of event in degrees |
+| `discoverdate` | Date that the event was first observed 🌟 |
+| `maxdate` | Date of the event's maximum light |
+| `maxvisualabsmag` | Maximum visual absolute magnitude 🌟 |
+| `maxvisualappmag` | Maximum visual apparent magnitude 🌟 |
+| `maxvisualband` | Band of maximum visual magnitude 🌟 |
+| `maxvisualdate` | Date of maximum visual magnitude 🌟 |
+| `redshift` | Redshift of event or its host in various frames | `heliocentric`, `cmb`, `host`
+| `lumdist` | Luminosity distance to the event |
+| `comovingdist` | Comoving distance to the event |
+| `velocity` | Recessional velocity of event | `heliocentric`, `cmb`, `host`
+| `claimedtype` | Claimed type of the event 🌟 |
+| `discoverer` | Person(s)/survey(s) who discovered the event |
 | `ebv` | Reddening originating from the Milky Way |
-| `host` | Host galaxy of the supernova |
+| `host` | Host galaxy of the event |
 | `hostra` | Right ascension of the host galaxy in hours (`hh:mm:ss`) |
 | `hostdec` | Declination of the host galaxy in degrees |
-| `hostoffsetang` | Offset angle between host and supernova |
-| `hostoffsetdist` | Offset angular diameter distance between host and supernova |
+| `hostoffsetang` | Offset angle between host and event |
+| `hostoffsetdist` | Offset angular diameter distance between host and event |
 | `maxappmag` | Maximum apparent magnitude |
 | `maxband` | Band that maximum was determined from |
 | `maxabsmag` | Maximum absolute magnitude |
@@ -133,6 +143,8 @@ Photometry and spectra are stored in a similar way, but have different and many 
 | `reducer` | Person(s) who reduced the observation | yes
 | `includeshost` | Host galaxy light not subtracted from observation | yes
 | `source` | A list of integer aliases to sources for the data | no
+| `model` | A list of integer aliases of which models the data orignated from | yes
+| `realization` | A numeric ID for the realization of the denoted model (e.g. from Monte Carlo) | yes
 
 For IR/optical/UV photometry specifically, typical field names are:
 
@@ -142,9 +154,11 @@ For IR/optical/UV photometry specifically, typical field names are:
 | `e_magnitude` | Error in the magnitude | yes
 | `e_lower_magnitude` | Lower (i.e. more negative) error in the magnitude | yes
 | `e_upper_magnitude` | Upper (i.e. more positive) error in the magnitude | yes
+| `zeropoint` | Zero point value used to covert flux to magnitudes | yes
 | `band` | Photometric band filter used | yes
 | `system` | Photometric system used | yes
 | `upperlimit` | Measurement is an upper limit | yes
+| `upperlimitsigma` | Number of sigmas upper limit corresponds to | yes
 | `kcorrected` | Photometry has been K-corrected for redshift effects | yes
 | `scorrected` | Photometry has been S-corrected for extinction in host galaxy | yes
 | `mcorrected` | Photometry has been S-corrected for extinction from Milky Way | yes
@@ -184,6 +198,7 @@ And finally for spectra, these fields are used:
 | `u_fluxes` | Unit for fluxes | no
 | `u_errors` | Unit for flux errors | yes
 | `snr` | Signal to noise ratio | yes
+| `airmass` | Airmass through which spectrum was collected | yes
 | `filename` | Name of file spectra was extracted from | yes
 | `deredshifted` | Data is known to have been deredshifted from observer frame | yes
 | `dereddened` | Data is known to have been dereddened | yes
