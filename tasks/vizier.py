@@ -653,11 +653,17 @@ def do_vizier(catalog):
         tsvin = csv.reader(f, delimiter='\t', skipinitialspace=True)
         ii189bibdict = {}
         ii189refdict = {}
-        rn = 0
         for r, row in enumerate(tsvin):
             if row[0] != '0':
-                ii189bibdict[str(rn)] = str(row[1])
-                rn = rn + 1
+                if row[1] in ii189bibdict:
+                    ii189bibdict[row[1]].append(str(row[2]))
+                else:
+                    ii189bibdict[row[1]] = [str(row[2])]
+            else:
+                if row[1] in ii189refdict:
+                    ii189refdict[row[1]].append(str(row[3]))
+                else:
+                    ii189refdict[row[1]] = [str(row[3])]
 
     for row in pbar(table, task_str):
         row = convert_aq_output(row)
@@ -666,25 +672,28 @@ def do_vizier(catalog):
         oldname = 'SN' + row['SN']
         name = catalog.add_entry(oldname)
         source = ''
-        secsource = catalog.entries[name].add_source(
-            bibcode='1990A&AS...82..145C', secondary=True)
+        sources = [
+            catalog.entries[name].add_source(
+                bibcode='1990A&AS...82..145C', secondary=True)
+        ]
         mjd = str(jd_to_mjd(Decimal(row['JD'])))
         mag = str(row['m'])
         band = row['band'].strip("'")
         if row['r_m'] in ii189bibdict:
-            source = catalog.entries[name].add_source(
-                bibcode=ii189bibdict[row['r_m']])
-        else:
-            source = catalog.entries[name].add_source(
-                name=ii189refdict[row['r_m']])
-        catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, oldname, source)
+            for bc in ii189bibdict[row['r_m']]:
+                sources.append(catalog.entries[name].add_source(bibcode=bc))
+        if row['r_m'] in ii189refdict:
+            for rn in ii189refdict[row['r_m']]:
+                sources.append(catalog.entries[name].add_source(name=rn))
+        sources = uniq_cdl(sources)
+        catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, oldname, sources)
 
         photodict = {
             PHOTOMETRY.TIME: mjd,
             PHOTOMETRY.U_TIME: 'MJD',
             PHOTOMETRY.BAND: band,
             PHOTOMETRY.MAGNITUDE: mag,
-            PHOTOMETRY.SOURCE: uniq_cdl([source, secsource])
+            PHOTOMETRY.SOURCE: sources
         }
         catalog.entries[name].add_photometry(**photodict)
     catalog.journal_entries()
