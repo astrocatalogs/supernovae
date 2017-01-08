@@ -653,11 +653,11 @@ def do_vizier(catalog):
         tsvin = csv.reader(f, delimiter='\t', skipinitialspace=True)
         ii189bibdict = {}
         ii189refdict = {}
+        rn = 0
         for r, row in enumerate(tsvin):
             if row[0] != '0':
-                ii189bibdict[str(r + 1)] = str(row[1])
-            else:
-                ii189refdict[str(r + 1)] = str(row[2])
+                ii189bibdict[str(rn)] = str(row[1])
+                rn = rn + 1
 
     for row in pbar(table, task_str):
         row = convert_aq_output(row)
