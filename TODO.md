@@ -10,22 +10,21 @@ Single SN dataset on VizieR:
 * SN2002cv - http://vizier.cfa.harvard.edu/viz-bin/VizieR-3?-source=J/MNRAS/384/107 (Use dust-corrected or not?)
 
 Other multiple SN datasets:
-* http://adsabs.harvard.edu/abs/1938ApJ....88..285B (Historical SN data)
+* http://adsabs.harvard.edu/abs/1979AcC.....8....5F (Lists references for many historical LCs)
 * http://adsabs.harvard.edu/abs/1982A%26A...116...43B (spectra for 1979B and 1979C)
-* http://adsabs.harvard.edu/abs/1999AJ....117..725F (1979C, 1980K)
 * http://adsabs.harvard.edu/abs/1987ApJ...317..355H (spectra for 1983N and 1984L)
 * http://adsabs.harvard.edu/abs/1987Ap&SS.134..329P (spectra for 1985G and 1985H)
 * http://adsabs.harvard.edu/abs/1989AJ.....97..726F (spectra for 1987F and 1988I)
 * http://adsabs.harvard.edu/abs/1990Ap&SS.169..275R (spectra for 1987N, 1988Y, 1988D, 1989D)
-* http://arxiv.org/abs/1603.05657 (KSN2011a, KSN2011d)
-* http://adsabs.harvard.edu/abs/2014A%26A...568A..19C (SN2013ez, SN2013fu, missing t0)
 * http://adsabs.harvard.edu/abs/1997AJ....114.2054A (SN 1995al, 1997Y, 1997bp)
-* http://adsabs.harvard.edu/abs/2012A%26A...545L...7T (SN 2006V, 2006au)
-* http://adsabs.harvard.edu/abs/1979AcC.....8....5F (Lists references for many historical LCs)
+* http://adsabs.harvard.edu/abs/1999AJ....117..725F (1979C, 1980K)
 * http://adsabs.harvard.edu/abs/2006ApJ...645..841N (SNLS LCs)
+* http://adsabs.harvard.edu/abs/2012A%26A...545L...7T (SN 2006V, 2006au)
+* http://adsabs.harvard.edu/abs/2014A%26A...568A..19C (SN2013ez, SN2013fu, missing t0)
 * http://adsabs.harvard.edu/abs/2016arXiv160105955F (Late-time Iax spectra)
 * http://adsabs.harvard.edu/abs/2015arXiv151201303C (radio upper limits for Ibc SNe)
 * http://adsabs.harvard.edu/abs/2016arXiv160908145V (a couple SLSN)
+* http://arxiv.org/abs/1603.05657 (KSN2011a, KSN2011d)
 
 Other single SN datasets:
 * SN1885A - 2011ApJ...730...89P (from Perets e-mail)
