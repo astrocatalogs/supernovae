@@ -11556,6 +11556,7 @@
 		"name2":"SN1997bz",
 		"aliases2":[
 			"SN1997bz",
+			"EPIC 201543419",
 			"2MASS J11222545+0111215"
 		],
 		"ra1":"11:22:00",
@@ -20564,24 +20565,6 @@
 		"edit":false
 	},
 	{
-		"name1":"PSN J2336140+020924",
-		"aliases1":[
-			"PSN J2336140+020924"
-		],
-		"name2":"EQ J2336+0209",
-		"aliases2":[
-			"EQ J2336+0209"
-		],
-		"ra1":"23:36:14.0",
-		"dec1":"+02:09:24",
-		"ra2":"23:36:14.0",
-		"dec2":"+02:09:24",
-		"distdeg":"0.0",
-		"maxdiffyear":"",
-		"discdiffyear":"",
-		"edit":false
-	},
-	{
 		"name1":"SN1998dl",
 		"aliases1":[
 			"SN1998dl"
@@ -21838,24 +21821,6 @@
 		"edit":false
 	},
 	{
-		"name1":"SN2007fo",
-		"aliases1":[
-			"SN2007fo"
-		],
-		"name2":"EQ J2336+0209",
-		"aliases2":[
-			"EQ J2336+0209"
-		],
-		"ra1":"23:36:13.98",
-		"dec1":"+02:09:30.4",
-		"ra2":"23:36:14.0",
-		"dec2":"+02:09:24",
-		"distdeg":"0.0017797298310690507",
-		"maxdiffyear":"",
-		"discdiffyear":"",
-		"edit":false
-	},
-	{
 		"name1":"SN2008ax",
 		"aliases1":[
 			"SN2008ax",
@@ -22682,24 +22647,6 @@
 		"edit":false
 	},
 	{
-		"name1":"SN2014es",
-		"aliases1":[
-			"SN2014es"
-		],
-		"name2":"PSN J09204691-0803340",
-		"aliases2":[
-			"PSN J09204691-0803340"
-		],
-		"ra1":"09:20:46.91",
-		"dec1":"-08:03:34.00",
-		"ra2":"09:20:46.91",
-		"dec2":"-08:03:34.0",
-		"distdeg":"0.0",
-		"maxdiffyear":"",
-		"discdiffyear":"0.0012499999997999112",
-		"edit":false
-	},
-	{
 		"name1":"PTF11apk",
 		"aliases1":[
 			"PTF11apk"
@@ -23266,6 +23213,24 @@
 		"distdeg":"0.0004166666666662877",
 		"maxdiffyear":"",
 		"discdiffyear":"",
+		"edit":false
+	},
+	{
+		"name1":"MASTER OT J133905.0-201718.3",
+		"aliases1":[
+			"MASTER OT J133905.0-201718.3"
+		],
+		"name2":"MASTER OT J133905.00-201718.3",
+		"aliases2":[
+			"MASTER OT J133905.00-201718.3"
+		],
+		"ra1":"13:39:05.000",
+		"dec1":"-20:17:18.30",
+		"ra2":"13:39:05.00",
+		"dec2":"-20:17:18.3",
+		"distdeg":"0.0",
+		"maxdiffyear":"",
+		"discdiffyear":"0.0388888888890051",
 		"edit":false
 	},
 	{
