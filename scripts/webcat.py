@@ -166,7 +166,7 @@ eventpageheader = [
 
 titles = [
     "", "Name (IAU name preferred)", "Aliases",
-    "Discovey Date (year-month-day)", "Date of Maximum (year-month-day)",
+    "Discovery Date (year-month-day)", "Date of Maximum (year-month-day)",
     "Maximum apparent AB magnitude", "Maximum absolute AB magnitude",
     "Host Name", "Supernova J2000 Right Ascension (h:m:s)",
     "Supernova J2000 Declination (d:m:s)",

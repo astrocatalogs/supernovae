@@ -11,7 +11,6 @@ from astrocats.catalog.key import KEY_TYPES, Key
 from astrocats.catalog.photometry import PHOTOMETRY
 from astrocats.catalog.quantity import QUANTITY
 from astrocats.catalog.source import SOURCE
-from astrocats.catalog.spectrum import SPECTRUM
 from astrocats.catalog.utils import (bib_priority, get_sig_digits,
                                      get_source_year, is_integer, is_number,
                                      jd_to_mjd, make_date_string, pretty_num,
