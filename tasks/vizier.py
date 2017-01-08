@@ -660,10 +660,11 @@ def do_vizier(catalog):
                 else:
                     ii189bibdict[row[1]] = [str(row[2])]
             else:
+                rn = str(row[3]).strip('() ').capitalize()
                 if row[1] in ii189refdict:
-                    ii189refdict[row[1]].append(str(row[3]))
+                    ii189refdict[row[1]].append(rn)
                 else:
-                    ii189refdict[row[1]] = [str(row[3])]
+                    ii189refdict[row[1]] = [rn]
 
     for row in pbar(table, task_str):
         row = convert_aq_output(row)
