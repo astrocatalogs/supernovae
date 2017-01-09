@@ -25,6 +25,35 @@ def do_ascii(catalog):
     """
     task_str = catalog.get_current_task_str()
 
+    # 2012A&A...537A.140T
+    tables = ['2012A&A...537A.140T-' + x + '.tsv' for x in ['tab4', 'tab6']]
+    sns = ['SN2006V', 'SN2006au']
+    for ti, tab in enumerate(tables):
+        file_path = os.path.join(catalog.get_current_task_repo(), 'ASCII',
+                                 tab)
+        tsvin = list(
+            csv.reader(
+                open(file_path, 'r'), delimiter='\t', skipinitialspace=True))
+        for ri, row in enumerate(pbar(tsvin, task_str)):
+            (name, source) = catalog.new_entry(
+                sns[ti], bibcode='2012A&A...537A.140T')
+            if ri == 0:
+                bands = row[1:]
+                continue
+            for ci, col in enumerate(row[1:-2:2]):
+                if not is_number(col):
+                    continue
+                photodict = {
+                    PHOTOMETRY.TELESCOPE: row[-1],
+                    PHOTOMETRY.BAND: bands[ci],
+                    PHOTOMETRY.TIME: jd_to_mjd(Decimal(row[0])),
+                    PHOTOMETRY.MAGNITUDE: col,
+                    PHOTOMETRY.E_MAGNITUDE: str(float(row[2 + 2 * ci])),
+                    PHOTOMETRY.SOURCE: source
+                }
+                catalog.entries[name].add_photometry(**photodict)
+    catalog.journal_entries()
+
     # 2015MNRAS.449.1215P
     file_path = os.path.join(catalog.get_current_task_repo(), 'ASCII',
                              '2015MNRAS.449.1215P.tsv')
