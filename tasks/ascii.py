@@ -25,6 +25,59 @@ def do_ascii(catalog):
     """
     task_str = catalog.get_current_task_str()
 
+    # 1998A&A...337..207S
+    file_path = os.path.join(catalog.get_current_task_repo(), 'ASCII',
+                             '1998A&A...337..207S-tab3.tsv')
+    tsvin = list(
+        csv.reader(
+            open(file_path, 'r'), delimiter='\t', skipinitialspace=True))
+    for ri, row in enumerate(pbar(tsvin, task_str)):
+        (name, source) = catalog.new_entry(
+            'SN1996N', bibcode='1998A&A...337..207S')
+        if ri == 0:
+            bands = row[1:]
+            continue
+        for ci, col in enumerate(row[1:-1:2]):
+            if not is_number(col):
+                continue
+            photodict = {
+                PHOTOMETRY.BAND: bands[ci],
+                PHOTOMETRY.TIME: jd_to_mjd(Decimal(row[0])),
+                PHOTOMETRY.MAGNITUDE: col,
+                PHOTOMETRY.SOURCE: source
+            }
+            if is_number(row[2 + 2 * ci]):
+                photodict[PHOTOMETRY.E_MAGNITUDE] = row[2 + 2 * ci]
+            catalog.entries[name].add_photometry(**photodict)
+    catalog.journal_entries()
+
+    # 1997ApJ...483..675C
+    file_path = os.path.join(catalog.get_current_task_repo(), 'ASCII',
+                             '1997ApJ...483..675C-tab1.tsv')
+    tsvin = list(
+        csv.reader(
+            open(file_path, 'r'), delimiter='\t', skipinitialspace=True))
+    for ri, row in enumerate(pbar(tsvin, task_str)):
+        (name, source) = catalog.new_entry(
+            'SN1983V', bibcode='1997ApJ...483..675C')
+        if ri == 0:
+            bands = row[1:-2]
+            continue
+        for ci, col in enumerate(row[1:-2:2]):
+            if not is_number(col):
+                continue
+            photodict = {
+                PHOTOMETRY.TELESCOPE: row[-2],
+                PHOTOMETRY.BAND: bands[ci],
+                PHOTOMETRY.TIME: jd_to_mjd(Decimal(row[0])),
+                PHOTOMETRY.MAGNITUDE: col,
+                PHOTOMETRY.SOURCE: source
+            }
+            if is_number(row[2 + 2 * ci]):
+                photodict[PHOTOMETRY.E_MAGNITUDE] = row[2 + 2 * ci]
+            catalog.entries[name].add_photometry(**photodict)
+    catalog.journal_entries()
+
     # 2016arXiv160908145V
     datafile = os.path.join(catalog.get_current_task_repo(), 'ASCII',
                             '2016arXiv160908145V-tab11.tex')
@@ -61,7 +114,7 @@ def do_ascii(catalog):
             if ri == 0:
                 bands = row[1:]
                 continue
-            for ci, col in enumerate(row[1:-2:2]):
+            for ci, col in enumerate(row[1:-1:2]):
                 if not is_number(col):
                     continue
                 photodict = {
