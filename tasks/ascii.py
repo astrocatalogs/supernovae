@@ -25,6 +25,27 @@ def do_ascii(catalog):
     """
     task_str = catalog.get_current_task_str()
 
+    # 2016arXiv160908145V
+    datafile = os.path.join(catalog.get_current_task_repo(), 'ASCII',
+                            '2016arXiv160908145V-tab11.tex')
+
+    data = read(datafile, format='latex')
+    name, source = catalog.new_entry(
+        'iPTF13dcc', bibcode='2016arXiv160908145V')
+    for row in pbar(data, task_str):
+        mag, err = row[-1].split(' $\pm$ ')
+        band = row[3]
+        tel = row[2]
+        photodict = {
+            PHOTOMETRY.MAGNITUDE: mag,
+            PHOTOMETRY.TIME: str(row[0]),
+            PHOTOMETRY.U_TIME: 'MJD',
+            PHOTOMETRY.BAND: band,
+            PHOTOMETRY.TELESCOPE: tel,
+            PHOTOMETRY.SOURCE: source
+        }
+        catalog.entries[name].add_photometry(**photodict)
+
     # 2012A&A...537A.140T
     tables = ['2012A&A...537A.140T-' + x + '.tsv' for x in ['tab4', 'tab6']]
     sns = ['SN2006V', 'SN2006au']
