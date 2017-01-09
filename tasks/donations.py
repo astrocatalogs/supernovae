@@ -78,6 +78,48 @@ def do_donated_photo(catalog):
                 catalog.entries[name].add_photometry(**photodict)
     # End private donations #
 
+    # Kuncarayakti-01-09-17
+    datafile = os.path.join(catalog.get_current_task_repo(), 'Donations',
+                            'Kuncarayakti-01-09-17/SN1978K.dat')
+    inpname = os.path.basename(datafile).split('.')[0]
+    with open(datafile, 'r') as f:
+        tsvin = csv.reader(f, delimiter=' ', skipinitialspace=True)
+        host = False
+        for ri, row in enumerate(tsvin):
+            if ri == 0:
+                continue
+            if row[0][0] == '#':
+                rsplit = [x.strip('# ') for x in ' '.join(row).split(',')]
+                bc = rsplit[0]
+                tel, ins = '', ''
+                if len(rsplit) > 1:
+                    tel = rsplit[1]
+                if len(rsplit) > 2:
+                    ins = rsplit[2]
+                continue
+            (name, source) = catalog.new_entry(inpname, bibcode=bc)
+            mag = row[4]
+            err = row[5]
+            mjd = str(astrotime('-'.join(row[:3]), format='iso').mjd)
+            photodict = {
+                PHOTOMETRY.BAND: row[3],
+                PHOTOMETRY.TIME: mjd,
+                PHOTOMETRY.U_TIME: 'MJD',
+                PHOTOMETRY.MAGNITUDE: mag.strip('>s'),
+                PHOTOMETRY.SOURCE: source
+            }
+            if is_number(err):
+                photodict[PHOTOMETRY.E_MAGNITUDE] = err
+            if tel:
+                photodict[PHOTOMETRY.TELESCOPE] = tel
+            if ins:
+                photodict[PHOTOMETRY.INSTRUMENT] = ins
+            if '>' in mag:
+                photodict[PHOTOMETRY.UPPER_LIMIT] = True
+            if 's' in mag:
+                photodict[PHOTOMETRY.SYNTHETIC] = True
+            catalog.entries[name].add_photometry(**photodict)
+
     # Nugent 01-09-17 donation
     file_names = glob(
         os.path.join(catalog.get_current_task_repo(), 'Donations',
@@ -91,8 +133,6 @@ def do_donated_photo(catalog):
             host = False
             for urow in tsvin:
                 row = list(filter(None, urow))
-                if not is_number(mag):
-                    continue
                 counts = row[2]
                 e_counts = row[3]
                 zp = row[4]
