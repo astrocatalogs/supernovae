@@ -8,12 +8,12 @@ import re
 from datetime import datetime
 from glob import glob
 
-from astropy.io.ascii import read
-from astropy.time import Time as astrotime
-
 from astrocats.catalog.photometry import PHOTOMETRY, set_pd_mag_from_counts
 from astrocats.catalog.utils import (is_number, jd_to_mjd, make_date_string,
                                      pbar, pbar_strings)
+from astropy.io.ascii import read
+from astropy.time import Time as astrotime
+
 from cdecimal import Decimal
 
 from ..supernova import SUPERNOVA
@@ -24,6 +24,38 @@ def do_ascii(catalog):
     published works.
     """
     task_str = catalog.get_current_task_str()
+
+    # 2011ApJ...729...88R
+    file_path = os.path.join(catalog.get_current_task_repo(), 'ASCII',
+                             '2011ApJ...729...88R-tab1.tsv')
+    tsvin = list(
+        csv.reader(
+            open(file_path, 'r'), delimiter='\t', skipinitialspace=True))
+    for ri, row in enumerate(pbar(tsvin, task_str)):
+        (name, source) = catalog.new_entry(
+            'SN2003ma', bibcode='2011ApJ...729...88R')
+        if ri == 0:
+            bands = row[1:]
+            continue
+        for ci, col in enumerate(row[1:]):
+            csplit = col.split(' (')
+            if not is_number(csplit[0]):
+                continue
+            photodict = {
+                PHOTOMETRY.BAND: bands[ci].split('_')[0],
+                PHOTOMETRY.TIME: row[0],
+                PHOTOMETRY.MAGNITUDE: csplit[0].strip('<'),
+                PHOTOMETRY.SURVEY: ('SuperMONGO'
+                                    if '_SM' in bands[ci] else 'OGLE'),
+                PHOTOMETRY.SOURCE: source
+            }
+            if len(csplit) > 1:
+                err = csplit[1].strip(')')
+                photodict[PHOTOMETRY.E_MAGNITUDE] = err
+            if '<' in col:
+                photodict[PHOTOMETRY.UPPER_LIMIT] = True
+            catalog.entries[name].add_photometry(**photodict)
+    catalog.journal_entries()
 
     # 1998A&A...337..207S
     file_path = os.path.join(catalog.get_current_task_repo(), 'ASCII',
@@ -43,6 +75,7 @@ def do_ascii(catalog):
             photodict = {
                 PHOTOMETRY.BAND: bands[ci],
                 PHOTOMETRY.TIME: jd_to_mjd(Decimal(row[0])),
+                PHOTOMETRY.U_TIME: 'MJD',
                 PHOTOMETRY.MAGNITUDE: col,
                 PHOTOMETRY.SOURCE: source
             }
@@ -70,6 +103,7 @@ def do_ascii(catalog):
                 PHOTOMETRY.TELESCOPE: row[-2],
                 PHOTOMETRY.BAND: bands[ci],
                 PHOTOMETRY.TIME: jd_to_mjd(Decimal(row[0])),
+                PHOTOMETRY.U_TIME: 'MJD',
                 PHOTOMETRY.MAGNITUDE: col,
                 PHOTOMETRY.SOURCE: source
             }
@@ -103,8 +137,7 @@ def do_ascii(catalog):
     tables = ['2012A&A...537A.140T-' + x + '.tsv' for x in ['tab4', 'tab6']]
     sns = ['SN2006V', 'SN2006au']
     for ti, tab in enumerate(tables):
-        file_path = os.path.join(catalog.get_current_task_repo(), 'ASCII',
-                                 tab)
+        file_path = os.path.join(catalog.get_current_task_repo(), 'ASCII', tab)
         tsvin = list(
             csv.reader(
                 open(file_path, 'r'), delimiter='\t', skipinitialspace=True))
@@ -121,6 +154,7 @@ def do_ascii(catalog):
                     PHOTOMETRY.TELESCOPE: row[-1],
                     PHOTOMETRY.BAND: bands[ci],
                     PHOTOMETRY.TIME: jd_to_mjd(Decimal(row[0])),
+                    PHOTOMETRY.U_TIME: 'MJD',
                     PHOTOMETRY.MAGNITUDE: col,
                     PHOTOMETRY.E_MAGNITUDE: str(float(row[2 + 2 * ci])),
                     PHOTOMETRY.SOURCE: source
@@ -150,6 +184,7 @@ def do_ascii(catalog):
                 PHOTOMETRY.TELESCOPE: 'DES',
                 PHOTOMETRY.BAND: band,
                 PHOTOMETRY.TIME: mjd,
+                PHOTOMETRY.U_TIME: 'MJD',
                 PHOTOMETRY.COUNTS: counts,
                 PHOTOMETRY.E_COUNTS: e_counts,
                 PHOTOMETRY.ZERO_POINT: zp,
