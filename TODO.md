@@ -16,24 +16,23 @@ Other multiple SN datasets:
 * http://adsabs.harvard.edu/abs/1987Ap&SS.134..329P (spectra for 1985G and 1985H)
 * http://adsabs.harvard.edu/abs/1989AJ.....97..726F (spectra for 1987F and 1988I)
 * http://adsabs.harvard.edu/abs/1990Ap&SS.169..275R (spectra for 1987N, 1988Y, 1988D, 1989D)
-* http://adsabs.harvard.edu/abs/1997AJ....114.2054A (SN 1995al, 1997Y, 1997bp)
-* http://adsabs.harvard.edu/abs/1999AJ....117..725F (1979C, 1980K)
-* http://adsabs.harvard.edu/abs/2006ApJ...645..841N (SNLS LCs)
-* http://adsabs.harvard.edu/abs/2012A%26A...545L...7T (SN 2006V, 2006au)
+* http://adsabs.harvard.edu/abs/1997AJ....114.2054A (spectra for 1995al, 1997Y, 1997bp)
+* http://adsabs.harvard.edu/abs/1999AJ....117..725F (spectra for 1979C, 1980K)
+* http://adsabs.harvard.edu/abs/2006ApJ...645..841N (five SNLS LCs)
 * http://adsabs.harvard.edu/abs/2014A%26A...568A..19C (SN2013ez, SN2013fu, missing t0)
 * http://adsabs.harvard.edu/abs/2016arXiv160105955F (Late-time Iax spectra)
 * http://adsabs.harvard.edu/abs/2015arXiv151201303C (radio upper limits for Ibc SNe)
-* http://adsabs.harvard.edu/abs/2016arXiv160908145V (a couple SLSN)
 * http://arxiv.org/abs/1603.05657 (KSN2011a, KSN2011d)
 
 Other single SN datasets:
+
+**Note: Mostly spectra from these papers.**
 * SN1885A - 2011ApJ...730...89P (from Perets e-mail)
 * SN1972E - IR photometry from Kirschner paper
-* SN1978K - http://adsabs.harvard.edu/abs/1993ApJ...416..167R (Table 1)
-* SN1979C - http://adsabs.harvard.edu/abs/1981ApJ...244..780B
+* SN1978K - http://adsabs.harvard.edu/abs/1993ApJ...416..167R (Table 1), http://adsabs.harvard.edu/abs/2016MNRAS.458.2063K
+* SN1979C - http://adsabs.harvard.edu/abs/1981ApJ...244..780B (spectra)
 * SN1980I - http://adsabs.harvard.edu/abs/1981AJ.....86..998S (spectrum)
 * SN1983I - http://adsabs.harvard.edu/abs/1987ApJ...313L..69W (spectrum)
-* SN1983V - http://adsabs.harvard.edu/abs/1997ApJ...483..675C
 * SN1984A - http://adsabs.harvard.edu/abs/1989A&A...220...83B (multiple spectra)
 * SN1985F - http://adsabs.harvard.edu/abs/1986Ap&SS.125..175P (spectrum)
 * SN1986G - http://adsabs.harvard.edu/abs/2002AJ....124..417H, May 7th spectrum
@@ -48,28 +47,28 @@ Other single SN datasets:
 * SN1994D - http://adsabs.harvard.edu/abs/1996MNRAS.281..263M
 * SN1994D - http://adsabs.harvard.edu/abs/1998AJ....115.1096G, June 5th spectrum
 * SN1995D - http://adsabs.harvard.edu/abs/1996PASJ...48...51S
-* SN1995N - http://adsabs.harvard.edu/abs/2002ApJ...572..350F
-* SN1995V - http://adsabs.harvard.edu/abs/1998MNRAS.299..150F
-* SN1996N - http://adsabs.harvard.edu/abs/1998A%26A...337..207S
+* SN1995N - http://adsabs.harvard.edu/abs/2002ApJ...572..350F, http://adsabs.harvard.edu/abs/2005ASPC..342..285P (LC in graphical form)
+* SN1995V - http://adsabs.harvard.edu/abs/1998MNRAS.299..150F (spectra)
+* SN1996N - http://adsabs.harvard.edu/abs/1998A%26A...337..207S (spectra)
 * SN1996cb - http://adsabs.harvard.edu/abs/1999AJ....117..736Q
 * SN1997X - http://adsabs.harvard.edu/abs/1998A%26A...333..159M
-* SN1997ab - http://adsabs.harvard.edu/abs/2000MmSAI..71..317S
+* SN1997ab - http://adsabs.harvard.edu/abs/2000MmSAI..71..317S (spectra only, LC missing)
 * SN1997eg - http://adsabs.harvard.edu/abs/2002MNRAS.330..844S
 * SN1998bu - http://adsabs.harvard.edu/abs/2001ApJ...549L.215C (need to reacquire spectrum on 1999-01-23)
-* SN1999E - http://adsabs.harvard.edu/abs/2003MNRAS.340..191R
+* SN1999E - http://adsabs.harvard.edu/abs/2003MNRAS.340..191R (has LC, needs digitization)
 * SN1999aw - http://adsabs.harvard.edu/abs/2002AJ....124.2905S
 * SN1999by - http://adsabs.harvard.edu/abs/2002ApJ...568..791H
 * SN1999el - http://adsabs.harvard.edu/abs/2002ApJ...573..144D
 * SN1999em - http://adsabs.harvard.edu/abs/2003MNRAS.338..939E
 * SN2000cx - http://adsabs.harvard.edu/abs/2002ApJ...565..413R
 * SN2000ew - http://adsabs.harvard.edu/abs/2002PASJ...54..905G
-* SN2001el - http://adsabs.harvard.edu/abs/2005A%26A...443..649M
+* SN2001el - http://adsabs.harvard.edu/abs/2005A%26A...443..649M (spectra)
 * SN2002fk - http://adsabs.harvard.edu/abs/2014ApJ...789...89C
 * SN2003hx - http://adsabs.harvard.edu/abs/2008MNRAS.389..706M
-* SN2003ma - http://adsabs.harvard.edu/abs/2011ApJ...729...88R
+* SN2003ma - http://adsabs.harvard.edu/abs/2011ApJ...729...88R (spectra)
 * SN2004dj - http://adsabs.harvard.edu/abs/2011A%26A...527A..61S
 * SN2004et - http://adsabs.harvard.edu/abs/2007MNRAS.381..280M, http://adsabs.harvard.edu/abs/2009ApJ...704..306K
-* SN2005E - http://adsabs.harvard.edu/abs/2010Natur.465..322P
+* SN2005E - http://adsabs.harvard.edu/abs/2010Natur.465..322P (Hagai will provide LC)
 * SN2005am - http://adsabs.harvard.edu/abs/2005ApJ...635.1192B
 * SN2005df - http://adsabs.harvard.edu/abs/2015ApJ...806..107D
 * SN2005ke - http://adsabs.harvard.edu/abs/2014A%26A...572A..75K
@@ -82,7 +81,9 @@ Other single SN datasets:
 * SN2007pk - http://adsabs.harvard.edu/abs/2012ApJ...750..128P
 * SN2007qd - http://adsabs.harvard.edu/abs/2010ApJ...720..704M
 * SN2007if - http://adsabs.harvard.edu/abs/2010ApJ...715.1338Y
-* SN2007it - http://adsabs.harvard.edu/abs/2011ApJ...731...47A
+* SN2007it - http://adsabs.harvard.edu/abs/2011ApJ...731...47A (more colors for LC available)
+
+**Note: Below have yet to be checked for photometry.**
 * SN2007ru - http://adsabs.harvard.edu/abs/2009ApJ...697..676S
 * SN2007uy - http://adsabs.harvard.edu/abs/2013MNRAS.434.2032R
 * SN2008D - http://www.nature.com/nature/journal/v453/n7194/suppinfo/nature06997.html
