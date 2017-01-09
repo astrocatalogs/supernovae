@@ -7,10 +7,10 @@ from glob import glob
 from math import floor, isnan
 
 import numpy as np
-from astropy.time import Time as astrotime
 from astropy.io.ascii import read
+from astropy.time import Time as astrotime
 
-from astrocats.catalog.photometry import PHOTOMETRY
+from astrocats.catalog.photometry import PHOTOMETRY, set_pd_mag_from_counts
 from astrocats.catalog.spectrum import SPECTRUM
 from astrocats.catalog.utils import (get_sig_digits, is_number, jd_to_mjd,
                                      pbar, pbar_strings, pretty_num, rep_chars)
@@ -22,7 +22,7 @@ from ..supernova import SUPERNOVA
 def do_donated_photo(catalog):
     task_str = catalog.get_current_task_str()
 
-    # Private donations here
+    # Private donations here #
     if not catalog.args.travis:
         # Nicholl Gaia16apd donation
         path = os.path.join(catalog.get_current_task_repo(), '..',
@@ -75,6 +75,39 @@ def do_donated_photo(catalog):
                     photodict[PHOTOMETRY.UPPER_LIMIT] = True
                 else:
                     photodict[PHOTOMETRY.E_MAGNITUDE] = err
+                catalog.entries[name].add_photometry(**photodict)
+    # End private donations #
+
+    # Nugent 01-09-17 donation
+    file_names = glob(
+        os.path.join(catalog.get_current_task_repo(), 'Donations',
+                     'Nugent-01-09-17/*.dat'))
+    for datafile in pbar_strings(file_names, task_str + ': Nugent-01-09-17'):
+        inpname = os.path.basename(datafile).split('.')[0]
+        (name, source) = catalog.new_entry(
+            inpname, bibcode='2006ApJ...645..841N')
+        with open(datafile, 'r') as f:
+            tsvin = csv.reader(f, delimiter=' ', skipinitialspace=True)
+            host = False
+            for urow in tsvin:
+                row = list(filter(None, urow))
+                if not is_number(mag):
+                    continue
+                counts = row[2]
+                e_counts = row[3]
+                zp = row[4]
+                photodict = {
+                    PHOTOMETRY.BAND: row[1],
+                    PHOTOMETRY.TIME: row[0],
+                    PHOTOMETRY.U_TIME: 'MJD',
+                    PHOTOMETRY.COUNTS: counts,
+                    PHOTOMETRY.E_COUNTS: e_counts,
+                    PHOTOMETRY.ZERO_POINT: zp,
+                    PHOTOMETRY.TELESCOPE: 'CFHT',
+                    PHOTOMETRY.SURVEY: 'SNLS',
+                    PHOTOMETRY.SOURCE: source
+                }
+                set_pd_mag_from_counts(photodict, counts, ec=e_counts, zp=zp)
                 catalog.entries[name].add_photometry(**photodict)
 
     # Inserra 09-04-16 donation
