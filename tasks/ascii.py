@@ -25,6 +25,25 @@ def do_ascii(catalog):
     """
     task_str = catalog.get_current_task_str()
 
+    # 2007ApJ...669L..17H
+    datafile = os.path.join(catalog.get_current_task_repo(), 'ASCII',
+                            '2007ApJ...669L..17H.tsv')
+
+    tsvin = list(
+        csv.reader(
+            open(datafile, 'r'), delimiter='\t', skipinitialspace=True))
+    name, source = catalog.new_entry('SN2006gz', bibcode='2007ApJ...669L..17H')
+    for row in pbar(tsvin[1:], task_str):
+        photodict = {
+            PHOTOMETRY.MAGNITUDE: row[2],
+            PHOTOMETRY.E_MAGNITUDE: row[3],
+            PHOTOMETRY.TIME: jd_to_mjd(Decimal(row[1])),
+            PHOTOMETRY.U_TIME: 'MJD',
+            PHOTOMETRY.BAND: row[0],
+            PHOTOMETRY.SOURCE: source
+        }
+        catalog.entries[name].add_photometry(**photodict)
+
     # 2011ApJ...729...88R
     file_path = os.path.join(catalog.get_current_task_repo(), 'ASCII',
                              '2011ApJ...729...88R-tab1.tsv')
