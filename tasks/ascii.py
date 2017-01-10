@@ -144,6 +144,7 @@ def do_ascii(catalog):
         tel = row[2]
         photodict = {
             PHOTOMETRY.MAGNITUDE: mag,
+            PHOTOMETRY.E_MAGNITUDE: err,
             PHOTOMETRY.TIME: str(row[0]),
             PHOTOMETRY.U_TIME: 'MJD',
             PHOTOMETRY.BAND: band,

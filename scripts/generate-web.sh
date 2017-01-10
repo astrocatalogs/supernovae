@@ -13,7 +13,7 @@ python3.5 -m astrocats.supernovae.scripts.dupecat &
 pids[2]=$!
 python3.5 -m astrocats.supernovae.scripts.conflictcat &
 pids[3]=$!
-python3.5 -m astrocats.supernovae.scripts.bibliocat &
+python3.5 -m astrocats.scripts.bibliocat -c sne &
 pids[4]=$!
 python3.5 -m astrocats.supernovae.scripts.erratacat &
 pids[5]=$!
