@@ -78,7 +78,7 @@ def do_nedd(catalog):
                             pass
                         else:
                             cosmosource = catalog.entries[name].add_source(
-                                bibcode='2015arXiv150201589P')
+                                bibcode='2016A&A...594A..13P')
                             combsources = uniq_cdl(sources.split(',') +
                                                    [cosmosource])
                             catalog.entries[snname].add_quantity(
