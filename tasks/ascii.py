@@ -25,6 +25,44 @@ def do_ascii(catalog):
     """
     task_str = catalog.get_current_task_str()
 
+    # 2006AJ....132.1126N
+    datafile = os.path.join(catalog.get_current_task_repo(), 'ASCII',
+                            '2006AJ....132.1126N-tab2.tsv')
+    tsvin = list(
+        csv.reader(
+            open(datafile, 'r'), delimiter='\t', skipinitialspace=True))
+    for row in pbar(tsvin, task_str):
+        name, source = catalog.new_entry(row[0], bibcode='2006AJ....132.1126N')
+        catalog.entries[name].add_quantity(SUPERNOVA.RA, row[1], source)
+        catalog.entries[name].add_quantity(SUPERNOVA.DEC, row[2], source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.REDSHIFT, row[3], source, kind='spectroscopic')
+        mldt = astrotime(float(row[4]), format='mjd').datetime
+        discoverdate = make_date_string(mldt.year, mldt.month, mldt.day)
+        catalog.entries[name].add_quantity(SUPERNOVA.DISCOVER_DATE,
+                                           discoverdate, source)
+        catalog.entries[name].add_quantity(SUPERNOVA.CLAIMED_TYPE, 'Ia',
+                                           source, kind='spectroscopic')
+
+    datafile = os.path.join(catalog.get_current_task_repo(), 'ASCII',
+                            '2006AJ....132.1126N-tab3.tsv')
+    tsvin = list(
+        csv.reader(
+            open(datafile, 'r'), delimiter='\t', skipinitialspace=True))
+    for row in pbar(tsvin, task_str):
+        name, source = catalog.new_entry(row[0], bibcode='2006AJ....132.1126N')
+        catalog.entries[name].add_quantity(SUPERNOVA.RA, row[1], source)
+        catalog.entries[name].add_quantity(SUPERNOVA.DEC, row[2], source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.REDSHIFT, row[3], source, kind='photometric')
+        mldt = astrotime(float(row[4]), format='mjd').datetime
+        discoverdate = make_date_string(mldt.year, mldt.month, mldt.day)
+        catalog.entries[name].add_quantity(SUPERNOVA.DISCOVER_DATE,
+                                           discoverdate, source)
+        catalog.entries[name].add_quantity(SUPERNOVA.CLAIMED_TYPE, 'Ia?',
+                                           source, kind='photometric')
+    catalog.journal_entries()
+
     # 2007ApJ...669L..17H
     datafile = os.path.join(catalog.get_current_task_repo(), 'ASCII',
                             '2007ApJ...669L..17H.tsv')
@@ -43,6 +81,7 @@ def do_ascii(catalog):
             PHOTOMETRY.SOURCE: source
         }
         catalog.entries[name].add_photometry(**photodict)
+    catalog.journal_entries()
 
     # 2011ApJ...729...88R
     file_path = os.path.join(catalog.get_current_task_repo(), 'ASCII',
