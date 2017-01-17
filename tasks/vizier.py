@@ -27,6 +27,30 @@ def do_vizier(catalog):
     Vizier.ROW_LIMIT = -1
     Vizier.VIZIER_SERVER = 'vizier.cfa.harvard.edu'
 
+    # 2016ApJ...826..144S
+    result = Vizier.get_catalogs('J/ApJ/826/144/table1')
+    table = result[list(result.keys())[0]]
+    table.convert_bytestring_to_unicode(python3_only=True)
+    (name, source) = catalog.new_entry(
+        'ASASSN-14lp', bibcode='2016ApJ...826..144S')
+    for row in pbar(table, task_str):
+        row = convert_aq_output(row)
+        photodict = {
+            PHOTOMETRY.TIME:
+            jd_to_mjd(Decimal(row['JD']) + Decimal('2450000')),
+            PHOTOMETRY.U_TIME: 'MJD',
+            PHOTOMETRY.TELESCOPE: row['Tel'],
+            PHOTOMETRY.BAND: row['Band'],
+            PHOTOMETRY.MAGNITUDE: row['mag'],
+            PHOTOMETRY.SOURCE: source
+        }
+        if row['l_mag'] == '>':
+            photodict[PHOTOMETRY.UPPER_LIMIT] = True
+        else:
+            photodict[PHOTOMETRY.E_MAGNITUDE] = row['e_mag']
+        catalog.entries[name].add_photometry(**photodict)
+    catalog.journal_entries()
+
     # 2012ApJ...756..173S
     results = Vizier.get_catalogs(
         ['J/ApJ/756/173/table2', 'J/ApJ/756/173/table3'])
