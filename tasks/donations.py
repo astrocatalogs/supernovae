@@ -24,29 +24,6 @@ def do_donated_photo(catalog):
 
     # Private donations here #
     if not catalog.args.travis:
-        # Nicholl Gaia16apd donation
-        path = os.path.join(catalog.get_current_task_repo(), '..',
-                            'sne-private-matt-nicholl', 'gaia16apd_phot.txt')
-
-        data = read(path, format='cds')
-        name, source = catalog.new_entry(
-            'Gaia16apd', bibcode='2016arXiv161106993N', private=True)
-        for row in pbar(data, task_str + ': Nicholl Gaia16apd'):
-            photodict = {
-                PHOTOMETRY.TIME: str(row['MJD']),
-                PHOTOMETRY.U_TIME: 'MJD',
-                PHOTOMETRY.MAGNITUDE: str(row['mag']),
-                PHOTOMETRY.E_MAGNITUDE: str(row['e_mag']),
-                PHOTOMETRY.BAND: row['Filter'],
-                PHOTOMETRY.TELESCOPE: row['Telescope'],
-                PHOTOMETRY.SOURCE: source
-            }
-            if row['l_mag'] == '>':
-                photodict[PHOTOMETRY.UPPER_LIMIT] = True
-            else:
-                photodict[PHOTOMETRY.E_MAGNITUDE] = str(row['e_mag'])
-            catalog.entries[name].add_photometry(**photodict)
-
         # Arcavi 2016gkg donation
         path = os.path.join(catalog.get_current_task_repo(), '..',
                             'sne-private-iair-arcavi', 'SN2016gkg.txt')
@@ -78,9 +55,32 @@ def do_donated_photo(catalog):
                 catalog.entries[name].add_photometry(**photodict)
     # End private donations #
 
+    # Nicholl Gaia16apd donation
+    path = os.path.join(catalog.get_current_task_repo(), 'Donations',
+                        'Nicholl-01-20-17', 'gaia16apd_phot.txt')
+
+    data = read(path, format='cds')
+    name, source = catalog.new_entry(
+        'Gaia16apd', bibcode='2016arXiv161106993N', private=True)
+    for row in pbar(data, task_str + ': Nicholl Gaia16apd'):
+        photodict = {
+            PHOTOMETRY.TIME: str(row['MJD']),
+            PHOTOMETRY.U_TIME: 'MJD',
+            PHOTOMETRY.MAGNITUDE: str(row['mag']),
+            PHOTOMETRY.E_MAGNITUDE: str(row['e_mag']),
+            PHOTOMETRY.BAND: row['Filter'],
+            PHOTOMETRY.TELESCOPE: row['Telescope'],
+            PHOTOMETRY.SOURCE: source
+        }
+        if row['l_mag'] == '>':
+            photodict[PHOTOMETRY.UPPER_LIMIT] = True
+        else:
+            photodict[PHOTOMETRY.E_MAGNITUDE] = str(row['e_mag'])
+        catalog.entries[name].add_photometry(**photodict)
+
     # Kuncarayakti-01-09-17
     datafile = os.path.join(catalog.get_current_task_repo(), 'Donations',
-                            'Kuncarayakti-01-09-17/SN1978K.dat')
+                            'Kuncarayakti-01-09-17', 'SN1978K.dat')
     inpname = os.path.basename(datafile).split('.')[0]
     with open(datafile, 'r') as f:
         tsvin = csv.reader(f, delimiter=' ', skipinitialspace=True)
@@ -123,7 +123,7 @@ def do_donated_photo(catalog):
     # Nugent 01-09-17 donation
     file_names = glob(
         os.path.join(catalog.get_current_task_repo(), 'Donations',
-                     'Nugent-01-09-17/*.dat'))
+                     'Nugent-01-09-17', '*.dat'))
     for datafile in pbar_strings(file_names, task_str + ': Nugent-01-09-17'):
         inpname = os.path.basename(datafile).split('.')[0]
         (name, source) = catalog.new_entry(
@@ -153,7 +153,7 @@ def do_donated_photo(catalog):
     # Inserra 09-04-16 donation
     file_names = glob(
         os.path.join(catalog.get_current_task_repo(), 'Donations',
-                     'Inserra-09-04-16/*.txt'))
+                     'Inserra-09-04-16', '*.txt'))
     for datafile in pbar_strings(file_names, task_str + ': Inserra-09-04-16'):
         inpname = os.path.basename(datafile).split('.')[0]
         (name, source) = catalog.new_entry(
@@ -195,7 +195,7 @@ def do_donated_photo(catalog):
     # Nicholl 04-01-16 donation
     with open(
             os.path.join(catalog.get_current_task_repo(), 'Donations',
-                         'Nicholl-04-01-16/bibcodes.json'), 'r') as f:
+                         'Nicholl-04-01-16', 'bibcodes.json'), 'r') as f:
         bcs = json.loads(f.read())
 
     kcorrected = ['SN2011ke', 'SN2011kf', 'SN2012il', 'PTF10hgi', 'PTF11rks']
@@ -292,7 +292,7 @@ def do_donated_photo(catalog):
     # Maggi 04-11-16 donation (MC SNRs)
     with open(
             os.path.join(catalog.get_current_task_repo(), 'Donations',
-                         'Maggi-04-11-16/LMCSNRs_OpenSNe.csv')) as f:
+                         'Maggi-04-11-16', 'LMCSNRs_OpenSNe.csv')) as f:
         tsvin = csv.reader(f, delimiter=',')
         for row in pbar(list(tsvin), task_str + ': Maggi-04-11-16/LMCSNRs'):
             name = 'MCSNR ' + row[0]
@@ -320,7 +320,7 @@ def do_donated_photo(catalog):
                                                    'CC', source)
     with open(
             os.path.join(catalog.get_current_task_repo(), 'Donations',
-                         'Maggi-04-11-16/SMCSNRs_OpenSNe.csv')) as f:
+                         'Maggi-04-11-16', 'SMCSNRs_OpenSNe.csv')) as f:
         tsvin = csv.reader(f, delimiter=',')
         for row in pbar(list(tsvin), task_str + ': Maggi-04-11-16/SMCSNRs'):
             name = 'MCSNR ' + row[0]
@@ -438,7 +438,7 @@ def do_donated_photo(catalog):
     # Nicholl 05-03-16
     files = glob(
         os.path.join(catalog.get_current_task_repo(), 'Donations',
-                     'Nicholl-05-03-16/*.txt'))
+                     'Nicholl-05-03-16', '*.txt'))
     name = catalog.add_entry('SN2015bn')
     for fi in pbar(files, task_str + ': Nicholl-05-03-16'):
         if 'late' in fi:
