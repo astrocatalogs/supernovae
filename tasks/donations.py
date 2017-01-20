@@ -24,28 +24,6 @@ def do_donated_photo(catalog):
 
     # Private donations here #
     if not catalog.args.travis:
-        # Nicholl Gaia16apd donation
-        path = os.path.join(catalog.get_current_task_repo(), '..',
-                            'sne-private-matt-nicholl', 'gaia16apd_phot.txt')
-
-        data = read(path, format='cds')
-        name, source = catalog.new_entry(
-            'Gaia16apd', bibcode='2016arXiv161106993N', private=True)
-        for row in pbar(data, task_str + ': Nicholl Gaia16apd'):
-            photodict = {
-                PHOTOMETRY.TIME: str(row['MJD']),
-                PHOTOMETRY.U_TIME: 'MJD',
-                PHOTOMETRY.MAGNITUDE: str(row['mag']),
-                PHOTOMETRY.E_MAGNITUDE: str(row['e_mag']),
-                PHOTOMETRY.BAND: row['Filter'],
-                PHOTOMETRY.TELESCOPE: row['Telescope'],
-                PHOTOMETRY.SOURCE: source
-            }
-            if row['l_mag'] == '>':
-                photodict[PHOTOMETRY.UPPER_LIMIT] = True
-            else:
-                photodict[PHOTOMETRY.E_MAGNITUDE] = str(row['e_mag'])
-            catalog.entries[name].add_photometry(**photodict)
 
         # Arcavi 2016gkg donation
         path = os.path.join(catalog.get_current_task_repo(), '..',
@@ -77,6 +55,29 @@ def do_donated_photo(catalog):
                     photodict[PHOTOMETRY.E_MAGNITUDE] = err
                 catalog.entries[name].add_photometry(**photodict)
     # End private donations #
+
+        # Nicholl Gaia16apd donation
+    path = os.path.join(catalog.get_current_task_repo(), '..',
+                        'sne-private-matt-nicholl', 'gaia16apd_phot.txt')
+
+    data = read(path, format='cds')
+    name, source = catalog.new_entry(
+        'Gaia16apd', bibcode='2016arXiv161106993N')
+    for row in pbar(data, task_str + ': Nicholl Gaia16apd'):
+        photodict = {
+            PHOTOMETRY.TIME: str(row['MJD']),
+            PHOTOMETRY.U_TIME: 'MJD',
+            PHOTOMETRY.MAGNITUDE: str(row['mag']),
+            PHOTOMETRY.E_MAGNITUDE: str(row['e_mag']),
+            PHOTOMETRY.BAND: row['Filter'],
+            PHOTOMETRY.TELESCOPE: row['Telescope'],
+            PHOTOMETRY.SOURCE: source
+        }
+        if row['l_mag'] == '>':
+            photodict[PHOTOMETRY.UPPER_LIMIT] = True
+        else:
+            photodict[PHOTOMETRY.E_MAGNITUDE] = str(row['e_mag'])
+        catalog.entries[name].add_photometry(**photodict)
 
     # Kuncarayakti-01-09-17
     datafile = os.path.join(catalog.get_current_task_repo(), 'Donations',
