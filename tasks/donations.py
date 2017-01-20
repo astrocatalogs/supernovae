@@ -61,7 +61,7 @@ def do_donated_photo(catalog):
 
     data = read(path, format='cds')
     name, source = catalog.new_entry(
-        'Gaia16apd', bibcode='2016arXiv161106993N', private=True)
+        'Gaia16apd', bibcode='2016arXiv161106993N')
     for row in pbar(data, task_str + ': Nicholl Gaia16apd'):
         photodict = {
             PHOTOMETRY.TIME: str(row['MJD']),
