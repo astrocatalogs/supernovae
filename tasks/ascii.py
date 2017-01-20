@@ -25,6 +25,28 @@ def do_ascii(catalog):
     """
     task_str = catalog.get_current_task_str()
 
+    # 2006AJ....132.2024L
+    datafile = os.path.join(catalog.get_current_task_repo(), 'ASCII',
+                            '2006AJ....132.2024L-tab1.txt')
+    data = read(datafile, format='cds')
+    for row in pbar(data, task_str):
+        name, source = catalog.new_entry(
+            row['Name'], bibcode='2006AJ....132.2024L')
+        for band in [
+                x for x in row.columns
+                if x.endswith('mag') and not x.startswith('e_')
+        ]:
+            if not is_number(row[band]):
+                continue
+            photodict = {
+                PHOTOMETRY.TIME: jd_to_mjd(Decimal(str(row['JD']))),
+                PHOTOMETRY.U_TIME: 'MJD',
+                PHOTOMETRY.MAGNITUDE: str(row[band]),
+                PHOTOMETRY.BAND: band.replace('mag', ''),
+                PHOTOMETRY.SOURCE: source
+            }
+            catalog.entries[name].add_photometry(**photodict)
+
     # 2006AJ....132.1126N
     datafile = os.path.join(catalog.get_current_task_repo(), 'ASCII',
                             '2006AJ....132.1126N-tab2.tsv')
@@ -41,8 +63,8 @@ def do_ascii(catalog):
         discoverdate = make_date_string(mldt.year, mldt.month, mldt.day)
         catalog.entries[name].add_quantity(SUPERNOVA.DISCOVER_DATE,
                                            discoverdate, source)
-        catalog.entries[name].add_quantity(SUPERNOVA.CLAIMED_TYPE, 'Ia',
-                                           source, kind='spectroscopic')
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.CLAIMED_TYPE, 'Ia', source, kind='spectroscopic')
 
     datafile = os.path.join(catalog.get_current_task_repo(), 'ASCII',
                             '2006AJ....132.1126N-tab3.tsv')
@@ -59,8 +81,8 @@ def do_ascii(catalog):
         discoverdate = make_date_string(mldt.year, mldt.month, mldt.day)
         catalog.entries[name].add_quantity(SUPERNOVA.DISCOVER_DATE,
                                            discoverdate, source)
-        catalog.entries[name].add_quantity(SUPERNOVA.CLAIMED_TYPE, 'Ia?',
-                                           source, kind='photometric')
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.CLAIMED_TYPE, 'Ia?', source, kind='photometric')
     catalog.journal_entries()
 
     # 2007ApJ...669L..17H
