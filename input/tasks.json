@@ -302,6 +302,17 @@
         "always_journal": true,
         "priority": 27
     },
+    "snax": {
+        "nice_name": "%pre SNaX",
+        "active": false,
+        "update": true,
+        "archived": false,
+        "module": "supernovae.tasks.snax",
+        "function": "do_snax",
+        "repo": "input/sne-external",
+        "always_journal": true,
+        "priority": 27
+    },
     "batse": {
         "nice_name": "%pre BATSE catalog",
         "active": true,
