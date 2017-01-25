@@ -145,14 +145,14 @@ def do_external_fits_spectra(catalog):
             else:
                 raise ValueError("Couldn't find JD/MJD for spectrum.")
             w0 = hdulist[0].header['CRVAL1']
-            if 'CDELT1' in hdrkeys:
+            if hdulist[0].header['NAXIS'] == 1:
                 wd = hdulist[0].header['CDELT1']
                 fluxes = [str(x) for x in list(hdulist[0].data)]
-            elif 'CD1_1' in hdrkeys:
+                errors = False
+            elif hdulist[0].header['NAXIS'] == 3:
                 wd = hdulist[0].header['CD1_1']
-                fluxes = [str(x) for x in list(hdulist[0].data)[0]]
-                print(len(list(hdulist[0].data)))
-                print(fluxes)
+                fluxes = [str(x) for x in list(hdulist[0].data)[1][0]]
+                errors = [str(x) for x in list(hdulist[0].data)[2][0]]
             else:
                 print('Warning: Skipping FITS spectrum `{}`.'.format(filename))
                 continue
@@ -184,6 +184,8 @@ def do_external_fits_spectra(catalog):
             SPECTRUM.FILENAME: filename,
             SPECTRUM.SOURCE: source
         }
+        if errors:
+            specdict[SPECTRUM.ERRORS] = errors
         if 'SITENAME' in hdrkeys:
             specdict[SPECTRUM.OBSERVATORY] = hdulist[0].header['SITENAME']
         elif 'OBSERVAT' in hdrkeys:
