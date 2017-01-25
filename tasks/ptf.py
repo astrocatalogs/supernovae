@@ -62,7 +62,7 @@ def do_ptf(catalog):
                 name = 'PTF' + cols[0]
             name = catalog.add_entry(name)
             source = catalog.entries[name].add_source(
-                bibcode='2016arXiv160408207P')
+                bibcode='2016ApJ...830...13P')
             catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
             if alias:
                 catalog.entries[name].add_quantity(

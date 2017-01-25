@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """General data import tasks.
 """
+import json
 import os
 from collections import OrderedDict
 from glob import glob
@@ -82,7 +83,7 @@ def do_external_xray(catalog):
                         counts=cols[4],
                         flux=cols[6],
                         unabsorbedflux=cols[8],
-                        u_flux='ergs/ss/cm^2',
+                        u_flux='ergs/s/cm^2',
                         photonindex=cols[15],
                         instrument=cols[17],
                         nhmw=cols[11],
@@ -96,20 +97,31 @@ def do_external_xray(catalog):
 
 
 def do_external_fits_spectra(catalog):
+    fpath = catalog.get_current_task_repo()
+    with open(os.path.join(fpath, 'meta.json'), 'r') as f:
+        metadict = json.loads(f.read())
+
     fureps = {'erg/cm2/s/A': 'erg/s/cm^2/Angstrom'}
     task_str = catalog.get_current_task_str()
     path_pattern = os.path.join(catalog.get_current_task_repo(), '*.fits')
     files = glob(path_pattern)
     for datafile in files:
-        hdulist = fits.open(datafile)
         filename = datafile.split('/')[-1]
+        if filename == 'meta.json':
+            continue
+        hdulist = fits.open(datafile)
         for oi, obj in enumerate(hdulist[0].header):
             if '.' in obj:
                 del (hdulist[0].header[oi])
         hdulist[0].verify('silentfix')
         hdrkeys = list(hdulist[0].header.keys())
         # print(hdrkeys)
-        name = hdulist[0].header['OBJECT']
+        name = ''
+        if filename in metadict:
+            if 'name' in metadict[filename]:
+                name = metadict[filename]['name']
+        if not name:
+            name = hdulist[0].header['OBJECT']
         if 'OBSERVER' in hdrkeys:
             name, source = catalog.new_entry(
                 name, srcname=hdulist[0].header['OBSERVER'])
@@ -119,7 +131,6 @@ def do_external_fits_spectra(catalog):
         # for key in hdulist[0].header.keys():
         #     print(key, hdulist[0].header[key])
         if hdulist[0].header['SIMPLE']:
-            fluxes = [str(x) for x in list(hdulist[0].data)]
             if 'JD' in hdrkeys:
                 mjd = str(jd_to_mjd(Decimal(str(hdulist[0].header['JD']))))
             elif 'MJD' in hdrkeys:
@@ -136,6 +147,12 @@ def do_external_fits_spectra(catalog):
             w0 = hdulist[0].header['CRVAL1']
             if 'CDELT1' in hdrkeys:
                 wd = hdulist[0].header['CDELT1']
+                fluxes = [str(x) for x in list(hdulist[0].data)]
+            elif 'CD1_1' in hdrkeys:
+                wd = hdulist[0].header['CD1_1']
+                fluxes = [str(x) for x in list(hdulist[0].data)[0]]
+                print(len(list(hdulist[0].data)))
+                print(fluxes)
             else:
                 print('Warning: Skipping FITS spectrum `{}`.'.format(filename))
                 continue
