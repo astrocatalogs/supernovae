@@ -22005,6 +22005,25 @@
 		"edit":false
 	},
 	{
+		"name1":"AT2014ev",
+		"aliases1":[
+			"AT2014ev"
+		],
+		"name2":"SN2014ev",
+		"aliases2":[
+			"SN2014ev",
+			"PSN J08351668+4819011"
+		],
+		"ra1":"08:35:16.68",
+		"dec1":"+48:19:01.10",
+		"ra2":"08:35:16.68",
+		"dec2":"+48:19:01.1",
+		"distdeg":"0.0",
+		"maxdiffyear":"0.0027777777779647295",
+		"discdiffyear":"0.001972222222320852",
+		"edit":false
+	},
+	{
 		"name1":"CSS100312:120855-033744",
 		"aliases1":[
 			"CSS100312:120855-033744"
@@ -22989,6 +23008,26 @@
 		"edit":false
 	},
 	{
+		"name1":"AT2017af",
+		"aliases1":[
+			"AT2017af",
+			"ATLAS17abg"
+		],
+		"name2":"Gaia17acr",
+		"aliases2":[
+			"Gaia17acr",
+			"ATLAS17abgï»¿"
+		],
+		"ra1":"03:19:33.85",
+		"dec1":"-06:43:49.48",
+		"ra2":"03:19:33.888",
+		"dec2":"-06:43:49.548",
+		"distdeg":"0.00015945605842144575",
+		"maxdiffyear":"0.02777777777760093",
+		"discdiffyear":"0.02686111111097489",
+		"edit":false
+	},
+	{
 		"name1":"SN2016cbx",
 		"aliases1":[
 			"SN2016cbx",
@@ -23084,6 +23123,27 @@
 		"distdeg":"3.888888888869957e-05",
 		"maxdiffyear":"",
 		"discdiffyear":"0.9027777777776009",
+		"edit":false
+	},
+	{
+		"name1":"SN2016isl",
+		"aliases1":[
+			"SN2016isl",
+			"AT2016isl",
+			"PS16fkl",
+			"AT 2016isl"
+		],
+		"name2":"Gaia17aez",
+		"aliases2":[
+			"Gaia17aez"
+		],
+		"ra1":"03:58:12.55",
+		"dec1":"+18:34:54.30",
+		"ra2":"03:58:12.624",
+		"dec2":"+18:34:54.12",
+		"distdeg":"0.00031236108022896154",
+		"maxdiffyear":"0.07500000000004547",
+		"discdiffyear":"0.12313635000009526",
 		"edit":false
 	},
 	{
