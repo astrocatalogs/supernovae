@@ -54,7 +54,7 @@ def do_psst(catalog):
 
     # 2016ApJ...827L..40S
     file_path = os.path.join(catalog.get_current_task_repo(), 'ASCII',
-                             '1606.04795.tsv')
+                             '2016ApJ...827L..40S.tsv')
     with open(file_path, 'r') as f:
         data = list(
             csv.reader(
