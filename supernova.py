@@ -27,6 +27,7 @@ class SUPERNOVA(ENTRY):
                        kind_preference=['spectroscopic', 'photometric'],
                        replace_better=True)
     DISCOVERY_DATE = Key('discoverdate', KEY_TYPES.STRING)
+    EXPLOSION_DATE = Key('explosiondate', KEY_TYPES.STRING)
     MAX_VISUAL_ABS_MAG = Key('maxvisualabsmag', KEY_TYPES.NUMERIC)
     MAX_VISUAL_APP_MAG = Key('maxvisualappmag', KEY_TYPES.NUMERIC)
     MAX_VISUAL_BAND = Key('maxvisualband', KEY_TYPES.STRING)

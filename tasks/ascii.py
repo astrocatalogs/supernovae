@@ -192,13 +192,13 @@ def do_ascii(catalog):
             catalog.entries[name].add_photometry(**photodict)
     catalog.journal_entries()
 
-    # 2016arXiv160908145V
+    # 2017ApJ...835...58V
     datafile = os.path.join(catalog.get_current_task_repo(), 'ASCII',
-                            '2016arXiv160908145V-tab11.tex')
+                            '2017ApJ...835...58V-tab11.tex')
 
     data = read(datafile, format='latex')
     name, source = catalog.new_entry(
-        'iPTF13dcc', bibcode='2016arXiv160908145V')
+        'iPTF13dcc', bibcode='2017ApJ...835...58V')
     for row in pbar(data, task_str):
         mag, err = row[-1].split(' $\pm$ ')
         band = row[3]
@@ -609,9 +609,9 @@ def do_ascii(catalog):
         catalog.entries[name].add_photometry(**photodict)
     catalog.journal_entries()
 
-    # 2015arXiv150907124M
-    file_path = os.path.join(catalog.get_current_task_repo(),
-                             '2015arXiv150907124M.txt')
+    # 2016ApJ...832..108M
+    file_path = os.path.join(catalog.get_current_task_repo(), 'ASCII',
+                             '2016ApJ...832..108M.txt')
     tsvin = list(
         csv.reader(
             open(file_path, 'r'), delimiter='/', skipinitialspace=True))
@@ -620,7 +620,7 @@ def do_ascii(catalog):
             ct = row[0].lstrip('#')
             continue
         name = row[0]
-        (name, source) = catalog.new_entry(name, bibcode='2015arXiv150907124M')
+        (name, source) = catalog.new_entry(name, bibcode='2016ApJ...832..108M')
         if len(row) == 2:
             catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, row[1], source)
         catalog.entries[name].add_quantity(SUPERNOVA.CLAIMED_TYPE, ct, source)

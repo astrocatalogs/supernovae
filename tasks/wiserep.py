@@ -41,7 +41,7 @@ def do_wiserep_spectra(catalog):
                              '2012MNRAS.420.1135': '2012MNRAS.420.1135S',
                              '2012Sci..337..942D': '2012Sci...337..942D',
                              'stt1839': '2013MNRAS.436.3614S',
-                             'arXiv:1605.03136': '2016arXiv160503136T',
+                             'arXiv:1605.03136': '2016MNRAS.460.3447T',
                              '10.1093/mnras/stt1839': '2013MNRAS.436.3614S'}
 
     file_names = list(glob(os.path.join(catalog.get_current_task_repo(), '*')))
