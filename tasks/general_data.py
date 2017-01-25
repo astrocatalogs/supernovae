@@ -186,6 +186,7 @@ def do_external_fits_spectra(catalog):
         }
         if errors:
             specdict[SPECTRUM.ERRORS] = errors
+            specdict[SPECTRUM.U_ERRORS] = fluxunit
         if 'SITENAME' in hdrkeys:
             specdict[SPECTRUM.OBSERVATORY] = hdulist[0].header['SITENAME']
         elif 'OBSERVAT' in hdrkeys:
