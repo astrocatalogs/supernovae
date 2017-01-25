@@ -13,8 +13,10 @@ from ..supernova import SUPERNOVA
 
 def do_ogle(catalog):
     task_str = catalog.get_current_task_str()
-    basenames = ['transients', 'transients/2014b', 'transients/2014',
-                 'transients/2013', 'transients/2012']
+    basenames = [
+        'transients', 'transients/2015', 'transients/2014b', 'transients/2014',
+        'transients/2013', 'transients/2012'
+    ]
     oglenames = []
     ogleupdate = [True, False, False, False, False]
     for b, bn in enumerate(pbar(basenames, task_str)):
@@ -24,8 +26,8 @@ def do_ogle(catalog):
         filepath = os.path.join(catalog.get_current_task_repo(), 'OGLE-')
         filepath += bn.replace('/', '-') + '-transients.html'
         htmltxt = catalog.load_url(
-            'http://ogle.astrouw.edu.pl/ogle4/' + bn +
-            '/transients.html', filepath)
+            'http://ogle.astrouw.edu.pl/ogle4/' + bn + '/transients.html',
+            filepath)
         if not htmltxt:
             continue
 
@@ -37,11 +39,11 @@ def do_ogle(catalog):
         for a in links:
             if a.has_attr('href'):
                 if '.dat' in a['href']:
-                    datalinks.append(
-                        'http://ogle.astrouw.edu.pl/ogle4/' + bn + '/' +
-                        a['href'])
-                    datafnames.append(bn.replace('/', '-') +
-                                      '-' + a['href'].replace('/', '-'))
+                    datalinks.append('http://ogle.astrouw.edu.pl/ogle4/' + bn +
+                                     '/' + a['href'])
+                    datafnames.append(
+                        bn.replace('/', '-') + '-' + a['href'].replace('/',
+                                                                       '-'))
 
         ec = -1
         reference = 'OGLE-IV Transient Detection System'
@@ -68,9 +70,8 @@ def do_ogle(catalog):
                 while 'Ra,Dec=' not in mySibling:
                     if isinstance(mySibling, NavigableString):
                         if not claimedtype and 'class=' in str(mySibling):
-                            claimedtype = re.sub(
-                                r'\([^)]*\)', '',
-                                str(mySibling).split('=')[-1])
+                            claimedtype = re.sub(r'\([^)]*\)', '',
+                                                 str(mySibling).split('=')[-1])
                             claimedtype = claimedtype.replace('SN', '').strip()
                             if claimedtype == '-':
                                 claimedtype = ''
@@ -99,10 +100,12 @@ def do_ogle(catalog):
                 csvtxt = catalog.load_url(datalinks[ec], fname)
 
                 lcdat = csvtxt.splitlines()
-                sources = [catalog.entries[name].add_source(
-                    name=reference, url=refurl)]
-                catalog.entries[name].add_quantity(
-                    SUPERNOVA.ALIAS, name, sources[0])
+                sources = [
+                    catalog.entries[name].add_source(
+                        name=reference, url=refurl)
+                ]
+                catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name,
+                                                   sources[0])
                 if atelref and atelref != 'ATel#----':
                     sources.append(catalog.entries[name].add_source(
                         name=atelref, url=atelurl))
@@ -124,12 +127,12 @@ def do_ogle(catalog):
                 # catalog.entries[name].add_quantity(SUPERNOVA.DEC, dec,
                 # sources)
                 if claimedtype and claimedtype != '-':
-                    catalog.entries[name].add_quantity(
-                        SUPERNOVA.CLAIMED_TYPE, claimedtype, sources)
-                elif ('SN' not in name and SUPERNOVA.CLAIMED_TYPE not in
-                      catalog.entries[name]):
-                    catalog.entries[name].add_quantity(
-                        SUPERNOVA.CLAIMED_TYPE, 'Candidate', sources)
+                    catalog.entries[name].add_quantity(SUPERNOVA.CLAIMED_TYPE,
+                                                       claimedtype, sources)
+                elif ('SN' not in name and
+                      SUPERNOVA.CLAIMED_TYPE not in catalog.entries[name]):
+                    catalog.entries[name].add_quantity(SUPERNOVA.CLAIMED_TYPE,
+                                                       'Candidate', sources)
                 for row in lcdat:
                     row = row.split()
                     mjd = str(jd_to_mjd(Decimal(row[0])))
@@ -142,9 +145,14 @@ def do_ogle(catalog):
                         e_mag = ''
                         upperlimit = True
                     catalog.entries[name].add_photometry(
-                        time=mjd, u_time='MJD', band='I', magnitude=magnitude,
+                        time=mjd,
+                        u_time='MJD',
+                        band='I',
+                        magnitude=magnitude,
                         e_magnitude=e_mag,
-                        system='Vega', source=sources, upperlimit=upperlimit)
+                        system='Vega',
+                        source=sources,
+                        upperlimit=upperlimit)
                 if catalog.args.update:
                     catalog.journal_entries()
                 if catalog.args.travis and bi >= catalog.TRAVIS_QUERY_LIMIT:
