@@ -151,8 +151,8 @@ def do_external_fits_spectra(catalog):
                 errors = False
             elif hdulist[0].header['NAXIS'] == 3:
                 wd = hdulist[0].header['CD1_1']
-                fluxes = [str(x) for x in list(hdulist[0].data)[1][0]]
-                errors = [str(x) for x in list(hdulist[0].data)[2][0]]
+                fluxes = [str(x) for x in list(hdulist[0].data)[0][0]]
+                errors = [str(x) for x in list(hdulist[0].data)[3][0]]
             else:
                 print('Warning: Skipping FITS spectrum `{}`.'.format(filename))
                 continue
