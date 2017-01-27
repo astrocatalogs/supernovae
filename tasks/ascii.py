@@ -25,6 +25,42 @@ def do_ascii(catalog):
     """
     task_str = catalog.get_current_task_str()
 
+    # Howerton Catalog
+    datafile = os.path.join(catalog.get_current_task_repo(), 'ASCII',
+                            'howerton-catalog.csv')
+    data = read(datafile, format='csv')
+    for rrow in pbar(data, task_str):
+        row = dict((x, str(rrow[x])) for x in rrow.columns)
+        if any(x in row['Notes'].lower() for x in ['artifact']):
+            continue
+        ctypes = row['Type'].split('/')
+        nonsne = False
+        for ct in ctypes:
+            if ct.replace('?', '') in catalog.nonsnetypes:
+                nonsne = True
+                break
+        if nonsne:
+            continue
+        name, source = catalog.new_entry(
+            row['SNHunt des.'], srcname='Howerton Catalog')
+        if row['IAU des.'] != '--':
+            catalog.entries[name].add_quantity(SUPERNOVA.ALIAS,
+                                               row['IAU des.'], source)
+        for ct in ctypes:
+            catalog.entries[name].add_quantity(SUPERNOVA.CLAIMED_TYPE, ct,
+                                               source)
+        catalog.entries[name].add_quantity(SUPERNOVA.DISCOVERER,
+                                           row['Discoverer'], source)
+        date = row['Discovery'].split('/')
+        date = '/'.join([date[-1].zfill(2), date[0].zfill(2), date[1]])
+        catalog.entries[name].add_quantity(SUPERNOVA.DISCOVER_DATE, date,
+                                           source)
+        catalog.entries[name].add_quantity(SUPERNOVA.HOST, row['Host galaxy'],
+                                           source)
+        catalog.entries[name].add_quantity(SUPERNOVA.RA, row['RA'].replace(
+            'h', ':').replace('m', ':').replace('s', ''), source)
+        catalog.entries[name].add_quantity(SUPERNOVA.DEC, row['Dec'], source)
+
     # 2006AJ....132.2024L
     datafile = os.path.join(catalog.get_current_task_repo(), 'ASCII',
                             '2006AJ....132.2024L-tab1.txt')
