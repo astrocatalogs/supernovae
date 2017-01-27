@@ -38,6 +38,8 @@ def do_ascii(catalog):
         for ct in ctypes:
             if ct.replace('?', '') in catalog.nonsnetypes:
                 nonsne = True
+            else:
+                nonsne = False
                 break
         if nonsne:
             continue
