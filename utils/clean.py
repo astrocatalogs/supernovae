@@ -314,6 +314,7 @@ def host_clean(name):
     newname = newname.replace("ARP", "ARP ", 1)
     newname = newname.replace("CGCG", "CGCG ", 1)
     newname = newname.replace("HOLM", "HOLM ", 1)
+    newname = newname.replace("ESO", "ESO ", 1)
     newname = newname.replace("IC", "IC ", 1)
     newname = newname.replace("Intergal.", "Intergalactic", 1)
     newname = newname.replace("MCG+", "MCG +", 1)

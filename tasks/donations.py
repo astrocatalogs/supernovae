@@ -7,13 +7,13 @@ from glob import glob
 from math import floor, isnan
 
 import numpy as np
-from astropy.io.ascii import read
-from astropy.time import Time as astrotime
-
 from astrocats.catalog.photometry import PHOTOMETRY, set_pd_mag_from_counts
 from astrocats.catalog.spectrum import SPECTRUM
 from astrocats.catalog.utils import (get_sig_digits, is_number, jd_to_mjd,
                                      pbar, pbar_strings, pretty_num, rep_chars)
+from astropy.io.ascii import read
+from astropy.time import Time as astrotime
+
 from cdecimal import Decimal
 
 from ..supernova import SUPERNOVA
@@ -26,6 +26,34 @@ def do_donated_photo(catalog):
     if not catalog.args.travis:
         pass
     # End private donations #
+
+    # Nicholl 01-29-17 donation
+    with open(
+            os.path.join(catalog.get_current_task_repo(), 'Donations',
+                         'Nicholl-01-29-17', 'meta.json'), 'r') as f:
+        metadict = json.loads(f.read())
+    file_names = glob(
+        os.path.join(catalog.get_current_task_repo(), 'Donations',
+                     'Nicholl-01-29-17', '*.txt'))
+    for path in file_names:
+        data = read(path, format='cds')
+        oname = path.split('/')[-1].split('_')[0]
+        name, source = catalog.new_entry(oname, bibcode=metadict[oname][0])
+        for row in pbar(data, task_str + ': Nicholl ' + oname):
+            photodict = {
+                PHOTOMETRY.TIME: str(row['MJD']),
+                PHOTOMETRY.U_TIME: 'MJD',
+                PHOTOMETRY.MAGNITUDE: str(row['mag']),
+                PHOTOMETRY.BAND: row['Filter'],
+                PHOTOMETRY.SOURCE: source
+            }
+            if 'l_mag' in row.columns and row['l_mag'] == '>':
+                photodict[PHOTOMETRY.UPPER_LIMIT] = True
+            elif 'e_mag' in row.columns:
+                photodict[PHOTOMETRY.E_MAGNITUDE] = str(row['e_mag'])
+            if 'Telescope' in row.columns:
+                photodict[PHOTOMETRY.TELESCOPE] = row['Telescope']
+            catalog.entries[name].add_photometry(**photodict)
 
     # Arcavi 2016gkg donation
     path = os.path.join(catalog.get_current_task_repo(), 'Donations',
@@ -69,7 +97,6 @@ def do_donated_photo(catalog):
             PHOTOMETRY.TIME: str(row['MJD']),
             PHOTOMETRY.U_TIME: 'MJD',
             PHOTOMETRY.MAGNITUDE: str(row['mag']),
-            PHOTOMETRY.E_MAGNITUDE: str(row['e_mag']),
             PHOTOMETRY.BAND: row['Filter'],
             PHOTOMETRY.TELESCOPE: row['Telescope'],
             PHOTOMETRY.SOURCE: source
