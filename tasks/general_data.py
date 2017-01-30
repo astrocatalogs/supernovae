@@ -122,12 +122,16 @@ def do_external_fits_spectra(catalog):
                 name = metadict[filename]['name']
         if not name:
             name = hdulist[0].header['OBJECT']
-        if 'OBSERVER' in hdrkeys:
+        if 'bibcode' in metadict[filename]:
             name, source = catalog.new_entry(
-                name, srcname=hdulist[0].header['OBSERVER'])
+                name, bibcode=metadict[filename]['bibcode'])
         else:
-            name = catalog.add_entry(name)
-            source = catalog.entries[name].add_self_source()
+            if 'OBSERVER' in hdrkeys:
+                name, source = catalog.new_entry(
+                    name, srcname=hdulist[0].header['OBSERVER'])
+            else:
+                name = catalog.add_entry(name)
+                source = catalog.entries[name].add_self_source()
         # for key in hdulist[0].header.keys():
         #     print(key, hdulist[0].header[key])
         if hdulist[0].header['SIMPLE']:
