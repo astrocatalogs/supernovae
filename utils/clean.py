@@ -55,6 +55,10 @@ def name_clean(name):
         newname = newname.replace('SNHiTS ', 'SNHiTS', 1)
     if newname.startswith('GAIA'):
         newname = newname.replace('GAIA', 'Gaia', 1)
+    if newname.startswith('KSN-'):
+        newname = newname.replace('KSN-', 'KSN', 1)
+    if newname.startswith('KSN'):
+        newname = 'KSN' + newname[3:].lower()
     if newname.startswith('Gaia '):
         newname = newname.replace('Gaia ', 'Gaia', 1)
     if newname.startswith('Gaia'):
