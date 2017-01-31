@@ -45,15 +45,6 @@
         "repo": "input/sne-external",
         "priority": 4
     },
-    "sousa": {
-        "nice_name": "%pre sousa",
-        "active": true,
-        "update": true,
-        "module": "supernovae.tasks.sousa",
-        "function": "do_sousa",
-        "repo": "input/sne-external",
-        "priority": 5
-    },
     "donated_photo": {
         "nice_name": "%pre donations",
         "active": true,
@@ -239,17 +230,6 @@
         "always_journal": true,
         "priority": 23
     },
-    "essence_photo": {
-        "nice_name": "%pre ESSENCE Photometry",
-        "active": true,
-        "update": false,
-        "module": "supernovae.tasks.essence",
-        "function": "do_essence_photo",
-        "groups": ["photometry"],
-        "repo": "input/sne-external",
-        "always_journal": true,
-        "priority": 23
-    },
     "psthreepi": {
         "nice_name": "%pre Pan-STARRS 3π",
         "active": true,
@@ -298,28 +278,6 @@
         "archived": false,
         "module": "supernovae.tasks.grb",
         "function": "do_grb",
-        "repo": "input/sne-external",
-        "always_journal": true,
-        "priority": 27
-    },
-    "snax": {
-        "nice_name": "%pre SNaX",
-        "active": false,
-        "update": true,
-        "archived": false,
-        "module": "supernovae.tasks.snax",
-        "function": "do_snax",
-        "repo": "input/sne-external",
-        "always_journal": true,
-        "priority": 27
-    },
-    "batse": {
-        "nice_name": "%pre BATSE catalog",
-        "active": true,
-        "update": false,
-        "archived": false,
-        "module": "supernovae.tasks.grb",
-        "function": "do_batse",
         "repo": "input/sne-external",
         "always_journal": true,
         "priority": 27
@@ -409,6 +367,59 @@
         "repo": "input/sne-external",
         "always_journal": true,
         "priority": 35
+    },
+    "sousa": {
+        "nice_name": "%pre sousa",
+        "active": true,
+        "update": true,
+        "module": "supernovae.tasks.sousa",
+        "function": "do_sousa",
+        "repo": "input/sne-external",
+        "priority": 36
+    },
+    "essence_photo": {
+        "nice_name": "%pre ESSENCE Photometry",
+        "active": true,
+        "update": false,
+        "module": "supernovae.tasks.essence",
+        "function": "do_essence_photo",
+        "groups": ["photometry"],
+        "repo": "input/sne-external",
+        "always_journal": true,
+        "priority": 37
+    },
+    "snax": {
+        "nice_name": "%pre SNaX",
+        "active": false,
+        "update": true,
+        "archived": false,
+        "module": "supernovae.tasks.snax",
+        "function": "do_snax",
+        "repo": "input/sne-external",
+        "always_journal": true,
+        "priority": 38
+    },
+    "batse": {
+        "nice_name": "%pre BATSE catalog",
+        "active": true,
+        "update": false,
+        "archived": false,
+        "module": "supernovae.tasks.grb",
+        "function": "do_batse",
+        "repo": "input/sne-external",
+        "always_journal": true,
+        "priority": 39
+    },
+    "tns_photo": {
+        "nice_name": "%pre TNS photometry",
+        "active": true,
+        "update": false,
+        "archived": false,
+        "module": "supernovae.tasks.tns",
+        "function": "do_tns_photo",
+        "repo": "input/sne-external",
+        "always_journal": true,
+        "priority": 40
     },
     "donated_spectra": {
         "nice_name": "%pre Donated spectra",
