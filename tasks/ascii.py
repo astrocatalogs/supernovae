@@ -25,34 +25,63 @@ def do_ascii(catalog):
     """
     task_str = catalog.get_current_task_str()
 
-    # KEGS
-    file_names = list(
-        glob(os.path.join(catalog.get_current_task_repo(), 'KEGS', '*.dat')))
-    for path in pbar(file_names, task_str):
-        oname = path.split('/')[-1].split('.')[0]
+    # 2014ApJ...789..104O
+    zps = {
+        'default': '27',
+        'PTF10aazn': '27.895',
+        'PTF10bjb': '27.14',
+        'PTF10tel': '27.442'
+    }
+    datafile = os.path.join(catalog.get_current_task_repo(), 'ASCII',
+                            '2014ApJ...789..104O-tab2.txt')
+    data = read(datafile, format='cds')
+    for row in pbar(data, task_str):
+        oname = row['SN']
         name, source = catalog.new_entry(
-            oname, srcname='KEGS', url='http://www.mso.anu.edu.au/kegs/')
-        tsvin = list(
-            csv.reader(
-                open(path, 'r'), delimiter=' ', skipinitialspace=True))
-        for row in pbar(tsvin, oname):
-            if row[0][0] == '#':
-                continue
-            counts = row[3]
-            e_counts = row[4]
-            zp = '25.47'
-            photodict = {
-                PHOTOMETRY.TIME:
-                jd_to_mjd(Decimal(row[0]) + Decimal('2454833')),
-                PHOTOMETRY.BAND: 'Kepler',
-                PHOTOMETRY.U_TIME: 'MJD',
-                PHOTOMETRY.COUNTS: counts,
-                PHOTOMETRY.E_COUNTS: e_counts,
-                PHOTOMETRY.ZERO_POINT: zp,
-                PHOTOMETRY.SOURCE: source
-            }
-            set_pd_mag_from_counts(photodict, counts, ec=e_counts, zp=zp)
-            catalog.entries[name].add_photometry(**photodict)
+            oname, bibcode='2014ApJ...789..104O')
+        c = str(row['Flux'])
+        ec = str(row['e_Flux'])
+        zp = zps[oname] if oname in zps else zps['default']
+        photodict = {
+            PHOTOMETRY.TIME: str(row['MJD']),
+            PHOTOMETRY.BAND: row['Filter'],
+            PHOTOMETRY.U_TIME: 'MJD',
+            PHOTOMETRY.COUNTS: c,
+            PHOTOMETRY.E_COUNTS: ec,
+            PHOTOMETRY.SOURCE: source
+        }
+        set_pd_mag_from_counts(photodict, c, ec=ec, zp=zp)
+        catalog.entries[name].add_photometry(**photodict)
+
+    # KEGS
+    # Zero point not right, commenting out for now.
+    # file_names = list(
+    #     glob(os.path.join(catalog.get_current_task_repo(), 'KEGS', '*.dat')))
+    # for path in pbar(file_names, task_str):
+    #     oname = path.split('/')[-1].split('.')[0]
+    #     name, source = catalog.new_entry(
+    #         oname, srcname='KEGS', url='http://www.mso.anu.edu.au/kegs/')
+    #     tsvin = list(
+    #         csv.reader(
+    #             open(path, 'r'), delimiter=' ', skipinitialspace=True))
+    #     for row in pbar(tsvin, oname):
+    #         if row[0][0] == '#':
+    #             continue
+    #         counts = row[3]
+    #         e_counts = row[4]
+    #         zp = '25.47'
+    #         photodict = {
+    #             PHOTOMETRY.TIME:
+    #             jd_to_mjd(Decimal(row[0]) + Decimal('2454833')),
+    #             PHOTOMETRY.BAND: 'Kepler',
+    #             PHOTOMETRY.U_TIME: 'MJD',
+    #             PHOTOMETRY.COUNTS: counts,
+    #             PHOTOMETRY.E_COUNTS: e_counts,
+    #             PHOTOMETRY.ZERO_POINT: zp,
+    #             PHOTOMETRY.SOURCE: source
+    #         }
+    #         set_pd_mag_from_counts(photodict, counts, ec=e_counts, zp=zp)
+    #         catalog.entries[name].add_photometry(**photodict)
 
     # Howerton Catalog
     datafile = os.path.join(catalog.get_current_task_repo(), 'ASCII',

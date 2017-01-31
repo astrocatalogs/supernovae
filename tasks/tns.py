@@ -177,7 +177,6 @@ def do_tns_photo(catalog):
             except KeyboardInterrupt:
                 raise
             except:
-                raise
                 catalog.log.warning('API request failed for `{}`.'.format(
                     name))
                 time.sleep(5)
