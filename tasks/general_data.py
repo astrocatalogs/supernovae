@@ -6,11 +6,12 @@ import os
 from collections import OrderedDict
 from glob import glob
 
-from astrocats.catalog.spectrum import SPECTRUM
-from astrocats.catalog.utils import jd_to_mjd, pbar_strings
 from astropy.io import fits
 from astropy.time import Time as astrotime
 
+from astrocats.catalog.photometry import PHOTOMETRY
+from astrocats.catalog.spectrum import SPECTRUM
+from astrocats.catalog.utils import jd_to_mjd, pbar_strings
 from cdecimal import Decimal
 
 from ..supernova import SUPERNOVA, Supernova
@@ -42,17 +43,19 @@ def do_external_radio(catalog):
                     else:
                         eflux = cols[4]
                         upp = False
-                    catalog.entries[name].add_photometry(
-                        time=cols[0],
-                        frequency=cols[2],
-                        u_frequency='GHz',
-                        fluxdensity=cols[3],
-                        e_fluxdensity=eflux,
-                        u_fluxdensity='µJy',
-                        upperlimit=upp,
-                        u_time='MJD',
-                        instrument=cols[5],
-                        source=source)
+                    photodict = {
+                        PHOTOMETRY.TIME:cols[0],
+                        PHOTOMETRY.FREQUENCY:cols[2],
+                        PHOTOMETRY.U_FREQUENCY:'GHz',
+                        PHOTOMETRY.FLUXDENSITY:cols[3],
+                        PHOTOMETRY.E_FLUXDENSITY:eflux,
+                        PHOTOMETRY.U_FLUXDENSITY:'µJy',
+                        PHOTOMETRY.UPPERLIMIT:upp,
+                        PHOTOMETRY.U_TIME:'MJD',
+                        PHOTOMETRY.INSTRUMENT:cols[5],
+                        PHOTOMETRY.SOURCE:source
+                    }
+                    catalog.entries[name].add_photometry(**photodict)
                     catalog.entries[name].add_quantity(SUPERNOVA.ALIAS,
                                                        oldname, source)
 

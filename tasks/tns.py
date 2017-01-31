@@ -148,6 +148,7 @@ def do_tns_photo(catalog):
         tnskey = ''
 
     bandreps = {'Clear': 'C'}
+    fails = 0
     for name in pbar(catalog.entries, task_str):
         aliases = catalog.entries[name].get_aliases()
         oname = ''
@@ -169,7 +170,7 @@ def do_tns_photo(catalog):
             'https://wis-tns.weizmann.ac.il/api/get/object', data=data)
         trys = 0
         objdict = None
-        while trys < 10 and not objdict:
+        while trys < 3 and not objdict:
             try:
                 objdict = json.loads(
                     urllib.request.urlopen(req).read().decode('ascii'))[
@@ -181,8 +182,11 @@ def do_tns_photo(catalog):
                     name))
                 time.sleep(5)
             trys = trys + 1
-        if not isinstance(objdict['objname'], str):
+        if not objdict or not isinstance(objdict['objname'], str):
+            fails = fails + 1
             catalog.log.warning('Object `{}` not found!'.format(name))
+            if fails >= 5:
+                break
             continue
         if 'photometry' not in objdict:
             continue
