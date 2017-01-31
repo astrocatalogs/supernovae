@@ -73,8 +73,6 @@ def name_clean(name):
         newname = newname[:3] + newname[3:].lower()
     if newname.startswith('DES') and is_number(newname[3]):
         newname = newname[:7] + newname[7:].lower()
-    if newname.startswith('KSN '):
-        newname = newname.replace('KSN ', 'KSN-', 1)
     if newname.startswith('SNSDF '):
         newname = newname.replace(' ', '')
     if newname.startswith('SNSDF'):

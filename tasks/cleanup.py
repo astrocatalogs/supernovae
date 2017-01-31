@@ -134,7 +134,7 @@ def do_cleanup(catalog):
                 if SUPERNOVA.DISCOVER_DATE in catalog.entries[name]:
                     break
         if SUPERNOVA.DISCOVER_DATE not in catalog.entries[name]:
-            prefixes = ['AT', 'SN', 'OGLE-', 'SM ', 'KSN-']
+            prefixes = ['AT', 'SN', 'OGLE-', 'SM ', 'KSN']
             for alias in aliases:
                 for prefix in prefixes:
                     if alias.startswith(prefix):

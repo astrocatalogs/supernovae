@@ -26,6 +26,21 @@ def do_ascii(catalog):
     task_str = catalog.get_current_task_str()
 
     # 2014ApJ...789..104O
+    datafile = os.path.join(catalog.get_current_task_repo(), 'ASCII',
+                            '2014ApJ...789..104O-tab1.txt')
+    tsvin = list(
+        csv.reader(
+            open(datafile, 'r'), delimiter='\t', skipinitialspace=True))
+    for row in pbar(tsvin, task_str):
+        name, source = catalog.new_entry(row[0], bibcode='2014ApJ...789..104O')
+        catalog.entries[name].add_quantity(SUPERNOVA.CLAIMED_TYPE, row[1],
+                                           source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.RA, row[2], source, u_value='floatdegrees')
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.DEC, row[3], source, u_value='floatdegrees')
+        catalog.entries[name].add_quantity(SUPERNOVA.REDSHIFT, row[5], source)
+
     zps = {
         'default': '27',
         'PTF10aazn': '27.895',
@@ -37,8 +52,7 @@ def do_ascii(catalog):
     data = read(datafile, format='cds')
     for row in pbar(data, task_str):
         oname = row['SN']
-        name, source = catalog.new_entry(
-            oname, bibcode='2014ApJ...789..104O')
+        name, source = catalog.new_entry(oname, bibcode='2014ApJ...789..104O')
         c = str(row['Flux'])
         ec = str(row['e_Flux'])
         zp = zps[oname] if oname in zps else zps['default']
