@@ -53,7 +53,7 @@ def do_gaia(catalog):
             commentsplit = commentsplit.split()
             for csi, cs in enumerate(commentsplit):
                 if 'aka' in cs.lower() and csi < len(commentsplit) - 1:
-                    alias = commentsplit[csi + 1].strip('(),:.').replace(
+                    alias = commentsplit[csi + 1].strip('(),:.ï»¿').replace(
                         'PSNJ', 'PSN J')
                     if alias[:6] == 'ASASSN' and alias[6] != '-':
                         alias = 'ASASSN-' + alias[6:]
