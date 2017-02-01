@@ -149,7 +149,7 @@ def do_tns_photo(catalog):
 
     bandreps = {'Clear': 'C'}
     fails = 0
-    for name in pbar(catalog.entries, task_str):
+    for name in pbar(list(catalog.entries.keys()), task_str):
         aliases = catalog.entries[name].get_aliases()
         oname = ''
         for alias in aliases:
