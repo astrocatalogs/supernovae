@@ -184,7 +184,7 @@ def do_tns_photo(catalog):
                     name))
                 time.sleep(5)
             trys = trys + 1
-        if not objdict or not isinstance(objdict['objname'], str):
+        if not objdict or 'objname' not in objdict or not isinstance(objdict['objname'], str):
             fails = fails + 1
             catalog.log.warning('Object `{}` not found!'.format(name))
             if fails >= 5:
