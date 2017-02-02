@@ -5,7 +5,7 @@ import json
 import os
 import time
 import urllib
-from datetime import timedelta
+from datetime import datetime, timedelta
 from math import ceil
 
 import requests
@@ -32,7 +32,7 @@ def do_tns(catalog):
     maxpages = ceil(int(maxid) / 1000.)
 
     for page in pbar(range(maxpages), task_str):
-        fname = os.path.join(catalog.get_current_task_repo(), 'TNS/page-') + \
+        fname = os.path.join(catalog.get_current_task_repo(), 'TNS', 'page-') + \
             str(page).zfill(2) + '.csv'
         if (catalog.current_task.load_archive(catalog.args) and
                 os.path.isfile(fname) and page < 7):
@@ -161,35 +161,52 @@ def do_tns_photo(catalog):
                 break
         if not oname:
             continue
-        data = urllib.parse.urlencode({
-            'api_key': tnskey,
-            'data': json.dumps({
-                'objname': oname[2:],
-                'photometry': '1'
-            })
-        }).encode('ascii')
-        req = urllib.request.Request(
-            'https://wis-tns.weizmann.ac.il/api/get/object', data=data)
-        trys = 0
-        objdict = None
-        while trys < 3 and not objdict:
-            try:
-                objdict = json.loads(
-                    urllib.request.urlopen(req).read().decode('ascii'))[
-                        'data']['reply']
-            except KeyboardInterrupt:
-                raise
-            except:
-                catalog.log.warning('API request failed for `{}`.'.format(
-                    name))
-                time.sleep(5)
-            trys = trys + 1
-        if not objdict or 'objname' not in objdict or not isinstance(objdict['objname'], str):
-            fails = fails + 1
-            catalog.log.warning('Object `{}` not found!'.format(name))
-            if fails >= 5:
-                break
-            continue
+        reqname = oname[2:]
+        jsonpath = os.path.join(catalog.get_current_task_repo(), 'TNS',
+                                reqname + '.json')
+        download_json = False
+        if os.path.isfile(jsonpath):
+            with open(jsonpath, 'r') as f:
+                objdict = json.load(f)
+            if ((datetime.now() - datetime.strptime(
+                    objdict['discoverydate'], '%Y-%m-%d %H:%M:%S')).days <=
+                    180):
+                download_json = True
+        if download_json:
+            data = urllib.parse.urlencode({
+                'api_key': tnskey,
+                'data': json.dumps({
+                    'objname': reqname,
+                    'photometry': '1'
+                })
+            }).encode('ascii')
+            req = urllib.request.Request(
+                'https://wis-tns.weizmann.ac.il/api/get/object', data=data)
+            trys = 0
+            objdict = None
+            while trys < 3 and not objdict:
+                try:
+                    objdict = json.loads(
+                        urllib.request.urlopen(req).read().decode('ascii'))[
+                            'data']['reply']
+                except KeyboardInterrupt:
+                    raise
+                except:
+                    catalog.log.warning('API request failed for `{}`.'.format(
+                        name))
+                    time.sleep(5)
+                trys = trys + 1
+            if (not objdict or 'objname' not in objdict or
+                    not isinstance(objdict['objname'], str)):
+                fails = fails + 1
+                catalog.log.warning('Object `{}` not found!'.format(name))
+                if fails >= 5:
+                    break
+                continue
+            # Cache object here
+            with open(jsonpath, 'w') as f:
+                json.dump(objdict, f)
+
         if 'photometry' not in objdict:
             continue
         photoarr = objdict['photometry']
