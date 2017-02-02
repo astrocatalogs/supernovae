@@ -164,14 +164,15 @@ def do_tns_photo(catalog):
         reqname = oname[2:]
         jsonpath = os.path.join(catalog.get_current_task_repo(), 'TNS',
                                 reqname + '.json')
-        download_json = False
+        download_json = True
         if os.path.isfile(jsonpath):
             with open(jsonpath, 'r') as f:
                 objdict = json.load(f)
-            if ((datetime.now() - datetime.strptime(
-                    objdict['discoverydate'], '%Y-%m-%d %H:%M:%S')).days <=
-                    180):
-                download_json = True
+            if ('discoverydate' in objdict and
+                (datetime.now() - datetime.strptime(objdict['discoverydate'],
+                                                    '%Y-%m-%d %H:%M:%S')
+                 ).days > 180):
+                download_json = False
         if download_json:
             data = urllib.parse.urlencode({
                 'api_key': tnskey,
