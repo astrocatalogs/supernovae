@@ -71,6 +71,7 @@ Other single SN datasets:
 * SN2005E - http://adsabs.harvard.edu/abs/2010Natur.465..322P (Hagai will provide LC)
 * SN2005am - http://adsabs.harvard.edu/abs/2005ApJ...635.1192B
 * SN2005df - http://adsabs.harvard.edu/abs/2015ApJ...806..107D
+* SN2005kd - http://adsabs.harvard.edu/abs/2016MNRAS.462.1101D (Radio data)
 * SN2005ke - http://adsabs.harvard.edu/abs/2014A%26A...572A..75K
 * SN2005gj - http://adsabs.harvard.edu/abs/2007arXiv0706.4088P (Late-time photometry)
 * SN2005gj - http://adsabs.harvard.edu/abs/2013ApJ...772L...6F (Late-time IR)
