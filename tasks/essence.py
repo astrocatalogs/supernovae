@@ -157,7 +157,7 @@ def do_essence_spectra(catalog):
             data = csv.reader(f, delimiter=' ', skipinitialspace=True)
             data = [list(i) for i in zip(*data)]
             wavelengths = data[0]
-            fluxes = [str(Decimal('1.0e-15') + Decimal(x)) for x in data[1]]
+            fluxes = [str(Decimal('1.0e-15') * Decimal(x)) for x in data[1]]
 
         name, source = catalog.new_entry(name, bibcode='2016ApJS..224....3N')
 
