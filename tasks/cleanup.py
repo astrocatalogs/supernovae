@@ -460,7 +460,7 @@ def do_cleanup(catalog):
                             SUPERNOVA.HOST_DEC][0][QUANTITY.SOURCE].split(','))
                 if SUPERNOVA.HOST_OFFSET_ANG not in catalog.entries[name]:
                     hosa = Decimal(c1.separation(c2).arcsecond)
-                    hosa = pretty_num(hosa * Decimal(3600.))
+                    hosa = pretty_num(hosa)
                     catalog.entries[name].add_quantity(
                         SUPERNOVA.HOST_OFFSET_ANG,
                         hosa,
