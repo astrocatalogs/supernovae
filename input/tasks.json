@@ -543,6 +543,17 @@
         "always_journal": true,
         "priority": 209
     },
+    "essence_spectra": {
+        "nice_name": "%pre ESSENCE spectra",
+        "active": true,
+        "update": false,
+        "module": "supernovae.tasks.essence",
+        "function": "do_essence_spectra",
+        "groups": ["spectra"],
+        "repo": "input/sne-external-spectra",
+        "always_journal": true,
+        "priority": 210
+    },
     "hst": {
         "nice_name": "Coordinates from HST pointings",
         "active": true,
