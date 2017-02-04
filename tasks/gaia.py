@@ -46,7 +46,7 @@ def do_gaia(catalog):
                                                'Candidate', source)
 
         if ('aka' in row[9].replace('gakaxy', 'galaxy').lower() and
-                'AKARI' not in row[9]):
+                'AKARI' not in row[9] and row[9].lower() != 'master'):
             commentsplit = (row[9].replace('_', ' ').replace('MLS ', 'MLS')
                             .replace('CSS ', 'CSS').replace('SN iPTF', 'iPTF')
                             .replace('SN ', 'SN').replace('AT ', 'AT'))

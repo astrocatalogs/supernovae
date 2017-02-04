@@ -1526,10 +1526,7 @@ def do_vizier(catalog):
     for row in pbar(table, task_str):
         row = convert_aq_output(row)
         name = str(row['Name'])
-        name = catalog.add_entry(name)
-        source = catalog.entries[name].add_source(
-            bibcode='2015MNRAS.448.1206M')
-        catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
+        name, source = catalog.new_entry(name, bibcode='2015MNRAS.448.1206M')
         catalog.entries[name].add_quantity(SUPERNOVA.DISCOVER_DATE,
                                            '20' + name[4:6], source)
         catalog.entries[name].add_quantity(
@@ -1552,10 +1549,7 @@ def do_vizier(catalog):
     for row in pbar(table, task_str):
         row = convert_aq_output(row)
         name = str(row['Name'])
-        name = catalog.add_entry(name)
-        source = catalog.entries[name].add_source(
-            bibcode='2015MNRAS.448.1206M')
-        catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
+        name, source = catalog.new_entry(name, bibcode='2015MNRAS.448.1206M')
         catalog.entries[name].add_quantity(SUPERNOVA.DISCOVER_DATE,
                                            '20' + name[4:6], source)
         catalog.entries[name].add_quantity(
@@ -1582,10 +1576,7 @@ def do_vizier(catalog):
     for row in pbar(table, task_str):
         row = convert_aq_output(row)
         name = str(row['Name'])
-        name = catalog.add_entry(name)
-        source = catalog.entries[name].add_source(
-            bibcode='2015MNRAS.448.1206M')
-        catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
+        name, source = catalog.new_entry(name, bibcode='2015MNRAS.448.1206M')
         catalog.entries[name].add_quantity(SUPERNOVA.DISCOVER_DATE,
                                            '20' + name[4:6], source)
         catalog.entries[name].add_quantity(
@@ -1608,10 +1599,7 @@ def do_vizier(catalog):
     for row in pbar(table, task_str):
         row = convert_aq_output(row)
         name = str(row['Name'])
-        name = catalog.add_entry(name)
-        source = catalog.entries[name].add_source(
-            bibcode='2015MNRAS.448.1206M')
-        catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
+        name, source = catalog.new_entry(name, bibcode='2015MNRAS.448.1206M')
         catalog.entries[name].add_quantity(SUPERNOVA.DISCOVER_DATE,
                                            '20' + name[4:6], source)
         catalog.entries[name].add_quantity(
@@ -1632,10 +1620,7 @@ def do_vizier(catalog):
     for row in pbar(table, task_str):
         row = convert_aq_output(row)
         name = str(row['Name'])
-        name = catalog.add_entry(name)
-        source = catalog.entries[name].add_source(
-            bibcode='2015MNRAS.448.1206M')
-        catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
+        name, source = catalog.new_entry(name, bibcode='2015MNRAS.448.1206M')
         catalog.entries[name].add_quantity(SUPERNOVA.DISCOVER_DATE,
                                            '20' + name[4:6], source)
         catalog.entries[name].add_quantity(
@@ -1664,10 +1649,7 @@ def do_vizier(catalog):
     for row in pbar(table, task_str):
         row = convert_aq_output(row)
         name = str(row['Name'])
-        name = catalog.add_entry(name)
-        source = catalog.entries[name].add_source(
-            bibcode='2015MNRAS.448.1206M')
-        catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
+        name, source = catalog.new_entry(name, bibcode='2015MNRAS.448.1206M')
         catalog.entries[name].add_quantity(SUPERNOVA.DISCOVER_DATE,
                                            '20' + name[4:6], source)
         catalog.entries[name].add_quantity(
