@@ -31,7 +31,7 @@ def do_ascii(catalog):
     tsvin = list(
         csv.reader(
             open(datafile, 'r'), delimiter='\t', skipinitialspace=True))
-    for row in pbar(tsvin, task_str):
+    for row in pbar(tsvin[1:], task_str):
         name, source = catalog.new_entry(row[0], bibcode='2014ApJ...789..104O')
         catalog.entries[name].add_quantity(SUPERNOVA.CLAIMED_TYPE, row[1],
                                            source)
