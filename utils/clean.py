@@ -22,6 +22,9 @@ def name_clean(name):
     if (newname.startswith('MASTER') and len(newname) > 7 and
             is_number(newname[7])):
         newname = newname.replace('MASTER', 'MASTER OT J', 1)
+    if (newname.startswith('MASTER OT') and len(newname) > 10 and
+            is_number(newname[10])):
+        newname = newname.replace('MASTER OT', 'MASTER OT J', 1)
     if newname.startswith('MASTER OT J '):
         newname = newname.replace('MASTER OT J ', 'MASTER OT J', 1)
     if newname.startswith('OGLE '):
