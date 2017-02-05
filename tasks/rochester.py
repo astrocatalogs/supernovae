@@ -6,10 +6,9 @@ import re
 from math import floor
 from string import ascii_letters
 
+from astrocats.catalog.utils import is_number, make_date_string, pbar, uniq_cdl
 from astropy.time import Time as astrotime
 from bs4 import BeautifulSoup
-
-from astrocats.catalog.utils import is_number, make_date_string, pbar, uniq_cdl
 
 from ..supernova import SUPERNOVA
 
@@ -21,30 +20,25 @@ def do_rochester(catalog):
     ]
     rochesterpaths = [
         'snimages/snredshiftall.html', 'sn2017/snredshift.html',
-        'snimages/snredboneyard.html'
+        'snimages/snredboneyard.html', 'snimages/snredboneyard-old.html'
     ]
-    rochesterupdate = [False, True, True]
+    rochesterupdate = [False, True, True, False]
     task_str = catalog.get_current_task_str()
 
     for pp, path in enumerate(pbar(rochesterpaths, task_str)):
         if catalog.args.update and not rochesterupdate[pp]:
             continue
 
-        if 'oiajsdoaisjd' in path:
+        if 'snredboneyard.html' in path:
             cns = {
                 'name': 9,
                 'type': 7,
                 'host': 5,
                 'ra': 0,
-                'dec': 4,
-                'disc': 6,
-                'max': 7,
+                'dec': 1,
+                'disc': 4,
                 'mmag': 8,
-                'z': 11,
-                'zh': 12,
-                'ref': 13,
-                'dver': 14,
-                'aka': 15
+                'aka': 10
             }
         else:
             cns = {
@@ -103,7 +97,8 @@ def do_rochester(catalog):
             ra = str(cols[cns['ra']].contents[0]).strip()
             dec = str(cols[cns['dec']].contents[0]).strip()
 
-            sn = re.sub('<[^<]+?>', '', str(cols[cns['name']].contents[0])).strip()
+            sn = re.sub('<[^<]+?>', '',
+                        str(cols[cns['name']].contents[0])).strip()
             if is_number(sn.strip('?')):
                 sn = 'SN' + sn.strip('?') + 'A'
             elif len(sn) == 4 and is_number(sn[:4]):
@@ -119,13 +114,17 @@ def do_rochester(catalog):
                     sn += dec.replace(':', '').replace('.', '')
                 oldname = sn
                 name = catalog.add_entry(sn)
-            reference = cols[cns['ref']].findAll('a')[0].contents[0].strip()
-            refurl = cols[cns['ref']].findAll('a')[0]['href'].strip()
-            source = catalog.entries[name].add_source(
-                name=reference, url=refurl)
             sec_source = catalog.entries[name].add_source(
                 name=sec_ref, url=sec_refurl, secondary=True)
-            sources = uniq_cdl(list(filter(None, [source, sec_source])))
+            sources = []
+            if 'ref' in cns:
+                reference = cols[cns['ref']].findAll('a')[0].contents[0].strip(
+                )
+                refurl = cols[cns['ref']].findAll('a')[0]['href'].strip()
+                sources.append(catalog.entries[name].add_source(
+                    name=reference, url=refurl))
+            sources.append(sec_source)
+            sources = uniq_cdl(list(filter(None, sources)))
             catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, oldname,
                                                sources)
             catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, sn, sources)
@@ -153,22 +152,27 @@ def do_rochester(catalog):
             if (len(cols[cns['host']].contents) > 0 and
                     str(cols[cns['host']].contents[0]).strip() != 'anonymous'):
                 catalog.entries[name].add_quantity(
-                    SUPERNOVA.HOST, str(cols[cns['host']].contents[0]).strip(), sources)
+                    SUPERNOVA.HOST,
+                    str(cols[cns['host']].contents[0]).strip(), sources)
             catalog.entries[name].add_quantity(SUPERNOVA.RA, ra, sources)
             catalog.entries[name].add_quantity(SUPERNOVA.DEC, dec, sources)
-            if (str(cols[cns['disc']].contents[0]).strip() not in
-                    ['2440587', '2440587.292']):
-                astrot = astrotime(
-                    float(str(cols[cns['disc']].contents[0]).strip()),
-                    format='jd').datetime
-                ddate = make_date_string(astrot.year, astrot.month, astrot.day)
+            discstr = str(cols[cns['disc']].contents[0]).strip()
+            if (discstr and discstr not in ['2440587', '2440587.292']):
+                if '/' not in discstr:
+                    astrot = astrotime(float(discstr), format='jd').datetime
+                    ddate = make_date_string(astrot.year, astrot.month,
+                                             astrot.day)
+                else:
+                    ddate = discstr
                 catalog.entries[name].add_quantity(SUPERNOVA.DISCOVER_DATE,
                                                    ddate, sources)
-            if (str(cols[cns['max']].contents[0]).strip() not in
-                    ['2440587', '2440587.292']):
+            if ('max' in cns and str(cols[cns['max']].contents[0]).strip()
+                    not in ['2440587', '2440587.292']):
                 astrot = astrotime(
-                    float(str(cols[cns['max']].contents[0]).strip()), format='jd')
-                if ((float(str(cols[cns['mmag']].contents[0]).strip()) <= 90.0 and
+                    float(str(cols[cns['max']].contents[0]).strip()),
+                    format='jd')
+                if ((float(str(cols[cns['mmag']].contents[0]).strip()) <= 90.0
+                     and
                      not any('GRB' in xx
                              for xx in catalog.entries[name].get_aliases()))):
                     mag = str(cols[cns['mmag']].contents[0]).strip()
@@ -177,17 +181,19 @@ def do_rochester(catalog):
                         u_time='MJD',
                         magnitude=mag,
                         source=sources)
-            if cols[cns['z']].contents[0] != 'n/a':
+            if 'z' in cns and cols[cns['z']].contents[0] != 'n/a':
                 catalog.entries[name].add_quantity(
                     SUPERNOVA.REDSHIFT,
                     str(cols[cns['z']].contents[0]).strip(), sources)
-            zhost = str(cols[cns['zh']].contents[0]).strip()
-            if is_number(zhost):
-                catalog.entries[name].add_quantity(SUPERNOVA.REDSHIFT,
-                                                   zhost, sources)
-            catalog.entries[name].add_quantity(
-                SUPERNOVA.DISCOVERER,
-                str(cols[cns['dver']].contents[0]).strip(), sources)
+            if 'zh' in cns:
+                zhost = str(cols[cns['zh']].contents[0]).strip()
+                if is_number(zhost):
+                    catalog.entries[name].add_quantity(SUPERNOVA.REDSHIFT,
+                                                       zhost, sources)
+            if 'dver' in cns:
+                catalog.entries[name].add_quantity(
+                    SUPERNOVA.DISCOVERER,
+                    str(cols[cns['dver']].contents[0]).strip(), sources)
             if catalog.args.update:
                 catalog.journal_entries()
             loopcnt = loopcnt + 1
