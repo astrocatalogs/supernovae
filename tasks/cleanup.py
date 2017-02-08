@@ -3,7 +3,7 @@
 import re
 import statistics
 import warnings
-from math import hypot, log10, pi, sqrt
+from math import log10, pi, sqrt
 
 from astropy import units as un
 from astropy.coordinates import SkyCoord as coord
@@ -459,10 +459,8 @@ def do_cleanup(catalog):
                         QUANTITY.SOURCE].split(',') + catalog.entries[name][
                             SUPERNOVA.HOST_DEC][0][QUANTITY.SOURCE].split(','))
                 if SUPERNOVA.HOST_OFFSET_ANG not in catalog.entries[name]:
-                    hosa = Decimal(
-                        hypot(c1.ra.degree - c2.ra.degree, c1.dec.degree -
-                              c2.dec.degree))
-                    hosa = pretty_num(hosa * Decimal(3600.))
+                    hosa = Decimal(c1.separation(c2).arcsecond)
+                    hosa = pretty_num(hosa)
                     catalog.entries[name].add_quantity(
                         SUPERNOVA.HOST_OFFSET_ANG,
                         hosa,

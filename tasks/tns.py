@@ -229,6 +229,8 @@ def do_tns_photo(catalog):
                 PHOTOMETRY.MAGNITUDE: mag,
                 PHOTOMETRY.SOURCE: source
             }
+            if photo.get('fluxerr', ''):
+                photodict[PHOTOMETRY.E_MAGNITUDE] = photo['fluxerr']
             if not photo['flux']:
                 photodict[PHOTOMETRY.UPPER_LIMIT] = True
             band = photo['filters']['name']
@@ -236,9 +238,8 @@ def do_tns_photo(catalog):
                 if band in bandreps:
                     band = bandreps[band]
                 photodict[PHOTOMETRY.BAND] = band
-            if 'observer' in photo:
-                if photo['observer']:
-                    photodict[PHOTOMETRY.OBSERVER] = photo['observer']
+            if photo.get('observer', ''):
+                photodict[PHOTOMETRY.OBSERVER] = photo['observer']
             if 'source_group' in photo:
                 survey = photo['source_group']['group_name']
                 if survey:

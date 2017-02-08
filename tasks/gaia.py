@@ -5,6 +5,7 @@ import os
 import re
 
 from astrocats.catalog.utils import jd_to_mjd, pbar
+
 from cdecimal import Decimal
 
 from ..supernova import SUPERNOVA
@@ -40,8 +41,10 @@ def do_gaia(catalog):
             type = row[7].replace('SNe', '').replace('SN', '').strip()
             catalog.entries[name].add_quantity(SUPERNOVA.CLAIMED_TYPE, type,
                                                source)
-        elif any([xx in row[9].upper()
-                  for xx in ['SN CANDIATE', 'CANDIDATE SN', 'HOSTLESS SN']]):
+        elif any([
+                xx in row[9].upper()
+                for xx in ['SN CANDIATE', 'CANDIDATE SN', 'HOSTLESS SN']
+        ]):
             catalog.entries[name].add_quantity(SUPERNOVA.CLAIMED_TYPE,
                                                'Candidate', source)
 
@@ -57,8 +60,9 @@ def do_gaia(catalog):
                         'PSNJ', 'PSN J')
                     if alias[:6] == 'ASASSN' and alias[6] != '-':
                         alias = 'ASASSN-' + alias[6:]
-                    catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, alias,
-                                                       source)
+                    if alias.lower() != 'master':
+                        catalog.entries[name].add_quantity(SUPERNOVA.ALIAS,
+                                                           alias, source)
                     break
 
         fname = os.path.join(catalog.get_current_task_repo(),

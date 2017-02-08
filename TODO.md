@@ -71,12 +71,15 @@ Other single SN datasets:
 * SN2005E - http://adsabs.harvard.edu/abs/2010Natur.465..322P (Hagai will provide LC)
 * SN2005am - http://adsabs.harvard.edu/abs/2005ApJ...635.1192B
 * SN2005df - http://adsabs.harvard.edu/abs/2015ApJ...806..107D
+* SN2005kd - http://adsabs.harvard.edu/abs/2016MNRAS.462.1101D (Radio data)
 * SN2005ke - http://adsabs.harvard.edu/abs/2014A%26A...572A..75K
+* SN2005gj - http://adsabs.harvard.edu/abs/2007arXiv0706.4088P (Late-time photometry)
+* SN2005gj - http://adsabs.harvard.edu/abs/2013ApJ...772L...6F (Late-time IR)
 * SN2005hk - http://adsabs.harvard.edu/abs/2008ApJ...680..580S
 * SN2006bc - http://adsabs.harvard.edu/abs/2012ApJ...753..109G
 * SN2006gz - http://adsabs.harvard.edu/abs/2009ApJ...690.1745M
 * SN2007ax - http://adsabs.harvard.edu/abs/2008ApJ...683L..29K
-* SN2007gr - http://adsabs.harvard.edu/abs/2009A%26A...508..371H, http://adsabs.harvard.edu/abs/2010MNRAS.408...87M, http://adsabs.harvard.edu/abs/2014ApJ...790..120C
+* SN2007gr - http://adsabs.harvard.edu/abs/2009A%26A...508..371H, http://adsabs.harvard.edu/abs/2010MNRAS.408...87M, http://adsabs.harvard.edu/abs/2014ApJ...790..120C, http://adsabs.harvard.edu/abs/2010ApJ...725..922S
 * SN2007od - http://adsabs.harvard.edu/abs/2012MNRAS.422.1178I
 * SN2007pk - http://adsabs.harvard.edu/abs/2012ApJ...750..128P
 * SN2007qd - http://adsabs.harvard.edu/abs/2010ApJ...720..704M
