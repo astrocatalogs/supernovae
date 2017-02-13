@@ -770,8 +770,8 @@ class Supernova(Entry):
         ]
         if not mjds:
             return
-        minmjd = min(mjds)
-        maxmjd = max(mjds)
+        minmjd = min(mjds) - 1
+        maxmjd = max(mjds) + 1
         newphotos = []
         for photo in self[SUPERNOVA.PHOTOMETRY]:
             if (PHOTOMETRY.MAGNITUDE in photo and
