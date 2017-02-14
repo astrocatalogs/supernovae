@@ -11,6 +11,7 @@ SNEUPDATE=$?
 echo $SNEUPDATE
 if [[ $SNEUPDATE == 0 ]]; then
 	astrocats/supernovae/scripts/generate-web.sh
+	python3.5 -m astrocats supernovae git-pull
 	python3.5 -m astrocats supernovae git-push
 	#stamp=$(date +"%Y-%m-%d %k:%M")
 	#./commit-and-push-repos.sh "Auto update: $stamp"
