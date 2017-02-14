@@ -6,10 +6,10 @@ import os
 import re
 import urllib
 
+from astrocats.catalog.utils import is_number, pbar, uniq_cdl, utf8
 # from astropy.time import Time as astrotime
 from bs4 import BeautifulSoup
 
-from astrocats.catalog.utils import is_number, pbar, uniq_cdl, utf8
 from ..supernova import SUPERNOVA
 from ..utils import clean_snname
 
@@ -18,8 +18,8 @@ def do_asiago_photo(catalog):
     task_str = catalog.get_current_task_str()
     # response = (urllib.request
     # .urlopen('http://graspa.oapd.inaf.it/cgi-bin/sncat.php'))
-    path = os.path.abspath(os.path.join(
-        catalog.get_current_task_repo(), 'asiago-cat.php'))
+    path = os.path.abspath(
+        os.path.join(catalog.get_current_task_repo(), 'asiago-cat.php'))
     response = urllib.request.urlopen('file://' + path)
     html = response.read().decode('utf-8')
     html = html.replace('\r', "")
@@ -43,7 +43,10 @@ def do_asiago_photo(catalog):
             refbib = '1989A&AS...81..421B'
 
             name, source = catalog.new_entry(
-                oldname, srcname=reference, url=refurl, bibcode=refbib,
+                oldname,
+                srcname=reference,
+                url=refurl,
+                bibcode=refbib,
                 secondary=True)
 
             year = re.findall(r'\d+', oldname)[0]
@@ -76,8 +79,7 @@ def do_asiago_photo(catalog):
                     daystr = dayarr[0]
                     datestring = datestring + '/' + daystr
 
-            catalog.entries[name].add_quantity(datekey, datestring,
-                                               source)
+            catalog.entries[name].add_quantity(datekey, datestring, source)
 
             velocity = ''
             redshift = ''
@@ -96,14 +98,19 @@ def do_asiago_photo(catalog):
                                                    source)
             if (claimedtype != ''):
                 catalog.entries[name].add_quantity(SUPERNOVA.CLAIMED_TYPE,
-                                                   claimedtype,
-                                                   source)
+                                                   claimedtype, source)
             if (redshift != ''):
                 catalog.entries[name].add_quantity(
-                    SUPERNOVA.REDSHIFT, redshift, source, kind='host')
+                    [SUPERNOVA.REDSHIFT, SUPERNOVA.HOST_REDSHIFT],
+                    redshift,
+                    source,
+                    kind='host')
             if (velocity != ''):
                 catalog.entries[name].add_quantity(
-                    SUPERNOVA.VELOCITY, velocity, source, kind='host')
+                    [SUPERNOVA.VELOCITY, SUPERNOVA.HOST_VELOCITY],
+                    velocity,
+                    source,
+                    kind='host')
             if (hostra != ''):
                 catalog.entries[name].add_quantity(
                     SUPERNOVA.HOST_RA, hostra, source, u_value='nospace')
@@ -111,15 +118,14 @@ def do_asiago_photo(catalog):
                 catalog.entries[name].add_quantity(
                     SUPERNOVA.HOST_DEC, hostdec, source, u_value='nospace')
             if (ra != ''):
-                catalog.entries[name].add_quantity(SUPERNOVA.RA, ra, source,
-                                                   u_value='nospace')
+                catalog.entries[name].add_quantity(
+                    SUPERNOVA.RA, ra, source, u_value='nospace')
             if (dec != ''):
-                catalog.entries[name].add_quantity(SUPERNOVA.DEC, dec, source,
-                                                   u_value='nospace')
+                catalog.entries[name].add_quantity(
+                    SUPERNOVA.DEC, dec, source, u_value='nospace')
             if (discoverer != ''):
                 catalog.entries[name].add_quantity(SUPERNOVA.DISCOVERER,
-                                                   discoverer,
-                                                   source)
+                                                   discoverer, source)
         if catalog.args.travis and ri >= catalog.TRAVIS_QUERY_LIMIT:
             break
 
@@ -129,11 +135,10 @@ def do_asiago_photo(catalog):
 
 def do_asiago_spectra(catalog):
     task_str = catalog.get_current_task_str()
-    html = catalog.load_url(
-        ('http://sngroup.oapd.inaf.it./'
-         'cgi-bin/output_class.cgi?sn=1990'),
-        os.path.join(catalog.get_current_task_repo(),
-                     'Asiago/spectra.html'))
+    html = catalog.load_url(('http://sngroup.oapd.inaf.it./'
+                             'cgi-bin/output_class.cgi?sn=1990'),
+                            os.path.join(catalog.get_current_task_repo(),
+                                         'Asiago/spectra.html'))
     if not html:
         return
 
@@ -154,8 +159,7 @@ def do_asiago_spectra(catalog):
                 alias = butt.text.strip()
                 alias = alias.replace('PSNJ', 'PSN J').replace('GAIA', 'Gaia')
             elif tdi == 1:
-                name = (td.text.strip()
-                        .replace('PSNJ', 'PSN J')
+                name = (td.text.strip().replace('PSNJ', 'PSN J')
                         .replace('GAIA', 'Gaia'))
                 if name.startswith('SN '):
                     name = 'SN' + name[3:]
@@ -220,15 +224,13 @@ def do_asiago_spectra(catalog):
                 #     fitsurl = fitslink['href']
         if name:
             catalog.entries[name].add_quantity(SUPERNOVA.CLAIMED_TYPE,
-                                               claimedtype,
-                                               sources)
+                                               claimedtype, sources)
             catalog.entries[name].add_quantity(SUPERNOVA.RA, ra, sources)
             catalog.entries[name].add_quantity(SUPERNOVA.DEC, dec, sources)
             catalog.entries[name].add_quantity(SUPERNOVA.REDSHIFT, redshift,
                                                sources)
             catalog.entries[name].add_quantity(SUPERNOVA.DISCOVERER,
-                                               discoverer,
-                                               sources)
+                                               discoverer, sources)
             catalog.entries[name].add_quantity(SUPERNOVA.HOST, host, sources)
 
             # if fitsurl:
