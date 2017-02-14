@@ -273,7 +273,7 @@ def do_vizier(catalog):
             PHOTOMETRY.BAND: row['Filt'],
             PHOTOMETRY.SOURCE: source
         }
-        if row['mag']:
+        if row['mag'] and is_number(row['mag']):
             photodict[PHOTOMETRY.MAGNITUDE] = row['mag']
             photodict[PHOTOMETRY.E_MAGNITUDE] = row['e_mag']
         else:
