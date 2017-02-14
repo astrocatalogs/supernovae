@@ -298,7 +298,6 @@ class Supernova(Entry):
                                 newquantities.append(ct)
 
                 if isworse:
-                    print(newquantities)
                     self._log.info("Removing quantity '{}' with value '{}' "
                                    "and kind '{}' determined to be worse than "
                                    "existing alternative values.".format(
