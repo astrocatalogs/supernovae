@@ -4,7 +4,7 @@ import csv
 import json
 import os
 from glob import glob
-from math import floor, isnan
+from math import floor
 
 import numpy as np
 from astrocats.catalog.photometry import PHOTOMETRY, set_pd_mag_from_counts
@@ -222,101 +222,102 @@ def do_donated_photo(catalog):
                     catalog.entries[name].add_photometry(**photodict)
 
     # Nicholl 04-01-16 donation
-    with open(
-            os.path.join(catalog.get_current_task_repo(), 'Donations',
-                         'Nicholl-04-01-16', 'bibcodes.json'), 'r') as f:
-        bcs = json.loads(f.read())
-
-    kcorrected = ['SN2011ke', 'SN2011kf', 'SN2012il', 'PTF10hgi', 'PTF11rks']
-
-    file_names = glob(
-        os.path.join(catalog.get_current_task_repo(), 'Donations',
-                     'Nicholl-04-01-16/*.txt'))
-    for datafile in pbar_strings(file_names, task_str + ': Nicholl-04-01-16'):
-        inpname = os.path.basename(datafile).split('_')[0]
-        isk = inpname in kcorrected
-        name = catalog.add_entry(inpname)
-        bibcode = ''
-        for bc in bcs:
-            if inpname in bcs[bc]:
-                bibcode = bc
-        if not bibcode:
-            raise ValueError('Bibcode not found!')
-        source = catalog.entries[name].add_source(bibcode=bibcode)
-        catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, inpname, source)
-        with open(datafile, 'r') as f:
-            tsvin = csv.reader(f, delimiter='\t', skipinitialspace=True)
-            rtelescope = ''
-            for r, rrow in enumerate(tsvin):
-                row = list(filter(None, rrow))
-                if not row:
-                    continue
-                if row[0] == '#MJD':
-                    bands = [x for x in row[1:] if x and 'err' not in x]
-                elif row[0][0] == '#' and len(row[0]) > 1:
-                    rtelescope = row[0][1:]
-                if row[0][0] == '#':
-                    continue
-                mjd = row[0]
-                if not is_number(mjd):
-                    continue
-                for v, val in enumerate(row[1::2]):
-                    upperlimit = ''
-                    if '>' in val:
-                        upperlimit = True
-                    mag = val.strip('>')
-                    if (not is_number(mag) or isnan(float(mag)) or
-                            float(mag) > 90.0):
-                        continue
-                    band = bands[v]
-                    instrument = ''
-                    survey = ''
-                    telescope = rtelescope
-                    if telescope == 'LSQ':
-                        instrument = 'QUEST'
-                    elif telescope == 'PS1':
-                        instrument = 'GPC'
-                    elif telescope == 'NTT':
-                        instrument = 'EFOSC'
-                    elif telescope == 'GROND':
-                        instrument = 'GROND'
-                        telescope = 'MPI/ESO 2.2m'
-                    else:
-                        if band == 'NUV':
-                            instrument = 'GALEX'
-                            telescope = 'GALEX'
-                        elif band in ['u', 'g', 'r', 'i', 'z']:
-                            if inpname.startswith('PS1'):
-                                instrument = 'GPC'
-                                telescope = 'PS1'
-                                survey = 'Pan-STARRS'
-                            elif inpname.startswith('PTF'):
-                                telescope = 'P60'
-                                survey = 'PTF'
-                        elif band.upper() in ['UW2', 'UW1', 'UM2']:
-                            instrument = 'UVOT'
-                            telescope = 'Swift'
-                    photodict = {
-                        PHOTOMETRY.TIME: mjd,
-                        PHOTOMETRY.U_TIME: 'MJD',
-                        PHOTOMETRY.BAND: band,
-                        PHOTOMETRY.MAGNITUDE: mag,
-                        PHOTOMETRY.UPPER_LIMIT: upperlimit,
-                        PHOTOMETRY.SOURCE: source
-                    }
-                    if instrument:
-                        photodict[PHOTOMETRY.INSTRUMENT] = instrument
-                    if telescope:
-                        photodict[PHOTOMETRY.TELESCOPE] = telescope
-                    if survey:
-                        photodict[PHOTOMETRY.SURVEY] = survey
-                    if (is_number(row[2 * v + 2]) and
-                            not isnan(float(row[2 * v + 2]))):
-                        photodict[PHOTOMETRY.E_MAGNITUDE] = row[2 * v + 2]
-                    if isk:
-                        photodict[PHOTOMETRY.KCORRECTED] = True
-                    catalog.entries[name].add_photometry(**photodict)
-    catalog.journal_entries()
+    # Superceded by Inserra-09-04-16 donation
+    # with open(
+    #         os.path.join(catalog.get_current_task_repo(), 'Donations',
+    #                      'Nicholl-04-01-16', 'bibcodes.json'), 'r') as f:
+    #     bcs = json.loads(f.read())
+    #
+    # kcorrected = ['SN2011ke', 'SN2011kf', 'SN2012il', 'PTF10hgi', 'PTF11rks']
+    #
+    # file_names = glob(
+    #     os.path.join(catalog.get_current_task_repo(), 'Donations',
+    #                  'Nicholl-04-01-16/*.txt'))
+    # for datafile in pbar_strings(file_names, task_str + ': Nicholl-04-01-16'):
+    #     inpname = os.path.basename(datafile).split('_')[0]
+    #     isk = inpname in kcorrected
+    #     name = catalog.add_entry(inpname)
+    #     bibcode = ''
+    #     for bc in bcs:
+    #         if inpname in bcs[bc]:
+    #             bibcode = bc
+    #     if not bibcode:
+    #         raise ValueError('Bibcode not found!')
+    #     source = catalog.entries[name].add_source(bibcode=bibcode)
+    #     catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, inpname, source)
+    #     with open(datafile, 'r') as f:
+    #         tsvin = csv.reader(f, delimiter='\t', skipinitialspace=True)
+    #         rtelescope = ''
+    #         for r, rrow in enumerate(tsvin):
+    #             row = list(filter(None, rrow))
+    #             if not row:
+    #                 continue
+    #             if row[0] == '#MJD':
+    #                 bands = [x for x in row[1:] if x and 'err' not in x]
+    #             elif row[0][0] == '#' and len(row[0]) > 1:
+    #                 rtelescope = row[0][1:]
+    #             if row[0][0] == '#':
+    #                 continue
+    #             mjd = row[0]
+    #             if not is_number(mjd):
+    #                 continue
+    #             for v, val in enumerate(row[1::2]):
+    #                 upperlimit = ''
+    #                 if '>' in val:
+    #                     upperlimit = True
+    #                 mag = val.strip('>')
+    #                 if (not is_number(mag) or isnan(float(mag)) or
+    #                         float(mag) > 90.0):
+    #                     continue
+    #                 band = bands[v]
+    #                 instrument = ''
+    #                 survey = ''
+    #                 telescope = rtelescope
+    #                 if telescope == 'LSQ':
+    #                     instrument = 'QUEST'
+    #                 elif telescope == 'PS1':
+    #                     instrument = 'GPC'
+    #                 elif telescope == 'NTT':
+    #                     instrument = 'EFOSC'
+    #                 elif telescope == 'GROND':
+    #                     instrument = 'GROND'
+    #                     telescope = 'MPI/ESO 2.2m'
+    #                 else:
+    #                     if band == 'NUV':
+    #                         instrument = 'GALEX'
+    #                         telescope = 'GALEX'
+    #                     elif band in ['u', 'g', 'r', 'i', 'z']:
+    #                         if inpname.startswith('PS1'):
+    #                             instrument = 'GPC'
+    #                             telescope = 'PS1'
+    #                             survey = 'Pan-STARRS'
+    #                         elif inpname.startswith('PTF'):
+    #                             telescope = 'P60'
+    #                             survey = 'PTF'
+    #                     elif band.upper() in ['UW2', 'UW1', 'UM2']:
+    #                         instrument = 'UVOT'
+    #                         telescope = 'Swift'
+    #                 photodict = {
+    #                     PHOTOMETRY.TIME: mjd,
+    #                     PHOTOMETRY.U_TIME: 'MJD',
+    #                     PHOTOMETRY.BAND: band,
+    #                     PHOTOMETRY.MAGNITUDE: mag,
+    #                     PHOTOMETRY.UPPER_LIMIT: upperlimit,
+    #                     PHOTOMETRY.SOURCE: source
+    #                 }
+    #                 if instrument:
+    #                     photodict[PHOTOMETRY.INSTRUMENT] = instrument
+    #                 if telescope:
+    #                     photodict[PHOTOMETRY.TELESCOPE] = telescope
+    #                 if survey:
+    #                     photodict[PHOTOMETRY.SURVEY] = survey
+    #                 if (is_number(row[2 * v + 2]) and
+    #                         not isnan(float(row[2 * v + 2]))):
+    #                     photodict[PHOTOMETRY.E_MAGNITUDE] = row[2 * v + 2]
+    #                 if isk:
+    #                     photodict[PHOTOMETRY.KCORRECTED] = True
+    #                 catalog.entries[name].add_photometry(**photodict)
+    # catalog.journal_entries()
 
     # Maggi 04-11-16 donation (MC SNRs)
     with open(
