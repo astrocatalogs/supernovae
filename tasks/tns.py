@@ -97,7 +97,10 @@ def do_tns(catalog):
                                                    source)
             if row[7]:
                 catalog.entries[name].add_quantity(
-                    SUPERNOVA.REDSHIFT, row[7], source, kind='host')
+                    [SUPERNOVA.REDSHIFT, SUPERNOVA.HOST_REDSHIFT],
+                    row[7],
+                    source,
+                    kind='host')
             if row[8]:
                 catalog.entries[name].add_quantity(SUPERNOVA.DISCOVERER,
                                                    row[8], source)

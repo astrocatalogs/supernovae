@@ -1155,7 +1155,7 @@ def do_ascii(catalog):
             catalog.entries[name].add_quantity(SUPERNOVA.RA, row[1], source)
             catalog.entries[name].add_quantity(SUPERNOVA.DEC, row[2], source)
             catalog.entries[name].add_quantity(
-                SUPERNOVA.REDSHIFT,
+                [SUPERNOVA.REDSHIFT, SUPERNOVA.HOST_REDSHIFT],
                 row[5].replace('?', ''),
                 source,
                 e_value=row[6],
@@ -1183,7 +1183,10 @@ def do_ascii(catalog):
             catalog.entries[name].add_quantity(SUPERNOVA.RA, row[1], source)
             catalog.entries[name].add_quantity(SUPERNOVA.DEC, row[2], source)
             catalog.entries[name].add_quantity(
-                SUPERNOVA.REDSHIFT, row[3], source, kind='host')
+                [SUPERNOVA.REDSHIFT, SUPERNOVA.HOST_REDSHIFT],
+                row[3],
+                source,
+                kind='host')
     catalog.journal_entries()
 
     # 2009MNRAS.398.1041B

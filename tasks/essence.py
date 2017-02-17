@@ -6,6 +6,7 @@ import os
 from glob import glob
 
 from astrocats.catalog.photometry import PHOTOMETRY, set_pd_mag_from_counts
+from astrocats.catalog.quantity import QUANTITY
 from astrocats.catalog.spectrum import SPECTRUM
 from astrocats.catalog.utils import is_number, pbar, pbar_strings
 from astropy.time import Time as astrotime
@@ -40,14 +41,21 @@ def do_essence_photo(catalog):
                                                source)
         catalog.entries[name].add_quantity(SUPERNOVA.RA, row[5], source)
         catalog.entries[name].add_quantity(SUPERNOVA.DEC, row[6], source)
-        catalog.entries[name].add_quantity(
-            SUPERNOVA.REDSHIFT, row[11], source, kind='host', e_value=row[12])
+        if is_number(row[11]):
+            quantdict = {
+                QUANTITY.VALUE: row[11],
+                QUANTITY.SOURCE: source,
+                QUANTITY.KIND: 'host'
+            }
+            if is_number(row[12]):
+                quantdict[QUANTITY.E_VALUE] = row[12]
+            catalog.entries[name].add_quantity(
+                [SUPERNOVA.REDSHIFT, SUPERNOVA.HOST_REDSHIFT], **quantdict)
 
     files = glob(
         os.path.join(catalog.get_current_task_repo(), 'ESSENCE',
                      '*clean*.dat'))
 
-    # Still written for SNLS
     for pfile in pbar(files, task_str):
         name = 'ESSENCE ' + pfile.split('/')[-1].split('.')[0]
         name, source = catalog.new_entry(name, bibcode='2016ApJS..224....3N')

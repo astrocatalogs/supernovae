@@ -4,8 +4,6 @@ import warnings
 from collections import OrderedDict
 
 import numpy as np
-from astropy.time import Time as astrotime
-
 from astrocats.catalog.entry import ENTRY, Entry
 from astrocats.catalog.key import KEY_TYPES, Key
 from astrocats.catalog.photometry import PHOTOMETRY
@@ -13,8 +11,10 @@ from astrocats.catalog.quantity import QUANTITY
 from astrocats.catalog.source import SOURCE
 from astrocats.catalog.utils import (bib_priority, get_sig_digits,
                                      get_source_year, is_integer, is_number,
-                                     jd_to_mjd, make_date_string, pretty_num,
-                                     uniq_cdl)
+                                     jd_to_mjd, listify, make_date_string,
+                                     pretty_num, uniq_cdl)
+from astropy.time import Time as astrotime
+
 from cdecimal import Decimal
 
 from .constants import MAX_VISUAL_BANDS
@@ -83,7 +83,7 @@ class Supernova(Entry):
         value = quantity.get(QUANTITY.VALUE, '').strip()
         error = quantity.get(QUANTITY.E_VALUE, '').strip()
         unit = quantity.get(QUANTITY.U_VALUE, '').strip()
-        kind = quantity.get(QUANTITY.KIND, '').strip()
+        kinds = [x.strip() for x in listify(quantity.get(QUANTITY.KIND, []))]
         key = quantity._key
 
         if not value:
@@ -117,10 +117,12 @@ class Supernova(Entry):
             ]:
                 return False
             value = host_clean(value)
-            if ((not kind and ((value.lower().startswith('abell') and
-                                is_number(value[5:].strip())) or
-                               'cluster' in value.lower()))):
-                kind = 'cluster'
+            if ((not kinds and ((value.lower().startswith('abell') and
+                                 is_number(value[5:].strip())) or
+                                'cluster' in value.lower()))):
+                kinds = ['cluster']
+        elif key == self._KEYS.HOST_REDSHIFT:
+            kinds = list(filter(lambda x: x != 'host', kinds))
         elif key == self._KEYS.CLAIMED_TYPE:
             isq = False
             if value.startswith('SN '):
@@ -170,112 +172,154 @@ class Supernova(Entry):
             quantity[QUANTITY.E_VALUE] = error
         if unit:
             quantity[QUANTITY.U_VALUE] = unit
-        if kind:
-            quantity[QUANTITY.KIND] = kind
+        if kinds:
+            quantity[QUANTITY.KIND] = kinds if len(kinds) > 1 else kinds[0]
+        elif QUANTITY.KIND in quantity:
+            del (quantity[QUANTITY.KIND])
 
         return True
 
     def add_quantity(self,
-                     quantity,
+                     quantities,
                      value,
                      source,
                      forcereplacebetter=False,
                      **kwargs):
-        success = super().add_quantity(quantity, value, source, **kwargs)
+        success = super().add_quantity(quantities, value, source, **kwargs)
 
         if not success:
             return
 
-        my_quantity_list = self.get(quantity, [])
+        for quantity in listify(quantities):
+            my_quantity_list = self.get(quantity, [])
 
-        if ((forcereplacebetter or quantity.replace_better) and
-                len(my_quantity_list) > 1):
+            if ((forcereplacebetter or quantity.replace_better) and
+                    len(my_quantity_list) > 1):
 
-            # The quantity that was just added should be last in the list
-            added_quantity = my_quantity_list.pop()
+                # The quantity that was just added should be last in the list
+                added_quantity = my_quantity_list.pop()
 
-            newquantities = []
-            isworse = True
-            if quantity in [self._KEYS.DISCOVER_DATE, self._KEYS.MAX_DATE]:
-                for ct in my_quantity_list:
-                    ctsplit = ct[QUANTITY.VALUE].split('/')
-                    svsplit = added_quantity[QUANTITY.VALUE].split('/')
-                    if len(ctsplit) < len(svsplit):
-                        isworse = False
-                        continue
-                    elif len(ctsplit) < len(svsplit) and len(svsplit) == 3:
-                        val_one = max(2,
-                                      get_sig_digits(ctsplit[-1].lstrip('0')))
-                        val_two = max(2,
-                                      get_sig_digits(svsplit[-1].lstrip('0')))
-                        if val_one < val_two:
+                newquantities = []
+                isworse = True
+                if quantity in [self._KEYS.DISCOVER_DATE, self._KEYS.MAX_DATE]:
+                    for ct in my_quantity_list:
+                        ctsplit = ct[QUANTITY.VALUE].split('/')
+                        svsplit = added_quantity[QUANTITY.VALUE].split('/')
+                        if len(ctsplit) < len(svsplit):
                             isworse = False
                             continue
-                    newquantities.append(ct)
-            else:
-                if type(quantity) != Key:
-                    isworse = False
-                elif quantity.type == KEY_TYPES.NUMERIC:
-                    newsig = get_sig_digits(added_quantity[QUANTITY.VALUE])
-                    for ct in my_quantity_list:
-                        if QUANTITY.E_VALUE in ct:
-                            if QUANTITY.E_VALUE in added_quantity:
-                                if (float(added_quantity[QUANTITY.E_VALUE]) <=
-                                        float(ct[QUANTITY.E_VALUE])):
-                                    isworse = False
-                                    continue
-                            newquantities.append(ct)
-                        else:
-                            if QUANTITY.E_VALUE in added_quantity:
+                        elif len(ctsplit) < len(svsplit) and len(svsplit) == 3:
+                            val_one = max(
+                                2, get_sig_digits(ctsplit[-1].lstrip('0')))
+                            val_two = max(
+                                2, get_sig_digits(svsplit[-1].lstrip('0')))
+                            if val_one < val_two:
                                 isworse = False
                                 continue
-                            oldsig = get_sig_digits(ct[QUANTITY.VALUE])
-                            if oldsig >= newsig:
-                                newquantities.append(ct)
-                            if newsig >= oldsig:
-                                isworse = False
-                elif quantity.type == KEY_TYPES.STRING:
-                    for ct in my_quantity_list:
-                        if (ct.get(QUANTITY.KIND, '') in
-                                quantity.kind_preference):
-                            if (added_quantity.get(QUANTITY.KIND, '') in
-                                    quantity.kind_preference):
-                                aqi = quantity.kind_preference.index(
-                                    added_quantity[QUANTITY.KIND])
-                                qqi = quantity.kind_preference.index(ct[
-                                    QUANTITY.KIND])
-                                if aqi >= qqi:
-                                    newquantities.append(ct)
+                        newquantities.append(ct)
+                else:
+                    if type(quantity) != Key:
+                        isworse = False
+                    elif quantity.type == KEY_TYPES.NUMERIC:
+                        newsig = get_sig_digits(added_quantity[QUANTITY.VALUE])
+                        for ct in my_quantity_list:
+                            addct = False
+                            checke = False
+                            if (not set(listify(ct.get(QUANTITY.KIND, [])))
+                                    .isdisjoint(quantity.kind_preference) and
+                                    not set(
+                                        listify(
+                                            added_quantity.get(QUANTITY.KIND,
+                                                               [])))
+                                    .isdisjoint(quantity.kind_preference)):
+                                aqi = min([
+                                    quantity.kind_preference.index(x)
+                                    for x in listify(added_quantity[
+                                        QUANTITY.KIND])
+                                ])
+                                qqi = min([
+                                    quantity.kind_preference.index(x)
+                                    for x in listify(ct[QUANTITY.KIND])
+                                ])
+                                if aqi > qqi:
+                                    addct = True
+                                if aqi == qqi:
+                                    checke = True
                                 if aqi <= qqi:
                                     isworse = False
-                                    continue
                             else:
+                                checke = True
+                            if checke and QUANTITY.E_VALUE in ct:
+                                if QUANTITY.E_VALUE in added_quantity:
+                                    if (float(added_quantity[QUANTITY.E_VALUE])
+                                            >= float(ct[QUANTITY.E_VALUE])):
+                                        addct = True
+                                    if (float(added_quantity[QUANTITY.E_VALUE])
+                                            <= float(ct[QUANTITY.E_VALUE])):
+                                        isworse = False
+                            else:
+                                if (checke and
+                                        QUANTITY.E_VALUE in added_quantity):
+                                    isworse = False
+                                else:
+                                    oldsig = get_sig_digits(ct[QUANTITY.VALUE])
+                                    if oldsig >= newsig:
+                                        addct = True
+                                    if newsig >= oldsig:
+                                        isworse = False
+                            if addct:
                                 newquantities.append(ct)
-                        else:
-                            isworse = False
-                            if (added_quantity.get(QUANTITY.KIND, '') not in
-                                    quantity.kind_preference):
+                    elif quantity.type == KEY_TYPES.STRING:
+                        for ct in my_quantity_list:
+                            addct = False
+                            if (not set(listify(ct.get(QUANTITY.KIND, [])))
+                                    .isdisjoint(quantity.kind_preference) and
+                                    not set(
+                                        listify(
+                                            added_quantity.get(QUANTITY.KIND,
+                                                               [])))
+                                    .isdisjoint(quantity.kind_preference)):
+                                aqi = min([
+                                    quantity.kind_preference.index(x)
+                                    for x in listify(added_quantity[
+                                        QUANTITY.KIND])
+                                ])
+                                qqi = min([
+                                    quantity.kind_preference.index(x)
+                                    for x in listify(ct[QUANTITY.KIND])
+                                ])
+                                if aqi >= qqi:
+                                    addct = True
+                                if aqi <= qqi:
+                                    isworse = False
+                            else:
+                                isworse = False
+                            if addct:
                                 newquantities.append(ct)
 
-            if isworse:
-                self._log.info("Removing quantity '{}' with value '{}' "
-                               "determined to be worse than existing "
-                               "alternative values.".format(
-                                   quantity, added_quantity[QUANTITY.VALUE]))
-            else:
-                newquantities.append(added_quantity)
-            self[quantity] = newquantities
+                if isworse:
+                    self._log.info("Removing quantity '{}' with value '{}' "
+                                   "and kind '{}' determined to be worse than "
+                                   "existing alternative values.".format(
+                                       quantity, added_quantity[
+                                           QUANTITY.VALUE],
+                                       added_quantity.get(QUANTITY.KIND, '')))
+                else:
+                    newquantities.append(added_quantity)
+                if len(newquantities) > 0:
+                    self[quantity] = newquantities
 
-        # As all SN####xx designations for 2016+ have corresponding AT
-        # designations, add the AT alias when the SN alias is added.
-        if quantity == self._KEYS.ALIAS:
-            cleaned_value = my_quantity_list[-1][QUANTITY.VALUE]
-            if (cleaned_value.startswith('SN') and
-                    is_integer(cleaned_value[2:6]) and
-                    int(cleaned_value[2:6]) >= 2016):
-                success = super().add_quantity(SUPERNOVA.ALIAS,
-                                               'AT' + cleaned_value[2:],
-                                               source, **kwargs)
+            # As all SN####xx designations for 2016+ have corresponding AT
+            # designations, add the AT alias when the SN alias is added.
+            if quantity == self._KEYS.ALIAS:
+                for alias in self.get(quantity, []):
+                    cleaned_value = alias[QUANTITY.VALUE]
+                    if (cleaned_value.startswith('SN') and
+                            is_integer(cleaned_value[2:6]) and
+                            int(cleaned_value[2:6]) >= 2016):
+                        success = super().add_quantity(
+                            SUPERNOVA.ALIAS, 'AT' + cleaned_value[2:], source,
+                            **kwargs)
 
         return True
 
@@ -789,12 +833,15 @@ class Supernova(Entry):
         self[SUPERNOVA.PHOTOMETRY] = newphotos
         return
 
-    def get_best_redshift(self):
+    def get_best_redshift(self, key=SUPERNOVA.REDSHIFT):
         bestsig = -1
         bestkind = None
-        for z in self[SUPERNOVA.REDSHIFT]:
+        for z in self[key]:
             try:
-                kind = z.kind_preference.index(z.get(QUANTITY.KIND, ''))
+                kind = min([
+                    z.kind_preference.index(x)
+                    for x in listify(z.get(QUANTITY.KIND, []))
+                ])
             except:
                 kind = None
             sig = get_sig_digits(z[QUANTITY.VALUE])
@@ -875,14 +922,15 @@ class Supernova(Entry):
         if newname and name != newname:
             # Make sure new name doesn't already exist
             if self.init_from_file(self.catalog, name=newname):
-                self._log.error("WARNING: `newname` already exists... "
-                                "should do something about that...")
-
-            self._log.info("Changing entry from name '{}' to preferred"
-                           " name '{}'".format(name, newname))
-            self.catalog.entries[newname] = self.catalog.entries[name]
-            del self.catalog.entries[name]
-            self.catalog.entries[newname][self._KEYS.NAME] = newname
+                self._log.info("`{}` already exists, copying `{}` to it".
+                               format(newname, name))
+                self.catalog.copy_entry_to_entry(name, newname)
+            else:
+                self._log.info("Changing entry from name '{}' to preferred"
+                               " name '{}'".format(name, newname))
+                self.catalog.entries[newname] = self.catalog.entries[name]
+                del self.catalog.entries[name]
+                self.catalog.entries[newname][self._KEYS.NAME] = newname
             return newname
 
         return name

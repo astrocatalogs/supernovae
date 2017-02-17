@@ -8,11 +8,10 @@ import warnings
 from glob import glob
 
 import requests
-from astropy.time import Time as astrotime
-from bs4 import BeautifulSoup
-
 from astrocats.catalog.photometry import PHOTOMETRY
 from astrocats.catalog.utils import is_number, make_date_string, pbar, uniq_cdl
+from astropy.time import Time as astrotime
+from bs4 import BeautifulSoup
 
 from ..supernova import SUPERNOVA
 
@@ -273,10 +272,12 @@ def do_ps_threepi(catalog):
             if not name:
                 name = psname
             name = catalog.add_entry(name)
-            sources = [catalog.entries[name].add_source(
-                name='Pan-STARRS 3Pi',
-                url=('http://psweb.mp.qub.ac.uk/'
-                     'ps1threepi/psdb/'))]
+            sources = [
+                catalog.entries[name].add_source(
+                    name='Pan-STARRS 3Pi',
+                    url=('http://psweb.mp.qub.ac.uk/'
+                         'ps1threepi/psdb/'))
+            ]
             catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name,
                                                sources[0])
             for ref in refs:
@@ -391,7 +392,10 @@ def do_ps_threepi(catalog):
                                                source)
             if redshift:
                 catalog.entries[name].add_quantity(
-                    SUPERNOVA.REDSHIFT, redshift, source, kind='host')
+                    [SUPERNOVA.REDSHIFT, SUPERNOVA.HOST_REDSHIFT],
+                    redshift,
+                    source,
+                    kind='host')
             if catalog.args.update:
                 catalog.journal_entries()
 
