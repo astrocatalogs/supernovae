@@ -131,6 +131,7 @@ def do_sdss_photo(catalog):
                       glob(
                           os.path.join(catalog.get_current_task_repo(),
                                        'SDSS/SMP_Data/*.dat'))))
+    skipphoto = ['SDSS-II SN 15557']
     for fi, fname in enumerate(pbar_strings(file_names, task_str)):
         tsvin = csv.reader(
             open(fname, 'r'), delimiter=' ', skipinitialspace=True)
@@ -156,8 +157,8 @@ def do_sdss_photo(catalog):
                     skip_entry = True
                     continue
                 # Ignore IAU names from file headers as they are unreliable
-                name = 'SDSS-II SN ' + row[3]
-                (name, source) = catalog.new_entry(name, bibcode=bibcode)
+                oname = 'SDSS-II SN ' + row[3]
+                (name, source) = catalog.new_entry(oname, bibcode=bibcode)
                 catalog.entries[name].add_quantity(
                     SUPERNOVA.RA, row[-4], source, u_value='floatdegrees')
                 catalog.entries[name].add_quantity(
@@ -177,6 +178,8 @@ def do_sdss_photo(catalog):
                 # Skip bad measurements
                 if int(row[0]) > 1024:
                     continue
+                if oname in skipphoto:
+                    break
 
                 mjd = row[1]
                 band = sdssbands[int(row[2])] + "'"
