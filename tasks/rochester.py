@@ -24,6 +24,7 @@ def do_rochester(catalog):
     ]
     rochesterupdate = [False, True, True, False]
     task_str = catalog.get_current_task_str()
+    badjds = ['2440587', '2440587.292']
 
     for pp, path in enumerate(pbar(rochesterpaths, task_str)):
         if catalog.args.update and not rochesterupdate[pp]:
@@ -161,7 +162,7 @@ def do_rochester(catalog):
             catalog.entries[name].add_quantity(SUPERNOVA.RA, ra, sources)
             catalog.entries[name].add_quantity(SUPERNOVA.DEC, dec, sources)
             discstr = str(cols[cns['disc']].contents[0]).strip()
-            if (discstr and discstr not in ['2440587', '2440587.292']):
+            if discstr and discstr not in badjds:
                 if '/' not in discstr:
                     astrot = astrotime(float(discstr), format='jd').datetime
                     ddate = make_date_string(astrot.year, astrot.month,
@@ -171,7 +172,7 @@ def do_rochester(catalog):
                 catalog.entries[name].add_quantity(SUPERNOVA.DISCOVER_DATE,
                                                    ddate, sources)
             maxstr = str(cols[cns.get('max', '')].contents[0]).strip()
-            if (maxstr and maxstr not in ['2440587', '2440587.292']):
+            if maxstr and maxstr not in badjds:
                 if '/' not in maxstr:
                     astrot = astrotime(float(maxstr), format='jd')
                 else:
