@@ -170,11 +170,12 @@ def do_rochester(catalog):
                     ddate = discstr
                 catalog.entries[name].add_quantity(SUPERNOVA.DISCOVER_DATE,
                                                    ddate, sources)
-            if ('max' in cns and str(cols[cns['max']].contents[0]).strip()
-                    not in ['2440587', '2440587.292']):
-                astrot = astrotime(
-                    float(str(cols[cns['max']].contents[0]).strip()),
-                    format='jd')
+            maxstr = str(cols[cns.get('max', '')].contents[0]).strip()
+            if (maxstr and maxstr not in ['2440587', '2440587.292']):
+                if '/' not in maxstr:
+                    astrot = astrotime(float(maxstr), format='jd')
+                else:
+                    astrot = astrotime(maxstr.replace('/', '-'))
                 if ((float(str(cols[cns['mmag']].contents[0]).strip()) <= 90.0
                      and
                      not any('GRB' in xx
