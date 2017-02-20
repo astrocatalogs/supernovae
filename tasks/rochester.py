@@ -177,7 +177,7 @@ def do_rochester(catalog):
                 if '/' not in maxstr:
                     astrot = astrotime(float(maxstr), format='jd')
                 else:
-                    astrot = astrotime(maxstr.replace('/', '-'))
+                    astrot = astrotime(maxstr.replace('/', '-'), format='iso')
                 if ((float(str(cols[cns['mmag']].contents[0]).strip()) <= 90.0
                      and
                      not any('GRB' in xx
