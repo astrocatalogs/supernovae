@@ -123,11 +123,12 @@ def do_rochester(catalog):
                 name=sec_ref, url=sec_refurl, secondary=True)
             sources = []
             if 'ref' in cns:
-                reference = cols[cns['ref']].findAll('a')[0].contents[0].strip(
-                )
-                refurl = cols[cns['ref']].findAll('a')[0]['href'].strip()
-                sources.append(catalog.entries[name].add_source(
-                    name=reference, url=refurl))
+                reftag = reference = cols[cns['ref']].findAll('a')
+                if len(reftag):
+                    reference = reftag[0].contents[0].strip()
+                    refurl = reftag[0]['href'].strip()
+                    sources.append(catalog.entries[name].add_source(
+                        name=reference, url=refurl))
             sources.append(sec_source)
             sources = uniq_cdl(list(filter(None, sources)))
             catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, oldname,
