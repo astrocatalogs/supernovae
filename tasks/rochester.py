@@ -31,14 +31,18 @@ def do_rochester(catalog):
 
         if 'snredboneyard.html' in path:
             cns = {
-                'name': 9,
+                'name': 0,
+                'host': 1,
+                'ra': 2,
+                'dec': 3,
                 'type': 7,
-                'host': 5,
-                'ra': 0,
-                'dec': 1,
-                'disc': 4,
-                'mmag': 8,
-                'aka': 10
+                'z': 8,
+                'mmag': 9,
+                'max': 10,
+                'disc': 11,
+                'ref': 12,
+                'dver': 13,
+                'aka': 14
             }
         else:
             cns = {
