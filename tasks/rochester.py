@@ -174,10 +174,15 @@ def do_rochester(catalog):
                                                    ddate, sources)
             maxstr = str(cols[cns.get('max', '')].contents[0]).strip()
             if maxstr and maxstr not in badjds:
-                if '/' not in maxstr:
-                    astrot = astrotime(float(maxstr), format='jd')
-                else:
-                    astrot = astrotime(maxstr.replace('/', '-'), format='iso')
+                try:
+                    if '/' not in maxstr:
+                        astrot = astrotime(float(maxstr), format='jd')
+                    else:
+                        astrot = astrotime(
+                            maxstr.replace('/', '-'), format='iso')
+                except:
+                    catalog.log.warning(
+                        'Max date conversion failed for `{}`.'.format(maxstr))
                 if ((float(str(cols[cns['mmag']].contents[0]).strip()) <= 90.0
                      and
                      not any('GRB' in xx
