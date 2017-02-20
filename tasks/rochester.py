@@ -181,7 +181,7 @@ def do_rochester(catalog):
                         astrot = astrotime(
                             maxstr.replace('/', '-'), format='iso')
                 except:
-                    catalog.log.warning(
+                    catalog.log.info(
                         'Max date conversion failed for `{}`.'.format(maxstr))
                 if ((float(str(cols[cns['mmag']].contents[0]).strip()) <= 90.0
                      and
