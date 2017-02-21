@@ -38,7 +38,7 @@ def do_donated_photo(catalog):
     for path in file_names:
         data = read(path, format='cds')
         oname = path.split('/')[-1].split('_')[0]
-        name, source = catalog.new_entry(oname, bibcode=metadict[oname][0])
+        name, source = catalog.new_entry(oname, bibcode=metadict[oname]['bibcode'])
         for row in pbar(data, task_str + ': Nicholl ' + oname):
             photodict = {
                 PHOTOMETRY.TIME: str(row['MJD']),
@@ -47,6 +47,8 @@ def do_donated_photo(catalog):
                 PHOTOMETRY.BAND: row['Filter'],
                 PHOTOMETRY.SOURCE: source
             }
+            if 'system' in metadict[oname]:
+                photodict[PHOTOMETRY.SYSTEM] = metadict[oname]['system']
             if 'l_mag' in row.columns and row['l_mag'] == '>':
                 photodict[PHOTOMETRY.UPPER_LIMIT] = True
             elif 'e_mag' in row.columns:
