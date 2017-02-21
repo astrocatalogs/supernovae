@@ -200,6 +200,9 @@ def name_clean(name):
     if (newname.startswith('Gaia ') and is_number(newname[3:4]) and
             len(newname) > 5):
         newname = newname.replace('Gaia ', 'Gaia', 1)
+    if (newname.startswith('AT ') and is_number(newname[3:7]) and
+            len(newname) > 7):
+        newname = newname.replace('AT ', 'AT', 1)
     if len(newname) <= 4 and is_number(newname):
         newname = 'SN' + newname + 'A'
     if (len(newname) > 4 and is_number(newname[:4]) and
