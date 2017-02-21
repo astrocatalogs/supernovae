@@ -304,6 +304,17 @@
         "always_journal": true,
         "priority": 29
     },
+    "smt": {
+        "nice_name": "%pre SMT",
+        "active": true,
+        "update": true,
+        "archived": false,
+        "module": "supernovae.tasks.smt",
+        "function": "do_smt",
+        "repo": "input/sne-external",
+        "always_journal": true,
+        "priority": 29
+    },
     "nedd": {
         "nice_name": "%pre NED-D",
         "active": true,

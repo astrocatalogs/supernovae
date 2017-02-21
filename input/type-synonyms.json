@@ -1,5 +1,5 @@
 {
-    "Candidate":     ["PSN"],
+    "Candidate":     ["PSN", "Cand", "Stale"],
     "CC":            ["CCSN"],
     "Ia":            ["Ia-norm", "Ia- norm"],
     "I Pec":         ["I pec", "I-pec", "I Pec", "I-Pec", "IPec", "Ipec"],
