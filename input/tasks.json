@@ -233,7 +233,7 @@
     "psthreepi": {
         "nice_name": "%pre Pan-STARRS 3π",
         "active": true,
-        "update": true,
+        "update": false,
         "archived": false,
         "module": "supernovae.tasks.ps",
         "function": "do_ps_threepi",
@@ -274,7 +274,7 @@
     "grb": {
         "nice_name": "%pre GRB catalog",
         "active": true,
-        "update": true,
+        "update": false,
         "archived": false,
         "module": "supernovae.tasks.grb",
         "function": "do_grb",
@@ -371,7 +371,7 @@
     "sousa": {
         "nice_name": "%pre sousa",
         "active": true,
-        "update": true,
+        "update": false,
         "module": "supernovae.tasks.sousa",
         "function": "do_sousa",
         "repo": "input/sne-external",
@@ -391,7 +391,7 @@
     "snax": {
         "nice_name": "%pre SNaX",
         "active": false,
-        "update": true,
+        "update": false,
         "archived": false,
         "module": "supernovae.tasks.snax",
         "function": "do_snax",
@@ -424,7 +424,7 @@
     "donated_spectra": {
         "nice_name": "%pre Donated spectra",
         "active": true,
-        "update": true,
+        "update": false,
         "module": "supernovae.tasks.donations",
         "function": "do_donated_spectra",
         "groups": ["spectra"],
@@ -435,7 +435,7 @@
     "asiago_spectra": {
         "nice_name": "%pre Asiago spectra",
         "active": true,
-        "update": true,
+        "update": false,
         "module": "supernovae.tasks.asiago",
         "function": "do_asiago_spectra",
         "groups": ["spectra"],
@@ -490,7 +490,7 @@
     "ucb_spectra": {
         "nice_name": "%pre UCB spectra",
         "active": true,
-        "update": true,
+        "update": false,
         "archived": false,
         "module": "supernovae.tasks.ucb",
         "function": "do_ucb_spectra",
