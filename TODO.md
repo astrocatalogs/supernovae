@@ -4,10 +4,14 @@ Donated datasets:
 * None to add at this time.
 
 Multiple SN datasets on VizieR:
-* None to add at this time.
+* J/A+A/592/A40
+* J/A+A/593/A68
 
 Single SN dataset on VizieR:
-* SN2002cv - http://vizier.cfa.harvard.edu/viz-bin/VizieR-3?-source=J/MNRAS/384/107 (Use dust-corrected or not?)
+* SN2002cv - J/MNRAS/384/107 (Use dust-corrected or not?)
+* iPTF13bvn - J/ApJ/825/L22
+* SN2013dy - J/AJ/151/125
+* SN2015bh - J/ApJ/824/6
 
 Other multiple SN datasets:
 * http://adsabs.harvard.edu/abs/1979AcC.....8....5F (Lists references for many historical LCs)
