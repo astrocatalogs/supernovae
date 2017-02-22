@@ -359,19 +359,20 @@ def do_ps_threepi(catalog):
                         e_magnitude=str(obs[2]),
                         source=source,
                         telescope=teles)
-            for li, line in enumerate(nslines[2 * len(nslabels):]):
-                if not line:
-                    continue
-                for obs in line:
-                    catalog.entries[name].add_photometry(
-                        time=str(obs[0]),
-                        u_time='MJD',
-                        band=nslabels[li],
-                        instrument='GPC',
-                        magnitude=str(obs[1]),
-                        upperlimit=True,
-                        source=source,
-                        telescope=teles)
+            # Ignoring upper limits as they are usually spurious chip gaps.
+            # for li, line in enumerate(nslines[2 * len(nslabels):]):
+            #     if not line:
+            #         continue
+            #     for obs in line:
+            #         catalog.entries[name].add_photometry(
+            #             time=str(obs[0]),
+            #             u_time='MJD',
+            #             band=nslabels[li],
+            #             instrument='GPC',
+            #             magnitude=str(obs[1]),
+            #             upperlimit=True,
+            #             source=source,
+            #             telescope=teles)
             assoctab = bs2.find('table', {'class': 'generictable'})
             hostname = ''
             redshift = ''

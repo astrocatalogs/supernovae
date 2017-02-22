@@ -4,6 +4,7 @@ from math import floor
 
 from astrocats.catalog.utils import (get_sig_digits, is_integer, is_number,
                                      pretty_num, zpad)
+
 from cdecimal import Decimal
 
 __all__ = ['name_clean', 'host_clean', 'radec_clean', 'clean_snname']
