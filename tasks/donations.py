@@ -267,9 +267,10 @@ def do_donated_photo(catalog):
                     continue
                 for v, val in enumerate(row[1::2]):
                     upperlimit = ''
-                    if '>' in val:
-                        upperlimit = True
                     mag = val.strip('>')
+                    emag = row[2 * v + 2]
+                    if '>' in val or (is_number(emag) and float(emag) == 0.0):
+                        upperlimit = True
                     if (not is_number(mag) or isnan(float(mag)) or
                             float(mag) > 90.0):
                         continue
@@ -315,9 +316,9 @@ def do_donated_photo(catalog):
                         photodict[PHOTOMETRY.TELESCOPE] = telescope
                     if survey:
                         photodict[PHOTOMETRY.SURVEY] = survey
-                    if (is_number(row[2 * v + 2]) and
-                            not isnan(float(row[2 * v + 2]))):
-                        photodict[PHOTOMETRY.E_MAGNITUDE] = row[2 * v + 2]
+                    if (is_number(emag) and
+                            not isnan(float(emag)) and float(emag) > 0.0):
+                        photodict[PHOTOMETRY.E_MAGNITUDE] = emag
                     if isk:
                         photodict[PHOTOMETRY.KCORRECTED] = True
                     catalog.entries[name].add_photometry(**photodict)
