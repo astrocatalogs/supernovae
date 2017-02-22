@@ -131,9 +131,10 @@ for fcnt, eventfile in enumerate(tqdm(sorted(files, key=lambda s: s.lower()))):
         ras = ras[:oralen]
         decs = decs[:odeclen]
 
+        ialias = item.get('alias', item['name'])
         if len(ras) != len(radegs):
             tqdm.write('Mangled R.A. for ' + item['name'])
-            conflicts.append(OrderedDict([('name', item['name']), ('alias', item['alias']), ('edit', edit),
+            conflicts.append(OrderedDict([('name', item['name']), ('alias', ialias), ('edit', edit),
                                           ('quantity', 'ra'), ('difference', '?'), ('values', ras), ('sources', rasources)]))
         elif len(radegs) > 1:
             maxradiff = max([abs((radegs[i + 1] - radegs[i]) / radegs[i + 1])
@@ -141,12 +142,12 @@ for fcnt, eventfile in enumerate(tqdm(sorted(files, key=lambda s: s.lower()))):
             if maxradiff > 0.001:
                 tqdm.write(
                     'R.A. difference greater than 0.1% for ' + item['name'])
-                conflicts.append(OrderedDict([('name', item['name']), ('alias', item['alias']), ('edit', edit),
+                conflicts.append(OrderedDict([('name', item['name']), ('alias', ialias), ('edit', edit),
                                               ('quantity', 'ra'), ('difference', str(round_sig(maxradiff))), ('values', ras), ('sources', rasources)]))
 
         if len(decs) != len(decdegs):
             tqdm.write('Mangled Dec. for ' + item['name'])
-            conflicts.append(OrderedDict([('name', item['name']), ('alias', item['alias']), ('edit', edit),
+            conflicts.append(OrderedDict([('name', item['name']), ('alias', ialias), ('edit', edit),
                                           ('quantity', 'dec'), ('difference', '?'), ('values', decs), ('sources', decsources)]))
         elif len(decdegs) > 1:
             maxdecdiff = max([abs((decdegs[i + 1] - decdegs[i]) / decdegs[i + 1])
@@ -154,7 +155,7 @@ for fcnt, eventfile in enumerate(tqdm(sorted(files, key=lambda s: s.lower()))):
             if maxdecdiff > 0.001:
                 tqdm.write(
                     'Dec. difference greater than 0.1% for ' + item['name'])
-                conflicts.append(OrderedDict([('name', item['name']), ('alias', item['alias']), ('edit', edit),
+                conflicts.append(OrderedDict([('name', item['name']), ('alias', ialias), ('edit', edit),
                                               ('quantity', 'dec'), ('difference', str(round_sig(maxdecdiff))), ('values', decs), ('sources', decsources)]))
 
     if zs:
@@ -163,7 +164,7 @@ for fcnt, eventfile in enumerate(tqdm(sorted(files, key=lambda s: s.lower()))):
         if maxzdiff > 0.05:
             tqdm.write(
                 'Redshift difference greater than 5% for ' + item['name'])
-            conflicts.append(OrderedDict([('name', item['name']), ('alias', item['alias']), ('edit', edit),
+            conflicts.append(OrderedDict([('name', item['name']), ('alias', ialias), ('edit', edit),
                                           ('quantity', 'redshift'), ('difference', str(round_sig(maxzdiff))), ('values', zs), ('sources', zsources)]))
 
     if cts:
@@ -174,7 +175,7 @@ for fcnt, eventfile in enumerate(tqdm(sorted(files, key=lambda s: s.lower()))):
         ntypei = any(x == 'nIa' for x in cts)
         if (typei and typeii) or (typei and ntypei):
             tqdm.write('Conflicting supernova typings for ' + item['name'])
-            conflicts.append(OrderedDict([('name', item['name']), ('alias', item['alias']), ('edit', edit),
+            conflicts.append(OrderedDict([('name', item['name']), ('alias', ialias), ('edit', edit),
                                           ('quantity', 'claimedtype'), ('difference', ''), ('values', cts), ('sources', ctsources)]))
 
 # Convert to array since that's what datatables expects
