@@ -303,13 +303,13 @@ def do_donated_photo(catalog):
                             elif inpname.startswith('PTF'):
                                 telescope = 'P60'
                                 survey = 'PTF'
-                            if inpname in ['SNLS-06F6']:
-                                system = 'Vega'
-                        elif band.upper() in ['UW2', 'UW1', 'UM2']:
+                        elif band.upper() in ['UVW2', 'UVW1', 'UVM2']:
                             instrument = 'UVOT'
                             telescope = 'Swift'
                             if inpname in ['PTF12dam']:
                                 system = 'AB'
+                    if inpname in ['SCP-06F6']:
+                        system = 'Vega'
                     photodict = {
                         PHOTOMETRY.TIME: mjd,
                         PHOTOMETRY.U_TIME: 'MJD',
@@ -324,6 +324,8 @@ def do_donated_photo(catalog):
                         photodict[PHOTOMETRY.TELESCOPE] = telescope
                     if survey:
                         photodict[PHOTOMETRY.SURVEY] = survey
+                    if system:
+                        photodict[PHOTOMETRY.SYSTEM] = system
                     if (is_number(emag) and
                             not isnan(float(emag)) and float(emag) > 0.0):
                         photodict[PHOTOMETRY.E_MAGNITUDE] = emag
