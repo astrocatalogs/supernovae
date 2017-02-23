@@ -204,13 +204,16 @@ def do_donated_photo(catalog):
                     mag = row[5 + 2 * bi]
                     if not is_number(mag):
                         continue
+                    system = 'AB'
+                    if ba in ['U', 'B', 'V', 'R', 'I']:
+                        system = 'Vega'
                     photodict = {
                         PHOTOMETRY.TIME: row[3],
                         PHOTOMETRY.U_TIME: 'MJD',
                         PHOTOMETRY.BAND: ba,
                         PHOTOMETRY.MAGNITUDE: mag.strip('< '),
                         PHOTOMETRY.SOURCE: source,
-                        PHOTOMETRY.SYSTEM: 'AB'
+                        PHOTOMETRY.SYSTEM: system
                     }
                     if 'ATel' not in row[-1]:
                         photodict[PHOTOMETRY.TELESCOPE] = row[-1]
@@ -277,6 +280,7 @@ def do_donated_photo(catalog):
                     band = bands[v]
                     instrument = ''
                     survey = ''
+                    system = ''
                     telescope = rtelescope
                     if telescope == 'LSQ':
                         instrument = 'QUEST'
@@ -299,9 +303,13 @@ def do_donated_photo(catalog):
                             elif inpname.startswith('PTF'):
                                 telescope = 'P60'
                                 survey = 'PTF'
+                            if inpname in ['SNLS-06F6']:
+                                system = 'Vega'
                         elif band.upper() in ['UW2', 'UW1', 'UM2']:
                             instrument = 'UVOT'
                             telescope = 'Swift'
+                            if inpname in ['PTF12dam']:
+                                system = 'AB'
                     photodict = {
                         PHOTOMETRY.TIME: mjd,
                         PHOTOMETRY.U_TIME: 'MJD',
