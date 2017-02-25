@@ -24,6 +24,7 @@ def do_rochester(catalog):
     ]
     rochesterupdate = [False, True, True, False]
     task_str = catalog.get_current_task_str()
+    baddates = ['2440587', '2440587.292', '0001/01/01']
 
     for pp, path in enumerate(pbar(rochesterpaths, task_str)):
         if catalog.args.update and not rochesterupdate[pp]:
@@ -31,14 +32,18 @@ def do_rochester(catalog):
 
         if 'snredboneyard.html' in path:
             cns = {
-                'name': 9,
+                'name': 0,
+                'host': 1,
+                'ra': 2,
+                'dec': 3,
                 'type': 7,
-                'host': 5,
-                'ra': 0,
-                'dec': 1,
-                'disc': 4,
-                'mmag': 8,
-                'aka': 10
+                'z': 8,
+                'mmag': 9,
+                'max': 10,
+                'disc': 11,
+                'ref': 12,
+                'dver': 13,
+                'aka': 14
             }
         else:
             cns = {
@@ -118,11 +123,12 @@ def do_rochester(catalog):
                 name=sec_ref, url=sec_refurl, secondary=True)
             sources = []
             if 'ref' in cns:
-                reference = cols[cns['ref']].findAll('a')[0].contents[0].strip(
-                )
-                refurl = cols[cns['ref']].findAll('a')[0]['href'].strip()
-                sources.append(catalog.entries[name].add_source(
-                    name=reference, url=refurl))
+                reftag = reference = cols[cns['ref']].findAll('a')
+                if len(reftag):
+                    reference = reftag[0].contents[0].strip()
+                    refurl = reftag[0]['href'].strip()
+                    sources.append(catalog.entries[name].add_source(
+                        name=reference, url=refurl))
             sources.append(sec_source)
             sources = uniq_cdl(list(filter(None, sources)))
             catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, oldname,
@@ -157,7 +163,7 @@ def do_rochester(catalog):
             catalog.entries[name].add_quantity(SUPERNOVA.RA, ra, sources)
             catalog.entries[name].add_quantity(SUPERNOVA.DEC, dec, sources)
             discstr = str(cols[cns['disc']].contents[0]).strip()
-            if (discstr and discstr not in ['2440587', '2440587.292']):
+            if discstr and discstr not in baddates:
                 if '/' not in discstr:
                     astrot = astrotime(float(discstr), format='jd').datetime
                     ddate = make_date_string(astrot.year, astrot.month,
@@ -166,11 +172,17 @@ def do_rochester(catalog):
                     ddate = discstr
                 catalog.entries[name].add_quantity(SUPERNOVA.DISCOVER_DATE,
                                                    ddate, sources)
-            if ('max' in cns and str(cols[cns['max']].contents[0]).strip()
-                    not in ['2440587', '2440587.292']):
-                astrot = astrotime(
-                    float(str(cols[cns['max']].contents[0]).strip()),
-                    format='jd')
+            maxstr = str(cols[cns.get('max', '')].contents[0]).strip()
+            if maxstr and maxstr not in baddates:
+                try:
+                    if '/' not in maxstr:
+                        astrot = astrotime(float(maxstr), format='jd')
+                    else:
+                        astrot = astrotime(
+                            maxstr.replace('/', '-'), format='iso')
+                except:
+                    catalog.log.info(
+                        'Max date conversion failed for `{}`.'.format(maxstr))
                 if ((float(str(cols[cns['mmag']].contents[0]).strip()) <= 90.0
                      and
                      not any('GRB' in xx

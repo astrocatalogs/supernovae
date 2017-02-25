@@ -14271,21 +14271,20 @@
 	{
 		"name1":"SN1998bp",
 		"aliases1":[
+			"SN1998bp",
+			"AAVSO 1750+18"
+		],
+		"name2":"GRB 971015A",
+		"aliases2":[
 			"GRB 971015A"
 		],
-		"name2":"SN1999bs",
-		"aliases2":[
-			"SN1999bs",
-			"Gaia16azz",
-			"V2561 Oph"
-		],
-		"ra1":"17:42:50.4",
-		"dec1":"+12:54:36",
-		"ra2":"18:01:48.75",
-		"dec2":"+07:00:49.61",
-		"distdeg":"7.567208104887161",
+		"ra1":"17:54:50.74",
+		"dec1":"+18:19:50.5",
+		"ra2":"17:42:50.4",
+		"dec2":"+12:54:36",
+		"distdeg":"6.196162543621307",
 		"maxdiffyear":"",
-		"discdiffyear":"1.4916666666665606",
+		"discdiffyear":"0.5388888888887777",
 		"edit":false
 	},
 	{
@@ -17925,19 +17924,19 @@
 	{
 		"name1":"SN2000bg",
 		"aliases1":[
-			"GRB 981020A"
+			"GRB 990408A"
 		],
-		"name2":"SN2000df",
+		"name2":"CRTS J162513.0+112756",
 		"aliases2":[
-			"SN2000df"
+			"CRTS J162513.0+112756"
 		],
-		"ra1":"16:15:40.8",
-		"dec1":"-05:25:48",
-		"ra2":"16:14:12.22",
-		"dec2":"+06:09:00.6",
-		"distdeg":"11.586046889889674",
+		"ra1":"17:14:07.2",
+		"dec1":"+04:34:12",
+		"ra2":"16:25:13.06",
+		"dec2":"+11:27:56.0",
+		"distdeg":"14.036152402280008",
 		"maxdiffyear":"",
-		"discdiffyear":"1.8250000000000455",
+		"discdiffyear":"",
 		"edit":false
 	},
 	{
@@ -19065,24 +19064,6 @@
 		"distdeg":"4.400284081738323",
 		"maxdiffyear":"",
 		"discdiffyear":"0.44444444444457076",
-		"edit":false
-	},
-	{
-		"name1":"SN1999bs",
-		"aliases1":[
-			"GRB 990408A"
-		],
-		"name2":"CRTS J162513.0+112756",
-		"aliases2":[
-			"CRTS J162513.0+112756"
-		],
-		"ra1":"17:14:07.2",
-		"dec1":"+04:34:12",
-		"ra2":"16:25:13.06",
-		"dec2":"+11:27:56.0",
-		"distdeg":"14.036152402280008",
-		"maxdiffyear":"",
-		"discdiffyear":"",
 		"edit":false
 	},
 	{
@@ -21403,6 +21384,42 @@
 		"edit":false
 	},
 	{
+		"name1":"SN2007uo",
+		"aliases1":[
+			"SN2007uo"
+		],
+		"name2":"ESSENCE z185",
+		"aliases2":[
+			"ESSENCE z185"
+		],
+		"ra1":"01:15:11.99",
+		"dec1":"-00:02:08.4",
+		"ra2":"01:15:11.994",
+		"dec2":"-00:02:08.387",
+		"distdeg":"1.7053383865175585e-05",
+		"maxdiffyear":"0.019444444444616238",
+		"discdiffyear":"0.044444444444479814",
+		"edit":false
+	},
+	{
+		"name1":"SN2007uv",
+		"aliases1":[
+			"SN2007uv"
+		],
+		"name2":"ESSENCE z200",
+		"aliases2":[
+			"ESSENCE z200"
+		],
+		"ra1":"01:14:43.18",
+		"dec1":"+00:54:27.7",
+		"ra2":"01:14:43.186",
+		"dec2":"+00:54:27.657",
+		"distdeg":"2.7706853901645575e-05",
+		"maxdiffyear":"0.01666666666665151",
+		"discdiffyear":"0.024999999999863576",
+		"edit":false
+	},
+	{
 		"name1":"PTF09y",
 		"aliases1":[
 			"PTF09y"
@@ -22076,6 +22093,24 @@
 		"edit":false
 	},
 	{
+		"name1":"PTF11ao",
+		"aliases1":[
+			"PTF11ao"
+		],
+		"name2":"Howerton-A4",
+		"aliases2":[
+			"Howerton-A4"
+		],
+		"ra1":"07:59:57.71",
+		"dec1":"+33:18:02.9",
+		"ra2":"07:59:57.7",
+		"dec2":"+33:18:06",
+		"distdeg":"0.0008621185862646482",
+		"maxdiffyear":"",
+		"discdiffyear":"0.036111111111267746",
+		"edit":false
+	},
+	{
 		"name1":"iPTF14to",
 		"aliases1":[
 			"iPTF14to"
@@ -22183,25 +22218,6 @@
 		"distdeg":"0.0",
 		"maxdiffyear":"",
 		"discdiffyear":"0.21944444444420697",
-		"edit":false
-	},
-	{
-		"name1":"OGLE-2013-SN-026",
-		"aliases1":[
-			"OGLE-2013-SN-026"
-		],
-		"name2":"OGLE-2013-SN-027",
-		"aliases2":[
-			"OGLE-2013-SN-027",
-			"OGLE-2014-SN-081"
-		],
-		"ra1":"01:13:38.51",
-		"dec1":"-69:32:11.4",
-		"ra2":"1:13:38.51",
-		"dec2":"-69:32:11.4",
-		"distdeg":"0.0",
-		"maxdiffyear":"0.05555555555542924",
-		"discdiffyear":"0.007638888888777728",
 		"edit":false
 	},
 	{

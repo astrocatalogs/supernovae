@@ -4,10 +4,14 @@ Donated datasets:
 * None to add at this time.
 
 Multiple SN datasets on VizieR:
-* None to add at this time.
+* J/A+A/592/A40
+* J/A+A/593/A68
 
 Single SN dataset on VizieR:
-* SN2002cv - http://vizier.cfa.harvard.edu/viz-bin/VizieR-3?-source=J/MNRAS/384/107 (Use dust-corrected or not?)
+* SN2002cv - J/MNRAS/384/107 (Use dust-corrected or not?)
+* iPTF13bvn - J/ApJ/825/L22
+* SN2013dy - J/AJ/151/125
+* SN2015bh - J/ApJ/824/6
 
 Other multiple SN datasets:
 * http://adsabs.harvard.edu/abs/1979AcC.....8....5F (Lists references for many historical LCs)
@@ -85,15 +89,15 @@ Other single SN datasets:
 * SN2007qd - http://adsabs.harvard.edu/abs/2010ApJ...720..704M
 * SN2007if - http://adsabs.harvard.edu/abs/2010ApJ...715.1338Y
 * SN2007it - http://adsabs.harvard.edu/abs/2011ApJ...731...47A (more colors for LC available)
+* SN2007ru - http://adsabs.harvard.edu/abs/2009ApJ...697..676S (includes photometry)
+* SN2007uy - http://adsabs.harvard.edu/abs/2013MNRAS.434.2032R (no new photometry)
+* SN2008D - http://www.nature.com/nature/journal/v453/n7194/suppinfo/nature06997.html (X-ray & radio)
+* SN2008fz - http://adsabs.harvard.edu/abs/2010ApJ...718L.127D
+* SN2008ge - http://adsabs.harvard.edu/abs/2010AJ....140.1321F (V-band photometry)
+* SN2008in - http://adsabs.harvard.edu/abs/2011ApJ...736...76R (UBVRIJH photometry)
+* SN2009N - http://adsabs.harvard.edu/abs/2014MNRAS.438..368T (great photometry)
 
 **Note: Below have yet to be checked for photometry.**
-* SN2007ru - http://adsabs.harvard.edu/abs/2009ApJ...697..676S
-* SN2007uy - http://adsabs.harvard.edu/abs/2013MNRAS.434.2032R
-* SN2008D - http://www.nature.com/nature/journal/v453/n7194/suppinfo/nature06997.html
-* SN2008fz - http://adsabs.harvard.edu/abs/2010ApJ...718L.127D
-* SN2008ge - http://adsabs.harvard.edu/abs/2010AJ....140.1321F
-* SN2008in - http://adsabs.harvard.edu/abs/2011ApJ...736...76R
-* SN2009N - http://adsabs.harvard.edu/abs/2014MNRAS.438..368T
 * SN2009bw - http://adsabs.harvard.edu/abs/2012MNRAS.422.1122I
 * SN2009dc - http://adsabs.harvard.edu/abs/2009ApJ...707L.118Y
 * SN2009ib - http://adsabs.harvard.edu/abs/2015MNRAS.450.3137T

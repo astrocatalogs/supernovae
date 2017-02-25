@@ -225,7 +225,8 @@ class Supernova(Entry):
                         for ct in my_quantity_list:
                             addct = False
                             checke = False
-                            if (not set(listify(ct.get(QUANTITY.KIND, [])))
+                            if (len(quantity.kind_preference) > 0 and not set(
+                                    listify(ct.get(QUANTITY.KIND, [])))
                                     .isdisjoint(quantity.kind_preference) and
                                     not set(
                                         listify(
@@ -272,7 +273,8 @@ class Supernova(Entry):
                     elif quantity.type == KEY_TYPES.STRING:
                         for ct in my_quantity_list:
                             addct = False
-                            if (not set(listify(ct.get(QUANTITY.KIND, [])))
+                            if (len(quantity.kind_preference) > 0 and not set(
+                                    listify(ct.get(QUANTITY.KIND, [])))
                                     .isdisjoint(quantity.kind_preference) and
                                     not set(
                                         listify(
@@ -920,17 +922,27 @@ class Supernova(Entry):
         if not newname and name.startswith('PSN'):
             newname = aliases[0]
         if newname and name != newname:
+            file_entry = None
             # Make sure new name doesn't already exist
-            if self.init_from_file(self.catalog, name=newname):
+            if newname in self.catalog.entries:
+                if self.catalog.entries[newname]._stub:
+                    file_entry = self.init_from_file(
+                        self.catalog, name=newname)
+                else:
+                    file_entry = self.catalog.entries[newname]
+
+            if file_entry:
                 self._log.info("`{}` already exists, copying `{}` to it".
                                format(newname, name))
-                self.catalog.copy_entry_to_entry(name, newname)
+                self.catalog.copy_entry_to_entry(
+                    self.catalog.entries[name], file_entry)
+                self.catalog.entries[newname] = file_entry
             else:
                 self._log.info("Changing entry from name '{}' to preferred"
                                " name '{}'".format(name, newname))
                 self.catalog.entries[newname] = self.catalog.entries[name]
-                del self.catalog.entries[name]
                 self.catalog.entries[newname][self._KEYS.NAME] = newname
+            del self.catalog.entries[name]
             return newname
 
         return name

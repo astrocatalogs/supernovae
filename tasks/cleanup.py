@@ -325,10 +325,12 @@ def do_cleanup(catalog):
             if bestsig > 0 and is_number(bestld) and float(bestld) > 0.:
                 source = catalog.entries[name].add_self_source()
                 sources = uniq_cdl([source] + bestsrc.split(','))
-                # FIX: what's happening here?!
+                bestldz = z_at_value(cosmo.luminosity_distance,
+                                     float(bestld) * un.Mpc)
                 pnum = (float(catalog.entries[name][SUPERNOVA.MAX_APP_MAG][0][
                     QUANTITY.VALUE]) - 5.0 *
-                        (log10(float(bestld) * 1.0e6) - 1.0))
+                        (log10(float(bestld) * 1.0e6) - 1.0
+                         ) + 2.5 * log10(1.0 + bestldz))
                 pnum = pretty_num(pnum, sig=bestsig + 1)
                 catalog.entries[name].add_quantity(
                     SUPERNOVA.MAX_ABS_MAG, pnum, sources, derived=True)
@@ -376,7 +378,6 @@ def do_cleanup(catalog):
                         kind=(SUPERNOVA.VELOCITY.kind_preference[bestkind]
                               if bestkind else ''))
                 if bestz > 0.:
-                    from astropy.cosmology import Planck15 as cosmo
                     if SUPERNOVA.LUM_DIST not in catalog.entries[name]:
                         dl = cosmo.luminosity_distance(bestz)
                         sources = [
@@ -400,7 +401,8 @@ def do_cleanup(catalog):
                             pnum = pretty_num(
                                 float(catalog.entries[name][
                                     SUPERNOVA.MAX_APP_MAG][0][QUANTITY.VALUE])
-                                - 5.0 * (log10(dl.to('pc').value) - 1.0),
+                                - 5.0 * (log10(dl.to('pc').value) - 1.0
+                                         ) + 2.5 * log10(1.0 + bestz),
                                 sig=bestsig + 1)
                             catalog.entries[name].add_quantity(
                                 SUPERNOVA.MAX_ABS_MAG,
@@ -460,7 +462,6 @@ def do_cleanup(catalog):
                         kind=(SUPERNOVA.HOST_VELOCITY.kind_preference[bestkind]
                               if bestkind else ''))
                 if bestz > 0.:
-                    from astropy.cosmology import Planck15 as cosmo
                     if SUPERNOVA.HOST_LUM_DIST not in catalog.entries[name]:
                         dl = cosmo.luminosity_distance(bestz)
                         sources = [
