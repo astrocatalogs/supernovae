@@ -850,7 +850,7 @@ def do_ascii(catalog):
             system = 'Swope'
         else:
             band_set = 'Johnson-Cousins'
-            system = 'Landolt'
+            system = 'Vega'
 
         with open(datafile, 'r') as ff:
             tsvin = csv.reader(ff, delimiter=' ', skipinitialspace=True)

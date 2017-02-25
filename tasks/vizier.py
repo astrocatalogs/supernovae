@@ -139,7 +139,8 @@ def do_vizier(catalog):
                             PHOTOMETRY.MAGNITUDE: row[bandtag],
                             PHOTOMETRY.SOURCE: source,
                             PHOTOMETRY.TELESCOPE: row['Tel'],
-                            PHOTOMETRY.SYSTEM: 'Landolt',
+                            PHOTOMETRY.SYSTEM: 'Vega',
+                            PHOTOMETRY.BAND_SET: 'Johnson-Cousins',
                             PHOTOMETRY.BAND: band,
                             PHOTOMETRY.E_MAGNITUDE: errdict[band]
                         }
