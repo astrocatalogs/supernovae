@@ -31545,15 +31545,15 @@
 		"alias":[
 			{
 				"value":"SN2007qv",
-				"source":"2,6,8,10,11"
+				"source":"2,7,9,11,12"
 			},
 			{
 				"value":"SDSS-II SN 20838",
-				"source":"2,3,7"
+				"source":"2,3,8"
 			},
 			{
 				"value":"CSS071219:223508-011160",
-				"source":"6,8"
+				"source":"7,9"
 			}
 		],
 		"edit":false,
@@ -36660,7 +36660,7 @@
 		"name":"OGLE-2015-SN-043",
 		"alias":[
 			{
-				"value":"MLS170221:101616+355433",
+				"value":"MLS170222:122110+091557",
 				"source":"2,3,4"
 			}
 		],
@@ -39047,16 +39047,20 @@
 		"name":"SN2017aub",
 		"alias":[
 			{
-				"value":"SN2017anf",
-				"source":"3,4,6,8"
+				"value":"SN2017aub",
+				"source":"3,4,5,6,8"
 			},
 			{
-				"value":"AT2017anf",
-				"source":"3,4,5"
+				"value":"AT2017aub",
+				"source":"3,4,6"
 			},
 			{
-				"value":"PS17avu",
-				"source":"3,6"
+				"value":"iPTF17aub",
+				"source":"3,4,6"
+			},
+			{
+				"value":"Gaia17ale",
+				"source":"4,6"
 			}
 		],
 		"edit":false,

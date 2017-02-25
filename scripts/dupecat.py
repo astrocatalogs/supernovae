@@ -207,19 +207,18 @@ for item1 in tqdm(newcatalog):
             '../sne-internal/' + get_entry_filename(name1) +
             '.json') else False
 
-        dupes[name1] = OrderedDict([('name1', name1),
-                                    ('aliases1', aliases1),
-                                    ('name2', name2),
-                                    ('aliases2', aliases2), ('ra1', ra1),
-                                    ('dec1', dec1),
-                                    ('ra2', ra2), ('dec2', dec2),
-                                    ('distdeg', str(distdeg)),
-                                    ('maxdiffyear', str(maxdiffyear)),
-                                    ('discdiffyear', str(discdiffyear)),
-                                    ('edit', edit)])
+        dupes.append(OrderedDict([('name1', name1),
+                                  ('aliases1', aliases1),
+                                  ('name2', name2),
+                                  ('aliases2', aliases2), ('ra1', ra1),
+                                  ('dec1', dec1),
+                                  ('ra2', ra2), ('dec2', dec2),
+                                  ('distdeg', str(distdeg)),
+                                  ('maxdiffyear', str(maxdiffyear)),
+                                  ('discdiffyear', str(discdiffyear)),
+                                  ('edit', edit)]))
 
 # Convert to array since that's what datatables expects
-dupes = list(dupes.values())
 jsonstring = json.dumps(
     dupes, indent='\t', separators=(',', ':'), ensure_ascii=False)
 with open(outdir + 'dupes.json', 'w') as f:
