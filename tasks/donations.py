@@ -205,7 +205,7 @@ def do_donated_photo(catalog):
                     if not is_number(mag):
                         continue
                     system = 'AB'
-                    if ba in ['U', 'B', 'V', 'R', 'I']:
+                    if ba in ['U', 'B', 'V', 'R', 'I', 'J', 'H', 'K']:
                         system = 'Vega'
                     photodict = {
                         PHOTOMETRY.TIME: row[3],

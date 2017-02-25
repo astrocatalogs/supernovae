@@ -23,7 +23,7 @@
     "IIn P":         ["IInP"],
     "IIn Pec":       ["IIn pec", "IIn-pec", "IInPec", "IInpec"],
     "IIn L":         ["IInL"],
-    "IIb":           ["II-b"],
+    "IIb":           ["IIB", "II-b"],
     "IIb Pec":       ["IIb-pec", "IIb: pec", "IIb: Pec", "IIb pec", "IIb:pec",
                       "IIb:Pec"],
     "nIa":           ["nIa", "non-Ia", "not-Ia", "non Ia", "not Ia"],
