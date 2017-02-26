@@ -16,7 +16,8 @@
         "sne-external-WISEREP",
         "sne-external-xray",
         "sne-external-spectra",
-        "sne-external-fits-spectra"
+        "sne-external-fits-spectra",
+        "sne-external-models"
     ],
     "private":[
         "sne-private-iair-arcavi",
