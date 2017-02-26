@@ -21,14 +21,15 @@ def do_mosfit(catalog):
         mosfitkey = ''
 
     dbx = dropbox.Dropbox(mosfitkey)
-    files = [
+    files = list(sorted([
         x.name for x in dbx.files_list_folder('').entries
         if not x.name.startswith('.')
-    ]
+    ]))
     fdir = os.path.join(catalog.get_current_task_repo(), 'MOSFiT')
     if not os.path.isdir(fdir):
         os.mkdir(fdir)
     efiles = [x.split('/')[-1] for x in glob(os.path.join(fdir, '*'))]
+    old_name = ''
     for fname in pbar(files, desc=task_str):
         if fname in efiles:
             efiles.remove(fname)
@@ -59,7 +60,9 @@ def do_mosfit(catalog):
         else:
             catalog.entries[name] = new_entry
 
-        catalog.journal_entries()
+        if old_name != name:
+            catalog.journal_entries()
+        old_name = name
     for fname in efiles:
         os.remove(os.path.join(fdir, fname))
 
