@@ -614,6 +614,17 @@
         "module": "supernovae.tasks.cleanup",
         "function": "do_cleanup",
         "groups": ["meta"],
+        "priority": -10
+    },
+    "mosfit": {
+        "nice_name": "Model fits from MOSFiT",
+        "active": false,
+        "update": false,
+        "module": "supernovae.tasks.mosfit",
+        "function": "do_mosfit",
+        "groups": ["models"],
+        "repo": "input/sne-external-models",
+        "always_journal": true,
         "priority": -1
     }
 }
