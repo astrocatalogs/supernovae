@@ -1,7 +1,8 @@
 ####Below are known sources of data that need to be added to the catalog. 
 
 Donated datasets:
-* SN2013ej - From Valenti
+* SN2013ej - From Valenti.
+* Several SNe from Prieto via e-mail.
 
 Multiple SN datasets on VizieR:
 * None to add at this time.
@@ -135,7 +136,6 @@ Other single SN datasets:
 * SN2013ej - http://adsabs.harvard.edu/abs/2015arXiv150901721D, http://adsabs.harvard.edu/abs/2015ApJ...807...59H
 * SN2013en - http://adsabs.harvard.edu/abs/2015MNRAS.452..838L
 * SN2013hx - Inserra+ 2013 in prep.?
-* PTF13efv (SNhunt275) - http://arxiv.org/abs/1605.02450
 * iPTF13ajg - http://iopscience.iop.org/article/10.1088/0004-637X/797/1/24/meta
 * iPTF13asv - http://adsabs.harvard.edu/abs/2016arXiv160100686C
 * iPTF13ebh - http://www.aanda.org/articles/aa/full_html/2015/06/aa25297-14/aa25297-14.html (LC available but spread over several misformatted tables)
@@ -144,8 +144,7 @@ Other single SN datasets:
 * iPTF14atg - http://adsabs.harvard.edu/abs/2015Natur.521..328C (LC, data not in paper)
 * SN2015H - http://adsabs.harvard.edu/abs/2016A%26A...589A..89M (LC, data not in paper)
 * SN2015bh - http://arxiv.org/abs/1609.00731
-* SN2015bn - http://arxiv.org/abs/1603.04748
-* iPTF15dtg - http://arxiv.org/abs/1605.02491
+* iPTF15dtg - http://arxiv.org/abs/1605.02491 (LCs and spectra available)
 * iPTF16geu - http://arxiv.org/abs/1611.00014
 
 Spectra to recover that were donated to SuSpect (bad wavelength solutions, etc):
