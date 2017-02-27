@@ -25,6 +25,8 @@ python3.5 -m astrocats.supernovae.scripts.histograms &
 pids[8]=$!
 python3.5 -m astrocats.scripts.atelscbetsiaucs -c sne &
 pids[9]=$!
+python3.5 -m astrocats.supernovae.scripts.frbcat &
+pids[10]=$!
 for pid in ${pids[*]}; do
 	wait $pid
 done

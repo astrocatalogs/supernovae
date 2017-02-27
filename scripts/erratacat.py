@@ -33,7 +33,7 @@ for fcnt, eventfile in enumerate(tqdm(sorted(files, key=lambda s: s.lower()))):
             if quantity in list(item.keys()) and 'value' in item[quantity][0]:
                 likelyvalue = item[quantity][0]['value']
             errata.append(OrderedDict([('name', item['name']),
-                                       ('alias', item['alias']),
+                                       ('alias', item.get('alias', item['name'])),
                                        ('ident', error['value']),
                                        ('kind', error['kind']),
                                        ('quantity', error['extra']),
