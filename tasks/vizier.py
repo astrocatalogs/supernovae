@@ -27,6 +27,76 @@ def do_vizier(catalog):
     Vizier.ROW_LIMIT = -1
     Vizier.VIZIER_SERVER = 'vizier.cfa.harvard.edu'
 
+    # 2016A&A...592..A40F
+    result = Vizier.get_catalogs('J/A+A/592/A40/table2')
+    table = result[list(result.keys())[0]]
+    table.convert_bytestring_to_unicode(python3_only=True)
+    for row in pbar(table, task_str):
+        (name, source) = catalog.new_entry(
+            row['Name'], bibcode='2016A&A...592..A40F')
+        tel, filt = row['Filter'].split('_')
+        photodict = {
+            PHOTOMETRY.TIME: str(row['MJD']),
+            PHOTOMETRY.U_TIME: 'MJD',
+            PHOTOMETRY.TELESCOPE: tel,
+            PHOTOMETRY.BAND: filt,
+            PHOTOMETRY.MAGNITUDE: row['Xmag'],
+            PHOTOMETRY.E_MAGNITUDE: row['e_Xmag'],
+            PHOTOMETRY.SOURCE: source
+        }
+        catalog.entries[name].add_photometry(**photodict)
+    catalog.journal_entries()
+
+    # 2016A&A...593A..68F
+    results = Vizier.get_catalogs(
+        ['J/A+A/593/A68/ph12os', 'J/A+A/593/A68/ph13bvn'])
+    for ti, table in enumerate(results):
+        table.convert_bytestring_to_unicode(python3_only=True)
+        (name, source) = catalog.new_entry(
+            ['PTF12os', 'iPTF13bvn'][ti], bibcode='2016A&A...593A..68F')
+        for row in pbar(table, task_str):
+            photodict = {
+                PHOTOMETRY.TIME: jd_to_mjd(Decimal(str(row['JD']))),
+                PHOTOMETRY.U_TIME: 'MJD',
+                PHOTOMETRY.TELESCOPE: row['Tel'],
+                PHOTOMETRY.BAND: row['Filter'],
+                PHOTOMETRY.MAGNITUDE: row['mag'],
+                PHOTOMETRY.E_MAGNITUDE: row['e_mag'],
+                PHOTOMETRY.SOURCE: source
+            }
+            catalog.entries[name].add_photometry(**photodict)
+    catalog.journal_entries()
+
+    # 2016ApJ...825L..22F
+    result = Vizier.get_catalogs('J/ApJ/825/L22/table3')
+    table = result[list(result.keys())[0]]
+    table.convert_bytestring_to_unicode(python3_only=True)
+    (name, source) = catalog.new_entry(
+        'iPTF13bvn', bibcode='2016ApJ...825L..22F')
+    for row in pbar(table, task_str):
+        row = convert_aq_output(row)
+        bands = [
+            x for x in row if x.endswith('mag') and not x.startswith('e_')
+        ]
+        for bandtag in bands:
+            band = bandtag.replace('mag', '')
+            if (bandtag in row and is_number(row[bandtag]) and
+                    not isnan(float(row[bandtag]))):
+                photodict = {
+                    PHOTOMETRY.TIME: str(row['MJD']),
+                    PHOTOMETRY.U_TIME: 'MJD',
+                    PHOTOMETRY.BAND: band,
+                    PHOTOMETRY.MAGNITUDE: row[bandtag],
+                    PHOTOMETRY.SOURCE: source,
+                    PHOTOMETRY.TELESCOPE: row['Tel']
+                }
+                if row.get('l_' + bandtag, '') == '>':
+                    photodict[PHOTOMETRY.UPPER_LIMIT] = True
+                else:
+                    photodict[PHOTOMETRY.E_MAGNITUDE] = row['e_' + bandtag]
+                catalog.entries[name].add_photometry(**photodict)
+    catalog.journal_entries()
+
     # 2016ApJ...826..144S
     result = Vizier.get_catalogs('J/ApJ/826/144/table1')
     table = result[list(result.keys())[0]]
