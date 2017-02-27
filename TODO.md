@@ -1,11 +1,10 @@
 ####Below are known sources of data that need to be added to the catalog. 
 
 Donated datasets:
-* None to add at this time.
+* SN2013ej - From Valenti
 
 Multiple SN datasets on VizieR:
-* J/A+A/592/A40
-* J/A+A/593/A68
+* None to add at this time.
 
 Single SN dataset on VizieR:
 * SN2002cv - J/MNRAS/384/107 (Use dust-corrected or not?)
