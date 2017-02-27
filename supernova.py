@@ -295,6 +295,7 @@ class Supernova(Entry):
                                 if aqi <= qqi:
                                     isworse = False
                             else:
+                                addct = True
                                 isworse = False
                             if addct:
                                 newquantities.append(ct)
