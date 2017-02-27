@@ -163,9 +163,9 @@ for item1 in tqdm(frbcatalog):
         if distdeg < 2.0 * (poserr1 + poserr2):
             if discyear1 and discyear2:
                 if discyear1 and discyear2:
-                    discdiffyear = abs(discyear1 - discyear2)
+                    discdiffyear = discyear1 - discyear2
 
-                elif discdiffyear and discdiffyear <= 2.0:
+                elif discdiffyear and abs(discdiffyear) <= 2.0:
                     tqdm.write(name1 + ' has ' + exactstr +
                                ' coordinate and discovery date match to ' +
                                name2 + " [" + str(distdeg) + ', ' +
