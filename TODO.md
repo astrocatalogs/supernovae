@@ -7,10 +7,7 @@ Multiple SN datasets on VizieR:
 * None to add at this time.
 
 Single SN dataset on VizieR:
-* SN2002cv - J/MNRAS/384/107 (Use dust-corrected or not?)
-* iPTF13bvn - J/ApJ/825/L22
-* SN2013dy - J/AJ/151/125
-* SN2015bh - J/ApJ/824/6
+* None to add at this time.
 
 Other multiple SN datasets:
 * http://adsabs.harvard.edu/abs/1979AcC.....8....5F (Lists references for many historical LCs)
@@ -58,7 +55,7 @@ Other single SN datasets:
 * SN1997ab - http://adsabs.harvard.edu/abs/2000MmSAI..71..317S (spectra only, LC missing)
 * SN1997eg - http://adsabs.harvard.edu/abs/2002MNRAS.330..844S
 * SN1998bu - http://adsabs.harvard.edu/abs/2001ApJ...549L.215C (need to reacquire spectrum on 1999-01-23)
-* SN1999E - http://adsabs.harvard.edu/abs/2003MNRAS.340..191R (has LC, needs digitization)
+* SN1999E - http://adsabs.harvard.edu/abs/2003MNRAS.340..191R (has LC, needs digitization, M. Turrato e-mailed 2/27/17)
 * SN1999aw - http://adsabs.harvard.edu/abs/2002AJ....124.2905S
 * SN1999by - http://adsabs.harvard.edu/abs/2002ApJ...568..791H
 * SN1999el - http://adsabs.harvard.edu/abs/2002ApJ...573..144D
@@ -71,7 +68,7 @@ Other single SN datasets:
 * SN2003ma - http://adsabs.harvard.edu/abs/2011ApJ...729...88R (spectra)
 * SN2004dj - http://adsabs.harvard.edu/abs/2011A%26A...527A..61S
 * SN2004et - http://adsabs.harvard.edu/abs/2007MNRAS.381..280M, http://adsabs.harvard.edu/abs/2009ApJ...704..306K
-* SN2005E - http://adsabs.harvard.edu/abs/2010Natur.465..322P (Hagai will provide LC)
+* SN2005E - http://adsabs.harvard.edu/abs/2010Natur.465..322P (Hagai will provide LC, H. Perets e-mailed 2/27/17)
 * SN2005am - http://adsabs.harvard.edu/abs/2005ApJ...635.1192B
 * SN2005df - http://adsabs.harvard.edu/abs/2015ApJ...806..107D
 * SN2005kd - http://adsabs.harvard.edu/abs/2016MNRAS.462.1101D (Radio data)
