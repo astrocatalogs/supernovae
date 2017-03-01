@@ -114,7 +114,7 @@ def do_external_fits_spectra(catalog):
             continue
         hdulist = fits.open(datafile)
         for oi, obj in enumerate(hdulist[0].header):
-            if '.' in obj:
+            if any(x in ['.', '/'] for x in obj):
                 del (hdulist[0].header[oi])
         hdulist[0].verify('silentfix')
         hdrkeys = list(hdulist[0].header.keys())
@@ -166,8 +166,6 @@ def do_external_fits_spectra(catalog):
             waves = [str(w0 + wd * x) for x in range(0, len(fluxes))]
         else:
             raise ValueError('Non-simple FITS import not yet supported.')
-        tel = hdulist[0].header['TELESCOP']
-        inst = hdulist[0].header['INSTRUME']
         airmass = hdulist[0].header['AIRMASS']
         if 'BUNIT' in hdrkeys:
             fluxunit = hdulist[0].header['BUNIT']
@@ -185,12 +183,14 @@ def do_external_fits_spectra(catalog):
             SPECTRUM.U_TIME: 'MJD',
             SPECTRUM.FLUXES: fluxes,
             SPECTRUM.U_FLUXES: fluxunit,
-            SPECTRUM.TELESCOPE: tel,
-            SPECTRUM.INSTRUMENT: inst,
             SPECTRUM.AIRMASS: airmass,
             SPECTRUM.FILENAME: filename,
             SPECTRUM.SOURCE: source
         }
+        if 'TELESCOP' in hdrkeys:
+            specdict[SPECTRUM.TELESCOPE] = hdulist[0].header['TELESCOP']
+        if 'INSTRUME' in hdrkeys:
+            specdict[SPECTRUM.INSTRUMENT] = hdulist[0].header['INSTRUME']
         if errors:
             specdict[SPECTRUM.ERRORS] = errors
             specdict[SPECTRUM.U_ERRORS] = fluxunit
@@ -202,8 +202,7 @@ def do_external_fits_spectra(catalog):
             specdict[SPECTRUM.OBSERVER] = hdulist[0].header['OBSERVER']
         catalog.entries[name].add_spectrum(**specdict)
         hdulist.close()
-
-    catalog.journal_entries()
+        catalog.journal_entries()
     return
 
 
