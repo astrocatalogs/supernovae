@@ -130,7 +130,7 @@ def do_external_fits_spectra(catalog):
                 name, bibcode=metadict[filename]['bibcode'])
         elif 'donator' in metadict[filename]:
             name, source = catalog.new_entry(
-                name, bibcode=metadict[filename]['donator'])
+                name, srcname=metadict[filename]['donator'])
         else:
             if 'OBSERVER' in hdrkeys:
                 name, source = catalog.new_entry(
