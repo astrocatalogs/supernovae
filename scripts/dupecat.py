@@ -14,7 +14,7 @@ from astrocats.supernovae.scripts.repos import repo_file_list
 
 from ...catalog.utils import get_entry_filename, is_number
 
-dupes = OrderedDict()
+dupes = []
 
 outdir = "astrocats/supernovae/output/"
 
@@ -24,8 +24,8 @@ newcatalog = []
 
 for fcnt, eventfile in enumerate(
         tqdm(sorted(files, key=lambda s: s.lower()))):
-    # if fcnt > 1000:
-    #    break
+    #if fcnt > 5000:
+    #   break
 
     if eventfile.split('.')[-1] == 'gz':
         with gzip.open(eventfile, 'rt') as f:
@@ -72,7 +72,7 @@ for fcnt, eventfile in enumerate(
         newitem['discyear'] = discyear
     if 'ra' in item and 'dec' in item and item['ra'] and item['dec']:
         newitem['name'] = item['name']
-        newitem['alias'] = [x['value'] for x in item['alias']]
+        newitem['alias'] = [x['value'] for x in item.get('alias', [{'value': item['name']}])]
         newitem['ra'] = item['ra'][0]['value']
         if not is_number(newitem['ra'].split(':')[0]):
             continue
@@ -91,16 +91,11 @@ for fcnt, eventfile in enumerate(
 
 coo = coord([x['ra'] for x in newcatalog],
             [x['dec'] for x in newcatalog], unit=(un.hourangle, un.deg))
-radegs = coo.ra.deg
-decdegs = coo.dec.deg
-
-for i, item in enumerate(newcatalog):
-    newcatalog[i]['radeg'] = radegs[i]
-    newcatalog[i]['decdeg'] = decdegs[i]
+cooref = list(range(len(coo)))
 
 newcatalog2 = deepcopy(newcatalog)
 
-for item1 in tqdm(newcatalog):
+for i1, item1 in enumerate(tqdm(newcatalog)):
     name1 = item1['name']
 
     maxyear1 = None
@@ -110,11 +105,12 @@ for item1 in tqdm(newcatalog):
     if 'discyear' in item1 and item1['discyear']:
         discyear1 = item1['discyear']
 
-    for item2 in newcatalog2[:]:
+    distdegs = coo[i1+1:].separation(coo[i1]).arcsecond
+
+    lcooref = deepcopy(cooref)
+
+    for i2, item2 in enumerate(newcatalog2[i1+1:]):
         name2 = item2['name']
-        if name1 == name2:
-            newcatalog2.remove(item2)
-            continue
 
         aliases1 = item1['alias']
         aliases2 = item2['alias']
@@ -146,18 +142,13 @@ for item1 in tqdm(newcatalog):
         dec2 = item2['dec']
         poserr1 = math.hypot(item1['raerr'], item1['decerr'])
         poserr2 = math.hypot(item2['raerr'], item2['decerr'])
-        radeg1 = item1['radeg']
-        radeg2 = item2['radeg']
-        decdeg1 = item1['decdeg']
-        decdeg2 = item2['decdeg']
 
         maxdiffyear = ''
         discdiffyear = ''
 
-        exactstr = ('exact' if radeg1 == radeg2 and
-                    decdeg1 == decdeg2 else 'a close')
+        distdeg = distdegs[i2]
+        exactstr = ('exact' if distdeg == 0.0 else 'a close')
 
-        distdeg = math.hypot((radeg1 - radeg2), (decdeg1 - decdeg2))
         if distdeg < ((10. + poserr1 + poserr2) / 3600.):
             if (maxyear1 and maxyear2) or (discyear1 and discyear2):
                 if maxyear1 and maxyear2:
@@ -218,7 +209,6 @@ for item1 in tqdm(newcatalog):
                                   ('discdiffyear', str(discdiffyear)),
                                   ('edit', edit)]))
 
-# Convert to array since that's what datatables expects
 jsonstring = json.dumps(
     dupes, indent='\t', separators=(',', ':'), ensure_ascii=False)
 with open(outdir + 'dupes.json', 'w') as f:
