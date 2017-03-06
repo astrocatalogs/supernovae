@@ -149,7 +149,7 @@ for i1, item1 in enumerate(tqdm(newcatalog)):
         distdeg = distdegs[i2]
         exactstr = ('exact' if distdeg == 0.0 else 'a close')
 
-        if distdeg < ((10. + poserr1 + poserr2) / 3600.):
+        if distdeg < (10. + (poserr1 + poserr2) / 3600.):
             if (maxyear1 and maxyear2) or (discyear1 and discyear2):
                 if maxyear1 and maxyear2:
                     maxdiffyear = abs(maxyear1 - maxyear2)

@@ -4,6 +4,9 @@ import json
 import math
 import os
 import urllib
+
+import numpy as np
+
 from collections import OrderedDict
 from copy import deepcopy
 
@@ -110,8 +113,8 @@ for row in frbtable:
         'discyear': discyear,
         'ra': row[7],
         'dec': row[8],
-        'raerr': 60*float(row[10])/np.sqrt(2.0),
-        'decerr': 60*float(row[10])/np.sqrt(2.0)
+        'raerr': 60*float(row[10])/2.355,
+        'decerr': 60*float(row[10])/2.355
     }
     frbcatalog.append(frbdict)
 
