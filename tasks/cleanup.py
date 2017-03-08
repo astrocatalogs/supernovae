@@ -306,7 +306,7 @@ def do_cleanup(catalog):
                     redshift = pretty_num(
                         redz, sig=get_sig_digits(str(meddist)))
                     catalog.entries[name].add_quantity(
-                        name, [SUPERNOVA.REDSHIFT, SUPERNOVA.HOST_REDSHIFT],
+                        [SUPERNOVA.REDSHIFT, SUPERNOVA.HOST_REDSHIFT],
                         redshift,
                         uniq_cdl([source, secondarysource]),
                         kind='host',
