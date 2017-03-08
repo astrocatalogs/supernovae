@@ -25,6 +25,35 @@ def do_ascii(catalog):
     """
     task_str = catalog.get_current_task_str()
 
+    # 2017arXiv170302402W
+    file_names = glob(
+        os.path.join(catalog.get_current_task_repo(), 'SweetSpot', '*.dat'))
+    for path in pbar(file_names, desc=task_str + ', SweetSpot'):
+        tsvin = list(
+            csv.reader(
+                open(path, 'r'), delimiter=' ', skipinitialspace=True))
+        oname = path.split('/')[-1].split('_')[0]
+        name, source = catalog.new_entry(oname, bibcode='2017arXiv170302402W')
+        for row in tsvin:
+            if not row or row[0][0] == '#':
+                continue
+            tel, band = row[2][:-2], row[2][-1]
+            zp = '25'
+            c, lec, uec = tuple(row[3:6])
+            photodict = {
+                PHOTOMETRY.TIME: row[1],
+                PHOTOMETRY.U_TIME: 'MJD',
+                PHOTOMETRY.COUNTS: c,
+                PHOTOMETRY.E_LOWER_COUNTS: lec,
+                PHOTOMETRY.E_UPPER_COUNTS: uec,
+                PHOTOMETRY.BAND: band,
+                PHOTOMETRY.TELESCOPE: tel,
+                PHOTOMETRY.SOURCE: source
+            }
+            set_pd_mag_from_counts(photodict, c, lec=lec, uec=uec, zp=zp)
+            catalog.entries[name].add_photometry(**photodict)
+    catalog.journal_entries()
+
     # 2014ApJ...789..104O
     datafile = os.path.join(catalog.get_current_task_repo(), 'ASCII',
                             '2014ApJ...789..104O-tab1.txt')
@@ -66,6 +95,7 @@ def do_ascii(catalog):
         }
         set_pd_mag_from_counts(photodict, c, ec=ec, zp=zp)
         catalog.entries[name].add_photometry(**photodict)
+    catalog.journal_entries()
 
     # KEGS
     # Zero point not right, commenting out for now.
@@ -136,6 +166,7 @@ def do_ascii(catalog):
         catalog.entries[name].add_quantity(SUPERNOVA.RA, row['RA'].replace(
             'h', ':').replace('m', ':').replace('s', ''), source)
         catalog.entries[name].add_quantity(SUPERNOVA.DEC, row['Dec'], source)
+    catalog.journal_entries()
 
     # 2006AJ....132.2024L
     datafile = os.path.join(catalog.get_current_task_repo(), 'ASCII',
@@ -158,6 +189,7 @@ def do_ascii(catalog):
                 PHOTOMETRY.SOURCE: source
             }
             catalog.entries[name].add_photometry(**photodict)
+    catalog.journal_entries()
 
     # 2006AJ....132.1126N
     datafile = os.path.join(catalog.get_current_task_repo(), 'ASCII',
