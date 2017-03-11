@@ -27,6 +27,42 @@ def do_donated_photo(catalog):
         pass
     # End private donations #
 
+    # Benetti 03-08-17 donation
+    path = os.path.join(catalog.get_current_task_repo(), 'Donations',
+                        'Benetti-03-08-17', '1999E.dat')
+    with open(path, 'r') as f:
+        tsvin = list(csv.reader(f, delimiter=' ', skipinitialspace=True))
+        name, source = catalog.new_entry(
+            'SN1999E', bibcode='2003MNRAS.340..191R')
+        bands = None
+        for row in tsvin:
+            if not row or row[0][0] == '#':
+                continue
+            if not bands:
+                bands = row[2:-2]
+                continue
+            mjd = row[1]
+            tel = row[-1] if 'IAUC' not in row[-1] else None
+            for bi, band in enumerate(bands):
+                mag = row[2 + 2 * bi]
+                if mag == '9999':
+                    continue
+                err = row[2 + 2 * bi + 1]
+                limit = row[6] == 'True'
+                photodict = {
+                    PHOTOMETRY.TIME: mjd,
+                    PHOTOMETRY.U_TIME: 'MJD',
+                    PHOTOMETRY.TELESCOPE: tel,
+                    PHOTOMETRY.BAND: band,
+                    PHOTOMETRY.MAGNITUDE: mag,
+                    PHOTOMETRY.SOURCE: source
+                }
+                if err != '.00':
+                    photodict[PHOTOMETRY.E_MAGNITUDE] = str(Decimal(err))
+                if tel:
+                    photodict[PHOTOMETRY.TELESCOPE] = tel
+                catalog.entries[name].add_photometry(**photodict)
+
     # Nicholl 01-29-17 donation
     with open(
             os.path.join(catalog.get_current_task_repo(), 'Donations',
