@@ -177,7 +177,7 @@ def do_tns_photo(catalog):
             if ('discoverydate' in objdict and
                 (datetime.now() - datetime.strptime(objdict['discoverydate'],
                                                     '%Y-%m-%d %H:%M:%S')
-                 ).days > 120):
+                 ).days > 90):
                 download_json = False
         if download_json:
             data = urllib.parse.urlencode({
@@ -306,7 +306,7 @@ def do_tns_spectra(catalog):
             if ('discoverydate' in objdict and
                 (datetime.now() - datetime.strptime(objdict['discoverydate'],
                                                     '%Y-%m-%d %H:%M:%S')
-                 ).days > 120):
+                 ).days > 90):
                 download_json = False
         if download_json:
             data = urllib.parse.urlencode({
