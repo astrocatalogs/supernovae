@@ -74,7 +74,7 @@ def do_nedd(catalog):
                             redshift = pretty_num(zatval, sig=sigd)
                         except (KeyboardInterrupt, SystemExit):
                             raise
-                        except:
+                        except Exception:
                             pass
                         else:
                             cosmosource = catalog.entries[name].add_source(

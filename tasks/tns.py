@@ -5,13 +5,16 @@ import json
 import os
 import time
 import urllib
+import warnings
 from datetime import datetime, timedelta
 from math import ceil
 
 import requests
-from astrocats.catalog.photometry import PHOTOMETRY
-from astrocats.catalog.utils import is_integer, jd_to_mjd, pbar, pretty_num
 
+from astrocats.catalog.photometry import PHOTOMETRY
+from astrocats.catalog.spectrum import SPECTRUM
+from astrocats.catalog.utils import (is_integer, is_number, jd_to_mjd, pbar,
+                                     pretty_num)
 from cdecimal import Decimal
 
 from ..supernova import SUPERNOVA
@@ -25,7 +28,7 @@ def do_tns(catalog):
         'search?&num_page=1&format=html&sort=desc&order=id&format=csv&page=0'
     csvtxt = catalog.load_url(search_url,
                               os.path.join(catalog.get_current_task_repo(),
-                                           'TNS/index.csv'))
+                                           'TNS', 'index.csv'))
     if not csvtxt:
         return
     maxid = csvtxt.splitlines()[1].split(',')[0].strip('"')
@@ -174,7 +177,7 @@ def do_tns_photo(catalog):
             if ('discoverydate' in objdict and
                 (datetime.now() - datetime.strptime(objdict['discoverydate'],
                                                     '%Y-%m-%d %H:%M:%S')
-                 ).days > 180):
+                 ).days > 120):
                 download_json = False
         if download_json:
             data = urllib.parse.urlencode({
@@ -263,5 +266,157 @@ def do_tns_photo(catalog):
             if system:
                 photodict[PHOTOMETRY.SYSTEM] = system
             catalog.entries[name].add_photometry(**photodict)
+        catalog.journal_entries()
+    return
+
+
+def do_tns_spectra(catalog):
+    requests.packages.urllib3.disable_warnings()
+    task_str = catalog.get_current_task_str()
+    tns_url = 'https://wis-tns.weizmann.ac.il/'
+    try:
+        with open('tns.key', 'r') as f:
+            tnskey = f.read().splitlines()[0]
+    except Exception:
+        catalog.log.warning('TNS API key not found, make sure a file named '
+                            '`tns.key` containing the key is placed the '
+                            'astrocats directory.')
+        tnskey = ''
+
+    fails = 0
+    for name in pbar(list(catalog.entries.keys()), task_str):
+        if name not in catalog.entries:
+            continue
+        aliases = catalog.entries[name].get_aliases()
+        oname = ''
+        for alias in aliases:
+            if (alias.startswith(('SN', 'AT')) and is_integer(alias[2:6]) and
+                    int(alias[2:6]) >= 2016) and alias[6:].isalpha():
+                oname = alias
+                break
+        if not oname:
+            continue
+        reqname = oname[2:]
+        jsonpath = os.path.join(catalog.get_current_task_repo(), 'TNS', 'meta',
+                                reqname + '.json')
+        download_json = True
+        if os.path.isfile(jsonpath):
+            with open(jsonpath, 'r') as f:
+                objdict = json.load(f)
+            if ('discoverydate' in objdict and
+                (datetime.now() - datetime.strptime(objdict['discoverydate'],
+                                                    '%Y-%m-%d %H:%M:%S')
+                 ).days > 120):
+                download_json = False
+        if download_json:
+            data = urllib.parse.urlencode({
+                'api_key': tnskey,
+                'data': json.dumps({
+                    'objname': reqname,
+                    'spectra': '1'
+                })
+            }).encode('ascii')
+            req = urllib.request.Request(
+                'https://wis-tns.weizmann.ac.il/api/get/object', data=data)
+            trys = 0
+            objdict = None
+            while trys < 3 and not objdict:
+                try:
+                    objdict = json.loads(
+                        urllib.request.urlopen(req).read().decode('ascii'))[
+                            'data']['reply']
+                except KeyboardInterrupt:
+                    raise
+                except Exception:
+                    catalog.log.warning('API request failed for `{}`.'.format(
+                        name))
+                    time.sleep(5)
+                trys = trys + 1
+            if (not objdict or 'objname' not in objdict or
+                    not isinstance(objdict['objname'], str)):
+                fails = fails + 1
+                catalog.log.warning('Object `{}` not found!'.format(name))
+                if fails >= 5:
+                    break
+                continue
+            # Cache object here
+            with open(jsonpath, 'w') as f:
+                json.dump(objdict, f)
+
+        if 'spectra' not in objdict:
+            continue
+        specarr = objdict['spectra']
+        name, source = catalog.new_entry(
+            oname, srcname='Transient Name Server', url=tns_url)
+        for spectrum in specarr:
+            spectrumdict = {
+                PHOTOMETRY.SOURCE: source
+            }
+            if 'jd' in spectrum:
+                spectrumdict[SPECTRUM.TIME] = str(
+                    jd_to_mjd(Decimal(str(spectrum['jd']))))
+                spectrumdict[SPECTRUM.U_TIME] = 'MJD'
+            if spectrum.get('observer', ''):
+                spectrumdict[SPECTRUM.OBSERVER] = spectrum['observer']
+            if spectrum.get('reducer', ''):
+                spectrumdict[SPECTRUM.OBSERVER] = spectrum['observer']
+            if 'source_group' in spectrum:
+                survey = spectrum['source_group']['name']
+                if survey:
+                    spectrumdict[SPECTRUM.SURVEY] = survey
+            if 'telescope' in spectrum:
+                telescope = spectrum['telescope']['name']
+                if telescope and telescope != 'Other':
+                    spectrumdict[SPECTRUM.TELESCOPE] = telescope
+            if 'instrument' in spectrum:
+                instrument = spectrum['instrument']['name']
+                if instrument and instrument != 'Other':
+                    spectrumdict[SPECTRUM.INSTRUMENT] = instrument
+
+            if 'asciifile' in spectrum:
+                fname = urllib.parse.unquote(
+                    spectrum['asciifile'].split('/')[-1])
+                spectxt = catalog.load_url(
+                    spectrum['asciifile'],
+                    os.path.join(
+                        catalog.get_current_task_repo(), 'TNS', 'spectra',
+                        fname), archived_mode=True)
+                data = [x.split() for x in spectxt.splitlines()]
+
+                skipspec = False
+                newdata = []
+                oldval = ''
+                for row in data:
+                    if row and '#' not in row[0]:
+                        if (len(row) >= 2 and is_number(row[0]) and
+                                is_number(row[1]) and row[1] != oldval):
+                            newdata.append(row)
+                            oldval = row[1]
+
+                if skipspec or not newdata:
+                    warnings.warn('Skipped adding spectrum file ' + fname)
+                    continue
+
+                data = [list(i) for i in zip(*newdata)]
+                wavelengths = data[0]
+                fluxes = data[1]
+                errors = ''
+                if len(data) == 3:
+                    errors = data[1]
+
+                if max([float(x) for x in fluxes]) < 1.0e-5:
+                    fluxunit = 'erg/s/cm^2/Angstrom'
+                else:
+                    fluxunit = 'Uncalibrated'
+
+                spectrumdict.update({
+                    SPECTRUM.U_WAVELENGTHS: 'Angstrom',
+                    SPECTRUM.ERRORS: errors,
+                    SPECTRUM.U_FLUXES: fluxunit,
+                    SPECTRUM.U_ERRORS: fluxunit if errors else '',
+                    SPECTRUM.WAVELENGTHS: wavelengths,
+                    SPECTRUM.FLUXES: fluxes
+                })
+                catalog.entries[name].add_spectrum(**spectrumdict)
         catalog.journal_entries()
     return
