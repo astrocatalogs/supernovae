@@ -14,7 +14,7 @@ import requests
 from astrocats.catalog.photometry import PHOTOMETRY
 from astrocats.catalog.spectrum import SPECTRUM
 from astrocats.catalog.utils import (is_integer, is_number, jd_to_mjd, pbar,
-                                     pretty_num)
+                                     pretty_num, sortOD)
 from cdecimal import Decimal
 
 from ..supernova import SUPERNOVA
@@ -212,7 +212,7 @@ def do_tns_photo(catalog):
                 continue
             # Cache object here
             with open(jsonpath, 'w') as f:
-                json.dump(objdict, f)
+                json.dump(sortOD(objdict), f)
 
         if 'photometry' not in objdict:
             continue
@@ -341,7 +341,7 @@ def do_tns_spectra(catalog):
                 continue
             # Cache object here
             with open(jsonpath, 'w') as f:
-                json.dump(objdict, f)
+                json.dump(sortOD(objdict), f)
 
         if 'spectra' not in objdict:
             continue
