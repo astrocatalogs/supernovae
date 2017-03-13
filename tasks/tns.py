@@ -212,7 +212,8 @@ def do_tns_photo(catalog):
                 continue
             # Cache object here
             with open(jsonpath, 'w') as f:
-                json.dump(sortOD(objdict), f)
+                json.dump(sortOD(objdict), f, indent='\t',
+                          separators=(',', ':'), ensure_ascii=False)
 
         if 'photometry' not in objdict:
             continue
@@ -341,7 +342,8 @@ def do_tns_spectra(catalog):
                 continue
             # Cache object here
             with open(jsonpath, 'w') as f:
-                json.dump(sortOD(objdict), f)
+                json.dump(sortOD(objdict), f, indent='\t',
+                          separators=(',', ':'), ensure_ascii=False)
 
         if 'spectra' not in objdict:
             continue
