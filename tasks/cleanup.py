@@ -293,12 +293,14 @@ def do_cleanup(catalog):
                 SUPERNOVA.HOST in catalog.entries[name]):
             reference = "NED-D"
             refurl = "http://ned.ipac.caltech.edu/Library/Distances/"
+            refbib = "1991ASSL..171...89H"
             for host in catalog.entries[name][SUPERNOVA.HOST]:
                 if host[QUANTITY.VALUE] in catalog.nedd_dict:
                     source = catalog.entries[name].add_source(
                         bibcode='2016A&A...594A..13P')
                     secondarysource = catalog.entries[name].add_source(
-                        name=reference, url=refurl, secondary=True)
+                        name=reference, url=refurl, bibcode=refbib,
+                        secondary=True)
                     meddist = statistics.median(catalog.nedd_dict[host[
                         QUANTITY.VALUE]])
                     redz = z_at_value(cosmo.comoving_distance,
