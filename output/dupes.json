@@ -2368,6 +2368,27 @@
 		"edit":false
 	},
 	{
+		"name1":"AT2017bzo",
+		"aliases1":[
+			"AT2017bzo",
+			"PS17brf",
+			"MASTER OT JJ133905.00-201718.3"
+		],
+		"name2":"MASTER OT J133905.0-201718.3",
+		"aliases2":[
+			"MASTER OT J133905.0-201718.3",
+			"MASTER OT J133905.00-201718.3"
+		],
+		"ra1":"13:39:04.97",
+		"dec1":"-20:17:19.98",
+		"ra2":"13:39:05.000",
+		"dec2":"-20:17:18.30",
+		"distdeg":"1.732210241",
+		"maxdiffyear":"0.24166666666678793",
+		"discdiffyear":"0.24050276388902603",
+		"edit":false
+	},
+	{
 		"name1":"SN2016cbx",
 		"aliases1":[
 			"SN2016cbx",
@@ -2646,6 +2667,24 @@
 		"edit":false
 	},
 	{
+		"name1":"PS15cmm",
+		"aliases1":[
+			"PS15cmm"
+		],
+		"name2":"MLS160311:051315+141335",
+		"aliases2":[
+			"MLS160311:051315+141335"
+		],
+		"ra1":"05:13:15.31",
+		"dec1":"+14:13:34.8",
+		"ra2":"05:13:15.31",
+		"dec2":"+14:13:34.7",
+		"distdeg":"0.0999999999959",
+		"maxdiffyear":"",
+		"discdiffyear":"0.39444444444461624",
+		"edit":false
+	},
+	{
 		"name1":"OGLE15fm",
 		"aliases1":[
 			"OGLE15fm"
@@ -2682,23 +2721,23 @@
 		"edit":false
 	},
 	{
-		"name1":"PS17bpz",
+		"name1":"PS16tx",
 		"aliases1":[
-			"PS17bpz",
-			"AT2017bon"
+			"PS16tx",
+			"AT2016sm"
 		],
-		"name2":"PS17bov",
+		"name2":"PS17bsa",
 		"aliases2":[
-			"PS17bov",
-			"AT2017bno"
+			"PS17bsa",
+			"AT2017cbk"
 		],
-		"ra1":"12:39:09.83",
-		"dec1":"-14:00:17.36",
-		"ra2":"12:39:09.58",
-		"dec2":"-14:00:17.96",
-		"distdeg":"3.68766998601",
-		"maxdiffyear":"0.002777777777737356",
-		"discdiffyear":"3.333888889756054e-05",
+		"ra1":"12:44:07.66",
+		"dec1":"-01:03:08.83",
+		"ra2":"12:44:07.17",
+		"dec2":"-01:03:08.71",
+		"distdeg":"7.34973977839",
+		"maxdiffyear":"1.1277777777779647",
+		"discdiffyear":"1.1273195722221772",
 		"edit":false
 	},
 	{
@@ -2762,8 +2801,7 @@
 			"SNMRK0477",
 			"SN_MRK0477",
 			"Supernova in Mrk 477",
-			"ProbableinMrk477",
-			"SN in Mrk 477"
+			"ProbableinMrk477"
 		],
 		"name2":"EQ J144038.3+533013.8",
 		"aliases2":[
