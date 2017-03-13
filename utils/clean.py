@@ -71,6 +71,8 @@ def name_clean(name):
         newname = newname.replace('GRB', 'GRB ', 1)
     if newname.startswith('GRB ') and is_number(newname[4:].strip()):
         newname = 'GRB ' + newname[4:].strip() + 'A'
+    if newname.startswith('ESSENCE '):
+        newname = newname.replace('ESSENCE ', 'ESSENCE', 1)
     if newname.startswith('LSQ '):
         newname = newname.replace('LSQ ', 'LSQ', 1)
     if newname.startswith('LSQ') and is_number(newname[3]):

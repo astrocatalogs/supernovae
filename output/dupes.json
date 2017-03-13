@@ -2368,27 +2368,6 @@
 		"edit":false
 	},
 	{
-		"name1":"AT2017bzo",
-		"aliases1":[
-			"AT2017bzo",
-			"PS17brf",
-			"MASTER OT JJ133905.00-201718.3"
-		],
-		"name2":"MASTER OT J133905.0-201718.3",
-		"aliases2":[
-			"MASTER OT J133905.0-201718.3",
-			"MASTER OT J133905.00-201718.3"
-		],
-		"ra1":"13:39:04.97",
-		"dec1":"-20:17:19.98",
-		"ra2":"13:39:05.000",
-		"dec2":"-20:17:18.30",
-		"distdeg":"1.732210241",
-		"maxdiffyear":"0.24166666666678793",
-		"discdiffyear":"0.24050276388902603",
-		"edit":false
-	},
-	{
 		"name1":"SN2016cbx",
 		"aliases1":[
 			"SN2016cbx",
@@ -2801,7 +2780,8 @@
 			"SNMRK0477",
 			"SN_MRK0477",
 			"Supernova in Mrk 477",
-			"ProbableinMrk477"
+			"ProbableinMrk477",
+			"SN in Mrk 477"
 		],
 		"name2":"EQ J144038.3+533013.8",
 		"aliases2":[
