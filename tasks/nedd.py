@@ -20,15 +20,15 @@ from ..utils import host_clean, name_clean
 def do_nedd(catalog):
     task_str = catalog.get_current_task_str()
     nedd_path = os.path.join(
-        catalog.get_current_task_repo(), 'NED26.05.1-D-12.1.0-20160501.csv')
+        catalog.get_current_task_repo(), 'NED26.10.1-D-13.1.0-20160930.csv')
 
     f = open(nedd_path, 'r')
 
     data = sorted(list(csv.reader(f, delimiter=',', quotechar='"'))[
                   13:], key=lambda x: (x[9], x[3]))
-    reference = "NED-D"
+    reference = "NED-D v" + nedd_path.split('-')[-2]
     refurl = "http://ned.ipac.caltech.edu/Library/Distances/"
-    nedd_dict = OrderedDict()
+    nedbib = "1991ASSL..171...89H"
     olddistname = ''
     loopcnt = 0
     for r, row in enumerate(pbar(data, task_str)):
@@ -50,10 +50,12 @@ def do_nedd(catalog):
             if not is_number(dist):
                 print(dist)
             if dist:
-                nedd_dict.setdefault(cleanhost, []).append(Decimal(dist))
+                catalog.nedd_dict.setdefault(
+                    cleanhost, []).append(Decimal(dist))
         if snname and 'HOST' not in snname:
             snname, secondarysource = catalog.new_entry(
-                snname, srcname=reference, url=refurl, secondary=True)
+                snname, srcname=reference, bibcode=nedbib, url=refurl,
+                secondary=True)
             if bibcode:
                 source = catalog.entries[snname].add_source(bibcode=bibcode)
                 sources = uniq_cdl([source, secondarysource])
