@@ -482,6 +482,8 @@ def do_ascii(catalog):
             PHOTOMETRY.TELESCOPE: row['Tel'],
             PHOTOMETRY.SOURCE: source
         }
+        if row['MJD'] >= 56600:
+            photodict[PHOTOMETRY.HOST] = True
         if row['l_mag'] == '>':
             photodict[PHOTOMETRY.UPPER_LIMIT] = True
         else:
