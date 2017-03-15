@@ -1,4 +1,4 @@
-####Below are known sources of data that need to be added to the catalog. 
+#### Below are known sources of data that need to be added to the catalog. 
 
 Donated datasets:
 * Several SNe from Prieto via e-mail.
@@ -191,8 +191,8 @@ SNR catalogs:
 Online catalogs:
 * No known missing online catalogs at this time.
 
-####Data that likely exists but no known source
+#### Data that likely exists but no known source
 * Any SNe with a typing but no spectrum likely has a spectrum somewhere.
 
-####Known errors that need to be corrected:
+#### Known errors that need to be corrected:
 * No known errors at this time.
