@@ -54,6 +54,7 @@ Other single SN datasets:
 * SN1997ab - http://adsabs.harvard.edu/abs/2000MmSAI..71..317S (spectra only, LC missing)
 * SN1997eg - http://adsabs.harvard.edu/abs/2002MNRAS.330..844S (spectra)
 * SN1998bu - http://adsabs.harvard.edu/abs/2001ApJ...549L.215C (need to reacquire spectrum on 1999-01-23)
+* SN1998bw - Photometry with measured errors available in original literature.
 * SN1999E - http://adsabs.harvard.edu/abs/2003MNRAS.340..191R (has LC, needs digitization, M. Turrato e-mailed 2/27/17)
 * SN1999aw - http://adsabs.harvard.edu/abs/2002AJ....124.2905S (spectra)
 * SN1999by - http://adsabs.harvard.edu/abs/2002ApJ...568..791H (spectra)
