@@ -25,6 +25,39 @@ def do_ascii(catalog):
     """
     task_str = catalog.get_current_task_str()
 
+    # 2016MNRAS.461.2003Y
+    path = os.path.join(catalog.get_current_task_repo(), 'ASCII',
+                        '2016MNRAS.461.2003Y-tab2.txt')
+    tsvin = list(
+        csv.reader(
+            open(path, 'r'), delimiter=',', skipinitialspace=True))
+    name, source = catalog.new_entry('SN2013ej',
+                                     bibcode='2016MNRAS.461.2003Y')
+    telstring = ','.join(tsvin[-1]).strip('#')
+    tels = {}
+    for combo in telstring.split(';'):
+        combosplit = combo.split(':')
+        keys = [x.strip() for x in combosplit[0].split(',')]
+        value = combosplit[1].strip()
+        for key in keys:
+            tels[key] = value
+
+    for row in pbar(tsvin, desc=task_str):
+        if not row or row[0][0] == '#':
+            continue
+        mag, err = tuple([x.strip('() ') for x in row[2].split()])
+        photodict = {
+            PHOTOMETRY.TIME: row[1].strip(),
+            PHOTOMETRY.U_TIME: 'MJD',
+            PHOTOMETRY.MAGNITUDE: mag,
+            PHOTOMETRY.E_MAGNITUDE: err,
+            PHOTOMETRY.BAND: row[3].strip(),
+            PHOTOMETRY.TELESCOPE: tels[row[-1].strip()],
+            PHOTOMETRY.SOURCE: source
+        }
+        catalog.entries[name].add_photometry(**photodict)
+    catalog.journal_entries()
+
     # 2017arXiv170302402W
     file_names = glob(
         os.path.join(catalog.get_current_task_repo(), 'SweetSpot', '*.dat'))
