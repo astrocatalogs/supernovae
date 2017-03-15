@@ -1,7 +1,6 @@
 ####Below are known sources of data that need to be added to the catalog. 
 
 Donated datasets:
-* SN2013ej - From Valenti.
 * Several SNe from Prieto via e-mail.
 
 Multiple SN datasets on VizieR:
