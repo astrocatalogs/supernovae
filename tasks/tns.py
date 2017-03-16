@@ -1,5 +1,4 @@
-"""Import tasks for the Transient Name Server.
-"""
+"""Import tasks for the Transient Name Server."""
 import csv
 import json
 import os
@@ -21,6 +20,7 @@ from ..supernova import SUPERNOVA
 
 
 def do_tns(catalog):
+    """Load TNS metadata."""
     session = requests.Session()
     task_str = catalog.get_current_task_str()
     tns_url = 'https://wis-tns.weizmann.ac.il/'
@@ -35,8 +35,9 @@ def do_tns(catalog):
     maxpages = ceil(int(maxid) / 1000.)
 
     for page in pbar(range(maxpages), task_str):
-        fname = os.path.join(catalog.get_current_task_repo(), 'TNS', 'page-') + \
-            str(page).zfill(2) + '.csv'
+        fname = os.path.join(
+            catalog.get_current_task_repo(), 'TNS',
+            'page-') + str(page).zfill(2) + '.csv'
         if (catalog.current_task.load_archive(catalog.args) and
                 os.path.isfile(fname) and page < 7):
             with open(fname, 'r') as tns_file:
@@ -62,7 +63,7 @@ def do_tns(catalog):
                 try:
                     response = session.get(ses_url)
                     csvtxt = response.text
-                except:
+                except Exception:
                     if os.path.isfile(fname):
                         with open(fname, 'r') as tns_file:
                             csvtxt = tns_file.read()
@@ -142,12 +143,13 @@ def do_tns(catalog):
 
 
 def do_tns_photo(catalog):
+    """Load TNS photometry."""
     task_str = catalog.get_current_task_str()
     tns_url = 'https://wis-tns.weizmann.ac.il/'
     try:
         with open('tns.key', 'r') as f:
             tnskey = f.read().splitlines()[0]
-    except:
+    except Exception:
         catalog.log.warning('TNS API key not found, make sure a file named '
                             '`tns.key` containing the key is placed the '
                             'astrocats directory.')
@@ -198,7 +200,7 @@ def do_tns_photo(catalog):
                             'data']['reply']
                 except KeyboardInterrupt:
                     raise
-                except:
+                except Exception:
                     catalog.log.warning('API request failed for `{}`.'.format(
                         name))
                     time.sleep(5)
@@ -213,7 +215,8 @@ def do_tns_photo(catalog):
             # Cache object here
             with open(jsonpath, 'w') as f:
                 json.dump(sortOD(objdict), f, indent='\t',
-                          separators=(',', ':'), ensure_ascii=False)
+                          separators=(',', ':'), ensure_ascii=False,
+                          sort_keys=True)
 
         if 'photometry' not in objdict:
             continue
@@ -272,6 +275,7 @@ def do_tns_photo(catalog):
 
 
 def do_tns_spectra(catalog):
+    """Load TNS spectra."""
     requests.packages.urllib3.disable_warnings()
     task_str = catalog.get_current_task_str()
     tns_url = 'https://wis-tns.weizmann.ac.il/'
@@ -343,7 +347,8 @@ def do_tns_spectra(catalog):
             # Cache object here
             with open(jsonpath, 'w') as f:
                 json.dump(sortOD(objdict), f, indent='\t',
-                          separators=(',', ':'), ensure_ascii=False)
+                          separators=(',', ':'), ensure_ascii=False,
+                          sort_keys=True)
 
         if 'spectra' not in objdict:
             continue
