@@ -454,17 +454,6 @@
         "always_journal": true,
         "priority": 200
     },
-    "wiserep_spectra": {
-        "nice_name": "%pre WISeREP spectra",
-        "active": true,
-        "update": false,
-        "module": "supernovae.tasks.wiserep",
-        "function": "do_wiserep_spectra",
-        "groups": ["spectra"],
-        "repo": "input/sne-external-WISEREP",
-        "always_journal": true,
-        "priority": 201
-    },
     "cfa_spectra": {
         "nice_name": "%pre CfA archive spectra",
         "active": true,
@@ -575,6 +564,17 @@
         "repo": "input/sne-external-spectra",
         "always_journal": true,
         "priority": 211
+    },
+    "wiserep_spectra": {
+        "nice_name": "%pre WISeREP spectra",
+        "active": true,
+        "update": false,
+        "module": "supernovae.tasks.wiserep",
+        "function": "do_wiserep_spectra",
+        "groups": ["spectra"],
+        "repo": "input/sne-external-WISEREP",
+        "always_journal": true,
+        "priority": 300
     },
     "hst": {
         "nice_name": "Coordinates from HST pointings",
