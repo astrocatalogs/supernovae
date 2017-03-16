@@ -41,7 +41,7 @@ script:
     - python -m astrocats setup
 
     - echo "travis_fold:start:IMPORT Importing data"
-    - coverage run --source astrocats/supernovae -a -m astrocats supernovae import --clone-depth 0 --travis
+    - coverage run --source astrocats/supernovae -a -m astrocats supernovae import --clone-depth 0 --purge-outputs --travis
     - echo "travis_fold:end:IMPORT Importing data done"
 
     - echo "travis_fold:start:COUNT Counting data"
