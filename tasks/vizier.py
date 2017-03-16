@@ -1696,10 +1696,10 @@ def do_vizier(catalog):
     table.convert_bytestring_to_unicode(python3_only=True)
     for row in pbar(table, task_str):
         row = convert_aq_output(row)
-        name = str(row['Name'])
-        name, source = catalog.new_entry(name, bibcode='2015MNRAS.448.1206M')
+        oname = str(row['Name'])
+        name, source = catalog.new_entry(oname, bibcode='2015MNRAS.448.1206M')
         catalog.entries[name].add_quantity(SUPERNOVA.DISCOVER_DATE,
-                                           '20' + name[4:6], source)
+                                           '20' + oname[4:6], source)
         catalog.entries[name].add_quantity(
             SUPERNOVA.RA, row['RAJ2000'], source, u_value='floatdegrees')
         catalog.entries[name].add_quantity(
@@ -1719,10 +1719,10 @@ def do_vizier(catalog):
     table.convert_bytestring_to_unicode(python3_only=True)
     for row in pbar(table, task_str):
         row = convert_aq_output(row)
-        name = str(row['Name'])
-        name, source = catalog.new_entry(name, bibcode='2015MNRAS.448.1206M')
+        oname = str(row['Name'])
+        name, source = catalog.new_entry(oname, bibcode='2015MNRAS.448.1206M')
         catalog.entries[name].add_quantity(SUPERNOVA.DISCOVER_DATE,
-                                           '20' + name[4:6], source)
+                                           '20' + oname[4:6], source)
         catalog.entries[name].add_quantity(
             SUPERNOVA.RA, row['RAJ2000'], source, u_value='floatdegrees')
         catalog.entries[name].add_quantity(
@@ -1746,10 +1746,10 @@ def do_vizier(catalog):
     table.convert_bytestring_to_unicode(python3_only=True)
     for row in pbar(table, task_str):
         row = convert_aq_output(row)
-        name = str(row['Name'])
-        name, source = catalog.new_entry(name, bibcode='2015MNRAS.448.1206M')
+        oname = str(row['Name'])
+        name, source = catalog.new_entry(oname, bibcode='2015MNRAS.448.1206M')
         catalog.entries[name].add_quantity(SUPERNOVA.DISCOVER_DATE,
-                                           '20' + name[4:6], source)
+                                           '20' + oname[4:6], source)
         catalog.entries[name].add_quantity(
             SUPERNOVA.RA, row['RAJ2000'], source, u_value='floatdegrees')
         catalog.entries[name].add_quantity(
@@ -1769,10 +1769,10 @@ def do_vizier(catalog):
     table.convert_bytestring_to_unicode(python3_only=True)
     for row in pbar(table, task_str):
         row = convert_aq_output(row)
-        name = str(row['Name'])
-        name, source = catalog.new_entry(name, bibcode='2015MNRAS.448.1206M')
+        oname = str(row['Name'])
+        name, source = catalog.new_entry(oname, bibcode='2015MNRAS.448.1206M')
         catalog.entries[name].add_quantity(SUPERNOVA.DISCOVER_DATE,
-                                           '20' + name[4:6], source)
+                                           '20' + oname[4:6], source)
         catalog.entries[name].add_quantity(
             SUPERNOVA.RA, row['RAJ2000'], source, u_value='floatdegrees')
         catalog.entries[name].add_quantity(
@@ -1790,10 +1790,10 @@ def do_vizier(catalog):
     table.convert_bytestring_to_unicode(python3_only=True)
     for row in pbar(table, task_str):
         row = convert_aq_output(row)
-        name = str(row['Name'])
-        name, source = catalog.new_entry(name, bibcode='2015MNRAS.448.1206M')
+        oname = str(row['Name'])
+        name, source = catalog.new_entry(oname, bibcode='2015MNRAS.448.1206M')
         catalog.entries[name].add_quantity(SUPERNOVA.DISCOVER_DATE,
-                                           '20' + name[4:6], source)
+                                           '20' + oname[4:6], source)
         catalog.entries[name].add_quantity(
             SUPERNOVA.RA, row['RAJ2000'], source, u_value='floatdegrees')
         catalog.entries[name].add_quantity(
@@ -1819,10 +1819,10 @@ def do_vizier(catalog):
     table.convert_bytestring_to_unicode(python3_only=True)
     for row in pbar(table, task_str):
         row = convert_aq_output(row)
-        name = str(row['Name'])
-        name, source = catalog.new_entry(name, bibcode='2015MNRAS.448.1206M')
+        oname = str(row['Name'])
+        name, source = catalog.new_entry(oname, bibcode='2015MNRAS.448.1206M')
         catalog.entries[name].add_quantity(SUPERNOVA.DISCOVER_DATE,
-                                           '20' + name[4:6], source)
+                                           '20' + oname[4:6], source)
         catalog.entries[name].add_quantity(
             SUPERNOVA.RA, row['RAJ2000'], source, u_value='floatdegrees')
         catalog.entries[name].add_quantity(
