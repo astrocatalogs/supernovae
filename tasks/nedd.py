@@ -84,7 +84,8 @@ def do_nedd(catalog):
                             combsources = uniq_cdl(sources.split(',') +
                                                    [cosmosource])
                             catalog.entries[snname].add_quantity(
-                                SUPERNOVA.REDSHIFT, redshift, combsources)
+                                SUPERNOVA.REDSHIFT, redshift, combsources,
+                                derived=True)
             if cleanhost:
                 catalog.entries[snname].add_quantity(
                     SUPERNOVA.HOST, cleanhost, sources)
