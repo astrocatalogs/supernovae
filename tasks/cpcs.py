@@ -1,5 +1,4 @@
-"""Import tasks for the Cambridge Photometric Calibration Server.
-"""
+"""Import tasks for the Cambridge Photometric Calibration Server."""
 import json
 import os
 from collections import OrderedDict
@@ -10,6 +9,7 @@ from ..supernova import SUPERNOVA
 
 
 def do_cpcs(catalog):
+    """Import data from CPCS."""
     task_str = catalog.get_current_task_str()
     cpcs_url = ('http://gsaweb.ast.cam.ac.uk/'
                 'followup/list_of_alerts?format=json&num=100000&'
@@ -39,7 +39,7 @@ def do_cpcs(catalog):
             if name.upper().startswith('IPTF'):
                 name = 'iPTF' + name[4:]
             # Only add events that are classified as SN.
-            if catalog.entry_exists(name):
+            if not catalog.entry_exists(name):
                 continue
             oldname = name
             name = catalog.add_entry(name)
@@ -76,7 +76,7 @@ def do_cpcs(catalog):
 
         try:
             cpcsalert = json.loads(jsonstr)
-        except:
+        except Exception:
             catalog.log.warning('Mangled CPCS data for alert {}.'.format(ai))
             continue
 
@@ -84,7 +84,7 @@ def do_cpcs(catalog):
         mags = [round_sig(xx, sig=6) for xx in cpcsalert['mag']]
         errs = [round_sig(
             xx, sig=6) if (is_number(xx) and float(xx) > 0.0) else ''
-                for xx in cpcsalert['magerr']]
+            for xx in cpcsalert['magerr']]
         bnds = cpcsalert['filter']
         obs = cpcsalert['observatory']
         for mi, mjd in enumerate(mjds):

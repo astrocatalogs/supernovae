@@ -325,17 +325,6 @@
         "always_journal": true,
         "priority": 30
     },
-    "cpcs": {
-        "nice_name": "%pre CPCS",
-        "active": true,
-        "update": true,
-        "archived": false,
-        "module": "supernovae.tasks.cpcs",
-        "function": "do_cpcs",
-        "repo": "input/sne-external",
-        "always_journal": true,
-        "priority": 31
-    },
     "ptf": {
         "nice_name": "%pre PTF",
         "active": true,
@@ -421,6 +410,17 @@
         "always_journal": true,
         "priority": 39
     },
+    "cpcs": {
+        "nice_name": "%pre CPCS",
+        "active": true,
+        "update": true,
+        "archived": false,
+        "module": "supernovae.tasks.cpcs",
+        "function": "do_cpcs",
+        "repo": "input/sne-external",
+        "always_journal": true,
+        "priority": 40
+    },
     "tns_photo": {
         "nice_name": "%pre TNS photometry",
         "active": true,
@@ -430,7 +430,7 @@
         "function": "do_tns_photo",
         "repo": "input/sne-external",
         "always_journal": true,
-        "priority": 40
+        "priority": 41
     },
     "donated_spectra": {
         "nice_name": "%pre Donated spectra",
