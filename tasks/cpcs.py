@@ -31,13 +31,15 @@ def do_cpcs(catalog):
         if True in [xx in name.upper() for xx in white_list]:
             name = name.replace('Verif', '').replace('_', ' ')
             if 'ASASSN' in name and name[6] != '-':
-                name = 'ASASSN-' + name[6:]
+                name = 'ASASSN-' + name[6:].lower()
             if 'MASTEROTJ' in name:
                 name = name.replace('MASTEROTJ', 'MASTER OT J')
             if 'OTJ' in name:
                 name = name.replace('OTJ', 'MASTER OT J')
             if name.upper().startswith('IPTF'):
-                name = 'iPTF' + name[4:]
+                name = 'iPTF' + name[4:].lower()
+            if name.upper().startswith('PS1'):
+                name = 'PS1' + name[3:].lower()
             # Only add events that are classified as SN.
             if not catalog.entry_exists(name):
                 continue
