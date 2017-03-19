@@ -27,7 +27,8 @@ def do_cpcs(catalog):
         if name == 'ASASSNli':
             continue
         # Just use aa whitelist for now since naming seems inconsistent
-        white_list = ['GAIA', 'OGLE', 'ASASSN', 'MASTER', 'OTJ', 'PS1', 'IPTF']
+        white_list = [
+            'GAIA', 'OGLE', 'ASASSN', 'MASTER', 'OTJ', 'PS1', 'IPTF', 'CSS']
         if True in [xx in name.upper() for xx in white_list]:
             name = name.replace('Verif', '').replace('_', ' ')
             if 'ASASSN' in name and name[6] != '-':
