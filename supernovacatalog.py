@@ -88,7 +88,7 @@ class SupernovaCatalog(Catalog):
         else:
             if SUPERNOVA.CLAIMED_TYPE in self.entries[name]:
                 for ct in self.entries[name][SUPERNOVA.CLAIMED_TYPE]:
-                    up_val = ct[QUANTITY.VALUE].upper()
+                    up_val = ct[QUANTITY.VALUE].upper().replace('?', '')
                     up_types = [x.upper() for x in self.nonsnetypes]
                     if up_val not in up_types and up_val != 'CANDIDATE':
                         bury_entry = False
