@@ -1,5 +1,4 @@
-"""
-"""
+"""Cleanup catalog before final write to disk."""
 import re
 import statistics
 import warnings
@@ -20,6 +19,7 @@ from ..supernova import SUPERNOVA
 
 
 def do_cleanup(catalog):
+    """Cleanup catalog after importing all data."""
     task_str = catalog.get_current_task_str()
 
     # Set preferred names, calculate some columns based on imported data,
@@ -32,7 +32,7 @@ def do_cleanup(catalog):
         # non-existent.
         try:
             name = catalog.add_entry(oname)
-        except:
+        except Exception:
             catalog.log.warning(
                 '"{}" was not found, suggests merge occurred in cleanup '
                 'process.'.format(oname))
@@ -153,8 +153,8 @@ def do_cleanup(catalog):
                                 len(year) <= 4):
                             discoverdate = year
                             if catalog.args.verbose:
-                                tprint('Added discoverdate from name [' + alias
-                                       + ']: ' + discoverdate)
+                                tprint('Added discoverdate from name [' +
+                                       alias + ']: ' + discoverdate)
                             source = catalog.entries[name].add_self_source()
                             catalog.entries[name].add_quantity(
                                 SUPERNOVA.DISCOVER_DATE,
@@ -186,9 +186,10 @@ def do_cleanup(catalog):
                         decstr = nops[1]
                         ra = ':'.join([rastr[:2], rastr[2:4], rastr[4:6]]) + \
                             ('.' + rastr[6:] if len(rastr) > 6 else '')
-                        dec = (decsign + ':'.join(
-                            [decstr[:2], decstr[2:4], decstr[4:6]]) +
-                               ('.' + decstr[6:] if len(decstr) > 6 else ''))
+                        dec = (
+                            decsign + ':'.join(
+                                [decstr[:2], decstr[2:4], decstr[4:6]]) +
+                            ('.' + decstr[6:] if len(decstr) > 6 else ''))
                         if catalog.args.verbose:
                             tprint('Added ra/dec from name: ' + ra + ' ' + dec)
                         source = catalog.entries[name].add_self_source()
@@ -216,7 +217,7 @@ def do_cleanup(catalog):
                     result = IrsaDust.get_query_table(ra_dec, section='ebv')
                 except (KeyboardInterrupt, SystemExit):
                     raise
-                except:
+                except Exception:
                     warnings.warn("Coordinate lookup for " + name +
                                   " failed in IRSA.")
                 else:
@@ -329,10 +330,11 @@ def do_cleanup(catalog):
                 sources = uniq_cdl([source] + bestsrc.split(','))
                 bestldz = z_at_value(cosmo.luminosity_distance,
                                      float(bestld) * un.Mpc)
-                pnum = (float(catalog.entries[name][SUPERNOVA.MAX_APP_MAG][0][
-                    QUANTITY.VALUE]) - 5.0 *
-                        (log10(float(bestld) * 1.0e6) - 1.0
-                         ) + 2.5 * log10(1.0 + bestldz))
+                pnum = (
+                    float(catalog.entries[name][SUPERNOVA.MAX_APP_MAG][0][
+                        QUANTITY.VALUE]) - 5.0 *
+                    (log10(float(bestld) * 1.0e6) - 1.0
+                     ) + 2.5 * log10(1.0 + bestldz))
                 pnum = pretty_num(pnum, sig=bestsig + 1)
                 catalog.entries[name].add_quantity(
                     SUPERNOVA.MAX_ABS_MAG, pnum, sources, derived=True)
@@ -351,9 +353,10 @@ def do_cleanup(catalog):
                 source = catalog.entries[name].add_self_source()
                 sources = uniq_cdl([source] + bestsrc.split(','))
                 # FIX: what's happening here?!
-                pnum = (float(catalog.entries[name][
-                    SUPERNOVA.MAX_VISUAL_APP_MAG][0][QUANTITY.VALUE]) - 5.0 *
-                        (log10(float(bestld) * 1.0e6) - 1.0))
+                pnum = (
+                    float(catalog.entries[name][
+                        SUPERNOVA.MAX_VISUAL_APP_MAG][0][QUANTITY.VALUE]) -
+                    5.0 * (log10(float(bestld) * 1.0e6) - 1.0))
                 pnum = pretty_num(pnum, sig=bestsig + 1)
                 catalog.entries[name].add_quantity(
                     SUPERNOVA.MAX_VISUAL_ABS_MAG, pnum, sources, derived=True)
@@ -364,7 +367,7 @@ def do_cleanup(catalog):
             if bestsig > 0:
                 try:
                     bestz = float(bestz)
-                except:
+                except Exception:
                     print(catalog.entries[name])
                     raise
                 if SUPERNOVA.VELOCITY not in catalog.entries[name]:
@@ -396,8 +399,8 @@ def do_cleanup(catalog):
                             kind=(SUPERNOVA.LUM_DIST.kind_preference[bestkind]
                                   if bestkind else ''),
                             derived=True)
-                        if (SUPERNOVA.MAX_ABS_MAG not in catalog.entries[name]
-                                and SUPERNOVA.MAX_APP_MAG in
+                        if (SUPERNOVA.MAX_ABS_MAG not in
+                            catalog.entries[name] and SUPERNOVA.MAX_APP_MAG in
                                 catalog.entries[name]):
                             source = catalog.entries[name].add_self_source()
                             pnum = pretty_num(
@@ -448,7 +451,7 @@ def do_cleanup(catalog):
             if bestsig > 0:
                 try:
                     bestz = float(bestz)
-                except:
+                except Exception:
                     print(catalog.entries[name])
                     raise
                 if SUPERNOVA.HOST_VELOCITY not in catalog.entries[name]:
@@ -517,7 +520,7 @@ def do_cleanup(catalog):
                     unit=(un.hourangle, un.deg))
             except (KeyboardInterrupt, SystemExit):
                 raise
-            except:
+            except Exception:
                 pass
             else:
                 sources = uniq_cdl(

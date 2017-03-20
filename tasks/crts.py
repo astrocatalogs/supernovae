@@ -1,5 +1,4 @@
-"""Import tasks for the Catalina Real-Time Transient Survey.
-"""
+"""Import tasks for the Catalina Real-Time Transient Survey."""
 import os
 import re
 
@@ -13,6 +12,7 @@ from ..supernova import SUPERNOVA
 
 
 def do_crts(catalog):
+    """Import data from the Catalina Real-Time Transient Survey."""
     crtsnameerrors = ['2011ax']
     task_str = catalog.get_current_task_str()
     folders = ['catalina', 'MLS', 'MLS', 'SSS']
@@ -92,9 +92,9 @@ def do_crts(catalog):
 
             if not name:
                 name = crtsname
-            name = catalog.add_entry(name)
-            source = catalog.entries[name].add_source(
-                name='Catalina Sky Survey', bibcode='2009ApJ...696..870D',
+            name, source = catalog.new_entry(
+                name, srcname='Catalina Sky Survey',
+                bibcode='2009ApJ...696..870D',
                 url='http://nesssi.cacr.caltech.edu/catalina/AllSN.html')
             catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
             for alias in validaliases:
@@ -104,6 +104,9 @@ def do_crts(catalog):
                 SUPERNOVA.RA, ra.strip(), source, u_value='floatdegrees')
             catalog.entries[name].add_quantity(
                 SUPERNOVA.DEC, dec.strip(), source, u_value='floatdegrees')
+            if SUPERNOVA.CLAIMED_TYPE not in catalog.entries[name]:
+                catalog.entries[name].add_quantity(
+                    SUPERNOVA.CLAIMED_TYPE, 'Candidate', source)
 
             if hostmag:
                 # 1.0 magnitude error based on Drake 2009 assertion that SN are
