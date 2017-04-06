@@ -76,8 +76,10 @@ def do_ucb_photo(catalog):
             phottxt.splitlines(), delimiter=' ', skipinitialspace=True)
 
         for rr, row in enumerate(tsvin):
-            if len(row) > 0 and row[0] == "#":
+            if not len(row) > 0 or row[0] == "#":
                 continue
+            if 'DOCTYPE' in ''.join(row):
+                break
             photodict = {
                 PHOTOMETRY.TIME: row[0],
                 PHOTOMETRY.U_TIME: 'MJD',
