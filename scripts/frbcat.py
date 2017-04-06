@@ -163,7 +163,7 @@ for item1 in tqdm(frbcatalog):
         exactstr = 'a close'
 
         distdeg = distdegs[i2]
-        if distdeg < 40.0 * (poserr1 + poserr2):
+        if distdeg < 4.0 * (poserr1 + poserr2):
             if discyear1 and discyear2:
                 if discyear1 and discyear2:
                     discdiffyear = discyear1 - discyear2
