@@ -11,7 +11,7 @@ from astropy import units as un
 from astropy.cosmology import Planck15 as cosmo
 from astropy.cosmology import z_at_value
 
-from cdecimal import Decimal
+from decimal import Decimal
 
 from ..supernova import SUPERNOVA
 from ..utils import host_clean, name_clean

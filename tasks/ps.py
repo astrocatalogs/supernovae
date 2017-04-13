@@ -65,7 +65,7 @@ def do_ps_alerts(catalog):
                          'ps1-clean/whitelist')) as f:
         whitelist = list(csv.reader(f, delimiter=' ', skipinitialspace=True))
     wlnames = [x[0] for x in whitelist]
-    wlnamesleft = wlnames.copy()
+    wlnamesleft = list(wlnames)
     wlra = [x[1] for x in whitelist]
     missing_confirmed = []
     # already_collected = []

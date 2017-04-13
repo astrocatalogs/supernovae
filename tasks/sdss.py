@@ -10,7 +10,7 @@ from astropy.time import Time as astrotime
 from astrocats.catalog.photometry import PHOTOMETRY
 from astrocats.catalog.quantity import QUANTITY
 from astrocats.catalog.utils import make_date_string, pbar, pbar_strings
-from cdecimal import Decimal
+from decimal import Decimal
 
 from ..supernova import SUPERNOVA
 

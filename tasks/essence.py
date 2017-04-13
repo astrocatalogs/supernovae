@@ -11,7 +11,7 @@ from astrocats.catalog.spectrum import SPECTRUM
 from astrocats.catalog.utils import is_number, pbar, pbar_strings
 from astropy.time import Time as astrotime
 
-from cdecimal import Decimal
+from decimal import Decimal
 
 from ..supernova import SUPERNOVA
 

@@ -6,7 +6,7 @@ from glob import glob
 
 from astrocats.catalog.utils import jd_to_mjd, pbar_strings
 
-from cdecimal import Decimal
+from decimal import Decimal
 
 from ..supernova import SUPERNOVA
 from ..utils import clean_snname

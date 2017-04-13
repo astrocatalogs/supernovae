@@ -6,7 +6,7 @@ import re
 from astrocats.catalog.utils import is_number, jd_to_mjd, pbar, uniq_cdl
 from bs4 import BeautifulSoup, NavigableString, Tag
 
-from cdecimal import Decimal
+from decimal import Decimal
 
 from ..supernova import SUPERNOVA
 

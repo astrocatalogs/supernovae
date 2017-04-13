@@ -11,7 +11,7 @@ from astrocats.catalog.utils import (convert_aq_output, get_sig_digits,
                                      pbar, rep_chars, round_sig, uniq_cdl)
 from astropy.time import Time as astrotime
 from astroquery.vizier import Vizier
-from cdecimal import Decimal
+from decimal import Decimal
 
 from ..constants import CLIGHT, KM
 from ..supernova import SUPERNOVA

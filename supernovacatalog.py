@@ -24,7 +24,7 @@ class SupernovaCatalog(Catalog):
 
         def __init__(self, catalog):
             """Initialize paths."""
-            super().__init__(catalog)
+            super(SupernovaCatalog.PATHS, self).__init__(catalog)
             # auxiliary datafiles
             self.TYPE_SYNONYMS = os.path.join(
                 self.PATH_INPUT, 'type-synonyms.json')
@@ -67,7 +67,7 @@ class SupernovaCatalog(Catalog):
     def __init__(self, args, log):
         """Initialize catalog."""
         # Initialize super `astrocats.catalog.catalog.Catalog` object
-        super().__init__(args, log)
+        super(SupernovaCatalog, self).__init__(args, log)
         self.proto = Supernova
         self._load_aux_data()
         return
@@ -78,7 +78,7 @@ class SupernovaCatalog(Catalog):
         An entry would be buried if it does not belong to the class of object
         associated with the given catalog.
         """
-        (bury_entry, save_entry) = super().should_bury(name)
+        (bury_entry, save_entry) = super(SupernovaCatalog, self).should_bury(name)
 
         ct_val = None
         if name.startswith(tuple(self.nonsneprefixes_dict)):

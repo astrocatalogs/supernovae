@@ -6,7 +6,7 @@ from astrocats.catalog.utils import is_number, pbar
 from astrocats.catalog.photometry import PHOTOMETRY
 from bs4 import BeautifulSoup
 
-from cdecimal import Decimal
+from decimal import Decimal
 
 from ..supernova import SUPERNOVA
 

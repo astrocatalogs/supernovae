@@ -10,7 +10,7 @@ from html import unescape
 from astrocats.catalog.utils import jd_to_mjd, pbar, uniq_cdl
 from astrocats.catalog.photometry import PHOTOMETRY
 
-from cdecimal import Decimal
+from decimal import Decimal
 
 from ..supernova import SUPERNOVA
 

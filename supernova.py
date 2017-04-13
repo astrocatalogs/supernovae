@@ -2,6 +2,7 @@
 """
 import warnings
 from collections import OrderedDict
+from decimal import Decimal
 
 import numpy as np
 from astrocats.catalog.entry import ENTRY, Entry
@@ -14,8 +15,7 @@ from astrocats.catalog.utils import (bib_priority, get_sig_digits,
                                      jd_to_mjd, listify, make_date_string,
                                      pretty_num, uniq_cdl)
 from astropy.time import Time as astrotime
-
-from cdecimal import Decimal
+from six import string_types
 
 from .constants import MAX_VISUAL_BANDS
 from .utils import frame_priority, host_clean, radec_clean
@@ -51,7 +51,7 @@ class Supernova(Entry):
     _KEYS = SUPERNOVA
 
     def __init__(self, catalog, name, stub=False):
-        super().__init__(catalog, name, stub=stub)
+        super(Supernova, self).__init__(catalog, name, stub=stub)
         return
 
     def _append_additional_tags(self, name, sources, quantity):
@@ -185,7 +185,8 @@ class Supernova(Entry):
                      source,
                      forcereplacebetter=False,
                      **kwargs):
-        success = super().add_quantity(quantities, value, source, **kwargs)
+        success = super(Supernova, self).add_quantity(
+            quantities, value, source, **kwargs)
 
         if not success:
             return
@@ -320,7 +321,7 @@ class Supernova(Entry):
                     if (cleaned_value.startswith('SN') and
                             is_integer(cleaned_value[2:6]) and
                             int(cleaned_value[2:6]) >= 2016):
-                        success = super().add_quantity(
+                        success = super(Supernova, self).add_quantity(
                             SUPERNOVA.ALIAS, 'AT' + cleaned_value[2:], source,
                             **kwargs)
 
@@ -378,7 +379,7 @@ class Supernova(Entry):
                     kwargs[SOURCE.URL] = rep
                     break
 
-        return super().add_source(**kwargs)
+        return super(Supernova, self).add_source(**kwargs)
 
     def priority_prefixes(self):
         """Prefixes to given priority to when merging duplicate entries.
@@ -433,7 +434,7 @@ class Supernova(Entry):
         return outdir, filename
 
     def sanitize(self):
-        super().sanitize()
+        super(Supernova, self).sanitize()
 
         # Calculate some columns based on imported data, sanitize some fields
         name = self[self._KEYS.NAME]
@@ -595,12 +596,12 @@ class Supernova(Entry):
         if dist_key in data:
             distincts = data.pop(dist_key)
             if ((isinstance(distincts, list) and
-                 isinstance(distincts[0], str))):
+                 isinstance(distincts[0], string_types))):
                 source = self.add_self_source()
                 for df in distincts:
                     self.add_quantity(self._KEYS.DISTINCT_FROM, df, source)
             else:
-                data[dist_key] = distincts.copy()
+                data[dist_key] = list(distincts)
 
         # Go through all remaining keys in 'dirty' event, and make sure
         # everything is a quantity with a source (OSC if no other)

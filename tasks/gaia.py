@@ -6,7 +6,7 @@ import re
 
 from astrocats.catalog.utils import jd_to_mjd, pbar
 
-from cdecimal import Decimal
+from decimal import Decimal
 
 from ..supernova import SUPERNOVA
 

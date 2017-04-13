@@ -14,7 +14,7 @@ from bs4 import BeautifulSoup
 
 from astrocats.catalog.utils import (get_sig_digits, is_number, jd_to_mjd,
                                      pbar, pbar_strings, pretty_num, uniq_cdl)
-from cdecimal import Decimal
+from decimal import Decimal
 
 from ..supernova import SUPERNOVA
 

@@ -7,7 +7,7 @@ from glob import glob
 from bs4 import BeautifulSoup
 
 from astrocats.catalog.utils import pbar, pbar_strings
-from cdecimal import Decimal
+from decimal import Decimal
 
 from ..supernova import SUPERNOVA
 

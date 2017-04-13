@@ -12,7 +12,7 @@ from astropy.time import Time as astrotime
 from astrocats.catalog.photometry import PHOTOMETRY
 from astrocats.catalog.spectrum import SPECTRUM
 from astrocats.catalog.utils import jd_to_mjd, pbar_strings
-from cdecimal import Decimal
+from decimal import Decimal
 
 from ..supernova import SUPERNOVA, Supernova
 

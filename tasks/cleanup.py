@@ -12,7 +12,7 @@ from astropy.coordinates import SkyCoord as coord
 from astropy.cosmology import Planck15 as cosmo
 from astropy.cosmology import z_at_value
 
-from cdecimal import Decimal
+from decimal import Decimal
 
 from ..constants import CLIGHT, KM
 from ..supernova import SUPERNOVA
@@ -24,7 +24,7 @@ def do_cleanup(catalog):
 
     # Set preferred names, calculate some columns based on imported data,
     # sanitize some fields
-    keys = catalog.entries.copy().keys()
+    keys = list(catalog.entries.keys())
 
     cleanupcnt = 0
     for oname in pbar(keys, task_str):

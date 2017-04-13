@@ -10,7 +10,7 @@ from astrocats.catalog.utils import (is_number, jd_to_mjd, pbar, pbar_strings,
                                      uniq_cdl)
 from astropy.time import Time as astrotime
 
-from cdecimal import Decimal
+from decimal import Decimal
 
 from ..supernova import SUPERNOVA
 from ..utils import clean_snname

@@ -1,7 +1,7 @@
 '''Utility functions related to comparing quanta to one another to determine if
 they are unique.
 '''
-from cdecimal import Decimal
+from decimal import Decimal
 
 __all__ = ['same_tag_num', 'same_tag_str']
 
