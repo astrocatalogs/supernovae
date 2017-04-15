@@ -20,10 +20,36 @@ from ..supernova import SUPERNOVA
 
 
 def do_ascii(catalog):
-    """Process ASCII files that were extracted from datatables appearing in
-    published works.
-    """
+    """Process ASCII files extracted from datatables of published works."""
     task_str = catalog.get_current_task_str()
+
+    # 2015MNRAS.452.4307P
+    datafile = os.path.join(catalog.get_current_task_repo(), 'ASCII',
+                            '2015MNRAS.452.4307P.tsv')
+    tsvin = list(
+        csv.reader(
+            open(datafile, 'r'), delimiter='\t', skipinitialspace=True))
+    name, source = catalog.new_entry(
+        'SN2013dy', bibcode='2015MNRAS.452.4307P')
+    for row in pbar(tsvin, task_str):
+        if row[0].startswith('#'):
+            instrument = row[0].strip('#')
+            bands = row[1:]
+            continue
+        for bi, band in enumerate(bands):
+            if row[bi + 1].strip() == '–':
+                continue
+            mag, err = tuple([x.strip() for x in row[bi + 1].split('±')])
+            photodict = {
+                PHOTOMETRY.TIME: row[0],
+                PHOTOMETRY.U_TIME: 'MJD',
+                PHOTOMETRY.MAGNITUDE: mag,
+                PHOTOMETRY.E_MAGNITUDE: err,
+                PHOTOMETRY.BAND: band,
+                PHOTOMETRY.INSTRUMENT: instrument,
+                PHOTOMETRY.SOURCE: source
+            }
+            catalog.entries[name].add_photometry(**photodict)
 
     # 2016MNRAS.461.2003Y
     path = os.path.join(catalog.get_current_task_repo(), 'ASCII',
