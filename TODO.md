@@ -18,7 +18,6 @@ Other multiple SN datasets:
 * http://adsabs.harvard.edu/abs/1990Ap&SS.169..275R (spectra for 1987N, 1988Y, 1988D, 1989D)
 * http://adsabs.harvard.edu/abs/1997AJ....114.2054A (spectra for 1995al, 1997Y, 1997bp)
 * http://adsabs.harvard.edu/abs/1999AJ....117..725F (spectra for 1979C, 1980K)
-* http://adsabs.harvard.edu/abs/2006ApJ...645..841N (five SNLS LCs)
 * http://adsabs.harvard.edu/abs/2014A%26A...568A..19C (SN2013ez, SN2013fu, missing t0)
 * http://adsabs.harvard.edu/abs/2016arXiv160105955F (Late-time Iax spectra)
 * http://adsabs.harvard.edu/abs/2015arXiv151201303C (radio upper limits for Ibc SNe)
