@@ -120,7 +120,8 @@ def do_vizier(catalog):
                 if row.get('l_' + bandtag, '') == '>':
                     photodict[PHOTOMETRY.UPPER_LIMIT] = True
                 else:
-                    photodict[PHOTOMETRY.E_MAGNITUDE] = row['e_' + bandtag]
+                    photodict[PHOTOMETRY.E_MAGNITUDE] = str(Decimal(
+                        '0.01') * Decimal(row['e_' + bandtag]))
                 catalog.entries[name].add_photometry(**photodict)
     catalog.journal_entries()
 
