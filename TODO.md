@@ -135,7 +135,7 @@ Other single SN datasets:
 * SN2013ab - http://adsabs.harvard.edu/abs/2015MNRAS.450.2373B
 * SN2013am - http://adsabs.harvard.edu/abs/2014ApJ...797....5Z
 * SN2013cq - http://adsabs.harvard.edu/abs/2014A%26A...567A..29M
-* SN2013cu - http://adsabs.harvard.edu/abs/2014Natur.509..471G
+* SN2013cu - http://adsabs.harvard.edu/abs/2014Natur.509..471G (Photometry only in plot form)
 * SN2013df - http://adsabs.harvard.edu/abs/2014MNRAS.445.1647M, http://adsabs.harvard.edu/abs/2015ApJ...803...40B, http://adsabs.harvard.edu/abs/2015ApJ...807...35M
 * SN2013ej - http://adsabs.harvard.edu/abs/2015arXiv150901721D, http://adsabs.harvard.edu/abs/2015ApJ...807...59H
 * SN2013hx - Inserra+ 2013 in prep.?
