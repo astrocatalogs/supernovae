@@ -75,6 +75,26 @@
 		"edit":false
 	},
 	{
+		"name1":"SN1994J",
+		"aliases1":[
+			"SN1994J",
+			"2MASS J10013669+5434561"
+		],
+		"name2":"PS17ccp",
+		"aliases2":[
+			"PS17ccp",
+			"AT2017cwa"
+		],
+		"ra1":"10:01:36.69",
+		"dec1":"+54:34:56.1",
+		"ra2":"10:01:37.01",
+		"dec2":"+54:34:56.46",
+		"distdeg":"2.80495608484",
+		"maxdiffyear":"0.07777777777755546",
+		"discdiffyear":"23.078758327777678",
+		"edit":false
+	},
+	{
 		"name1":"SN1998T",
 		"aliases1":[
 			"SN1998T",
@@ -2204,27 +2224,6 @@
 		"edit":false
 	},
 	{
-		"name1":"AT2016ioi",
-		"aliases1":[
-			"AT2016ioi",
-			"ATLAS16dyg",
-			"Gaia16cdc",
-			"PS16fkh"
-		],
-		"name2":"MLS170323:095455+361503",
-		"aliases2":[
-			"MLS170323:095455+361503"
-		],
-		"ra1":"09:54:55.36",
-		"dec1":"+36:15:03.10",
-		"ra2":"09:54:55.44",
-		"dec2":"+36:15:02.88",
-		"distdeg":"0.992415370494",
-		"maxdiffyear":"",
-		"discdiffyear":"0.5822388750002574",
-		"edit":false
-	},
-	{
 		"name1":"AT2016jbg",
 		"aliases1":[
 			"AT2016jbg"
@@ -2297,22 +2296,22 @@
 		"edit":false
 	},
 	{
-		"name1":"SN2016jft",
+		"name1":"PS15cej",
 		"aliases1":[
-			"SN2016jft",
-			"AT2016jft"
+			"PS15cej"
 		],
-		"name2":"Gaia17awn",
+		"name2":"Gaia17azf",
 		"aliases2":[
-			"Gaia17awn"
+			"Gaia17azf",
+			"AT2017cyx"
 		],
-		"ra1":"09:43:55.87",
-		"dec1":"+41:41:17.82",
-		"ra2":"09:43:55.92",
-		"dec2":"+41:41:17.52",
-		"distdeg":"0.635366620964",
-		"maxdiffyear":"0.24722222222203527",
-		"discdiffyear":"0.24708333333319388",
+		"ra1":"09:35:19.41",
+		"dec1":"+10:11:50.7",
+		"ra2":"09:35:19.56",
+		"dec2":"+10:11:53.45",
+		"distdeg":"3.53076660641",
+		"maxdiffyear":"1.5277777777778283",
+		"discdiffyear":"1.5254333194445735",
 		"edit":false
 	},
 	{
@@ -2551,24 +2550,6 @@
 		"distdeg":"6.19367148933",
 		"maxdiffyear":"",
 		"discdiffyear":"0.019444444444388864",
-		"edit":false
-	},
-	{
-		"name1":"SN2015ce",
-		"aliases1":[
-			"SN2015ce"
-		],
-		"name2":"PSN J22412689+3917220",
-		"aliases2":[
-			"PSN J22412689+3917220"
-		],
-		"ra1":"22:41:26.89",
-		"dec1":"+39:17:22.00",
-		"ra2":"22:41:26.89",
-		"dec2":"+39:17:22.0",
-		"distdeg":"0.0",
-		"maxdiffyear":"",
-		"discdiffyear":"0.00018608527784635953",
 		"edit":false
 	},
 	{

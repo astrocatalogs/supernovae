@@ -1,4 +1,4 @@
-#!/usr/local/bin/python3.5
+#!/usr/local/bin/python
 import json
 import os
 import re
