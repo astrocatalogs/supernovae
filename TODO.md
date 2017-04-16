@@ -128,13 +128,12 @@ Other single SN datasets:
 * SN2011fe - http://adsabs.harvard.edu/abs/2013ApJ...762L...5S, http://adsabs.harvard.edu/abs/2013ApJ...767..119M
 * SN2011ht - http://adsabs.harvard.edu/abs/2013MNRAS.431.2599M
 * SN2011kl - http://adsabs.harvard.edu/abs/2015Natur.523..189G
-* PTF11iqb - http://adsabs.harvard.edu/abs/2015MNRAS.449.1876S
+* PTF11iqb - http://adsabs.harvard.edu/abs/2015MNRAS.449.1876S (Photometry available)
 * PS1-11ap - http://mnras.oxfordjournals.org/content/437/1/656.full (Missing spectra)
-* SN2012ap - http://adsabs.harvard.edu/abs/2015RAA....15..225L
+* SN2012ap - http://adsabs.harvard.edu/abs/2015RAA....15..225L (Article in weird journal)
 * SN2012au - http://adsabs.harvard.edu/abs/2013ApJ...770L..38M, http://adsabs.harvard.edu/abs/2013ApJ...772L..17T
 * SN2012aw - http://adsabs.harvard.edu/abs/2013MNRAS.433.1871B, http://adsabs.harvard.edu/abs/2014ApJ...787..139D
-* SN2012bz - http://www.aanda.org/articles/aa/full_html/2014/06/aa23387-14/aa23387-14.html
-* SN2012dn - http://adsabs.harvard.edu/abs/2014MNRAS.443.1663C
+* SN2012bz - http://www.aanda.org/articles/aa/full_html/2014/06/aa23387-14/aa23387-14.html (Photometry table needs hand-digitization.)
 * SN2013df - http://adsabs.harvard.edu/abs/2014MNRAS.445.1647M, http://adsabs.harvard.edu/abs/2015ApJ...803...40B, http://adsabs.harvard.edu/abs/2015ApJ...807...35M
 * SN2013ej - http://adsabs.harvard.edu/abs/2015arXiv150901721D, http://adsabs.harvard.edu/abs/2015ApJ...807...59H
 * SN2014J - http://adsabs.harvard.edu/abs/2014ApJ...795L...4K, http://adsabs.harvard.edu/abs/2014ApJ...784L..12G, http://adsabs.harvard.edu/abs/2015ApJ...804...66V, http://adsabs.harvard.edu/abs/2015ApJ...798...93T, http://adsabs.harvard.edu/abs/2015ApJ...798...39M, http://adsabs.harvard.edu/abs/2015MNRAS.451.4104J, http://adsabs.harvard.edu/abs/2016MNRAS.457.1000S
