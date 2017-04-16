@@ -23,6 +23,162 @@ def do_ascii(catalog):
     """Process ASCII files extracted from datatables of published works."""
     task_str = catalog.get_current_task_str()
 
+    # 2014MNRAS.443.1663C
+    datafile = os.path.join(catalog.get_current_task_repo(), 'ASCII',
+                            '2014MNRAS.443.1663C.tsv')
+    tsvin = list(
+        csv.reader(
+            open(datafile, 'r'), delimiter='\t', skipinitialspace=True))
+    name, source = catalog.new_entry(
+        'SN2012dn', bibcode='2014MNRAS.443.1663C')
+    for row in pbar(tsvin, task_str):
+        if row[0].startswith('#'):
+            bands = row[1:]
+            continue
+        for bi, band in enumerate(bands):
+            if row[bi + 1].strip() == '-':
+                continue
+            mag, err = tuple([x.strip() for x in row[bi + 1].split('±')])
+            photodict = {
+                PHOTOMETRY.TIME: jd_to_mjd(Decimal(row[0])),
+                PHOTOMETRY.U_TIME: 'MJD',
+                PHOTOMETRY.MAGNITUDE: mag,
+                PHOTOMETRY.E_MAGNITUDE: err,
+                PHOTOMETRY.BAND: band,
+                PHOTOMETRY.SOURCE: source
+            }
+            catalog.entries[name].add_photometry(**photodict)
+
+    # 2015ApJ...811...52A
+    datafile = os.path.join(catalog.get_current_task_repo(), 'ASCII',
+                            '2015ApJ...811...52A.tsv')
+    tsvin = list(
+        csv.reader(
+            open(datafile, 'r'), delimiter='\t', skipinitialspace=True))
+    name, source = catalog.new_entry(
+        'PTF12csy', bibcode='2015ApJ...811...52A')
+    for row in pbar(tsvin, task_str):
+        if row[0].startswith('#'):
+            continue
+        mag = row[1]
+        if mag == '-':
+            continue
+        mag, err = tuple([x.strip() for x in mag.split('±')])
+        photodict = {
+            PHOTOMETRY.TIME: row[0],
+            PHOTOMETRY.U_TIME: 'MJD',
+            PHOTOMETRY.MAGNITUDE: mag,
+            PHOTOMETRY.E_MAGNITUDE: err,
+            PHOTOMETRY.BAND: row[-2],
+            PHOTOMETRY.TELESCOPE: row[-1],
+            PHOTOMETRY.SOURCE: source
+        }
+        catalog.entries[name].add_photometry(**photodict)
+
+    # 2015MNRAS.450.2373B
+    datafile = os.path.join(catalog.get_current_task_repo(), 'ASCII',
+                            '2015MNRAS.450.2373B.tsv')
+    tsvin = list(
+        csv.reader(
+            open(datafile, 'r'), delimiter='\t', skipinitialspace=True))
+    name, source = catalog.new_entry(
+        'SN2013ab', bibcode='2015MNRAS.450.2373B')
+    telkey = {
+        '1': 'ST/DFOT',
+        '2': 'Faulkes Telescope South',
+        '3': 'Faulkes Telescope North',
+        '5': '1-m LCOGT',
+        '6': 'IAUC'
+    }
+    for row in pbar(tsvin, task_str):
+        if row[0].startswith('#'):
+            bands = row[1:]
+            continue
+        for bi, band in enumerate(bands):
+            if row[bi + 1].strip() == '–':
+                continue
+            photodict = {
+                PHOTOMETRY.TIME: jd_to_mjd(Decimal(row[0])),
+                PHOTOMETRY.U_TIME: 'MJD',
+                PHOTOMETRY.BAND: band,
+                PHOTOMETRY.TELESCOPE: '/'.join(
+                    [telkey[x] for x in row[-1].strip().split(',')]),
+                PHOTOMETRY.SOURCE: source
+            }
+            if '>' in row[bi + 1]:
+                mag = row[bi + 1].strip('>')
+                photodict[PHOTOMETRY.UPPER_LIMIT] = True
+            else:
+                magerr = tuple([x.strip() for x in row[bi + 1].split('±')])
+                if len(magerr) == 2:
+                    mag, err = magerr
+                    photodict[PHOTOMETRY.E_MAGNITUDE] = err
+                else:
+                    mag = magerr[0]
+            photodict[PHOTOMETRY.MAGNITUDE] = mag
+            catalog.entries[name].add_photometry(**photodict)
+
+    # 2014ApJ...797....5Z
+    datafile = os.path.join(catalog.get_current_task_repo(), 'ASCII',
+                            '2014ApJ...797....5Z.tsv')
+    tsvin = list(
+        csv.reader(
+            open(datafile, 'r'), delimiter='\t', skipinitialspace=True))
+    name, source = catalog.new_entry(
+        'SN2013am', bibcode='2014ApJ...797....5Z')
+    for row in pbar(tsvin, task_str):
+        if row[0].startswith('#'):
+            bands = row[1:]
+            continue
+        telescope = row[-1]
+        for bi, band in enumerate(bands):
+            if row[bi + 1].strip() == '-':
+                continue
+            mag, err = tuple([x.strip() for x in row[bi + 1].split('(')])
+            err = str(Decimal('0.01') * Decimal(err.strip(')')))
+            photodict = {
+                PHOTOMETRY.TIME: row[0],
+                PHOTOMETRY.U_TIME: 'MJD',
+                PHOTOMETRY.MAGNITUDE: mag,
+                PHOTOMETRY.E_MAGNITUDE: err,
+                PHOTOMETRY.BAND: band,
+                PHOTOMETRY.TELESCOPE: telescope,
+                PHOTOMETRY.SOURCE: source
+            }
+            catalog.entries[name].add_photometry(**photodict)
+
+    # 2015MNRAS.452..838L
+    datafile = os.path.join(catalog.get_current_task_repo(), 'ASCII',
+                            '2015MNRAS.452..838L.tsv')
+    tsvin = list(
+        csv.reader(
+            open(datafile, 'r'), delimiter='\t', skipinitialspace=True))
+    name, source = catalog.new_entry(
+        'SN2013en', bibcode='2015MNRAS.452..838L')
+    for row in pbar(tsvin, task_str):
+        if row[0].startswith('#'):
+            bands = row[1:]
+            continue
+        telescope, instrument = tuple(row[-2].split('+'))
+        observer = row[-1]
+        for bi, band in enumerate(bands):
+            if row[bi + 1].strip() == '–':
+                continue
+            mag, err = tuple([x.strip() for x in row[bi + 1].split('(')])
+            err = str(Decimal('0.01') * Decimal(err.strip(')')))
+            photodict = {
+                PHOTOMETRY.TIME: row[0],
+                PHOTOMETRY.U_TIME: 'MJD',
+                PHOTOMETRY.MAGNITUDE: mag,
+                PHOTOMETRY.E_MAGNITUDE: err,
+                PHOTOMETRY.BAND: band,
+                PHOTOMETRY.INSTRUMENT: instrument,
+                PHOTOMETRY.TELESCOPE: telescope,
+                PHOTOMETRY.OBSERVER: observer,
+                PHOTOMETRY.SOURCE: source
+            }
+            catalog.entries[name].add_photometry(**photodict)
+
     # 2015MNRAS.452.4307P
     datafile = os.path.join(catalog.get_current_task_repo(), 'ASCII',
                             '2015MNRAS.452.4307P.tsv')
