@@ -1,4 +1,4 @@
-#!/usr/local/bin/python3.5
+#!/usr/local/bin/python
 import gzip
 import json
 import math
@@ -23,14 +23,16 @@ dupes = []
 
 outdir = "astrocats/supernovae/output/"
 
+utmost = "astrocats/supernovae/scripts/UTMOST-FRBs.dat"
+
 files = repo_file_list(bones=False)
 
 newcatalog = []
 
 for fcnt, eventfile in enumerate(
         tqdm(sorted(files, key=lambda s: s.lower()))):
-    # if fcnt > 1000:
-    #    break
+    #if fcnt > 1000:
+    #   break
 
     if eventfile.split('.')[-1] == 'gz':
         with gzip.open(eventfile, 'rt') as f:
@@ -91,9 +93,55 @@ response = urllib.request.urlopen('http://www.astronomy.swin.edu.au/pulsar/frbca
 
 frbtxt = response.read().decode('utf-8').splitlines()
 
-frbtable = read(frbtxt, format='csv')
+with open(utmost, 'r') as f:
+    utmosttable = f.read().splitlines()
+
 frbcatalog = []
 frbnames = []
+utmostcoords = {}
+for row in utmosttable:
+    if row[0] == '#':
+        frbname = row[1:].strip()
+        utmostcoords[frbname] = []
+    else:
+        frbnames.append(frbname)
+        ra, dec, prob = row.split()
+        utmostcoords[frbname].append([float(ra), float(dec)])
+
+for frb in utmostcoords:
+    ras, decs = zip(*(utmostcoords[frbname]))
+
+    frbc1 = coord(ra=ras[0], dec=decs[0], unit=(un.hourangle, un.deg))
+    frbc2 = coord(ra=ras[-1], dec=decs[-1], unit=(un.hourangle, un.deg))
+    frblength = frbc1.separation(frbc2).arcsecond
+
+    nras = np.linspace(ras[0], ras[1], np.round(frblength/30.0))
+    ndecs = np.interp(nras, ras, decs)
+
+    ncoo = [nras, ndecs] 
+    for ra, dec in zip(*ncoo):
+        frbc = coord(ra=ra, dec=dec, unit=(un.hourangle, un.deg))
+        radecstr = frbc.to_string('hmsdms').replace('h', ':').replace('m', ':').replace('s', '').replace('d', ':').replace('+', '')
+        ra, dec = radecstr.split()
+        datesplit = '20' + frb[-6:-4], frb[-4:-2], frb[-2:]
+        if len(datesplit) >= 1:
+            discyear = float(datesplit[0])
+        if len(datesplit) >= 2:
+            discyear += float(datesplit[1]) / 12.
+        if len(datesplit) >= 3:
+            discyear += float(datesplit[2]) / (12. * 30.)
+        frbdict = {
+            'name': frb,
+            'alias': [frb],
+            'discyear': discyear,
+            'ra': ra,
+            'dec': dec,
+            'raerr': 30,
+            'decerr': 30
+        }
+        frbcatalog.append(frbdict)
+
+frbtable = read(frbtxt, format='csv')
 for row in frbtable:
     name = row[0]
     if name in frbnames:
@@ -106,7 +154,6 @@ for row in frbtable:
         discyear += float(datesplit[1]) / 12.
     if len(datesplit) >= 3:
         discyear += float(datesplit[2]) / (12. * 30.)
-    fcoo = coord(row[7], row[8], unit=(un.hourangle, un.deg))
     frbdict = {
         'name': name,
         'alias': [name],
@@ -157,6 +204,9 @@ for item1 in tqdm(frbcatalog):
         dec2 = item2['dec']
         poserr1 = math.hypot(item1['raerr'], item1['decerr'])
         poserr2 = math.hypot(item2['raerr'], item2['decerr'])
+
+        if poserr2 > 3000:
+            continue
 
         discdiffyear = ''
 

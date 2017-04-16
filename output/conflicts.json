@@ -41505,7 +41505,7 @@
 		"name":"OGLE-2015-SN-043",
 		"alias":[
 			{
-				"value":"MLS170405:144216+340239",
+				"value":"MLS170407:142044+392805",
 				"source":"2,3,4"
 			}
 		],
@@ -42222,97 +42222,6 @@
 		]
 	},
 	{
-		"name":"PS16acj",
-		"alias":[
-			{
-				"value":"PS16acj",
-				"source":"3,4,6"
-			},
-			{
-				"value":"AT2016aan",
-				"source":"3,4,5,6"
-			},
-			{
-				"value":"iPTF17aan",
-				"source":"1,3,5,6"
-			},
-			{
-				"value":"AT2017aan",
-				"source":"3"
-			}
-		],
-		"edit":false,
-		"quantity":"ra",
-		"difference":"0.7093",
-		"values":[
-			"13:05:19.35",
-			"13:05:19.36",
-			"07:39:26.28"
-		],
-		"sources":[
-			{
-				"id":"Transient Name Server",
-				"idtype":"name"
-			},
-			{
-				"id":"Pan-STARRS 3Pi,Latest Supernovae",
-				"idtype":"name,name"
-			},
-			{
-				"id":"Transient Name Server,ATel 10038,Latest Supernovae",
-				"idtype":"name,name,name"
-			}
-		]
-	},
-	{
-		"name":"PS16acj",
-		"alias":[
-			{
-				"value":"PS16acj",
-				"source":"3,4,6"
-			},
-			{
-				"value":"AT2016aan",
-				"source":"3,4,5,6"
-			},
-			{
-				"value":"iPTF17aan",
-				"source":"1,3,5,6"
-			},
-			{
-				"value":"AT2017aan",
-				"source":"3"
-			}
-		],
-		"edit":false,
-		"quantity":"dec",
-		"difference":"3.943",
-		"values":[
-			"+68:48:14.26",
-			"+68:48:14.2",
-			"+13:55:09.74",
-			"+13:55:09.76"
-		],
-		"sources":[
-			{
-				"id":"Transient Name Server",
-				"idtype":"name"
-			},
-			{
-				"id":"Pan-STARRS 3Pi,Latest Supernovae",
-				"idtype":"name,name"
-			},
-			{
-				"id":"Transient Name Server",
-				"idtype":"name"
-			},
-			{
-				"id":"ATel 10038,Latest Supernovae",
-				"idtype":"name,name"
-			}
-		]
-	},
-	{
 		"name":"PS16cww",
 		"alias":[
 			{
@@ -42842,120 +42751,6 @@
 			{
 				"id":"CBET 4170,Gaia Photometric Science Alerts,Latest Supernovae",
 				"idtype":"name,name,name"
-			}
-		]
-	},
-	{
-		"name":"SN2016acs",
-		"alias":[
-			{
-				"value":"SN2016acs",
-				"source":"1,4,5,6,7"
-			},
-			{
-				"value":"AT2016acs",
-				"source":"1,4,5,6,7"
-			},
-			{
-				"value":"PS16aer",
-				"source":"4,5,7"
-			},
-			{
-				"value":"Gaia17ahe",
-				"source":"4,6,7"
-			},
-			{
-				"value":"AT2017acs",
-				"source":"4"
-			}
-		],
-		"edit":false,
-		"quantity":"ra",
-		"difference":"0.3457",
-		"values":[
-			"10:54:58.20",
-			"10:54:58.19",
-			"16:41:05.43",
-			"16:41:05.428",
-			"16:41:05.52"
-		],
-		"sources":[
-			{
-				"id":"Transient Name Server",
-				"idtype":"name"
-			},
-			{
-				"id":"2016ATel.8663....1H,Pan-STARRS 3Pi,Latest Supernovae",
-				"idtype":"bibcode,name,name"
-			},
-			{
-				"id":"Transient Name Server",
-				"idtype":"name"
-			},
-			{
-				"id":"Gaia Photometric Science Alerts,Latest Supernovae",
-				"idtype":"name,name"
-			},
-			{
-				"id":"Gaia Photometric Science Alerts",
-				"idtype":"name"
-			}
-		]
-	},
-	{
-		"name":"SN2016acs",
-		"alias":[
-			{
-				"value":"SN2016acs",
-				"source":"1,4,5,6,7"
-			},
-			{
-				"value":"AT2016acs",
-				"source":"1,4,5,6,7"
-			},
-			{
-				"value":"PS16aer",
-				"source":"4,5,7"
-			},
-			{
-				"value":"Gaia17ahe",
-				"source":"4,6,7"
-			},
-			{
-				"value":"AT2017acs",
-				"source":"4"
-			}
-		],
-		"edit":false,
-		"quantity":"dec",
-		"difference":"1.309",
-		"values":[
-			"+14:16:17.79",
-			"+14:16:17.7",
-			"-46:14:57.26",
-			"-46:14:57.27",
-			"-46:14:57.12"
-		],
-		"sources":[
-			{
-				"id":"Transient Name Server",
-				"idtype":"name"
-			},
-			{
-				"id":"2016ATel.8663....1H,Pan-STARRS 3Pi,Latest Supernovae",
-				"idtype":"bibcode,name,name"
-			},
-			{
-				"id":"Transient Name Server",
-				"idtype":"name"
-			},
-			{
-				"id":"Gaia Photometric Science Alerts,Latest Supernovae",
-				"idtype":"name,name"
-			},
-			{
-				"id":"Gaia Photometric Science Alerts",
-				"idtype":"name"
 			}
 		]
 	},
@@ -44621,8 +44416,8 @@
 		"difference":"0.1128",
 		"values":[
 			0.148,
-			0.148,
-			0.133
+			0.133,
+			0.148
 		],
 		"sources":[
 			{
@@ -44630,12 +44425,12 @@
 				"idtype":"name"
 			},
 			{
-				"id":"Transient Name Server,Latest Supernovae,2012PASP..124..668Y",
-				"idtype":"name,name,bibcode"
-			},
-			{
 				"id":"Transient Name Server,Latest Supernovae",
 				"idtype":"name,name"
+			},
+			{
+				"id":"2012PASP..124..668Y",
+				"idtype":"bibcode"
 			}
 		]
 	},
