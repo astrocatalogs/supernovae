@@ -1,4 +1,3 @@
-#!/usr/local/bin/python
 
 import json
 import os
