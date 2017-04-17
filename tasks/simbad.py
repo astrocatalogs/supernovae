@@ -14,8 +14,8 @@ def do_simbad(catalog):
     # Some coordinates that SIMBAD claims belong to the SNe actually belong to
     # the host.
     task_str = catalog.get_current_task_str()
-    simbadmirrors = ['http://simbad.u-strasbg.fr/simbad/sim-script',
-                     'http://simbad.harvard.edu/simbad/sim-script']
+    simbadmirrors = ['http://simbad.harvard.edu/simbad/sim-script',
+                     'http://simbad.u-strasbg.fr/simbad/sim-script']
     simbadbadcoordbib = ['2013ApJ...770..107C']
     simbadbadtypebib = ['2014ApJ...796...87I', '2015MNRAS.448.1206M',
                         '2015ApJ...807L..18N']
@@ -29,13 +29,16 @@ def do_simbad(catalog):
     customSimbad.TIMEOUT = 120
     customSimbad.add_votable_fields('otype', 'sptype', 'sp_bibcode', 'id')
     table = []
+    print(customSimbad.SIMBAD_URL)
     for mirror in simbadmirrors:
         customSimbad.SIMBAD_URL = mirror
         try:
             table = customSimbad.query_criteria('maintype=SN | maintype="SN?"')
-        except:
+        except Exception:
             continue
         else:
+            if not table:
+                continue
             break
 
     if not table:
