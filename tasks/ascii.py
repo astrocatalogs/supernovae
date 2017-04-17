@@ -258,9 +258,9 @@ def do_ascii(catalog):
             photodict = {
                 PHOTOMETRY.TIME: row[1],
                 PHOTOMETRY.U_TIME: 'MJD',
-                PHOTOMETRY.COUNTS: c,
-                PHOTOMETRY.E_LOWER_COUNTS: lec,
-                PHOTOMETRY.E_UPPER_COUNTS: uec,
+                PHOTOMETRY.COUNT_RATE: c,
+                PHOTOMETRY.E_LOWER_COUNT_RATE: lec,
+                PHOTOMETRY.E_UPPER_COUNT_RATE: uec,
                 PHOTOMETRY.BAND: band,
                 PHOTOMETRY.TELESCOPE: tel,
                 PHOTOMETRY.SOURCE: source
@@ -304,8 +304,8 @@ def do_ascii(catalog):
             PHOTOMETRY.TIME: str(row['MJD']),
             PHOTOMETRY.BAND: row['Filter'],
             PHOTOMETRY.U_TIME: 'MJD',
-            PHOTOMETRY.COUNTS: c,
-            PHOTOMETRY.E_COUNTS: ec,
+            PHOTOMETRY.COUNT_RATE: c,
+            PHOTOMETRY.E_COUNT_RATE: ec,
             PHOTOMETRY.SOURCE: source
         }
         set_pd_mag_from_counts(photodict, c, ec=ec, zp=zp)
@@ -334,8 +334,8 @@ def do_ascii(catalog):
     #             jd_to_mjd(Decimal(row[0]) + Decimal('2454833')),
     #             PHOTOMETRY.BAND: 'Kepler',
     #             PHOTOMETRY.U_TIME: 'MJD',
-    #             PHOTOMETRY.COUNTS: counts,
-    #             PHOTOMETRY.E_COUNTS: e_counts,
+    #             PHOTOMETRY.COUNT_RATE: counts,
+    #             PHOTOMETRY.E_COUNT_RATE: e_counts,
     #             PHOTOMETRY.ZERO_POINT: zp,
     #             PHOTOMETRY.SOURCE: source
     #         }
@@ -625,8 +625,8 @@ def do_ascii(catalog):
                 PHOTOMETRY.BAND: band,
                 PHOTOMETRY.TIME: mjd,
                 PHOTOMETRY.U_TIME: 'MJD',
-                PHOTOMETRY.COUNTS: counts,
-                PHOTOMETRY.E_COUNTS: e_counts,
+                PHOTOMETRY.COUNT_RATE: counts,
+                PHOTOMETRY.E_COUNT_RATE: e_counts,
                 PHOTOMETRY.ZERO_POINT: zp,
                 PHOTOMETRY.SOURCE: source
             }
@@ -961,8 +961,8 @@ def do_ascii(catalog):
             PHOTOMETRY.INSTRUMENT: row[1][:-off],
             PHOTOMETRY.BAND: row[1][-off:],
             PHOTOMETRY.TIME: row[2],
-            PHOTOMETRY.COUNTS: counts,
-            PHOTOMETRY.E_COUNTS: e_counts,
+            PHOTOMETRY.COUNT_RATE: counts,
+            PHOTOMETRY.E_COUNT_RATE: e_counts,
             PHOTOMETRY.ZERO_POINT: zp,
             PHOTOMETRY.SOURCE: source
         }
