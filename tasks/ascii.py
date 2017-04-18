@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
-"""ASCII datafiles, often produced from LaTeX tables in the original papers,
+"""ASCII datafiles.
+
+Often produced from LaTeX tables in the original papers,
 but sometimes provided as supplementary datafiles on the journal webpages.
 """
 import csv
@@ -22,6 +24,36 @@ from ..supernova import SUPERNOVA
 def do_ascii(catalog):
     """Process ASCII files extracted from datatables of published works."""
     task_str = catalog.get_current_task_str()
+
+    # 2016ApJ...823..147C
+    datafile = os.path.join(catalog.get_current_task_repo(), 'ASCII',
+                            '2016ApJ...823..147C.csv')
+    tsvin = list(
+        csv.reader(
+            open(datafile, 'r'), delimiter=',', skipinitialspace=True))
+    name, src1 = catalog.new_entry(
+        'iPTF13asv', bibcode='2016ApJ...823..147C')
+    src2 = catalog.entries[name].add_source(bibcode='2012PASP..124..668Y')
+    source = ','.join([src1, src2])
+    for row in pbar(tsvin, task_str):
+        if row[0].startswith('#'):
+            continue
+        mag = row[1]
+        err = row[2]
+        photodict = {
+            PHOTOMETRY.TIME: row[0],
+            PHOTOMETRY.U_TIME: 'MJD',
+            PHOTOMETRY.MAGNITUDE: mag,
+            PHOTOMETRY.BAND: row[-2],
+            PHOTOMETRY.TELESCOPE: row[-1],
+            PHOTOMETRY.SOURCE: source
+        }
+        if err == '99':
+            photodict[PHOTOMETRY.UPPER_LIMIT] = True
+        else:
+            photodict[PHOTOMETRY.E_MAGNITUDE] = err
+        catalog.entries[name].add_photometry(**photodict)
+    catalog.journal_entries()
 
     # 2014MNRAS.443.1663C
     datafile = os.path.join(catalog.get_current_task_repo(), 'ASCII',
@@ -48,6 +80,7 @@ def do_ascii(catalog):
                 PHOTOMETRY.SOURCE: source
             }
             catalog.entries[name].add_photometry(**photodict)
+    catalog.journal_entries()
 
     # 2015ApJ...811...52A
     datafile = os.path.join(catalog.get_current_task_repo(), 'ASCII',
@@ -117,6 +150,7 @@ def do_ascii(catalog):
                     mag = magerr[0]
             photodict[PHOTOMETRY.MAGNITUDE] = mag
             catalog.entries[name].add_photometry(**photodict)
+    catalog.journal_entries()
 
     # 2014ApJ...797....5Z
     datafile = os.path.join(catalog.get_current_task_repo(), 'ASCII',
@@ -146,6 +180,7 @@ def do_ascii(catalog):
                 PHOTOMETRY.SOURCE: source
             }
             catalog.entries[name].add_photometry(**photodict)
+    catalog.journal_entries()
 
     # 2015MNRAS.452..838L
     datafile = os.path.join(catalog.get_current_task_repo(), 'ASCII',
@@ -178,6 +213,7 @@ def do_ascii(catalog):
                 PHOTOMETRY.SOURCE: source
             }
             catalog.entries[name].add_photometry(**photodict)
+    catalog.journal_entries()
 
     # 2015MNRAS.452.4307P
     datafile = os.path.join(catalog.get_current_task_repo(), 'ASCII',
@@ -206,6 +242,7 @@ def do_ascii(catalog):
                 PHOTOMETRY.SOURCE: source
             }
             catalog.entries[name].add_photometry(**photodict)
+    catalog.journal_entries()
 
     # 2016MNRAS.461.2003Y
     path = os.path.join(catalog.get_current_task_repo(), 'ASCII',

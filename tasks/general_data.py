@@ -1,18 +1,16 @@
 # -*- coding: utf-8 -*-
-"""General data import tasks.
-"""
+"""General data import tasks."""
 import json
 import os
 from collections import OrderedDict
+from decimal import Decimal
 from glob import glob
-
-from astropy.io import fits
-from astropy.time import Time as astrotime
 
 from astrocats.catalog.photometry import PHOTOMETRY
 from astrocats.catalog.spectrum import SPECTRUM
 from astrocats.catalog.utils import jd_to_mjd, pbar_strings
-from decimal import Decimal
+from astropy.io import fits
+from astropy.time import Time as astrotime
 
 from ..supernova import SUPERNOVA, Supernova
 
@@ -26,7 +24,7 @@ def do_external_radio(catalog):
         radiosourcedict = OrderedDict()
         with open(datafile, 'r') as ff:
             for li, line in enumerate(
-                [xx.strip() for xx in ff.read().splitlines()]):
+                    [xx.strip() for xx in ff.read().splitlines()]):
                 if line.startswith('(') and li <= len(radiosourcedict):
                     key = line.split()[0]
                     bibc = line.split()[-1]
@@ -44,16 +42,16 @@ def do_external_radio(catalog):
                         eflux = cols[4]
                         upp = False
                     photodict = {
-                        PHOTOMETRY.TIME:cols[0],
-                        PHOTOMETRY.FREQUENCY:cols[2],
-                        PHOTOMETRY.U_FREQUENCY:'GHz',
-                        PHOTOMETRY.FLUX_DENSITY:cols[3],
-                        PHOTOMETRY.E_FLUX_DENSITY:eflux,
-                        PHOTOMETRY.U_FLUX_DENSITY:'µJy',
-                        PHOTOMETRY.UPPER_LIMIT:upp,
-                        PHOTOMETRY.U_TIME:'MJD',
-                        PHOTOMETRY.INSTRUMENT:cols[5],
-                        PHOTOMETRY.SOURCE:source
+                        PHOTOMETRY.TIME: cols[0],
+                        PHOTOMETRY.FREQUENCY: cols[2],
+                        PHOTOMETRY.U_FREQUENCY: 'GHz',
+                        PHOTOMETRY.FLUX_DENSITY: cols[3],
+                        PHOTOMETRY.E_FLUX_DENSITY: eflux,
+                        PHOTOMETRY.U_FLUX_DENSITY: 'µJy',
+                        PHOTOMETRY.UPPER_LIMIT: upp,
+                        PHOTOMETRY.U_TIME: 'MJD',
+                        PHOTOMETRY.INSTRUMENT: cols[5],
+                        PHOTOMETRY.SOURCE: source
                     }
                     catalog.entries[name].add_photometry(**photodict)
                     catalog.entries[name].add_quantity(SUPERNOVA.ALIAS,
@@ -64,6 +62,7 @@ def do_external_radio(catalog):
 
 
 def do_external_xray(catalog):
+    """Import supernova X-ray data."""
     task_str = catalog.get_current_task_str()
     path_pattern = os.path.join(catalog.get_current_task_repo(), '*.txt')
     for datafile in pbar_strings(glob(path_pattern), task_str):
@@ -78,20 +77,22 @@ def do_external_xray(catalog):
                     continue
                 else:
                     cols = list(filter(None, line.split()))
-                    catalog.entries[name].add_photometry(
-                        time=cols[:2],
-                        u_time='MJD',
-                        energy=cols[2:4],
-                        u_energy='keV',
-                        counts=cols[4],
-                        flux=cols[6],
-                        unabsorbedflux=cols[8],
-                        u_flux='ergs/s/cm^2',
-                        photonindex=cols[15],
-                        instrument=cols[17],
-                        nhmw=cols[11],
-                        upperlimit=(float(cols[5]) < 0),
-                        source=source)
+                    photodict = {
+                        PHOTOMETRY.TIME: cols[:2],
+                        PHOTOMETRY.U_TIME: 'MJD',
+                        PHOTOMETRY.ENERGY: cols[2:4],
+                        PHOTOMETRY.U_ENERGY: 'keV',
+                        PHOTOMETRY.COUNT_RATE: cols[4],
+                        PHOTOMETRY.FLUX: cols[6],
+                        PHOTOMETRY.UNABSORBED_FLUX: cols[8],
+                        PHOTOMETRY.U_FLUX: 'ergs/s/cm^2',
+                        PHOTOMETRY.PHOTON_INDEX: cols[15],
+                        PHOTOMETRY.INSTRUMENT: cols[17],
+                        PHOTOMETRY.NHMW: cols[11],
+                        PHOTOMETRY.UPPER_LIMIT: (float(cols[5]) < 0),
+                        PHOTOMETRY.SOURCE: source
+                    }
+                    catalog.entries[name].add_photometry(**photodict)
                     catalog.entries[name].add_quantity(SUPERNOVA.ALIAS,
                                                        oldname, source)
 
