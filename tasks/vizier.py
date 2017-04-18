@@ -82,8 +82,8 @@ def do_vizier(catalog):
                     PHOTOMETRY.TIME: str(row['MJD']),
                     PHOTOMETRY.U_TIME: 'MJD',
                     PHOTOMETRY.BAND: band,
-                    PHOTOMETRY.COUNTS: str(row['Cts']),
-                    PHOTOMETRY.E_COUNTS: str(row['e_Cts']),
+                    PHOTOMETRY.COUNT_RATE: str(row['Cts']),
+                    PHOTOMETRY.E_COUNT_RATE: str(row['e_Cts']),
                     PHOTOMETRY.MAGNITUDE: row[bandtag],
                     PHOTOMETRY.SOURCE: source
                 }
@@ -363,8 +363,8 @@ def do_vizier(catalog):
                     PHOTOMETRY.TIME: row['MJD-' + band],
                     PHOTOMETRY.U_TIME: 'MJD',
                     PHOTOMETRY.BAND: band,
-                    PHOTOMETRY.COUNTS: str(flux),
-                    PHOTOMETRY.E_COUNTS: str(err),
+                    PHOTOMETRY.COUNT_RATE: str(flux),
+                    PHOTOMETRY.E_COUNT_RATE: str(err),
                     PHOTOMETRY.ZERO_POINT: str(zp),
                     PHOTOMETRY.SOURCE: source,
                     PHOTOMETRY.SURVEY: 'SCP'
@@ -530,8 +530,8 @@ def do_vizier(catalog):
             PHOTOMETRY.TIME: str(row['MJD']),
             PHOTOMETRY.U_TIME: 'MJD',
             PHOTOMETRY.BAND: row['Filter'],
-            PHOTOMETRY.COUNTS: str(flux),
-            PHOTOMETRY.E_COUNTS: str(err),
+            PHOTOMETRY.COUNT_RATE: str(flux),
+            PHOTOMETRY.E_COUNT_RATE: str(err),
             PHOTOMETRY.ZERO_POINT: str(zp),
             PHOTOMETRY.SOURCE: source,
             PHOTOMETRY.INSTRUMENT: row['Inst']
@@ -566,8 +566,8 @@ def do_vizier(catalog):
             PHOTOMETRY.U_TIME: 'MJD',
             PHOTOMETRY.BAND: band,
             PHOTOMETRY.BAND_SET: bandset,
-            PHOTOMETRY.COUNTS: flux,
-            PHOTOMETRY.E_COUNTS: err,
+            PHOTOMETRY.COUNT_RATE: flux,
+            PHOTOMETRY.E_COUNT_RATE: err,
             PHOTOMETRY.ZERO_POINT: str(zp),
             PHOTOMETRY.TELESCOPE: telescope,
             PHOTOMETRY.SOURCE: source

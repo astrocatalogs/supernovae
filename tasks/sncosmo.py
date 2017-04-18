@@ -47,14 +47,14 @@ def do_sncosmo(catalog):
                      float(photo[PHOTOMETRY.ZERO_POINT]), 'ab'))
             elif (photo.get(PHOTOMETRY.BAND_SET, '') == 'MegaCam' and
                   PHOTOMETRY.TIME in photo and PHOTOMETRY.BAND in photo and
-                  PHOTOMETRY.COUNTS in photo and
-                  PHOTOMETRY.E_COUNTS in photo and
+                  PHOTOMETRY.COUNT_RATE in photo and
+                  PHOTOMETRY.E_COUNT_RATE in photo and
                   PHOTOMETRY.UPPER_LIMIT not in photo):
                 photodat.append(
                     (float(photo[PHOTOMETRY.TIME]),
                      'sdss' + photo[PHOTOMETRY.BAND].replace("'", ''),
-                     float(photo[PHOTOMETRY.COUNTS]),
-                     float(photo[PHOTOMETRY.E_COUNTS]),
+                     float(photo[PHOTOMETRY.COUNT_RATE]),
+                     float(photo[PHOTOMETRY.E_COUNT_RATE]),
                      float(photo[PHOTOMETRY.ZERO_POINT]), 'bd17'))
         if len(photodat) < 20:
             catalog.entries[event] = catalog.entries[event].get_stub()
