@@ -113,7 +113,6 @@ Other single SN datasets:
 * SN2013cq - http://adsabs.harvard.edu/abs/2014A%26A...567A..29M (Photometry only in plot form)
 * SN2013cu - http://adsabs.harvard.edu/abs/2014Natur.509..471G (Photometry only in plot form)
 * SN2013hx - Inserra+ 2013 in prep.?
-* iPTF13asv - http://adsabs.harvard.edu/abs/2016arXiv160100686C (Table improperly constructed by authors, most photometry missing)
 * SN2014C - http://adsabs.harvard.edu/abs/2015ApJ...815..120M  (LC & spectra, data not in paper)
 * iPTF14atg - http://adsabs.harvard.edu/abs/2015Natur.521..328C (LC, data not in paper)
 * SN2015bh - http://arxiv.org/abs/1609.00731
