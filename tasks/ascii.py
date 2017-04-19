@@ -25,6 +25,32 @@ def do_ascii(catalog):
     """Process ASCII files extracted from datatables of published works."""
     task_str = catalog.get_current_task_str()
 
+    # 1704.05061
+    events = {
+        'iPTF15esb': '1704.05061-tab3.tsv',
+        'iPTF16bad': '1704.05061-tab4.tsv'
+    }
+    for ev in events:
+        datafile = os.path.join(catalog.get_current_task_repo(), 'ASCII',
+                                events[ev])
+        tsvin = list(
+            csv.reader(
+                open(datafile, 'r'), delimiter='\t', skipinitialspace=True))
+        name, source = catalog.new_entry(
+            ev, arxivid='1704.05061')
+        for row in pbar(tsvin, task_str):
+            photodict = {
+                PHOTOMETRY.TIME: row[1],
+                PHOTOMETRY.U_TIME: 'MJD',
+                PHOTOMETRY.MAGNITUDE: row[2],
+                PHOTOMETRY.E_MAGNITUDE: row[3],
+                PHOTOMETRY.BAND: row[0],
+                PHOTOMETRY.SYSTEM: 'AB',
+                PHOTOMETRY.SOURCE: source
+            }
+            catalog.entries[name].add_photometry(**photodict)
+    catalog.journal_entries()
+
     # 2016ApJ...823..147C
     datafile = os.path.join(catalog.get_current_task_repo(), 'ASCII',
                             '2016ApJ...823..147C.csv')
