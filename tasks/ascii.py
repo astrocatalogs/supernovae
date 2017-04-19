@@ -25,7 +25,7 @@ def do_ascii(catalog):
     """Process ASCII files extracted from datatables of published works."""
     task_str = catalog.get_current_task_str()
 
-    # 1704.05061
+    # 2017arXiv170405061Y
     events = {
         'iPTF15esb': '1704.05061-tab3.tsv',
         'iPTF16bad': '1704.05061-tab4.tsv'
@@ -37,7 +37,7 @@ def do_ascii(catalog):
             csv.reader(
                 open(datafile, 'r'), delimiter='\t', skipinitialspace=True))
         name, source = catalog.new_entry(
-            ev, arxivid='1704.05061')
+            ev, bibcode='2017arXiv170405061Y')
         for row in pbar(tsvin, task_str):
             photodict = {
                 PHOTOMETRY.TIME: row[1],
