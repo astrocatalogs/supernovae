@@ -146,6 +146,13 @@ Photometry and spectra are stored in a similar way, but have different and many 
 | `model` | A list of integer aliases of which models the data orignated from | yes
 | `realization` | A numeric ID for the realization of the denoted model (e.g. from Monte Carlo) | yes
 
+For all photometry, count rates (and their errors) can be specified:
+
+| Field | Value | Optional?
+| :--- | :--- | :---
+| `countrate` | Counts per unit time. This could be literal counts detected, or a flux normalized to a zero point | yes
+| `e_countrate` | Error in the count rate | yes
+
 For IR/optical/UV photometry specifically, typical field names are:
 
 | Field | Value | Optional?
@@ -183,7 +190,6 @@ For X-ray, the additional set of fields are:
 | `flux` | Energy flux | no
 | `unabsorbedflux` | Unabsorbed energy flux | yes
 | `photonindex` | Power-law assumed to convert counts to flux | yes
-| `counts` | Counts per second on the detector | yes
 | `nhmw` | Milky Way hydrogen column density | yes
 | `e_flux` | Error in the flux | yes
 | `u_flux` | Unit for flux | yes
