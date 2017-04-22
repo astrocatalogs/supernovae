@@ -315,7 +315,8 @@ def do_ascii(catalog):
         for row in tsvin:
             if not row or row[0][0] == '#':
                 continue
-            tel, band = row[2][:-2], row[2][-1]
+            inst, band = row[2][:-1], row[2][-1]
+            tel = 'WIYN'
             zp = '25'
             c, lec, uec = tuple(row[3:6])
             photodict = {
@@ -325,6 +326,7 @@ def do_ascii(catalog):
                 PHOTOMETRY.E_LOWER_COUNT_RATE: lec,
                 PHOTOMETRY.E_UPPER_COUNT_RATE: uec,
                 PHOTOMETRY.BAND: band,
+                PHOTOMETRY.INSTRUMENT: inst,
                 PHOTOMETRY.TELESCOPE: tel,
                 PHOTOMETRY.SOURCE: source
             }
