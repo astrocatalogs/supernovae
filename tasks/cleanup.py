@@ -2,6 +2,7 @@
 import re
 import statistics
 import warnings
+from decimal import Decimal
 from math import log10, pi, sqrt
 
 from astrocats.catalog.quantity import QUANTITY
@@ -11,8 +12,6 @@ from astropy import units as un
 from astropy.coordinates import SkyCoord as coord
 from astropy.cosmology import Planck15 as cosmo
 from astropy.cosmology import z_at_value
-
-from decimal import Decimal
 
 from ..constants import CLIGHT, KM
 from ..supernova import SUPERNOVA

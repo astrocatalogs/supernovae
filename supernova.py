@@ -1,5 +1,4 @@
-"""
-"""
+"""Supernova transient class."""
 import warnings
 from collections import OrderedDict
 from decimal import Decimal
@@ -22,6 +21,7 @@ from .utils import frame_priority, host_clean, radec_clean
 
 
 class SUPERNOVA(ENTRY):
+    """Supernova `Key` child class."""
     CLAIMED_TYPE = Key('claimedtype',
                        KEY_TYPES.STRING,
                        kind_preference=['spectroscopic', 'photometric'],
@@ -38,19 +38,20 @@ class SUPERNOVA(ENTRY):
 
 
 class Supernova(Entry):
-    """
+    """Supernova `Entry` child class.
+
     NOTE: OrderedDict data is just the `name` values from the JSON file.
           I.e. it does not include the highest nesting level
           { name: DATA }, it *just* includes DATA
 
     FIX: check that no stored values are empty/invalid (delete key in that
          case?)
-
     """
 
     _KEYS = SUPERNOVA
 
     def __init__(self, catalog, name, stub=False):
+        """Initialize `Supernova`."""
         super(Supernova, self).__init__(catalog, name, stub=stub)
         return
 
@@ -78,8 +79,7 @@ class Supernova(Entry):
                 return
 
     def _clean_quantity(self, quantity):
-        """Clean quantity value before it is added to entry.
-        """
+        """Clean quantity value before it is added to entry."""
         value = quantity.get(QUANTITY.VALUE, '').strip()
         error = quantity.get(QUANTITY.E_VALUE, '').strip()
         unit = quantity.get(QUANTITY.U_VALUE, '').strip()
@@ -185,6 +185,7 @@ class Supernova(Entry):
                      source,
                      forcereplacebetter=False,
                      **kwargs):
+        """Add `Quantity` to `Supernova`."""
         success = super(Supernova, self).add_quantity(
             quantities, value, source, **kwargs)
 
@@ -859,7 +860,9 @@ class Supernova(Entry):
         return bestz, bestkind, bestsig, bestsrc
 
     def set_preferred_name(self):
-        """Highest preference goes to names of the form 'SN####AA'.
+        """Set preferred name of supernova.
+
+        Highest preference goes to names of the form 'SN####AA'.
         Otherwise base the name on whichever survey is the 'discoverer'.
 
         FIX: create function to match SN####AA type names.
@@ -915,6 +918,11 @@ class Supernova(Entry):
                     if 'PTF' in alias.upper():
                         newname = alias
                         break
+            if not newname and 'la silla-quest' in discoverer.lower():
+                for alias in aliases:
+                    if 'LSQ' in alias.upper():
+                        newname = alias
+                        break
             if not newname and 'GAIA' in discoverer:
                 for alias in aliases:
                     if 'GAIA' in alias.upper():
@@ -922,7 +930,9 @@ class Supernova(Entry):
                         break
         # Always prefer another alias over PSN
         if not newname and name.startswith('PSN'):
-            newname = aliases[0]
+            for alias in aliases:
+                if not alias.startswith('PSN'):
+                    newname = alias
         if newname and name != newname:
             file_entry = None
             # Make sure new name doesn't already exist

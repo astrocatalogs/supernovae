@@ -1,4 +1,6 @@
-"""Import tasks for the Sternberg Astronomical Institute's Supernova Light
+"""Import tasks for ITEP.
+
+Import tasks for the Sternberg Astronomical Institute's Supernova Light
 Curve Catalog, from the ITEP-SAI group.
 """
 import csv
@@ -16,6 +18,7 @@ from ..supernova import SUPERNOVA
 
 
 def do_itep(catalog):
+    """Import data from ITEP."""
     task_str = catalog.get_current_task_str()
     itepignoresources = ['2004ApJ...602..571B', '2013NewA...20...30M']
     itepignorephot = ['SN2006gy']
