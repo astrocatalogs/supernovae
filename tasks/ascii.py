@@ -25,6 +25,32 @@ def do_ascii(catalog):
     """Process ASCII files extracted from datatables of published works."""
     task_str = catalog.get_current_task_str()
 
+    # 2000MNRAS.319..223H
+    datafile = os.path.join(catalog.get_current_task_repo(), 'ASCII',
+                            '2000MNRAS.319..223H.csv')
+    tsvin = list(
+        csv.reader(
+            open(datafile, 'r'), delimiter=',', skipinitialspace=True))
+    name, source = catalog.new_entry(
+        'SN1998bu', bibcode='2000MNRAS.319..223H')
+    for ri, row in enumerate(pbar(tsvin, task_str)):
+        if ri == 0:
+            continue
+        mjd = jd_to_mjd(Decimal('2450000') + Decimal(row[0]))
+        for bi, band in enumerate(['J', 'H', 'K']):
+            photodict = {
+                PHOTOMETRY.TIME: mjd,
+                PHOTOMETRY.U_TIME: 'MJD',
+                PHOTOMETRY.MAGNITUDE: row[2 * bi + 1],
+                PHOTOMETRY.E_MAGNITUDE: row[2 * bi + 2],
+                PHOTOMETRY.BAND: band,
+                PHOTOMETRY.TELESCOPE: row[-2],
+                PHOTOMETRY.OBSERVER: row[-1],
+                PHOTOMETRY.SOURCE: source
+            }
+            catalog.entries[name].add_photometry(**photodict)
+    catalog.journal_entries()
+
     # 2017arXiv170405061Y
     events = {
         'iPTF15esb': '1704.05061-tab3.tsv',
