@@ -1,8 +1,8 @@
-"""Import tasks for data directly donated to the Open Supernova Catalog.
-"""
+"""Import tasks for data directly donated to the Open Supernova Catalog."""
 import csv
 import json
 import os
+from decimal import Decimal
 from glob import glob
 from math import floor, isnan
 
@@ -14,18 +14,50 @@ from astrocats.catalog.utils import (get_sig_digits, is_number, jd_to_mjd,
 from astropy.io.ascii import read
 from astropy.time import Time as astrotime
 
-from decimal import Decimal
-
 from ..supernova import SUPERNOVA
 
 
 def do_donated_photo(catalog):
+    """Import donated photometry."""
     task_str = catalog.get_current_task_str()
 
     # Private donations here #
     if not catalog.args.travis:
         pass
     # End private donations #
+
+    # Ponder 05-12-17 donation
+    with open(
+            os.path.join(catalog.get_current_task_repo(), 'Donations',
+                         'Ponder-05-12-17', 'meta.json'), 'r') as f:
+        metadict = json.loads(f.read())
+    file_names = glob(
+        os.path.join(catalog.get_current_task_repo(), 'Donations',
+                     'Ponder-05-12-17', '*.dat'))
+    for path in file_names:
+        with open(path, 'r') as f:
+            tsvin = list(csv.reader(f, delimiter=' ', skipinitialspace=True))
+        oname = path.split('/')[-1].split('.')[0]
+        name, source = catalog.new_entry(
+            oname, bibcode=metadict[oname]['bibcode'])
+        for row in pbar(tsvin, task_str + ': Ponder ' + oname):
+            if row[0][0] == '#' or not is_number(row[-1]):
+                continue
+            mjd = row[1]
+            band = row[2]
+            mag = row[3]
+            uerr = row[4]
+            lerr = row[5]
+            photodict = {
+                PHOTOMETRY.TIME: mjd,
+                PHOTOMETRY.U_TIME: 'MJD',
+                PHOTOMETRY.BAND: band,
+                PHOTOMETRY.MAGNITUDE: mag,
+                PHOTOMETRY.E_LOWER_MAGNITUDE: lerr,
+                PHOTOMETRY.E_UPPER_MAGNITUDE: uerr,
+                PHOTOMETRY.SOURCE: source
+            }
+            catalog.entries[name].add_photometry(**photodict)
 
     # Benetti 03-08-17 donation
     path = os.path.join(catalog.get_current_task_repo(), 'Donations',
@@ -74,7 +106,8 @@ def do_donated_photo(catalog):
     for path in file_names:
         data = read(path, format='cds')
         oname = path.split('/')[-1].split('_')[0]
-        name, source = catalog.new_entry(oname, bibcode=metadict[oname]['bibcode'])
+        name, source = catalog.new_entry(
+            oname, bibcode=metadict[oname]['bibcode'])
         for row in pbar(data, task_str + ': Nicholl ' + oname):
             photodict = {
                 PHOTOMETRY.TIME: str(row['MJD']),
@@ -581,6 +614,7 @@ def do_donated_photo(catalog):
 
 
 def do_donated_spectra(catalog):
+    """Import donated spectra."""
     task_str = catalog.get_current_task_str()
     fpath = os.path.join(catalog.get_current_task_repo(), 'donations')
     with open(os.path.join(fpath, 'meta.json'), 'r') as f:
