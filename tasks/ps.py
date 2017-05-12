@@ -163,6 +163,7 @@ def do_ps_alerts(catalog):
 
 
 def do_ps_threepi(catalog):
+    """Import data from Pan-STARRS' 3pi page."""
     task_str = catalog.get_current_task_str()
     teles = 'Pan-STARRS1'
     fname = os.path.join(catalog.get_current_task_repo(), '3pi/page00.html')
@@ -245,13 +246,13 @@ def do_ps_threepi(catalog):
                     ttype = td.contents[0]
                     if ttype != 'sn' and ttype != 'orphan':
                         break
-                elif tdi == 5:
+                elif tdi == 6:
                     if not td.contents:
                         continue
                     ctype = td.contents[0]
                     if ctype == 'Observed':
                         ctype = ''
-                elif tdi == 16:
+                elif tdi == 17:
                     if td.contents:
                         crossrefs = td.findAll('a')
                         for cref in crossrefs:
@@ -315,7 +316,7 @@ def do_ps_threepi(catalog):
                     try:
                         session2 = requests.Session()
                         response2 = session2.get(pslink)
-                    except:
+                    except Exception:
                         offline = True
                         if not os.path.isfile(fname2):
                             continue

@@ -663,6 +663,7 @@ def do_ascii(catalog):
             PHOTOMETRY.SOURCE: source
         }
         catalog.entries[name].add_photometry(**photodict)
+    catalog.journal_entries()
 
     # 2012A&A...537A.140T
     tables = ['2012A&A...537A.140T-' + x + '.tsv' for x in ['tab4', 'tab6']]
