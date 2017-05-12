@@ -44,7 +44,11 @@ def do_donated_photo(catalog):
             if row[0][0] == '#' or not is_number(row[-1]):
                 continue
             mjd = row[1]
-            band = row[2]
+            bandinst = row[2].split('_')
+            band = bandinst[0]
+            inst = ''
+            if len(bandinst) > 1:
+                inst = bandinst[1]
             mag = row[3]
             uerr = row[4]
             lerr = row[5]
@@ -57,6 +61,8 @@ def do_donated_photo(catalog):
                 PHOTOMETRY.E_UPPER_MAGNITUDE: uerr,
                 PHOTOMETRY.SOURCE: source
             }
+            if inst:
+                photodict[PHOTOMETRY.INSTRUMENT] = inst
             catalog.entries[name].add_photometry(**photodict)
 
     # Benetti 03-08-17 donation
