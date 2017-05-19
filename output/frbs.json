@@ -792,6 +792,53 @@
 		"edit":false
 	},
 	{
+		"name1":"FRB130628",
+		"aliases1":[
+			"FRB130628"
+		],
+		"name2":"PS17cwd",
+		"aliases2":[
+			"PS17cwd",
+			"AT2017duh"
+		],
+		"ra1":"09:03:02",
+		"dec1":"03:26:16",
+		"ra2":"09:01:21.77",
+		"dec2":"+03:51:20.78",
+		"distdeg":"0.590274184096",
+		"discdiffyear":"-3.759172197222142",
+		"poserror":"540.4637817986351",
+		"claimedtype":"",
+		"host":"",
+		"edit":false
+	},
+	{
+		"name1":"FRB130628",
+		"aliases1":[
+			"FRB130628"
+		],
+		"name2":"PS17cwe",
+		"aliases2":[
+			"PS17cwe",
+			"AT2017dua"
+		],
+		"ra1":"09:03:02",
+		"dec1":"03:26:16",
+		"ra2":"09:04:16.75",
+		"dec2":"+03:23:34.87",
+		"distdeg":"0.314110342276",
+		"discdiffyear":"-3.7592055361110397",
+		"poserror":"540.4637817986351",
+		"claimedtype":"",
+		"host":[
+			{
+				"value":"SDSS J090416.31+032329.0",
+				"source":"3"
+			}
+		],
+		"edit":false
+	},
+	{
 		"name1":"FRB130729",
 		"aliases1":[
 			"FRB130729"
@@ -882,6 +929,26 @@
 		"dec2":"-51:18:06.49",
 		"distdeg":"0.250390409164",
 		"discdiffyear":"-3.2472222222222626",
+		"poserror":"540.4637817986351",
+		"claimedtype":"",
+		"host":"",
+		"edit":false
+	},
+	{
+		"name1":"FRB150215",
+		"aliases1":[
+			"FRB150215"
+		],
+		"name2":"PS15akm",
+		"aliases2":[
+			"PS15akm"
+		],
+		"ra1":"18:17:27",
+		"dec1":"-04:54:15",
+		"ra2":"18:16:13.37",
+		"dec2":"-04:59:30.0",
+		"distdeg":"0.317926377151",
+		"discdiffyear":"-0.25",
 		"poserror":"540.4637817986351",
 		"claimedtype":"",
 		"host":"",

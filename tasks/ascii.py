@@ -1408,9 +1408,9 @@ def do_ascii(catalog):
             source=source)
     catalog.journal_entries()
 
-    # 2012MNRAS.425.1007B
+    # 2013MNRAS.432L..90B
     file_path = os.path.join(catalog.get_current_task_repo(),
-                             '2012MNRAS.425.1007B.tsv')
+                             'ASCII/2013MNRAS.432L..90B.tsv')
     data = list(
         csv.reader(
             open(file_path, 'r'),
@@ -1423,7 +1423,7 @@ def do_ascii(catalog):
             continue
         name = catalog.add_entry(row[0])
         source = catalog.entries[name].add_source(
-            bibcode='2012MNRAS.425.1007B')
+            bibcode='2013MNRAS.432L..90B')
         catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
         mjd = row[1]
         mags = [xx.split('±')[0].strip() for xx in row[2:]]
