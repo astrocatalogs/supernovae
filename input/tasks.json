@@ -390,7 +390,7 @@
     },
     "snax": {
         "nice_name": "%pre SNaX",
-        "active": false,
+        "active": true,
         "update": false,
         "archived": false,
         "module": "supernovae.tasks.snax",

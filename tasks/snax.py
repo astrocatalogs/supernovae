@@ -1,6 +1,4 @@
-"""Import tasks for the Gamma-ray Bursts Catalog.
-"""
-import csv
+"""Import tasks for SNaX."""
 import os
 
 from astrocats.catalog.photometry import PHOTOMETRY
@@ -13,25 +11,28 @@ from ..supernova import SUPERNOVA
 
 
 def do_snax(catalog):
+    """Import from the SNaX X-ray database."""
     task_str = catalog.get_current_task_str()
+
+    dlurl = 'http://kronos.uchicago.edu/snax/export.php?exportType=TSV&exportFields=standard&objid=&name=&typeid=&type=&galaxyid=&galaxy=&fluxMin=&fluxMax=&fluxEnergyLMin=&fluxEnergyLMax=&fluxEnergyHMin=&fluxEnergyHMax=&lumMin=&lumMax=&instrumentid=&instrument=&ageMin=&ageMax=&dateMin=&dateMax=&sortA=dateExploded'  # noqa: E501
+
     file_path = os.path.join(catalog.get_current_task_repo(), 'SNaX.TSV')
+
+    tsv = catalog.load_url(dlurl, file_path)
     # csvtxt = catalog.load_url(
     #     'http://www.grbcatalog.org/'
     #     'download_data?cut_0_min=5&cut_0=BAT%20T90'
     #     '&cut_0_max=100000&num_cuts=1&no_date_cut=True',
     #     file_path)
-    data = list(
-        csv.reader(
-            open(file_path, 'r'),
-            delimiter='\t',
-            quotechar='"',
-            skipinitialspace=True))
+
+    data = [x.split('\t') for x in tsv.split('\n')]
 
     for r, row in enumerate(pbar(data, task_str)):
-        if r == 0:
+        if r == 0 or not row[0]:
             continue
         (name, source) = catalog.new_entry(
-            row[0], srcname='SNaX', url='http://kronos.uchicago.edu/snax/')
+            row[0], srcname='SNaX', url='http://kronos.uchicago.edu/snax/',
+            secondary=True)
         sources = [source]
         expsrc = uniq_cdl(sources + [
             catalog.entries[name].add_source(bibcode=row[-6].strip())
