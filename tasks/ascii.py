@@ -8,15 +8,16 @@ import csv
 import os
 import re
 from datetime import datetime
+from decimal import Decimal
 from glob import glob
 
 from astrocats.catalog.photometry import PHOTOMETRY, set_pd_mag_from_counts
 from astrocats.catalog.utils import (is_number, jd_to_mjd, make_date_string,
                                      pbar, pbar_strings)
+from astropy import units as u
+from astropy.coordinates import SkyCoord as coord
 from astropy.io.ascii import read
 from astropy.time import Time as astrotime
-
-from decimal import Decimal
 
 from ..supernova import SUPERNOVA
 
@@ -24,6 +25,27 @@ from ..supernova import SUPERNOVA
 def do_ascii(catalog):
     """Process ASCII files extracted from datatables of published works."""
     task_str = catalog.get_current_task_str()
+
+    # 1705.10927
+    datafile = os.path.join(catalog.get_current_task_repo(), 'ASCII',
+                            '1705.10927.tex')
+    data = read(datafile, format='latex')
+    for row in pbar(data, task_str):
+        name = row[0].replace('$', '')
+        name, source = catalog.new_entry(name, arxivid='1705.10927')
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.CLAIMED_TYPE, 'SNR?', source=source)
+        gallon = float(str(row[1]).replace('$', ''))
+        gallat = float(str(row[2]).replace('$', ''))
+        ra, dec = coord(
+            l=gallon * u.degree, b=gallat * u.degree,
+            frame='galactic').icrs.to_string(
+                'hmsdms', sep=':').split()
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.RA, ra, source=source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.DEC, dec, source=source)
+    catalog.journal_entries()
 
     # 2000MNRAS.319..223H
     datafile = os.path.join(catalog.get_current_task_repo(), 'ASCII',
