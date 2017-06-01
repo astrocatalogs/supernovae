@@ -31,16 +31,18 @@ def do_ascii(catalog):
                             '1705.10927.tex')
     data = read(datafile, format='latex')
     for row in pbar(data, task_str):
-        name = row[0].replace('$', '')
-        name, source = catalog.new_entry(name, arxivid='1705.10927')
+        oname = row[0].replace('$', '')
+        name, source = catalog.new_entry(oname, arxivid='1705.10927')
         catalog.entries[name].add_quantity(
-            SUPERNOVA.CLAIMED_TYPE, 'SNR?', source=source)
+            SUPERNOVA.ALIAS, 'MWSNR' + oname[1:], source=source)
         gallon = float(str(row[1]).replace('$', ''))
         gallat = float(str(row[2]).replace('$', ''))
         ra, dec = coord(
             l=gallon * u.degree, b=gallat * u.degree,
             frame='galactic').icrs.to_string(
                 'hmsdms', sep=':').split()
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.HOST, 'Milky Way', source=source)
         catalog.entries[name].add_quantity(
             SUPERNOVA.RA, ra, source=source)
         catalog.entries[name].add_quantity(
