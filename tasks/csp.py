@@ -1,5 +1,4 @@
-"""Imported tasks for the Carnegie Supernova Program.
-"""
+"""Imported tasks for the Carnegie Supernova Program."""
 import csv
 import os
 from glob import glob
@@ -13,8 +12,8 @@ from ..utils import clean_snname
 
 
 def do_csp_photo(catalog):
+    """Import CSP photometry."""
     import re
-    cspbands = ['u', 'B', 'V', 'g', 'r', 'i', 'Y', 'J', 'H', 'K']
     file_names = glob(
         os.path.join(catalog.get_current_task_repo(), 'CSP/*.dat'))
     task_str = catalog.get_current_task_str()
@@ -47,6 +46,10 @@ def do_csp_photo(catalog):
                         SUPERNOVA.RA, row[1].split(' ')[-1], source)
                     catalog.entries[name].add_quantity(
                         SUPERNOVA.DEC, row[2].split(' ')[-1], source)
+                if 'MJD' in ''.join(row):
+                    cspbands = list(filter(None, [
+                        x.strip()
+                        for x in ''.join(row).split('MJD')[-1].split('+/-')]))
                 continue
             for v, val in enumerate(row):
                 if v == 0:
@@ -64,6 +67,7 @@ def do_csp_photo(catalog):
 
 
 def do_csp_spectra(catalog):
+    """Import CSP spectra."""
     oldname = ''
     task_str = catalog.get_current_task_str()
     file_names = glob(os.path.join(catalog.get_current_task_repo(), 'CSP/*'))
