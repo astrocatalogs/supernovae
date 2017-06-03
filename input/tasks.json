@@ -629,7 +629,7 @@
     },
     "mosfit": {
         "nice_name": "Model fits from MOSFiT",
-        "active": false,
+        "active": true,
         "update": false,
         "module": "supernovae.tasks.mosfit",
         "function": "do_mosfit",

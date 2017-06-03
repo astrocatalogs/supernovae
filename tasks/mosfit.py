@@ -1,20 +1,23 @@
-"""Import tasks related to the Hubble pointings page.
-"""
+"""Import tasks related to MOSFiT."""
 import os
 from glob import glob
 
 import dropbox
 
 from astrocats.catalog.utils import pbar
-from astrocats.supernovae.supernova import Supernova
+from astrocats.supernovae.supernova import Supernova, SUPERNOVA
+from astrocats.catalog.photometry import PHOTOMETRY
 
 
 def do_mosfit(catalog):
+    """Import models produced by MOSFiT from Dropbox."""
+    REALIZATION_LIMIT = 10
+
     task_str = catalog.get_current_task_str()
     try:
         with open('mosfit.key', 'r') as f:
             mosfitkey = f.read().splitlines()[0]
-    except:
+    except Exception:
         catalog.log.warning('MOSFiT key not found, make sure a file named '
                             '`mosfit.key` containing the key is placed the '
                             'astrocats directory.')
@@ -40,10 +43,20 @@ def do_mosfit(catalog):
             with open(fpath, 'wb') as f:
                 f.write(jtxt)
 
-        name = fname.split('_')[-3]
-
         new_entry = Supernova.init_from_file(
-            catalog, path=fpath, compare_to_existing=False)
+            catalog, path=fpath, compare_to_existing=False, try_gzip=True,
+            clean=False, merge=False)
+
+        name = new_entry[SUPERNOVA.NAME]
+
+        # Only take a number of realizations up to the realization limit.
+        new_photo = []
+        for photo in new_entry[SUPERNOVA.PHOTOMETRY]:
+            real = int(photo.get(PHOTOMETRY.REALIZATION, -1))
+            if real < 0 or real >= REALIZATION_LIMIT:
+                continue
+            new_photo.append(photo)
+        new_entry[SUPERNOVA.PHOTOMETRY] = new_photo
 
         old_entry = None
         if name in catalog.entries:
