@@ -26,6 +26,24 @@ def do_ascii(catalog):
     """Process ASCII files extracted from datatables of published works."""
     task_str = catalog.get_current_task_str()
 
+    # 1705.10806
+    datafile = os.path.join(catalog.get_current_task_repo(), 'ASCII',
+                            '1705.10806.tex')
+    data = read(datafile, format='latex')
+    for row in pbar(data, task_str):
+        oname = row['Supernova']
+        name, source = catalog.new_entry(oname, arxivid='1705.10806')
+        photodict = {
+            PHOTOMETRY.TIME: row['MJD'],
+            PHOTOMETRY.MAGNITUDE: row['Magnitude'],
+            PHOTOMETRY.E_MAGNITUDE: row['Error'],
+            PHOTOMETRY.BAND: row['Filter'],
+            PHOTOMETRY.TELESCOPE: row['Telescope'],
+            PHOTOMETRY.SOURCE: source
+        }
+        catalog.entries[name].add_photometry(**photodict)
+    catalog.journal_entries()
+
     # 1705.10927
     datafile = os.path.join(catalog.get_current_task_repo(), 'ASCII',
                             '1705.10927.tex')
