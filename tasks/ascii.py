@@ -26,6 +26,39 @@ def do_ascii(catalog):
     """Process ASCII files extracted from datatables of published works."""
     task_str = catalog.get_current_task_str()
 
+    # 2017arXiv170601030H
+    datafile = os.path.join(catalog.get_current_task_repo(), 'ASCII',
+                            'CFA_SNII_NATSYSTEM_LC.txt')
+    data = read(datafile, format='tab')
+    for row in pbar(data, task_str):
+        oname = row[0]
+        name, source = catalog.new_entry(oname, bibcode='2017arXiv170601030H')
+        photodict = {
+            PHOTOMETRY.TIME: row[2],
+            PHOTOMETRY.MAGNITUDE: row[4],
+            PHOTOMETRY.E_MAGNITUDE: row[5],
+            PHOTOMETRY.BAND: row[1],
+            PHOTOMETRY.INSTRUMENT: row[7],
+            PHOTOMETRY.SURVEY: row[6],
+            PHOTOMETRY.SOURCE: source
+        }
+        catalog.entries[name].add_photometry(**photodict)
+    datafile = os.path.join(catalog.get_current_task_repo(), 'ASCII',
+                            'CFA_SNII_NIR_LC.txt')
+    data = read(datafile, format='tab')
+    for row in pbar(data, task_str):
+        oname = row[0]
+        name, source = catalog.new_entry(oname, bibcode='2017arXiv170601030H')
+        photodict = {
+            PHOTOMETRY.TIME: row[2],
+            PHOTOMETRY.MAGNITUDE: row[3],
+            PHOTOMETRY.E_MAGNITUDE: row[4],
+            PHOTOMETRY.BAND: row[1],
+            PHOTOMETRY.SOURCE: source
+        }
+        catalog.entries[name].add_photometry(**photodict)
+    catalog.journal_entries()
+
     # 1705.10806
     datafile = os.path.join(catalog.get_current_task_repo(), 'ASCII',
                             '1705.10806.tex')
