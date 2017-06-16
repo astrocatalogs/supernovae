@@ -26,6 +26,24 @@ def do_ascii(catalog):
     """Process ASCII files extracted from datatables of published works."""
     task_str = catalog.get_current_task_str()
 
+    # 2017ApJ...836...60L
+    datafile = os.path.join(catalog.get_current_task_repo(), 'ASCII',
+                            '2017ApJ...836...60L-tab1.cds')
+    data = read(datafile, format='cds')
+    for row in pbar(data, task_str):
+        oname = row['ID']
+        name, source = catalog.new_entry(oname, bibcode='2017ApJ...836...60L')
+        photodict = {
+            PHOTOMETRY.TIME: str(row['MJD']),
+            PHOTOMETRY.BAND: row['Filter'],
+            PHOTOMETRY.U_TIME: 'MJD',
+            PHOTOMETRY.MAGNITUDE: row['mag'],
+            PHOTOMETRY.E_MAGNITUDE: row['e_mag'],
+            PHOTOMETRY.SOURCE: source
+        }
+        catalog.entries[name].add_photometry(**photodict)
+    catalog.journal_entries()
+
     # 2017arXiv170601030H
     datafile = os.path.join(catalog.get_current_task_repo(), 'ASCII',
                             'CFA_SNII_NATSYSTEM_LC.txt')
@@ -450,6 +468,7 @@ def do_ascii(catalog):
         catalog.entries[name].add_quantity(
             SUPERNOVA.DEC, row[3], source, u_value='floatdegrees')
         catalog.entries[name].add_quantity(SUPERNOVA.REDSHIFT, row[5], source)
+    catalog.journal_entries()
 
     zps = {
         'default': '27',
