@@ -120,6 +120,7 @@ Other single SN datasets:
 * SN2015H - http://adsabs.harvard.edu/abs/2016A%26A...589A..89M (LC, data not in paper)
 * iPTF15dtg - http://arxiv.org/abs/1605.02491 (LCs and spectra available)
 * iPTF16geu - http://arxiv.org/abs/1611.00014
+* iPTF16asu - http://arxiv.org/abs/1706.05018
 
 **Note: Below have yet to be checked for content.**
 * SN2010jl - http://adsabs.harvard.edu/abs/2014ApJ...797..118F, http://adsabs.harvard.edu/abs/2014ApJ...781...42O
