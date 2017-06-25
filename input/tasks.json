@@ -357,6 +357,17 @@
         "always_journal": true,
         "priority": 34
     },
+    "asasatels": {
+        "nice_name": "%pre ASASSN ATels",
+        "active": true,
+        "update": true,
+        "archived": true,
+        "module": "supernovae.tasks.asassn",
+        "function": "do_asas_atels",
+        "repo": "input/sne-external",
+        "always_journal": true,
+        "priority": 34
+    },
     "snf": {
         "nice_name": "%pre SNF aliases",
         "active": true,

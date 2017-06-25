@@ -1,14 +1,19 @@
-"""Tasks related to the ASASSN survey.
-"""
+"""Tasks related to the ASASSN survey."""
+import json
 import os
+import re
+from decimal import Decimal
 
-from astrocats.catalog.utils import pbar
+from astrocats.catalog.photometry import PHOTOMETRY
+from astrocats.catalog.utils import jd_to_mjd, pbar
+from astropy.io.ascii import read
 from bs4 import BeautifulSoup
 
 from ..supernova import SUPERNOVA
 
 
 def do_asassn(catalog):
+    """Import list of ASASSN events."""
     task_str = catalog.get_current_task_str()
     asn_url = 'http://www.astronomy.ohio-state.edu/~assassin/sn_list.html'
     html = catalog.load_url(asn_url, os.path.join(
@@ -90,5 +95,52 @@ def do_asassn(catalog):
                                                    typesources)
         if host != 'Uncatalogued':
             catalog.entries[name].add_quantity(SUPERNOVA.HOST, host, sources)
+    catalog.journal_entries()
+    return
+
+
+def do_asas_atels(catalog):
+    """Import LCs exposed in ASASSN Atels."""
+    with open('/root/better-atel/atels.json') as f:
+        ateljson = json.load(f)
+    for entry in ateljson:
+        if ('asas-sn.osu.edu/light_curve' in entry['body'] and
+                'Supernovae' in entry['subjects']):
+            matches = re.findall(r'<a\s+[^>]*?href="([^"]*)".*?>(.*?)<\/a>',
+                                 entry['body'], re.DOTALL)
+            lcurl = ''
+            objname = ''
+            for match in matches:
+                if 'asas-sn.osu.edu/light_curve' in match[0]:
+                    lcurl = match[0]
+                    objname = re.findall(
+                        r'\bASASSN-[0-9][0-9].*?\b', match[1])
+                    if len(objname):
+                        objname = objname[0]
+            if objname and lcurl:
+                name, source = catalog.new_entry(
+                    objname, srcname='ASAS-SN Sky Patrol',
+                    bibcode='2017arXiv170607060K',
+                    url='https://asas-sn.osu.edu')
+                csv = catalog.load_url(lcurl + '.csv', os.path.join(
+                    catalog.get_current_task_repo(), os.path.join(
+                        'ASASSN', objname + '.csv')))
+                data = read(csv, format='csv')
+                for row in data:
+                    mag = str(row['mag'])
+                    if float(mag.strip('>')) > 50.0:
+                        continue
+                    photodict = {
+                        PHOTOMETRY.TIME: str(jd_to_mjd(
+                            Decimal(str(row['HJD'])))),
+                        PHOTOMETRY.MAGNITUDE: mag.strip('>'),
+                        PHOTOMETRY.SURVEY: 'ASASSN',
+                        PHOTOMETRY.SOURCE: source
+                    }
+                    if '>' in mag:
+                        photodict[PHOTOMETRY.UPPER_LIMIT] = True
+                    else:
+                        photodict[PHOTOMETRY.E_MAGNITUDE] = str(row['mag_err'])
+                    catalog.entries[name].add_photometry(**photodict)
     catalog.journal_entries()
     return
