@@ -211,8 +211,7 @@ def do_external_fits_spectra(catalog):
 
 
 def do_internal(catalog):
-    """Load events from files in the 'internal' repository, and save them.
-    """
+    """Load events from files in the 'internal' repository, and save them."""
     task_str = catalog.get_current_task_str()
     path_pattern = os.path.join(catalog.get_current_task_repo(), '*.json')
     files = glob(path_pattern)
