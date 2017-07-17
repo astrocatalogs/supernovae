@@ -2184,26 +2184,6 @@
 		"edit":false
 	},
 	{
-		"name1":"AT2016bar",
-		"aliases1":[
-			"AT2016bar",
-			"XTSS-16A",
-			"PS16bke"
-		],
-		"name2":"iPTF16br",
-		"aliases2":[
-			"iPTF16br"
-		],
-		"ra1":"12:07:07.30",
-		"dec1":"+53:40:06.30",
-		"ra2":"12:07:07.2",
-		"dec2":"+53:40:04.8",
-		"distdeg":"1.74349380341",
-		"maxdiffyear":"",
-		"discdiffyear":"0.2658332999999402",
-		"edit":false
-	},
-	{
 		"name1":"AT2016jbg",
 		"aliases1":[
 			"AT2016jbg"
@@ -2256,24 +2236,6 @@
 		"distdeg":"0.148996850485",
 		"maxdiffyear":"0.10833333333334849",
 		"discdiffyear":"0.15833333333330302",
-		"edit":false
-	},
-	{
-		"name1":"DES16X2crr-corrected",
-		"aliases1":[
-			"DES16X2crr-corrected"
-		],
-		"name2":"DES16X2crr",
-		"aliases2":[
-			"DES16X2crr"
-		],
-		"ra1":"02:19:39.090",
-		"dec1":"-06:03:50.04",
-		"ra2":"02:19:39.09",
-		"dec2":"-06:03:49.9",
-		"distdeg":"0.139999999999",
-		"maxdiffyear":"",
-		"discdiffyear":"0.9027777777776009",
 		"edit":false
 	},
 	{
@@ -2446,26 +2408,6 @@
 		"edit":false
 	},
 	{
-		"name1":"iPTF16hzg",
-		"aliases1":[
-			"iPTF16hzg"
-		],
-		"name2":"PS16fdq",
-		"aliases2":[
-			"PS16fdq",
-			"Gaia16bxr",
-			"AT2016hzg"
-		],
-		"ra1":"01:04:37.2",
-		"dec1":"-02:32:31.2",
-		"ra2":"01:04:37.128",
-		"dec2":"-02:32:32.352",
-		"distdeg":"1.57835652353",
-		"maxdiffyear":"",
-		"discdiffyear":"0.967661105555635",
-		"edit":false
-	},
-	{
 		"name1":"MASTER OT J072940.10+141425.5",
 		"aliases1":[
 			"MASTER OT J072940.10+141425.5"
@@ -2590,45 +2532,6 @@
 		"distdeg":"0.653237839953",
 		"maxdiffyear":"",
 		"discdiffyear":"1.2268460638890701",
-		"edit":false
-	},
-	{
-		"name1":"OGLE15fm",
-		"aliases1":[
-			"OGLE15fm"
-		],
-		"name2":"OGLE16bsa",
-		"aliases2":[
-			"OGLE16bsa"
-		],
-		"ra1":"01:53:13.54",
-		"dec1":"-63:49:32.1",
-		"ra2":"01:53:13.86",
-		"dec2":"-63:49:25.1",
-		"distdeg":"7.31322700563",
-		"maxdiffyear":"1.063888888889096",
-		"discdiffyear":"0.6611111111112677",
-		"edit":false
-	},
-	{
-		"name1":"SN2017eio",
-		"aliases1":[
-			"SN2017eio",
-			"AT2017eio",
-			"ASASSN-17gt"
-		],
-		"name2":"PS17dhl",
-		"aliases2":[
-			"PS17dhl",
-			"AT2017eqa"
-		],
-		"ra1":"22:55:37.32",
-		"dec1":"+19:10:22.86",
-		"ra2":"22:55:37.110",
-		"dec2":"+19:10:24.05",
-		"distdeg":"3.20442386291",
-		"maxdiffyear":"0.002777777777737356",
-		"discdiffyear":"0.03449999999997999",
 		"edit":false
 	},
 	{
