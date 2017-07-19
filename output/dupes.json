@@ -2184,45 +2184,6 @@
 		"edit":false
 	},
 	{
-		"name1":"AT2016bar",
-		"aliases1":[
-			"AT2016bar",
-			"XTSS-16A",
-			"PS16bke"
-		],
-		"name2":"iPTF16br",
-		"aliases2":[
-			"iPTF16br"
-		],
-		"ra1":"12:07:07.30",
-		"dec1":"+53:40:06.30",
-		"ra2":"12:07:07.2",
-		"dec2":"+53:40:04.8",
-		"distdeg":"1.74349380341",
-		"maxdiffyear":"",
-		"discdiffyear":"0.2658332999999402",
-		"edit":false
-	},
-	{
-		"name1":"AT2016gep",
-		"aliases1":[
-			"AT2016gep",
-			"ATLAS16crp"
-		],
-		"name2":"Gaia17bdx",
-		"aliases2":[
-			"Gaia17bdx"
-		],
-		"ra1":"18:07:29.93",
-		"dec1":"+26:06:02.94",
-		"ra2":"18:07:30",
-		"dec2":"+26:06:02.88",
-		"distdeg":"0.944829467505",
-		"maxdiffyear":"0.6555555555555657",
-		"discdiffyear":"0.6547083333332466",
-		"edit":false
-	},
-	{
 		"name1":"AT2016jbg",
 		"aliases1":[
 			"AT2016jbg"
@@ -2241,6 +2202,25 @@
 		"edit":false
 	},
 	{
+		"name1":"Gaia16bcy",
+		"aliases1":[
+			"Gaia16bcy",
+			"AT2016fqs"
+		],
+		"name2":"CSS170605:153607+515811",
+		"aliases2":[
+			"CSS170605:153607+515811"
+		],
+		"ra1":"15:36:07.35",
+		"dec1":"+51:58:10.85",
+		"ra2":"15:36:07.318",
+		"dec2":"+51:58:10.81",
+		"distdeg":"0.298410681755",
+		"maxdiffyear":"0.775000000000091",
+		"discdiffyear":"0.7763361305555918",
+		"edit":false
+	},
+	{
 		"name1":"DES15X2asq",
 		"aliases1":[
 			"DES15X2asq"
@@ -2256,24 +2236,6 @@
 		"distdeg":"0.148996850485",
 		"maxdiffyear":"0.10833333333334849",
 		"discdiffyear":"0.15833333333330302",
-		"edit":false
-	},
-	{
-		"name1":"DES16X2crr-corrected",
-		"aliases1":[
-			"DES16X2crr-corrected"
-		],
-		"name2":"DES16X2crr",
-		"aliases2":[
-			"DES16X2crr"
-		],
-		"ra1":"02:19:39.090",
-		"dec1":"-06:03:50.04",
-		"ra2":"02:19:39.09",
-		"dec2":"-06:03:49.9",
-		"distdeg":"0.139999999999",
-		"maxdiffyear":"",
-		"discdiffyear":"0.9027777777776009",
 		"edit":false
 	},
 	{
@@ -2446,26 +2408,6 @@
 		"edit":false
 	},
 	{
-		"name1":"iPTF16hzg",
-		"aliases1":[
-			"iPTF16hzg"
-		],
-		"name2":"PS16fdq",
-		"aliases2":[
-			"PS16fdq",
-			"Gaia16bxr",
-			"AT2016hzg"
-		],
-		"ra1":"01:04:37.2",
-		"dec1":"-02:32:31.2",
-		"ra2":"01:04:37.128",
-		"dec2":"-02:32:32.352",
-		"distdeg":"1.57835652353",
-		"maxdiffyear":"",
-		"discdiffyear":"0.967661105555635",
-		"edit":false
-	},
-	{
 		"name1":"MASTER OT J072940.10+141425.5",
 		"aliases1":[
 			"MASTER OT J072940.10+141425.5"
@@ -2556,21 +2498,40 @@
 		"edit":false
 	},
 	{
-		"name1":"OGLE15fm",
+		"name1":"PS15cmm",
 		"aliases1":[
-			"OGLE15fm"
+			"PS15cmm"
 		],
-		"name2":"OGLE16bsa",
+		"name2":"MLS160311:051315+141335",
 		"aliases2":[
-			"OGLE16bsa"
+			"MLS160311:051315+141335"
 		],
-		"ra1":"01:53:13.54",
-		"dec1":"-63:49:32.1",
-		"ra2":"01:53:13.86",
-		"dec2":"-63:49:25.1",
-		"distdeg":"7.31322700563",
-		"maxdiffyear":"1.063888888889096",
-		"discdiffyear":"0.6611111111112677",
+		"ra1":"05:13:15.31",
+		"dec1":"+14:13:34.8",
+		"ra2":"05:13:15.31",
+		"dec2":"+14:13:34.7",
+		"distdeg":"0.0999999999959",
+		"maxdiffyear":"",
+		"discdiffyear":"0.39444444444461624",
+		"edit":false
+	},
+	{
+		"name1":"PS16axk",
+		"aliases1":[
+			"PS16axk",
+			"AT2016axd"
+		],
+		"name2":"MLS170528:105049+100340",
+		"aliases2":[
+			"MLS170528:105049+100340"
+		],
+		"ra1":"10:50:49.27",
+		"dec1":"+10:03:40.58",
+		"ra2":"10:50:49.300",
+		"dec2":"+10:03:40.10",
+		"distdeg":"0.653237839953",
+		"maxdiffyear":"",
+		"discdiffyear":"1.2268460638890701",
 		"edit":false
 	},
 	{

@@ -626,7 +626,7 @@
 		"host":[
 			{
 				"value":"A210354-4438",
-				"source":"11"
+				"source":"12"
 			},
 			{
 				"value":"2MASXJ21035623-4438515",
@@ -971,6 +971,27 @@
 		"discdiffyear":"17.41944444444448",
 		"poserror":"3340.606635297363",
 		"claimedtype":"LGRB",
+		"host":"",
+		"edit":false
+	},
+	{
+		"name1":"FRB170107",
+		"aliases1":[
+			"FRB170107"
+		],
+		"name2":"PS17api",
+		"aliases2":[
+			"PS17api",
+			"AT2017age"
+		],
+		"ra1":"11:23:10",
+		"dec1":"-05:01",
+		"ra2":"11:22:19.14",
+		"dec2":"-05:03:26.59",
+		"distdeg":"0.214989661698",
+		"discdiffyear":"-0.07380831944465172",
+		"poserror":"288.2473502926054",
+		"claimedtype":"",
 		"host":"",
 		"edit":false
 	}
