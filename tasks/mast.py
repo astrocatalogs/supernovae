@@ -134,7 +134,7 @@ def do_mast_spectra(catalog):
             if dt < datetime(datetime.now().year - 5, 1, 1):
                 use_cache = True
             if (dt >= datetime(datetime.now().year - 5, 1, 1) and
-                    time.time() - histdict[entry][0] > 30. * 86400.):
+                    time.time() - histdict[entry][0] < 30. * 86400.):
                 use_cache = True
         if use_cache:
             spectra = histdict[entry][1]
@@ -143,14 +143,18 @@ def do_mast_spectra(catalog):
             mastRequest = {'service': 'Mast.Caom.Cone',
                            'params': {'ra': objRa,
                                       'dec': objDec,
-                                      'radius': 0.2},
+                                      'radius': 0.008},
                            'format': 'json',
-                           'pagesize': 5000,
+                           'pagesize': 1000,
                            'page': 1,
                            'removenullcolumns': True,
                            'removecache': True}
 
-            headers, mastDataString = mastQuery(mastRequest)
+            try:
+                headers, mastDataString = mastQuery(mastRequest)
+            except Exception:
+                print('`mastQuery` failed for `{}`, skipping.'.format(entry))
+                continue
 
             mastData = json.loads(mastDataString)
 
@@ -161,7 +165,6 @@ def do_mast_spectra(catalog):
 
             if 'fields' not in mastData:
                 print('`fields` not found for `{}`'.format(entry))
-                print(mastData)
                 continue
 
             for col, atype in [(
@@ -192,8 +195,10 @@ def do_mast_spectra(catalog):
         mjd = ''
         instrument = ''
         observer = ''
-        for spec in spectra:
-            if 'SUPERNOVA' not in spec['target_classification'].upper():
+        for si in range(len(spectra)):
+            spec = spectra[si]
+            if all([x not in spec['target_classification'].upper()
+                    for x in ['SUPERNOVA', 'UNIDENTIFIED']]):
                 continue
 
             obsid = spec['obsid']
@@ -205,62 +210,78 @@ def do_mast_spectra(catalog):
                 continue
             observer = spec['proposal_pi']
 
-            productRequest = {'service': 'Mast.Caom.Products',
-                              'params': {'obsid': obsid},
-                              'format': 'json',
-                              'pagesize': 100,
-                              'page': 1}
+            if use_cache:
+                scienceProducts = spec.get('sciProds', [])
+            else:
+                productRequest = {'service': 'Mast.Caom.Products',
+                                  'params': {'obsid': obsid},
+                                  'format': 'json',
+                                  'pagesize': 100,
+                                  'page': 1}
 
-            headers, obsProductsString = mastQuery(productRequest)
+                try:
+                    headers, obsProductsString = mastQuery(productRequest)
+                except Exception:
+                    print(
+                        '`mastQuery` failed for `{}`, skipping.'.format(obsid))
+                    continue
 
-            obsProducts = json.loads(obsProductsString)
+                obsProducts = json.loads(obsProductsString)
 
-            if 'fields' not in obsProducts:
-                print('`fields` not found for `{}`'.format(obsid))
-                print(obsProducts)
-                continue
+                if 'fields' not in obsProducts:
+                    print('`fields` not found for `{}`'.format(obsid))
+                    print(obsProducts)
+                    continue
 
-            sciProdArr = [x for x in obsProducts['data']
-                          if x.get("productType", None) == 'SCIENCE']
-            scienceProducts = Table()
+                sciProdArr = [x for x in obsProducts['data']
+                              if x.get("productType", None) == 'SCIENCE']
+                scienceProducts = OrderedDict()
 
-            for col, atype in [
-                    (x['name'], x['type']) for x in obsProducts['fields']]:
-                if atype == "string":
-                    atype = "str"
-                if atype == "boolean":
-                    atype = "bool"
-                if atype == "int":
-                    # array may contain nan values, and they do not exist in
-                    # numpy integer arrays.
-                    atype = "float"
-                scienceProducts[col] = np.array(
-                    [x.get(col, None) for x in sciProdArr], dtype=atype)
+                for col, atype in [
+                        (x['name'], x['type']) for x in obsProducts['fields']]:
+                    if atype == "string":
+                        atype = "str"
+                    if atype == "boolean":
+                        atype = "bool"
+                    if atype == "int":
+                        # array may contain nan values, and they do not exist
+                        # in numpy integer arrays.
+                        atype = "float"
+                    scienceProducts[col] = [
+                        x.get(col, None) for x in sciProdArr]
 
-            print("Number of science products:", len(scienceProducts))
+                spectra[si]['sciProds'] = scienceProducts
+
+            # print("Number of science products:", len(scienceProducts))
             # print(scienceProducts)
 
             search_str = '_x1d.fits'
             summed = False
-            if any(['_x1dsum.fits' in
-                    x['productFilename'] for x in scienceProducts]):
+            if any(['_x1dsum.fits' in x for x in scienceProducts[
+                    'productFilename']]):
                 search_str = '_x1dsum.fits'
                 summed = True
-            for row in scienceProducts:
-                if search_str not in row['productFilename']:
+            if any(['_sx1.fits' in x for x in scienceProducts[
+                    'productFilename']]):
+                search_str = '_sx1.fits'
+                summed = True
+            for ri in range(len(scienceProducts['productFilename'])):
+                if search_str not in scienceProducts['productFilename'][ri]:
                     continue
-                filename = str(obsid) + "_" + row['productFilename']
+                filename = str(obsid) + "_" + \
+                    scienceProducts['productFilename'][ri]
                 datafile = os.path.join(
                     catalog.get_current_task_repo(), 'MAST', filename)
                 if not os.path.exists(datafile):
-                    if "http" in row['dataURI']:  # link is url, so can just dl
-                        urlretrieve(row['dataURI'], datafile)
+                    # link is url, so can just dl
+                    if "http" in scienceProducts['dataURI'][ri]:
+                        urlretrieve(scienceProducts['dataURI'][ri], datafile)
                     else:  # link is uri, need to go through direct dl request
                         server = 'mast.stsci.edu'
                         conn = httplib.HTTPSConnection(server)
                         conn.request(
                             "GET", "/api/v0/download/file/" +
-                            row['dataURI'].lstrip('mast:'))
+                            scienceProducts['dataURI'][ri].lstrip('mast:'))
                         resp = conn.getresponse()
                         fileContent = resp.read()
                         with open(datafile, 'wb') as FLE:
@@ -339,9 +360,10 @@ def do_mast_spectra(catalog):
                 if 'OBSERVER' in hdrkeys:
                     specdict[SPECTRUM.OBSERVER] = hdulist[0].header['OBSERVER']
                 catalog.entries[name].add_spectrum(**specdict)
-        histdict[entry] = [time.time(), spectra]
-        json.dump(histdict, open(histfile, 'w'),
-                  indent='\t', separators=(',', ':'))
+        if not use_cache and (ci % 100 == 0 or ci == len(coords) - 1):
+            histdict[entry] = [time.time(), spectra]
+            json.dump(histdict, open(histfile, 'w'),
+                      indent='\t', separators=(',', ':'))
         catalog.journal_entries()
 
     return
