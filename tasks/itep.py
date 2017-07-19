@@ -21,7 +21,7 @@ def do_itep(catalog):
     """Import data from ITEP."""
     task_str = catalog.get_current_task_str()
     itepignoresources = ['2004ApJ...602..571B', '2013NewA...20...30M']
-    itepignorephot = ['SN2006gy']
+    itepignorephot = ['SN2006gy', 'SN1996Z']
     needsbib = []
     with open(os.path.join(catalog.get_current_task_repo(),
                            'itep-refs.txt'), 'r') as refs_file:
