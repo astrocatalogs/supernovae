@@ -20,8 +20,10 @@ from ..supernova import SUPERNOVA
 def do_itep(catalog):
     """Import data from ITEP."""
     task_str = catalog.get_current_task_str()
-    itepignoresources = ['2004ApJ...602..571B', '2013NewA...20...30M']
-    itepignorephot = ['SN2006gy', 'SN1996Z']
+    itepignoresources = [
+        '2004ApJ...602..571B', '2013NewA...20...30M', '1999AJ....117..707R',
+        '2006AJ....131..527J']
+    itepignorephot = ['SN2006gy']
     needsbib = []
     with open(os.path.join(catalog.get_current_task_repo(),
                            'itep-refs.txt'), 'r') as refs_file:
