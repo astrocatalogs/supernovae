@@ -1856,12 +1856,15 @@ def do_vizier(catalog):
     catalog.journal_entries()
 
     # 2015ApJS..220....9F
+    excludes = ['SN2009y']
     for viztab in ['1', '2']:
         result = Vizier.get_catalogs('J/ApJS/220/9/table' + viztab)
         table = result[list(result.keys())[0]]
         table.convert_bytestring_to_unicode(python3_only=True)
         for row in pbar(table, task_str):
             row = convert_aq_output(row)
+            if row['SN'].lower() in excludes:
+                continue
             name = catalog.add_entry(name=row['SN'])
             source = catalog.entries[name].add_source(
                 bibcode='2015ApJS..220....9F')
