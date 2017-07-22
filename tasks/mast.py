@@ -305,7 +305,7 @@ def do_mast_spectra(catalog):
                 if not name:
                     name = hdulist[0].header['OBJECT']
                 name, source = catalog.new_entry(
-                    name, srcname=mastref, url=masturl)
+                    name, srcname=mastref, url=masturl, secondary=True)
                 sources = [source]
                 if 'OBSERVER' in hdrkeys:
                     sources.append(
@@ -322,8 +322,12 @@ def do_mast_spectra(catalog):
                 else:
                     wcol = 2
                     fcol = 3
-                waves = [str(x) for x in list(hdulist[1].data)[0][wcol]]
-                fluxes = [str(x) for x in list(hdulist[1].data)[0][fcol]]
+                try:
+                    waves = [str(x) for x in list(hdulist[1].data)[0][wcol]]
+                    fluxes = [str(x) for x in list(hdulist[1].data)[0][fcol]]
+                except Exception:
+                    print('Failed to find waves/fluxes for `{}`.'.format(filename))
+                    continue
 
                 if 'BUNIT' in hdrkeys:
                     fluxunit = hdulist[0].header['BUNIT']
