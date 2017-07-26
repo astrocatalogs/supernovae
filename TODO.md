@@ -123,6 +123,7 @@ Other single SN datasets:
 * iPTF16asu - http://arxiv.org/abs/1706.05018
 * SCP16C03 - https://arxiv.org/abs/1707.04606
 * LSQ14efd - https://arxiv.org/abs/1707.04644
+* DES15E2mlf - https://arxiv.org/abs/1707.06649
 
 **Note: Below have yet to be checked for content.**
 * SN2010jl - http://adsabs.harvard.edu/abs/2014ApJ...797..118F, http://adsabs.harvard.edu/abs/2014ApJ...781...42O
