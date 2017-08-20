@@ -23,8 +23,6 @@ Other multiple SN datasets:
 * http://adsabs.harvard.edu/abs/2015arXiv151201303C (radio upper limits for Ibc SNe)
 * http://arxiv.org/abs/1603.05657 (KSN2011a, KSN2011d)
 * https://arxiv.org/abs/1705.10806 (Nine II-P/L light curves)
-* https://arxiv.org/abs/1708.01619 (17 SLSN-I light curves)
-* https://arxiv.org/abs/1708.01623 (26 SLSN-I light curves)
 
 Other single SN datasets:
 
@@ -128,15 +126,7 @@ Other single SN datasets:
 * DES15E2mlf - https://arxiv.org/abs/1707.06649
 
 **Note: Below have yet to be checked for content.**
-* SN2010jl - http://adsabs.harvard.edu/abs/2014ApJ...797..118F, http://adsabs.harvard.edu/abs/2014ApJ...781...42O
-* SN2010mb - http://adsabs.harvard.edu/abs/2014ApJ...785...37B
-* SN2010X - http://adsabs.harvard.edu/abs/2010ApJ...723L..98K
-* PS1-10afx - http://adsabs.harvard.edu/abs/2013ApJ...767..162C
-* PS1-10bzj - http://adsabs.harvard.edu/abs/2013ApJ...771...97L
-* SN2011ay - http://adsabs.harvard.edu/abs/2015MNRAS.453.2103S
-* SN2011dh - http://adsabs.harvard.edu/abs/2013MNRAS.433....2S, http://adsabs.harvard.edu/abs/2014ApJ...781...69M
 * SN2011fe - http://adsabs.harvard.edu/abs/2013ApJ...762L...5S, http://adsabs.harvard.edu/abs/2013ApJ...767..119M
-* SN2011ht - http://adsabs.harvard.edu/abs/2013MNRAS.431.2599M
 * SN2011kl - http://adsabs.harvard.edu/abs/2015Natur.523..189G
 * SN2012au - http://adsabs.harvard.edu/abs/2013ApJ...770L..38M, http://adsabs.harvard.edu/abs/2013ApJ...772L..17T
 * SN2012aw - http://adsabs.harvard.edu/abs/2013MNRAS.433.1871B, http://adsabs.harvard.edu/abs/2014ApJ...787..139D
