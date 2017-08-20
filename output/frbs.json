@@ -915,26 +915,6 @@
 		"edit":false
 	},
 	{
-		"name1":"FRB131104",
-		"aliases1":[
-			"FRB131104"
-		],
-		"name2":"dwf17a1147",
-		"aliases2":[
-			"dwf17a1147"
-		],
-		"ra1":"06:44:10",
-		"dec1":"-51:16:40",
-		"ra2":"6:42:34.352",
-		"dec2":"-51:18:06.49",
-		"distdeg":"0.250390409164",
-		"discdiffyear":"-3.2472222222222626",
-		"poserror":"540.4637817986351",
-		"claimedtype":"",
-		"host":"",
-		"edit":false
-	},
-	{
 		"name1":"FRB150215",
 		"aliases1":[
 			"FRB150215"
