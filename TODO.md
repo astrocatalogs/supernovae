@@ -23,6 +23,8 @@ Other multiple SN datasets:
 * http://adsabs.harvard.edu/abs/2015arXiv151201303C (radio upper limits for Ibc SNe)
 * http://arxiv.org/abs/1603.05657 (KSN2011a, KSN2011d)
 * https://arxiv.org/abs/1705.10806 (Nine II-P/L light curves)
+* https://arxiv.org/abs/1708.01619 (17 SLSN-I light curves)
+* https://arxiv.org/abs/1708.01623 (26 SLSN-I light curves)
 
 Other single SN datasets:
 
@@ -123,6 +125,7 @@ Other single SN datasets:
 * iPTF16asu - http://arxiv.org/abs/1706.05018
 * SCP16C03 - https://arxiv.org/abs/1707.04606
 * LSQ14efd - https://arxiv.org/abs/1707.04644
+* DES15E2mlf - https://arxiv.org/abs/1707.06649
 
 **Note: Below have yet to be checked for content.**
 * SN2010jl - http://adsabs.harvard.edu/abs/2014ApJ...797..118F, http://adsabs.harvard.edu/abs/2014ApJ...781...42O
