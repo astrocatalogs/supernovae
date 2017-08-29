@@ -71,7 +71,7 @@ Other single SN datasets:
 * SN2005df - http://adsabs.harvard.edu/abs/2015ApJ...806..107D (spectra)
 * SN2005kd - http://adsabs.harvard.edu/abs/2016MNRAS.462.1101D (Radio data)
 * SN2005ke - http://adsabs.harvard.edu/abs/2014A%26A...572A..75K (spectra)
-* SN2005gj - http://adsabs.harvard.edu/abs/2007arXiv0706.4088P (Late-time photometry)
+* SN2005gj - http://adsabs.harvard.edu/abs/2007arXiv0706.4088P (Late-time photometry in TeX tables)
 * SN2005gj - http://adsabs.harvard.edu/abs/2013ApJ...772L...6F (Late-time IR)
 * SN2005hk - http://adsabs.harvard.edu/abs/2008ApJ...680..580S (spectra)
 * SN2006bc - http://adsabs.harvard.edu/abs/2012ApJ...753..109G (spectra)
@@ -88,11 +88,9 @@ Other single SN datasets:
 * SN2008D - http://www.nature.com/nature/journal/v453/n7194/suppinfo/nature06997.html (X-ray & radio)
 * SN2008fz - http://adsabs.harvard.edu/abs/2010ApJ...718L.127D (spectra)
 * SN2008ge - http://adsabs.harvard.edu/abs/2010AJ....140.1321F (V-band photometry)
-* SN2008in - http://adsabs.harvard.edu/abs/2011ApJ...736...76R (UBVRIJH photometry)
-* SN2009N - http://adsabs.harvard.edu/abs/2014MNRAS.438..368T (great photometry)
+* SN2008in - http://adsabs.harvard.edu/abs/2011ApJ...736...76R (UBVRIJH photometry, data already on OSC?)
 * SN2009bw - http://adsabs.harvard.edu/abs/2012MNRAS.422.1122I (UBVRI photometry)
 * SN2009dc - http://adsabs.harvard.edu/abs/2009ApJ...707L.118Y (spectra)
-* SN2009ib - http://adsabs.harvard.edu/abs/2015MNRAS.450.3137T (lots of photometry)
 * SN2009hd - http://adsabs.harvard.edu/abs/2011ApJ...742....6E (photometry in ASCII table)
 * SN2009ig - http://adsabs.harvard.edu/abs/2012ApJ...744...38F (likely no new photometry)
 * SN2009ig - http://adsabs.harvard.edu/abs/2013ApJ...777...40M (spectra only)
@@ -116,14 +114,14 @@ Other single SN datasets:
 * SN2013hx - Inserra+ 2013 in prep.?
 * SN2014C - http://adsabs.harvard.edu/abs/2015ApJ...815..120M  (LC & spectra, data not in paper)
 * iPTF14atg - http://adsabs.harvard.edu/abs/2015Natur.521..328C (LC, data not in paper)
+* LSQ14efd - https://arxiv.org/abs/1707.04644
 * SN2015bh - http://arxiv.org/abs/1609.00731
 * SN2015H - http://adsabs.harvard.edu/abs/2016A%26A...589A..89M (LC, data not in paper)
 * iPTF15dtg - http://arxiv.org/abs/1605.02491 (LCs and spectra available)
+* DES15E2mlf - https://arxiv.org/abs/1707.06649
 * iPTF16geu - http://arxiv.org/abs/1611.00014
 * iPTF16asu - http://arxiv.org/abs/1706.05018
 * SCP16C03 - https://arxiv.org/abs/1707.04606
-* LSQ14efd - https://arxiv.org/abs/1707.04644
-* DES15E2mlf - https://arxiv.org/abs/1707.06649
 
 **Note: Below have yet to be checked for content.**
 * SN2011fe - http://adsabs.harvard.edu/abs/2013ApJ...762L...5S, http://adsabs.harvard.edu/abs/2013ApJ...767..119M
