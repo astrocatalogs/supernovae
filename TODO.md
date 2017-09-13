@@ -120,6 +120,7 @@ Other single SN datasets:
 * iPTF16geu - http://arxiv.org/abs/1611.00014
 * iPTF16asu - http://arxiv.org/abs/1706.05018
 * SCP16C03 - https://arxiv.org/abs/1707.04606
+* SN2016coi - http://adsabs.harvard.edu/abs/2017arXiv170903593P (LCs and spectra)
 
 **Note: Below have yet to be checked for content.**
 * SN2011fe - http://adsabs.harvard.edu/abs/2013ApJ...762L...5S, http://adsabs.harvard.edu/abs/2013ApJ...767..119M
