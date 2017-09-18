@@ -1,5 +1,4 @@
-"""Import tasks for the Harvard Center for Astrophysics
-"""
+"""Import tasks for the Harvard Center for Astrophysics."""
 import csv
 import os
 from glob import glob
@@ -21,6 +20,7 @@ ACKN_CFA = ("This research has made use of the CfA Supernova Archive, "
 
 
 def do_cfa_photo(catalog):
+    """Import photometry from the CfA archive."""
     from html import unescape
     import re
     task_str = catalog.get_current_task_str()
@@ -175,7 +175,78 @@ def do_cfa_photo(catalog):
 
 
 def do_cfa_spectra(catalog):
+    """Import spectra from the CfA archive."""
     task_str = catalog.get_current_task_str()
+    # II spectra
+    oldname = ''
+    file_names = next(
+        os.walk(os.path.join(catalog.get_current_task_repo(), 'CfA_SNII')))[1]
+    for ni, name in enumerate(pbar_strings(file_names, task_str)):
+        fullpath = os.path.join(catalog.get_current_task_repo(),
+                                'CfA_SNII/') + name
+        origname = name
+        if name.startswith('sn') and is_number(name[2:6]):
+            name = 'SN' + name[2:]
+        name = catalog.get_preferred_name(name)
+        if oldname and name != oldname:
+            catalog.journal_entries()
+        oldname = name
+        name = catalog.add_entry(name)
+        reference = 'CfA Supernova Archive'
+        refurl = 'https://www.cfa.harvard.edu/supernova/SNarchive.html'
+        source = catalog.entries[name].add_source(
+            name=reference,
+            url=refurl,
+            secondary=True,
+            acknowledgment=ACKN_CFA)
+        catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
+        for fi, fname in enumerate(
+                sorted(
+                    glob(fullpath + '/*'), key=lambda s: s.lower())):
+            filename = os.path.basename(fname)
+            fileparts = filename.split('-')
+            if origname.startswith('sn') and is_number(origname[2:6]):
+                year = fileparts[1][:4]
+                month = fileparts[1][4:6]
+                day = fileparts[1][6:]
+                instrument = fileparts[2].split('.')[0]
+            else:
+                year = fileparts[2][:4]
+                month = fileparts[2][4:6]
+                day = fileparts[2][6:]
+                instrument = fileparts[3].split('.')[0]
+            time = str(
+                astrotime(year + '-' + month + '-' + str(floor(float(day)))
+                          .zfill(2)).mjd + float(day) - floor(float(day)))
+            f = open(fname, 'r')
+            data = csv.reader(f, delimiter=' ', skipinitialspace=True)
+            data = [list(i) for i in zip(*data)]
+            wavelengths = data[0]
+            fluxes = data[1]
+            errors = data[2]
+            sources = uniq_cdl([
+                source,
+                (catalog.entries[name]
+                 .add_source(bibcode='2017arXiv170601030H'))
+            ])
+            catalog.entries[name].add_spectrum(
+                u_wavelengths='Angstrom',
+                u_fluxes='erg/s/cm^2/Angstrom',
+                filename=filename,
+                wavelengths=wavelengths,
+                fluxes=fluxes,
+                u_time='MJD' if time else '',
+                time=time,
+                instrument=instrument,
+                u_errors='ergs/s/cm^2/Angstrom',
+                errors=errors,
+                source=sources,
+                dereddened=False,
+                deredshifted=False)
+        if catalog.args.travis and ni >= catalog.TRAVIS_QUERY_LIMIT:
+            break
+    catalog.journal_entries()
+
     # Ia spectra
     oldname = ''
     file_names = next(
