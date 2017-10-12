@@ -45,7 +45,8 @@ def do_mosfit(catalog):
 
         new_entry = Supernova.init_from_file(
             catalog, path=fpath, compare_to_existing=False, try_gzip=True,
-            clean=False, merge=False)
+            clean=False, merge=False, filter_on={
+                'realization': [str(x) for x in range(1, REALIZATION_LIMIT)]})
 
         name = new_entry[SUPERNOVA.NAME]
 
