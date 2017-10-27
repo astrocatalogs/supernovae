@@ -69,8 +69,8 @@ def name_clean(name):
         newname = 'Gaia' + newname[4:].lower()
     if newname.startswith('GRB'):
         newname = newname.replace('GRB', 'GRB ', 1)
-    if newname.startswith('GRB ') and is_number(newname[4:].strip()):
-        newname = 'GRB ' + newname[4:].strip() + 'A'
+    # if newname.startswith('GRB ') and is_number(newname[4:].strip()):
+    #     newname = 'GRB ' + newname[4:].strip() + 'A'
     if newname.startswith('ESSENCE '):
         newname = newname.replace('ESSENCE ', 'ESSENCE', 1)
     if newname.startswith('LSQ '):
