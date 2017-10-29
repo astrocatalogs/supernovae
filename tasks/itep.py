@@ -23,7 +23,7 @@ def do_itep(catalog):
     itepignoresources = [
         '2004ApJ...602..571B', '2013NewA...20...30M', '1999AJ....117..707R',
         '2006AJ....131..527J']
-    itepignorephot = ['SN2006gy']
+    itepignorephot = ['SN2006gy', 'SN1999aw']
     needsbib = []
     with open(os.path.join(catalog.get_current_task_repo(),
                            'itep-refs.txt'), 'r') as refs_file:
