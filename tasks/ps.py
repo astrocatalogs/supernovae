@@ -165,6 +165,7 @@ def do_ps_alerts(catalog):
 def do_ps_threepi(catalog):
     """Import data from Pan-STARRS' 3pi page."""
     task_str = catalog.get_current_task_str()
+    bad_aliases = ['SN1994J']
     teles = 'Pan-STARRS1'
     fname = os.path.join(catalog.get_current_task_repo(), '3pi/page00.html')
     ps_url = ("http://psweb.mp.qub.ac.uk/"
@@ -268,6 +269,8 @@ def do_ps_threepi(catalog):
 
             name = ''
             for alias in aliases:
+                if alias in bad_aliases:
+                    continue
                 if alias[:2] == 'SN':
                     name = alias
             if not name:
