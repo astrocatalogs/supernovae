@@ -22,7 +22,7 @@ def do_itep(catalog):
     task_str = catalog.get_current_task_str()
     itepignoresources = [
         '2004ApJ...602..571B', '2013NewA...20...30M', '1999AJ....117..707R',
-        '2006AJ....131..527J']
+        '2006AJ....131..527J', '1994AJ....108.2233W']
     itepignorephot = ['SN2006gy', 'SN1999aw']
     needsbib = []
     with open(os.path.join(catalog.get_current_task_repo(),
