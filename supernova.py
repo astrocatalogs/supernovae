@@ -50,7 +50,7 @@ class Supernova(Entry):
 
     _KEYS = SUPERNOVA
 
-    def __init__(self, catalog, name, stub=False):
+    def __init__(self, catalog, name=None, stub=False):
         """Initialize `Supernova`."""
         super(Supernova, self).__init__(catalog, name, stub=stub)
         return

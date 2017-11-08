@@ -3,6 +3,7 @@
 import json
 import os
 from collections import OrderedDict
+from copy import deepcopy
 from decimal import Decimal
 from glob import glob
 
@@ -218,8 +219,26 @@ def do_internal(catalog):
     catalog.log.debug("found {} files matching '{}'".format(
         len(files), path_pattern))
     for datafile in pbar_strings(files, task_str):
-        new_event = Supernova.init_from_file(
-            catalog, path=datafile, clean=True)
-        catalog.entries.update({new_event[SUPERNOVA.NAME]: new_event})
+        new_entry = Supernova.init_from_file(
+            catalog, path=datafile, clean=True, merge=True)
+
+        name = new_entry[SUPERNOVA.NAME]
+        old_name = None
+
+        for alias in new_entry.get_aliases():
+            if catalog.entry_exists(alias):
+                old_name = catalog.get_preferred_name(alias)
+                if catalog.entries[old_name]._stub:
+                    catalog.add_entry(old_name)
+                break
+
+        if old_name:
+            old_entry = deepcopy(catalog.entries[old_name])
+            catalog.copy_entry_to_entry(new_entry, old_entry)
+            catalog.entries[old_name] = old_entry
+        else:
+            catalog.entries[name] = new_entry
+
+        catalog.journal_entries()
 
     return
