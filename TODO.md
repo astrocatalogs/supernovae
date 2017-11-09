@@ -118,9 +118,9 @@ Other single SN datasets:
 * iPTF14atg - http://adsabs.harvard.edu/abs/2015Natur.521..328C (LC, data not in paper)
 * LSQ14efd - https://arxiv.org/abs/1707.04644
 * SN2015bh - http://arxiv.org/abs/1609.00731
+* SN2015F - https://arxiv.org/abs/1711.01275
 * SN2015H - http://adsabs.harvard.edu/abs/2016A%26A...589A..89M (LC, data not in paper)
 * iPTF15dtg - http://arxiv.org/abs/1605.02491 (LCs and spectra available)
-* ASASSN-14ms - https://arxiv.org/abs/1711.00862
 * DES15E2mlf - https://arxiv.org/abs/1707.06649
 * iPTF16geu - http://arxiv.org/abs/1611.00014
 * iPTF16asu - http://arxiv.org/abs/1706.05018
