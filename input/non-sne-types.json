@@ -36,6 +36,7 @@
 	"Mira",
 	"Mover",
 	"MP",
+	"Not",
 	"Nova",
 	"QSO",
 	"Quasar",
@@ -51,5 +52,6 @@
 	"Variable",
 	"Varstar",
 	"VS",
+	"weirdnoSN",
 	"YSO"
 ]
