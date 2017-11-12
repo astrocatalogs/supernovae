@@ -63,7 +63,6 @@ Other single SN datasets:
 * SN2000cx - http://adsabs.harvard.edu/abs/2002ApJ...565..413R (spectra)
 * SN2000ew - http://adsabs.harvard.edu/abs/2002PASJ...54..905G (spectra)
 * SN2001el - http://adsabs.harvard.edu/abs/2005A%26A...443..649M (spectra)
-* SN2002bj - http://adsabs.harvard.edu/abs/2010Sci...327...58P (photometry)
 * SN2002fk - http://adsabs.harvard.edu/abs/2014ApJ...789...89C (spectra)
 * SN2003hx - http://adsabs.harvard.edu/abs/2008MNRAS.389..706M (spectra)
 * SN2003ma - http://adsabs.harvard.edu/abs/2011ApJ...729...88R (spectra)
