@@ -92,7 +92,6 @@ Other single SN datasets:
 * SN2008ge - http://adsabs.harvard.edu/abs/2010AJ....140.1321F (V-band photometry)
 * SN2008in - http://adsabs.harvard.edu/abs/2011ApJ...736...76R (UBVRIJH photometry, data already on OSC?)
 * SN2009dc - http://adsabs.harvard.edu/abs/2009ApJ...707L.118Y (spectra)
-* SN2009hd - http://adsabs.harvard.edu/abs/2011ApJ...742....6E (photometry in ASCII table)
 * SN2009ig - http://adsabs.harvard.edu/abs/2012ApJ...744...38F (likely no new photometry)
 * SN2009ig - http://adsabs.harvard.edu/abs/2013ApJ...777...40M (spectra only)
 * SN2009ip - http://mnras.oxfordjournals.org/content/453/4/3886.full (spectra only?)
