@@ -104,6 +104,7 @@ Other single SN datasets:
 * SN2010aq - http://adsabs.harvard.edu/abs/2010ApJ...720L..77G (photometry)
 * SN2010bh - http://iopscience.iop.org/article/10.1088/0004-637X/740/1/41/meta (photometry)
 * SN2010ev - http://adsabs.harvard.edu/abs/2016arXiv160107863G (photometry)
+* SN2011kl - http://adsabs.harvard.edu/abs/2015Natur.523..189G (Photometry in *JPG* tables!)
 * PTF11iqb - http://adsabs.harvard.edu/abs/2015MNRAS.449.1876S (Photometry available)
 * PS1-11ap - http://mnras.oxfordjournals.org/content/437/1/656.full (Missing spectra)
 * SN2012ap - http://adsabs.harvard.edu/abs/2015RAA....15..225L (Article in weird journal)
@@ -115,6 +116,7 @@ Other single SN datasets:
 * SN2014C - http://adsabs.harvard.edu/abs/2015ApJ...815..120M  (LC & spectra, data not in paper)
 * iPTF14atg - http://adsabs.harvard.edu/abs/2015Natur.521..328C (LC, data not in paper)
 * LSQ14efd - https://arxiv.org/abs/1707.04644
+* SN2014dt - https://arxiv.org/abs/1711.00292 (photometry)
 * SN2015bh - http://arxiv.org/abs/1609.00731
 * SN2015F - https://arxiv.org/abs/1711.01275
 * SN2015H - http://adsabs.harvard.edu/abs/2016A%26A...589A..89M (LC, data not in paper)
@@ -127,13 +129,11 @@ Other single SN datasets:
 
 **Note: Below have yet to be checked for content.**
 * SN2011fe - http://adsabs.harvard.edu/abs/2013ApJ...762L...5S, http://adsabs.harvard.edu/abs/2013ApJ...767..119M
-* SN2011kl - http://adsabs.harvard.edu/abs/2015Natur.523..189G
 * SN2012au - http://adsabs.harvard.edu/abs/2013ApJ...770L..38M, http://adsabs.harvard.edu/abs/2013ApJ...772L..17T
 * SN2012aw - http://adsabs.harvard.edu/abs/2013MNRAS.433.1871B, http://adsabs.harvard.edu/abs/2014ApJ...787..139D
 * SN2013df - http://adsabs.harvard.edu/abs/2014MNRAS.445.1647M, http://adsabs.harvard.edu/abs/2015ApJ...803...40B, http://adsabs.harvard.edu/abs/2015ApJ...807...35M
 * SN2013ej - http://adsabs.harvard.edu/abs/2015arXiv150901721D, http://adsabs.harvard.edu/abs/2015ApJ...807...59H
 * SN2014J - http://adsabs.harvard.edu/abs/2014ApJ...795L...4K, http://adsabs.harvard.edu/abs/2014ApJ...784L..12G, http://adsabs.harvard.edu/abs/2015ApJ...804...66V, http://adsabs.harvard.edu/abs/2015ApJ...798...93T, http://adsabs.harvard.edu/abs/2015ApJ...798...39M, http://adsabs.harvard.edu/abs/2015MNRAS.451.4104J, http://adsabs.harvard.edu/abs/2016MNRAS.457.1000S
-* SN2014dt - https://arxiv.org/abs/1711.00292
 
 Spectra to recover that were donated to SuSpect (bad wavelength solutions, etc):
 * 2000E_20000130_3274_7356_00.dat
