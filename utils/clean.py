@@ -143,6 +143,8 @@ def name_clean(name):
         newname = newname.replace('SMTJ', 'SMT J', 1)
     if newname.startswith('PSN20J'):
         newname = newname.replace('PSN20J', 'PSN J', 1)
+    if newname.startswith('kait'):
+        newname = newname.replace('kait', 'KAIT', 1)
     if newname.startswith('SN ASASSN'):
         newname = newname.replace('SN ASASSN', 'ASASSN', 1)
     if newname.startswith('ASASSN-20') and is_number(newname[9]):
