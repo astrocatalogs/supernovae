@@ -886,7 +886,7 @@ class Supernova(Entry):
                  (is_number(alias[2:5]) and not is_number(alias[5:])))):
                 newname = alias
                 break
-        # Otherwise, name based on the 'discoverer' survey
+        # If not, name based on the 'discoverer' survey
         if not newname and SUPERNOVA.DISCOVERER in self:
             discoverer = ','.join(
                 [x['value'].upper() for x in self[SUPERNOVA.DISCOVERER]])
@@ -928,6 +928,17 @@ class Supernova(Entry):
                     if 'GAIA' in alias.upper():
                         newname = alias
                         break
+        # If one of the aliases is in the form 'AT####AA' then use that
+        if not newname:
+            for alias in aliases:
+                if (alias.startswith('AT') and
+                    ((is_number(alias[2:6]) and not is_number(alias[6:])) or
+                     (is_number(alias[2:5]) and not is_number(alias[5:])))):
+                    newname = alias
+                    break
+        # Otherwise, use the shortest name.
+        if not newname:
+            newname = min(aliases, key=len)
         # Always prefer another alias over PSN
         if not newname and name.startswith('PSN'):
             for alias in aliases:
