@@ -99,6 +99,8 @@ class SupernovaCatalog(Catalog):
                         ct_val = ct[QUANTITY.VALUE]
             else:
                 if (SUPERNOVA.DISCOVER_DATE in self.entries[name] and
+                    any([x.get(QUANTITY.VALUE).startswith('AT')
+                         for x in self.entries[name][SUPERNOVA.ALIAS]]) and
                     not any([x.get(QUANTITY.VALUE).startswith('SN')
                              for x in self.entries[name][SUPERNOVA.ALIAS]])):
                     try:
@@ -110,7 +112,7 @@ class SupernovaCatalog(Catalog):
                             dd = datetime.strptime(self.entries[name][
                                 SUPERNOVA.DISCOVER_DATE][0].get('value', '') +
                                 '/12/31',
-                                '%Y/%m/%d')
+                                '%Y')
                     except ValueError:
                         pass
                     else:

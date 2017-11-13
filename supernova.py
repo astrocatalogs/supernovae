@@ -455,8 +455,15 @@ class Supernova(Entry):
         if self._KEYS.CLAIMED_TYPE in self:
             self[self._KEYS.CLAIMED_TYPE][:] = [
                 ct for ct in self[self._KEYS.CLAIMED_TYPE]
-                if (ct[QUANTITY.VALUE] != '?' and ct[QUANTITY.VALUE] != '-')
+                if ct[QUANTITY.VALUE] not in ['?', '-']
             ]
+            if (len(self[self._KEYS.CLAIMED_TYPE]) > 1 and
+                any([x[QUANTITY.VALUE].lower() == 'candidate'
+                     for x in self[self._KEYS.CLAIMED_TYPE]])):
+                self[self._KEYS.CLAIMED_TYPE][:] = [
+                    ct for ct in self[self._KEYS.CLAIMED_TYPE]
+                    if ct[QUANTITY.VALUE].lower() != 'candidate'
+                ]
             if not len(self[self._KEYS.CLAIMED_TYPE]):
                 del (self[self._KEYS.CLAIMED_TYPE])
         if self._KEYS.CLAIMED_TYPE not in self and name.startswith('AT'):
