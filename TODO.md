@@ -95,12 +95,10 @@ Other single SN datasets:
 * SN2009ig - http://adsabs.harvard.edu/abs/2012ApJ...744...38F (likely no new photometry)
 * SN2009ig - http://adsabs.harvard.edu/abs/2013ApJ...777...40M (spectra only)
 * SN2009ip - http://mnras.oxfordjournals.org/content/453/4/3886.full (spectra only?)
-* SN2009jf - http://adsabs.harvard.edu/abs/2011MNRAS.413.2583S (UBVRI photometry)
 * SN2009kf - http://adsabs.harvard.edu/abs/2010ApJ...717L..52B (photometry only in graphical form)
 * SN2009kn - http://adsabs.harvard.edu/abs/2012MNRAS.424..855K (spectra only)
 * SN2009kr - http://adsabs.harvard.edu/abs/2010ApJ...714L.280F (spectra only)
 * SN2009ku - http://adsabs.harvard.edu/abs/2011ApJ...731L..11N (griz photometry)
-* UDS10Wil - http://adsabs.harvard.edu/abs/2013ApJ...768..166J (photometry)
 * SN2010aq - http://adsabs.harvard.edu/abs/2010ApJ...720L..77G (photometry)
 * SN2010bh - http://iopscience.iop.org/article/10.1088/0004-637X/740/1/41/meta (photometry)
 * SN2010ev - http://adsabs.harvard.edu/abs/2016arXiv160107863G (photometry)
@@ -126,6 +124,7 @@ Other single SN datasets:
 * iPTF16asu - http://arxiv.org/abs/1706.05018
 * SCP16C03 - https://arxiv.org/abs/1707.04606
 * SN2016coi - http://adsabs.harvard.edu/abs/2017arXiv170903593P (LCs and spectra)
+* SN2016ija - https://arxiv.org/abs/1711.03940 (photometry)
 
 **Note: Below have yet to be checked for content.**
 * SN2011fe - http://adsabs.harvard.edu/abs/2013ApJ...762L...5S, http://adsabs.harvard.edu/abs/2013ApJ...767..119M
