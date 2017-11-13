@@ -57,7 +57,7 @@ def do_snax(catalog):
         catalog.entries[name].add_quantity(
             SUPERNOVA.RA, ' '.join(row[3].split()[:3]), coosrc)
         catalog.entries[name].add_quantity(
-            SUPERNOVA.DEC, ' '.join(row[3].split()[:3]), coosrc)
+            SUPERNOVA.DEC, ' '.join(row[3].split()[3:]), coosrc)
         catalog.entries[name].add_quantity(SUPERNOVA.LUM_DIST, row[4], dissrc)
         catalog.entries[name].add_quantity(SUPERNOVA.HOST, row[5], source)
         catalog.entries[name].add_quantity(
