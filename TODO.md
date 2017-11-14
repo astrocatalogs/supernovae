@@ -58,6 +58,7 @@ Other single SN datasets:
 * SN1998bw - Photometry with measured errors available in original literature.
 * SN1999aw - http://adsabs.harvard.edu/abs/2002AJ....124.2905S (spectra)
 * SN1999by - http://adsabs.harvard.edu/abs/2002ApJ...568..791H (spectra)
+* SN1999ec - Need to find source (photometry)
 * SN1999el - http://adsabs.harvard.edu/abs/2002ApJ...573..144D (spectra)
 * SN1999em - http://adsabs.harvard.edu/abs/2003MNRAS.338..939E (spectra)
 * SN2000cx - http://adsabs.harvard.edu/abs/2002ApJ...565..413R (spectra)
