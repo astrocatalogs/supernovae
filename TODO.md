@@ -126,6 +126,7 @@ Other single SN datasets:
 * SCP16C03 - https://arxiv.org/abs/1707.04606
 * SN2016coi - http://adsabs.harvard.edu/abs/2017arXiv170903593P (LCs and spectra)
 * SN2016ija - https://arxiv.org/abs/1711.03940 (photometry)
+* SN2017hcc - https://arxiv.org/abs/1711.07938 (photometry/spectra, but only in graphical form)
 
 **Note: Below have yet to be checked for content.**
 * SN2011fe - http://adsabs.harvard.edu/abs/2013ApJ...762L...5S, http://adsabs.harvard.edu/abs/2013ApJ...767..119M
