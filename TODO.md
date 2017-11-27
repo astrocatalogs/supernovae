@@ -119,6 +119,7 @@ Other single SN datasets:
 * SN2015bh - http://arxiv.org/abs/1609.00731
 * SN2015F - https://arxiv.org/abs/1711.01275
 * SN2015H - http://adsabs.harvard.edu/abs/2016A%26A...589A..89M (LC, data not in paper)
+* SN2015J - https://arxiv.org/abs/1711.08655 (photometry, X-ray)
 * iPTF15dtg - http://arxiv.org/abs/1605.02491 (LCs and spectra available)
 * DES15E2mlf - https://arxiv.org/abs/1707.06649
 * iPTF16geu - http://arxiv.org/abs/1611.00014
