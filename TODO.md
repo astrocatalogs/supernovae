@@ -24,6 +24,7 @@ Other multiple SN datasets:
 * http://arxiv.org/abs/1603.05657 (KSN2011a, KSN2011d)
 * https://arxiv.org/abs/1705.10806 (Nine II-P/L light curves)
 * http://csp.obs.carnegiescience.edu/data/Gutierrez_et_al_2017.tar.gz/view (Type II spectra)
+* https://arxiv.org/abs/1711.10501 (two SNe, data only in graphical form)
 
 Other single SN datasets:
 
