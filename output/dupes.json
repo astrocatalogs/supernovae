@@ -753,6 +753,24 @@
 		"edit":false
 	},
 	{
+		"name1":"SN2001I",
+		"aliases1":[
+			"SN2001I"
+		],
+		"name2":"PS16bpu",
+		"aliases2":[
+			"PS16bpu"
+		],
+		"ra1":"03:43:57.28",
+		"dec1":"+39:17:39.4",
+		"ra2":"03:43:57.13",
+		"dec2":"+39:17:38.4",
+		"distdeg":"2.00800343309",
+		"maxdiffyear":"",
+		"discdiffyear":"15.0",
+		"edit":false
+	},
+	{
 		"name1":"SN2002bw",
 		"aliases1":[
 			"SN2002bw"
@@ -1037,6 +1055,24 @@
 		"distdeg":"4.183788836",
 		"maxdiffyear":"",
 		"discdiffyear":"12.28611111111104",
+		"edit":false
+	},
+	{
+		"name1":"SN2003ih",
+		"aliases1":[
+			"SN2003ih"
+		],
+		"name2":"PS16bpu",
+		"aliases2":[
+			"PS16bpu"
+		],
+		"ra1":"03:43:57.72",
+		"dec1":"+39:17:43.9",
+		"ra2":"03:43:57.13",
+		"dec2":"+39:17:38.4",
+		"distdeg":"8.78400676548",
+		"maxdiffyear":"",
+		"discdiffyear":"12.333333333333258",
 		"edit":false
 	},
 	{
@@ -1378,25 +1414,6 @@
 		"distdeg":"9.07246643358",
 		"maxdiffyear":"",
 		"discdiffyear":"0.0",
-		"edit":false
-	},
-	{
-		"name1":"HST05Spo",
-		"aliases1":[
-			"HST05Spo",
-			"Spock"
-		],
-		"name2":"GND13Vin",
-		"aliases2":[
-			"GND13Vin"
-		],
-		"ra1":"12:37:06.530",
-		"dec1":"+62:15:11.70",
-		"ra2":"12:37:06.354",
-		"dec2":"+62:15:17.79",
-		"distdeg":"6.21278335067",
-		"maxdiffyear":"",
-		"discdiffyear":"7.900000000000091",
 		"edit":false
 	},
 	{
@@ -1839,6 +1856,24 @@
 		"edit":false
 	},
 	{
+		"name1":"MLS160328:130415-054540",
+		"aliases1":[
+			"MLS160328:130415-054540"
+		],
+		"name2":"CSS160529:130415-054540",
+		"aliases2":[
+			"CSS160529:130415-054540"
+		],
+		"ra1":"13:04:14.64",
+		"dec1":"-05:45:40.176",
+		"ra2":"13:04:14.69",
+		"dec2":"-05:45:39.8",
+		"distdeg":"0.835588452075",
+		"maxdiffyear":"",
+		"discdiffyear":"10.027777777777828",
+		"edit":false
+	},
+	{
 		"name1":"MLS161205:111930+143242",
 		"aliases1":[
 			"MLS161205:111930+143242"
@@ -1855,49 +1890,6 @@
 		"distdeg":"0.731520259011",
 		"maxdiffyear":"",
 		"discdiffyear":"10.742991641666322",
-		"edit":false
-	},
-	{
-		"name1":"MLS170626:213243-120005",
-		"aliases1":[
-			"MLS170626:213243-120005"
-		],
-		"name2":"CSS170602:213243-120005",
-		"aliases2":[
-			"CSS170602:213243-120005",
-			"AT2017fdg",
-			"PS17dnl",
-			"MLS170626:213243-120004",
-			"ATLAS17grg"
-		],
-		"ra1":"21:32:43.2",
-		"dec1":"-12:00:04.68",
-		"ra2":"21:32:43.19",
-		"dec2":"-12:00:04.75",
-		"distdeg":"0.162564378631",
-		"maxdiffyear":"",
-		"discdiffyear":"12.037702772222246",
-		"edit":false
-	},
-	{
-		"name1":"AT2017fxp",
-		"aliases1":[
-			"AT2017fxp",
-			"ATLAS17jgc",
-			"CSS170918:032037+093315",
-			"Gaia17ciz"
-		],
-		"name2":"MLS170926:032037+093314",
-		"aliases2":[
-			"MLS170926:032037+093314"
-		],
-		"ra1":"03:20:36.60",
-		"dec1":"+09:33:14.36",
-		"ra2":"03:20:36.6",
-		"dec2":"+09:33:14.328",
-		"distdeg":"0.0319999999898",
-		"maxdiffyear":"",
-		"discdiffyear":"9.57391110555568",
 		"edit":false
 	},
 	{
@@ -2742,6 +2734,24 @@
 		"edit":false
 	},
 	{
+		"name1":"SN2007ev",
+		"aliases1":[
+			"SN2007ev"
+		],
+		"name2":"PS16cvg",
+		"aliases2":[
+			"PS16cvg"
+		],
+		"ra1":"22:40:06.18",
+		"dec1":"+24:41:57.1",
+		"ra2":"22:40:05.840",
+		"dec2":"+24:41:55.50",
+		"distdeg":"4.90190503188",
+		"maxdiffyear":"8.958333333333258",
+		"discdiffyear":"8.977777777777646",
+		"edit":false
+	},
+	{
 		"name1":"SN2007ga",
 		"aliases1":[
 			"SN2007ga"
@@ -3211,6 +3221,24 @@
 		"edit":false
 	},
 	{
+		"name1":"SN2009hj",
+		"aliases1":[
+			"SN2009hj"
+		],
+		"name2":"AT2017itc",
+		"aliases2":[
+			"AT2017itc"
+		],
+		"ra1":"22:45:46.08",
+		"dec1":"+11:07:58.3",
+		"ra2":"22:45:46.05",
+		"dec2":"+11:07:55.01",
+		"distdeg":"3.3194956039",
+		"maxdiffyear":"8.441666666666833",
+		"discdiffyear":"8.439108024722145",
+		"edit":false
+	},
+	{
 		"name1":"SN2009jk",
 		"aliases1":[
 			"SN2009jk"
@@ -3303,6 +3331,25 @@
 		"edit":false
 	},
 	{
+		"name1":"Spock",
+		"aliases1":[
+			"Spock",
+			"HST05Spo"
+		],
+		"name2":"GND13Vin",
+		"aliases2":[
+			"GND13Vin"
+		],
+		"ra1":"12:37:06.530",
+		"dec1":"+62:15:11.70",
+		"ra2":"12:37:06.354",
+		"dec2":"+62:15:17.79",
+		"distdeg":"6.21278335067",
+		"maxdiffyear":"",
+		"discdiffyear":"7.900000000000091",
+		"edit":false
+	},
+	{
 		"name1":"SN2012es",
 		"aliases1":[
 			"SN2012es",
@@ -3319,6 +3366,25 @@
 		"distdeg":"1.00618776658",
 		"maxdiffyear":"",
 		"discdiffyear":"5.16944444444448",
+		"edit":false
+	},
+	{
+		"name1":"AT2014fo",
+		"aliases1":[
+			"AT2014fo"
+		],
+		"name2":"SNhunt246",
+		"aliases2":[
+			"SNhunt246",
+			"PSN J14445230+0022030"
+		],
+		"ra1":"14:44:52.40",
+		"dec1":"+00:22:00.48",
+		"ra2":"14:44:52.3",
+		"dec2":"+00:22:03",
+		"distdeg":"2.93262810656",
+		"maxdiffyear":"",
+		"discdiffyear":"0.008994824999945195",
 		"edit":false
 	},
 	{
@@ -3541,6 +3607,27 @@
 		"edit":false
 	},
 	{
+		"name1":"IKT 22",
+		"aliases1":[
+			"IKT 22",
+			"SMCSNR J010401-720152",
+			"MCSNR J0104-7201",
+			"SNR B0102-72.3"
+		],
+		"name2":"SMCSNR J01040201-7201499",
+		"aliases2":[
+			"SMCSNR J01040201-7201499"
+		],
+		"ra1":"01:04:01.2",
+		"dec1":"-72:01:52",
+		"ra2":"01:04:02.01",
+		"dec2":"-72:01:49.9",
+		"distdeg":"4.29651662441",
+		"maxdiffyear":"",
+		"discdiffyear":"0.0",
+		"edit":false
+	},
+	{
 		"name1":"iPTF13ebw",
 		"aliases1":[
 			"iPTF13ebw"
@@ -3616,6 +3703,24 @@
 		"edit":false
 	},
 	{
+		"name1":"MASTER OT J080909.92+032014.5",
+		"aliases1":[
+			"MASTER OT J080909.92+032014.5"
+		],
+		"name2":"PS16bcb",
+		"aliases2":[
+			"PS16bcb"
+		],
+		"ra1":"08:09:09.92",
+		"dec1":"+03:20:14.5",
+		"ra2":"08:09:09.83",
+		"dec2":"+03:20:14.1",
+		"distdeg":"1.40581783187",
+		"maxdiffyear":"3.938888888889096",
+		"discdiffyear":"3.9361111111113587",
+		"edit":false
+	},
+	{
 		"name1":"PS1-14xn",
 		"aliases1":[
 			"PS1-14xn",
@@ -3632,27 +3737,6 @@
 		"distdeg":"1.00105358568",
 		"maxdiffyear":"0.08888888888895963",
 		"discdiffyear":"0.09722222222239907",
-		"edit":false
-	},
-	{
-		"name1":"MCSNR J0104-7201",
-		"aliases1":[
-			"MCSNR J0104-7201",
-			"SMCSNR J010401-720152",
-			"IKT 22",
-			"SNR B0102-72.3"
-		],
-		"name2":"SMCSNR J01040201-7201499",
-		"aliases2":[
-			"SMCSNR J01040201-7201499"
-		],
-		"ra1":"01:04:01.2",
-		"dec1":"-72:01:52",
-		"ra2":"01:04:02.01",
-		"dec2":"-72:01:49.9",
-		"distdeg":"4.29651662441",
-		"maxdiffyear":"",
-		"discdiffyear":"0.0",
 		"edit":false
 	},
 	{
@@ -3746,6 +3830,24 @@
 		"edit":false
 	},
 	{
+		"name1":"MLS151122:083521+181515",
+		"aliases1":[
+			"MLS151122:083521+181515"
+		],
+		"name2":"PS16dx",
+		"aliases2":[
+			"PS16dx"
+		],
+		"ra1":"08:35:20.88",
+		"dec1":"+18:15:15.48",
+		"ra2":"08:35:20.97",
+		"dec2":"+18:15:15.1",
+		"distdeg":"1.3371926549",
+		"maxdiffyear":"",
+		"discdiffyear":"5.808333333333394",
+		"edit":false
+	},
+	{
 		"name1":"OGLE-2013-SN-017",
 		"aliases1":[
 			"OGLE-2013-SN-017"
@@ -3764,11 +3866,11 @@
 		"edit":false
 	},
 	{
-		"name1":"OGLE-2011-SN-034",
+		"name1":"mbr121.29.882",
 		"aliases1":[
+			"mbr121.29.882",
 			"OGLE-2011-SN-034",
-			"OGLE-MBR121.29.00882",
-			"mbr121.29.882"
+			"OGLE-MBR121.29.00882"
 		],
 		"name2":"OGLE-2013-SN-022",
 		"aliases2":[
@@ -3781,6 +3883,24 @@
 		"distdeg":"5.21512298022",
 		"maxdiffyear":"1.4472222222223081",
 		"discdiffyear":"",
+		"edit":false
+	},
+	{
+		"name1":"OGLE-2013-SN-036",
+		"aliases1":[
+			"OGLE-2013-SN-036"
+		],
+		"name2":"OGLE16coz",
+		"aliases2":[
+			"OGLE16coz"
+		],
+		"ra1":"00:54:27.93",
+		"dec1":"-68:37:30.7",
+		"ra2":"00:54:27.14",
+		"dec2":"-68:37:30.4",
+		"distdeg":"4.32935266987",
+		"maxdiffyear":"3.2194444444444343",
+		"discdiffyear":"3.0611111111111313",
 		"edit":false
 	},
 	{
@@ -3800,6 +3920,24 @@
 		"distdeg":"5.04454272068",
 		"maxdiffyear":"3.3916666666666515",
 		"discdiffyear":"3.3194444444443434",
+		"edit":false
+	},
+	{
+		"name1":"OGLE-2013-SN-119",
+		"aliases1":[
+			"OGLE-2013-SN-119"
+		],
+		"name2":"OGLE16ged",
+		"aliases2":[
+			"OGLE16ged"
+		],
+		"ra1":"06:19:45.55",
+		"dec1":"-71:20:19.43",
+		"ra2":"06:19:45.550",
+		"dec2":"-71:20:19.50",
+		"distdeg":"0.0699999999765",
+		"maxdiffyear":"3.08055555555552",
+		"discdiffyear":"3.0833333333332575",
 		"edit":false
 	},
 	{
@@ -3854,6 +3992,24 @@
 		"distdeg":"0.680785054978",
 		"maxdiffyear":"0.05833333333316659",
 		"discdiffyear":"0.11944444444452529",
+		"edit":false
+	},
+	{
+		"name1":"PS1-1000789",
+		"aliases1":[
+			"PS1-1000789"
+		],
+		"name2":"PS1-10adi",
+		"aliases2":[
+			"PS1-10adi"
+		],
+		"ra1":"20:42:44.7490",
+		"dec1":"+15:30:32.240",
+		"ra2":"20:42:44.740",
+		"dec2":"+15:30:32.10",
+		"distdeg":"0.191107228274",
+		"maxdiffyear":"",
+		"discdiffyear":"0.0861111111109949",
 		"edit":false
 	},
 	{
@@ -4038,29 +4194,10 @@
 		"edit":false
 	},
 	{
-		"name1":"SN2012db",
-		"aliases1":[
-			"SN2012db",
-			"PSN J17484870-6042193"
-		],
-		"name2":"PSN J17484862-6042189",
-		"aliases2":[
-			"PSN J17484862-6042189"
-		],
-		"ra1":"17:48:48.70",
-		"dec1":"-60:42:19.3",
-		"ra2":"17:48:48.62",
-		"dec2":"-60:42:18.9",
-		"distdeg":"0.710464113376",
-		"maxdiffyear":"0.03333333333307564",
-		"discdiffyear":"0.02222222222212622",
-		"edit":false
-	},
-	{
 		"name1":"AT2016ewr",
 		"aliases1":[
 			"AT2016ewr",
-			"kait-16au"
+			"KAIT-16au"
 		],
 		"name2":"PSN J18223801+1226179",
 		"aliases2":[
@@ -4458,14 +4595,15 @@
 		"aliases2":[
 			"SN2017hgz",
 			"AT2017hgz",
-			"ASASSN-17ng"
+			"ASASSN-17ng",
+			"Gaia17dab"
 		],
 		"ra1":"21:48:20.22",
 		"dec1":"-34:57:16.5",
 		"ra2":"21:48:20.08",
 		"dec2":"-34:57:10.62",
 		"distdeg":"6.12673627321",
-		"maxdiffyear":"7.4833333333333485",
+		"maxdiffyear":"7.513888888888914",
 		"discdiffyear":"7.480611111111102",
 		"edit":false
 	},
@@ -4660,6 +4798,26 @@
 		"edit":false
 	},
 	{
+		"name1":"SN2013be",
+		"aliases1":[
+			"SN2013be",
+			"iPTF13aig",
+			"PSN J12362767+1145281"
+		],
+		"name2":"PS16ahk",
+		"aliases2":[
+			"PS16ahk"
+		],
+		"ra1":"12:36:27.67",
+		"dec1":"+11:45:28.1",
+		"ra2":"12:36:27.07",
+		"dec2":"+11:45:30.7",
+		"distdeg":"9.18674740073",
+		"maxdiffyear":"2.8444444444446617",
+		"discdiffyear":"2.8500000000001364",
+		"edit":false
+	},
+	{
 		"name1":"SN2014bh",
 		"aliases1":[
 			"SN2014bh",
@@ -4756,6 +4914,46 @@
 		"edit":false
 	},
 	{
+		"name1":"Gaia17bqu",
+		"aliases1":[
+			"Gaia17bqu",
+			"AT2017fbf"
+		],
+		"name2":"ASASSN-17ph",
+		"aliases2":[
+			"ASASSN-17ph",
+			"AT2017igs"
+		],
+		"ra1":"06:23:38.85",
+		"dec1":"-35:38:28.46",
+		"ra2":"06:23:38.57",
+		"dec2":"-35:38:23.50",
+		"distdeg":"6.02097685283",
+		"maxdiffyear":"0.42777777777791925",
+		"discdiffyear":"0.42604446388895667",
+		"edit":false
+	},
+	{
+		"name1":"SN2017ilt",
+		"aliases1":[
+			"SN2017ilt",
+			"AT2017ilt",
+			"ASASN-17pq"
+		],
+		"name2":"ASASSN-17pq",
+		"aliases2":[
+			"ASASSN-17pq"
+		],
+		"ra1":"00:49:13.39",
+		"dec1":"-25:41:48.59",
+		"ra2":"00:49:13.368",
+		"dec2":"-25:41:48.48",
+		"distdeg":"0.317056736945",
+		"maxdiffyear":"",
+		"discdiffyear":"2.777777785922808e-05",
+		"edit":false
+	},
+	{
 		"name1":"AT2015cf",
 		"aliases1":[
 			"AT2015cf"
@@ -4771,6 +4969,44 @@
 		"distdeg":"0.696436341383",
 		"maxdiffyear":"0.0",
 		"discdiffyear":"0.0",
+		"edit":false
+	},
+	{
+		"name1":"AT2015cl",
+		"aliases1":[
+			"AT2015cl"
+		],
+		"name2":"PS15uz",
+		"aliases2":[
+			"PS15uz"
+		],
+		"ra1":"15:19:06.17",
+		"dec1":"+03:01:11.89",
+		"ra2":"15:19:06.18",
+		"dec2":"+03:01:11.8",
+		"distdeg":"0.174749962575",
+		"maxdiffyear":"",
+		"discdiffyear":"0.009258230555587943",
+		"edit":false
+	},
+	{
+		"name1":"AT2016bar",
+		"aliases1":[
+			"AT2016bar",
+			"XTSS-16A",
+			"PS16bke"
+		],
+		"name2":"iPTF16br",
+		"aliases2":[
+			"iPTF16br"
+		],
+		"ra1":"12:07:07.30",
+		"dec1":"+53:40:06.30",
+		"ra2":"12:07:07.2",
+		"dec2":"+53:40:04.8",
+		"distdeg":"1.74349380341",
+		"maxdiffyear":"",
+		"discdiffyear":"0.2658332999999402",
 		"edit":false
 	},
 	{
@@ -4793,6 +5029,24 @@
 		"edit":false
 	},
 	{
+		"name1":"AT2016jbg",
+		"aliases1":[
+			"AT2016jbg"
+		],
+		"name2":"Gaia17ann",
+		"aliases2":[
+			"Gaia17ann"
+		],
+		"ra1":"00:43:01.49",
+		"dec1":"+41:16:59.40",
+		"ra2":"00:43:01.68",
+		"dec2":"+41:17:00.24",
+		"distdeg":"2.30049366814",
+		"maxdiffyear":"0.06944444444457076",
+		"discdiffyear":"0.06802793888891756",
+		"edit":false
+	},
+	{
 		"name1":"AT2016jbx",
 		"aliases1":[
 			"AT2016jbx"
@@ -4808,24 +5062,6 @@
 		"distdeg":"8.52831855055",
 		"maxdiffyear":"0.8666666666667879",
 		"discdiffyear":"0.8669670138890524",
-		"edit":false
-	},
-	{
-		"name1":"AT2017cbs",
-		"aliases1":[
-			"AT2017cbs"
-		],
-		"name2":"PSN J12322660+1615318",
-		"aliases2":[
-			"PSN J12322660+1615318"
-		],
-		"ra1":"12:32:26.63",
-		"dec1":"+16:15:31.10",
-		"ra2":"12:32:26.60",
-		"dec2":"+16:15:31.8",
-		"distdeg":"0.82257327354",
-		"maxdiffyear":"2.0361111111110404",
-		"discdiffyear":"2.0381666666667115",
 		"edit":false
 	},
 	{
@@ -4845,6 +5081,47 @@
 		"distdeg":"8.24979460559",
 		"maxdiffyear":"2.586111111110995",
 		"discdiffyear":"2.65591049444447",
+		"edit":false
+	},
+	{
+		"name1":"SN2016cbx",
+		"aliases1":[
+			"SN2016cbx",
+			"AT2016cbx",
+			"ASASSN-16es",
+			"MLS160505:115055+021825"
+		],
+		"name2":"CSS160528:115054+021826",
+		"aliases2":[
+			"CSS160528:115054+021826"
+		],
+		"ra1":"11:50:54.53",
+		"dec1":"+02:18:21.56",
+		"ra2":"11:50:54.48",
+		"dec2":"+02:18:25.8",
+		"distdeg":"4.30571583749",
+		"maxdiffyear":"0.08333333333348492",
+		"discdiffyear":"0.08505555555575484",
+		"edit":false
+	},
+	{
+		"name1":"MLS160906:004405+240401",
+		"aliases1":[
+			"MLS160906:004405+240401"
+		],
+		"name2":"CSS160830:004405+240401",
+		"aliases2":[
+			"CSS160830:004405+240401",
+			"MLS160906:004405+240402",
+			"MLS161001:004405+240402"
+		],
+		"ra1":"00:44:05.448",
+		"dec1":"+24:04:01.2",
+		"ra2":"00:44:05.441",
+		"dec2":"+24:04:01.02",
+		"distdeg":"0.203939930172",
+		"maxdiffyear":"",
+		"discdiffyear":"0.7944444444444798",
 		"edit":false
 	},
 	{
@@ -4885,6 +5162,24 @@
 		"edit":false
 	},
 	{
+		"name1":"DES16X2crr-corrected",
+		"aliases1":[
+			"DES16X2crr-corrected"
+		],
+		"name2":"DES16X2crr",
+		"aliases2":[
+			"DES16X2crr"
+		],
+		"ra1":"02:19:39.090",
+		"dec1":"-06:03:50.04",
+		"ra2":"02:19:39.09",
+		"dec2":"-06:03:49.9",
+		"distdeg":"0.139999999999",
+		"maxdiffyear":"",
+		"discdiffyear":"0.9027777777776009",
+		"edit":false
+	},
+	{
 		"name1":"Gaia17aod",
 		"aliases1":[
 			"Gaia17aod",
@@ -4921,6 +5216,25 @@
 		"distdeg":"3.53076660641",
 		"maxdiffyear":"1.5277777777778283",
 		"discdiffyear":"1.5254333194445735",
+		"edit":false
+	},
+	{
+		"name1":"SN2017hxt",
+		"aliases1":[
+			"SN2017hxt",
+			"AT2017hxt"
+		],
+		"name2":"Gaia17cyg",
+		"aliases2":[
+			"Gaia17cyg"
+		],
+		"ra1":"03:42:25.32",
+		"dec1":"-55:01:12.20",
+		"ra2":"03:42:25.344",
+		"dec2":"-55:01:11.28",
+		"distdeg":"0.942865177504",
+		"maxdiffyear":"0.0027777777779647295",
+		"discdiffyear":"0.015222349999930884",
 		"edit":false
 	},
 	{
@@ -5005,11 +5319,11 @@
 			"PS16yj",
 			"AT2016wi"
 		],
-		"ra1":"07:58:50.64",
-		"dec1":"+66:07:40.8",
+		"ra1":"07:58:50.67",
+		"dec1":"+66:07:39.1",
 		"ra2":"07:58:50.67",
 		"dec2":"+66:07:39.18",
-		"distdeg":"1.63020415939",
+		"distdeg":"0.0800000000059",
 		"maxdiffyear":"0.044444444444479814",
 		"discdiffyear":"0.14555275833322412",
 		"edit":false
@@ -5030,6 +5344,45 @@
 		"distdeg":"0.231505359165",
 		"maxdiffyear":"0.02777777777760093",
 		"discdiffyear":"0.030555555555338287",
+		"edit":false
+	},
+	{
+		"name1":"iPTF16fnm",
+		"aliases1":[
+			"iPTF16fnm"
+		],
+		"name2":"PS16eti",
+		"aliases2":[
+			"PS16eti",
+			"AT2016fnm"
+		],
+		"ra1":"01:12:38.32",
+		"dec1":"+38:30:08.8",
+		"ra2":"01:12:38.30",
+		"dec2":"+38:30:08.95",
+		"distdeg":"0.278601909911",
+		"maxdiffyear":"",
+		"discdiffyear":"0.8621222027777549",
+		"edit":false
+	},
+	{
+		"name1":"iPTF16hzg",
+		"aliases1":[
+			"iPTF16hzg"
+		],
+		"name2":"PS16fdq",
+		"aliases2":[
+			"PS16fdq",
+			"Gaia16bxr",
+			"AT2016hzg"
+		],
+		"ra1":"01:04:37.2",
+		"dec1":"-02:32:31.2",
+		"ra2":"01:04:37.128",
+		"dec2":"-02:32:32.352",
+		"distdeg":"1.57835652353",
+		"maxdiffyear":"",
+		"discdiffyear":"0.967661105555635",
 		"edit":false
 	},
 	{
@@ -5123,24 +5476,6 @@
 		"edit":false
 	},
 	{
-		"name1":"MLS150417:140932-102951",
-		"aliases1":[
-			"MLS150417:140932-102951"
-		],
-		"name2":"PS15afd",
-		"aliases2":[
-			"PS15afd"
-		],
-		"ra1":"14:09:32.24",
-		"dec1":"-10:29:51.3",
-		"ra2":"14:09:32.23",
-		"dec2":"-10:29:50.8",
-		"distdeg":"0.52129946254",
-		"maxdiffyear":"",
-		"discdiffyear":"0.01666666666665151",
-		"edit":false
-	},
-	{
 		"name1":"PS16axk",
 		"aliases1":[
 			"PS16axk",
@@ -5165,7 +5500,8 @@
 			"SN2017hrh",
 			"AT2017hrh",
 			"ATLAS17mwl",
-			"MLS171024:020025+031921"
+			"MLS171024:020025+031921",
+			"PS17ffz"
 		],
 		"name2":"MLS171024:020025p031921",
 		"aliases2":[
@@ -5178,6 +5514,24 @@
 		"distdeg":"0.22360072473",
 		"maxdiffyear":"",
 		"discdiffyear":"0.004338894444344987",
+		"edit":false
+	},
+	{
+		"name1":"OGLE15fm",
+		"aliases1":[
+			"OGLE15fm"
+		],
+		"name2":"OGLE16bsa",
+		"aliases2":[
+			"OGLE16bsa"
+		],
+		"ra1":"01:53:13.54",
+		"dec1":"-63:49:32.1",
+		"ra2":"01:53:13.86",
+		"dec2":"-63:49:25.1",
+		"distdeg":"7.31322700563",
+		"maxdiffyear":"1.0416666666667425",
+		"discdiffyear":"0.6611111111112677",
 		"edit":false
 	},
 	{
@@ -5199,6 +5553,43 @@
 		"edit":false
 	},
 	{
+		"name1":"PS15dov",
+		"aliases1":[
+			"PS15dov"
+		],
+		"name2":"PS16bpu",
+		"aliases2":[
+			"PS16bpu"
+		],
+		"ra1":"03:43:57.36",
+		"dec1":"+39:17:43.7",
+		"ra2":"03:43:57.13",
+		"dec2":"+39:17:38.4",
+		"distdeg":"5.93452863851",
+		"maxdiffyear":"",
+		"discdiffyear":"0.04722222222221717",
+		"edit":false
+	},
+	{
+		"name1":"PS15dpq-as-offset",
+		"aliases1":[
+			"PS15dpq-as-offset"
+		],
+		"name2":"PS15dpq",
+		"aliases2":[
+			"PS15dpq",
+			"iPTF15fel"
+		],
+		"ra1":"03:09:12.738",
+		"dec1":"+27:31:16.80",
+		"ra2":"03:09:12.75",
+		"dec2":"+27:31:16.9",
+		"distdeg":"0.188366789104",
+		"maxdiffyear":"",
+		"discdiffyear":"1.0777777777777828",
+		"edit":false
+	},
+	{
 		"name1":"PS16fju",
 		"aliases1":[
 			"PS16fju",
@@ -5216,6 +5607,25 @@
 		"distdeg":"5.92952063134",
 		"maxdiffyear":"0.0",
 		"discdiffyear":"0.0",
+		"edit":false
+	},
+	{
+		"name1":"SDSS-II SN 4539",
+		"aliases1":[
+			"SDSS-II SN 4539"
+		],
+		"name2":"PS17fhl",
+		"aliases2":[
+			"PS17fhl",
+			"AT2017ird"
+		],
+		"ra1":"03:34:58.224",
+		"dec1":"-00:26:17.07",
+		"ra2":"03:34:58.47",
+		"dec2":"-00:26:15.69",
+		"distdeg":"3.93950564508",
+		"maxdiffyear":"12.03611111111104",
+		"discdiffyear":"",
 		"edit":false
 	},
 	{
@@ -5271,6 +5681,46 @@
 		"distdeg":"4.63292148719",
 		"maxdiffyear":"",
 		"discdiffyear":"0.052777777777919255",
+		"edit":false
+	},
+	{
+		"name1":"SN2015cm",
+		"aliases1":[
+			"SN2015cm"
+		],
+		"name2":"SNMRK0477",
+		"aliases2":[
+			"SNMRK0477",
+			"SN_MRK0477",
+			"Supernova in Mrk 477",
+			"ProbableinMrk477",
+			"SN in Mrk 477"
+		],
+		"ra1":"14:40:38.30",
+		"dec1":"+53:30:13.80",
+		"ra2":"14:40:38.30",
+		"dec2":"+53:30:13.8",
+		"distdeg":"0.0",
+		"maxdiffyear":"",
+		"discdiffyear":"0.0008162305557561922",
+		"edit":false
+	},
+	{
+		"name1":"SN2015cm",
+		"aliases1":[
+			"SN2015cm"
+		],
+		"name2":"EQ J144038.3+533013.8",
+		"aliases2":[
+			"EQ J144038.3+533013.8"
+		],
+		"ra1":"14:40:38.30",
+		"dec1":"+53:30:13.80",
+		"ra2":"14:40:38.30",
+		"dec2":"+53:30:13.8",
+		"distdeg":"0.0",
+		"maxdiffyear":"",
+		"discdiffyear":"",
 		"edit":false
 	},
 	{
@@ -5771,6 +6221,48 @@
 		"ra2":"18:11:27",
 		"dec2":"-19:25",
 		"distdeg":"0.0",
+		"maxdiffyear":"",
+		"discdiffyear":"",
+		"edit":false
+	},
+	{
+		"name1":"IKT 18",
+		"aliases1":[
+			"IKT 18",
+			"SMCSNR J005925-721011",
+			"MCSNR J0059-7210",
+			"[BMD2010] SNR J0059.4-7210"
+		],
+		"name2":"SMCSNR J00592742-7210102",
+		"aliases2":[
+			"SMCSNR J00592742-7210102"
+		],
+		"ra1":"00:59:25.7",
+		"dec1":"-72:10:11",
+		"ra2":"00:59:27.42",
+		"dec2":"-72:10:10.2",
+		"distdeg":"7.94036983888",
+		"maxdiffyear":"",
+		"discdiffyear":"",
+		"edit":false
+	},
+	{
+		"name1":"IKT 5",
+		"aliases1":[
+			"IKT 5",
+			"SMCSNR J004907-731402",
+			"MCSNR J0049-7314",
+			"SNR B0047-73.5"
+		],
+		"name2":"SMCSNR J00490775-7314020",
+		"aliases2":[
+			"SMCSNR J00490775-7314020"
+		],
+		"ra1":"00:49:07.7",
+		"dec1":"-73:14:02",
+		"ra2":"00:49:07.75",
+		"dec2":"-73:14:02.0",
+		"distdeg":"0.21634913856",
 		"maxdiffyear":"",
 		"discdiffyear":"",
 		"edit":false
@@ -14252,48 +14744,6 @@
 		"ra2":"13:37:17.800",
 		"dec2":"-29:51:55.60",
 		"distdeg":"5.19553629278",
-		"maxdiffyear":"",
-		"discdiffyear":"",
-		"edit":false
-	},
-	{
-		"name1":"MCSNR J0049-7314",
-		"aliases1":[
-			"MCSNR J0049-7314",
-			"SMCSNR J004907-731402",
-			"IKT 5",
-			"SNR B0047-73.5"
-		],
-		"name2":"SMCSNR J00490775-7314020",
-		"aliases2":[
-			"SMCSNR J00490775-7314020"
-		],
-		"ra1":"00:49:07.7",
-		"dec1":"-73:14:02",
-		"ra2":"00:49:07.75",
-		"dec2":"-73:14:02.0",
-		"distdeg":"0.21634913856",
-		"maxdiffyear":"",
-		"discdiffyear":"",
-		"edit":false
-	},
-	{
-		"name1":"MCSNR J0059-7210",
-		"aliases1":[
-			"MCSNR J0059-7210",
-			"SMCSNR J005925-721011",
-			"IKT 18",
-			"[BMD2010] SNR J0059.4-7210"
-		],
-		"name2":"SMCSNR J00592742-7210102",
-		"aliases2":[
-			"SMCSNR J00592742-7210102"
-		],
-		"ra1":"00:59:25.7",
-		"dec1":"-72:10:11",
-		"ra2":"00:59:27.42",
-		"dec2":"-72:10:10.2",
-		"distdeg":"7.94036983888",
 		"maxdiffyear":"",
 		"discdiffyear":"",
 		"edit":false
