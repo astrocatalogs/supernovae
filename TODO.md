@@ -24,6 +24,7 @@ Other multiple SN datasets:
 * http://arxiv.org/abs/1603.05657 (KSN2011a, KSN2011d)
 * https://arxiv.org/abs/1705.10806 (Nine II-P/L light curves)
 * http://csp.obs.carnegiescience.edu/data/Gutierrez_et_al_2017.tar.gz/view (Type II spectra)
+* https://arxiv.org/abs/1711.10501 (two SNe, data only in graphical form)
 
 Other single SN datasets:
 
@@ -58,6 +59,7 @@ Other single SN datasets:
 * SN1998bw - Photometry with measured errors available in original literature.
 * SN1999aw - http://adsabs.harvard.edu/abs/2002AJ....124.2905S (spectra)
 * SN1999by - http://adsabs.harvard.edu/abs/2002ApJ...568..791H (spectra)
+* SN1999ec - Need to find source (photometry)
 * SN1999el - http://adsabs.harvard.edu/abs/2002ApJ...573..144D (spectra)
 * SN1999em - http://adsabs.harvard.edu/abs/2003MNRAS.338..939E (spectra)
 * SN2000cx - http://adsabs.harvard.edu/abs/2002ApJ...565..413R (spectra)
@@ -118,13 +120,15 @@ Other single SN datasets:
 * SN2015bh - http://arxiv.org/abs/1609.00731
 * SN2015F - https://arxiv.org/abs/1711.01275
 * SN2015H - http://adsabs.harvard.edu/abs/2016A%26A...589A..89M (LC, data not in paper)
+* SN2015J - https://arxiv.org/abs/1711.08655 (photometry, X-ray)
 * iPTF15dtg - http://arxiv.org/abs/1605.02491 (LCs and spectra available)
 * DES15E2mlf - https://arxiv.org/abs/1707.06649
 * iPTF16geu - http://arxiv.org/abs/1611.00014
 * iPTF16asu - http://arxiv.org/abs/1706.05018
 * SCP16C03 - https://arxiv.org/abs/1707.04606
 * SN2016coi - http://adsabs.harvard.edu/abs/2017arXiv170903593P (LCs and spectra)
-* SN2016ija - https://arxiv.org/abs/1711.03940 (photometry)
+* SN2017dio - https://arxiv.org/abs/1712.00027 (photometry only in graphical form)
+* SN2017hcc - https://arxiv.org/abs/1711.07938 (photometry/spectra, but only in graphical form)
 
 **Note: Below have yet to be checked for content.**
 * SN2011fe - http://adsabs.harvard.edu/abs/2013ApJ...762L...5S, http://adsabs.harvard.edu/abs/2013ApJ...767..119M
