@@ -107,6 +107,7 @@ Other single SN datasets:
 * SN2011kl - http://adsabs.harvard.edu/abs/2015Natur.523..189G (Photometry in *JPG* tables!)
 * PTF11iqb - http://adsabs.harvard.edu/abs/2015MNRAS.449.1876S (Photometry available)
 * PS1-11ap - http://mnras.oxfordjournals.org/content/437/1/656.full (Missing spectra)
+* SN2012ab - https://arxiv.org/abs/1712.03370 (photometry)
 * SN2012ap - http://adsabs.harvard.edu/abs/2015RAA....15..225L (Article in weird journal)
 * SN2012bz - http://www.aanda.org/articles/aa/full_html/2014/06/aa23387-14/aa23387-14.html (Photometry table needs hand-digitization)
 * iPTF13ebh - http://www.aanda.org/articles/aa/full_html/2015/06/aa25297-14/aa25297-14.html (LC available but spread over several misformatted tables)
