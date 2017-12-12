@@ -116,6 +116,7 @@ Other single SN datasets:
 * SN2013hx - Inserra+ 2013 in prep.?
 * SN2014C - http://adsabs.harvard.edu/abs/2015ApJ...815..120M  (LC & spectra, data not in paper)
 * iPTF14atg - http://adsabs.harvard.edu/abs/2015Natur.521..328C (LC, data not in paper)
+* iPTF14gqr - De et al in prep (photometry and spectra)
 * LSQ14efd - https://arxiv.org/abs/1707.04644
 * SN2014dt - https://arxiv.org/abs/1711.00292 (photometry)
 * SN2015bh - http://arxiv.org/abs/1609.00731
