@@ -87,7 +87,6 @@ Other single SN datasets:
 * SN2007qd - http://adsabs.harvard.edu/abs/2010ApJ...720..704M (spectra)
 * SN2007if - http://adsabs.harvard.edu/abs/2010ApJ...715.1338Y (spectra)
 * SN2007it - http://adsabs.harvard.edu/abs/2011ApJ...731...47A (more colors for LC available)
-* SN2007ru - http://adsabs.harvard.edu/abs/2009ApJ...697..676S (includes photometry)
 * SN2007uy - http://adsabs.harvard.edu/abs/2013MNRAS.434.2032R (no new photometry)
 * SN2008D - http://www.nature.com/nature/journal/v453/n7194/suppinfo/nature06997.html (X-ray & radio)
 * SN2008fz - http://adsabs.harvard.edu/abs/2010ApJ...718L.127D (spectra)
