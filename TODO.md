@@ -9,6 +9,9 @@ Multiple SN datasets on VizieR:
 Single SN dataset on VizieR:
 * None to add at this time.
 
+SN on WISeREP that were made public after being posted:
+* None known at this time.
+
 Other multiple SN datasets:
 * http://adsabs.harvard.edu/abs/1979AcC.....8....5F (Lists references for many historical LCs)
 * http://adsabs.harvard.edu/abs/1982A%26A...116...43B (spectra for 1979B and 1979C)
