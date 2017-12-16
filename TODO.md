@@ -102,7 +102,6 @@ Other single SN datasets:
 * SN2009kf - http://adsabs.harvard.edu/abs/2010ApJ...717L..52B (photometry only in graphical form)
 * SN2009kn - http://adsabs.harvard.edu/abs/2012MNRAS.424..855K (spectra only)
 * SN2009kr - http://adsabs.harvard.edu/abs/2010ApJ...714L.280F (spectra only)
-* SN2011kl - http://adsabs.harvard.edu/abs/2015Natur.523..189G (Photometry in *JPG* tables!)
 * PTF11iqb - http://adsabs.harvard.edu/abs/2015MNRAS.449.1876S (Photometry available)
 * PS1-11ap - http://mnras.oxfordjournals.org/content/437/1/656.full (Missing spectra)
 * SN2012ab - https://arxiv.org/abs/1712.03370 (photometry)
