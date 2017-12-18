@@ -3,16 +3,10 @@
 Donated datasets:
 * Several SNe from Prieto via e-mail.
 
-Multiple SN datasets on VizieR:
-* None to add at this time.
-
-Single SN dataset on VizieR:
-* None to add at this time.
-
 SN on WISeREP that were made public after being posted:
 * None known at this time.
 
-Other multiple SN datasets:
+Multiple SN datasets:
 * http://adsabs.harvard.edu/abs/1979AcC.....8....5F (Lists references for many historical LCs)
 * http://adsabs.harvard.edu/abs/1982A%26A...116...43B (spectra for 1979B and 1979C)
 * http://adsabs.harvard.edu/abs/1987ApJ...317..355H (spectra for 1983N and 1984L)
@@ -28,6 +22,7 @@ Other multiple SN datasets:
 * https://arxiv.org/abs/1705.10806 (Nine II-P/L light curves)
 * http://csp.obs.carnegiescience.edu/data/Gutierrez_et_al_2017.tar.gz/view (Type II spectra)
 * https://arxiv.org/abs/1711.10501 (two SNe, data only in graphical form)
+* http://adsabs.harvard.edu/abs/2015ApJ...799...52W (several 02cx and 02es LCs from PTF in plot form only)
 
 Other single SN datasets:
 
