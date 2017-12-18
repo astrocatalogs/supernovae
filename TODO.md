@@ -90,6 +90,7 @@ Other single SN datasets:
 * SN2007it - http://adsabs.harvard.edu/abs/2011ApJ...731...47A (more colors for LC available)
 * SN2007uy - http://adsabs.harvard.edu/abs/2013MNRAS.434.2032R (no new photometry)
 * SN2008D - http://www.nature.com/nature/journal/v453/n7194/suppinfo/nature06997.html (X-ray & radio)
+* SN2008cq - In CSP data somewhere?
 * SN2008fz - http://adsabs.harvard.edu/abs/2010ApJ...718L.127D (spectra)
 * SN2008ge - http://adsabs.harvard.edu/abs/2010AJ....140.1321F (V-band photometry)
 * SN2008in - http://adsabs.harvard.edu/abs/2011ApJ...736...76R (UBVRIJH photometry, data already on OSC?)
