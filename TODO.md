@@ -23,6 +23,7 @@ Multiple SN datasets:
 * http://csp.obs.carnegiescience.edu/data/Gutierrez_et_al_2017.tar.gz/view (Type II spectra)
 * https://arxiv.org/abs/1711.10501 (two SNe, data only in graphical form)
 * http://adsabs.harvard.edu/abs/2015ApJ...799...52W (several 02cx and 02es LCs from PTF in plot form only)
+* http://adsabs.harvard.edu/abs/1996AJ....111.1271V (radio upper limits for several older SNe)
 
 Other single SN datasets:
 
