@@ -24,10 +24,13 @@ Multiple SN datasets:
 * https://arxiv.org/abs/1711.10501 (two SNe, data only in graphical form)
 * http://adsabs.harvard.edu/abs/2015ApJ...799...52W (several 02cx and 02es LCs from PTF in plot form only)
 * http://adsabs.harvard.edu/abs/1996AJ....111.1271V (radio upper limits for several older SNe)
+* http://adsabs.harvard.edu/abs/2008ApJ...683..767S (X-ray data for 1941C, 1959D, and 1968D)
+* http://adsabs.harvard.edu/abs/1989ApJ...336..421W (radio data for several older SNe)
 
 Other single SN datasets:
 
 * SN1885A - 2011ApJ...730...89P (from Perets e-mail)
+* SN1968D - http://adsabs.harvard.edu/abs/1995ApJ...443L..77H (radio)
 * SN1972E - IR photometry from Kirschner paper
 * SN1978K - http://adsabs.harvard.edu/abs/1993ApJ...416..167R (Table 1), http://adsabs.harvard.edu/abs/2016MNRAS.458.2063K
 * SN1979C - http://adsabs.harvard.edu/abs/1981ApJ...244..780B (spectra)
@@ -37,6 +40,7 @@ Other single SN datasets:
 * SN1985B - http://adsabs.harvard.edu/abs/1987AJ.....93..287W (multiple spectra)
 * SN1985F - http://adsabs.harvard.edu/abs/1986Ap&SS.125..175P (spectrum)
 * SN1986G - http://adsabs.harvard.edu/abs/2002AJ....124..417H, May 7th spectrum
+* SN1986J - http://adsabs.harvard.edu/abs/2002MNRAS.335L..23P (radio)
 * SN1987A - http://adsabs.harvard.edu/abs/1996ApJ...467..435W (spectra)
 * SN1987D - http://adsabs.harvard.edu/abs/1987PASP...99.1167S (multiple spectra)
 * SN1989B - http://adsabs.harvard.edu/abs/1990A%26A...237...79B (need to reacquire a few from original source)
@@ -103,6 +107,7 @@ Other single SN datasets:
 * SN2009kf - http://adsabs.harvard.edu/abs/2010ApJ...717L..52B (photometry only in graphical form)
 * SN2009kn - http://adsabs.harvard.edu/abs/2012MNRAS.424..855K (spectra only)
 * SN2009kr - http://adsabs.harvard.edu/abs/2010ApJ...714L.280F (spectra only)
+* PTF09dav - http://iopscience.iop.org/article/10.1088/0004-637X/732/2/118/meta#apj387306t1 (photometry)
 * SN2010ma - Photometry scattered over several papers/GCNs
 * PTF11iqb - http://adsabs.harvard.edu/abs/2015MNRAS.449.1876S (Photometry available)
 * PTF11kx - https://arxiv.org/abs/1207.1306 (photometry in plot form only)
