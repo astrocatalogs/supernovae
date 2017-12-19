@@ -620,7 +620,7 @@ class Supernova(Entry):
                 pass
             elif key == self._KEYS.PHOTOMETRY:
                 for p, photo in enumerate(data[self._KEYS.PHOTOMETRY]):
-                    if photo[PHOTOMETRY.U_TIME] == 'JD':
+                    if photo.get(PHOTOMETRY.U_TIME) == 'JD':
                         data[self._KEYS.PHOTOMETRY][p][
                             PHOTOMETRY.U_TIME] = 'MJD'
                         data[self._KEYS.PHOTOMETRY][p][PHOTOMETRY.TIME] = str(
