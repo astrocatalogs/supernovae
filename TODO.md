@@ -26,6 +26,7 @@ Multiple SN datasets:
 * http://adsabs.harvard.edu/abs/1996AJ....111.1271V (radio upper limits for several older SNe)
 * http://adsabs.harvard.edu/abs/2008ApJ...683..767S (X-ray data for 1941C, 1959D, and 1968D)
 * http://adsabs.harvard.edu/abs/1989ApJ...336..421W (radio data for several older SNe)
+* http://member.ipmu.jp/gaston.folatelli/spec_nir/ (NIR spectra leads)
 
 Other single SN datasets:
 
