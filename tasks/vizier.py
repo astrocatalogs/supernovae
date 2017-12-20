@@ -407,8 +407,8 @@ def do_vizier(catalog):
                         photodict[PHOTOMETRY.SYSTEM] = 'SDSS'
                         band = band + "'"
                     photodict[PHOTOMETRY.BAND] = band
-                    if (is_number(row['e_' + bandtag]) and
-                            not isnan(float(row['e_' + bandtag]))):
+                    if ('e_' + bandtag in row and is_number(row['e_' + bandtag])
+                            and not isnan(float(row['e_' + bandtag]))):
                         photodict[PHOTOMETRY.E_MAGNITUDE] = row['e_' + bandtag]
                     catalog.entries[name].add_photometry(**photodict)
     catalog.journal_entries()
@@ -476,7 +476,7 @@ def do_vizier(catalog):
             SUPERNOVA.EBV,
             str(row['E_B-V_']),
             source,
-            e_value=str(row['e_E_B-V_']) if row['e_E_B-V_'] else '')
+            e_value=str(row['e_E_B-V_']) if 'e_E_B-V_' in row else '')
         catalog.entries[name].add_quantity(SUPERNOVA.RA, row['RAJ2000'],
                                            source)
         catalog.entries[name].add_quantity(SUPERNOVA.DEC, row['DEJ2000'],
@@ -595,7 +595,7 @@ def do_vizier(catalog):
             str(row['z']),
             source,
             kind='heliocentric',
-            e_value=str(row['e_z']))
+            e_value=str(row['e_z']) if 'e_z' in row else '')
         catalog.entries[name].add_quantity(
             SUPERNOVA.RA, str(row['_RA']), source, u_value='floatdegrees')
         catalog.entries[name].add_quantity(
