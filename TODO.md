@@ -154,7 +154,6 @@ Other single SN datasets:
 * iPTF15dtg - http://arxiv.org/abs/1605.02491 (Photometry and spectra available)
 * DES15E2mlf - https://arxiv.org/abs/1707.06649
 * iPTF16geu - http://arxiv.org/abs/1611.00014
-* iPTF16asu - http://arxiv.org/abs/1706.05018
 * SCP16C03 - https://arxiv.org/abs/1707.04606
 * SN2016coi - http://adsabs.harvard.edu/abs/2017arXiv170903593P (Photometry and spectra)
 * SN2017dio - https://arxiv.org/abs/1712.00027 (photometry only in plot form)
