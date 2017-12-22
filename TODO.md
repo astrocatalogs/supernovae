@@ -56,7 +56,6 @@ Other single SN datasets:
 * SN1995D - http://adsabs.harvard.edu/abs/1996PASJ...48...51S (spectra)
 * SN1995N - http://adsabs.harvard.edu/abs/2002ApJ...572..350F, http://adsabs.harvard.edu/abs/2005ASPC..342..285P (photomtery in plot form)
 * SN1995V - http://adsabs.harvard.edu/abs/1998MNRAS.299..150F (spectra)
-* SN1996al - http://adsabs.harvard.edu/abs/2016MNRAS.456.3296B (lots of photometry)
 * SN1996N - http://adsabs.harvard.edu/abs/1998A%26A...337..207S (spectra)
 * SN1996cb - http://adsabs.harvard.edu/abs/1999AJ....117..736Q (spectra)
 * SN1997X - http://adsabs.harvard.edu/abs/1998A%26A...333..159M (spectra)
