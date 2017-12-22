@@ -78,7 +78,7 @@ Other single SN datasets:
 * SN2004dj - http://adsabs.harvard.edu/abs/2011A%26A...527A..61S (spectra)
 * SN2004et - http://adsabs.harvard.edu/abs/2007MNRAS.381..280M, http://adsabs.harvard.edu/abs/2009ApJ...704..306K (spectra)
 * SN2005am - http://adsabs.harvard.edu/abs/2005ApJ...635.1192B (spectra)
-* SN2005at - http://adsabs.harvard.edu/abs/2014A%26A...572A..75K (photometry and spectra)
+* SN2005at - http://adsabs.harvard.edu/abs/2014A%26A...572A..75K (spectra)
 * SN2005da - https://etd.ohiolink.edu/pg_10?0::NO:10:P10_ETD_SUBID:150302#abstract-files (photometry)
 * SN2005df - http://adsabs.harvard.edu/abs/2015ApJ...806..107D (spectra)
 * SN2005kd - http://adsabs.harvard.edu/abs/2016MNRAS.462.1101D (Radio data)
