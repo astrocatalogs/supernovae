@@ -130,7 +130,7 @@ Other single SN datasets:
 * SN2013df - http://adsabs.harvard.edu/abs/2014MNRAS.445.1647M (Late-time photometry, we already have Swift)
 * SN2013df - http://adsabs.harvard.edu/abs/2015ApJ...803...40B (spectra)
 * SN2013df - http://adsabs.harvard.edu/abs/2015ApJ...807...35M (B&V photometry)
-* SN2013dx - http://adsabs.harvard.edu/abs/2015A%26A...577A.116D (Lots of photometry)
+* SN2013dx - http://adsabs.harvard.edu/abs/2015A%26A...577A.116D (Lots of photometry, but no zero points in paper)
 * SN2013ej - http://adsabs.harvard.edu/abs/2015ApJ...807...59H (photometry)
 * SN2013hx - Inserra+ 2013 in prep.?
 * SN2014C - http://adsabs.harvard.edu/abs/2015ApJ...815..120M  (Photometry & spectra, but data not in paper)
