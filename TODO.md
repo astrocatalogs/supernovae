@@ -143,16 +143,13 @@ Other single SN datasets:
 * SN2014ad - http://adsabs.harvard.edu/abs/2017MNRAS.469.1897S (Photometry only in plot form)
 * iPTF14atg - http://adsabs.harvard.edu/abs/2015Natur.521..328C (Photometry, but data not in paper)
 * iPTF14gqr - De et al in prep (photometry and spectra)
-* LSQ14efd - https://arxiv.org/abs/1707.04644
-* SN2015bh - http://arxiv.org/abs/1609.00731
-* SN2015F - https://arxiv.org/abs/1711.01275
+* SN2015bh - http://arxiv.org/abs/1609.00731 (photometry and spectra)
+* SN2015F - https://arxiv.org/abs/1711.01275 (photometry)
 * SN2015H - http://adsabs.harvard.edu/abs/2016A%26A...589A..89M (Photometry, data not in paper)
 * SN2015J - https://arxiv.org/abs/1711.08655 (photometry, X-ray)
 * iPTF15dtg - http://arxiv.org/abs/1605.02491 (spectra)
-* DES15E2mlf - https://arxiv.org/abs/1707.06649
 * SN2016jhr - http://adsabs.harvard.edu/abs/2017Natur.550...80J (Photometry in arxiv version)
-* iPTF16geu - http://arxiv.org/abs/1611.00014
-* SCP16C03 - https://arxiv.org/abs/1707.04606
+* SCP16C03 - https://arxiv.org/abs/1707.04606 (spectra)
 * SN2016coi - http://adsabs.harvard.edu/abs/2017arXiv170903593P (Photometry and spectra)
 * SN2017dio - https://arxiv.org/abs/1712.00027 (photometry only in plot form)
 * SN2017hcc - https://arxiv.org/abs/1711.07938 (photometry/spectra, but only in plot form)
