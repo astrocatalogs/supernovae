@@ -1,5 +1,4 @@
-"""Import tasks from the catalog available on VizieR.
-"""
+"""Import tasks from the catalog available on VizieR."""
 import csv
 import os
 from math import isnan
@@ -19,15 +18,15 @@ from ..utils import radec_clean
 
 
 def do_vizier(catalog):
-    """
-    """
+    """Import data from Vizier catalogs."""
     task_str = catalog.get_current_task_str()
 
-    Vizier.ROW_LIMIT = -1
-    Vizier.VIZIER_SERVER = 'vizier.cfa.harvard.edu'
+    viz = Vizier(columns=['**'])
+    viz.ROW_LIMIT = -1
+    viz.VIZIER_SERVER = 'vizier.cfa.harvard.edu'
 
     # 2008MNRAS.384..107E
-    results = Vizier.get_catalogs([
+    results = viz.get_catalogs([
         'J/MNRAS/384/107/table3', 'J/MNRAS/384/107/table5',
         'J/MNRAS/384/107/table4'
     ])
@@ -64,7 +63,7 @@ def do_vizier(catalog):
     catalog.journal_entries()
 
     # 2016ApJ...824....6O
-    result = Vizier.get_catalogs('J/ApJ/824/6/table1')
+    result = viz.get_catalogs('J/ApJ/824/6/table1')
     table = result[list(result.keys())[0]]
     table.convert_bytestring_to_unicode(python3_only=True)
     (name, source) = catalog.new_entry(
@@ -95,7 +94,7 @@ def do_vizier(catalog):
     catalog.journal_entries()
 
     # 2016AJ....151..125Z
-    result = Vizier.get_catalogs('J/AJ/151/125/table2')
+    result = viz.get_catalogs('J/AJ/151/125/table2')
     table = result[list(result.keys())[0]]
     table.convert_bytestring_to_unicode(python3_only=True)
     (name, source) = catalog.new_entry(
@@ -126,7 +125,7 @@ def do_vizier(catalog):
     catalog.journal_entries()
 
     # 2016A&A...592..A40F
-    result = Vizier.get_catalogs('J/A+A/592/A40/table2')
+    result = viz.get_catalogs('J/A+A/592/A40/table2')
     table = result[list(result.keys())[0]]
     table.convert_bytestring_to_unicode(python3_only=True)
     for row in pbar(table, task_str):
@@ -146,7 +145,7 @@ def do_vizier(catalog):
     catalog.journal_entries()
 
     # 2016A&A...593A..68F
-    results = Vizier.get_catalogs(
+    results = viz.get_catalogs(
         ['J/A+A/593/A68/ph12os', 'J/A+A/593/A68/ph13bvn'])
     for ti, table in enumerate(results):
         table.convert_bytestring_to_unicode(python3_only=True)
@@ -166,7 +165,7 @@ def do_vizier(catalog):
     catalog.journal_entries()
 
     # 2016ApJ...825L..22F
-    result = Vizier.get_catalogs('J/ApJ/825/L22/table3')
+    result = viz.get_catalogs('J/ApJ/825/L22/table3')
     table = result[list(result.keys())[0]]
     table.convert_bytestring_to_unicode(python3_only=True)
     (name, source) = catalog.new_entry(
@@ -196,7 +195,7 @@ def do_vizier(catalog):
     catalog.journal_entries()
 
     # 2016ApJ...826..144S
-    result = Vizier.get_catalogs('J/ApJ/826/144/table1')
+    result = viz.get_catalogs('J/ApJ/826/144/table1')
     table = result[list(result.keys())[0]]
     table.convert_bytestring_to_unicode(python3_only=True)
     (name, source) = catalog.new_entry(
@@ -220,7 +219,7 @@ def do_vizier(catalog):
     catalog.journal_entries()
 
     # 2012ApJ...756..173S
-    results = Vizier.get_catalogs(
+    results = viz.get_catalogs(
         ['J/ApJ/756/173/table2', 'J/ApJ/756/173/table3'])
     for ti, table in enumerate(results):
         table.convert_bytestring_to_unicode(python3_only=True)
@@ -255,7 +254,7 @@ def do_vizier(catalog):
     catalog.journal_entries()
 
     # 2016ApJ...819...35A
-    result = Vizier.get_catalogs('J/ApJ/819/35/table2')
+    result = viz.get_catalogs('J/ApJ/819/35/table2')
     table = result[list(result.keys())[0]]
     table.convert_bytestring_to_unicode(python3_only=True)
     for row in pbar(table, task_str):
@@ -281,8 +280,8 @@ def do_vizier(catalog):
     errdict = {'B': '0.011', 'V': '0.007', 'Rc': '0.010', 'Ic': '0.016'}
     snnames = ['SN2011fe', 'SN2012cg', 'SN2012aw']
     for sni in range(3):
-        results = Vizier.get_catalogs('J/other/NewA/20.30/table' + str(sni +
-                                                                       1))
+        results = viz.get_catalogs('J/other/NewA/20.30/table' + str(
+            sni + 1))
         for ti, table in enumerate(results):
             table.convert_bytestring_to_unicode(python3_only=True)
             for row in pbar(table, task_str):
@@ -316,7 +315,7 @@ def do_vizier(catalog):
     catalog.journal_entries()
 
     # 2008ApJ...686..749K
-    result = Vizier.get_catalogs('J/ApJ/686/749/table10')
+    result = viz.get_catalogs('J/ApJ/686/749/table10')
     table = result[list(result.keys())[0]]
     table.convert_bytestring_to_unicode(python3_only=True)
     for row in pbar(table, task_str):
@@ -340,7 +339,7 @@ def do_vizier(catalog):
                     PHOTOMETRY.TELESCOPE: row['Tel']
                 }
                 catalog.entries[name].add_photometry(**photodict)
-    result = Vizier.get_catalogs('J/ApJ/686/749/table12')
+    result = viz.get_catalogs('J/ApJ/686/749/table12')
     table = result[list(result.keys())[0]]
     table.convert_bytestring_to_unicode(python3_only=True)
     for row in pbar(table, task_str):
@@ -374,7 +373,7 @@ def do_vizier(catalog):
     catalog.journal_entries()
 
     # 2013A&A...555A..10T
-    results = Vizier.get_catalogs(
+    results = viz.get_catalogs(
         ['J/A+A/555/A10/table4', 'J/A+A/555/A10/table5'])
     for ti, table in enumerate(results):
         table.convert_bytestring_to_unicode(python3_only=True)
@@ -414,7 +413,7 @@ def do_vizier(catalog):
     catalog.journal_entries()
 
     # 2016ApJ...820...33R
-    result = Vizier.get_catalogs('J/ApJ/820/33/table1')
+    result = viz.get_catalogs('J/ApJ/820/33/table1')
     table = result[list(result.keys())[0]]
     table.convert_bytestring_to_unicode(python3_only=True)
     for row in pbar(table, task_str):
@@ -428,7 +427,7 @@ def do_vizier(catalog):
         catalog.entries[name].add_quantity(
             SUPERNOVA.REDSHIFT, str(row['z']), source, kind='spectroscopic')
 
-    result = Vizier.get_catalogs('J/ApJ/820/33/table2')
+    result = viz.get_catalogs('J/ApJ/820/33/table2')
     table = result[list(result.keys())[0]]
     table.convert_bytestring_to_unicode(python3_only=True)
     for row in pbar(table, task_str):
@@ -452,7 +451,7 @@ def do_vizier(catalog):
     catalog.journal_entries()
 
     # 2012ApJS..200...12H
-    result = Vizier.get_catalogs('J/ApJS/200/12/table1')
+    result = viz.get_catalogs('J/ApJS/200/12/table1')
     table = result[list(result.keys())[0]]
     table.convert_bytestring_to_unicode(python3_only=True)
     oldname = ''
@@ -483,7 +482,7 @@ def do_vizier(catalog):
                                            source)
 
     # 2012ApJ...746...85S
-    result = Vizier.get_catalogs('J/ApJ/746/85/table1')
+    result = viz.get_catalogs('J/ApJ/746/85/table1')
     table = result[list(result.keys())[0]]
     table.convert_bytestring_to_unicode(python3_only=True)
     oldname = ''
@@ -512,7 +511,7 @@ def do_vizier(catalog):
         catalog.entries[name].add_quantity(SUPERNOVA.DEC, row['DEJ2000'],
                                            source)
 
-    result = Vizier.get_catalogs('J/ApJ/746/85/table2')
+    result = viz.get_catalogs('J/ApJ/746/85/table2')
     table = result[list(result.keys())[0]]
     table.convert_bytestring_to_unicode(python3_only=True)
     oldname = ''
@@ -540,7 +539,7 @@ def do_vizier(catalog):
         catalog.entries[name].add_photometry(**photodict)
 
     # 2004ApJ...602..571B
-    result = Vizier.get_catalogs('J/ApJ/602/571/table8')
+    result = viz.get_catalogs('J/ApJ/602/571/table8')
     table = result[list(result.keys())[0]]
     table.convert_bytestring_to_unicode(python3_only=True)
     oldname = ''
@@ -576,7 +575,7 @@ def do_vizier(catalog):
         catalog.entries[name].add_photometry(**photodict)
 
     # 2014MNRAS.444.3258M
-    result = Vizier.get_catalogs('J/MNRAS/444/3258/SNe')
+    result = viz.get_catalogs('J/MNRAS/444/3258/SNe')
     table = result[list(result.keys())[0]]
     table.convert_bytestring_to_unicode(python3_only=True)
     oldname = ''
@@ -603,7 +602,7 @@ def do_vizier(catalog):
     catalog.journal_entries()
 
     # 2014MNRAS.438.1391P
-    result = Vizier.get_catalogs('J/MNRAS/438/1391/table2')
+    result = viz.get_catalogs('J/MNRAS/438/1391/table2')
     table = result[list(result.keys())[0]]
     table.convert_bytestring_to_unicode(python3_only=True)
     for row in pbar(table, task_str):
@@ -622,7 +621,7 @@ def do_vizier(catalog):
     catalog.journal_entries()
 
     # 2012ApJ...749...18B
-    result = Vizier.get_catalogs('J/ApJ/749/18/table1')
+    result = viz.get_catalogs('J/ApJ/749/18/table1')
     table = result[list(result.keys())[0]]
     table.convert_bytestring_to_unicode(python3_only=True)
     for row in pbar(table, task_str):
@@ -657,7 +656,7 @@ def do_vizier(catalog):
     catalog.journal_entries()
 
     # 2010A&A...523A...7G
-    result = Vizier.get_catalogs('J/A+A/523/A7/table9')
+    result = viz.get_catalogs('J/A+A/523/A7/table9')
     table = result[list(result.keys())[0]]
     table.convert_bytestring_to_unicode(python3_only=True)
     for row in pbar(table, task_str):
@@ -688,7 +687,7 @@ def do_vizier(catalog):
     catalog.journal_entries()
 
     # 2004A&A...415..863G
-    result = Vizier.get_catalogs('J/A+A/415/863/table1')
+    result = viz.get_catalogs('J/A+A/415/863/table1')
     table = result[list(result.keys())[0]]
     table.convert_bytestring_to_unicode(python3_only=True)
     for row in pbar(table, task_str):
@@ -723,7 +722,7 @@ def do_vizier(catalog):
     catalog.journal_entries()
 
     # 2008AJ....136.2306H
-    result = Vizier.get_catalogs('J/AJ/136/2306/sources')
+    result = viz.get_catalogs('J/AJ/136/2306/sources')
     table = result[list(result.keys())[0]]
     table.convert_bytestring_to_unicode(python3_only=True)
     for row in pbar(table, task_str):
@@ -742,7 +741,7 @@ def do_vizier(catalog):
                                            source)
 
     # 2010ApJ...708..661D
-    result = Vizier.get_catalogs('J/ApJ/708/661/sn')
+    result = viz.get_catalogs('J/ApJ/708/661/sn')
     table = result[list(result.keys())[0]]
     table.convert_bytestring_to_unicode(python3_only=True)
     for row in pbar(table, task_str):
@@ -765,7 +764,7 @@ def do_vizier(catalog):
         catalog.entries[name].add_quantity(SUPERNOVA.DEC, row['DEJ2000'],
                                            source)
 
-    result = Vizier.get_catalogs('J/ApJ/708/661/table1')
+    result = viz.get_catalogs('J/ApJ/708/661/table1')
     table = result[list(result.keys())[0]]
     table.convert_bytestring_to_unicode(python3_only=True)
     for row in pbar(table, task_str):
@@ -783,7 +782,7 @@ def do_vizier(catalog):
     catalog.journal_entries()
 
     # 2014ApJ...795...44R
-    result = Vizier.get_catalogs('J/ApJ/795/44/ps1_snIa')
+    result = viz.get_catalogs('J/ApJ/795/44/ps1_snIa')
     table = result[list(result.keys())[0]]
     table.convert_bytestring_to_unicode(python3_only=True)
     for row in pbar(table, task_str):
@@ -810,7 +809,7 @@ def do_vizier(catalog):
         catalog.entries[name].add_quantity(
             SUPERNOVA.CLAIMED_TYPE, 'Ia', source, kind='spectroscopic')
 
-    result = Vizier.get_catalogs('J/ApJ/795/44/table6')
+    result = viz.get_catalogs('J/ApJ/795/44/table6')
     table = result[list(result.keys())[0]]
     table.convert_bytestring_to_unicode(python3_only=True)
     for row in pbar(table, task_str):
@@ -836,7 +835,7 @@ def do_vizier(catalog):
     catalog.journal_entries()
 
     # 1990A&AS...82..145C
-    result = Vizier.get_catalogs('II/189/mag')
+    result = viz.get_catalogs('II/189/mag')
     table = result[list(result.keys())[0]]
     table.convert_bytestring_to_unicode(python3_only=True)
 
@@ -893,7 +892,7 @@ def do_vizier(catalog):
     catalog.journal_entries()
 
     # 2014yCat.7272....0G
-    result = Vizier.get_catalogs('VII/272/snrs')
+    result = viz.get_catalogs('VII/272/snrs')
     table = result[list(result.keys())[0]]
     table.convert_bytestring_to_unicode(python3_only=True)
 
@@ -949,7 +948,7 @@ def do_vizier(catalog):
     catalog.journal_entries()
 
     # 2014MNRAS.442..844F
-    result = Vizier.get_catalogs('J/MNRAS/442/844/table1')
+    result = viz.get_catalogs('J/MNRAS/442/844/table1')
     table = result[list(result.keys())[0]]
     table.convert_bytestring_to_unicode(python3_only=True)
     for row in pbar(table, task_str):
@@ -968,7 +967,7 @@ def do_vizier(catalog):
                                            str(row['E_B-V_']), source)
     catalog.journal_entries()
 
-    result = Vizier.get_catalogs('J/MNRAS/442/844/table2')
+    result = viz.get_catalogs('J/MNRAS/442/844/table2')
     table = result[list(result.keys())[0]]
     table.convert_bytestring_to_unicode(python3_only=True)
     instr = 'KAIT'
@@ -997,7 +996,7 @@ def do_vizier(catalog):
     catalog.journal_entries()
 
     # 2012MNRAS.425.1789S
-    result = Vizier.get_catalogs('J/MNRAS/425/1789/table1')
+    result = viz.get_catalogs('J/MNRAS/425/1789/table1')
     table = result[list(result.keys())[0]]
     table.convert_bytestring_to_unicode(python3_only=True)
     for row in pbar(table, task_str):
@@ -1022,7 +1021,7 @@ def do_vizier(catalog):
     catalog.journal_entries()
 
     # 2015ApJS..219...13W
-    result = Vizier.get_catalogs('J/ApJS/219/13/table3')
+    result = viz.get_catalogs('J/ApJS/219/13/table3')
     table = result[list(result.keys())[0]]
     table.convert_bytestring_to_unicode(python3_only=True)
     for row in pbar(table, task_str):
@@ -1046,7 +1045,7 @@ def do_vizier(catalog):
                                            source)
         catalog.entries[name].add_quantity(
             SUPERNOVA.CLAIMED_TYPE, 'Ia', source, kind='spectroscopic')
-    result = Vizier.get_catalogs('J/ApJS/219/13/table2')
+    result = viz.get_catalogs('J/ApJS/219/13/table2')
     table = result[list(result.keys())[0]]
     table.convert_bytestring_to_unicode(python3_only=True)
     for row in pbar(table, task_str):
@@ -1072,7 +1071,7 @@ def do_vizier(catalog):
     catalog.journal_entries()
 
     # 2012Natur.491..228C
-    result = Vizier.get_catalogs('J/other/Nat/491.228/tablef1')
+    result = viz.get_catalogs('J/other/Nat/491.228/tablef1')
     table = result[list(result.keys())[0]]
     table.convert_bytestring_to_unicode(python3_only=True)
     name = 'SN2213-1745'
@@ -1097,7 +1096,7 @@ def do_vizier(catalog):
                 }
                 catalog.entries[name].add_photometry(**photodict)
 
-    result = Vizier.get_catalogs('J/other/Nat/491.228/tablef2')
+    result = viz.get_catalogs('J/other/Nat/491.228/tablef2')
     table = result[list(result.keys())[0]]
     table.convert_bytestring_to_unicode(python3_only=True)
     name = 'SN1000+0216'
@@ -1124,7 +1123,7 @@ def do_vizier(catalog):
     catalog.journal_entries()
 
     # 2011Natur.474..484Q
-    result = Vizier.get_catalogs('J/other/Nat/474.484/tables1')
+    result = viz.get_catalogs('J/other/Nat/474.484/tables1')
     table = result[list(result.keys())[0]]
     table.convert_bytestring_to_unicode(python3_only=True)
     for row in pbar(table, task_str):
@@ -1147,7 +1146,7 @@ def do_vizier(catalog):
     catalog.journal_entries()
 
     # 2011ApJ...736..159G
-    result = Vizier.get_catalogs('J/ApJ/736/159/table1')
+    result = viz.get_catalogs('J/ApJ/736/159/table1')
     table = result[list(result.keys())[0]]
     table.convert_bytestring_to_unicode(python3_only=True)
     name = 'PTF10vdl'
@@ -1171,7 +1170,7 @@ def do_vizier(catalog):
     catalog.journal_entries()
 
     # 2012ApJ...760L..33B
-    result = Vizier.get_catalogs('J/ApJ/760/L33/table1')
+    result = viz.get_catalogs('J/ApJ/760/L33/table1')
     table = result[list(result.keys())[0]]
     table.convert_bytestring_to_unicode(python3_only=True)
     name = 'PTF12gzk'
@@ -1196,7 +1195,7 @@ def do_vizier(catalog):
     catalog.journal_entries()
 
     # 2013ApJ...769...39S
-    result = Vizier.get_catalogs('J/ApJ/769/39/table1')
+    result = viz.get_catalogs('J/ApJ/769/39/table1')
     table = result[list(result.keys())[0]]
     table.convert_bytestring_to_unicode(python3_only=True)
     name = 'PS1-12sk'
@@ -1232,7 +1231,7 @@ def do_vizier(catalog):
     name = catalog.add_entry(name)
     source = catalog.entries[name].add_source(bibcode='2009MNRAS.394.2266P')
     catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
-    result = Vizier.get_catalogs('J/MNRAS/394/2266/table2')
+    result = viz.get_catalogs('J/MNRAS/394/2266/table2')
     table = result[list(result.keys())[0]]
     table.convert_bytestring_to_unicode(python3_only=True)
     for row in pbar(table, task_str):
@@ -1266,7 +1265,7 @@ def do_vizier(catalog):
             }
             catalog.entries[name].add_photometry(**photodict)
 
-    result = Vizier.get_catalogs('J/MNRAS/394/2266/table3')
+    result = viz.get_catalogs('J/MNRAS/394/2266/table3')
     table = result[list(result.keys())[0]]
     table.convert_bytestring_to_unicode(python3_only=True)
     for row in pbar(table, task_str):
@@ -1287,7 +1286,7 @@ def do_vizier(catalog):
                     source=source,
                     upperlimit=(row['l_' + bandtag] == '>'))
 
-    result = Vizier.get_catalogs('J/MNRAS/394/2266/table4')
+    result = viz.get_catalogs('J/MNRAS/394/2266/table4')
     table = result[list(result.keys())[0]]
     table.convert_bytestring_to_unicode(python3_only=True)
     for row in pbar(table, task_str):
@@ -1306,7 +1305,7 @@ def do_vizier(catalog):
     catalog.journal_entries()
 
     # 2013AJ....145...99A
-    result = Vizier.get_catalogs('J/AJ/145/99/table1')
+    result = viz.get_catalogs('J/AJ/145/99/table1')
     table = result[list(result.keys())[0]]
     table.convert_bytestring_to_unicode(python3_only=True)
     name = 'SN2003ie'
@@ -1349,7 +1348,7 @@ def do_vizier(catalog):
     source = catalog.entries[name].add_source(bibcode='2011ApJ...729..143C')
     catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
 
-    result = Vizier.get_catalogs('J/ApJ/729/143/table1')
+    result = viz.get_catalogs('J/ApJ/729/143/table1')
     table = result[list(result.keys())[0]]
     table.convert_bytestring_to_unicode(python3_only=True)
     for row in pbar(table, task_str):
@@ -1368,7 +1367,7 @@ def do_vizier(catalog):
         }
         catalog.entries[name].add_photometry(**photodict)
 
-    result = Vizier.get_catalogs('J/ApJ/729/143/table2')
+    result = viz.get_catalogs('J/ApJ/729/143/table2')
     table = result[list(result.keys())[0]]
     table.convert_bytestring_to_unicode(python3_only=True)
     for row in pbar(table, task_str):
@@ -1389,7 +1388,7 @@ def do_vizier(catalog):
                 }
                 catalog.entries[name].add_photometry(**photodict)
 
-    result = Vizier.get_catalogs('J/ApJ/729/143/table4')
+    result = viz.get_catalogs('J/ApJ/729/143/table4')
     table = result[list(result.keys())[0]]
     table.convert_bytestring_to_unicode(python3_only=True)
     for row in pbar(table, task_str):
@@ -1406,7 +1405,7 @@ def do_vizier(catalog):
         }
         catalog.entries[name].add_photometry(**photodict)
 
-    result = Vizier.get_catalogs('J/ApJ/729/143/table5')
+    result = viz.get_catalogs('J/ApJ/729/143/table5')
     table = result[list(result.keys())[0]]
     table.convert_bytestring_to_unicode(python3_only=True)
     for row in pbar(table, task_str):
@@ -1431,7 +1430,7 @@ def do_vizier(catalog):
     source = catalog.entries[name].add_source(bibcode='2011ApJ...728...14P')
     catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
 
-    result = Vizier.get_catalogs('J/ApJ/728/14/table1')
+    result = viz.get_catalogs('J/ApJ/728/14/table1')
     table = result[list(result.keys())[0]]
     table.convert_bytestring_to_unicode(python3_only=True)
     for row in pbar(table, task_str):
@@ -1449,7 +1448,7 @@ def do_vizier(catalog):
                     e_magnitude=row["e_" + bandtag],
                     source=source)
 
-    result = Vizier.get_catalogs('J/ApJ/728/14/table2')
+    result = viz.get_catalogs('J/ApJ/728/14/table2')
     table = result[list(result.keys())[0]]
     table.convert_bytestring_to_unicode(python3_only=True)
     for row in pbar(table, task_str):
@@ -1467,7 +1466,7 @@ def do_vizier(catalog):
                     e_magnitude=row["e_" + bandtag],
                     source=source)
 
-    result = Vizier.get_catalogs('J/ApJ/728/14/table3')
+    result = viz.get_catalogs('J/ApJ/728/14/table3')
     table = result[list(result.keys())[0]]
     table.convert_bytestring_to_unicode(python3_only=True)
     for row in pbar(table, task_str):
@@ -1494,7 +1493,7 @@ def do_vizier(catalog):
     source = catalog.entries[name].add_source(bibcode='2011PAZh...37..837T')
     catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
 
-    result = Vizier.get_catalogs('J/PAZh/37/837/table2')
+    result = viz.get_catalogs('J/PAZh/37/837/table2')
     table = result[list(result.keys())[0]]
     table.convert_bytestring_to_unicode(python3_only=True)
     for row in pbar(table, task_str):
@@ -1520,7 +1519,7 @@ def do_vizier(catalog):
     source = catalog.entries[name].add_source(bibcode='2013MNRAS.433.1871B')
     catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
 
-    result = Vizier.get_catalogs('J/MNRAS/433/1871/table3a')
+    result = viz.get_catalogs('J/MNRAS/433/1871/table3a')
     table = result[list(result.keys())[0]]
     table.convert_bytestring_to_unicode(python3_only=True)
     for row in pbar(table, task_str):
@@ -1539,7 +1538,7 @@ def do_vizier(catalog):
                     e_magnitude=row["e_" + bandtag],
                     source=source)
 
-    result = Vizier.get_catalogs('J/MNRAS/433/1871/table3b')
+    result = viz.get_catalogs('J/MNRAS/433/1871/table3b')
     table = result[list(result.keys())[0]]
     table.convert_bytestring_to_unicode(python3_only=True)
     for row in pbar(table, task_str):
@@ -1565,7 +1564,7 @@ def do_vizier(catalog):
     source = catalog.entries[name].add_source(bibcode='2014AJ....148....1Z')
     catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
 
-    result = Vizier.get_catalogs('J/AJ/148/1/table2')
+    result = viz.get_catalogs('J/AJ/148/1/table2')
     table = result[list(result.keys())[0]]
     table.convert_bytestring_to_unicode(python3_only=True)
     for row in pbar(table, task_str):
@@ -1587,7 +1586,7 @@ def do_vizier(catalog):
                 }
                 catalog.entries[name].add_photometry(**photodict)
 
-    result = Vizier.get_catalogs('J/AJ/148/1/table3')
+    result = viz.get_catalogs('J/AJ/148/1/table3')
     table = result[list(result.keys())[0]]
     table.convert_bytestring_to_unicode(python3_only=True)
     for row in pbar(table, task_str):
@@ -1609,7 +1608,7 @@ def do_vizier(catalog):
                 }
                 catalog.entries[name].add_photometry(**photodict)
 
-    result = Vizier.get_catalogs('J/AJ/148/1/table5')
+    result = viz.get_catalogs('J/AJ/148/1/table5')
     table = result[list(result.keys())[0]]
     table.convert_bytestring_to_unicode(python3_only=True)
     for row in pbar(table, task_str):
@@ -1635,7 +1634,7 @@ def do_vizier(catalog):
     source = catalog.entries[name].add_source(bibcode='2014AJ....148....1Z')
     catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
 
-    result = Vizier.get_catalogs('J/ApJ/805/74/table1')
+    result = viz.get_catalogs('J/ApJ/805/74/table1')
     table = result[list(result.keys())[0]]
     table.convert_bytestring_to_unicode(python3_only=True)
     for row in pbar(table, task_str):
@@ -1670,7 +1669,7 @@ def do_vizier(catalog):
     catalog.journal_entries()
 
     # 2011ApJ...741...97D
-    result = Vizier.get_catalogs('J/ApJ/741/97/table2')
+    result = viz.get_catalogs('J/ApJ/741/97/table2')
     table = result[list(result.keys())[0]]
     table.convert_bytestring_to_unicode(python3_only=True)
     for row in pbar(table, task_str):
@@ -1692,7 +1691,7 @@ def do_vizier(catalog):
 
     # 2015MNRAS.448.1206M
     # Note: Photometry from two SN can also be added from this source.
-    result = Vizier.get_catalogs('J/MNRAS/448/1206/table3')
+    result = viz.get_catalogs('J/MNRAS/448/1206/table3')
     table = result[list(result.keys())[0]]
     table.convert_bytestring_to_unicode(python3_only=True)
     for row in pbar(table, task_str):
@@ -1715,7 +1714,7 @@ def do_vizier(catalog):
         catalog.entries[name].add_quantity(SUPERNOVA.MAX_BAND, 'r', source)
         catalog.entries[name].add_quantity(
             SUPERNOVA.CLAIMED_TYPE, 'Ia', source, kind='spectroscopic')
-    result = Vizier.get_catalogs('J/MNRAS/448/1206/table4')
+    result = viz.get_catalogs('J/MNRAS/448/1206/table4')
     table = result[list(result.keys())[0]]
     table.convert_bytestring_to_unicode(python3_only=True)
     for row in pbar(table, task_str):
@@ -1742,7 +1741,7 @@ def do_vizier(catalog):
         catalog.entries[name].add_quantity(SUPERNOVA.MAX_BAND, 'r', source)
         catalog.entries[name].add_quantity(
             SUPERNOVA.CLAIMED_TYPE, 'Ia?', source, kind='photometric')
-    result = Vizier.get_catalogs('J/MNRAS/448/1206/table5')
+    result = viz.get_catalogs('J/MNRAS/448/1206/table5')
     table = result[list(result.keys())[0]]
     table.convert_bytestring_to_unicode(python3_only=True)
     for row in pbar(table, task_str):
@@ -1765,7 +1764,7 @@ def do_vizier(catalog):
         catalog.entries[name].add_quantity(SUPERNOVA.MAX_BAND, 'r', source)
         catalog.entries[name].add_quantity(
             SUPERNOVA.CLAIMED_TYPE, row['Type'], source, kind='spectroscopic')
-    result = Vizier.get_catalogs('J/MNRAS/448/1206/table6')
+    result = viz.get_catalogs('J/MNRAS/448/1206/table6')
     table = result[list(result.keys())[0]]
     table.convert_bytestring_to_unicode(python3_only=True)
     for row in pbar(table, task_str):
@@ -1786,7 +1785,7 @@ def do_vizier(catalog):
         catalog.entries[name].add_quantity(SUPERNOVA.MAX_BAND, 'r', source)
         catalog.entries[name].add_quantity(
             SUPERNOVA.CLAIMED_TYPE, row['Type'], source, kind='photometric')
-    result = Vizier.get_catalogs('J/MNRAS/448/1206/tablea2')
+    result = viz.get_catalogs('J/MNRAS/448/1206/tablea2')
     table = result[list(result.keys())[0]]
     table.convert_bytestring_to_unicode(python3_only=True)
     for row in pbar(table, task_str):
@@ -1815,7 +1814,7 @@ def do_vizier(catalog):
             row['Typepsnid'] + '?',
             source,
             kind='photometric')
-    result = Vizier.get_catalogs('J/MNRAS/448/1206/tablea3')
+    result = viz.get_catalogs('J/MNRAS/448/1206/tablea3')
     table = result[list(result.keys())[0]]
     table.convert_bytestring_to_unicode(python3_only=True)
     for row in pbar(table, task_str):
@@ -1839,7 +1838,7 @@ def do_vizier(catalog):
     catalog.journal_entries()
 
     # 2012AJ....143..126B
-    result = Vizier.get_catalogs('J/AJ/143/126/table4')
+    result = viz.get_catalogs('J/AJ/143/126/table4')
     table = result[list(result.keys())[0]]
     table.convert_bytestring_to_unicode(python3_only=True)
     for row in pbar(table, task_str):
@@ -1858,7 +1857,7 @@ def do_vizier(catalog):
     # 2015ApJS..220....9F
     excludes = ['SN2009y']
     for viztab in ['1', '2']:
-        result = Vizier.get_catalogs('J/ApJS/220/9/table' + viztab)
+        result = viz.get_catalogs('J/ApJS/220/9/table' + viztab)
         table = result[list(result.keys())[0]]
         table.convert_bytestring_to_unicode(python3_only=True)
         for row in pbar(table, task_str):
@@ -1890,7 +1889,7 @@ def do_vizier(catalog):
                 e_value=row['e_z'],
                 kind=kind)
 
-    result = Vizier.get_catalogs('J/ApJS/220/9/table8')
+    result = viz.get_catalogs('J/ApJS/220/9/table8')
     table = result[list(result.keys())[0]]
     table.convert_bytestring_to_unicode(python3_only=True)
     for row in pbar(table, task_str):
@@ -1911,7 +1910,7 @@ def do_vizier(catalog):
             source=source)
     catalog.journal_entries()
 
-    result = Vizier.get_catalogs('J/ApJ/673/999/table1')
+    result = viz.get_catalogs('J/ApJ/673/999/table1')
     table = result[list(result.keys())[0]]
     table.convert_bytestring_to_unicode(python3_only=True)
     for row in pbar(table, task_str):
@@ -1938,7 +1937,7 @@ def do_vizier(catalog):
     catalog.journal_entries()
 
     # 2011MNRAS.417..916G
-    result = Vizier.get_catalogs("J/MNRAS/417/916/table2")
+    result = viz.get_catalogs("J/MNRAS/417/916/table2")
     table = result[list(result.keys())[0]]
     table.convert_bytestring_to_unicode(python3_only=True)
     for row in pbar(table, task_str):
@@ -1967,7 +1966,7 @@ def do_vizier(catalog):
     catalog.journal_entries()
 
     # 2013MNRAS.430.1746G
-    result = Vizier.get_catalogs("J/MNRAS/430/1746/table4")
+    result = viz.get_catalogs("J/MNRAS/430/1746/table4")
     table = result[list(result.keys())[0]]
     table.convert_bytestring_to_unicode(python3_only=True)
     for row in pbar(table, task_str):
@@ -1990,7 +1989,7 @@ def do_vizier(catalog):
     catalog.journal_entries()
 
     # 2014AJ....148...13R
-    result = Vizier.get_catalogs("J/AJ/148/13/high_z")
+    result = viz.get_catalogs("J/AJ/148/13/high_z")
     table = result[list(result.keys())[0]]
     table.convert_bytestring_to_unicode(python3_only=True)
     for row in pbar(table, task_str):
@@ -2024,7 +2023,7 @@ def do_vizier(catalog):
             source,
             kind='host',
             e_value=row['e_zhost'])
-    result = Vizier.get_catalogs("J/AJ/148/13/low_z")
+    result = viz.get_catalogs("J/AJ/148/13/low_z")
     table = result[list(result.keys())[0]]
     table.convert_bytestring_to_unicode(python3_only=True)
     for row in pbar(table, task_str):
@@ -2061,7 +2060,7 @@ def do_vizier(catalog):
     catalog.journal_entries()
 
     # 2007ApJ...666..674M
-    result = Vizier.get_catalogs("J/ApJ/666/674/table3")
+    result = viz.get_catalogs("J/ApJ/666/674/table3")
     table = result[list(result.keys())[0]]
     table.convert_bytestring_to_unicode(python3_only=True)
     for row in pbar(table, task_str):
@@ -2094,7 +2093,7 @@ def do_vizier(catalog):
     catalog.journal_entries()
 
     # 2013AcA....63....1K
-    result = Vizier.get_catalogs("J/AcA/63/1/table1")
+    result = viz.get_catalogs("J/AcA/63/1/table1")
     table = result[list(result.keys())[0]]
     table.convert_bytestring_to_unicode(python3_only=True)
     for row in pbar(table, task_str):
@@ -2116,7 +2115,7 @@ def do_vizier(catalog):
     catalog.journal_entries()
 
     # 2011MNRAS.410.1262W
-    result = Vizier.get_catalogs("J/MNRAS/410/1262/tablea2")
+    result = viz.get_catalogs("J/MNRAS/410/1262/tablea2")
     table = result[list(result.keys())[0]]
     table.convert_bytestring_to_unicode(python3_only=True)
     for row in pbar(table, task_str):
@@ -2136,7 +2135,7 @@ def do_vizier(catalog):
     catalog.journal_entries()
 
     # 2012ApJ...755...61S
-    result = Vizier.get_catalogs("J/ApJ/755/61/table3")
+    result = viz.get_catalogs("J/ApJ/755/61/table3")
     table = result[list(result.keys())[0]]
     table.convert_bytestring_to_unicode(python3_only=True)
     for row in pbar(table, task_str):
@@ -2162,7 +2161,7 @@ def do_vizier(catalog):
     catalog.journal_entries()
 
     # 2008AJ....135..348S
-    result = Vizier.get_catalogs("J/AJ/135/348/SNe")
+    result = viz.get_catalogs("J/AJ/135/348/SNe")
     table = result[list(result.keys())[0]]
     table.convert_bytestring_to_unicode(python3_only=True)
     for row in pbar(table, task_str):
@@ -2189,7 +2188,7 @@ def do_vizier(catalog):
     catalog.journal_entries()
 
     # 2010ApJ...713.1026D
-    result = Vizier.get_catalogs("J/ApJ/713/1026/SNe")
+    result = viz.get_catalogs("J/ApJ/713/1026/SNe")
     table = result[list(result.keys())[0]]
     table.convert_bytestring_to_unicode(python3_only=True)
     for row in pbar(table, task_str):
@@ -2210,7 +2209,7 @@ def do_vizier(catalog):
     catalog.journal_entries()
 
     # 2013ApJ...770..107C
-    result = Vizier.get_catalogs("J/ApJ/770/107/galaxies")
+    result = viz.get_catalogs("J/ApJ/770/107/galaxies")
     table = result[list(result.keys())[0]]
     table.convert_bytestring_to_unicode(python3_only=True)
     for row in pbar(table, task_str):
@@ -2230,7 +2229,7 @@ def do_vizier(catalog):
     catalog.journal_entries()
 
     # 2011ApJ...738..162S
-    result = Vizier.get_catalogs("J/ApJ/738/162/table3")
+    result = viz.get_catalogs("J/ApJ/738/162/table3")
     table = result[list(result.keys())[0]]
     table.convert_bytestring_to_unicode(python3_only=True)
     for row in pbar(table, task_str):
@@ -2252,7 +2251,7 @@ def do_vizier(catalog):
             e_value=row['e_z'])
         catalog.entries[name].add_quantity(
             SUPERNOVA.CLAIMED_TYPE, 'Ia', source, probability=row['PzIa'])
-    result = Vizier.get_catalogs("J/ApJ/738/162/table4")
+    result = viz.get_catalogs("J/ApJ/738/162/table4")
     table = result[list(result.keys())[0]]
     table.convert_bytestring_to_unicode(python3_only=True)
     for row in pbar(table, task_str):
@@ -2279,7 +2278,7 @@ def do_vizier(catalog):
         "m81", "m82", "m83", "m101", "m31"
     ]
     for tab in pbar(snrtabs, task_str):
-        result = Vizier.get_catalogs("J/MNRAS/446/943/" + tab)
+        result = viz.get_catalogs("J/MNRAS/446/943/" + tab)
         table = result[list(result.keys())[0]]
         table.convert_bytestring_to_unicode(python3_only=True)
         for ri, row in enumerate(pbar(table, task_str)):
@@ -2303,7 +2302,7 @@ def do_vizier(catalog):
     catalog.journal_entries()
 
     # 2009ApJ...703..370C
-    result = Vizier.get_catalogs("J/ApJ/703/370/tables")
+    result = viz.get_catalogs("J/ApJ/703/370/tables")
     table = result[list(result.keys())[0]]
     table.convert_bytestring_to_unicode(python3_only=True)
     for row in pbar(table, task_str):
@@ -2322,7 +2321,7 @@ def do_vizier(catalog):
 
     # 2016ApJ...821...57D
     name, source = catalog.new_entry('SN2013ge', bibcode="2016ApJ...821...57D")
-    result = Vizier.get_catalogs("J/ApJ/821/57/table1")
+    result = viz.get_catalogs("J/ApJ/821/57/table1")
     table = result[list(result.keys())[0]]
     table.convert_bytestring_to_unicode(python3_only=True)
     for row in pbar(table, task_str):
@@ -2342,7 +2341,7 @@ def do_vizier(catalog):
                     PHOTOMETRY.SOURCE: source
                 }
                 catalog.entries[name].add_photometry(**photodict)
-    result = Vizier.get_catalogs("J/ApJ/821/57/table2")
+    result = viz.get_catalogs("J/ApJ/821/57/table2")
     table = result[list(result.keys())[0]]
     table.convert_bytestring_to_unicode(python3_only=True)
     for row in pbar(table, task_str):
@@ -2361,7 +2360,7 @@ def do_vizier(catalog):
                     PHOTOMETRY.SOURCE: source
                 }
                 catalog.entries[name].add_photometry(**photodict)
-    result = Vizier.get_catalogs("J/ApJ/821/57/table3")
+    result = viz.get_catalogs("J/ApJ/821/57/table3")
     table = result[list(result.keys())[0]]
     table.convert_bytestring_to_unicode(python3_only=True)
     for row in pbar(table, task_str):
@@ -2380,7 +2379,7 @@ def do_vizier(catalog):
                     PHOTOMETRY.SOURCE: source
                 }
                 catalog.entries[name].add_photometry(**photodict)
-    result = Vizier.get_catalogs("J/ApJ/821/57/table4")
+    result = viz.get_catalogs("J/ApJ/821/57/table4")
     table = result[list(result.keys())[0]]
     table.convert_bytestring_to_unicode(python3_only=True)
     for row in pbar(table, task_str):
@@ -2409,7 +2408,7 @@ def do_vizier(catalog):
     catalog.journal_entries()
 
     # 2004ApJ...607..665R
-    result = Vizier.get_catalogs("J/ApJ/607/665/table1")
+    result = viz.get_catalogs("J/ApJ/607/665/table1")
     table = result[list(result.keys())[0]]
     table.convert_bytestring_to_unicode(python3_only=True)
     for row in pbar(table, task_str):
@@ -2422,7 +2421,7 @@ def do_vizier(catalog):
                                            source)
         catalog.entries[name].add_quantity(SUPERNOVA.DEC, row['DEJ2000'],
                                            source)
-    result = Vizier.get_catalogs("J/ApJ/607/665/table2")
+    result = viz.get_catalogs("J/ApJ/607/665/table2")
     table = result[list(result.keys())[0]]
     table.convert_bytestring_to_unicode(python3_only=True)
     for row in pbar(table, task_str):
@@ -2440,7 +2439,7 @@ def do_vizier(catalog):
             PHOTOMETRY.SOURCE: source
         }
         catalog.entries[name].add_photometry(**photodict)
-    result = Vizier.get_catalogs("J/ApJ/607/665/table5")
+    result = viz.get_catalogs("J/ApJ/607/665/table5")
     table = result[list(result.keys())[0]]
     table.convert_bytestring_to_unicode(python3_only=True)
     for row in pbar(table, task_str):
@@ -2455,11 +2454,12 @@ def do_vizier(catalog):
 
 
 def do_lennarz(catalog):
-    """
-    """
+    """Import data from the Lennarz catalog."""
     task_str = catalog.get_current_task_str()
-    Vizier.ROW_LIMIT = -1
-    result = Vizier.get_catalogs('J/A+A/538/A120/usc')
+    viz = Vizier(columns=['**'])
+    viz.ROW_LIMIT = -1
+    viz.VIZIER_SERVER = 'vizier.cfa.harvard.edu'
+    result = viz.get_catalogs('J/A+A/538/A120/usc')
     table = result[list(result.keys())[0]]
     table.convert_bytestring_to_unicode(python3_only=True)
 
