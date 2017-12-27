@@ -152,6 +152,7 @@ Other single SN datasets:
 * SCP16C03 - https://arxiv.org/abs/1707.04606 (spectra)
 * SN2016coi - http://adsabs.harvard.edu/abs/2017arXiv170903593P (Photometry and spectra)
 * SN2017dio - https://arxiv.org/abs/1712.00027 (photometry only in plot form)
+* SN2017egm - https://arxiv.org/abs/1708.00864 (additional photometry)
 * SN2017hcc - https://arxiv.org/abs/1711.07938 (photometry/spectra, but only in plot form)
 
 Spectra to recover that were donated to SuSpect (bad wavelength solutions, etc):
