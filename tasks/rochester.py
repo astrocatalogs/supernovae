@@ -1,5 +1,4 @@
-"""Import tasks for David Bishop's Latest Supernovae page.
-"""
+"""Import tasks for David Bishop's Latest Supernovae page."""
 import csv
 import os
 import re
@@ -14,13 +13,15 @@ from ..supernova import SUPERNOVA
 
 
 def do_rochester(catalog):
+    """Import data from latest supernova page."""
     rochestermirrors = [
         'http://www.rochesterastronomy.org/',
         'http://www.supernova.thistlethwaites.com/'
     ]
     rochesterpaths = [
         'snimages/snredshiftall.html', 'sn2017/snredshift.html',
-        'snimages/snredboneyard.html', 'snimages/snredboneyard-old.html'
+        'sn2018/snredshift.html', 'snimages/snredboneyard.html',
+        'snimages/snredboneyard-old.html'
     ]
     rochesterupdate = [False, True, True, False]
     task_str = catalog.get_current_task_str()
