@@ -27,6 +27,7 @@ Multiple SN datasets:
 * http://adsabs.harvard.edu/abs/1989ApJ...336..421W (radio data for several older SNe)
 * http://member.ipmu.jp/gaston.folatelli/spec_nir/ (NIR spectra leads)
 * https://arxiv.org/abs/1712.07379 (Spectra for 68 Ia SNe)
+* https://arxiv.org/abs/1801.01532 (photometry for 2013fs and 2013fr)
 
 Other single SN datasets:
 
