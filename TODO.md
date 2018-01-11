@@ -152,6 +152,7 @@ Other single SN datasets:
 * SN2016bkv - https://arxiv.org/abs/1801.00015 (photometry only in plot form)
 * SN2016coi - http://adsabs.harvard.edu/abs/2017arXiv170903593P (Photometry and spectra)
 * SN2016jhr - http://adsabs.harvard.edu/abs/2017Natur.550...80J (Photometry in arxiv version)
+* SN2016X - https://arxiv.org/abs/1801.03167
 * SCP16C03 - https://arxiv.org/abs/1707.04606 (spectra)
 * SN2017dio - https://arxiv.org/abs/1712.00027 (photometry only in plot form)
 * SN2017egm - https://arxiv.org/abs/1708.00864 (additional photometry)
