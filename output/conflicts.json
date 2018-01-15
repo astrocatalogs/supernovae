@@ -3444,11 +3444,11 @@
 		"alias":[
 			{
 				"value":"SN1999cp",
-				"source":"7,8,23,24,25,27,28,29,30,32,33,34,35"
+				"source":"7,8,23,24,25,26,27,28,29,31,32,33,34"
 			},
 			{
 				"value":"AAVSO 1401-04",
-				"source":"33"
+				"source":"32"
 			}
 		],
 		"edit":false,
@@ -3684,15 +3684,15 @@
 		"alias":[
 			{
 				"value":"SN2000C",
-				"source":"2,6,8,9,10,11,13,14,15"
+				"source":"2,6,7,8,9,10,12,13,14"
 			},
 			{
 				"value":"AAVSO 0730+35",
-				"source":"14"
+				"source":"13"
 			},
 			{
 				"value":"PSN J07365699+3514372",
-				"source":"6,10"
+				"source":"6,9"
 			}
 		],
 		"edit":false,
@@ -36937,10 +36937,6 @@
 			{
 				"value":"PS1-14abq",
 				"source":"2,10"
-			},
-			{
-				"value":"MASTER OT JJ044212.20+230616.7",
-				"source":"2,6"
 			}
 		],
 		"edit":false,
@@ -41628,7 +41624,7 @@
 		"name":"OGLE-2015-SN-043",
 		"alias":[
 			{
-				"value":"MLS171230:160606+402635",
+				"value":"MLS180112:143648+244259",
 				"source":"2,3,4"
 			}
 		],
@@ -44768,7 +44764,11 @@
 			},
 			{
 				"value":"AT2017egm",
-				"source":"12,14,15"
+				"source":"12,14,15,5,9"
+			},
+			{
+				"value":"PS18cn",
+				"source":"5,9"
 			},
 			{
 				"value":"SN2017egm",
@@ -45140,119 +45140,6 @@
 		]
 	},
 	{
-		"name":"SN2017gfo",
-		"alias":[
-			{
-				"value":"SN2017gfo",
-				"source":"3,4"
-			},
-			{
-				"value":"AT2017gfo",
-				"source":"3,4"
-			},
-			{
-				"value":"SSS17a",
-				"source":"3,4"
-			},
-			{
-				"value":"GW170817",
-				"source":"3,4"
-			},
-			{
-				"value":"G298048",
-				"source":"3,4"
-			},
-			{
-				"value":"PS16egl",
-				"source":"3,4"
-			},
-			{
-				"value":"AT2016fyn",
-				"source":"3,4"
-			},
-			{
-				"value":"DLT17ck",
-				"source":"3,4"
-			}
-		],
-		"edit":false,
-		"quantity":"ra",
-		"difference":"50.99",
-		"values":[
-			"00:15:11.57",
-			"13:09:48.090",
-			"00:15:11.570"
-		],
-		"sources":[
-			{
-				"idtype":"name",
-				"id":"Transient Name Server"
-			},
-			{
-				"idtype":"name,name",
-				"id":"Transient Name Server,Latest Supernovae"
-			},
-			{
-				"idtype":"name,name",
-				"id":"Transient Name Server,Latest Supernovae"
-			}
-		]
-	},
-	{
-		"name":"SN2017gfo",
-		"alias":[
-			{
-				"value":"SN2017gfo",
-				"source":"3,4"
-			},
-			{
-				"value":"AT2017gfo",
-				"source":"3,4"
-			},
-			{
-				"value":"SSS17a",
-				"source":"3,4"
-			},
-			{
-				"value":"GW170817",
-				"source":"3,4"
-			},
-			{
-				"value":"G298048",
-				"source":"3,4"
-			},
-			{
-				"value":"PS16egl",
-				"source":"3,4"
-			},
-			{
-				"value":"AT2016fyn",
-				"source":"3,4"
-			},
-			{
-				"value":"DLT17ck",
-				"source":"3,4"
-			}
-		],
-		"edit":false,
-		"quantity":"dec",
-		"difference":"1.631",
-		"values":[
-			"+14:45:07.96",
-			"-23:22:53.35"
-		],
-		"sources":[
-			{
-				"idtype":"name,name",
-				"id":"Transient Name Server,Latest Supernovae"
-			},
-			{
-				"idtype":"name,name",
-				"id":"Transient Name Server,Latest Supernovae"
-			}
-		]
-	},
-	{
 		"name":"SN2017gip",
 		"alias":[
 			{
@@ -45598,6 +45485,10 @@
 			{
 				"value":"Gaia17dim",
 				"source":"4,9"
+			},
+			{
+				"value":"PS18ct",
+				"source":"4,9"
 			}
 		],
 		"edit":false,
@@ -45645,6 +45536,10 @@
 			},
 			{
 				"value":"Gaia17dim",
+				"source":"4,9"
+			},
+			{
+				"value":"PS18ct",
 				"source":"4,9"
 			}
 		],

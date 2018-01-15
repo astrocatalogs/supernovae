@@ -4140,6 +4140,25 @@
 		"edit":false
 	},
 	{
+		"name1":"SN2018ec",
+		"aliases1":[
+			"SN2018ec",
+			"AT2018ec"
+		],
+		"name2":"PSN J10275082-4354034",
+		"aliases2":[
+			"PSN J10275082-4354034"
+		],
+		"ra1":"10:27:50.77",
+		"dec1":"-43:54:06.30",
+		"ra2":"10:27:50.82",
+		"dec2":"-43:54:03.4",
+		"distdeg":"2.94992090652",
+		"maxdiffyear":"3.658333333333303",
+		"discdiffyear":"3.656666666666524",
+		"edit":false
+	},
+	{
 		"name1":"SNhunt84",
 		"aliases1":[
 			"SNhunt84"
@@ -4229,6 +4248,25 @@
 		"distdeg":"0.0",
 		"maxdiffyear":"",
 		"discdiffyear":"",
+		"edit":false
+	},
+	{
+		"name1":"PTF10osn",
+		"aliases1":[
+			"PTF10osn"
+		],
+		"name2":"PS18ap",
+		"aliases2":[
+			"PS18ap",
+			"AT2018aq"
+		],
+		"ra1":"23:23:07.982",
+		"dec1":"+17:30:29.23",
+		"ra2":"23:23:08.59",
+		"dec2":"+17:30:30.71",
+		"distdeg":"8.82252269552",
+		"maxdiffyear":"",
+		"discdiffyear":"7.4311944444443725",
 		"edit":false
 	},
 	{
@@ -5038,6 +5076,24 @@
 		"edit":false
 	},
 	{
+		"name1":"AT2018er",
+		"aliases1":[
+			"AT2018er"
+		],
+		"name2":"SNhunt339",
+		"aliases2":[
+			"SNhunt339"
+		],
+		"ra1":"04:53:17.04",
+		"dec1":"+25:52:23.52",
+		"ra2":"04:53:17.04",
+		"dec2":"+25:52:23.52",
+		"distdeg":"0.0",
+		"maxdiffyear":"",
+		"discdiffyear":"0.0005193555555251805",
+		"edit":false
+	},
+	{
 		"name1":"SN2016cbx",
 		"aliases1":[
 			"SN2016cbx",
@@ -5095,6 +5151,24 @@
 		"distdeg":"0.298410681755",
 		"maxdiffyear":"0.775000000000091",
 		"discdiffyear":"0.7763361305555918",
+		"edit":false
+	},
+	{
+		"name1":"DES15C1mat",
+		"aliases1":[
+			"DES15C1mat"
+		],
+		"name2":"DES17C1bzd",
+		"aliases2":[
+			"DES17C1bzd"
+		],
+		"ra1":"03:39:08.05",
+		"dec1":"-26:11:27.0",
+		"ra2":"03:39:07.80",
+		"dec2":"-26:11:28.9",
+		"distdeg":"3.8643323078",
+		"maxdiffyear":"1.9944444444445253",
+		"discdiffyear":"1.9555555555555202",
 		"edit":false
 	},
 	{
