@@ -1,5 +1,4 @@
-"""Import tasks for GAIA.
-"""
+"""Import tasks for GAIA."""
 import csv
 import os
 import re
@@ -12,6 +11,7 @@ from ..supernova import SUPERNOVA
 
 
 def do_gaia(catalog):
+    """Import from the GAIA alerts page."""
     task_str = catalog.get_current_task_str()
     fname = os.path.join(catalog.get_current_task_repo(), 'GAIA/alerts.csv')
     csvtxt = catalog.load_url('http://gsaweb.ast.cam.ac.uk/alerts/alerts.csv',
