@@ -100,8 +100,6 @@ def do_rochester(catalog):
                         oldname = aka
                         name = catalog.add_entry(aka)
 
-            ra = str(cols[cns['ra']].contents[0]).strip()
-            dec = str(cols[cns['dec']].contents[0]).strip()
 
             sn = re.sub('<[^<]+?>', '',
                         str(cols[cns['name']].contents[0])).strip()
@@ -112,6 +110,11 @@ def do_rochester(catalog):
             if not name:
                 if not sn or sn in ['Transient']:
                     continue
+
+            ra = str(cols[cns['ra']].contents[0]).strip()
+            dec = str(cols[cns['dec']].contents[0]).strip()
+
+            if not name:
                 if sn[:8] == 'MASTER J':
                     sn = sn.replace('MASTER J', 'MASTER OT J').replace(
                         'SNHunt', 'SNhunt')
