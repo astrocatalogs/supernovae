@@ -133,6 +133,7 @@ Other single SN datasets:
 * SN2013dx - http://adsabs.harvard.edu/abs/2015A%26A...577A.116D (Lots of photometry, but no zero points in paper)
 * SN2013ej - http://adsabs.harvard.edu/abs/2015ApJ...807...59H (photometry)
 * SN2013hx - Inserra+ 2013 in prep.?
+* SN2014ad - https://arxiv.org/abs/1801.07046 (photometry)
 * SN2014C - http://adsabs.harvard.edu/abs/2015ApJ...815..120M  (Photometry & spectra, but data not in paper)
 * SN2014J - http://adsabs.harvard.edu/abs/2014ApJ...795L...4K
 * SN2014J - http://adsabs.harvard.edu/abs/2014ApJ...784L..12G
