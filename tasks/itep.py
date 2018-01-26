@@ -27,7 +27,7 @@ def do_itep(catalog):
         '2000MNRAS.318.1093F', '2005MNRAS.360..950P', '2004A&A...426..963E',
         '1999AJ....117.1175S', '1999MNRAS.305..811B', '2001MNRAS.321..254S',
         '1995A&A...293..723C', '2004AJ....127.1664K', '2001AJ....122.1616K',
-        '2004MNRAS.349.1344A', '2006AJ....131.1639K']
+        '2004MNRAS.349.1344A', '2006AJ....131.1639K', '2004AJ....128.3034K']
     itepignorephot = ['SN2006gy', 'SN1999aw']
     needsbib = []
     with open(os.path.join(catalog.get_current_task_repo(),
