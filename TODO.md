@@ -29,7 +29,7 @@ Multiple SN datasets:
 * https://arxiv.org/abs/1712.07379 (Spectra for 68 Ia SNe)
 * https://arxiv.org/abs/1801.01532 (photometry for 2013fs and 2013fr)
 * http://adsabs.harvard.edu/abs/2014A&A...561A.146S (IR photometry for 2008ha, 2010ae)
-* https://arxiv.org/abs/1801.08240 (3 high-z SLSN, photometry)
+* https://arxiv.org/abs/1801.08241 (5 high-z SLSN, spectra)
 
 Other single SN datasets:
 
