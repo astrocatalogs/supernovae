@@ -29,6 +29,7 @@ Multiple SN datasets:
 * https://arxiv.org/abs/1712.07379 (Spectra for 68 Ia SNe)
 * https://arxiv.org/abs/1801.01532 (photometry for 2013fs and 2013fr)
 * http://adsabs.harvard.edu/abs/2014A&A...561A.146S (IR photometry for 2008ha, 2010ae)
+* https://arxiv.org/abs/1801.08240 (3 high-z SLSN, photometry)
 
 Other single SN datasets:
 
@@ -136,6 +137,7 @@ Other single SN datasets:
 * SN2014ad - http://adsabs.harvard.edu/abs/2017MNRAS.469.1897S (Photometry only in plot form)
 * iPTF14atg - http://adsabs.harvard.edu/abs/2015Natur.521..328C (Photometry, but data not in paper)
 * iPTF14gqr - De et al in prep (photometry and spectra)
+* ASASSN-15no - https://arxiv.org/abs/1801.08318 (photometry)
 * SN2015bh - http://arxiv.org/abs/1609.00731 (photometry and spectra)
 * SN2015H - http://adsabs.harvard.edu/abs/2016A%26A...589A..89M (Photometry, data not in paper)
 * SN2015J - https://arxiv.org/abs/1711.08655 (photometry, X-ray)
