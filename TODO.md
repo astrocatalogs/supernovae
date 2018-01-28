@@ -144,12 +144,12 @@ Other single SN datasets:
 * iPTF15dtg - http://arxiv.org/abs/1605.02491 (spectra)
 * SN2016bkv - https://arxiv.org/abs/1801.00015 (photometry only in plot form)
 * SN2016jhr - http://adsabs.harvard.edu/abs/2017Natur.550...80J (Photometry in arxiv version)
-* SN2016X - https://arxiv.org/abs/1801.03167
+* SN2016X - https://arxiv.org/abs/1801.03167 (photometry)
 * SCP16C03 - https://arxiv.org/abs/1707.04606 (spectra)
 * SN2017dio - https://arxiv.org/abs/1712.00027 (photometry only in plot form)
 * SN2017egm - https://arxiv.org/abs/1708.00864 (additional photometry)
 * SN2017hcc - https://arxiv.org/abs/1711.07938 (photometry/spectra, but only in plot form)
-* SNHunt151 - https://arxiv.org/abs/1801.03040
+* SNHunt151 - https://arxiv.org/abs/1801.03040 (photometry)
 
 Spectra to recover that were donated to SuSpect (bad wavelength solutions, etc):
 * 2000E_20000130_3274_7356_00.dat
