@@ -26,7 +26,7 @@ def do_snf_aliases(catalog):
     return
 
 
-def do_snf_specta(catalog):
+def do_snf_spectra(catalog):
     task_str = catalog.get_current_task_str()
     bibcodes = {'SN2005gj': '2006ApJ...650..510A',
                 'SN2006D': '2007ApJ...654L..53T',

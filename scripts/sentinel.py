@@ -32,9 +32,15 @@ else:
         "https://ui.adsabs.harvard.edu/#user/settings/token and place it in "
         "this file.")
 
+specterms = [
+    "spectrum", "spectra", "spectroscopic", "spectroscopy"]
+
+photterms = [
+    "photometry", "photometric", "light curve"]
+
 for fcnt, eventfile in enumerate(tq(sorted(files, key=lambda s: s.lower()))):
-    # if fcnt > 10000:
-    #    break
+    #if fcnt > 10000:
+    #   break
     fileeventname = os.path.splitext(os.path.basename(eventfile))[0].replace(
         '.json', '')
 
@@ -48,30 +54,33 @@ for fcnt, eventfile in enumerate(tq(sorted(files, key=lambda s: s.lower()))):
     item = json.loads(filetext, object_pairs_hook=OrderedDict)
     item = item[list(item.keys())[0]]
 
-    # Check for likely existence of spectrum
-    if 'spectra' in item:
-        continue
-
     hasspecred = False
-    if 'redshift' in item:
-        redshiftkinds = [x['kind'] if 'kind' in x else ''
-                         for x in item['redshift']]
-        if any([any(
-            [y == x for y in ['cmb', 'heliocentric', 'spectroscopic', '']])
-                for x in redshiftkinds]):
-            hasspecred = True
-
     hasspectype = False
-    if 'claimedtype' in item:
-        typekinds = ['candidate'
-                     if x['value'] == 'Candidate' else (x['kind']
-                                                        if 'kind' in x else '')
-                     for x in item['claimedtype']]
-        if any([any([y == x for y in ['spectroscopic', '']])
-                for x in typekinds]):
-            hasspectype = True
+    if 'spectra' not in item:
+        if 'redshift' in item:
+            redshiftkinds = [x['kind'] if 'kind' in x else ''
+                             for x in item['redshift']]
+            if any([any(
+                [y == x for y in ['cmb', 'heliocentric', 'spectroscopic', '']])
+                    for x in redshiftkinds]):
+                hasspecred = True
 
-    if not hasspecred and not hasspectype:
+        if 'claimedtype' in item:
+            typekinds = ['candidate'
+                         if x['value'].lower() == 'candidate' else (x['kind']
+                                                            if 'kind' in x else '')
+                         for x in item['claimedtype']]
+            if any([any([y == x for y in ['spectroscopic', '']])
+                    for x in typekinds]):
+                hasspectype = True
+
+    search_spectra = hasspecred or hasspectype
+    search_photometry = len(item.get('photometry', [])) <= 3
+
+    # Optionally ignore spectra
+    # search_spectra = False
+
+    if not search_photometry and not search_spectra:
         continue
 
     try:
@@ -87,32 +96,41 @@ for fcnt, eventfile in enumerate(tq(sorted(files, key=lambda s: s.lower()))):
             if alias.startswith('SN'):
                 aliases.append('SN ' + alias[2:])
         qstr = 'full:("' + '" or "'.join(aliases) + '") '
+        qstr += 'and property:refereed and full:('
+        terms = []
+        if search_spectra:
+            terms += specterms
+        if search_photometry:
+            terms += photterms
+        qstr += '"' + '" or "'.join(terms) + '")'
         allpapers = ads.SearchQuery(
-            q=(qstr +
-               ' and property:refereed and ' +
-               'full:("spectrum" or "spectra" or "spectroscopic" or ' +
-               '"spectroscopy")'),
-            fl=['id', 'bibcode', 'author'], max_pages=100)
+            q=qstr, fl=['id', 'bibcode', 'author'], max_pages=100)
     except:
         continue
 
-    if not allpapers:
-        continue
-
     try:
+        npapers = 0
         for paper in allpapers:
+            if paper.bibstem in ['ATel', 'CBET', 'IAUC']:
+                tprint('ignored bibstem')
+                continue
             bc = paper.bibcode
             if bc not in sentinel:
                 allauthors = paper.author
                 sentinel[bc] = OrderedDict([('bibcode', bc), (
                     'allauthors', allauthors), ('events', [])])
             sentinel[bc]['events'].append(fileeventname)
-        rate_limits = allpapers.response.get_ratelimits()
+            npapers += 1
+        if not npapers:
+            continue
         if int(rate_limits['remaining']) <= 10:
             print('ADS API limit reached, terminating early.')
             break
-        tprint(fileeventname + '\t(remaining API calls: ' + rate_limits[
-            'remaining'] + ')')
+
+        rate_limits = allpapers.response.get_ratelimits()
+
+        tprint('{:<30} (papers found: {}, remaining API calls: {})'.format(
+            fileeventname, npapers, rate_limits['remaining']))
     except:
         continue
 

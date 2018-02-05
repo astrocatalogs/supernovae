@@ -63,6 +63,15 @@
         "repo": "input/sne-external",
         "priority": 6
     },
+    "ptss": {
+        "nice_name": "%pre PTSS",
+        "active": true,
+        "update": false,
+        "module": "supernovae.tasks.ptss",
+        "function": "do_ptss_meta",
+        "repo": "input/sne-external",
+        "priority": 7
+    },
     "scp": {
         "nice_name": "%pre SCP",
         "active": true,
@@ -526,7 +535,7 @@
         "active": true,
         "update": false,
         "module": "supernovae.tasks.snf",
-        "function": "do_snf_specta",
+        "function": "do_snf_spectra",
         "groups": ["spectra"],
         "repo": "input/sne-external-spectra",
         "always_journal": true,
