@@ -5017,8 +5017,8 @@
 		"difference":"",
 		"values":[
 			"Ic",
-			"II",
 			"IIc",
+			"II",
 			"II Pec"
 		],
 		"sources":[
@@ -45736,6 +45736,10 @@
 			{
 				"value":"Gaia17djs",
 				"source":"3,6,7"
+			},
+			{
+				"value":"PS18ez",
+				"source":"3,7"
 			}
 		],
 		"edit":false,
