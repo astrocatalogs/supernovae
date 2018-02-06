@@ -79,10 +79,8 @@ def do_tns(catalog):
             if row[4] and 'SN' not in row[4]:
                 continue
             name = row[1].replace(' ', '')
-            name = catalog.add_entry(name)
-            source = catalog.entries[name].add_source(
-                name='Transient Name Server', url=tns_url)
-            catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
+            name, source = catalog.new_entry(
+                name, srcname='Transient Name Server', url=tns_url)
             if row[2] and row[2] != '00:00:00.00':
                 catalog.entries[name].add_quantity(SUPERNOVA.RA, row[2],
                                                    source)

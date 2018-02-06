@@ -1,5 +1,4 @@
-'''Clean various supernova-specific values.
-'''
+"""Clean various supernova-specific values."""
 from math import floor
 
 from astrocats.catalog.utils import (get_sig_digits, is_integer, is_number,
@@ -11,6 +10,7 @@ __all__ = ['name_clean', 'host_clean', 'radec_clean', 'clean_snname']
 
 
 def name_clean(name):
+    """Apply list of renaming rules for supernova names."""
     newname = name.strip(' ;,*.')
     if newname.startswith('NAME '):
         newname = newname.replace('NAME ', '', 1)
@@ -28,6 +28,8 @@ def name_clean(name):
         newname = newname.replace('MASTER OT', 'MASTER OT J', 1)
     if newname.startswith('MASTER OT J '):
         newname = newname.replace('MASTER OT J ', 'MASTER OT J', 1)
+    if newname.startswith('PTSS '):
+        newname = newname.replace('PTSS ', 'PTSS-', 1)
     if newname.startswith('OGLE '):
         newname = newname.replace('OGLE ', 'OGLE-', 1)
     if newname.startswith('OGLE-') and len(newname) != 16:
@@ -358,7 +360,7 @@ def host_clean(name):
         newname = newname[:5] + '-'.join(
             [x.zfill(3) for x in newname[5:].strip().split("-")])
     if ((len(newname) > 1 and newname.startswith("E")) or
-        (len(newname) > 3 and newname.startswith('ESO'))):
+            (len(newname) > 3 and newname.startswith('ESO'))):
         if newname[0] == "E":
             esplit = newname[1:].split("-")
         else:
