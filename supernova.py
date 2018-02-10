@@ -22,6 +22,7 @@ from .utils import frame_priority, host_clean, radec_clean
 
 class SUPERNOVA(ENTRY):
     """Supernova `Key` child class."""
+
     CLAIMED_TYPE = Key('claimedtype',
                        KEY_TYPES.STRING,
                        kind_preference=['spectroscopic', 'photometric'],
@@ -820,7 +821,8 @@ class Supernova(Entry):
         if SUPERNOVA.PHOTOMETRY not in self:
             return
         mjds = [
-            float(x[PHOTOMETRY.TIME]) for x in self[SUPERNOVA.PHOTOMETRY]
+            np.mean([float(x) for x in listify(
+                x[PHOTOMETRY.TIME])]) for x in self[SUPERNOVA.PHOTOMETRY]
             if (PHOTOMETRY.TIME in x and x.get(PHOTOMETRY.U_TIME, '') == 'MJD'
                 and PHOTOMETRY.MAGNITUDE in x and PHOTOMETRY.BAND in x)
         ]
@@ -830,16 +832,17 @@ class Supernova(Entry):
         maxmjd = max(mjds) + 1
         newphotos = []
         for photo in self[SUPERNOVA.PHOTOMETRY]:
+            ptime = np.mean([float(x) for x in listify(
+                photo[PHOTOMETRY.TIME])]) if PHOTOMETRY.TIME in photo else None
             if (PHOTOMETRY.MAGNITUDE in photo and
                     PHOTOMETRY.BAND not in photo and
                 (PHOTOMETRY.TIME not in photo or
                  PHOTOMETRY.U_TIME not in photo or
-                 (float(photo[PHOTOMETRY.TIME]) >= minmjd and
-                  float(photo[PHOTOMETRY.TIME]) <= maxmjd))):
+                 (float(ptime) >= minmjd and float(ptime) <= maxmjd))):
                 self._log.info("Purging photometry without band information, "
                                "MJD: {}, Mag: {}".format(
-                                   photo.get(PHOTOMETRY.TIME, "Not specified"),
-                                   photo[PHOTOMETRY.MAGNITUDE]))
+                                   'N/A' if ptime is None else ptime,
+                                   photo.get(PHOTOMETRY.MAGNITUDE, 'N/A')))
                 continue
             newphotos.append(photo)
         self[SUPERNOVA.PHOTOMETRY] = newphotos
