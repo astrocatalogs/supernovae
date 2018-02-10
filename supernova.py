@@ -653,7 +653,7 @@ class Supernova(Entry):
         eventphoto = [
             (x[PHOTOMETRY.U_TIME], Decimal(x[PHOTOMETRY.TIME])
              if not isinstance(x[PHOTOMETRY.TIME], list) else
-             Decimal(np.mean(float(y) for y in x[PHOTOMETRY.TIME])),
+             Decimal(np.mean([float(y) for y in x[PHOTOMETRY.TIME]])),
              Decimal(x[PHOTOMETRY.MAGNITUDE]), x.get(PHOTOMETRY.BAND, ''),
              x[PHOTOMETRY.SOURCE]) for x in self[self._KEYS.PHOTOMETRY]
             if (PHOTOMETRY.MAGNITUDE in x and PHOTOMETRY.TIME in x and x.get(
@@ -665,7 +665,7 @@ class Supernova(Entry):
             eventphoto = [
                 (x[PHOTOMETRY.U_TIME], Decimal(x[PHOTOMETRY.TIME])
                  if not isinstance(x[PHOTOMETRY.TIME], list) else
-                 Decimal(np.mean(float(y) for y in x[PHOTOMETRY.TIME])),
+                 Decimal(np.mean([float(y) for y in x[PHOTOMETRY.TIME]])),
                  Decimal(x[PHOTOMETRY.MAGNITUDE]), x.get(PHOTOMETRY.BAND, ''),
                  x[PHOTOMETRY.SOURCE]) for x in self[self._KEYS.PHOTOMETRY]
                 if (PHOTOMETRY.MAGNITUDE in x and PHOTOMETRY.TIME in x and
