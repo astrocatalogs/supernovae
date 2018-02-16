@@ -830,9 +830,9 @@ def do_ascii(catalog):
         'BS': 'B',
         'VS': 'V',
         'US': 'U',
-        'UM2': 'M2',
-        'UW1': 'W1',
-        'UW2': 'W2'
+        'UM2': 'UVM2',
+        'UW1': 'UVW1',
+        'UW2': 'UVW2'
     }
     for ri, row in enumerate(pbar(tsvin, task_str)):
         if row[0].startswith('###'):
