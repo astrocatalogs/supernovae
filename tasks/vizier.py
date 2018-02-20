@@ -25,6 +25,33 @@ def do_vizier(catalog):
     viz.ROW_LIMIT = -1
     viz.VIZIER_SERVER = 'vizier.cfa.harvard.edu'
 
+    # 2018ApJ...854L..14K
+    result = viz.get_catalogs('J/ApJ/854/L14/ph17dio')
+    table = result[list(result.keys())[0]]
+    table.convert_bytestring_to_unicode(python3_only=True)
+    (name, source) = catalog.new_entry(
+        'SN2017dio', bibcode='2018ApJ...854L..14K')
+    for row in pbar(table, task_str):
+        row = convert_aq_output(row)
+        bands = [
+            x for x in row if x.endswith('mag') and not x.startswith('e_')
+        ]
+        for bandtag in bands:
+            band = bandtag.replace('mag', '')
+            if (bandtag in row and is_number(row[bandtag]) and
+                    not isnan(float(row[bandtag]))):
+                photodict = {
+                    PHOTOMETRY.TIME: str(row['MJD']),
+                    PHOTOMETRY.U_TIME: 'MJD',
+                    PHOTOMETRY.BAND: band,
+                    PHOTOMETRY.MAGNITUDE: row[bandtag],
+                    PHOTOMETRY.E_MAGNITUDE: row['e_' + bandtag],
+                    PHOTOMETRY.TELESCOPE: row['Tel'],
+                    PHOTOMETRY.SOURCE: source
+                }
+                catalog.entries[name].add_photometry(**photodict)
+    catalog.journal_entries()
+
     # 2008MNRAS.384..107E
     results = viz.get_catalogs([
         'J/MNRAS/384/107/table3', 'J/MNRAS/384/107/table5',
