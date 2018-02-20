@@ -138,6 +138,7 @@ Other single SN datasets:
 * iPTF14atg - http://adsabs.harvard.edu/abs/2015Natur.521..328C (Photometry, but data not in paper)
 * iPTF14gqr - De et al in prep (photometry and spectra)
 * ASASSN-15no - https://arxiv.org/abs/1801.08318 (photometry)
+* SN2015as - https://arxiv.org/abs/1802.06731
 * SN2015bh - http://arxiv.org/abs/1609.00731 (photometry and spectra)
 * SN2015H - http://adsabs.harvard.edu/abs/2016A%26A...589A..89M (Photometry, data not in paper)
 * SN2015J - https://arxiv.org/abs/1711.08655 (photometry, X-ray)
