@@ -144,6 +144,7 @@ Other single SN datasets:
 * SN2015J - https://arxiv.org/abs/1711.08655 (photometry, X-ray)
 * iPTF15dtg - http://arxiv.org/abs/1605.02491 (spectra)
 * SN2016bkv - https://arxiv.org/abs/1801.00015 (photometry only in plot form)
+* SN2016gkg - http://www.nature.com.ezp-prod1.hul.harvard.edu/articles/nature25151#extended-data (photometry in JPG table)
 * SN2016jhr - http://adsabs.harvard.edu/abs/2017Natur.550...80J (Photometry in arxiv version)
 * SN2016X - https://arxiv.org/abs/1801.03167 (photometry)
 * SCP16C03 - https://arxiv.org/abs/1707.04606 (spectra)
