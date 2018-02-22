@@ -185,7 +185,7 @@ def do_mast_spectra(catalog):
 
             spectra = [{
                 'target_classification': x['target_classification'],
-                'obsid': x.get('obsid'),
+                'obsid': x['obsid'] if 'obsid' in x else None,
                 't_min': x['t_min'],
                 't_max': x['t_max'],
                 'instrument_name': x['instrument_name'],
