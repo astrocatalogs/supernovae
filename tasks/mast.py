@@ -185,7 +185,7 @@ def do_mast_spectra(catalog):
 
             spectra = [{
                 'target_classification': x['target_classification'],
-                'obsid': x['obsid'],
+                'obsid': x['obsid'] if 'obsid' in x else None,
                 't_min': x['t_min'],
                 't_max': x['t_max'],
                 'instrument_name': x['instrument_name'],
@@ -202,6 +202,9 @@ def do_mast_spectra(catalog):
                 continue
 
             obsid = spec['obsid']
+            if obsid is None:
+                continue
+
             mjd = str(Decimal('0.5') * (
                 Decimal(str(spec['t_min'])) + Decimal(str(spec['t_max']))))
             instrument = spec['instrument_name']
