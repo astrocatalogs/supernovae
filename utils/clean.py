@@ -30,6 +30,8 @@ def name_clean(name):
         newname = newname.replace('MASTER OT J ', 'MASTER OT J', 1)
     if newname.startswith('PTSS '):
         newname = newname.replace('PTSS ', 'PTSS-', 1)
+    if newname.startswith('SPIRITS '):
+        newname = newname.replace('SPIRITS ', 'SPIRITS', 1)
     if newname.startswith('OGLE '):
         newname = newname.replace('OGLE ', 'OGLE-', 1)
     if newname.startswith('OGLE-') and len(newname) != 16:
