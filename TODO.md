@@ -152,6 +152,7 @@ Other single SN datasets:
 * SCP16C03 - https://arxiv.org/abs/1707.04606 (spectra)
 * SN2017dio - https://arxiv.org/abs/1712.00027 (photometry only in plot form)
 * SN2017egm - https://arxiv.org/abs/1708.00864 (additional photometry)
+* SN2017ein - https://arxiv.org/abs/1803.01050 (photometry)
 * SN2017hcc - https://arxiv.org/abs/1711.07938 (photometry/spectra, but only in plot form)
 * SNHunt151 - https://arxiv.org/abs/1801.03040 (photometry)
 
