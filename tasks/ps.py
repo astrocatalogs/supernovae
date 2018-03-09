@@ -170,22 +170,24 @@ def do_ps_threepi(catalog):
     fname = os.path.join(catalog.get_current_task_repo(), '3pi/page00.html')
     ps_url = ("http://psweb.mp.qub.ac.uk/"
               "ps1threepi/psdb/public/?page=1&sort=followup_flag_date")
-    html = catalog.load_url(ps_url, fname, write=False)
-    if not html:
-        return
+    html = catalog.load_url(ps_url, fname, write=False, update_mode=True)
 
-    # Clean some common HTML manglings
-    html = html.replace('ahref=', 'a href=')
-
-    bs = BeautifulSoup(html, 'html5lib')
-    div = bs.find('div', {'class': 'pagination'})
+    # Check if offline.
     offline = False
-    if not div:
+    if not html:
         offline = True
     else:
-        links = div.findAll('a')
-        if not links:
+        # Clean some common HTML manglings
+        html = html.replace('ahref=', 'a href=')
+
+        bs = BeautifulSoup(html, 'html5lib')
+        div = bs.find('div', {'class': 'pagination'})
+        if not div:
             offline = True
+        else:
+            links = div.findAll('a')
+            if not links:
+                offline = True
 
     if offline:
         if catalog.args.update:
