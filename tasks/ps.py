@@ -168,7 +168,7 @@ def do_ps_threepi(catalog):
     bad_aliases = ['SN1994J']
     teles = 'Pan-STARRS1'
     fname = os.path.join(catalog.get_current_task_repo(), '3pi/page00.html')
-    ps_url = ("http://psweb.mp.qub.ac.uk/"
+    ps_url = ("https://star.pst.qub.ac.uk/"
               "ps1threepi/psdb/public/?page=1&sort=followup_flag_date")
     html = catalog.load_url(ps_url, fname, write=False, update_mode=True)
 
@@ -220,7 +220,7 @@ def do_ps_threepi(catalog):
                     html = f.read()
             else:
                 response = urllib.request.urlopen(
-                    "http://psweb.mp.qub.ac.uk/ps1threepi/psdb/public/?page=" +
+                    "https://star.pst.qub.ac.uk/ps1threepi/psdb/public/?page=" +
                     str(page) + "&sort=followup_flag_date")
                 with open(fname, 'w') as f:
                     html = response.read().decode('utf-8')
@@ -281,7 +281,7 @@ def do_ps_threepi(catalog):
             sources = [
                 catalog.entries[name].add_source(
                     name='Pan-STARRS 3Pi',
-                    url=('http://psweb.mp.qub.ac.uk/'
+                    url=('https://star.pst.qub.ac.uk/'
                          'ps1threepi/psdb/'))
             ]
             catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name,
@@ -316,7 +316,7 @@ def do_ps_threepi(catalog):
                     with open(fname2, 'r') as f:
                         html2 = f.read()
                 else:
-                    pslink = ('http://psweb.mp.qub.ac.uk/'
+                    pslink = ('https://star.pst.qub.ac.uk/'
                               'ps1threepi/psdb/public/') + pslink
                     try:
                         session2 = requests.Session()
