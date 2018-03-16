@@ -13,7 +13,7 @@ from glob import glob
 
 from astrocats.catalog.photometry import PHOTOMETRY, set_pd_mag_from_counts
 from astrocats.catalog.utils import (is_number, jd_to_mjd, make_date_string,
-                                     pbar, pbar_strings)
+                                     pbar, pbar_strings, round_sig)
 from astropy import units as u
 from astropy.coordinates import SkyCoord as coord
 from astropy.io.ascii import read
@@ -25,6 +25,58 @@ from ..supernova import SUPERNOVA
 def do_ascii(catalog):
     """Process ASCII files extracted from datatables of published works."""
     task_str = catalog.get_current_task_str()
+
+    # 2017arXiv171000846J
+    datafile = os.path.join(catalog.get_current_task_repo(), 'PSCosmo',
+                            'pscosmo.txt')
+    data = read(datafile)
+    photofiles = glob(
+        os.path.join(catalog.get_current_task_repo(), 'PSCosmo', '*'))
+    for row in pbar(data, task_str):
+        oname = row['ID'].replace('ps', 'PS')
+        name, source = catalog.new_entry(oname, bibcode='2017arXiv171000846J')
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.RA, row['RA'], source=source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.DEC, row['Dec'], source=source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.HOST_RA, row['RAHost'], source=source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.HOST_DEC, row['DecHost'], source=source)
+        if float(row['zHost']) > 0.0:
+            catalog.entries[name].add_quantity(
+                SUPERNOVA.REDSHIFT, str(row['zHost']), source=source,
+                kind='host')
+        ia_probs = [Decimal(row[x]) for x in [
+            'PIa_PSNID', 'PIa_NN', 'PIa_Fitprob', 'PIa_Galsnid'
+        ] if float(row[x]) >= 0.0]
+        if len(ia_probs):
+            ia_prob = round_sig(sum(ia_probs) / len(ia_probs), sig=4)
+            catalog.entries[name].add_quantity(
+                SUPERNOVA.CLAIMED_TYPE, 'Ia', source=source,
+                probability=ia_prob)
+        photofile = [x for x in photofiles if row['ID'] in x]
+        if len(photofile):
+            photofile = photofile[0]
+        else:
+            continue
+        tsvin = list(
+            csv.reader(
+                open(photofile, 'r'), delimiter=' ', skipinitialspace=True))
+        for trow in tsvin:
+            if not len(trow) or not trow[0].startswith('OBS:'):
+                continue
+            photodict = {
+                PHOTOMETRY.TIME: trow[1],
+                PHOTOMETRY.COUNT_RATE: trow[4],
+                PHOTOMETRY.E_COUNT_RATE: trow[5],
+                PHOTOMETRY.BAND: trow[2],
+                PHOTOMETRY.TELESCOPE: 'PS1',
+                PHOTOMETRY.SOURCE: source
+            }
+            set_pd_mag_from_counts(photodict, trow[4], ec=trow[5], zp='27.5')
+            catalog.entries[name].add_photometry(**photodict)
+    catalog.journal_entries()
 
     # 2017ApJ...836...60L
     datafile = os.path.join(catalog.get_current_task_repo(), 'ASCII',
@@ -44,13 +96,13 @@ def do_ascii(catalog):
         catalog.entries[name].add_photometry(**photodict)
     catalog.journal_entries()
 
-    # 2017arXiv170601030H
+    # 2017ApJS..233....6H
     datafile = os.path.join(catalog.get_current_task_repo(), 'ASCII',
                             'CFA_SNII_NATSYSTEM_LC.txt')
     data = read(datafile, format='tab')
     for row in pbar(data, task_str):
         oname = row[0]
-        name, source = catalog.new_entry(oname, bibcode='2017arXiv170601030H')
+        name, source = catalog.new_entry(oname, bibcode='2017ApJS..233....6H')
         photodict = {
             PHOTOMETRY.TIME: row[2],
             PHOTOMETRY.MAGNITUDE: row[4],
@@ -66,7 +118,7 @@ def do_ascii(catalog):
     data = read(datafile, format='tab')
     for row in pbar(data, task_str):
         oname = row[0]
-        name, source = catalog.new_entry(oname, bibcode='2017arXiv170601030H')
+        name, source = catalog.new_entry(oname, bibcode='2017ApJS..233....6H')
         photodict = {
             PHOTOMETRY.TIME: row[2],
             PHOTOMETRY.MAGNITUDE: row[3],
@@ -95,13 +147,13 @@ def do_ascii(catalog):
         catalog.entries[name].add_photometry(**photodict)
     catalog.journal_entries()
 
-    # 1705.10927
+    # 2017A&A...605A..58A
     datafile = os.path.join(catalog.get_current_task_repo(), 'ASCII',
                             '1705.10927.tex')
     data = read(datafile, format='latex')
     for row in pbar(data, task_str):
         oname = row[0].replace('$', '')
-        name, source = catalog.new_entry(oname, arxivid='1705.10927')
+        name, source = catalog.new_entry(oname, bibcode='2017A&A...605A..58A')
         catalog.entries[name].add_quantity(
             SUPERNOVA.ALIAS, 'MWSNR' + oname[1:], source=source)
         gallon = float(str(row[1]).replace('$', ''))
@@ -144,7 +196,7 @@ def do_ascii(catalog):
             catalog.entries[name].add_photometry(**photodict)
     catalog.journal_entries()
 
-    # 2017arXiv170405061Y
+    # 2017ApJ...848....6Y
     events = {
         'iPTF15esb': '1704.05061-tab3.tsv',
         'iPTF16bad': '1704.05061-tab4.tsv'
@@ -156,7 +208,7 @@ def do_ascii(catalog):
             csv.reader(
                 open(datafile, 'r'), delimiter='\t', skipinitialspace=True))
         name, source = catalog.new_entry(
-            ev, bibcode='2017arXiv170405061Y')
+            ev, bibcode='2017ApJ...848....6Y')
         for row in pbar(tsvin, task_str):
             photodict = {
                 PHOTOMETRY.TIME: row[1],
@@ -891,7 +943,7 @@ def do_ascii(catalog):
             photodict[PHOTOMETRY.E_MAGNITUDE] = str(row['e_mag'])
         catalog.entries[name].add_photometry(**photodict)
 
-    # 2016arXiv160904444J
+    # 2017ApJ...837..167J
     bandrep = {
         '[3.6]': 'I1',
         '[4.5]': 'I2',
@@ -903,7 +955,7 @@ def do_ascii(catalog):
 
     data = read(datafile, format='latex')
     name, source = catalog.new_entry(
-        'SPIRITS 15c', bibcode='2016arXiv160904444J')
+        'SPIRITS 15c', bibcode='2017ApJ...837..167J')
     for row in pbar(data, task_str):
         me = [x.replace('$', '') for x in row[5].split('$ $')]
         mag = me[0].replace('>', '').replace('$', '').strip()
@@ -933,7 +985,7 @@ def do_ascii(catalog):
 
     data = read(datafile, format='latex')
     name, source = catalog.new_entry(
-        'SPIRITS 14buu', bibcode='2016arXiv160904444J')
+        'SPIRITS 14buu', bibcode='2017ApJ...837..167J')
     for row in pbar(data, task_str):
         me = [x.replace('$', '') for x in row[5].split('$ $')]
         mag = me[0].replace('>', '').replace('$', '').strip()
