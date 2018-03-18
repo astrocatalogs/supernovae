@@ -74,7 +74,10 @@ def do_ascii(catalog):
                 PHOTOMETRY.TELESCOPE: 'PS1',
                 PHOTOMETRY.SOURCE: source
             }
-            set_pd_mag_from_counts(photodict, trow[4], ec=trow[5], zp='27.5')
+            set_pd_mag_from_counts(photodict, trow[4], ec=trow[5], zp='27.5',
+                sig=5.0)
+            if PHOTOMETRY.UPPER_LIMIT in photodict:
+                photodict[PHOTOMETRY.UPPER_LIMIT_SIGMA] = '5.0'
             catalog.entries[name].add_photometry(**photodict)
     catalog.journal_entries()
 

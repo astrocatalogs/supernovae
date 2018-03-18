@@ -5017,8 +5017,8 @@
 		"difference":"",
 		"values":[
 			"Ic",
-			"II",
 			"IIc",
+			"II",
 			"II Pec"
 		],
 		"sources":[
@@ -6824,7 +6824,7 @@
 		"alias":[
 			{
 				"value":"PTF09dlc",
-				"source":"3,4,5,7,8,11,13,15,16,18,19"
+				"source":"3,4,5,7,8,11,13,14,16,17"
 			}
 		],
 		"edit":false,
@@ -25539,7 +25539,7 @@
 		"alias":[
 			{
 				"value":"SN2006cd",
-				"source":"1,3,7,8,9,10,12,13,14"
+				"source":"1,4,8,9,10,11,13,14,15"
 			}
 		],
 		"edit":false,
@@ -30639,7 +30639,7 @@
 		"alias":[
 			{
 				"value":"SN2007be",
-				"source":"1,3,6,8,9,10,11,13,14,15"
+				"source":"1,4,7,9,10,11,12,14,15,16"
 			}
 		],
 		"edit":false,
@@ -35929,7 +35929,7 @@
 			},
 			{
 				"value":"PTF09dsy",
-				"source":"3,7,12,13"
+				"source":"3,4,7,12,13"
 			}
 		],
 		"edit":false,
@@ -37982,7 +37982,7 @@
 		"alias":[
 			{
 				"value":"PTF10wof",
-				"source":"3,4,6,7,10,13,15,16"
+				"source":"3,4,6,7,10,13,14"
 			}
 		],
 		"edit":false,
@@ -38018,7 +38018,7 @@
 		"alias":[
 			{
 				"value":"PTF10xyt",
-				"source":"3,4,7,8,11,14,16,17"
+				"source":"3,4,7,8,11,14,15"
 			}
 		],
 		"edit":false,
@@ -38256,7 +38256,7 @@
 			},
 			{
 				"value":"PTF10cxk",
-				"source":"8,14"
+				"source":"3,8,14"
 			}
 		],
 		"edit":false,
@@ -38291,7 +38291,7 @@
 			},
 			{
 				"value":"PTF10cxk",
-				"source":"8,14"
+				"source":"3,8,14"
 			}
 		],
 		"edit":false,
@@ -38604,7 +38604,7 @@
 			},
 			{
 				"value":"PTF10mwb",
-				"source":"8,13,20,21"
+				"source":"3,8,13,20,21"
 			}
 		],
 		"edit":false,
@@ -39714,7 +39714,7 @@
 			},
 			{
 				"value":"PTF11alo",
-				"source":"4,11"
+				"source":"2,4,11"
 			},
 			{
 				"value":"PSN J13304304-2057140",
@@ -41568,7 +41568,7 @@
 		"name":"OGLE-2015-SN-043",
 		"alias":[
 			{
-				"value":"MLS180211:101754+244232",
+				"value":"MLS180314:093712+225422",
 				"source":"2,3,4"
 			}
 		],
@@ -48709,11 +48709,11 @@
 		"alias":[
 			{
 				"value":"SN1572A",
-				"source":"1,6,8,9,10,11,12,13"
+				"source":"1,4,6,8,9,11,12,13"
 			},
 			{
 				"value":"Tycho's supernova",
-				"source":"8,9,10"
+				"source":"4,8,9"
 			},
 			{
 				"value":"b\"SN 1572",
