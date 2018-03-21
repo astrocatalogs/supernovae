@@ -395,7 +395,7 @@ def do_vizier(catalog):
                     PHOTOMETRY.SOURCE: source,
                     PHOTOMETRY.SURVEY: 'SCP'
                 }
-                set_pd_mag_from_counts(photodict, flux, ec=err, zp=zp)
+                set_pd_mag_from_counts(photodict, flux, ec=err, zp=zp, sig=5.0)
                 catalog.entries[name].add_photometry(**photodict)
     catalog.journal_entries()
 
@@ -562,7 +562,7 @@ def do_vizier(catalog):
             PHOTOMETRY.SOURCE: source,
             PHOTOMETRY.INSTRUMENT: row['Inst']
         }
-        set_pd_mag_from_counts(photodict, flux, ec=err, zp=zp)
+        set_pd_mag_from_counts(photodict, flux, ec=err, zp=zp, sig=5.0)
         catalog.entries[name].add_photometry(**photodict)
 
     # 2004ApJ...602..571B
@@ -598,7 +598,7 @@ def do_vizier(catalog):
             PHOTOMETRY.TELESCOPE: telescope,
             PHOTOMETRY.SOURCE: source
         }
-        set_pd_mag_from_counts(photodict, flux, ec=err, zp=zp)
+        set_pd_mag_from_counts(photodict, flux, ec=err, zp=zp, sig=5.0)
         catalog.entries[name].add_photometry(**photodict)
 
     # 2014MNRAS.444.3258M

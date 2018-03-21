@@ -253,7 +253,8 @@ def do_donated_photo(catalog):
                     PHOTOMETRY.SURVEY: 'SNLS',
                     PHOTOMETRY.SOURCE: source
                 }
-                set_pd_mag_from_counts(photodict, counts, ec=e_counts, zp=zp)
+                set_pd_mag_from_counts(photodict, counts, ec=e_counts, zp=zp,
+                                       sig=5.0)
                 catalog.entries[name].add_photometry(**photodict)
 
     # Inserra 09-04-16 donation

@@ -50,7 +50,7 @@ def do_snls_photo(catalog):
             PHOTOMETRY.BAND_SET: 'MegaCam',
             PHOTOMETRY.SYSTEM: 'BD17'
         }
-        set_pd_mag_from_counts(photodict, counts, ec=err, zp=zp)
+        set_pd_mag_from_counts(photodict, counts, ec=err, zp=zp, sig=5.0)
         catalog.entries[name].add_photometry(**photodict)
 
     catalog.journal_entries()

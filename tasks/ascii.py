@@ -75,9 +75,7 @@ def do_ascii(catalog):
                 PHOTOMETRY.SOURCE: source
             }
             set_pd_mag_from_counts(photodict, trow[4], ec=trow[5], zp='27.5',
-                sig=5.0)
-            if PHOTOMETRY.UPPER_LIMIT in photodict:
-                photodict[PHOTOMETRY.UPPER_LIMIT_SIGMA] = '5.0'
+                                   sig=5.0)
             catalog.entries[name].add_photometry(**photodict)
     catalog.journal_entries()
 
@@ -504,7 +502,8 @@ def do_ascii(catalog):
                 PHOTOMETRY.TELESCOPE: tel,
                 PHOTOMETRY.SOURCE: source
             }
-            set_pd_mag_from_counts(photodict, c, lec=lec, uec=uec, zp=zp)
+            set_pd_mag_from_counts(photodict, c, lec=lec, uec=uec, zp=zp,
+                                   sig=5.0)
             catalog.entries[name].add_photometry(**photodict)
     catalog.journal_entries()
 
@@ -548,7 +547,7 @@ def do_ascii(catalog):
             PHOTOMETRY.E_COUNT_RATE: ec,
             PHOTOMETRY.SOURCE: source
         }
-        set_pd_mag_from_counts(photodict, c, ec=ec, zp=zp)
+        set_pd_mag_from_counts(photodict, c, ec=ec, zp=zp, sig=5.0)
         catalog.entries[name].add_photometry(**photodict)
     catalog.journal_entries()
 
@@ -871,7 +870,8 @@ def do_ascii(catalog):
                 PHOTOMETRY.ZERO_POINT: zp,
                 PHOTOMETRY.SOURCE: source
             }
-            set_pd_mag_from_counts(photodict, counts, ec=e_counts, zp=zp)
+            set_pd_mag_from_counts(photodict, counts, ec=e_counts, zp=zp,
+                                   sig=5.0)
             catalog.entries[name].add_photometry(**photodict)
     catalog.journal_entries()
 
@@ -1207,7 +1207,7 @@ def do_ascii(catalog):
             PHOTOMETRY.ZERO_POINT: zp,
             PHOTOMETRY.SOURCE: source
         }
-        set_pd_mag_from_counts(photodict, counts, ec=e_counts, zp=zp)
+        set_pd_mag_from_counts(photodict, counts, ec=e_counts, zp=zp, sig=5.0)
         catalog.entries[name].add_photometry(**photodict)
     catalog.journal_entries()
 

@@ -93,7 +93,7 @@ def do_essence_photo(catalog):
                 PHOTOMETRY.SYSTEM: 'Natural'
             }
             set_pd_mag_from_counts(
-                photodict, counts, ec='', lec=lerr, uec=uerr, zp=zp)
+                photodict, counts, ec='', lec=lerr, uec=uerr, zp=zp, sig=5.0)
             catalog.entries[name].add_photometry(**photodict)
 
     catalog.journal_entries()
