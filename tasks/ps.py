@@ -202,7 +202,7 @@ def do_ps_threepi(catalog):
         with open(fname, 'w') as f:
             f.write(html)
 
-    numpages = int(links[-2].contents[0])
+    numpages = int(links[-2].contents[0]) + 1
     oldnumpages = len(
         glob(os.path.join(catalog.get_current_task_repo(), '3pi/page*')))
     for page in pbar(range(1, numpages), task_str):

@@ -37575,6 +37575,36 @@
 		]
 	},
 	{
+		"name":"PS1-10aex",
+		"alias":[
+			{
+				"value":"PS1-10aex",
+				"source":"3,5"
+			},
+			{
+				"value":"PSc080087",
+				"source":"1,5"
+			}
+		],
+		"edit":false,
+		"quantity":"redshift",
+		"difference":"0.2211",
+		"values":[
+			0.42,
+			0.34395
+		],
+		"sources":[
+			{
+				"idtype":"bibcode",
+				"id":"2015MNRAS.448.1206M"
+			},
+			{
+				"idtype":"bibcode",
+				"id":"2017arXiv171000846J"
+			}
+		]
+	},
+	{
 		"name":"PS1-10ags",
 		"alias":[
 			{
@@ -37684,6 +37714,41 @@
 		]
 	},
 	{
+		"name":"PS1-11yr",
+		"alias":[
+			{
+				"value":"PS1-11yr",
+				"source":"3,6,7,8"
+			},
+			{
+				"value":"PSc160066",
+				"source":"1,4,7"
+			}
+		],
+		"edit":false,
+		"quantity":"redshift",
+		"difference":"1.504",
+		"values":[
+			0.53,
+			0.21169,
+			0.53
+		],
+		"sources":[
+			{
+				"idtype":"bibcode",
+				"id":"2015MNRAS.448.1206M"
+			},
+			{
+				"idtype":"bibcode",
+				"id":"2017arXiv171000846J"
+			},
+			{
+				"idtype":"name",
+				"id":"Pan-STARRS Alerts"
+			}
+		]
+	},
+	{
 		"name":"PS1-13dhc",
 		"alias":[
 			{
@@ -37714,6 +37779,36 @@
 			{
 				"idtype":"name",
 				"id":"Pan-STARRS 3Pi"
+			}
+		]
+	},
+	{
+		"name":"PSc100405",
+		"alias":[
+			{
+				"value":"PSc100405",
+				"source":"1,3,6"
+			},
+			{
+				"value":"PS1-10bmk",
+				"source":"5,6,7"
+			}
+		],
+		"edit":false,
+		"quantity":"redshift",
+		"difference":"0.9652",
+		"values":[
+			0.00362,
+			0.104
+		],
+		"sources":[
+			{
+				"idtype":"bibcode",
+				"id":"2017arXiv171000846J"
+			},
+			{
+				"idtype":"name",
+				"id":"Pan-STARRS Alerts"
 			}
 		]
 	},
@@ -38161,24 +38256,33 @@
 		"alias":[
 			{
 				"value":"PTF11rnq",
-				"source":"2,3,6,8"
+				"source":"3,4,7,8,9"
 			},
 			{
 				"value":"LSQ11ec",
-				"source":"4,6,8"
+				"source":"5,7,9"
+			},
+			{
+				"value":"PSc340229",
+				"source":"1,8"
 			}
 		],
 		"edit":false,
 		"quantity":"dec",
-		"difference":"0.06854",
+		"difference":"0.0685",
 		"values":[
 			"-02:51:37.9",
+			"-02:51:37.60",
 			"-02:40:37.4"
 		],
 		"sources":[
 			{
 				"idtype":"bibcode,name,bibcode",
 				"id":"2011ATel.3832....1H,Latest Supernovae,2000A&AS..143....9W"
+			},
+			{
+				"idtype":"bibcode",
+				"id":"2017arXiv171000846J"
 			},
 			{
 				"idtype":"bibcode,name",
@@ -38327,15 +38431,19 @@
 		"alias":[
 			{
 				"value":"SN2010ar",
-				"source":"2,3,5,7,9,10,11,12"
+				"source":"3,4,6,8,10,11,12,13"
 			},
 			{
 				"value":"PS1-10v",
-				"source":"8,10,11"
+				"source":"9,11,12"
+			},
+			{
+				"value":"PSc010010",
+				"source":"1,11"
 			},
 			{
 				"value":"PS1-1000022",
-				"source":"5,9"
+				"source":"6,10"
 			}
 		],
 		"edit":false,
@@ -38413,54 +38521,115 @@
 		]
 	},
 	{
+		"name":"SN2010fn",
+		"alias":[
+			{
+				"value":"SN2010fn",
+				"source":"3,4,6,8,10,11,12,13"
+			},
+			{
+				"value":"PS1-10ju",
+				"source":"9,11,12"
+			},
+			{
+				"value":"PSc050293",
+				"source":"1,11"
+			},
+			{
+				"value":"PSc050291",
+				"source":"1,11"
+			},
+			{
+				"value":"PS1-1000291",
+				"source":"6,10,12"
+			}
+		],
+		"edit":false,
+		"quantity":"dec",
+		"difference":"0.00149",
+		"values":[
+			"+55:23:04.95",
+			"+55:23:04.94",
+			"+55:18:08.24",
+			"+55:23:04.9",
+			"+55:23:04.88"
+		],
+		"sources":[
+			{
+				"idtype":"bibcode,bibcode",
+				"id":"2014ApJ...795...44R,2000A&AS..143....9W"
+			},
+			{
+				"idtype":"bibcode,bibcode,name,name",
+				"id":"2017arXiv171000846J,2010CBET.2350....1C,Pan-STARRS Alerts,Latest Supernovae"
+			},
+			{
+				"idtype":"bibcode",
+				"id":"2017arXiv171000846J"
+			},
+			{
+				"idtype":"bibcode,bibcode",
+				"id":"2012A&A...538A.120L,1989A&AS...81..421B"
+			},
+			{
+				"idtype":"name",
+				"id":"Transient Name Server"
+			}
+		]
+	},
+	{
 		"name":"SN2010fq",
 		"alias":[
 			{
 				"value":"SN2010fq",
-				"source":"2,3,5,7,9,11,12"
+				"source":"3,4,6,8,10,11,12,13"
+			},
+			{
+				"value":"PSc050296",
+				"source":"1,11"
 			},
 			{
 				"value":"PS1-1000295",
-				"source":"5,9,11"
+				"source":"6,10,12"
 			},
 			{
 				"value":"PS1-10ki",
-				"source":"8,10,11"
+				"source":"9,11,12"
 			},
 			{
 				"value":"SN2010fl",
-				"source":"5,7,9,10,11,12"
+				"source":"6,8,10,11,12,13"
 			},
 			{
 				"value":"PS1-1000283",
-				"source":"5,9,11"
+				"source":"6,10,12"
 			},
 			{
 				"value":"PS1-10jw",
-				"source":"8,11"
+				"source":"9,12"
 			}
 		],
 		"edit":false,
 		"quantity":"ra",
 		"difference":"0.3124",
 		"values":[
+			"16:13:48.217",
 			"16:13:48.216",
 			"12:21:59.468",
-			"16:13:48.217",
 			"12:21:59.470"
 		],
 		"sources":[
 			{
-				"idtype":"bibcode,name,name",
-				"id":"2010CBET.2350....1C,Pan-STARRS Alerts,Latest Supernovae"
+				"idtype":"bibcode,name",
+				"id":"2017arXiv171000846J,Pan-STARRS Alerts"
 			},
 			{
 				"idtype":"bibcode,name,name",
 				"id":"2010CBET.2350....1C,Pan-STARRS Alerts,Latest Supernovae"
 			},
 			{
-				"idtype":"name",
-				"id":"Pan-STARRS Alerts"
+				"idtype":"bibcode,name,name",
+				"id":"2010CBET.2350....1C,Pan-STARRS Alerts,Latest Supernovae"
 			},
 			{
 				"idtype":"name",
@@ -38473,33 +38642,38 @@
 		"alias":[
 			{
 				"value":"SN2010fq",
-				"source":"2,3,5,7,9,11,12"
+				"source":"3,4,6,8,10,11,12,13"
+			},
+			{
+				"value":"PSc050296",
+				"source":"1,11"
 			},
 			{
 				"value":"PS1-1000295",
-				"source":"5,9,11"
+				"source":"6,10,12"
 			},
 			{
 				"value":"PS1-10ki",
-				"source":"8,10,11"
+				"source":"9,11,12"
 			},
 			{
 				"value":"SN2010fl",
-				"source":"5,7,9,10,11,12"
+				"source":"6,8,10,11,12,13"
 			},
 			{
 				"value":"PS1-1000283",
-				"source":"5,9,11"
+				"source":"6,10,12"
 			},
 			{
 				"value":"PS1-10jw",
-				"source":"8,11"
+				"source":"9,12"
 			}
 		],
 		"edit":false,
 		"quantity":"dec",
 		"difference":"0.2129",
 		"values":[
+			"+55:36:30.73",
 			"+55:36:30.71",
 			"+45:50:49.99",
 			"+55:36:30.66",
@@ -38509,6 +38683,10 @@
 		],
 		"sources":[
 			{
+				"idtype":"bibcode",
+				"id":"2017arXiv171000846J"
+			},
+			{
 				"idtype":"name",
 				"id":"Transient Name Server"
 			},
@@ -38539,33 +38717,38 @@
 		"alias":[
 			{
 				"value":"SN2010fq",
-				"source":"2,3,5,7,9,11,12"
+				"source":"3,4,6,8,10,11,12,13"
+			},
+			{
+				"value":"PSc050296",
+				"source":"1,11"
 			},
 			{
 				"value":"PS1-1000295",
-				"source":"5,9,11"
+				"source":"6,10,12"
 			},
 			{
 				"value":"PS1-10ki",
-				"source":"8,10,11"
+				"source":"9,11,12"
 			},
 			{
 				"value":"SN2010fl",
-				"source":"5,7,9,10,11,12"
+				"source":"6,8,10,11,12,13"
 			},
 			{
 				"value":"PS1-1000283",
-				"source":"5,9,11"
+				"source":"6,10,12"
 			},
 			{
 				"value":"PS1-10jw",
-				"source":"8,11"
+				"source":"9,12"
 			}
 		],
 		"edit":false,
 		"quantity":"redshift",
-		"difference":"0.05556",
+		"difference":"0.07425",
 		"values":[
+			0.35086,
 			0.379,
 			0.38,
 			0.36,
@@ -38573,6 +38756,10 @@
 			0.36
 		],
 		"sources":[
+			{
+				"idtype":"bibcode",
+				"id":"2017arXiv171000846J"
+			},
 			{
 				"idtype":"bibcode",
 				"id":"1989A&AS...81..421B"
@@ -38622,6 +38809,62 @@
 			{
 				"idtype":"bibcode,bibcode",
 				"id":"2012MNRAS.426.2359M,1991ASSL..171...89H"
+			}
+		]
+	},
+	{
+		"name":"SN2010gy",
+		"alias":[
+			{
+				"value":"SN2010gy",
+				"source":"5,8,9,11,13,14,17,18,19,20,21,22"
+			},
+			{
+				"value":"PTF10qyx",
+				"source":"11,19,20"
+			},
+			{
+				"value":"PS1-10nu",
+				"source":"4,15,19,20"
+			},
+			{
+				"value":"PSc070242",
+				"source":"1,19"
+			},
+			{
+				"value":"PS1-1000385",
+				"source":"13,17,20"
+			},
+			{
+				"value":"PTF10qyz",
+				"source":"7,20"
+			}
+		],
+		"edit":false,
+		"quantity":"redshift",
+		"difference":"3.119",
+		"values":[
+			0.2867,
+			0.0696,
+			0.0708,
+			0.0722
+		],
+		"sources":[
+			{
+				"idtype":"bibcode",
+				"id":"2017arXiv171000846J"
+			},
+			{
+				"idtype":"bibcode,bibcode,bibcode",
+				"id":"2016A&A...594A..13P,2012MNRAS.425.1007B,1991ASSL..171...89H"
+			},
+			{
+				"idtype":"bibcode,bibcode,bibcode",
+				"id":"2016A&A...594A..13P,2014ApJ...784..105W,1991ASSL..171...89H"
+			},
+			{
+				"idtype":"bibcode,bibcode,bibcode",
+				"id":"2016A&A...594A..13P,2012MNRAS.425.1007B,1991ASSL..171...89H"
 			}
 		]
 	},
@@ -41568,7 +41811,7 @@
 		"name":"OGLE-2015-SN-043",
 		"alias":[
 			{
-				"value":"MLS180314:093712+225422",
+				"value":"MLS180322:151303+221236",
 				"source":"2,3,4"
 			}
 		],
@@ -45760,6 +46003,41 @@
 			{
 				"idtype":"name,name",
 				"id":"ASAS-SN Supernovae,ATel 10022"
+			}
+		]
+	},
+	{
+		"name":"SN2018ze",
+		"alias":[
+			{
+				"value":"SN2018ze",
+				"source":"3,4,5,7"
+			},
+			{
+				"value":"AT2018ze",
+				"source":"3,4"
+			}
+		],
+		"edit":false,
+		"quantity":"dec",
+		"difference":"0.03261",
+		"values":[
+			"+31:44:08.41",
+			"+30:44:00.76",
+			"+30:44:08.4"
+		],
+		"sources":[
+			{
+				"idtype":"name",
+				"id":"Transient Name Server"
+			},
+			{
+				"idtype":"name,name",
+				"id":"Transient Name Server,Latest Supernovae"
+			},
+			{
+				"idtype":"name,name,name",
+				"id":"Transient Name Server,Pan-STARRS 3Pi,Latest Supernovae"
 			}
 		]
 	},
