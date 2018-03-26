@@ -143,6 +143,7 @@ Other single SN datasets:
 * SN2015bh - http://arxiv.org/abs/1609.00731 (photometry and spectra)
 * SN2015H - http://adsabs.harvard.edu/abs/2016A%26A...589A..89M (Photometry, data not in paper)
 * SN2015J - https://arxiv.org/abs/1711.08655 (photometry, X-ray)
+* KSN2015k - https://www.nature.com/articles/s41550-018-0423-2
 * iPTF15dtg - http://arxiv.org/abs/1605.02491 (spectra)
 * SPIRITS16tn - https://arxiv.org/abs/1803.00574 (photometry and radio)
 * DES16C2nm - https://arxiv.org/abs/1712.04535 (photometry)
