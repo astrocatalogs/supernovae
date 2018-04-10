@@ -31,6 +31,7 @@ Multiple SN datasets:
 * http://adsabs.harvard.edu/abs/2014A&A...561A.146S (IR photometry for 2008ha, 2010ae)
 * https://arxiv.org/abs/1801.08241 (5 high-z SLSN, spectra)
 * https://arxiv.org/abs/1803.04869 (rapid transient LCs from DES, data in plot form only)
+* https://snfactory.lbl.gov/snf/data/index.html (SNF data releases)
 
 Other single SN datasets:
 
