@@ -41811,7 +41811,7 @@
 		"name":"OGLE-2015-SN-043",
 		"alias":[
 			{
-				"value":"MLS180322:151303+221236",
+				"value":"MLS180406:144926+410719",
 				"source":"2,3,4"
 			}
 		],
@@ -42823,6 +42823,36 @@
 		"values":[
 			"+00:01:17.95",
 			"+00:01:17.8"
+		],
+		"sources":[
+			{
+				"idtype":"name,name,name",
+				"id":"Transient Name Server,Pan-STARRS 3Pi,Latest Supernovae"
+			},
+			{
+				"idtype":"name",
+				"id":"Pan-STARRS 3Pi"
+			}
+		]
+	},
+	{
+		"name":"PS18ns",
+		"alias":[
+			{
+				"value":"PS18ns",
+				"source":"3,4,5"
+			},
+			{
+				"value":"AT2018ama",
+				"source":"3,4,5"
+			}
+		],
+		"edit":false,
+		"quantity":"dec",
+		"difference":"0.001754",
+		"values":[
+			"+00:00:34.26",
+			"+00:00:34.2"
 		],
 		"sources":[
 			{
@@ -44869,6 +44899,49 @@
 		]
 	},
 	{
+		"name":"SN2017civ",
+		"alias":[
+			{
+				"value":"SN2017civ",
+				"source":"3,5,6,8"
+			},
+			{
+				"value":"AT2017civ",
+				"source":"3,4,8"
+			},
+			{
+				"value":"ASASSN-17dv",
+				"source":"3,4,5,8"
+			},
+			{
+				"value":"Gaia17bgr",
+				"source":"3,8"
+			}
+		],
+		"edit":false,
+		"quantity":"claimedtype",
+		"difference":"",
+		"values":[
+			"IIn",
+			"Ib/c",
+			"II"
+		],
+		"sources":[
+			{
+				"idtype":"name,name",
+				"id":"ATel 10226,Latest Supernovae"
+			},
+			{
+				"idtype":"name",
+				"id":"Gaia Photometric Science Alerts"
+			},
+			{
+				"idtype":"name,name",
+				"id":"ASAS-SN Supernovae,ATel 10424"
+			}
+		]
+	},
+	{
 		"name":"SN2017dgk",
 		"alias":[
 			{
@@ -46003,41 +46076,6 @@
 			{
 				"idtype":"name,name",
 				"id":"ASAS-SN Supernovae,ATel 10022"
-			}
-		]
-	},
-	{
-		"name":"SN2018ze",
-		"alias":[
-			{
-				"value":"SN2018ze",
-				"source":"3,4,5,7"
-			},
-			{
-				"value":"AT2018ze",
-				"source":"3,4"
-			}
-		],
-		"edit":false,
-		"quantity":"dec",
-		"difference":"0.03261",
-		"values":[
-			"+31:44:08.41",
-			"+30:44:00.76",
-			"+30:44:08.4"
-		],
-		"sources":[
-			{
-				"idtype":"name",
-				"id":"Transient Name Server"
-			},
-			{
-				"idtype":"name,name",
-				"id":"Transient Name Server,Latest Supernovae"
-			},
-			{
-				"idtype":"name,name,name",
-				"id":"Transient Name Server,Pan-STARRS 3Pi,Latest Supernovae"
 			}
 		]
 	},
