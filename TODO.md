@@ -31,6 +31,7 @@ Multiple SN datasets:
 * http://adsabs.harvard.edu/abs/2014A&A...561A.146S (IR photometry for 2008ha, 2010ae)
 * https://arxiv.org/abs/1801.08241 (5 high-z SLSN, spectra)
 * https://arxiv.org/abs/1803.04869 (rapid transient LCs from DES, data in plot form only)
+* https://snfactory.lbl.gov/snf/data/index.html (SNF data releases)
 
 Other single SN datasets:
 
@@ -117,6 +118,7 @@ Other single SN datasets:
 * SN2012au - http://adsabs.harvard.edu/abs/2013ApJ...772L..17T (photometry in plot form only)
 * SN2012aw - http://adsabs.harvard.edu/abs/2014ApJ...787..139D (photometry)
 * SN2012dh - https://arxiv.org/pdf/1609.00241 (suggests photometry likely exists, but doesn't have any itself)
+* SN2012fr - https://arxiv.org/abs/1803.10095 (lots of ground-based photometry)
 * SN2012hs - http://adsabs.harvard.edu/abs/2012ATel.4667....1R (radio)
 * iPTF13beo - https://academic.oup.com/mnras/article/443/1/671/1491979 (Photometry only in plot form)
 * SN2013cq - http://adsabs.harvard.edu/abs/2014A%26A...567A..29M (Photometry only in plot form)
@@ -139,15 +141,16 @@ Other single SN datasets:
 * iPTF14atg - http://adsabs.harvard.edu/abs/2015Natur.521..328C (Photometry, but data not in paper)
 * iPTF14gqr - De et al in prep (photometry and spectra)
 * ASASSN-15no - https://arxiv.org/abs/1801.08318 (photometry)
+* ASASSN-15nx - https://arxiv.org/pdf/1804.00025.pdf (photometry)
 * SN2015as - https://arxiv.org/abs/1802.06731
 * SN2015bh - http://arxiv.org/abs/1609.00731 (photometry and spectra)
 * SN2015H - http://adsabs.harvard.edu/abs/2016A%26A...589A..89M (Photometry, data not in paper)
 * SN2015J - https://arxiv.org/abs/1711.08655 (photometry, X-ray)
+* KSN2015k - https://www.nature.com/articles/s41550-018-0423-2
 * iPTF15dtg - http://arxiv.org/abs/1605.02491 (spectra)
 * SPIRITS16tn - https://arxiv.org/abs/1803.00574 (photometry and radio)
 * DES16C2nm - https://arxiv.org/abs/1712.04535 (photometry)
 * SN2016bkv - https://arxiv.org/abs/1801.00015 (photometry only in plot form)
-* SN2016gkg - http://www.nature.com.ezp-prod1.hul.harvard.edu/articles/nature25151#extended-data (photometry in JPG table)
 * SN2016jhr - http://adsabs.harvard.edu/abs/2017Natur.550...80J (Photometry in arxiv version)
 * SN2016X - https://arxiv.org/abs/1801.03167 (photometry)
 * SCP16C03 - https://arxiv.org/abs/1707.04606 (spectra)
