@@ -32,6 +32,7 @@ Multiple SN datasets:
 * https://arxiv.org/abs/1801.08241 (5 high-z SLSN, spectra)
 * https://arxiv.org/abs/1803.04869 (rapid transient LCs from DES, data in plot form only)
 * https://snfactory.lbl.gov/snf/data/index.html (SNF data releases)
+* https://arxiv.org/abs/1804.05815 (photometry for four Ia)
 
 Other single SN datasets:
 
@@ -159,6 +160,7 @@ Other single SN datasets:
 * SN2017ein - https://arxiv.org/abs/1803.01050 (photometry)
 * SN2017hcc - https://arxiv.org/abs/1711.07938 (photometry/spectra, but only in plot form)
 * SNHunt151 - https://arxiv.org/abs/1801.03040 (photometry)
+* OGLE14-073 - https://arxiv.org/abs/1804.05791 (bolometric photometry)
 
 Spectra to recover that were donated to SuSpect (bad wavelength solutions, etc):
 * 2000E_20000130_3274_7356_00.dat
