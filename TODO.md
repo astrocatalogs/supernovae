@@ -162,6 +162,7 @@ Other single SN datasets:
 * SN2017hcc - https://arxiv.org/abs/1711.07938 (photometry/spectra, but only in plot form)
 * SNHunt151 - https://arxiv.org/abs/1801.03040 (photometry)
 * OGLE14-073 - https://arxiv.org/abs/1804.05791 (bolometric photometry)
+* PS17bdq - http://arxiv.org/abs/1805.00025v1 (metadata)
 
 Spectra to recover that were donated to SuSpect (bad wavelength solutions, etc):
 * 2000E_20000130_3274_7356_00.dat
