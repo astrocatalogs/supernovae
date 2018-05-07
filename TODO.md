@@ -32,6 +32,7 @@ Multiple SN datasets:
 * https://arxiv.org/abs/1801.08241 (5 high-z SLSN, spectra)
 * https://arxiv.org/abs/1803.04869 (rapid transient LCs from DES, data in plot form only)
 * https://snfactory.lbl.gov/snf/data/index.html (SNF data releases)
+* https://arxiv.org/abs/1804.05815 (photometry for four Ia)
 
 Other single SN datasets:
 
@@ -151,6 +152,8 @@ Other single SN datasets:
 * SPIRITS16tn - https://arxiv.org/abs/1803.00574 (photometry and radio)
 * DES16C2nm - https://arxiv.org/abs/1712.04535 (photometry)
 * SN2016bkv - https://arxiv.org/abs/1801.00015 (photometry only in plot form)
+* SN2016bkv - https://arxiv.org/abs/1804.06065 (optical/IR photometry)
+* SN2016brx - https://arxiv.org/abs/1805.00010 (minimal photometry and spectra)
 * SN2016jhr - http://adsabs.harvard.edu/abs/2017Natur.550...80J (Photometry in arxiv version)
 * SN2016X - https://arxiv.org/abs/1801.03167 (photometry)
 * SCP16C03 - https://arxiv.org/abs/1707.04606 (spectra)
@@ -159,6 +162,8 @@ Other single SN datasets:
 * SN2017ein - https://arxiv.org/abs/1803.01050 (photometry)
 * SN2017hcc - https://arxiv.org/abs/1711.07938 (photometry/spectra, but only in plot form)
 * SNHunt151 - https://arxiv.org/abs/1801.03040 (photometry)
+* OGLE14-073 - https://arxiv.org/abs/1804.05791 (bolometric photometry)
+* PS17bdq - http://arxiv.org/abs/1805.00025v1 (metadata)
 
 Spectra to recover that were donated to SuSpect (bad wavelength solutions, etc):
 * 2000E_20000130_3274_7356_00.dat

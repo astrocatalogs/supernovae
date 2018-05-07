@@ -61,9 +61,11 @@ def do_tns(catalog):
                            '&display[sources]=1'
                            '&display[bibcode]=1&format=csv&page=' + str(page))
                 try:
-                    response = session.get(ses_url)
+                    response = session.get(ses_url, timeout=30)
                     csvtxt = response.text
                 except Exception:
+                    catalog.log.warning(
+                        'Could not download TNS page #{}.'.format(str(page)))
                     if os.path.isfile(fname):
                         with open(fname, 'r') as tns_file:
                             csvtxt = tns_file.read()
@@ -79,6 +81,8 @@ def do_tns(catalog):
             if row[4] and 'SN' not in row[4]:
                 continue
             name = row[1].replace(' ', '')
+            if len(name) < 5:
+                continue
             name, source = catalog.new_entry(
                 name, srcname='Transient Name Server', url=tns_url)
             if row[2] and row[2] != '00:00:00.00':
@@ -113,29 +117,33 @@ def do_tns(catalog):
             #        catalog.entries[name].add_quantity('observer',
             #                                  observer.strip(),
             #                                  source)
-            if row[10]:
-                catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, row[10],
+            if row[11]:
+                catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, row[11],
                                                    source)
-            if row[16]:
-                date = row[16].split()[0].replace('-', '/')
+            if row[19]:
+                date = row[19].split()[0].replace('-', '/')
                 if date != '0000/00/00':
                     date = date.replace('/00', '')
-                    t = row[16].split()[1]
-                    if t != '00:00:00':
-                        ts = t.split(':')
-                        dt = timedelta(
-                            hours=int(ts[0]),
-                            minutes=int(ts[1]),
-                            seconds=int(ts[2]))
-                        date += pretty_num(
-                            dt.total_seconds() / (24 * 60 * 60),
-                            sig=6).lstrip('0')
+                    dsplit = row[19].split()
+                    if len(dsplit) >= 2:
+                        t = dsplit[1]
+                        if t != '00:00:00':
+                            ts = t.split(':')
+                            dt = timedelta(
+                                hours=int(ts[0]),
+                                minutes=int(ts[1]),
+                                seconds=int(ts[2]))
+                            date += pretty_num(
+                                dt.total_seconds() / (24 * 60 * 60),
+                                sig=6).lstrip('0')
                     catalog.entries[name].add_quantity(SUPERNOVA.DISCOVER_DATE,
                                                        date, source)
             if catalog.args.travis and ri >= catalog.TRAVIS_QUERY_LIMIT:
                 break
-            if catalog.args.update:
-                catalog.journal_entries()
+            #if catalog.args.update:
+            #    catalog.journal_entries()
+
+        catalog.journal_entries()
 
     catalog.journal_entries()
 
