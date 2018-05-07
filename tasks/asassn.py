@@ -35,6 +35,8 @@ def do_asassn(catalog):
         if tri == 0:
             continue
         tds = tr.findAll('td')
+        if not len(tds):
+            continue
         for tdi, td in enumerate(tds):
             if tdi == 1:
                 name = catalog.add_entry(td.text.strip())
