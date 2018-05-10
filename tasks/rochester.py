@@ -128,7 +128,7 @@ def do_rochester(catalog):
             sources = []
             if 'ref' in cns:
                 reftag = reference = cols[cns['ref']].findAll('a')
-                if len(reftag):
+                if len(reftag) and len(reftag[0].contents):
                     reference = reftag[0].contents[0].strip()
                     refurl = reftag[0]['href'].strip()
                     sources.append(catalog.entries[name].add_source(

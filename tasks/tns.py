@@ -140,8 +140,6 @@ def do_tns(catalog):
                                                        date, source)
             if catalog.args.travis and ri >= catalog.TRAVIS_QUERY_LIMIT:
                 break
-            #if catalog.args.update:
-            #    catalog.journal_entries()
 
         catalog.journal_entries()
 
@@ -202,7 +200,7 @@ def do_tns_photo(catalog):
             while trys < 3 and not objdict:
                 try:
                     objdict = json.loads(
-                        urllib.request.urlopen(req).read().decode('ascii'))[
+                        urllib.request.urlopen(req, timeout=30).read().decode('ascii'))[
                             'data']['reply']
                 except KeyboardInterrupt:
                     raise
@@ -334,7 +332,7 @@ def do_tns_spectra(catalog):
             while trys < 3 and not objdict:
                 try:
                     objdict = json.loads(
-                        urllib.request.urlopen(req).read().decode('ascii'))[
+                        urllib.request.urlopen(req, timeout=30).read().decode('ascii'))[
                             'data']['reply']
                 except KeyboardInterrupt:
                     raise
