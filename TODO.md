@@ -145,6 +145,7 @@ Other single SN datasets:
 * ASASSN-15no - https://arxiv.org/abs/1801.08318 (photometry)
 * ASASSN-15nx - https://arxiv.org/pdf/1804.00025.pdf (photometry)
 * SN2015as - https://arxiv.org/abs/1802.06731
+* SN2015bs - https://arxiv.org/abs/1805.04434 (photometry)
 * SN2015bh - http://arxiv.org/abs/1609.00731 (photometry and spectra)
 * SN2015H - http://adsabs.harvard.edu/abs/2016A%26A...589A..89M (Photometry, data not in paper)
 * SN2015J - https://arxiv.org/abs/1711.08655 (photometry, X-ray)
