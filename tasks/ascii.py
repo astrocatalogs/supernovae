@@ -1088,7 +1088,7 @@ def do_ascii(catalog):
         }
         if '>' in me[0]:
             photodict[PHOTOMETRY.UPPER_LIMIT] = True
-        else:
+        elif float(me[1].strip()) > 0.0:
             photodict[PHOTOMETRY.E_MAGNITUDE] = me[1].strip()
         catalog.entries[name].add_photometry(**photodict)
 
