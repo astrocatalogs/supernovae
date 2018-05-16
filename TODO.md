@@ -32,7 +32,6 @@ Multiple SN datasets:
 * https://arxiv.org/abs/1801.08241 (5 high-z SLSN, spectra)
 * https://arxiv.org/abs/1803.04869 (rapid transient LCs from DES, data in plot form only)
 * https://snfactory.lbl.gov/snf/data/index.html (SNF data releases)
-* https://arxiv.org/abs/1804.05815 (photometry for four Ia)
 
 Other single SN datasets:
 
@@ -120,7 +119,6 @@ Other single SN datasets:
 * SN2012au - http://adsabs.harvard.edu/abs/2013ApJ...772L..17T (photometry in plot form only)
 * SN2012aw - http://adsabs.harvard.edu/abs/2014ApJ...787..139D (photometry)
 * SN2012dh - https://arxiv.org/pdf/1609.00241 (suggests photometry likely exists, but doesn't have any itself)
-* SN2012fr - https://arxiv.org/abs/1803.10095 (lots of ground-based photometry)
 * SN2012hs - http://adsabs.harvard.edu/abs/2012ATel.4667....1R (radio)
 * iPTF13beo - https://academic.oup.com/mnras/article/443/1/671/1491979 (Photometry only in plot form)
 * SN2013cq - http://adsabs.harvard.edu/abs/2014A%26A...567A..29M (Photometry only in plot form)
@@ -140,7 +138,6 @@ Other single SN datasets:
 * SN2014J - http://adsabs.harvard.edu/abs/2016MNRAS.457.1000S
 * SN2014ad - https://arxiv.org/abs/1801.07046 (photometry)
 * SN2014ad - http://adsabs.harvard.edu/abs/2017MNRAS.469.1897S (Photometry only in plot form)
-* SN2014ek - https://arxiv.org/abs/1805.05810 (photometry)
 * iPTF14atg - http://adsabs.harvard.edu/abs/2015Natur.521..328C (Photometry, but data not in paper)
 * iPTF14gqr - De et al in prep (photometry and spectra)
 * ASASSN-15no - https://arxiv.org/abs/1801.08318 (photometry)
