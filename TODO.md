@@ -130,7 +130,6 @@ Other single SN datasets:
 * SN2013df - http://adsabs.harvard.edu/abs/2015ApJ...807...35M (B&V photometry)
 * SN2013dx - http://adsabs.harvard.edu/abs/2015A%26A...577A.116D (Lots of photometry, but no zero points in paper)
 * SN2013hx - Inserra+ 2013 in prep.?
-* SN2014ad - https://arxiv.org/abs/1801.07046 (photometry)
 * SN2014C - http://adsabs.harvard.edu/abs/2015ApJ...815..120M  (Photometry & spectra, but data not in paper)
 * SN2014J - http://adsabs.harvard.edu/abs/2014ApJ...795L...4K
 * SN2014J - http://adsabs.harvard.edu/abs/2014ApJ...784L..12G
@@ -139,25 +138,27 @@ Other single SN datasets:
 * SN2014J - http://adsabs.harvard.edu/abs/2015ApJ...798...39M
 * SN2014J - http://adsabs.harvard.edu/abs/2015MNRAS.451.4104J
 * SN2014J - http://adsabs.harvard.edu/abs/2016MNRAS.457.1000S
+* SN2014ad - https://arxiv.org/abs/1801.07046 (photometry)
 * SN2014ad - http://adsabs.harvard.edu/abs/2017MNRAS.469.1897S (Photometry only in plot form)
+* SN2014ek - https://arxiv.org/abs/1805.05810 (photometry)
 * iPTF14atg - http://adsabs.harvard.edu/abs/2015Natur.521..328C (Photometry, but data not in paper)
 * iPTF14gqr - De et al in prep (photometry and spectra)
 * ASASSN-15no - https://arxiv.org/abs/1801.08318 (photometry)
 * ASASSN-15nx - https://arxiv.org/pdf/1804.00025.pdf (photometry)
+* SN2015H - http://adsabs.harvard.edu/abs/2016A%26A...589A..89M (Photometry, data not in paper)
+* SN2015J - https://arxiv.org/abs/1711.08655 (photometry, X-ray)
 * SN2015as - https://arxiv.org/abs/1802.06731
 * SN2015bs - https://arxiv.org/abs/1805.04434 (photometry)
 * SN2015bh - http://arxiv.org/abs/1609.00731 (photometry and spectra)
-* SN2015H - http://adsabs.harvard.edu/abs/2016A%26A...589A..89M (Photometry, data not in paper)
-* SN2015J - https://arxiv.org/abs/1711.08655 (photometry, X-ray)
 * KSN2015k - https://www.nature.com/articles/s41550-018-0423-2
 * iPTF15dtg - http://arxiv.org/abs/1605.02491 (spectra)
 * SPIRITS16tn - https://arxiv.org/abs/1803.00574 (photometry and radio)
 * DES16C2nm - https://arxiv.org/abs/1712.04535 (photometry)
+* SN2016X - https://arxiv.org/abs/1801.03167 (photometry)
 * SN2016bkv - https://arxiv.org/abs/1801.00015 (photometry only in plot form)
 * SN2016bkv - https://arxiv.org/abs/1804.06065 (optical/IR photometry)
 * SN2016brx - https://arxiv.org/abs/1805.00010 (minimal photometry and spectra)
 * SN2016jhr - http://adsabs.harvard.edu/abs/2017Natur.550...80J (Photometry in arxiv version)
-* SN2016X - https://arxiv.org/abs/1801.03167 (photometry)
 * SCP16C03 - https://arxiv.org/abs/1707.04606 (spectra)
 * SN2017dio - https://arxiv.org/abs/1712.00027 (photometry only in plot form)
 * SN2017egm - https://arxiv.org/abs/1708.00864 (additional photometry)
