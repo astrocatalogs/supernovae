@@ -33,6 +33,7 @@ Multiple SN datasets:
 * https://arxiv.org/abs/1803.04869 (rapid transient LCs from DES, data in plot form only)
 * https://snfactory.lbl.gov/snf/data/index.html (SNF data releases)
 * http://adsabs.harvard.edu/abs/2017ApJ...850...89G (888 Type II spectra)
+* http://adsabs.harvard.edu/abs/2014AJ....148...13R (CANDELS Ia SNe)
 
 Other single SN datasets:
 
