@@ -103,7 +103,9 @@ def do_asassn(catalog):
 
 def do_asas_atels(catalog):
     """Import LCs exposed in ASASSN Atels."""
-    with open('/root/better-atel/atels.json') as f:
+    import gzip
+
+    with gzip.open('/root/better-atel/atels.json.gz', 'rb') as f:
         ateljson = json.load(f)
     for entry in ateljson:
         if ('asas-sn.osu.edu/light_curve' in entry['body'] and

@@ -1118,8 +1118,9 @@
 		"aliases1":[
 			"SN2003K"
 		],
-		"name2":"AT2018bek",
+		"name2":"SN2018bek",
 		"aliases2":[
+			"SN2018bek",
 			"AT2018bek"
 		],
 		"ra1":"15:32:01.91",
@@ -1127,7 +1128,7 @@
 		"ra2":"15:32:01.55",
 		"dec2":"+68:14:31.00",
 		"distdeg":"5.29307336991938",
-		"maxdiffyear":"15.28333333333353",
+		"maxdiffyear":"15.294444444444707",
 		"discdiffyear":"15.316833333333534",
 		"edit":false
 	},
@@ -1965,45 +1966,6 @@
 		"distdeg":"0.8355884520747412",
 		"maxdiffyear":"",
 		"discdiffyear":"10.027777777777828",
-		"edit":false
-	},
-	{
-		"name1":"MLS180506:100556+342952",
-		"aliases1":[
-			"MLS180506:100556+342952"
-		],
-		"name2":"Gaia18bcz",
-		"aliases2":[
-			"Gaia18bcz",
-			"AT2018beq"
-		],
-		"ra1":"10:05:55.92",
-		"dec1":"+34:29:52.08",
-		"ra2":"10:05:55.86",
-		"dec2":"+34:29:52.15",
-		"distdeg":"0.7450288094591075",
-		"maxdiffyear":"",
-		"discdiffyear":"12.40356388333339",
-		"edit":false
-	},
-	{
-		"name1":"MLS180507:115937+273150",
-		"aliases1":[
-			"MLS180507:115937+273150"
-		],
-		"name2":"Gaia18bbq",
-		"aliases2":[
-			"Gaia18bbq",
-			"AT2018bdg",
-			"ZTF18aapictz"
-		],
-		"ra1":"11:59:36.96",
-		"dec1":"+27:31:50.16",
-		"ra2":"11:59:37.00",
-		"dec2":"+27:31:50.05",
-		"distdeg":"0.5433104855753571",
-		"maxdiffyear":"",
-		"discdiffyear":"12.344577771388913",
 		"edit":false
 	},
 	{
@@ -5069,6 +5031,26 @@
 		"edit":false
 	},
 	{
+		"name1":"SNhunt160",
+		"aliases1":[
+			"SNhunt160",
+			"PSN J03520610-3903551"
+		],
+		"name2":"Gaia18ben",
+		"aliases2":[
+			"Gaia18ben",
+			"AT2018bhf"
+		],
+		"ra1":"03:52:06.1",
+		"dec1":"-39:03:55",
+		"ra2":"03:52:06.08",
+		"dec2":"-39:03:55.33",
+		"distdeg":"0.403925282744129",
+		"maxdiffyear":"5.263888888888914",
+		"discdiffyear":"5.453827772222212",
+		"edit":false
+	},
+	{
 		"name1":"SNhunt189",
 		"aliases1":[
 			"SNhunt189"
@@ -5085,6 +5067,25 @@
 		"distdeg":"0.6406161991279896",
 		"maxdiffyear":"",
 		"discdiffyear":"0.0",
+		"edit":false
+	},
+	{
+		"name1":"SSS121124:035206-390355",
+		"aliases1":[
+			"SSS121124:035206-390355"
+		],
+		"name2":"Gaia18ben",
+		"aliases2":[
+			"Gaia18ben",
+			"AT2018bhf"
+		],
+		"ra1":"03:52:06.096",
+		"dec1":"-39:03:55.08",
+		"ra2":"03:52:06.08",
+		"dec2":"-39:03:55.33",
+		"distdeg":"0.31180698332220436",
+		"maxdiffyear":"",
+		"discdiffyear":"5.453827772222212",
 		"edit":false
 	},
 	{
@@ -5191,7 +5192,8 @@
 			"Supernova in Mrk 477",
 			"SNMRK0477",
 			"SN_MRK0477",
-			"ProbableinMrk477"
+			"ProbableinMrk477",
+			"SN in Mrk 477"
 		],
 		"name2":"SN2015cm",
 		"aliases2":[
@@ -5213,7 +5215,8 @@
 			"Supernova in Mrk 477",
 			"SNMRK0477",
 			"SN_MRK0477",
-			"ProbableinMrk477"
+			"ProbableinMrk477",
+			"SN in Mrk 477"
 		],
 		"name2":"EQ J144038.3+533013.8",
 		"aliases2":[
@@ -5437,21 +5440,23 @@
 		"edit":false
 	},
 	{
-		"name1":"AT2018bgo",
+		"name1":"AT2018mm",
 		"aliases1":[
-			"AT2018bgo"
+			"AT2018mm",
+			"ATLAS18ltj",
+			"MLS180227:153419+303733"
 		],
-		"name2":"SNhunt373",
+		"name2":"MLS180210:153419+303734",
 		"aliases2":[
-			"SNhunt373"
+			"MLS180210:153419+303734"
 		],
-		"ra1":"13:48:37.13",
-		"dec1":"+43:24:23.04",
-		"ra2":"13:48:37.2",
-		"dec2":"+43:24:23.04",
-		"distdeg":"0.7628228139344383",
+		"ra1":"15:34:18.94",
+		"dec1":"+30:37:33.32",
+		"ra2":"15:34:18.96",
+		"dec2":"+30:37:33.6",
+		"distdeg":"0.3808453373877195",
 		"maxdiffyear":"",
-		"discdiffyear":"0.0007481666666535602",
+		"discdiffyear":"0.02343058888914129",
 		"edit":false
 	},
 	{
@@ -6015,25 +6020,6 @@
 		"edit":false
 	},
 	{
-		"name1":"MLS180507:172155+291834",
-		"aliases1":[
-			"MLS180507:172155+291834"
-		],
-		"name2":"Gaia18bav",
-		"aliases2":[
-			"Gaia18bav",
-			"AT2018bcm"
-		],
-		"ra1":"17:21:54.96",
-		"dec1":"+29:18:33.48",
-		"ra2":"17:21:55.06",
-		"dec2":"+29:18:33.59",
-		"distdeg":"1.3126018311353356",
-		"maxdiffyear":"",
-		"discdiffyear":"0.03547222222232449",
-		"edit":false
-	},
-	{
 		"name1":"iPTF15bxb",
 		"aliases1":[
 			"iPTF15bxb"
@@ -6271,6 +6257,44 @@
 		"distdeg":"0.6532378399530369",
 		"maxdiffyear":"",
 		"discdiffyear":"1.2268460638890701",
+		"edit":false
+	},
+	{
+		"name1":"MLS171028:090632+274315",
+		"aliases1":[
+			"MLS171028:090632+274315"
+		],
+		"name2":"PS18rt",
+		"aliases2":[
+			"PS18rt",
+			"AT2018bkb"
+		],
+		"ra1":"09:06:32.054",
+		"dec1":"+27:43:15.13",
+		"ra2":"09:06:32.06",
+		"dec2":"+27:43:15.09",
+		"distdeg":"0.08914784721066296",
+		"maxdiffyear":"",
+		"discdiffyear":"0.22106108611114905",
+		"edit":false
+	},
+	{
+		"name1":"MLS180210:081432+323154",
+		"aliases1":[
+			"MLS180210:081432+323154"
+		],
+		"name2":"PS18is",
+		"aliases2":[
+			"PS18is",
+			"AT2018ud"
+		],
+		"ra1":"08:14:31.92",
+		"dec1":"+32:31:53.76",
+		"ra2":"08:14:31.92",
+		"dec2":"+32:31:53.21",
+		"distdeg":"0.5499999999896765",
+		"maxdiffyear":"",
+		"discdiffyear":"1.220208333333403",
 		"edit":false
 	},
 	{
@@ -11613,8 +11637,110 @@
 		"ra2":"16:15:00.792",
 		"dec2":"+31:04:19.3476",
 		"distdeg":"0.3528993744619027",
-		"maxdiffyear":"0.10000000000013642",
+		"maxdiffyear":"0.019444444444388864",
 		"discdiffyear":"0.09553613611137735",
+		"edit":false
+	},
+	{
+		"name1":"SN2017ivh",
+		"aliases1":[
+			"SN2017ivh",
+			"AT2017ivh",
+			"ATLAS17nph",
+			"Gaia17dfx",
+			"MLS180118:133936-112856"
+		],
+		"name2":"PTSS-18ehe",
+		"aliases2":[
+			"PTSS-18ehe"
+		],
+		"ra1":"13:39:36.25",
+		"dec1":"-11:28:55.86",
+		"ra2":"13:39:36.2448",
+		"dec2":"-11:28:55.1388",
+		"distdeg":"0.7252395180754936",
+		"maxdiffyear":"0.2888888888892325",
+		"discdiffyear":"0.4260277777780175",
+		"edit":false
+	},
+	{
+		"name1":"SN2018bbr",
+		"aliases1":[
+			"SN2018bbr",
+			"AT2018bbr",
+			"ATLAS18nts"
+		],
+		"name2":"PTSS-18ejd",
+		"aliases2":[
+			"PTSS-18ejd"
+		],
+		"ra1":"14:03:19.86",
+		"dec1":"-22:33:07.19",
+		"ra2":"14:03:19.9224",
+		"dec2":"-22:33:07.2468",
+		"distdeg":"0.8662898774168754",
+		"maxdiffyear":"0.052777777777919255",
+		"discdiffyear":"0.048780575000137105",
+		"edit":false
+	},
+	{
+		"name1":"PTSS-18enx",
+		"aliases1":[
+			"PTSS-18enx"
+		],
+		"name2":"PTSS-18eny",
+		"aliases2":[
+			"PTSS-18eny"
+		],
+		"ra1":"12:41:11.2176",
+		"dec1":"-01:35:19.7473",
+		"ra2":"12:41:11.2008",
+		"dec2":"-01:35:20.4904",
+		"distdeg":"0.7846354466982001",
+		"maxdiffyear":"0.0",
+		"discdiffyear":"0.0",
+		"edit":false
+	},
+	{
+		"name1":"SN2018yo",
+		"aliases1":[
+			"SN2018yo",
+			"AT2018yo",
+			"SNhunt353",
+			"PS18nu"
+		],
+		"name2":"PTSS-18enx",
+		"aliases2":[
+			"PTSS-18enx"
+		],
+		"ra1":"12:41:11.14",
+		"dec1":"-01:35:20.40",
+		"ra2":"12:41:11.2176",
+		"dec2":"-01:35:19.7473",
+		"distdeg":"1.3341182774482672",
+		"maxdiffyear":"0.2111111111109949",
+		"discdiffyear":"0.20993126388884775",
+		"edit":false
+	},
+	{
+		"name1":"SN2018yo",
+		"aliases1":[
+			"SN2018yo",
+			"AT2018yo",
+			"SNhunt353",
+			"PS18nu"
+		],
+		"name2":"PTSS-18eny",
+		"aliases2":[
+			"PTSS-18eny"
+		],
+		"ra1":"12:41:11.14",
+		"dec1":"-01:35:20.40",
+		"ra2":"12:41:11.2008",
+		"dec2":"-01:35:20.4904",
+		"distdeg":"0.9161204017162836",
+		"maxdiffyear":"0.2111111111109949",
+		"discdiffyear":"0.20993126388884775",
 		"edit":false
 	},
 	{
