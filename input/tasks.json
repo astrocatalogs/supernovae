@@ -552,6 +552,17 @@
         "always_journal": true,
         "priority": 208
     },
+    "csp_fits_spectra": {
+        "nice_name": "%pre CSP FITS spectra",
+        "active": true,
+        "update": false,
+        "module": "supernovae.tasks.csp",
+        "function": "do_csp_fits_spectra",
+        "groups": ["spectra"],
+        "repo": "input/sne-external-fits-spectra",
+        "always_journal": true,
+        "priority": 209
+    },
     "fits_spectra": {
         "nice_name": "%pre FITS spectra",
         "active": true,
@@ -561,7 +572,7 @@
         "groups": ["spectra"],
         "repo": "input/sne-external-fits-spectra",
         "always_journal": true,
-        "priority": 209
+        "priority": 210
     },
     "essence_spectra": {
         "nice_name": "%pre ESSENCE spectra",
@@ -572,7 +583,7 @@
         "groups": ["spectra"],
         "repo": "input/sne-external-spectra",
         "always_journal": true,
-        "priority": 210
+        "priority": 211
     },
     "tns_spectra": {
         "nice_name": "%pre TNS spectra",
@@ -583,7 +594,7 @@
         "groups": ["spectra"],
         "repo": "input/sne-external-spectra",
         "always_journal": true,
-        "priority": 211
+        "priority": 212
     },
     "wiserep_spectra": {
         "nice_name": "%pre WISeREP spectra",
