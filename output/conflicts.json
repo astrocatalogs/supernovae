@@ -23290,6 +23290,53 @@
 		]
 	},
 	{
+		"name":"SN2005cy",
+		"alias":[
+			{
+				"value":"SN2005cy",
+				"source":"2,6,7,8,9,10,11,13,14"
+			},
+			{
+				"value":"AT2018aqf",
+				"source":"7,8,9,11"
+			},
+			{
+				"value":"SN2018aqf",
+				"source":"7,11"
+			},
+			{
+				"value":"SNhunt363",
+				"source":"7,11"
+			},
+			{
+				"value":"PS18ve",
+				"source":"7,11"
+			}
+		],
+		"edit":false,
+		"quantity":"claimedtype",
+		"difference":"",
+		"values":[
+			"II",
+			"IIn",
+			"Ib"
+		],
+		"sources":[
+			{
+				"idtype":"bibcode",
+				"id":"2012A&A...538A.120L"
+			},
+			{
+				"idtype":"bibcode,bibcode,name,bibcode,bibcode",
+				"id":"2008yCat....1.2024B,2005IAUC.8569....2G,Latest Supernovae,2000A&AS..143....9W,1989A&AS...81..421B"
+			},
+			{
+				"idtype":"name,name",
+				"id":"Transient Name Server,Latest Supernovae"
+			}
+		]
+	},
+	{
 		"name":"SN2005em",
 		"alias":[
 			{
@@ -31032,62 +31079,6 @@
 		]
 	},
 	{
-		"name":"SN2007in",
-		"alias":[
-			{
-				"value":"SN2007in",
-				"source":"3,6,7,8,10,11"
-			},
-			{
-				"value":"SNF20070909-023",
-				"source":"2,10"
-			}
-		],
-		"edit":false,
-		"quantity":"ra",
-		"difference":"0.002449",
-		"values":[
-			"01:08:13.68",
-			"01:08:03.68"
-		],
-		"sources":[
-			{
-				"idtype":"bibcode,name,bibcode",
-				"id":"2012A&A...538A.120L,Transient Name Server,1989A&AS...81..421B"
-			},
-			{
-				"idtype":"bibcode,name",
-				"id":"2007CBET.1063....1A,Latest Supernovae"
-			}
-		]
-	},
-	{
-		"name":"SN2007io",
-		"alias":[
-			{
-				"value":"SN2007io",
-				"source":"2,6,7,8,10,11"
-			}
-		],
-		"edit":false,
-		"quantity":"ra",
-		"difference":"0.0104",
-		"values":[
-			"01:04:47.69",
-			"01:04:07.69"
-		],
-		"sources":[
-			{
-				"idtype":"bibcode,bibcode,name,bibcode,bibcode",
-				"id":"2012A&A...538A.120L,2007IAUC.8874....3I,Transient Name Server,2000A&AS..143....9W,1989A&AS...81..421B"
-			},
-			{
-				"idtype":"bibcode,name",
-				"id":"2007CBET.1063....1A,Latest Supernovae"
-			}
-		]
-	},
-	{
 		"name":"SN2007J",
 		"alias":[
 			{
@@ -35955,15 +35946,15 @@
 		"alias":[
 			{
 				"value":"SN2009jh",
-				"source":"2,4,5,6,7,9,11,12,14,15"
+				"source":"3,5,6,7,8,10,12,13,15,16"
 			},
 			{
 				"value":"CSS090802:144910+292510",
-				"source":"9,12,14"
+				"source":"10,13,15"
 			},
 			{
 				"value":"PTF09cwl",
-				"source":"1,2,6,9,12,14"
+				"source":"2,3,7,10,13,15"
 			}
 		],
 		"edit":false,
@@ -38295,7 +38286,7 @@
 		"alias":[
 			{
 				"value":"PTF12dam",
-				"source":"2,4,5,7,8,10,11,12,13"
+				"source":"3,5,6,8,9,11,12,13,14"
 			}
 		],
 		"edit":false,
@@ -38308,8 +38299,8 @@
 		],
 		"sources":[
 			{
-				"idtype":"bibcode",
-				"id":"2017arXiv170801623D"
+				"idtype":"bibcode,bibcode",
+				"id":"2017arXiv170801623D,2012PASP..124..668Y"
 			},
 			{
 				"idtype":"bibcode",
@@ -41442,6 +41433,32 @@
 		]
 	},
 	{
+		"name":"AT2016jhy",
+		"alias":[
+			{
+				"value":"AT2016jhy",
+				"source":"3,4"
+			}
+		],
+		"edit":false,
+		"quantity":"dec",
+		"difference":"2.0",
+		"values":[
+			"+22:40:31.26",
+			"-22:40:31.26"
+		],
+		"sources":[
+			{
+				"idtype":"name",
+				"id":"Transient Name Server"
+			},
+			{
+				"idtype":"name,name",
+				"id":"Transient Name Server,Latest Supernovae"
+			}
+		]
+	},
+	{
 		"name":"AT2017exn",
 		"alias":[
 			{
@@ -41912,7 +41929,7 @@
 		"name":"OGLE-2015-SN-043",
 		"alias":[
 			{
-				"value":"MLS180516:213747-035613",
+				"value":"MLS180522:215155-120445",
 				"source":"2,3,4"
 			}
 		],
@@ -46408,7 +46425,7 @@
 			},
 			{
 				"value":"ASASSN-18jp",
-				"source":"3,7"
+				"source":"3,4,7"
 			}
 		],
 		"edit":false,
@@ -46431,11 +46448,374 @@
 			},
 			{
 				"idtype":"name,name,bibcode",
-				"id":"Transient Name Server,Latest Supernovae,2012PASP..124..668Y"
+				"id":"ATel 11663,Latest Supernovae,2012PASP..124..668Y"
 			},
 			{
 				"idtype":"name,name",
-				"id":"Transient Name Server,Latest Supernovae"
+				"id":"ATel 11663,Latest Supernovae"
+			}
+		]
+	},
+	{
+		"name":"SN2018btn",
+		"alias":[
+			{
+				"value":"SN2018btn",
+				"source":"3,4,7"
+			},
+			{
+				"value":"AT2018btm",
+				"source":"3,4,5,7,9"
+			},
+			{
+				"value":"ASASSN-18kn",
+				"source":"3"
+			},
+			{
+				"value":"ASASSN-18ko",
+				"source":"3,4,7"
+			},
+			{
+				"value":"AT2018btn",
+				"source":"3,4,7"
+			}
+		],
+		"edit":false,
+		"quantity":"ra",
+		"difference":"0.7204",
+		"values":[
+			"23:19:44.49",
+			"13:33:36.42",
+			"23:19:44.461",
+			"13:33:36.457",
+			"13:33:36.48",
+			"23:19:44.4"
+		],
+		"sources":[
+			{
+				"idtype":"name",
+				"id":"Transient Name Server"
+			},
+			{
+				"idtype":"name",
+				"id":"Transient Name Server"
+			},
+			{
+				"idtype":"name,name",
+				"id":"ATel 11660,Latest Supernovae"
+			},
+			{
+				"idtype":"name,name",
+				"id":"ATel 11660,Latest Supernovae"
+			},
+			{
+				"idtype":"name,name",
+				"id":"ATel 11660,ASAS-SN Supernovae"
+			},
+			{
+				"idtype":"name,name",
+				"id":"ATel 11660,ASAS-SN Supernovae"
+			}
+		]
+	},
+	{
+		"name":"SN2018btn",
+		"alias":[
+			{
+				"value":"SN2018btn",
+				"source":"3,4,7"
+			},
+			{
+				"value":"AT2018btm",
+				"source":"3,4,5,7,9"
+			},
+			{
+				"value":"ASASSN-18kn",
+				"source":"3"
+			},
+			{
+				"value":"ASASSN-18ko",
+				"source":"3,4,7"
+			},
+			{
+				"value":"AT2018btn",
+				"source":"3,4,7"
+			}
+		],
+		"edit":false,
+		"quantity":"dec",
+		"difference":"2.476",
+		"values":[
+			"+22:30:08.63",
+			"-33:12:25.34",
+			"+22:30:08.23",
+			"-33:12:25.80",
+			"-33:12:25.92",
+			"+22:30:08.28"
+		],
+		"sources":[
+			{
+				"idtype":"name",
+				"id":"Transient Name Server"
+			},
+			{
+				"idtype":"name",
+				"id":"Transient Name Server"
+			},
+			{
+				"idtype":"name,name",
+				"id":"ATel 11660,Latest Supernovae"
+			},
+			{
+				"idtype":"name,name",
+				"id":"ATel 11660,Latest Supernovae"
+			},
+			{
+				"idtype":"name,name",
+				"id":"ATel 11660,ASAS-SN Supernovae"
+			},
+			{
+				"idtype":"name,name",
+				"id":"ATel 11660,ASAS-SN Supernovae"
+			}
+		]
+	},
+	{
+		"name":"SN2018bui",
+		"alias":[
+			{
+				"value":"SN2018bui",
+				"source":"3,4,5,8,10"
+			},
+			{
+				"value":"AT2018bui",
+				"source":"3,4,8"
+			},
+			{
+				"value":"ASASSN-18kr",
+				"source":"3"
+			},
+			{
+				"value":"ASASSN-18kp",
+				"source":"3,4,8"
+			},
+			{
+				"value":"SN2018btr",
+				"source":"3,4,8"
+			},
+			{
+				"value":"AT2018btr",
+				"source":"3,4,8"
+			}
+		],
+		"edit":false,
+		"quantity":"ra",
+		"difference":"0.4295",
+		"values":[
+			"14:20:43.66",
+			"10:02:05.97",
+			"14:20:43.440",
+			"10:02:05.816",
+			"14:20:43.44",
+			"10:02:05.76"
+		],
+		"sources":[
+			{
+				"idtype":"name",
+				"id":"Transient Name Server"
+			},
+			{
+				"idtype":"name",
+				"id":"Transient Name Server"
+			},
+			{
+				"idtype":"name,name",
+				"id":"ATel 11660,Latest Supernovae"
+			},
+			{
+				"idtype":"name,name",
+				"id":"ATel 11660,Latest Supernovae"
+			},
+			{
+				"idtype":"name,name",
+				"id":"ATel 11660,ASAS-SN Supernovae"
+			},
+			{
+				"idtype":"name,name",
+				"id":"ATel 11660,ASAS-SN Supernovae"
+			}
+		]
+	},
+	{
+		"name":"SN2018bui",
+		"alias":[
+			{
+				"value":"SN2018bui",
+				"source":"3,4,5,8,10"
+			},
+			{
+				"value":"AT2018bui",
+				"source":"3,4,8"
+			},
+			{
+				"value":"ASASSN-18kr",
+				"source":"3"
+			},
+			{
+				"value":"ASASSN-18kp",
+				"source":"3,4,8"
+			},
+			{
+				"value":"SN2018btr",
+				"source":"3,4,8"
+			},
+			{
+				"value":"AT2018btr",
+				"source":"3,4,8"
+			}
+		],
+		"edit":false,
+		"quantity":"dec",
+		"difference":"2.117",
+		"values":[
+			"+13:41:44.74",
+			"-15:17:55.21",
+			"+13:41:42.60",
+			"-15:17:54.47",
+			"+13:41:42.72",
+			"-15:17:54.6"
+		],
+		"sources":[
+			{
+				"idtype":"name",
+				"id":"Transient Name Server"
+			},
+			{
+				"idtype":"name",
+				"id":"Transient Name Server"
+			},
+			{
+				"idtype":"name,name",
+				"id":"ATel 11660,Latest Supernovae"
+			},
+			{
+				"idtype":"name,name",
+				"id":"ATel 11660,Latest Supernovae"
+			},
+			{
+				"idtype":"name,name",
+				"id":"ATel 11660,ASAS-SN Supernovae"
+			},
+			{
+				"idtype":"name,name",
+				"id":"ATel 11660,ASAS-SN Supernovae"
+			}
+		]
+	},
+	{
+		"name":"SN2018bui",
+		"alias":[
+			{
+				"value":"SN2018bui",
+				"source":"3,4,5,8,10"
+			},
+			{
+				"value":"AT2018bui",
+				"source":"3,4,8"
+			},
+			{
+				"value":"ASASSN-18kr",
+				"source":"3"
+			},
+			{
+				"value":"ASASSN-18kp",
+				"source":"3,4,8"
+			},
+			{
+				"value":"SN2018btr",
+				"source":"3,4,8"
+			},
+			{
+				"value":"AT2018btr",
+				"source":"3,4,8"
+			}
+		],
+		"edit":false,
+		"quantity":"redshift",
+		"difference":"0.5377",
+		"values":[
+			0.031275,
+			0.020339,
+			0.031275,
+			0.020339,
+			0.031275
+		],
+		"sources":[
+			{
+				"idtype":"name",
+				"id":"Transient Name Server"
+			},
+			{
+				"idtype":"name",
+				"id":"Transient Name Server"
+			},
+			{
+				"idtype":"name",
+				"id":"Transient Name Server"
+			},
+			{
+				"idtype":"name,name,name",
+				"id":"ATel 11660,ASAS-SN Supernovae,Latest Supernovae"
+			},
+			{
+				"idtype":"name,name,name,bibcode",
+				"id":"ATel 11660,ASAS-SN Supernovae,Latest Supernovae,2012PASP..124..668Y"
+			}
+		]
+	},
+	{
+		"name":"SN2018bui",
+		"alias":[
+			{
+				"value":"SN2018bui",
+				"source":"3,4,5,8,10"
+			},
+			{
+				"value":"AT2018bui",
+				"source":"3,4,8"
+			},
+			{
+				"value":"ASASSN-18kr",
+				"source":"3"
+			},
+			{
+				"value":"ASASSN-18kp",
+				"source":"3,4,8"
+			},
+			{
+				"value":"SN2018btr",
+				"source":"3,4,8"
+			},
+			{
+				"value":"AT2018btr",
+				"source":"3,4,8"
+			}
+		],
+		"edit":false,
+		"quantity":"claimedtype",
+		"difference":"",
+		"values":[
+			"II",
+			"Ia"
+		],
+		"sources":[
+			{
+				"idtype":"name,name,name,name,name,bibcode",
+				"id":"Transient Name Server,ATel 11660,ASAS-SN Supernovae,ATel https://wis-tns.weizmann.ac.il/object/2018bui,Latest Supernovae,2012PASP..124..668Y"
+			},
+			{
+				"idtype":"name,name,name,name,name,bibcode",
+				"id":"Transient Name Server,ATel 11660,ASAS-SN Supernovae,ATel https://wis-tns.weizmann.ac.il/object/2018btr,Latest Supernovae,2012PASP..124..668Y"
 			}
 		]
 	},

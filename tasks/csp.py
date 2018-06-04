@@ -165,7 +165,7 @@ def do_csp_fits_spectra(catalog):
                 if is_number(dval):
                     dkey = 'DATE' if dkey == 'DATE-OBS' else 'DATE-OBS'
                     dval = hdulist[0].header[dkey]
-                elif 'T' in dval:
+                if 'T' in dval:
                     dateobs = dval.strip()
                 elif 'UTC-OBS' in hdrkeys:
                     dateobs = dval.strip(
