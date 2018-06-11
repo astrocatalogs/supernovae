@@ -105,8 +105,13 @@ def do_asas_atels(catalog):
     """Import LCs exposed in ASASSN Atels."""
     import gzip
 
-    with gzip.open('/root/better-atel/atels.json.gz', 'rb') as f:
-        ateljson = json.load(f)
+    try:
+        with gzip.open('/root/better-atel/atels.json.gz', 'rb') as f:
+            ateljson = json.load(f)
+    except Exception:
+        print('ATel data unavailable, skipping ASAS ATel task.')
+        return
+
     for entry in ateljson:
         if ('asas-sn.osu.edu/light_curve' in entry['body'] and
                 'Supernovae' in entry['subjects']):
