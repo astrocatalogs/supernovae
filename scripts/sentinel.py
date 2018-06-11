@@ -6,7 +6,7 @@ from collections import OrderedDict
 
 import ads
 
-from astrocats.catalog.utils import tprint, tq
+from astrocats.catalog.utils import tprint, tq, listify
 from astrocats.supernovae.scripts.repos import repo_file_list
 
 sentinel = OrderedDict()
@@ -39,10 +39,13 @@ photterms = [
     "photometry", "photometric", "light curve"]
 
 for fcnt, eventfile in enumerate(tq(sorted(files, key=lambda s: s.lower()))):
-    #if fcnt > 10000:
+    #if fcnt > 3000:
     #   break
+    if not os.path.exists(eventfile):
+        continue
+
     fileeventname = os.path.splitext(os.path.basename(eventfile))[0].replace(
-        '.json', '')
+        '.json', '').replace('.gz', '')
 
     if eventfile.split('.')[-1] == 'gz':
         with gzip.open(eventfile, 'rt') as f:
@@ -58,17 +61,15 @@ for fcnt, eventfile in enumerate(tq(sorted(files, key=lambda s: s.lower()))):
     hasspectype = False
     if 'spectra' not in item:
         if 'redshift' in item:
-            redshiftkinds = [x['kind'] if 'kind' in x else ''
-                             for x in item['redshift']]
+            redshiftkinds = [x for y in [listify(x.get('kind', '')) for x in item['redshift']] for x in y]
             if any([any(
-                [y == x for y in ['cmb', 'heliocentric', 'spectroscopic', '']])
+                [y == x for y in ['cmb', 'heliocentric', 'spectroscopic', 'host', '']])
                     for x in redshiftkinds]):
                 hasspecred = True
 
         if 'claimedtype' in item:
             typekinds = ['candidate'
-                         if x['value'].lower() == 'candidate' else (x['kind']
-                                                            if 'kind' in x else '')
+                         if x['value'].lower() == 'candidate' else x.get('kind', '')
                          for x in item['claimedtype']]
             if any([any([y == x for y in ['spectroscopic', '']])
                     for x in typekinds]):
@@ -87,7 +88,7 @@ for fcnt, eventfile in enumerate(tq(sorted(files, key=lambda s: s.lower()))):
         aliases = [
             x['value'] for x in item['alias']
             if (not any([y in x['value'] for y in ['GRB', 'SNR', 'SDSS-II']])
-                and len(x['value']) >= 4)]
+                and len(x['value']) >= 5)]
         if not aliases:
             continue
         # ADS treats queries with spaces differently, so must search for both
@@ -95,7 +96,7 @@ for fcnt, eventfile in enumerate(tq(sorted(files, key=lambda s: s.lower()))):
         for alias in aliases[:]:
             if alias.startswith('SN'):
                 aliases.append('SN ' + alias[2:])
-        qstr = 'full:("' + '" or "'.join(aliases) + '") '
+        qstr = 'full:(="' + '" or "'.join(aliases) + '") '
         qstr += 'and property:refereed and full:('
         terms = []
         if search_spectra:
@@ -104,8 +105,9 @@ for fcnt, eventfile in enumerate(tq(sorted(files, key=lambda s: s.lower()))):
             terms += photterms
         qstr += '"' + '" or "'.join(terms) + '")'
         allpapers = ads.SearchQuery(
-            q=qstr, fl=['id', 'bibcode', 'author'], max_pages=100)
+            q=qstr, fl=['id', 'bibstem', 'bibcode', 'author'], max_pages=100)
     except:
+        print('ADS query failed for {}, skipping'.format(fileeventname))
         continue
 
     try:
@@ -131,7 +133,10 @@ for fcnt, eventfile in enumerate(tq(sorted(files, key=lambda s: s.lower()))):
 
         tprint('{:<30} (papers found: {}, remaining API calls: {})'.format(
             fileeventname, npapers, rate_limits['remaining']))
-    except:
+    except Exception as e:
+        print(repr(e))
+        print('Failed to parse ADS output for {}, skipping'.format(fileeventname))
+        print(allpapers.response.get_ratelimits())
         continue
 
 # Convert to array since that's what datatables expects
