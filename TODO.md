@@ -210,6 +210,7 @@ SNR catalogs:
 * Chandra SNR catalog - http://hea-www.cfa.harvard.edu/ChandraSNR/
 * GALEX SNR catalog?
 * GRBs (FERMI, GRBs from early 2000s)
+* https://arxiv.org/abs/1806.04280
 
 Online catalogs:
 * No known missing online catalogs at this time.
