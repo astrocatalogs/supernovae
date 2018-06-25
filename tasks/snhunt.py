@@ -42,10 +42,17 @@ def do_snhunt(catalog):
         name = re.sub(
             '<[^<]+?>', '',
             cols[4]).strip().replace(' ', '').replace('SNHunt', 'SNhunt')
+        ex_name = None
+        if '/' in name:
+            ex_name = name.split('/')[-1]
+            name = name.split('/')[0]
         name = catalog.add_entry(name)
         source = catalog.entries[name].add_source(
             name='Supernova Hunt', url=snh_url)
         catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
+        if ex_name is not None:
+            catalog.entries[name].add_quantity(
+                SUPERNOVA.ALIAS, ex_name, source)
         host = re.sub('<[^<]+?>', '', cols[1]).strip().replace('_', ' ')
         catalog.entries[name].add_quantity(SUPERNOVA.HOST, host, source)
         catalog.entries[name].add_quantity(
