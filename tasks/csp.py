@@ -154,6 +154,7 @@ def do_csp_fits_spectra(catalog):
         name, source = catalog.new_entry(name, bibcode='2017ApJ...850...89G')
         # for key in hdulist[0].header.keys():
         #     print(key, hdulist[0].header[key])
+        mjd = None
         if hdulist[0].header['SIMPLE']:
             if 'JD' in hdrkeys:
                 mjd = str(jd_to_mjd(Decimal(str(hdulist[0].header['JD']))))
@@ -165,14 +166,14 @@ def do_csp_fits_spectra(catalog):
                 if is_number(dval):
                     dkey = 'DATE' if dkey == 'DATE-OBS' else 'DATE-OBS'
                     dval = hdulist[0].header[dkey]
+                dateobs = None
                 if 'T' in dval:
                     dateobs = dval.strip()
                 elif 'UTC-OBS' in hdrkeys:
                     dateobs = dval.strip(
                     ) + 'T' + hdulist[0].header['UTC-OBS'].strip()
-                mjd = str(astrotime(dateobs, format='isot').mjd)
-            else:
-                raise ValueError("Couldn't find JD/MJD for spectrum.")
+                if dateobs is not None:
+                    mjd = str(astrotime(dateobs, format='isot').mjd)
             # print(hdulist[0].header)
             if 'CRVAL1' in hdulist[0].header:
                 w0 = hdulist[0].header['CRVAL1']
@@ -207,13 +208,14 @@ def do_csp_fits_spectra(catalog):
         specdict = {
             SPECTRUM.U_WAVELENGTHS: 'Angstrom',
             SPECTRUM.WAVELENGTHS: waves,
-            SPECTRUM.TIME: mjd,
-            SPECTRUM.U_TIME: 'MJD',
             SPECTRUM.FLUXES: fluxes,
             SPECTRUM.U_FLUXES: fluxunit,
             SPECTRUM.FILENAME: filename,
             SPECTRUM.SOURCE: source
         }
+        if mjd is not None:
+            specdict[SPECTRUM.TIME] = mjd
+            specdict[SPECTRUM.U_TIME] = 'MJD'
         if 'TELESCOP' in hdrkeys:
             specdict[SPECTRUM.TELESCOPE] = hdulist[0].header['TELESCOP']
         if 'INSTRUME' in hdrkeys:

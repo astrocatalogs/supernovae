@@ -2114,9 +2114,9 @@ def do_vizier(catalog):
             row['zGal'],
             source,
             kind='host')
-        catalog.entries[name].add_quantity(SUPERNOVA.CLAIMED_TYPE, row['SType']
-                                           if row['SType'] else row['Type'],
-                                           source)
+        ct = row['SType'] if row['SType'] else row['Type']
+        if ct != '---':
+            catalog.entries[name].add_quantity(SUPERNOVA.CLAIMED_TYPE, ct, source)
     catalog.journal_entries()
 
     # 2013AcA....63....1K
