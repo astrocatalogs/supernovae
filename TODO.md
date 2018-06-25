@@ -139,6 +139,7 @@ Other single SN datasets:
 * SN2014J - http://adsabs.harvard.edu/abs/2015ApJ...798...39M
 * SN2014J - http://adsabs.harvard.edu/abs/2015MNRAS.451.4104J
 * SN2014J - http://adsabs.harvard.edu/abs/2016MNRAS.457.1000S
+* SN2014L - https://arxiv.org/abs/1806.08477 (photometry)
 * SN2014ad - https://arxiv.org/abs/1801.07046 (photometry)
 * SN2014ad - http://adsabs.harvard.edu/abs/2017MNRAS.469.1897S (Photometry only in plot form)
 * iPTF14atg - http://adsabs.harvard.edu/abs/2015Natur.521..328C (Photometry, but data not in paper)
