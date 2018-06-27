@@ -144,6 +144,7 @@ Other single SN datasets:
 * SN2014ad - http://adsabs.harvard.edu/abs/2017MNRAS.469.1897S (Photometry only in plot form)
 * iPTF14atg - http://adsabs.harvard.edu/abs/2015Natur.521..328C (Photometry, but data not in paper)
 * iPTF14gqr - De et al in prep (photometry and spectra)
+* iPTF14hls - https://arxiv.org/abs/1806.10001 (late-time photometry)
 * ASASSN-15no - https://arxiv.org/abs/1801.08318 (photometry)
 * ASASSN-15nx - https://arxiv.org/abs/1804.00025 (photometry in txt file)
 * SN2015H - http://adsabs.harvard.edu/abs/2016A%26A...589A..89M (Photometry, data not in paper)
@@ -154,6 +155,7 @@ Other single SN datasets:
 * SN2015bh - http://arxiv.org/abs/1609.00731 (photometry and spectra)
 * KSN2015k - https://www.nature.com/articles/s41550-018-0423-2
 * iPTF15dtg - http://arxiv.org/abs/1605.02491 (spectra)
+* iPTF15dtg - http://arxiv.org/abs/1806.10000 (late-time photometry)
 * SPIRITS16tn - https://arxiv.org/abs/1803.00574 (photometry and radio)
 * DES16C2nm - https://arxiv.org/abs/1712.04535 (photometry)
 * SN2016X - https://arxiv.org/abs/1801.03167 (photometry)
