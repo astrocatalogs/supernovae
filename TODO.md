@@ -158,6 +158,8 @@ Other single SN datasets:
 * iPTF15dtg - http://arxiv.org/abs/1806.10000 (late-time photometry)
 * SPIRITS16tn - https://arxiv.org/abs/1803.00574 (photometry and radio)
 * DES16C2nm - https://arxiv.org/abs/1712.04535 (photometry)
+* iPTF16hgs - https://arxiv.org/abs/1806.10623 (photometry)
+* PS16aqv - https://arxiv.org/abs/1805.07372 (photometry)
 * SN2016X - https://arxiv.org/abs/1801.03167 (photometry)
 * SN2016bkv - https://arxiv.org/abs/1801.00015 (photometry only in plot form)
 * SN2016bkv - https://arxiv.org/abs/1804.06065 (optical/IR photometry)
@@ -171,7 +173,7 @@ Other single SN datasets:
 * SNHunt151 - https://arxiv.org/abs/1801.03040 (photometry)
 * OGLE14-073 - https://arxiv.org/abs/1804.05791 (bolometric photometry)
 * PS17bdq - http://arxiv.org/abs/1805.00025v1 (metadata)
-* PS16aqv - https://arxiv.org/abs/1805.07372 (photometry)
+* SN2018bsz - https://arxiv.org/abs/1806.10609 (photometry)
 
 Spectra to recover that were donated to SuSpect (bad wavelength solutions, etc):
 * 2000E_20000130_3274_7356_00.dat
