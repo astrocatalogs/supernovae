@@ -191,6 +191,8 @@ def name_clean(name):
         newname = newname.replace('IPTF', 'iPTF', 1)
     if newname.startswith('iPTF '):
         newname = newname.replace('iPTF ', 'iPTF', 1)
+    if newname.startswith('iPTF-'):
+        newname = newname.replace('iPTF-', 'iPTF', 1)
     if newname.startswith('iPTF') and len(
             newname) > 4 and is_number(newname[4]):
         newname = newname[:4] + newname[4:].lower()
