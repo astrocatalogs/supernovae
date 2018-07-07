@@ -144,6 +144,7 @@ Other single SN datasets:
 * SN2014ad - http://adsabs.harvard.edu/abs/2017MNRAS.469.1897S (Photometry only in plot form)
 * iPTF14atg - http://adsabs.harvard.edu/abs/2015Natur.521..328C (Photometry, but data not in paper)
 * iPTF14gqr - De et al in prep (photometry and spectra)
+* iPTF14hls - https://arxiv.org/abs/1806.10001 (late-time photometry)
 * ASASSN-15no - https://arxiv.org/abs/1801.08318 (photometry)
 * ASASSN-15nx - https://arxiv.org/abs/1804.00025 (photometry in txt file)
 * SN2015H - http://adsabs.harvard.edu/abs/2016A%26A...589A..89M (Photometry, data not in paper)
@@ -154,8 +155,11 @@ Other single SN datasets:
 * SN2015bh - http://arxiv.org/abs/1609.00731 (photometry and spectra)
 * KSN2015k - https://www.nature.com/articles/s41550-018-0423-2
 * iPTF15dtg - http://arxiv.org/abs/1605.02491 (spectra)
+* iPTF15dtg - http://arxiv.org/abs/1806.10000 (late-time photometry)
 * SPIRITS16tn - https://arxiv.org/abs/1803.00574 (photometry and radio)
 * DES16C2nm - https://arxiv.org/abs/1712.04535 (photometry)
+* iPTF16hgs - https://arxiv.org/abs/1806.10623 (photometry)
+* PS16aqv - https://arxiv.org/abs/1805.07372 (photometry)
 * SN2016X - https://arxiv.org/abs/1801.03167 (photometry)
 * SN2016bkv - https://arxiv.org/abs/1801.00015 (photometry only in plot form)
 * SN2016bkv - https://arxiv.org/abs/1804.06065 (optical/IR photometry)
@@ -165,11 +169,12 @@ Other single SN datasets:
 * SN2017dio - https://arxiv.org/abs/1712.00027 (photometry only in plot form)
 * SN2017egm - https://arxiv.org/abs/1708.00864 (additional photometry)
 * SN2017ein - https://arxiv.org/abs/1803.01050 (photometry)
+* SN2017ein - https://arxiv.org/abs/1806.11288 (photometry)
 * SN2017hcc - https://arxiv.org/abs/1711.07938 (photometry/spectra, but only in plot form)
 * SNHunt151 - https://arxiv.org/abs/1801.03040 (photometry)
 * OGLE14-073 - https://arxiv.org/abs/1804.05791 (bolometric photometry)
 * PS17bdq - http://arxiv.org/abs/1805.00025v1 (metadata)
-* PS16aqv - https://arxiv.org/abs/1805.07372 (photometry)
+* SN2018bsz - https://arxiv.org/abs/1806.10609 (photometry)
 
 Spectra to recover that were donated to SuSpect (bad wavelength solutions, etc):
 * 2000E_20000130_3274_7356_00.dat
