@@ -103,6 +103,7 @@ Other single SN datasets:
 * SN2007uy - http://adsabs.harvard.edu/abs/2013MNRAS.434.2032R (no new photometry)
 * SN2008D - http://www.nature.com/nature/journal/v453/n7194/suppinfo/nature06997.html (X-ray & radio)
 * SN2008cq - In CSP data somewhere?
+* SN2008es - https://arxiv.org/abs/1807.07859 (late-time photometry)
 * SN2008fz - http://adsabs.harvard.edu/abs/2010ApJ...718L.127D (spectra)
 * SN2008in - http://adsabs.harvard.edu/abs/2011ApJ...736...76R (UBVRIJH photometry, data already on OSC?)
 * SN2009dc - http://adsabs.harvard.edu/abs/2009ApJ...707L.118Y (spectra)
