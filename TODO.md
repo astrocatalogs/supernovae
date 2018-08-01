@@ -167,6 +167,7 @@ Other single SN datasets:
 * SN2016brx - https://arxiv.org/abs/1805.00010 (minimal photometry and spectra)
 * SN2016jhr - http://adsabs.harvard.edu/abs/2017Natur.550...80J (Photometry in arxiv version)
 * SCP16C03 - https://arxiv.org/abs/1707.04606 (spectra)
+* AT2017be - http://arxiv.org/abs/1807.11676v1 (photometry)
 * SN2017dio - https://arxiv.org/abs/1712.00027 (photometry only in plot form)
 * SN2017egm - https://arxiv.org/abs/1708.00864 (additional photometry)
 * SN2017ein - https://arxiv.org/abs/1803.01050 (photometry)
