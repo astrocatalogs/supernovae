@@ -147,6 +147,7 @@ Other single SN datasets:
 * iPTF14gqr - De et al in prep (photometry and spectra)
 * iPTF14hls - https://arxiv.org/abs/1806.10001 (late-time photometry)
 * ASASSN-14dq - https://arxiv.org/abs/1807.07251 (photometry)
+* ASASSN-14lp - https://arxiv.org/abs/1808.00972 (late-time photometry)
 * ASASSN-15no - https://arxiv.org/abs/1801.08318 (photometry)
 * ASASSN-15nx - https://arxiv.org/abs/1804.00025 (photometry in txt file)
 * SN2015H - http://adsabs.harvard.edu/abs/2016A%26A...589A..89M (Photometry, data not in paper)
