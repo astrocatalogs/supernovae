@@ -160,6 +160,7 @@ Other single SN datasets:
 * iPTF15dtg - http://arxiv.org/abs/1806.10000 (late-time photometry)
 * SPIRITS16tn - https://arxiv.org/abs/1803.00574 (photometry and radio)
 * DES16C2nm - https://arxiv.org/abs/1712.04535 (photometry)
+* iPTF16abc - https://arxiv.org/abs/1808.02330 (late-time photometry)
 * iPTF16hgs - https://arxiv.org/abs/1806.10623 (photometry)
 * PS16aqv - https://arxiv.org/abs/1805.07372 (photometry)
 * SN2016X - https://arxiv.org/abs/1801.03167 (photometry)
