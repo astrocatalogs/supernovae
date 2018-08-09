@@ -35,6 +35,7 @@ Multiple SN datasets:
 * http://adsabs.harvard.edu/abs/2017ApJ...850...89G (888 Type II spectra)
 * http://adsabs.harvard.edu/abs/2014AJ....148...13R (CANDELS Ia SNe)
 * https://arxiv.org/pdf/1806.03855.pdf (no data but lists a bunch of future sources)
+* https://arxiv.org/abs/1808.02710 (4 GRBs with SNe components)
 
 Other single SN datasets:
 
