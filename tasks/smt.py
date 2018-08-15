@@ -2,7 +2,7 @@
 """
 import os
 
-from astrocats.catalog.utils import pbar
+from astrocats.utils import pbar
 from bs4 import BeautifulSoup
 
 from ..supernova import SUPERNOVA

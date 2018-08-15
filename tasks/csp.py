@@ -4,8 +4,8 @@ import os
 from decimal import Decimal
 from glob import glob
 
-from astrocats.catalog.spectrum import SPECTRUM
-from astrocats.catalog.utils import is_number, jd_to_mjd, pbar, pbar_strings
+from astrocats.structures.struct import SPECTRUM
+from astrocats.utils import is_number, jd_to_mjd, pbar, pbar_strings
 from astropy.time import Time as astrotime
 
 from ..supernova import SUPERNOVA

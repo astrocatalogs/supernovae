@@ -6,8 +6,8 @@ import os
 # from astropy.time import Time as astrotime
 from bs4 import BeautifulSoup
 
-from astrocats.catalog.utils import pbar, utf8
-from astrocats.catalog.entry import ENTRY
+from astrocats.utils import pbar, utf8
+from astrocats.structures.struct import ENTRY
 from astrocats.supernovae.utils import name_clean
 
 

@@ -9,8 +9,8 @@ import re
 from collections import OrderedDict
 from html import unescape
 
-from astrocats.catalog.utils import jd_to_mjd, pbar, uniq_cdl
-from astrocats.catalog.photometry import PHOTOMETRY
+from astrocats.utils import jd_to_mjd, pbar, uniq_cdl
+from astrocats.structures.struct import PHOTOMETRY
 
 from decimal import Decimal
 

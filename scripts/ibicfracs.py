@@ -7,7 +7,7 @@ from collections import OrderedDict
 from tqdm import tqdm
 
 from astrocats.supernovae.scripts.repos import repo_file_list
-from astrocats.catalog.utils import tprint
+from astrocats.utils import tprint
 
 files = repo_file_list(bones=False)
 

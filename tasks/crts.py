@@ -2,8 +2,8 @@
 import os
 import re
 
-from astrocats.catalog.utils import is_number, pbar
-from astrocats.catalog.photometry import PHOTOMETRY
+from astrocats.utils import is_number, pbar
+from astrocats.structures.struct import PHOTOMETRY
 from bs4 import BeautifulSoup
 
 from decimal import Decimal

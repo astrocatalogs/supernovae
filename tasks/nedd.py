@@ -5,7 +5,7 @@ import os
 from collections import OrderedDict
 from html import unescape
 
-from astrocats.catalog.utils import (get_sig_digits, is_number, pbar,
+from astrocats.utils import (get_sig_digits, is_number, pbar,
                                      pretty_num, uniq_cdl)
 from astropy import units as un
 from astropy.cosmology import Planck15 as cosmo

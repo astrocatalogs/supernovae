@@ -3,7 +3,7 @@
 import csv
 import os
 
-from astrocats.catalog.utils import make_date_string, pbar
+from astrocats.utils import make_date_string, pbar
 from astropy.time import Time as astrotime
 
 from ..supernova import SUPERNOVA

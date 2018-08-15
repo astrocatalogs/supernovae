@@ -12,7 +12,7 @@ from math import floor
 from astropy.time import Time as astrotime
 from bs4 import BeautifulSoup
 
-from astrocats.catalog.utils import (get_sig_digits, is_number, jd_to_mjd,
+from astrocats.utils import (get_sig_digits, is_number, jd_to_mjd,
                                      pbar, pbar_strings, pretty_num, uniq_cdl)
 from decimal import Decimal
 

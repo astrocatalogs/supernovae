@@ -5,8 +5,8 @@ import os
 
 from bs4 import BeautifulSoup
 
-from astrocats.catalog.photometry import PHOTOMETRY
-from astrocats.catalog.utils import pbar
+from astrocats.structures.struct import PHOTOMETRY
+from astrocats.utils import pbar
 
 from ..supernova import SUPERNOVA
 

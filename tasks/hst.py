@@ -3,8 +3,8 @@
 import json
 import os
 
-from astrocats.catalog.entry import ENTRY
-from astrocats.catalog.utils import is_number, pbar
+from astrocats.structures.struct import ENTRY
+from astrocats.utils import is_number, pbar
 from astrocats.supernovae.utils import name_clean
 
 

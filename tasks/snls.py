@@ -7,9 +7,9 @@ from glob import glob
 from astropy.time import Time as astrotime
 from astroquery.vizier import Vizier
 
-from astrocats.catalog.photometry import PHOTOMETRY, set_pd_mag_from_counts
-from astrocats.catalog.spectrum import SPECTRUM
-from astrocats.catalog.utils import (get_sig_digits, pbar, pbar_strings,
+from astrocats.structures.struct import PHOTOMETRY, set_pd_mag_from_counts
+from astrocats.structures.struct import SPECTRUM
+from astrocats.utils import (get_sig_digits, pbar, pbar_strings,
                                      pretty_num)
 
 from ..supernova import SUPERNOVA

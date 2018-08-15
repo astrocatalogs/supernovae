@@ -2,9 +2,9 @@
 """
 import numpy as np
 import sncosmo
-from astrocats.catalog.photometry import PHOTOMETRY
-from astrocats.catalog.quantity import QUANTITY
-from astrocats.catalog.utils import pbar
+from astrocats.structures.struct import PHOTOMETRY
+from astrocats.structures.struct import QUANTITY
+from astrocats.utils import pbar
 from astropy.table import Table
 
 from ..supernova import SUPERNOVA

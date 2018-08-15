@@ -4,8 +4,8 @@ import os
 from glob import glob
 from math import floor
 
-from astrocats.catalog.photometry import PHOTOMETRY
-from astrocats.catalog.utils import (is_number, jd_to_mjd, pbar, pbar_strings,
+from astrocats.structures.struct import PHOTOMETRY
+from astrocats.utils import (is_number, jd_to_mjd, pbar, pbar_strings,
                                      uniq_cdl)
 from astropy.time import Time as astrotime
 

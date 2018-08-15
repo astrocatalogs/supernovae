@@ -3,7 +3,7 @@
 import os
 import re
 
-from astrocats.catalog.utils import is_number, jd_to_mjd, pbar, uniq_cdl
+from astrocats.utils import is_number, jd_to_mjd, pbar, uniq_cdl
 from bs4 import BeautifulSoup, NavigableString, Tag
 
 from decimal import Decimal

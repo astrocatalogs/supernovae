@@ -8,7 +8,7 @@ from astropy import units as un
 from astropy.coordinates import SkyCoord as coord
 from tqdm import tqdm
 
-from astrocats.catalog.utils import round_sig
+from astrocats.utils import round_sig
 from astrocats.supernovae.scripts.repos import repo_file_list
 
 from ...catalog.utils import get_entry_filename

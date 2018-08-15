@@ -11,8 +11,8 @@ from datetime import datetime
 from decimal import Decimal
 from glob import glob
 
-from astrocats.catalog.photometry import PHOTOMETRY, set_pd_mag_from_counts
-from astrocats.catalog.utils import (is_number, jd_to_mjd, make_date_string,
+from astrocats.structures.struct import PHOTOMETRY, set_pd_mag_from_counts
+from astrocats.utils import (is_number, jd_to_mjd, make_date_string,
                                      pbar, pbar_strings, round_sig)
 from astropy import units as u
 from astropy.coordinates import SkyCoord as coord

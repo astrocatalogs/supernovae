@@ -7,9 +7,9 @@ from glob import glob
 from astropy.coordinates import SkyCoord as coord
 from astropy.time import Time as astrotime
 
-from astrocats.catalog.photometry import PHOTOMETRY
-from astrocats.catalog.quantity import QUANTITY
-from astrocats.catalog.utils import make_date_string, pbar, pbar_strings
+from astrocats.structures.struct import PHOTOMETRY
+from astrocats.structures.struct import QUANTITY
+from astrocats.utils import make_date_string, pbar, pbar_strings
 from decimal import Decimal
 
 from ..supernova import SUPERNOVA

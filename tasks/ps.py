@@ -8,8 +8,8 @@ import warnings
 from glob import glob
 
 import requests
-from astrocats.catalog.photometry import PHOTOMETRY
-from astrocats.catalog.utils import is_number, make_date_string, pbar, uniq_cdl
+from astrocats.structures.struct import PHOTOMETRY
+from astrocats.utils import is_number, make_date_string, pbar, uniq_cdl
 from astropy.time import Time as astrotime
 from bs4 import BeautifulSoup
 

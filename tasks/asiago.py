@@ -6,7 +6,7 @@ import os
 import re
 import urllib
 
-from astrocats.catalog.utils import is_number, pbar, uniq_cdl, utf8
+from astrocats.utils import is_number, pbar, uniq_cdl, utf8
 # from astropy.time import Time as astrotime
 from bs4 import BeautifulSoup
 

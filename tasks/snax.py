@@ -1,8 +1,8 @@
 """Import tasks for SNaX."""
 import os
 
-from astrocats.catalog.photometry import PHOTOMETRY
-from astrocats.catalog.utils import jd_to_mjd, make_date_string, pbar, uniq_cdl
+from astrocats.structures.struct import PHOTOMETRY
+from astrocats.utils import jd_to_mjd, make_date_string, pbar, uniq_cdl
 from astropy.time import Time as astrotime
 
 from decimal import Decimal

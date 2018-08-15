@@ -3,8 +3,8 @@
 import csv
 import os
 
-from astrocats.catalog.utils import pbar
-from astrocats.catalog.photometry import PHOTOMETRY
+from astrocats.utils import pbar
+from astrocats.structures.struct import PHOTOMETRY
 
 from ..supernova import SUPERNOVA
 

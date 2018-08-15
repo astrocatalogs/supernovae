@@ -3,9 +3,9 @@ import csv
 import os
 from math import isnan
 
-from astrocats.catalog.photometry import PHOTOMETRY, set_pd_mag_from_counts
-from astrocats.catalog.quantity import QUANTITY
-from astrocats.catalog.utils import (convert_aq_output, get_sig_digits,
+from astrocats.structures.struct import PHOTOMETRY, set_pd_mag_from_counts
+from astrocats.structures.struct import QUANTITY
+from astrocats.utils import (convert_aq_output, get_sig_digits,
                                      is_number, jd_to_mjd, make_date_string,
                                      pbar, rep_chars, round_sig, uniq_cdl)
 from astropy.time import Time as astrotime

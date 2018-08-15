@@ -4,15 +4,11 @@ from collections import OrderedDict
 from decimal import Decimal
 
 import numpy as np
-from astrocats.catalog.entry import ENTRY, Entry
-from astrocats.catalog.key import KEY_TYPES, Key
-from astrocats.catalog.photometry import PHOTOMETRY
-from astrocats.catalog.quantity import QUANTITY
-from astrocats.catalog.source import SOURCE
-from astrocats.catalog.utils import (bib_priority, get_sig_digits,
-                                     get_source_year, is_integer, is_number,
-                                     jd_to_mjd, listify, make_date_string,
-                                     pretty_num, uniq_cdl)
+from astrocats.structures import struct
+from astrocats.structures.struct import PHOTOMETRY, QUANTITY, SOURCE, Entry
+from astrocats.utils import (bib_priority, get_sig_digits, get_source_year,
+                             is_integer, is_number, jd_to_mjd, listify,
+                             make_date_string, pretty_num, uniq_cdl)
 from astropy.time import Time as astrotime
 from six import string_types
 
@@ -20,24 +16,7 @@ from .constants import MAX_VISUAL_BANDS
 from .utils import frame_priority, host_clean, radec_clean
 
 
-class SUPERNOVA(ENTRY):
-    """Supernova `Key` child class."""
-
-    CLAIMED_TYPE = Key('claimedtype',
-                       KEY_TYPES.STRING,
-                       kind_preference=['spectroscopic', 'photometric'],
-                       replace_better=True)
-    DISCOVERY_DATE = Key('discoverdate', KEY_TYPES.STRING)
-    EXPLOSION_DATE = Key('explosiondate', KEY_TYPES.STRING)
-    MAX_VISUAL_ABS_MAG = Key('maxvisualabsmag', KEY_TYPES.NUMERIC)
-    MAX_VISUAL_APP_MAG = Key('maxvisualappmag', KEY_TYPES.NUMERIC)
-    MAX_VISUAL_BAND = Key('maxvisualband', KEY_TYPES.STRING)
-    MAX_VISUAL_DATE = Key('maxvisualdate',
-                          KEY_TYPES.STRING,
-                          replace_better=True)
-    ERRORS = Key('errors')
-
-
+@struct.set_struct_schema("astroschema_entry", extensions=["astrocats_entry"])
 class Supernova(Entry):
     """Supernova `Entry` child class.
 
@@ -48,8 +27,6 @@ class Supernova(Entry):
     FIX: check that no stored values are empty/invalid (delete key in that
          case?)
     """
-
-    _KEYS = SUPERNOVA
 
     def __init__(self, catalog, name=None, stub=False):
         """Initialize `Supernova`."""
@@ -324,7 +301,7 @@ class Supernova(Entry):
                             is_integer(cleaned_value[2:6]) and
                             int(cleaned_value[2:6]) >= 2016):
                         success = super(Supernova, self).add_quantity(
-                            SUPERNOVA.ALIAS, 'AT' + cleaned_value[2:], source,
+                            self._KEYS.ALIAS, 'AT' + cleaned_value[2:], source,
                             **kwargs)
 
         return True
@@ -399,9 +376,9 @@ class Supernova(Entry):
         """These aliases are considered when merging duplicates only, but are
         not added to the list of aliases that would be included with the event
         """
-        if (self[SUPERNOVA.NAME].startswith('SN') and
-                is_number(self[SUPERNOVA.NAME][2:6])):
-            return ['AT' + self[SUPERNOVA.NAME][2:]]
+        if (self[self._KEYS.NAME].startswith('SN') and
+                is_number(self[self._KEYS.NAME][2:6])):
+            return ['AT' + self[self._KEYS.NAME][2:]]
         return []
 
     def _get_save_path(self, bury=False):
@@ -498,7 +475,7 @@ class Supernova(Entry):
                             hsplit = html.split("\n")
                             if len(hsplit) > 5:
                                 bibcodeauthor = hsplit[5]
-                        except:
+                        except Exception:
                             pass
 
                         if not bibcodeauthor:
@@ -730,7 +707,7 @@ class Supernova(Entry):
         return flmjd, flsource
 
     def set_first_max_light(self):
-        if SUPERNOVA.MAX_APP_MAG not in self:
+        if self._KEYS.MAX_APP_MAG not in self:
             # Get the maximum amongst all bands
             mldt, mlmag, mlband, mlsource = self._get_max_light()
             if mldt or mlmag or mlband:
@@ -739,16 +716,16 @@ class Supernova(Entry):
             if mldt:
                 max_date = make_date_string(mldt.year, mldt.month, mldt.day)
                 self.add_quantity(
-                    SUPERNOVA.MAX_DATE, max_date, uniq_src, derived=True)
+                    self._KEYS.MAX_DATE, max_date, uniq_src, derived=True)
             if mlmag:
                 mlmag = pretty_num(mlmag)
                 self.add_quantity(
-                    SUPERNOVA.MAX_APP_MAG, mlmag, uniq_src, derived=True)
+                    self._KEYS.MAX_APP_MAG, mlmag, uniq_src, derived=True)
             if mlband:
                 self.add_quantity(
-                    SUPERNOVA.MAX_BAND, mlband, uniq_src, derived=True)
+                    self._KEYS.MAX_BAND, mlband, uniq_src, derived=True)
 
-        if SUPERNOVA.MAX_VISUAL_APP_MAG not in self:
+        if self._KEYS.MAX_VISUAL_APP_MAG not in self:
             # Get the "visual" maximum
             mldt, mlmag, mlband, mlsource = self._get_max_light(visual=True)
             if mldt or mlmag or mlband:
@@ -757,20 +734,20 @@ class Supernova(Entry):
             if mldt:
                 max_date = make_date_string(mldt.year, mldt.month, mldt.day)
                 self.add_quantity(
-                    SUPERNOVA.MAX_VISUAL_DATE,
+                    self._KEYS.MAX_VISUAL_DATE,
                     max_date,
                     uniq_src,
                     derived=True)
             if mlmag:
                 mlmag = pretty_num(mlmag)
                 self.add_quantity(
-                    SUPERNOVA.MAX_VISUAL_APP_MAG,
+                    self._KEYS.MAX_VISUAL_APP_MAG,
                     mlmag,
                     uniq_src,
                     derived=True)
             if mlband:
                 self.add_quantity(
-                    SUPERNOVA.MAX_VISUAL_BAND, mlband, uniq_src, derived=True)
+                    self._KEYS.MAX_VISUAL_BAND, mlband, uniq_src, derived=True)
 
         if (self._KEYS.DISCOVER_DATE not in self or max([
                 len(x[QUANTITY.VALUE].split('/'))
@@ -818,11 +795,11 @@ class Supernova(Entry):
         bandless photometry, in such cases the bandless photometry is not
         providing additional information.
         """
-        if SUPERNOVA.PHOTOMETRY not in self:
+        if self._KEYS.PHOTOMETRY not in self:
             return
         mjds = [
             np.mean([float(x) for x in listify(
-                x[PHOTOMETRY.TIME])]) for x in self[SUPERNOVA.PHOTOMETRY]
+                x[PHOTOMETRY.TIME])]) for x in self[self._KEYS.PHOTOMETRY]
             if (PHOTOMETRY.TIME in x and x.get(PHOTOMETRY.U_TIME, '') == 'MJD'
                 and PHOTOMETRY.MAGNITUDE in x and PHOTOMETRY.BAND in x)
         ]
@@ -831,7 +808,7 @@ class Supernova(Entry):
         minmjd = min(mjds) - 1
         maxmjd = max(mjds) + 1
         newphotos = []
-        for photo in self[SUPERNOVA.PHOTOMETRY]:
+        for photo in self[self._KEYS.PHOTOMETRY]:
             ptime = np.mean([float(x) for x in listify(
                 photo[PHOTOMETRY.TIME])]) if PHOTOMETRY.TIME in photo else None
             if (PHOTOMETRY.MAGNITUDE in photo and
@@ -845,10 +822,12 @@ class Supernova(Entry):
                                    photo.get(PHOTOMETRY.MAGNITUDE, 'N/A')))
                 continue
             newphotos.append(photo)
-        self[SUPERNOVA.PHOTOMETRY] = newphotos
+        self[self._KEYS.PHOTOMETRY] = newphotos
         return
 
-    def get_best_redshift(self, key=SUPERNOVA.REDSHIFT):
+    def get_best_redshift(self, key=None):
+        if key is None:
+            key = self._KEYS.REDSHIFT
         bestsig = -1
         bestkind = None
         for z in self[key]:
@@ -857,7 +836,7 @@ class Supernova(Entry):
                     z.kind_preference.index(x)
                     for x in listify(z.get(QUANTITY.KIND, []))
                 ])
-            except:
+            except Exception:
                 kind = None
             sig = get_sig_digits(z[QUANTITY.VALUE])
             if (sig > bestsig and ((kind is None and bestkind is None) or
@@ -897,9 +876,9 @@ class Supernova(Entry):
                 newname = alias
                 break
         # If not, name based on the 'discoverer' survey
-        if not newname and SUPERNOVA.DISCOVERER in self:
+        if not newname and self._KEYS.DISCOVERER in self:
             discoverer = ','.join(
-                [x['value'].upper() for x in self[SUPERNOVA.DISCOVERER]])
+                [x['value'].upper() for x in self[self._KEYS.DISCOVERER]])
             if 'ASAS' in discoverer:
                 for alias in aliases:
                     if 'ASASSN' in alias.upper():
@@ -1002,3 +981,19 @@ class Supernova(Entry):
                 if source_year > max_source_year:
                     max_source_year = source_year
         return -max_source_year
+
+
+SUPERNOVA = Supernova._KEYCHAIN
+Supernova._KEYS = SUPERNOVA
+
+SUPERNOVA.DISCOVER_DATE = SUPERNOVA.DISCOVERDATE
+
+SUPERNOVA.MAX_VISUAL_BAND = SUPERNOVA.MAXVISUALBAND
+SUPERNOVA.MAX_VISUAL_DATE = SUPERNOVA.MAXVISUALDATE
+SUPERNOVA.MAX_VISUAL_APP_MAG = SUPERNOVA.MAXVISUALAPPMAG
+SUPERNOVA.MAX_VISUAL_ABS_MAG = SUPERNOVA.MAXVISUALABSMAG
+SUPERNOVA.MAX_DATE = SUPERNOVA.MAXDATE
+SUPERNOVA.MAX_BAND = SUPERNOVA.MAXBAND
+SUPERNOVA.MAX_APP_MAG = SUPERNOVA.MAXAPPMAG
+SUPERNOVA.MAX_ABS_MAG = SUPERNOVA.MAXABSMAG
+SUPERNOVA.CLAIMED_TYPE = SUPERNOVA.CLAIMEDTYPE

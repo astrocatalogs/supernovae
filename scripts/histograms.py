@@ -8,7 +8,7 @@ from bokeh.models import ColumnDataSource, HoverTool
 from bokeh.plotting import Figure, reset_output
 from bokeh.resources import CDN
 
-from astrocats.catalog.utils import is_number, tq
+from astrocats.utils import is_number, tq
 
 outdir = "astrocats/supernovae/output/"
 

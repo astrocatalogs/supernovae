@@ -9,8 +9,8 @@ from html import unescape
 
 from astropy.time import Time as astrotime
 
-from astrocats.catalog.source import SOURCE
-from astrocats.catalog.utils import is_number, pbar, pbar_strings, uniq_cdl
+from astrocats.structures.struct import SOURCE
+from astrocats.utils import is_number, pbar, pbar_strings, uniq_cdl
 
 from ..supernova import SUPERNOVA
 

@@ -5,10 +5,10 @@ import datetime
 import os
 from glob import glob
 
-from astrocats.catalog.photometry import PHOTOMETRY, set_pd_mag_from_counts
-from astrocats.catalog.quantity import QUANTITY
-from astrocats.catalog.spectrum import SPECTRUM
-from astrocats.catalog.utils import is_number, pbar, pbar_strings
+from astrocats.structures.struct import PHOTOMETRY, set_pd_mag_from_counts
+from astrocats.structures.struct import QUANTITY
+from astrocats.structures.struct import SPECTRUM
+from astrocats.utils import is_number, pbar, pbar_strings
 from astropy.time import Time as astrotime
 
 from decimal import Decimal

@@ -3,7 +3,7 @@ import json
 import os
 from collections import OrderedDict
 
-from astrocats.catalog.utils import is_number, pbar, round_sig, uniq_cdl
+from astrocats.utils import is_number, pbar, round_sig, uniq_cdl
 
 from ..supernova import SUPERNOVA
 

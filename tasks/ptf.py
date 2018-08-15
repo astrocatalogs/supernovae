@@ -2,7 +2,7 @@
 """
 import os
 
-from astrocats.catalog.utils import is_number, pbar
+from astrocats.utils import is_number, pbar
 from bs4 import BeautifulSoup
 
 from ..supernova import SUPERNOVA

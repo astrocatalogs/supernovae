@@ -7,9 +7,9 @@ from glob import glob
 from math import floor, isnan
 
 import numpy as np
-from astrocats.catalog.photometry import PHOTOMETRY, set_pd_mag_from_counts
-from astrocats.catalog.spectrum import SPECTRUM
-from astrocats.catalog.utils import (get_sig_digits, is_number, jd_to_mjd,
+from astrocats.structures.struct import PHOTOMETRY, set_pd_mag_from_counts
+from astrocats.structures.struct import SPECTRUM
+from astrocats.utils import (get_sig_digits, is_number, jd_to_mjd,
                                      pbar, pbar_strings, pretty_num, rep_chars)
 from astropy.io.ascii import read
 from astropy.time import Time as astrotime

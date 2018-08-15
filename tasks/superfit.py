@@ -4,7 +4,7 @@ import os
 import re
 from glob import glob
 
-from astrocats.catalog.utils import pbar
+from astrocats.utils import pbar
 from astropy.time import Time as astrotime
 
 from decimal import Decimal

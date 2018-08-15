@@ -10,7 +10,7 @@ from bokeh.models import ColumnDataSource, HoverTool
 from bokeh.plotting import Figure, reset_output
 from bokeh.resources import CDN
 
-from astrocats.catalog.utils import bandaliasf, bandcolorf, tprint, tq
+from astrocats.utils import bandaliasf, bandcolorf, tprint, tq
 from astrocats.supernovae.scripts.events import get_event_text
 from astrocats.supernovae.scripts.repos import repo_file_list
 

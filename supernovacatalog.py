@@ -1,14 +1,14 @@
 """Supernovae specific catalog class."""
 import codecs
 import json
-import os
 from collections import OrderedDict
 from datetime import datetime
-from subprocess import check_output
 
-from astrocats.catalog.catalog import Catalog
-from astrocats.catalog.quantity import QUANTITY
-from astrocats.catalog.utils import read_json_arr, read_json_dict
+from astrocats.structures.catalog import Catalog
+from astrocats.structures.struct import QUANTITY
+from astrocats.utils import read_json_arr, read_json_dict
+
+from supernovae import PATHS as _PATHS
 
 from .supernova import SUPERNOVA, Supernova
 from .utils import name_clean
@@ -17,56 +17,12 @@ from .utils import name_clean
 class SupernovaCatalog(Catalog):
     """Catalog class for `Supernova` objects."""
 
-    class PATHS(Catalog.PATHS):
-        """Paths to catalog inputs/outputs."""
-
-        PATH_BASE = os.path.abspath(os.path.dirname(__file__))
-
-        def __init__(self, catalog):
-            """Initialize paths."""
-            super(SupernovaCatalog.PATHS, self).__init__(catalog)
-            # auxiliary datafiles
-            self.TYPE_SYNONYMS = os.path.join(
-                self.PATH_INPUT, 'type-synonyms.json')
-            self.SOURCE_SYNONYMS = os.path.join(
-                self.PATH_INPUT, 'source-synonyms.json')
-            self.URL_REDIRECTS = os.path.join(
-                self.PATH_INPUT, 'url-redirects.json')
-            self.NON_SNE_TYPES = os.path.join(
-                self.PATH_INPUT, 'non-sne-types.json')
-            self.NON_SNE_PREFIXES = os.path.join(
-                self.PATH_INPUT, 'non-sne-prefixes.json')
-            self.BIBERRORS = os.path.join(self.PATH_INPUT, 'biberrors.json')
-            self.ATELS = os.path.join(self.PATH_INPUT, 'atels.json')
-            self.CBETS = os.path.join(self.PATH_INPUT, 'cbets.json')
-            self.IAUCS = os.path.join(self.PATH_INPUT, 'iaucs.json')
-            # cached datafiles
-            self.BIBAUTHORS = os.path.join(
-                self.PATH_OUTPUT, 'cache', 'bibauthors.json')
-            self.EXTINCT = os.path.join(
-                self.PATH_OUTPUT, 'cache', 'extinctions.json')
-
-        def get_repo_years(self):
-            """Return an array of years based upon output repositories."""
-            repo_folders = self.get_repo_output_folders(bones=False)
-            repo_years = [int(repo_folders[x][-4:])
-                          for x in range(len(repo_folders))]
-            repo_years[0] -= 1
-            return repo_years
-
-    class SCHEMA(object):
-        """Define the HASH/URL associated with the present schema."""
-
-        HASH = (check_output(['git', '-C', 'astrocats/supernovae',
-                              'log', '-n', '1', '--format="%h"',
-                              '--', 'SCHEMA.md'])
-                .decode('ascii').strip().strip('"').strip())
-        URL = ('https://github.com/astrocatalogs/supernovae/blob/' + HASH +
-               '/SCHEMA.md')
+    MODULE_NAME = "supernovae"
+    PATHS = _PATHS
 
     def __init__(self, args, log):
         """Initialize catalog."""
-        # Initialize super `astrocats.catalog.catalog.Catalog` object
+        # Initialize super `astrocats.structures.catalog.Catalog` object
         super(SupernovaCatalog, self).__init__(args, log)
         self.proto = Supernova
         self._load_aux_data()
@@ -78,7 +34,8 @@ class SupernovaCatalog(Catalog):
         An entry would be buried if it does not belong to the class of object
         associated with the given catalog.
         """
-        (bury_entry, save_entry) = super(SupernovaCatalog, self).should_bury(name)
+        (bury_entry, save_entry) = super(
+            SupernovaCatalog, self).should_bury(name)
 
         ct_val = None
         if name.startswith(tuple(self.nonsneprefixes_dict)):
@@ -134,7 +91,7 @@ class SupernovaCatalog(Catalog):
         """Load auxiliary dictionaries for use in this catalog."""
         # Create/Load auxiliary dictionaries
         self.nedd_dict = OrderedDict()
-        self.bibauthor_dict = read_json_dict(self.PATHS.BIBAUTHORS)
+        self.bibauthor_dict = read_json_dict(self.PATHS.AUTHORS_FILE)
         self.biberror_dict = read_json_dict(self.PATHS.BIBERRORS)
         self.extinctions_dict = read_json_dict(self.PATHS.EXTINCT)
         self.iaucs_dict = read_json_dict(self.PATHS.IAUCS)
@@ -153,7 +110,7 @@ class SupernovaCatalog(Catalog):
         """Save caches to JSON files."""
         jsonstring = json.dumps(self.bibauthor_dict, indent='\t',
                                 separators=(',', ':'), ensure_ascii=False)
-        with codecs.open(self.PATHS.BIBAUTHORS, 'w', encoding='utf8') as f:
+        with codecs.open(self.PATHS.AUTHORS_FILE, 'w', encoding='utf8') as f:
             f.write(jsonstring)
         jsonstring = json.dumps(self.extinctions_dict, indent='\t',
                                 separators=(',', ':'), ensure_ascii=False)

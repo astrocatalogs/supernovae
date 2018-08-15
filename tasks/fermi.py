@@ -3,7 +3,7 @@
 import csv
 import os
 
-from astrocats.catalog.utils import pbar
+from astrocats.utils import pbar
 
 from ..supernova import SUPERNOVA
 

@@ -8,9 +8,9 @@ from datetime import datetime
 from decimal import Decimal
 
 import numpy as np
-from astrocats.catalog.quantity import QUANTITY
-from astrocats.catalog.spectrum import SPECTRUM
-from astrocats.catalog.utils import pbar
+from astrocats.structures.struct import QUANTITY
+from astrocats.structures.struct import SPECTRUM
+from astrocats.utils import pbar
 from astropy import units as un
 from astropy.coordinates import SkyCoord as coord
 from astropy.io import fits

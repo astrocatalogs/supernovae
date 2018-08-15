@@ -1,7 +1,7 @@
 import warnings
 from glob import glob
 
-from astrocats.catalog.utils import is_number
+from astrocats.utils import is_number
 
 with open('astrocats/supernovae/input/rep-folders.txt', 'r') as f:
     repofolders = f.read().splitlines()

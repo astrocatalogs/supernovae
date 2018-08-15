@@ -3,7 +3,7 @@ import csv
 import os
 import re
 
-from astrocats.catalog.utils import jd_to_mjd, pbar
+from astrocats.utils import jd_to_mjd, pbar
 
 from decimal import Decimal
 

@@ -4,7 +4,7 @@ import csv
 import os
 from glob import glob
 
-from astrocats.catalog.utils import jd_to_mjd, pbar, pretty_num, uniq_cdl
+from astrocats.utils import jd_to_mjd, pbar, pretty_num, uniq_cdl
 from astropy.time import Time as astrotime
 
 from decimal import Decimal

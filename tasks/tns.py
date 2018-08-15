@@ -10,9 +10,9 @@ from math import ceil
 
 import requests
 
-from astrocats.catalog.photometry import PHOTOMETRY
-from astrocats.catalog.spectrum import SPECTRUM
-from astrocats.catalog.utils import (is_integer, is_number, jd_to_mjd, pbar,
+from astrocats.structures.struct import PHOTOMETRY
+from astrocats.structures.struct import SPECTRUM
+from astrocats.utils import (is_integer, is_number, jd_to_mjd, pbar,
                                      pretty_num, sortOD)
 from decimal import Decimal
 

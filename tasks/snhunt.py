@@ -5,7 +5,7 @@ import re
 
 from bs4 import BeautifulSoup
 
-from astrocats.catalog.utils import pbar
+from astrocats.utils import pbar
 
 from ..supernova import SUPERNOVA
 

@@ -5,8 +5,8 @@ import warnings
 from decimal import Decimal
 from math import log10, pi, sqrt
 
-from astrocats.catalog.quantity import QUANTITY
-from astrocats.catalog.utils import (get_sig_digits, is_number, pbar,
+from astrocats.structures.struct import QUANTITY
+from astrocats.utils import (get_sig_digits, is_number, pbar,
                                      pretty_num, tprint, uniq_cdl)
 from astropy import units as un
 from astropy.coordinates import SkyCoord as coord

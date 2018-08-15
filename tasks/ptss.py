@@ -3,8 +3,8 @@ import json
 import os
 from datetime import datetime
 
-from astrocats.catalog.photometry import PHOTOMETRY
-from astrocats.catalog.utils import pbar
+from astrocats.structures.struct import PHOTOMETRY
+from astrocats.utils import pbar
 from astropy import units as un
 from astropy.coordinates import SkyCoord as coord
 from astropy.time import Time as astrotime

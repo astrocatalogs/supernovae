@@ -7,9 +7,9 @@ from copy import deepcopy
 from decimal import Decimal
 from glob import glob
 
-from astrocats.catalog.photometry import PHOTOMETRY
-from astrocats.catalog.spectrum import SPECTRUM
-from astrocats.catalog.utils import jd_to_mjd, pbar_strings
+from astrocats.structures.struct import PHOTOMETRY
+from astrocats.structures.struct import SPECTRUM
+from astrocats.utils import jd_to_mjd, pbar_strings
 from astropy.io import fits
 from astropy.time import Time as astrotime
 

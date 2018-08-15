@@ -4,8 +4,8 @@ import os
 import re
 from decimal import Decimal
 
-from astrocats.catalog.photometry import PHOTOMETRY
-from astrocats.catalog.utils import jd_to_mjd, pbar
+from astrocats.structures.struct import PHOTOMETRY
+from astrocats.utils import jd_to_mjd, pbar
 from astropy.io.ascii import read
 from bs4 import BeautifulSoup
 
