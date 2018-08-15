@@ -124,6 +124,7 @@ Other single SN datasets:
 * SN2012aw - http://adsabs.harvard.edu/abs/2014ApJ...787..139D (photometry)
 * SN2012dh - https://arxiv.org/pdf/1609.00241 (suggests photometry likely exists, but doesn't have any itself)
 * SN2012hs - http://adsabs.harvard.edu/abs/2012ATel.4667....1R (radio)
+* PTF12glz - https://arxiv.org/abs/1808.04232 (photometry)
 * iPTF13beo - https://academic.oup.com/mnras/article/443/1/671/1491979 (Photometry only in plot form)
 * SN2013cq - http://adsabs.harvard.edu/abs/2014A%26A...567A..29M (Photometry only in plot form)
 * SN2013cu - http://adsabs.harvard.edu/abs/2014Natur.509..471G (Photometry only in plot form)
@@ -175,6 +176,7 @@ Other single SN datasets:
 * SN2017egm - https://arxiv.org/abs/1708.00864 (additional photometry)
 * SN2017ein - https://arxiv.org/abs/1803.01050 (photometry)
 * SN2017ein - https://arxiv.org/abs/1806.11288 (photometry)
+* SN2017ens - https://arxiv.org/abs/1808.04382 (photometry)
 * SN2017hcc - https://arxiv.org/abs/1711.07938 (photometry/spectra, but only in plot form)
 * ATLAS17aeu - https://arxiv.org/abs/1807.03681 (photometry)
 * SNHunt151 - https://arxiv.org/abs/1801.03040 (photometry)
@@ -183,7 +185,6 @@ Other single SN datasets:
 * SN2018bsz - https://arxiv.org/abs/1806.10609 (photometry)
 * W0948+0318 - https://arxiv.org/abs/1807.07985 (IR photometry)
 * ASASSN-18bt - https://arxiv.org/abs/1807.11526 (photometry in plot form only)
-* PTF12glz - https://arxiv.org/abs/1808.04232 (photometry)
 
 Spectra to recover that were donated to SuSpect (bad wavelength solutions, etc):
 * 2000E_20000130_3274_7356_00.dat
