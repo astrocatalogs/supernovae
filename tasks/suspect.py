@@ -13,7 +13,7 @@ from astropy.time import Time as astrotime
 from bs4 import BeautifulSoup
 
 from astrocats.utils import (get_sig_digits, is_number, jd_to_mjd,
-                                     pbar, pbar_strings, pretty_num, uniq_cdl)
+                                     pbar, pretty_num, uniq_cdl)
 from decimal import Decimal
 
 from ..supernova import SUPERNOVA
@@ -34,7 +34,7 @@ def do_suspect_photo(catalog):
             glob(
                 os.path.join(catalog.get_current_task_repo(),
                              'SUSPECT/*.html'))))
-    for datafile in pbar_strings(file_names, task_str):
+    for datafile in pbar(file_names, task_str, sort=True):
         basename = os.path.basename(datafile)
         basesplit = basename.split('-')
         oldname = basesplit[1]

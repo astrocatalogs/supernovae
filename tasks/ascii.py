@@ -13,7 +13,7 @@ from glob import glob
 
 from astrocats.structures.struct import PHOTOMETRY, set_pd_mag_from_counts
 from astrocats.utils import (is_number, jd_to_mjd, make_date_string,
-                                     pbar, pbar_strings, round_sig)
+                                     pbar, round_sig)
 from astropy import units as u
 from astropy.coordinates import SkyCoord as coord
 from astropy.io.ascii import read
@@ -1321,7 +1321,7 @@ def do_ascii(catalog):
         glob(
             os.path.join(catalog.get_current_task_repo(),
                          'SNII_anderson2014/*.dat')))
-    for datafile in pbar_strings(file_names, task_str):
+    for datafile in pbar(file_names, task_str, sort=True):
         basename = os.path.basename(datafile)
         if not is_number(basename[:2]):
             continue

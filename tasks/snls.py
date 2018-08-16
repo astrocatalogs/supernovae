@@ -9,7 +9,7 @@ from astroquery.vizier import Vizier
 
 from astrocats.structures.struct import PHOTOMETRY, set_pd_mag_from_counts
 from astrocats.structures.struct import SPECTRUM
-from astrocats.utils import (get_sig_digits, pbar, pbar_strings,
+from astrocats.utils import (get_sig_digits, pbar,
                                      pretty_num)
 
 from ..supernova import SUPERNOVA
@@ -71,7 +71,7 @@ def do_snls_spectra(catalog):
 
     oldname = ''
     file_names = glob(os.path.join(catalog.get_current_task_repo(), 'SNLS/*'))
-    for fi, fname in enumerate(pbar_strings(file_names, task_str)):
+    for fi, fname in enumerate(pbar(file_names, task_str), sort=True):
         filename = os.path.basename(fname)
         fileparts = filename.split('_')
         name = 'SNLS-' + fileparts[1]

@@ -10,7 +10,7 @@ from html import unescape
 from astropy.time import Time as astrotime
 
 from astrocats.structures.struct import SOURCE
-from astrocats.utils import is_number, pbar, pbar_strings, uniq_cdl
+from astrocats.utils import is_number, pbar, uniq_cdl
 
 from ..supernova import SUPERNOVA
 
@@ -49,7 +49,7 @@ def do_wiserep_spectra(catalog):
                              '10.1093/mnras/stt1839': '2013MNRAS.436.3614S'}
 
     file_names = list(glob(os.path.join(catalog.get_current_task_repo(), '*')))
-    for folder in pbar_strings(file_names, task_str):
+    for folder in pbar(file_names, task_str, sort=True):
         if '.txt' in folder or '.json' in folder:
             continue
         name = os.path.basename(folder).strip()

@@ -8,7 +8,7 @@ from glob import glob
 from astrocats.structures.struct import PHOTOMETRY, set_pd_mag_from_counts
 from astrocats.structures.struct import QUANTITY
 from astrocats.structures.struct import SPECTRUM
-from astrocats.utils import is_number, pbar, pbar_strings
+from astrocats.utils import is_number, pbar
 from astropy.time import Time as astrotime
 
 from decimal import Decimal
@@ -132,7 +132,7 @@ def do_essence_spectra(catalog):
     file_names = glob(
         os.path.join(catalog.get_current_task_repo(), 'ESSENCE', '*'))
     oldname = ''
-    for fi, fname in enumerate(pbar_strings(file_names, task_str)):
+    for fi, fname in enumerate(pbar(file_names, task_str), sort=True):
         filename = os.path.basename(fname)
         fileparts = filename.split('_')
         name = 'ESSENCE ' + fileparts[0]

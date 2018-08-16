@@ -10,7 +10,7 @@ import numpy as np
 from astrocats.structures.struct import PHOTOMETRY, set_pd_mag_from_counts
 from astrocats.structures.struct import SPECTRUM
 from astrocats.utils import (get_sig_digits, is_number, jd_to_mjd,
-                                     pbar, pbar_strings, pretty_num, rep_chars)
+                                     pbar, pretty_num, rep_chars)
 from astropy.io.ascii import read
 from astropy.time import Time as astrotime
 
@@ -230,7 +230,7 @@ def do_donated_photo(catalog):
     file_names = glob(
         os.path.join(catalog.get_current_task_repo(), 'Donations',
                      'Nugent-01-09-17', '*.dat'))
-    for datafile in pbar_strings(file_names, task_str + ': Nugent-01-09-17'):
+    for datafile in pbar(file_names, task_str + ': Nugent-01-09-17', sort=True):
         inpname = os.path.basename(datafile).split('.')[0]
         (name, source) = catalog.new_entry(
             inpname, bibcode='2006ApJ...645..841N')
@@ -261,7 +261,7 @@ def do_donated_photo(catalog):
     file_names = glob(
         os.path.join(catalog.get_current_task_repo(), 'Donations',
                      'Inserra-09-04-16', '*.txt'))
-    for datafile in pbar_strings(file_names, task_str + ': Inserra-09-04-16'):
+    for datafile in pbar(file_names, task_str + ': Inserra-09-04-16', sort=True):
         inpname = os.path.basename(datafile).split('.')[0]
         (name, source) = catalog.new_entry(
             inpname, bibcode='2013ApJ...770..128I')
@@ -314,7 +314,7 @@ def do_donated_photo(catalog):
     file_names = glob(
         os.path.join(catalog.get_current_task_repo(), 'Donations',
                      'Nicholl-04-01-16/*.txt'))
-    for datafile in pbar_strings(file_names, task_str + ': Nicholl-04-01-16'):
+    for datafile in pbar(file_names, task_str + ': Nicholl-04-01-16', sort=True):
         inpname = os.path.basename(datafile).split('_')[0]
         isk = inpname in kcorrected
         name = catalog.add_entry(inpname)

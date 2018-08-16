@@ -5,7 +5,7 @@ from glob import glob
 from math import floor
 
 from astrocats.structures.struct import PHOTOMETRY
-from astrocats.utils import (is_number, jd_to_mjd, pbar, pbar_strings,
+from astrocats.utils import (is_number, jd_to_mjd, pbar,
                                      uniq_cdl)
 from astropy.time import Time as astrotime
 
@@ -26,7 +26,7 @@ def do_cfa_photo(catalog):
     task_str = catalog.get_current_task_str()
     file_names = glob(
         os.path.join(catalog.get_current_task_repo(), 'cfa-input/*.dat'))
-    for fname in pbar_strings(file_names, task_str):
+    for fname in pbar(file_names, task_str, sort=True):
         f = open(fname, 'r')
         tsvin = csv.reader(f, delimiter=' ', skipinitialspace=True)
         csv_data = []
@@ -181,7 +181,7 @@ def do_cfa_spectra(catalog):
     oldname = ''
     file_names = next(
         os.walk(os.path.join(catalog.get_current_task_repo(), 'CfA_SNII')))[1]
-    for ni, name in enumerate(pbar_strings(file_names, task_str)):
+    for ni, name in enumerate(pbar(file_names, task_str), sort=True):
         fullpath = os.path.join(catalog.get_current_task_repo(),
                                 'CfA_SNII/') + name
         origname = name
@@ -251,7 +251,7 @@ def do_cfa_spectra(catalog):
     oldname = ''
     file_names = next(
         os.walk(os.path.join(catalog.get_current_task_repo(), 'CfA_SNIa')))[1]
-    for ni, name in enumerate(pbar_strings(file_names, task_str)):
+    for ni, name in enumerate(pbar(file_names, task_str), sort=True):
         fullpath = os.path.join(catalog.get_current_task_repo(),
                                 'CfA_SNIa/') + name
         origname = name
@@ -385,7 +385,7 @@ def do_cfa_spectra(catalog):
     oldname = ''
     file_names = next(
         os.walk(os.path.join(catalog.get_current_task_repo(), 'CfA_Extra')))[1]
-    for ni, name in enumerate(pbar_strings(file_names, task_str)):
+    for ni, name in enumerate(pbar(file_names, task_str), sort=True):
         fullpath = os.path.join(catalog.get_current_task_repo(),
                                 'CfA_Extra/') + name
         if name.startswith('sn') and is_number(name[2:6]):

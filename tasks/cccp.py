@@ -6,7 +6,7 @@ from glob import glob
 
 from bs4 import BeautifulSoup
 
-from astrocats.utils import pbar, pbar_strings
+from astrocats.utils import pbar
 from decimal import Decimal
 
 from ..supernova import SUPERNOVA
@@ -18,7 +18,7 @@ def do_cccp(catalog):
     file_names = list(
         glob(os.path.join(catalog.get_current_task_repo(),
                           'CCCP/apj407397*.txt')))
-    for datafile in pbar_strings(file_names, task_str + ': apj407397...'):
+    for datafile in pbar(file_names, task_str + ': apj407397...', sort=True):
         with open(datafile, 'r') as ff:
             tsvin = csv.reader(ff, delimiter='\t', skipinitialspace=True)
             for rr, row in enumerate(tsvin):

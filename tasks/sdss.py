@@ -9,7 +9,7 @@ from astropy.time import Time as astrotime
 
 from astrocats.structures.struct import PHOTOMETRY
 from astrocats.structures.struct import QUANTITY
-from astrocats.utils import make_date_string, pbar, pbar_strings
+from astrocats.utils import make_date_string, pbar
 from decimal import Decimal
 
 from ..supernova import SUPERNOVA
@@ -132,7 +132,7 @@ def do_sdss_photo(catalog):
                           os.path.join(catalog.get_current_task_repo(),
                                        'SDSS/SMP_Data/*.dat'))))
     skipphoto = ['SDSS-II SN 15557']
-    for fi, fname in enumerate(pbar_strings(file_names, task_str)):
+    for fi, fname in enumerate(pbar(file_names, task_str), sort=True):
         tsvin = csv.reader(
             open(fname, 'r'), delimiter=' ', skipinitialspace=True)
         basename = os.path.basename(fname)

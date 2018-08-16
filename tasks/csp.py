@@ -5,7 +5,7 @@ from decimal import Decimal
 from glob import glob
 
 from astrocats.structures.struct import SPECTRUM
-from astrocats.utils import is_number, jd_to_mjd, pbar, pbar_strings
+from astrocats.utils import is_number, jd_to_mjd, pbar
 from astropy.time import Time as astrotime
 
 from ..supernova import SUPERNOVA
@@ -18,7 +18,7 @@ def do_csp_photo(catalog):
     file_names = glob(
         os.path.join(catalog.get_current_task_repo(), 'CSP/*.dat'))
     task_str = catalog.get_current_task_str()
-    for fname in pbar_strings(file_names, task_str):
+    for fname in pbar(file_names, task_str, sort=True):
         tsvin = csv.reader(open(fname, 'r'), delimiter='\t',
                            skipinitialspace=True)
         eventname = os.path.basename(os.path.splitext(fname)[0])
@@ -72,7 +72,7 @@ def do_csp_spectra(catalog):
     oldname = ''
     task_str = catalog.get_current_task_str()
     file_names = glob(os.path.join(catalog.get_current_task_repo(), 'CSP/*'))
-    for fi, fname in enumerate(pbar_strings(file_names, task_str)):
+    for fi, fname in enumerate(pbar(file_names, task_str), sort=True):
         filename = os.path.basename(fname)
         sfile = filename.split('.')
         if sfile[1] == 'txt':

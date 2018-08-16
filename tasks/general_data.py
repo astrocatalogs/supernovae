@@ -9,7 +9,7 @@ from glob import glob
 
 from astrocats.structures.struct import PHOTOMETRY
 from astrocats.structures.struct import SPECTRUM
-from astrocats.utils import jd_to_mjd, pbar_strings
+from astrocats import utils
 from astropy.io import fits
 from astropy.time import Time as astrotime
 
@@ -19,7 +19,7 @@ from ..supernova import SUPERNOVA, Supernova
 def do_external_radio(catalog):
     task_str = catalog.get_current_task_str()
     path_pattern = os.path.join(catalog.get_current_task_repo(), '*.txt')
-    for datafile in pbar_strings(glob(path_pattern), task_str):
+    for datafile in utils.pbar(glob(path_pattern), task_str, sort=True):
         oldname = os.path.basename(datafile).split('.')[0]
         name = catalog.add_entry(oldname)
         radiosourcedict = OrderedDict()
@@ -66,7 +66,7 @@ def do_external_xray(catalog):
     """Import supernova X-ray data."""
     task_str = catalog.get_current_task_str()
     path_pattern = os.path.join(catalog.get_current_task_repo(), '*.txt')
-    for datafile in pbar_strings(glob(path_pattern), task_str):
+    for datafile in utils.pbar(glob(path_pattern), task_str, sort=True):
         oldname = os.path.basename(datafile).split('.')[0]
         name = catalog.add_entry(oldname)
         with open(datafile, 'r') as ff:
@@ -107,7 +107,7 @@ def do_external_fits_spectra(catalog):
         metadict = json.loads(f.read())
 
     fureps = {'erg/cm2/s/A': 'erg/s/cm^2/Angstrom'}
-    task_str = catalog.get_current_task_str()
+    # task_str = catalog.get_current_task_str()
     path_pattern = os.path.join(catalog.get_current_task_repo(), '*.fits')
     files = glob(path_pattern)
     for datafile in files:
@@ -144,7 +144,7 @@ def do_external_fits_spectra(catalog):
         #     print(key, hdulist[0].header[key])
         if hdulist[0].header['SIMPLE']:
             if 'JD' in hdrkeys:
-                mjd = str(jd_to_mjd(Decimal(str(hdulist[0].header['JD']))))
+                mjd = str(utils.jd_to_mjd(Decimal(str(hdulist[0].header['JD']))))
             elif 'MJD' in hdrkeys:
                 mjd = str(hdulist[0].header['MJD'])
             elif 'DATE-OBS' in hdrkeys:
@@ -218,7 +218,7 @@ def do_internal(catalog):
     files = glob(path_pattern)
     catalog.log.debug("found {} files matching '{}'".format(
         len(files), path_pattern))
-    for datafile in pbar_strings(files, task_str):
+    for datafile in utils.pbar(files, task_str, sort=True):
         new_entry = Supernova.init_from_file(
             catalog, path=datafile, clean=True, merge=True)
 
