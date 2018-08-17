@@ -13,6 +13,8 @@ from six import string_types
 from .constants import MAX_VISUAL_BANDS
 from .utils import frame_priority, host_clean, radec_clean
 
+import pyastroschema as pas
+
 
 @struct.set_struct_schema("astroschema_entry", extensions=["astrocats_entry"])
 class Supernova(Entry):
@@ -155,15 +157,9 @@ class Supernova(Entry):
 
         return True
 
-    def add_quantity(self,
-                     quantities,
-                     value,
-                     source,
-                     forcereplacebetter=False,
-                     **kwargs):
+    def add_quantity(self, quantities, value, source, forcereplacebetter=False, **kwargs):
         """Add `Quantity` to `Supernova`."""
-        success = super(Supernova, self).add_quantity(
-            quantities, value, source, **kwargs)
+        success = super(Supernova, self).add_quantity(quantities, value, source, **kwargs)
 
         if not success:
             return
@@ -171,8 +167,7 @@ class Supernova(Entry):
         for quantity in utils.listify(quantities):
             my_quantity_list = self.get(quantity, [])
 
-            if ((forcereplacebetter or quantity.replace_better) and
-                    len(my_quantity_list) > 1):
+            if ((forcereplacebetter or quantity.replace_better) and len(my_quantity_list) > 1):
 
                 # The quantity that was just added should be last in the list
                 added_quantity = my_quantity_list.pop()
@@ -196,9 +191,10 @@ class Supernova(Entry):
                                 continue
                         newquantities.append(ct)
                 else:
-                    if type(quantity) != Key:
+                    if type(quantity) != pas.keys.Key:
                         isworse = False
-                    elif quantity.type == KEY_TYPES.NUMERIC:
+                    # elif quantity.type == KEY_TYPES.NUMERIC:
+                    elif quantity.format == pas.KEY_FORMATS.NUMERIC:
                         newsig = utils.get_sig_digits(added_quantity[QUANTITY.VALUE])
                         for ct in my_quantity_list:
                             addct = False
@@ -248,7 +244,8 @@ class Supernova(Entry):
                                         isworse = False
                             if addct:
                                 newquantities.append(ct)
-                    elif quantity.type == KEY_TYPES.STRING:
+                    # elif quantity.type == KEY_TYPES.STRING:
+                    elif quantity.format == pas.KEY_FORMATS.STRING:
                         for ct in my_quantity_list:
                             addct = False
                             if (len(quantity.kind_preference) > 0 and not set(
