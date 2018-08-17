@@ -20,6 +20,8 @@ class SupernovaCatalog(Catalog):
     MODULE_NAME = "supernovae"
     PATHS = _PATHS
 
+    RAISE_ERROR_ON_ADDITION_FAILURE = False
+
     def __init__(self, args, log):
         """Initialize catalog."""
         # Initialize super `astrocats.structures.catalog.Catalog` object
