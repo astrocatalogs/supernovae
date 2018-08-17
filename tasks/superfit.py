@@ -33,10 +33,9 @@ def do_superfit_spectra(catalog):
 
             if 'theory' in name:
                 continue
-            if catalog.entry_exists(name):
-                prefname = catalog.get_preferred_name(name)
-                if ('spectra' in catalog.entries[prefname] and
-                        lastname != prefname):
+            prefname = catalog.get_name_for_entry_or_alias(name)
+            if prefname is not None::
+                if ('spectra' in catalog.entries[prefname] and lastname != prefname):
                     continue
             if oldname and name != oldname:
                 catalog.journal_entries()

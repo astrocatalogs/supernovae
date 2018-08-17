@@ -80,7 +80,7 @@ def do_csp_spectra(catalog):
         sfile = sfile[0]
         fileparts = sfile.split('_')
         name = 'SN20' + fileparts[0][2:]
-        name = catalog.get_preferred_name(name)
+        name = catalog.get_name_for_entry_or_alias(name)
         if oldname and name != oldname:
             catalog.journal_entries()
         oldname = name

@@ -213,23 +213,40 @@ def do_external_fits_spectra(catalog):
 
 def do_internal(catalog):
     """Load events from files in the 'internal' repository, and save them."""
+    log = catalog.log
     task_str = catalog.get_current_task_str()
     path_pattern = os.path.join(catalog.get_current_task_repo(), '*.json')
     files = glob(path_pattern)
-    catalog.log.debug("found {} files matching '{}'".format(
-        len(files), path_pattern))
+    catalog.log.debug("found {} files matching '{}'".format(len(files), path_pattern))
     for datafile in utils.pbar(files, task_str, sort=True):
-        new_entry = Supernova.init_from_file(
-            catalog, path=datafile, clean=True, merge=True)
+        new_entry = Supernova.init_from_file(catalog, path=datafile, clean=True, merge=True)
 
         name = new_entry[SUPERNOVA.NAME]
         old_name = None
 
         for alias in new_entry.get_aliases():
-            if catalog.entry_exists(alias):
-                old_name = catalog.get_preferred_name(alias)
-                if catalog.entries[old_name]._stub:
-                    catalog.add_entry(old_name)
+            old_name = catalog.get_name_for_entry_or_alias(alias)
+            if old_name is not None:
+                try:
+                    if catalog.entries[old_name]._stub:
+                        catalog.add_entry(old_name)
+                except KeyError as err:
+                    log.error("Failed in datafile '{}'".format(datafile))
+                    log.error("`new_entry` = '{}'".format(new_entry))
+                    log.error("`name` = '{}'".format(name))
+                    log.error("`alias` = '{}'".format(alias))
+                    log.error("`old_name` = '{}'".format(old_name))
+                    try:
+                        print(catalog.entries[alias])
+                    except KeyError:
+                        print("COULD NOT LOAD `entries[{}]`".format(alias))
+                        try:
+                            print(catalog.entries[name])
+                        except KeyError:
+                            print("COULD NOT LOAD `entries[{}]`".format(name))
+
+                    raise
+
                 break
 
         if old_name:

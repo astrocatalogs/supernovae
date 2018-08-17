@@ -148,7 +148,7 @@ def do_suspect_spectra(catalog):
             name = eventfolder
             if is_number(name[:4]):
                 name = 'SN' + name
-            name = catalog.get_preferred_name(name)
+            name = catalog.get_name_for_entry_or_alias(name)
             if oldname and name != oldname:
                 catalog.journal_entries()
             oldname = name

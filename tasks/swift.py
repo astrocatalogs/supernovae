@@ -46,7 +46,7 @@ def do_swift(catalog):
                 radeg = record[1].strip()
                 decdeg = record[2].strip()
 
-                if not catalog.entry_exists(oldname):
+                if catalog.get_name_for_entry_or_alias(oldname) is None:
                     continue
                 if float(radeg) == 0.0 and float(decdeg) == 0.0:
                     continue

@@ -42,7 +42,7 @@ def do_cpcs(catalog):
             if name.upper().startswith('PS1'):
                 name = 'PS1' + name[3:].lower()
             # Only add events that are classified as SN.
-            if not catalog.entry_exists(name):
+            if catalog.get_name_for_entry_or_alias(name) is None:
                 continue
             oldname = name
             name = catalog.add_entry(name)

@@ -38,7 +38,7 @@ def do_snf_spectra(catalog):
         catalog.get_current_task_repo(), 'SNFactory')))[1]
     for eventfolder in pbar(eventfolders, task_str):
         oname = eventfolder
-        name = catalog.get_preferred_name(oname)
+        name = catalog.get_name_for_entry_or_alias(oname)
         if oldname and name != oldname:
             catalog.journal_entries()
         oldname = name

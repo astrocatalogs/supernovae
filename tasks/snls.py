@@ -75,7 +75,7 @@ def do_snls_spectra(catalog):
         filename = os.path.basename(fname)
         fileparts = filename.split('_')
         name = 'SNLS-' + fileparts[1]
-        name = catalog.get_preferred_name(name)
+        name = catalog.get_name_for_entry_or_alias(name)
         if oldname and name != oldname:
             catalog.journal_entries()
         oldname = name
