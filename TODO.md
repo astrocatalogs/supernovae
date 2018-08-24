@@ -124,7 +124,7 @@ Other single SN datasets:
 * SN2012aw - http://adsabs.harvard.edu/abs/2014ApJ...787..139D (photometry)
 * SN2012dh - https://arxiv.org/pdf/1609.00241 (suggests photometry likely exists, but doesn't have any itself)
 * SN2012hs - http://adsabs.harvard.edu/abs/2012ATel.4667....1R (radio)
-* PTF12glz - http://adsabs.harvard.edu/abs/2018arXiv180804232S (photometry)
+* PTF12glz - http://adsabs.harvard.edu/abs/2018arXiv180804232S (photometry not available until published)
 * iPTF13beo - https://academic.oup.com/mnras/article/443/1/671/1491979 (Photometry only in plot form)
 * SN2013cq - http://adsabs.harvard.edu/abs/2014A%26A...567A..29M (Photometry only in plot form)
 * SN2013cu - http://adsabs.harvard.edu/abs/2014Natur.509..471G (Photometry only in plot form)
