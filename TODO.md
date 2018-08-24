@@ -184,7 +184,7 @@ Other single SN datasets:
 * OGLE14-073 - https://arxiv.org/abs/1804.05791 (bolometric photometry)
 * PS17bdq - http://arxiv.org/abs/1805.00025v1 (metadata)
 * SN2018bsz - https://arxiv.org/abs/1806.10609 (photometry)
-* W0948+0318 - https://arxiv.org/abs/1807.07985 (IR photometry)
+* W0948+0318 - https://arxiv.org/abs/1807.07985 (IR photometry in plot form)
 * ASASSN-18bt - https://arxiv.org/abs/1807.11526 (photometry in plot form only)
 
 Spectra to recover that were donated to SuSpect (bad wavelength solutions, etc):
