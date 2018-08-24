@@ -177,7 +177,7 @@ Other single SN datasets:
 * SN2017ein - https://arxiv.org/abs/1803.01050 (photometry)
 * SN2017ein - https://arxiv.org/abs/1806.11288 (photometry)
 * SN2017ens - https://arxiv.org/abs/1808.04382 (photometry)
-* SN2017erp - https://arxiv.org/abs/1808.04729 (photometry)
+* SN2017erp - https://arxiv.org/abs/1808.04729 (photometry in plot form)
 * SN2017hcc - https://arxiv.org/abs/1711.07938 (photometry/spectra, but only in plot form)
 * ATLAS17aeu - https://arxiv.org/abs/1807.03681 (photometry)
 * SNHunt151 - https://arxiv.org/abs/1801.03040 (photometry)
