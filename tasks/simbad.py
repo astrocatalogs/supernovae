@@ -42,7 +42,7 @@ def do_simbad(catalog):
             break
 
     if not table:
-        catalog.log.warning('SIMBAD unable to load, probably offline.')
+        catalog.log.raise_error("SIMBAD unable to load, probably offline.")
 
     # 2000A&AS..143....9W
     for brow in pbar(table, task_str):
