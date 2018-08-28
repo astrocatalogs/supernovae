@@ -117,7 +117,7 @@ def do_external_fits_spectra(catalog):
         hdulist = fits.open(datafile)
         for oi, obj in enumerate(hdulist[0].header):
             if any(x in ['.', '/'] for x in obj):
-                del (hdulist[0].header[oi])
+                del hdulist[0].header[oi]
         hdulist[0].verify('silentfix')
         hdrkeys = list(hdulist[0].header.keys())
         # print(hdrkeys)
@@ -128,15 +128,12 @@ def do_external_fits_spectra(catalog):
         if not name:
             name = hdulist[0].header['OBJECT']
         if 'bibcode' in metadict[filename]:
-            name, source = catalog.new_entry(
-                name, bibcode=metadict[filename]['bibcode'])
+            name, source = catalog.new_entry(name, bibcode=metadict[filename]['bibcode'])
         elif 'donator' in metadict[filename]:
-            name, source = catalog.new_entry(
-                name, srcname=metadict[filename]['donator'])
+            name, source = catalog.new_entry(name, srcname=metadict[filename]['donator'])
         else:
             if 'OBSERVER' in hdrkeys:
-                name, source = catalog.new_entry(
-                    name, srcname=hdulist[0].header['OBSERVER'])
+                name, source = catalog.new_entry(name, srcname=hdulist[0].header['OBSERVER'])
             else:
                 name = catalog.add_entry(name)
                 source = catalog.entries[name].add_self_source()
@@ -151,8 +148,8 @@ def do_external_fits_spectra(catalog):
                 if 'T' in hdulist[0].header['DATE-OBS']:
                     dateobs = hdulist[0].header['DATE-OBS'].strip()
                 elif 'UTC-OBS' in hdrkeys:
-                    dateobs = hdulist[0].header['DATE-OBS'].strip(
-                    ) + 'T' + hdulist[0].header['UTC-OBS'].strip()
+                    dateobs = (hdulist[0].header['DATE-OBS'].strip() + 'T' +
+                               hdulist[0].header['UTC-OBS'].strip())
                 mjd = str(astrotime(dateobs, format='isot').mjd)
             else:
                 raise ValueError("Couldn't find JD/MJD for spectrum.")

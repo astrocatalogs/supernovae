@@ -18,10 +18,11 @@ def do_crts(catalog):
     folders = ['catalina', 'MLS', 'MLS', 'SSS']
     files = ['AllSN.html', 'AllSN.arch.html', 'CRTSII_SN.html', 'AllSN.html']
     for fi, fold in enumerate(pbar(folders, task_str)):
-        html = catalog.load_url(
-            'http://nesssi.cacr.caltech.edu/' + fold + '/' + files[fi],
-            os.path.join(catalog.get_current_task_repo(), 'CRTS', fold + '-' +
-                         files[fi]), archived_mode=('arch' in files[fi]))
+        url = 'http://nesssi.cacr.caltech.edu/' + fold + '/' + files[fi]
+        fname = fold + '-' + files[fi]
+        fpath = os.path.join(catalog.get_current_task_repo(), 'CRTS', fname)
+        arch_flag = ('arch' in files[fi])
+        html = catalog.load_url(url, fpath, archived_mode=arch_flag)
         html = html.replace('<ahref=', '<a href=')
         if not html:
             continue
@@ -50,10 +51,10 @@ def do_crts(catalog):
                     lclink = td.find('a')['onclick']
                     lclink = lclink.split("'")[1]
                 elif tdi == (10 if files[fi] == 'CRTSII_SN.html' else 13):
-                    aliases = re.sub('[()]', '', re.sub(
-                        '<[^<]+?>', '', td.contents[-1].strip()))
-                    aliases = [xx.strip('; ') for xx in list(
-                        filter(None, aliases.split(' ')))]
+                    aliases = td.contents[-1].strip()
+                    aliases = re.sub('[()]', '', re.sub('<[^<]+?>', '', aliases))
+                    aliases = aliases.split(' ')
+                    aliases = [xx.strip('; ') for xx in list(filter(None, aliases))]
 
             name = ''
             hostmag = ''
@@ -69,8 +70,7 @@ def do_crts(catalog):
                         ind = ai + 1
                         if aliases[ai + 1] in ['SDSS']:
                             ind = ai + 2
-                        elif aliases[ai + 1] in ['gal', 'obj', 'object',
-                                                 'source']:
+                        elif aliases[ai + 1] in ['gal', 'obj', 'object', 'source']:
                             ind = ai - 1
                         if '>' in aliases[ind]:
                             hostupper = True
@@ -92,14 +92,16 @@ def do_crts(catalog):
 
             if not name:
                 name = crtsname
+
             name, source = catalog.new_entry(
-                name, srcname='Catalina Sky Survey',
+                name,
+                srcname='Catalina Sky Survey',
                 bibcode='2009ApJ...696..870D',
                 url='http://nesssi.cacr.caltech.edu/catalina/AllSN.html')
+
             catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
             for alias in validaliases:
-                catalog.entries[name].add_quantity(
-                    SUPERNOVA.ALIAS, alias, source)
+                catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, alias, source)
             catalog.entries[name].add_quantity(
                 SUPERNOVA.RA, ra.strip(), source, u_value='floatdegrees')
             catalog.entries[name].add_quantity(
