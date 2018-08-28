@@ -6,7 +6,7 @@ from decimal import Decimal
 import numpy as np
 from astrocats import utils
 from astrocats.structures import struct
-from astrocats.structures.struct import PHOTOMETRY, QUANTITY, SOURCE, Entry
+from astrocats.structures.struct import PHOTOMETRY, QUANTITY, SOURCE
 from astropy.time import Time as astrotime
 from six import string_types
 
@@ -17,7 +17,8 @@ import pyastroschema as pas
 
 
 @struct.set_struct_schema("astroschema_entry", extensions=["astrocats_entry"])
-class Supernova(Entry):
+# class Supernova(struct.Entry):
+class Supernova(struct.Entry_Old_Adder):
     """Supernova `Entry` child class.
 
     NOTE: OrderedDict data is just the `name` values from the JSON file.
@@ -976,6 +977,16 @@ class Supernova(Entry):
                 if source_year > max_source_year:
                     max_source_year = source_year
         return -max_source_year
+
+    def num_models(self):
+        """Return the current number of models stored in this instance.
+
+        Returns
+        -------
+        len : int
+            The *integer* number of existing models.
+        """
+        return len(self.get(self._KEYS.MODELS, []))
 
 
 SUPERNOVA = Supernova._KEYCHAIN
