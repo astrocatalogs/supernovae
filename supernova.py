@@ -18,7 +18,7 @@ import pyastroschema as pas
 
 @struct.set_struct_schema("astroschema_entry", extensions=["astrocats_entry"])
 # class Supernova(struct.Entry):
-class Supernova(struct.Entry_Old_Adder):
+class Supernova(struct.Entry_New_Adder):
     """Supernova `Entry` child class.
 
     NOTE: OrderedDict data is just the `name` values from the JSON file.
@@ -34,10 +34,18 @@ class Supernova(struct.Entry_Old_Adder):
         super(Supernova, self).__init__(catalog, name, stub=stub)
         return
 
+    '''
     def _append_additional_tags(self, name, sources, quantity):
         """Append additional bits of data to an existing quantity when a newly
         added quantity is found to be a duplicate
         """
+
+        # NOTE: FIX: LZK: This should be put into a `Quantity` subclass in supernovae, that
+        # overrides the `merge_from` method of `astroschema.struct.Struct`.
+        # Requires a method of registering classes to each catalog... i.e. the SupernovaCatalog
+        # needs to know (or provide) the correct `Quantity` class to be used with it (in this case,
+        # one which overrides the `merge_from` method.
+
         svalue = quantity.get(QUANTITY.VALUE, '')
         serror = quantity.get(QUANTITY.E_VALUE, '')
         sprob = quantity.get(QUANTITY.PROB, '')
@@ -48,14 +56,44 @@ class Supernova(struct.Entry_Old_Adder):
                 if ct.get(QUANTITY.KIND, '') != skind:
                     return
                 for source in sources.split(','):
-                    if (source not in
-                            self[name][ii][QUANTITY.SOURCE].split(',')):
+                    if (source not in self[name][ii][QUANTITY.SOURCE].split(',')):
                         self[name][ii][QUANTITY.SOURCE] += ',' + source
                         if serror and QUANTITY.E_VALUE not in self[name][ii]:
                             self[name][ii][QUANTITY.E_VALUE] = serror
                         if sprob and QUANTITY.PROB not in self[name][ii]:
                             self[name][ii][QUANTITY.PROB] = sprob
                 return
+    '''
+
+    def _merge_quantities(self, dst, src):
+        """Append additional bits of data to an existing quantity when a newly
+        added quantity is found to be a duplicate
+        """
+
+        # NOTE: FIX: LZK: This should be put into a `Quantity` subclass in supernovae, that
+        # overrides the `merge_from` method of `astroschema.struct.Struct`.
+        # Requires a method of registering classes to each catalog... i.e. the SupernovaCatalog
+        # needs to know (or provide) the correct `Quantity` class to be used with it (in this case,
+        # one which overrides the `merge_from` method.
+
+        sources = src.get(QUANTITY.SOURCE, '')
+        svalue = src.get(QUANTITY.VALUE, '')
+        serror = src.get(QUANTITY.E_VALUE, '')
+        sprob = src.get(QUANTITY.PROB, '')
+        skind = src.get(QUANTITY.KIND, '')
+
+        if dst[QUANTITY.VALUE] == svalue and sources:
+            if dst.get(QUANTITY.KIND, '') != skind:
+                return
+            for source in sources.split(','):
+                if (source not in dst[QUANTITY.SOURCE].split(',')):
+                    dst[QUANTITY.SOURCE] += ',' + source
+                    if serror and QUANTITY.E_VALUE not in dst:
+                        dst[QUANTITY.E_VALUE] = serror
+                    if sprob and QUANTITY.PROB not in dst:
+                        dst[QUANTITY.PROB] = sprob
+
+        return
 
     def _clean_quantity(self, quantity):
         """Clean quantity value before it is added to entry."""
