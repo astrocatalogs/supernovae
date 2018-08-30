@@ -446,6 +446,7 @@ class Supernova(struct.Entry_New_Adder):
 
     def sanitize(self):
         super(Supernova, self).sanitize()
+        log = self._log
 
         # Calculate some columns based on imported data, sanitize some fields
         name = self[self._KEYS.NAME]
@@ -500,7 +501,7 @@ class Supernova(struct.Entry_New_Adder):
                         adsquery = (self.catalog.ADS_BIB_URL +
                                     urllib.parse.quote(bibcode) +
                                     '&data_type=Custom&format=%253m%20%25(y)')
-                        bibcodeauthor = ''
+                        bibcodeauthor = None
                         try:
                             response = urllib.request.urlopen(adsquery)
                             html = response.read().decode('utf-8')
@@ -510,13 +511,11 @@ class Supernova(struct.Entry_New_Adder):
                         except Exception:
                             pass
 
-                        if not bibcodeauthor:
-                            warnings.warn(
-                                "Bibcode didn't return authors, not converting"
-                                "this bibcode.")
-
-                        self.catalog.bibauthor_dict[bibcode] = unescape(
-                            bibcodeauthor).strip()
+                        if bibcodeauthor is None:
+                            log.warn(
+                                "Bibcode didn't return authors, not converting this bibcode.")
+                        else:
+                            self.catalog.bibauthor_dict[bibcode] = unescape(bibcodeauthor).strip()
 
             for source in self[self._KEYS.SOURCES]:
                 if (SOURCE.BIBCODE in source and
