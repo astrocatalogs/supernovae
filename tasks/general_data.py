@@ -29,34 +29,36 @@ def do_external_radio(catalog):
                 if line.startswith('(') and li <= len(radiosourcedict):
                     key = line.split()[0]
                     bibc = line.split()[-1]
-                    radiosourcedict[key] = catalog.entries[name].add_source(
-                        bibcode=bibc)
+                    radiosourcedict[key] = catalog.entries[name].add_source(bibcode=bibc)
                 elif li in [xx + len(radiosourcedict) for xx in range(3)]:
                     continue
                 else:
                     cols = list(filter(None, line.split()))
                     source = radiosourcedict[cols[6]]
-                    if float(cols[4]) == 0.0:
-                        eflux = ''
-                        upp = True
-                    else:
-                        eflux = cols[4]
-                        upp = False
-                    photodict = {
+                    photo = {
                         PHOTOMETRY.TIME: cols[0],
                         PHOTOMETRY.FREQUENCY: cols[2],
                         PHOTOMETRY.U_FREQUENCY: 'GHz',
                         PHOTOMETRY.FLUX_DENSITY: cols[3],
-                        PHOTOMETRY.E_FLUX_DENSITY: eflux,
                         PHOTOMETRY.U_FLUX_DENSITY: 'µJy',
-                        PHOTOMETRY.UPPER_LIMIT: upp,
                         PHOTOMETRY.U_TIME: 'MJD',
                         PHOTOMETRY.INSTRUMENT: cols[5],
                         PHOTOMETRY.SOURCE: source
                     }
-                    catalog.entries[name].add_photometry(**photodict)
-                    catalog.entries[name].add_quantity(SUPERNOVA.ALIAS,
-                                                       oldname, source)
+                    if float(cols[4]) == 0.0:
+                        eflux = None
+                        upp = True
+                    else:
+                        eflux = cols[4]
+                        upp = False
+
+                    if eflux is not None:
+                        photo[PHOTOMETRY.E_FLUX_DENSITY] = eflux
+
+                    photo[PHOTOMETRY.UPPER_LIMIT] = upp
+
+                    catalog.entries[name].add_photometry(**photo)
+                    catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, oldname, source)
 
     catalog.journal_entries()
     return
@@ -121,11 +123,11 @@ def do_external_fits_spectra(catalog):
         hdulist[0].verify('silentfix')
         hdrkeys = list(hdulist[0].header.keys())
         # print(hdrkeys)
-        name = ''
+        name = None
         if filename in metadict:
             if 'name' in metadict[filename]:
                 name = metadict[filename]['name']
-        if not name:
+        if name is None:
             name = hdulist[0].header['OBJECT']
         if 'bibcode' in metadict[filename]:
             name, source = catalog.new_entry(name, bibcode=metadict[filename]['bibcode'])

@@ -23,15 +23,15 @@ def do_asassn(catalog):
     bs = BeautifulSoup(html, 'html5lib')
     trs = bs.find('table').findAll('tr')
     for tri, tr in enumerate(pbar(trs, task_str)):
-        name = ''
-        ra = ''
-        dec = ''
-        redshift = ''
-        hostoff = ''
-        claimedtype = ''
-        host = ''
-        atellink = ''
-        typelink = ''
+        name = None
+        ra = None
+        dec = None
+        redshift = None
+        hostoff = None
+        claimedtype = None
+        host = None
+        atellink = None
+        typelink = None
         if tri == 0:
             continue
         tds = tr.findAll('td')
@@ -44,7 +44,7 @@ def do_asassn(catalog):
                 if atellink:
                     atellink = atellink['href']
                 else:
-                    atellink = ''
+                    atellink = None
             if tdi == 2:
                 discdate = td.text.replace('-', '/')
             if tdi == 3:
@@ -61,42 +61,41 @@ def do_asassn(catalog):
                 if typelink:
                     typelink = typelink['href']
                 else:
-                    typelink = ''
+                    typelink = None
             if tdi == 12:
                 host = td.text
 
-        sources = [catalog.entries[name].add_source(
-            url=asn_url, name='ASAS-SN Supernovae')]
+        sources = [catalog.entries[name].add_source(url=asn_url, name='ASAS-SN Supernovae')]
         typesources = sources[:]
-        if atellink:
-            sources.append(
-                (catalog.entries[name]
-                 .add_source(name='ATel ' +
-                             atellink.split('=')[-1], url=atellink)))
-        if typelink:
-            typesources.append(
-                (catalog.entries[name]
-                 .add_source(name='ATel ' +
-                             typelink.split('=')[-1], url=typelink)))
+        if atellink is not None:
+            src_name = 'ATel ' + atellink.split('=')[-1]
+            src = catalog.entries[name].add_source(name=src_name, url=atellink)
+            sources.append(src)
+        if typelink is not None:
+            src_name = 'ATel ' + typelink.split('=')[-1]
+            src = catalog.entries[name].add_source(name=src_name, url=typelink)
+            typesources.append(src)
+
         sources = ','.join(sources)
         typesources = ','.join(typesources)
         catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, sources)
-        catalog.entries[name].add_quantity(
-            SUPERNOVA.DISCOVER_DATE, discdate, sources)
-        catalog.entries[name].add_quantity(SUPERNOVA.RA, ra, sources,
-                                           u_value='floatdegrees')
-        catalog.entries[name].add_quantity(SUPERNOVA.DEC, dec, sources,
-                                           u_value='floatdegrees')
-        catalog.entries[name].add_quantity(
-            SUPERNOVA.REDSHIFT, redshift, sources)
-        catalog.entries[name].add_quantity(
-            SUPERNOVA.HOST_OFFSET_ANG, hostoff, sources, u_value='arcseconds')
-        for ct in claimedtype.split('/'):
-            if ct != 'Unk':
-                catalog.entries[name].add_quantity(SUPERNOVA.CLAIMED_TYPE, ct,
-                                                   typesources)
+        catalog.entries[name].add_quantity(SUPERNOVA.DISCOVER_DATE, discdate, sources)
+        if ra is not None:
+            catalog.entries[name].add_quantity(SUPERNOVA.RA, ra, sources, u_value='floatdegrees')
+        if dec is not None:
+            catalog.entries[name].add_quantity(SUPERNOVA.DEC, dec, sources, u_value='floatdegrees')
+        if redshift is not None:
+            catalog.entries[name].add_quantity(SUPERNOVA.REDSHIFT, redshift, sources)
+        if hostoff is not None:
+            catalog.entries[name].add_quantity(
+                SUPERNOVA.HOST_OFFSET_ANG, hostoff, sources, u_value='arcseconds')
+        if claimedtype is not None:
+            for ct in claimedtype.split('/'):
+                if ct != 'Unk':
+                    catalog.entries[name].add_quantity(SUPERNOVA.CLAIMED_TYPE, ct, typesources)
         if host != 'Uncatalogued':
             catalog.entries[name].add_quantity(SUPERNOVA.HOST, host, sources)
+
     catalog.journal_entries()
     return
 
@@ -122,15 +121,13 @@ def do_asas_atels(catalog):
             for match in matches:
                 if 'asas-sn.osu.edu/light_curve' in match[0]:
                     lcurl = match[0]
-                    objname = re.findall(
-                        r'\bASASSN-[0-9][0-9].*?\b', match[1])
+                    objname = re.findall(r'\bASASSN-[0-9][0-9].*?\b', match[1])
                     if len(objname):
                         objname = objname[0]
             if objname and lcurl:
                 name, source = catalog.new_entry(
                     objname, srcname='ASAS-SN Sky Patrol',
-                    bibcode='2017arXiv170607060K',
-                    url='https://asas-sn.osu.edu')
+                    bibcode='2017arXiv170607060K', url='https://asas-sn.osu.edu')
                 csv = catalog.load_url(lcurl + '.csv', os.path.join(
                     catalog.get_current_task_repo(), os.path.join(
                         'ASASSN', objname + '.csv')))
@@ -140,8 +137,7 @@ def do_asas_atels(catalog):
                     if float(mag.strip('>')) > 50.0:
                         continue
                     photodict = {
-                        PHOTOMETRY.TIME: str(jd_to_mjd(
-                            Decimal(str(row['HJD'])))),
+                        PHOTOMETRY.TIME: str(jd_to_mjd(Decimal(str(row['HJD'])))),
                         PHOTOMETRY.MAGNITUDE: mag.strip('>'),
                         PHOTOMETRY.SURVEY: 'ASASSN',
                         PHOTOMETRY.SOURCE: source

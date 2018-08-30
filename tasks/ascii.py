@@ -1278,21 +1278,21 @@ def do_ascii(catalog):
             banddict[row[0]] = row[2]
         elif ri >= 45:
             time = str(jd_to_mjd(Decimal(row[2]) + Decimal('2450000')))
-            ssource = ''
+            ssource = None
             if bibdict[row[0]]:
                 # Skip Matheson as it's added directly above
                 if bibdict[row[0]] == '2003ApJ...599..394M':
                     continue
-                ssource = catalog.entries[name].add_source(
-                    bibcode=bibdict[row[0]])
+                ssource = catalog.entries[name].add_source(bibcode=bibdict[row[0]])
             photodict = {
                 'instrument': instdict[row[0]],
                 'band': banddict[row[1]],
                 'time': time,
                 'magnitude': row[4],
                 'e_magnitude': row[6],
-                'source': source + ((',' + ssource) if ssource else '')
+                'source': source + ((',' + ssource) if (ssource is not None) else '')
             }
+
             catalog.entries[name].add_photometry(**photodict)
         else:
             continue

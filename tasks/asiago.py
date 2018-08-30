@@ -94,8 +94,7 @@ def do_asiago_photo(catalog):
             claimedtype = record[17].replace(':', '').replace('*', '').strip()
 
             if (hostname != ''):
-                catalog.entries[name].add_quantity(SUPERNOVA.HOST, hostname,
-                                                   source)
+                catalog.entries[name].add_quantity(SUPERNOVA.HOST, hostname, source)
             if (claimedtype != ''):
                 catalog.entries[name].add_quantity(SUPERNOVA.CLAIMED_TYPE,
                                                    claimedtype, source)
