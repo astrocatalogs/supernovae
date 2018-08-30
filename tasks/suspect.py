@@ -12,8 +12,8 @@ from math import floor
 from astropy.time import Time as astrotime
 from bs4 import BeautifulSoup
 
-from astrocats.utils import (get_sig_digits, is_number, jd_to_mjd,
-                                     pbar, pretty_num, uniq_cdl)
+from astrocats.structures.struct import PHOTOMETRY, SPECTRUM
+from astrocats.utils import (get_sig_digits, is_number, jd_to_mjd, pbar, pretty_num, uniq_cdl)
 from decimal import Decimal
 
 from ..supernova import SUPERNOVA
@@ -21,19 +21,15 @@ from ..supernova import SUPERNOVA
 
 def do_suspect_photo(catalog):
     task_str = catalog.get_current_task_str()
-    with open(
-            os.path.join(catalog.get_current_task_repo(),
-                         'suspectreferences.csv'), 'r') as f:
+    path = os.path.join(catalog.get_current_task_repo(), 'suspectreferences.csv')
+    with open(path, 'r') as f:
         tsvin = csv.reader(f, delimiter=',', skipinitialspace=True)
         suspectrefdict = {}
         for row in tsvin:
             suspectrefdict[row[0]] = row[1]
 
-    file_names = list(
-        sorted(
-            glob(
-                os.path.join(catalog.get_current_task_repo(),
-                             'SUSPECT/*.html'))))
+    pattern = os.path.join(catalog.get_current_task_repo(), 'SUSPECT/*.html')
+    file_names = list(sorted(glob(pattern)))
     for datafile in pbar(file_names, task_str, sort=True):
         basename = os.path.basename(datafile)
         basesplit = basename.split('-')
@@ -59,24 +55,20 @@ def do_suspect_photo(catalog):
 
         sec_ref = 'SUSPECT'
         sec_refurl = 'https://www.nhn.ou.edu/~suspect/'
-        sec_source = catalog.entries[name].add_source(
-            name=sec_ref, url=sec_refurl, secondary=True)
-        catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, oldname,
-                                           sec_source)
+        sec_source = catalog.entries[name].add_source(name=sec_ref, url=sec_refurl, secondary=True)
+        catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, oldname, sec_source)
 
         if ei == 1:
             year = re.findall(r'\d+', name)[0]
-            catalog.entries[name].add_quantity(SUPERNOVA.DISCOVER_DATE, year,
-                                               sec_source)
+            catalog.entries[name].add_quantity(SUPERNOVA.DISCOVER_DATE, year, sec_source)
             catalog.entries[name].add_quantity(
                 SUPERNOVA.HOST, names[1].split(':')[1].strip(), sec_source)
 
             redshifts = bandsoup.body.findAll(text=re.compile('Redshift'))
             if redshifts:
                 catalog.entries[name].add_quantity(
-                    SUPERNOVA.REDSHIFT,
-                    redshifts[0].split(':')[1].strip(), sec_source,
-                    kind='heliocentric')
+                    SUPERNOVA.REDSHIFT, redshifts[0].split(':')[1].strip(),
+                    sec_source, kind='heliocentric')
             # hvels = bandsoup.body.findAll(text=re.compile('Heliocentric
             # Velocity'))
             # if hvels:
@@ -87,8 +79,7 @@ def do_suspect_photo(catalog):
             types = bandsoup.body.findAll(text=re.compile('Type'))
 
             catalog.entries[name].add_quantity(
-                SUPERNOVA.CLAIMED_TYPE,
-                types[0].split(':')[1].strip().split(' ')[0], sec_source)
+                SUPERNOVA.CLAIMED_TYPE, types[0].split(':')[1].strip().split(' ')[0], sec_source)
 
         for r, row in enumerate(bandtable.findAll('tr')):
             if r == 0:
@@ -101,17 +92,16 @@ def do_suspect_photo(catalog):
             else:
                 mag = str(mag)
             e_magnitude = col[4].contents[0]
-            if e_magnitude.isspace():
-                e_magnitude = ''
-            else:
-                e_magnitude = str(e_magnitude)
-            catalog.entries[name].add_photometry(
-                time=mjd,
-                u_time='MJD',
-                band=band,
-                magnitude=mag,
-                e_magnitude=e_magnitude,
-                source=sec_source + ',' + source)
+            photo = {
+                PHOTOMETRY.TIME: mjd,
+                PHOTOMETRY.U_TIME: 'MJD',
+                PHOTOMETRY.BAND: band,
+                PHOTOMETRY.MAGNITUDE: mag,
+                PHOTOMETRY.SOURCE: sec_source + ',' + source
+            }
+            if not e_magnitude.isspace():
+                photo[PHOTOMETRY.E_MAGNITUDE] = str(e_magnitude)
+            catalog.entries[name].add_photometry(**photo)
 
     catalog.journal_entries()
     return
@@ -119,14 +109,12 @@ def do_suspect_photo(catalog):
 
 def do_suspect_spectra(catalog):
     task_str = catalog.get_current_task_str()
-    with open(
-            os.path.join(catalog.get_current_task_repo(),
-                         'Suspect/sources.json'), 'r') as f:
+    path = os.path.join(catalog.get_current_task_repo(), 'Suspect/sources.json')
+    with open(path, 'r') as f:
         sourcedict = json.loads(f.read())
 
-    with open(
-            os.path.join(catalog.get_current_task_repo(),
-                         'Suspect/filename-changes.txt'), 'r') as f:
+    path = os.path.join(catalog.get_current_task_repo(), 'Suspect/filename-changes.txt')
+    with open(path, 'r') as f:
         rows = f.readlines()
         changedict = {}
         for row in rows:
@@ -136,13 +124,10 @@ def do_suspect_spectra(catalog):
             changedict[items[1]] = items[0]
 
     suspectcnt = 0
-    folders = next(
-        os.walk(os.path.join(catalog.get_current_task_repo(), 'Suspect')))[1]
+    folders = next(os.walk(os.path.join(catalog.get_current_task_repo(), 'Suspect')))[1]
     for folder in pbar(folders, task_str):
-        eventfolders = next(
-            os.walk(
-                os.path.join(catalog.get_current_task_repo(), 'Suspect/') +
-                folder))[1]
+        path = os.path.join(catalog.get_current_task_repo(), 'Suspect/') + folder
+        eventfolders = next(os.walk(path))[1]
         oldname = ''
         for eventfolder in pbar(eventfolders, task_str):
             name = eventfolder
@@ -158,10 +143,8 @@ def do_suspect_spectra(catalog):
             sec_bibc = '2001AAS...199.8408R'
             sec_source = catalog.entries[name].add_source(
                 name=sec_ref, url=sec_refurl, bibcode=sec_bibc, secondary=True)
-            catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name,
-                                               sec_source)
-            fpath = os.path.join(catalog.get_current_task_repo(), 'Suspect',
-                                 folder, eventfolder)
+            catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, sec_source)
+            fpath = os.path.join(catalog.get_current_task_repo(), 'Suspect', folder, eventfolder)
             eventspectra = next(os.walk(fpath))[2]
             for spectrum in eventspectra:
                 sources = [sec_source]
@@ -175,8 +158,7 @@ def do_suspect_spectra(catalog):
                 elif name in sourcedict:
                     bibcode = sourcedict[name]
                 if bibcode:
-                    source = catalog.entries[name].add_source(
-                        bibcode=unescape(bibcode))
+                    source = catalog.entries[name].add_source(bibcode=unescape(bibcode))
                     sources += [source]
                 sources = uniq_cdl(sources)
 
@@ -190,12 +172,10 @@ def do_suspect_spectra(catalog):
                 time = time + float(day) - floor(float(day))
                 time = pretty_num(time, sig=sig)
 
-                fpath = os.path.join(catalog.get_current_task_repo(),
-                                     'Suspect', folder, eventfolder, spectrum)
+                fpath = os.path.join(
+                    catalog.get_current_task_repo(), 'Suspect', folder, eventfolder, spectrum)
                 with open(fpath, 'r') as f:
-                    specdata = list(
-                        csv.reader(
-                            f, delimiter=' ', skipinitialspace=True))
+                    specdata = list(csv.reader(f, delimiter=' ', skipinitialspace=True))
                     specdata = list(filter(None, specdata))
                     newspec = []
                     oldval = ''
@@ -205,30 +185,30 @@ def do_suspect_spectra(catalog):
                         newspec.append(row)
                         oldval = row[1]
                     specdata = newspec
-                haserrors = len(specdata[0]) == 3 and specdata[0][
-                    2] and specdata[0][2] != 'NaN'
+                haserrors = len(specdata[0]) == 3 and specdata[0][2] and specdata[0][2] != 'NaN'
                 specdata = [list(i) for i in zip(*specdata)]
 
                 wavelengths = specdata[0]
                 fluxes = specdata[1]
-                errors = ''
-                if haserrors:
-                    errors = specdata[2]
 
-                catalog.entries[name].add_spectrum(
-                    u_wavelengths='Angstrom',
-                    u_fluxes='Uncalibrated',
-                    u_time='MJD',
-                    time=time,
-                    wavelengths=wavelengths,
-                    fluxes=fluxes,
-                    errors=errors,
-                    u_errors='Uncalibrated',
-                    source=sources,
-                    filename=spectrum)
+                spec = {
+                    SPECTRUM.U_WAVELENGTHS: 'Angstrom',
+                    SPECTRUM.U_FLUXES: 'Uncalibrated',
+                    SPECTRUM.U_TIME: 'MJD',
+                    SPECTRUM.TIME: time,
+                    SPECTRUM.WAVELENGTHS: wavelengths,
+                    SPECTRUM.FLUXES: fluxes,
+                    SPECTRUM.U_ERRORS: 'Uncalibrated',
+                    SPECTRUM.SOURCE: sources,
+                    SPECTRUM.FILENAME: spectrum
+                }
+                if haserrors:
+                    spec[SPECTRUM.ERRORS] = specdata[2]
+
+                catalog.entries[name].add_spectrum(**spec)
+
                 suspectcnt = suspectcnt + 1
-                if (catalog.args.travis and
-                        suspectcnt % catalog.TRAVIS_QUERY_LIMIT == 0):
+                if catalog.args.travis and (suspectcnt > catalog.TRAVIS_QUERY_LIMIT):
                     break
 
     catalog.journal_entries()
