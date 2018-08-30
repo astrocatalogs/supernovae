@@ -4,7 +4,7 @@ import csv
 import os
 
 from astrocats.utils import pbar
-
+from astrocats.structures.struct import QUANTITY
 from ..supernova import SUPERNOVA
 
 
@@ -29,14 +29,20 @@ def do_scp(catalog):
             catalog.entries[name].add_quantity(SUPERNOVA.REDSHIFT, row[4], source, kind='cluster')
         if row[6]:
             claimedtype = row[6].replace('SN ', '')
-            kind = ('spectroscopic/light curve' if 'a' in row[7] and 'c' in
-                    row[7] else
-                    'spectroscopic' if 'a' in row[7] else
-                    'light curve' if 'c' in row[7]
-                    else '')
-            if claimedtype != '?':
-                catalog.entries[name].add_quantity(
-                    SUPERNOVA.CLAIMED_TYPE, claimedtype, source, kind=kind)
+            if claimedtype == '?':
+                continue
+
+            if 'a' in row[7] and 'c' in row[7]:
+                quant = {QUANTITY.KIND: 'spectroscopic/light curve'}
+            elif 'a' in row[7]:
+                quant = {QUANTITY.KIND: 'spectroscopic'}
+            elif 'c' in row[7]:
+                quant = {QUANTITY.KIND: 'light curve'}
+            else:
+                quant = {}
+
+            catalog.entries[name].add_quantity(
+                SUPERNOVA.CLAIMED_TYPE, claimedtype, source, **quant)
 
     catalog.journal_entries()
     return
