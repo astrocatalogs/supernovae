@@ -7,13 +7,14 @@ from glob import glob
 from math import floor, isnan
 
 import numpy as np
-from astrocats.structures.struct import PHOTOMETRY, set_pd_mag_from_counts
+from astrocats.structures.struct import PHOTOMETRY
 from astrocats.structures.struct import SPECTRUM
 from astrocats.utils import (get_sig_digits, is_number, jd_to_mjd,
-                                     pbar, pretty_num, rep_chars)
+                             pbar, pretty_num, rep_chars)
 from astropy.io.ascii import read
 from astropy.time import Time as astrotime
 
+from supernovae import utils as sn_utils
 from ..supernova import SUPERNOVA
 
 
@@ -253,7 +254,7 @@ def do_donated_photo(catalog):
                     PHOTOMETRY.SURVEY: 'SNLS',
                     PHOTOMETRY.SOURCE: source
                 }
-                set_pd_mag_from_counts(photodict, counts, ec=e_counts, zp=zp,
+                sn_utils.set_pd_mag_from_counts(photodict, counts, ec=e_counts, zp=zp,
                                        sig=5.0)
                 catalog.entries[name].add_photometry(**photodict)
 

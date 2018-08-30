@@ -5,14 +5,13 @@ import datetime
 import os
 from glob import glob
 
-from astrocats.structures.struct import PHOTOMETRY, set_pd_mag_from_counts
-from astrocats.structures.struct import QUANTITY
-from astrocats.structures.struct import SPECTRUM
+from astrocats.structures.struct import PHOTOMETRY, QUANTITY, SPECTRUM
 from astrocats.utils import is_number, pbar
 from astropy.time import Time as astrotime
 
 from decimal import Decimal
 
+from supernovae import utils and sn_utils
 from ..supernova import SUPERNOVA
 
 
@@ -92,7 +91,7 @@ def do_essence_photo(catalog):
                 PHOTOMETRY.TELESCOPE: 'CTIO 4m',
                 PHOTOMETRY.SYSTEM: 'Natural'
             }
-            set_pd_mag_from_counts(
+            sn_utils.set_pd_mag_from_counts(
                 photodict, counts, ec='', lec=lerr, uec=uerr, zp=zp, sig=5.0)
             catalog.entries[name].add_photometry(**photodict)
 

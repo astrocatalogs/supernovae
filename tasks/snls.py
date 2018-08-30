@@ -7,11 +7,10 @@ from glob import glob
 from astropy.time import Time as astrotime
 from astroquery.vizier import Vizier
 
-from astrocats.structures.struct import PHOTOMETRY, set_pd_mag_from_counts
-from astrocats.structures.struct import SPECTRUM
-from astrocats.utils import (get_sig_digits, pbar,
-                                     pretty_num)
+from astrocats.structures.struct import PHOTOMETRY, SPECTRUM
+from astrocats.utils import (get_sig_digits, pbar, pretty_num)
 
+from supernovae import utilds as sn_utils
 from ..supernova import SUPERNOVA
 
 
@@ -50,7 +49,7 @@ def do_snls_photo(catalog):
             PHOTOMETRY.BAND_SET: 'MegaCam',
             PHOTOMETRY.SYSTEM: 'BD17'
         }
-        set_pd_mag_from_counts(photodict, counts, ec=err, zp=zp, sig=5.0)
+        sn_utils.set_pd_mag_from_counts(photodict, counts, ec=err, zp=zp, sig=5.0)
         catalog.entries[name].add_photometry(**photodict)
 
     catalog.journal_entries()

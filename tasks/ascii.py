@@ -11,15 +11,16 @@ from datetime import datetime
 from decimal import Decimal
 from glob import glob
 
-from astrocats.structures.struct import PHOTOMETRY, set_pd_mag_from_counts
+from astrocats.structures.struct import PHOTOMETRY
 from astrocats.utils import (is_number, jd_to_mjd, make_date_string,
-                                     pbar, round_sig)
+                             pbar, round_sig)
 from astropy import units as u
 from astropy.coordinates import SkyCoord as coord
 from astropy.io.ascii import read
 from astropy.time import Time as astrotime
 
 from ..supernova import SUPERNOVA
+from supernovae import utils as sn_utils
 
 
 def do_ascii(catalog):
@@ -74,7 +75,7 @@ def do_ascii(catalog):
                 PHOTOMETRY.TELESCOPE: 'PS1',
                 PHOTOMETRY.SOURCE: source
             }
-            set_pd_mag_from_counts(photodict, trow[4], ec=trow[5], zp='27.5',
+            sn_utils.set_pd_mag_from_counts(photodict, trow[4], ec=trow[5], zp='27.5',
                                    sig=5.0)
             catalog.entries[name].add_photometry(**photodict)
     catalog.journal_entries()
@@ -502,7 +503,7 @@ def do_ascii(catalog):
                 PHOTOMETRY.TELESCOPE: tel,
                 PHOTOMETRY.SOURCE: source
             }
-            set_pd_mag_from_counts(photodict, c, lec=lec, uec=uec, zp=zp,
+            sn_utils.set_pd_mag_from_counts(photodict, c, lec=lec, uec=uec, zp=zp,
                                    sig=5.0)
             catalog.entries[name].add_photometry(**photodict)
     catalog.journal_entries()
@@ -547,7 +548,7 @@ def do_ascii(catalog):
             PHOTOMETRY.E_COUNT_RATE: ec,
             PHOTOMETRY.SOURCE: source
         }
-        set_pd_mag_from_counts(photodict, c, ec=ec, zp=zp, sig=5.0)
+        sn_utils.set_pd_mag_from_counts(photodict, c, ec=ec, zp=zp, sig=5.0)
         catalog.entries[name].add_photometry(**photodict)
     catalog.journal_entries()
 
@@ -578,7 +579,7 @@ def do_ascii(catalog):
     #             PHOTOMETRY.ZERO_POINT: zp,
     #             PHOTOMETRY.SOURCE: source
     #         }
-    #         set_pd_mag_from_counts(photodict, counts, ec=e_counts, zp=zp)
+    #         sn_utils.set_pd_mag_from_counts(photodict, counts, ec=e_counts, zp=zp)
     #         catalog.entries[name].add_photometry(**photodict)
 
     # Howerton Catalog
@@ -870,7 +871,7 @@ def do_ascii(catalog):
                 PHOTOMETRY.ZERO_POINT: zp,
                 PHOTOMETRY.SOURCE: source
             }
-            set_pd_mag_from_counts(photodict, counts, ec=e_counts, zp=zp,
+            sn_utils.set_pd_mag_from_counts(photodict, counts, ec=e_counts, zp=zp,
                                    sig=5.0)
             catalog.entries[name].add_photometry(**photodict)
     catalog.journal_entries()
@@ -1207,7 +1208,7 @@ def do_ascii(catalog):
             PHOTOMETRY.ZERO_POINT: zp,
             PHOTOMETRY.SOURCE: source
         }
-        set_pd_mag_from_counts(photodict, counts, ec=e_counts, zp=zp, sig=5.0)
+        sn_utils.set_pd_mag_from_counts(photodict, counts, ec=e_counts, zp=zp, sig=5.0)
         catalog.entries[name].add_photometry(**photodict)
     catalog.journal_entries()
 

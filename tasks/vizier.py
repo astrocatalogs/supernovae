@@ -3,15 +3,16 @@ import csv
 import os
 from math import isnan
 
-from astrocats.structures.struct import PHOTOMETRY, set_pd_mag_from_counts
+from astrocats.structures.struct import PHOTOMETRY
 from astrocats.structures.struct import QUANTITY
 from astrocats.utils import (convert_aq_output, get_sig_digits,
-                                     is_number, jd_to_mjd, make_date_string,
-                                     pbar, rep_chars, round_sig, uniq_cdl)
+                             is_number, jd_to_mjd, make_date_string,
+                             pbar, rep_chars, round_sig, uniq_cdl)
 from astropy.time import Time as astrotime
 from astroquery.vizier import Vizier
 from decimal import Decimal
 
+from supernovae import utils as sn_utils
 from ..constants import CLIGHT, KM
 from ..supernova import SUPERNOVA
 from ..utils import radec_clean
@@ -395,7 +396,7 @@ def do_vizier(catalog):
                     PHOTOMETRY.SOURCE: source,
                     PHOTOMETRY.SURVEY: 'SCP'
                 }
-                set_pd_mag_from_counts(photodict, flux, ec=err, zp=zp, sig=5.0)
+                sn_utils.set_pd_mag_from_counts(photodict, flux, ec=err, zp=zp, sig=5.0)
                 catalog.entries[name].add_photometry(**photodict)
     catalog.journal_entries()
 
@@ -562,7 +563,7 @@ def do_vizier(catalog):
             PHOTOMETRY.SOURCE: source,
             PHOTOMETRY.INSTRUMENT: row['Inst']
         }
-        set_pd_mag_from_counts(photodict, flux, ec=err, zp=zp, sig=5.0)
+        sn_utils.set_pd_mag_from_counts(photodict, flux, ec=err, zp=zp, sig=5.0)
         catalog.entries[name].add_photometry(**photodict)
 
     # 2004ApJ...602..571B
@@ -598,7 +599,7 @@ def do_vizier(catalog):
             PHOTOMETRY.TELESCOPE: telescope,
             PHOTOMETRY.SOURCE: source
         }
-        set_pd_mag_from_counts(photodict, flux, ec=err, zp=zp, sig=5.0)
+        sn_utils.set_pd_mag_from_counts(photodict, flux, ec=err, zp=zp, sig=5.0)
         catalog.entries[name].add_photometry(**photodict)
 
     # 2014MNRAS.444.3258M
