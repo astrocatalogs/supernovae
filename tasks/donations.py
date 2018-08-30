@@ -28,19 +28,18 @@ def do_donated_photo(catalog):
     # End private donations #
 
     # Ponder 05-12-17 donation
-    with open(
-            os.path.join(catalog.get_current_task_repo(), 'Donations',
-                         'Ponder-05-12-17', 'meta.json'), 'r') as f:
+    path = os.path.join(
+        catalog.get_current_task_repo(), 'Donations', 'Ponder-05-12-17', 'meta.json')
+    with open(path, 'r') as f:
         metadict = json.loads(f.read())
-    file_names = glob(
-        os.path.join(catalog.get_current_task_repo(), 'Donations',
-                     'Ponder-05-12-17', '*.dat'))
+    pattern = os.path.join(
+        catalog.get_current_task_repo(), 'Donations', 'Ponder-05-12-17', '*.dat')
+    file_names = glob(pattern)
     for path in file_names:
         with open(path, 'r') as f:
             tsvin = list(csv.reader(f, delimiter=' ', skipinitialspace=True))
         oname = path.split('/')[-1].split('.')[0]
-        name, source = catalog.new_entry(
-            oname, bibcode=metadict[oname]['bibcode'])
+        name, source = catalog.new_entry(oname, bibcode=metadict[oname]['bibcode'])
         for row in pbar(tsvin, task_str + ': Ponder ' + oname):
             if row[0][0] == '#' or not is_number(row[-1]):
                 continue
@@ -62,7 +61,7 @@ def do_donated_photo(catalog):
                 PHOTOMETRY.E_UPPER_MAGNITUDE: uerr,
                 PHOTOMETRY.SOURCE: source
             }
-            if inst:
+            if len(inst) > 0:
                 photodict[PHOTOMETRY.INSTRUMENT] = inst
             catalog.entries[name].add_photometry(**photodict)
 
@@ -254,8 +253,8 @@ def do_donated_photo(catalog):
                     PHOTOMETRY.SURVEY: 'SNLS',
                     PHOTOMETRY.SOURCE: source
                 }
-                sn_utils.set_pd_mag_from_counts(photodict, counts, ec=e_counts, zp=zp,
-                                       sig=5.0)
+                sn_utils.set_pd_mag_from_counts(
+                    photodict, counts, ec=e_counts, zp=zp, sig=5.0)
                 catalog.entries[name].add_photometry(**photodict)
 
     # Inserra 09-04-16 donation
@@ -313,17 +312,18 @@ def do_donated_photo(catalog):
     ignorephoto = ['PTF10hgi', 'PTF11rks', 'SN2011ke', 'SN2011kf', 'SN2012il']
 
     file_names = glob(
-        os.path.join(catalog.get_current_task_repo(), 'Donations',
-                     'Nicholl-04-01-16/*.txt'))
+        os.path.join(catalog.get_current_task_repo(), 'Donations', 'Nicholl-04-01-16/*.txt'))
     for datafile in pbar(file_names, task_str + ': Nicholl-04-01-16', sort=True):
         inpname = os.path.basename(datafile).split('_')[0]
         isk = inpname in kcorrected
         name = catalog.add_entry(inpname)
-        bibcode = ''
+        bibcode = None
         for bc in bcs:
             if inpname in bcs[bc]:
                 bibcode = bc
-        if not bibcode:
+                break
+
+        if bibcode is None:
             raise ValueError('Bibcode not found!')
         source = catalog.entries[name].add_source(bibcode=bibcode)
         catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, inpname, source)
@@ -331,7 +331,7 @@ def do_donated_photo(catalog):
             continue
         with open(datafile, 'r') as f:
             tsvin = csv.reader(f, delimiter='\t', skipinitialspace=True)
-            rtelescope = ''
+            rtelescope = None
             for r, rrow in enumerate(tsvin):
                 row = list(filter(None, rrow))
                 if not row:
@@ -346,18 +346,15 @@ def do_donated_photo(catalog):
                 if not is_number(mjd):
                     continue
                 for v, val in enumerate(row[1::2]):
-                    upperlimit = ''
                     mag = val.strip('>')
-                    emag = row[2 * v + 2]
-                    if '>' in val or (is_number(emag) and float(emag) == 0.0):
-                        upperlimit = True
-                    if (not is_number(mag) or isnan(float(mag)) or
-                            float(mag) > 90.0):
+                    if (not is_number(mag) or isnan(float(mag)) or float(mag) > 90.0):
                         continue
+                    emag = row[2 * v + 2]
+                    upperlimit = ('>' in val) or (is_number(emag) and float(emag) == 0.0)
                     band = bands[v]
-                    instrument = ''
-                    survey = ''
-                    system = ''
+                    instrument = None
+                    survey = None
+                    system = None
                     telescope = rtelescope
                     if telescope == 'LSQ':
                         instrument = 'QUEST'
@@ -395,20 +392,20 @@ def do_donated_photo(catalog):
                         PHOTOMETRY.UPPER_LIMIT: upperlimit,
                         PHOTOMETRY.SOURCE: source
                     }
-                    if instrument:
+                    if instrument is not None:
                         photodict[PHOTOMETRY.INSTRUMENT] = instrument
-                    if telescope:
+                    if telescope is not None:
                         photodict[PHOTOMETRY.TELESCOPE] = telescope
-                    if survey:
+                    if survey is not None:
                         photodict[PHOTOMETRY.SURVEY] = survey
-                    if system:
+                    if system is not None:
                         photodict[PHOTOMETRY.SYSTEM] = system
-                    if (is_number(emag) and
-                            not isnan(float(emag)) and float(emag) > 0.0):
+                    if (is_number(emag) and not isnan(float(emag)) and float(emag) > 0.0):
                         photodict[PHOTOMETRY.E_MAGNITUDE] = emag
                     if isk:
                         photodict[PHOTOMETRY.KCORRECTED] = True
                     catalog.entries[name].add_photometry(**photodict)
+
     catalog.journal_entries()
 
     # Maggi 04-11-16 donation (MC SNRs)
