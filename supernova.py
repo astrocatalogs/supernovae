@@ -34,7 +34,6 @@ class Supernova(struct.Entry_New_Adder):
         super(Supernova, self).__init__(catalog, name, stub=stub)
         return
 
-    '''
     def _append_additional_tags(self, name, sources, quantity):
         """Append additional bits of data to an existing quantity when a newly
         added quantity is found to be a duplicate
@@ -63,7 +62,6 @@ class Supernova(struct.Entry_New_Adder):
                         if sprob and QUANTITY.PROB not in self[name][ii]:
                             self[name][ii][QUANTITY.PROB] = sprob
                 return
-    '''
 
     def _merge_quantities(self, dst, src):
         """Append additional bits of data to an existing quantity when a newly
@@ -585,11 +583,11 @@ class Supernova(struct.Entry_New_Adder):
         def_source_dict = {}
         # Find source that will be used as default
         sources = data.get(self._KEYS.SOURCES, [])
-        if sources:
+        if len(sources) > 0:
             def_source_dict = sources[0]
             allow_alias = False
             if SOURCE.ALIAS in def_source_dict:
-                del (def_source_dict[SOURCE.ALIAS])
+                del def_source_dict[SOURCE.ALIAS]
         else:
             # If there are no existing sources, add OSC as one
             self.add_self_source()
@@ -604,8 +602,7 @@ class Supernova(struct.Entry_New_Adder):
             aliases = data.pop(alias_key)
             # Make sure this is a list
             if not isinstance(aliases, list):
-                raise ValueError("{}: aliases not a list '{}'".format(
-                    self.name(), aliases))
+                raise ValueError("{}: aliases not a list '{}'".format(self.name(), aliases))
             # Add OSC source entry
             source = self.add_self_source()
 
@@ -615,8 +612,7 @@ class Supernova(struct.Entry_New_Adder):
         dist_key = 'distinctfrom'
         if dist_key in data:
             distincts = data.pop(dist_key)
-            if ((isinstance(distincts, list) and
-                 isinstance(distincts[0], string_types))):
+            if isinstance(distincts, list) and isinstance(distincts[0], string_types):
                 source = self.add_self_source()
                 for df in distincts:
                     self.add_quantity(self._KEYS.DISTINCT_FROM, df, source)
@@ -633,26 +629,20 @@ class Supernova(struct.Entry_New_Adder):
             elif key == self._KEYS.PHOTOMETRY:
                 for p, photo in enumerate(data[self._KEYS.PHOTOMETRY]):
                     if photo.get(PHOTOMETRY.U_TIME) == 'JD':
-                        data[self._KEYS.PHOTOMETRY][p][
-                            PHOTOMETRY.U_TIME] = 'MJD'
-                        data[self._KEYS.PHOTOMETRY][p][PHOTOMETRY.TIME] = str(
-                            utils.jd_to_mjd(Decimal(photo['time'])))
+                        data[self._KEYS.PHOTOMETRY][p][PHOTOMETRY.U_TIME] = 'MJD'
+                        time = utils.jd_to_mjd(Decimal(photo['time']))
+                        data[self._KEYS.PHOTOMETRY][p][PHOTOMETRY.TIME] = str(time)
                     if QUANTITY.SOURCE not in photo:
                         if not def_source_dict:
-                            raise ValueError("No sources found, can't add "
-                                             "photometry.")
-                        source = self.add_source(
-                            allow_alias=allow_alias, **def_source_dict)
-                        data[self._KEYS.PHOTOMETRY][p][
-                            QUANTITY.SOURCE] = source
+                            raise ValueError("No sources found, can't add photometry.")
+                        source = self.add_source(allow_alias=allow_alias, **def_source_dict)
+                        data[self._KEYS.PHOTOMETRY][p][QUANTITY.SOURCE] = source
             else:
                 for qi, quantity in enumerate(data[key]):
                     if QUANTITY.SOURCE not in quantity:
                         if not def_source_dict:
-                            raise ValueError("No sources found, can't add "
-                                             "quantity.")
-                        source = self.add_source(
-                            allow_alias=allow_alias, **def_source_dict)
+                            raise ValueError("No sources found, can't add quantity.")
+                        source = self.add_source(allow_alias=allow_alias, **def_source_dict)
                         data[key][qi][QUANTITY.SOURCE] = source
 
         return data
