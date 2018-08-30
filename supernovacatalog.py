@@ -20,7 +20,7 @@ class SupernovaCatalog(Catalog):
     MODULE_NAME = "supernovae"
     PATHS = _PATHS
 
-    RAISE_ERROR_ON_ADDITION_FAILURE = False
+    RAISE_ERROR_ON_ADDITION_FAILURE = True
 
     def __init__(self, args, log):
         """Initialize catalog."""
