@@ -1,5 +1,5 @@
 """Supernova transient class."""
-import warnings
+# import warnings
 from collections import OrderedDict
 from decimal import Decimal
 
