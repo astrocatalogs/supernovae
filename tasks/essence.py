@@ -40,8 +40,8 @@ def do_essence_photo(catalog):
             }
             if is_number(row[12]):
                 quantdict[QUANTITY.E_VALUE] = row[12]
-            catalog.entries[name].add_quantity(
-                [SUPERNOVA.REDSHIFT, SUPERNOVA.HOST_REDSHIFT], **quantdict)
+            for qkey in [SUPERNOVA.REDSHIFT, SUPERNOVA.HOST_REDSHIFT]:
+                catalog.entries[name].add_quantity(qkey, **quantdict)
 
     files = glob(os.path.join(catalog.get_current_task_repo(), 'ESSENCE', '*clean*.dat'))
     for pfile in pbar(files, task_str):
@@ -52,15 +52,9 @@ def do_essence_photo(catalog):
         for ri, row in enumerate(rows):
             if ri == 1:
                 catalog.entries[name].add_quantity(
-                    SUPERNOVA.REDSHIFT,
-                    row[5],
-                    source,
-                    kind=['spectroscopic', 'heliocentric'])
+                    SUPERNOVA.REDSHIFT, row[5], source, kind=['spectroscopic', 'heliocentric'])
                 catalog.entries[name].add_quantity(
-                    SUPERNOVA.REDSHIFT,
-                    row[6],
-                    source,
-                    kind=['spectroscopic', 'cmb'])
+                    SUPERNOVA.REDSHIFT, row[6], source, kind=['spectroscopic', 'cmb'])
                 continue
             if row[0].startswith('#'):
                 continue
