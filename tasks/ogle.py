@@ -8,15 +8,14 @@ from bs4 import BeautifulSoup, NavigableString, Tag
 
 from decimal import Decimal
 
+from astrocats.structures.struct import PHOTOMETRY
 from ..supernova import SUPERNOVA
 
 
 def do_ogle(catalog):
     task_str = catalog.get_current_task_str()
-    basenames = [
-        'transients', 'transients/2015', 'transients/2014b', 'transients/2014',
-        'transients/2013', 'transients/2012'
-    ]
+    basenames = ['transients', 'transients/2015', 'transients/2014b', 'transients/2014',
+                 'transients/2013', 'transients/2012']
     oglenames = []
     ogleupdate = [True, False, False, False, False]
     for b, bn in enumerate(pbar(basenames, task_str)):
@@ -26,8 +25,7 @@ def do_ogle(catalog):
         filepath = os.path.join(catalog.get_current_task_repo(), 'OGLE-')
         filepath += bn.replace('/', '-') + '-transients.html'
         htmltxt = catalog.load_url(
-            'http://ogle.astrouw.edu.pl/ogle4/' + bn + '/transients.html',
-            filepath)
+            'http://ogle.astrouw.edu.pl/ogle4/' + bn + '/transients.html', filepath)
         if not htmltxt:
             continue
 
@@ -39,11 +37,8 @@ def do_ogle(catalog):
         for a in links:
             if a.has_attr('href'):
                 if '.dat' in a['href']:
-                    datalinks.append('http://ogle.astrouw.edu.pl/ogle4/' + bn +
-                                     '/' + a['href'])
-                    datafnames.append(
-                        bn.replace('/', '-') + '-' + a['href'].replace('/',
-                                                                       '-'))
+                    datalinks.append('http://ogle.astrouw.edu.pl/ogle4/' + bn + '/' + a['href'])
+                    datafnames.append(bn.replace('/', '-') + '-' + a['href'].replace('/', '-'))
 
         ec = -1
         reference = 'OGLE-IV Transient Detection System'
@@ -70,8 +65,7 @@ def do_ogle(catalog):
                 while 'Ra,Dec=' not in mySibling:
                     if isinstance(mySibling, NavigableString):
                         if not claimedtype and 'class=' in str(mySibling):
-                            claimedtype = re.sub(r'\([^)]*\)', '',
-                                                 str(mySibling).split('=')[-1])
+                            claimedtype = re.sub(r'\([^)]*\)', '', str(mySibling).split('=')[-1])
                             claimedtype = claimedtype.replace('SN', '').strip()
                             if claimedtype == '-':
                                 claimedtype = ''
@@ -95,20 +89,14 @@ def do_ogle(catalog):
                 # ra = radec[0]
                 # dec = radec[1]
 
-                fname = os.path.join(catalog.get_current_task_repo(),
-                                     'OGLE/') + datafnames[ec]
+                fname = os.path.join(catalog.get_current_task_repo(), 'OGLE/') + datafnames[ec]
                 csvtxt = catalog.load_url(datalinks[ec], fname)
 
                 lcdat = csvtxt.splitlines()
-                sources = [
-                    catalog.entries[name].add_source(
-                        name=reference, url=refurl)
-                ]
-                catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name,
-                                                   sources[0])
+                sources = [catalog.entries[name].add_source(name=reference, url=refurl)]
+                catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, sources[0])
                 if atelref and atelref != 'ATel#----':
-                    sources.append(catalog.entries[name].add_source(
-                        name=atelref, url=atelurl))
+                    sources.append(catalog.entries[name].add_source(name=atelref, url=atelurl))
                 sources = uniq_cdl(sources)
 
                 if name.startswith('OGLE'):
@@ -119,20 +107,19 @@ def do_ogle(catalog):
                     else:
                         if is_number(name[4:6]):
                             catalog.entries[name].add_quantity(
-                                SUPERNOVA.DISCOVER_DATE, '20' + name[4:6],
-                                sources)
+                                SUPERNOVA.DISCOVER_DATE, '20' + name[4:6], sources)
 
                 # RA and Dec from OGLE pages currently not reliable
                 # catalog.entries[name].add_quantity(SUPERNOVA.RA, ra, sources)
                 # catalog.entries[name].add_quantity(SUPERNOVA.DEC, dec,
                 # sources)
                 if claimedtype and claimedtype != '-':
-                    catalog.entries[name].add_quantity(SUPERNOVA.CLAIMED_TYPE,
-                                                       claimedtype, sources)
+                    catalog.entries[name].add_quantity(
+                        SUPERNOVA.CLAIMED_TYPE, claimedtype, sources)
                 elif ('SN' not in name and
                       SUPERNOVA.CLAIMED_TYPE not in catalog.entries[name]):
-                    catalog.entries[name].add_quantity(SUPERNOVA.CLAIMED_TYPE,
-                                                       'Candidate', sources)
+                    catalog.entries[name].add_quantity(
+                        SUPERNOVA.CLAIMED_TYPE, 'Candidate', sources)
                 for row in lcdat:
                     row = row.split()
                     mjd = str(jd_to_mjd(Decimal(row[0])))
@@ -140,19 +127,21 @@ def do_ogle(catalog):
                     if float(magnitude) > 90.0:
                         continue
                     e_mag = row[2]
-                    upperlimit = False
+
+                    photo = {
+                        PHOTOMETRY.TIME: mjd,
+                        PHOTOMETRY.U_TIME: 'MJD',
+                        PHOTOMETRY.BAND: 'I',
+                        PHOTOMETRY.MAGNITUDE: magnitude,
+                        PHOTOMETRY.SYSTEM: 'Vega',
+                        PHOTOMETRY.SOURCE: sources,
+                    }
                     if e_mag == '-1' or float(e_mag) > 10.0:
-                        e_mag = ''
-                        upperlimit = True
-                    catalog.entries[name].add_photometry(
-                        time=mjd,
-                        u_time='MJD',
-                        band='I',
-                        magnitude=magnitude,
-                        e_magnitude=e_mag,
-                        system='Vega',
-                        source=sources,
-                        upperlimit=upperlimit)
+                        photo[PHOTOMETRY.UPPERLIMIT] = True
+                    else:
+                        photo[PHOTOMETRY.E_MAGNITUDE] = e_mag
+
+                    catalog.entries[name].add_photometry(**photo)
                 if catalog.args.update:
                     catalog.journal_entries()
                 if catalog.args.travis and bi >= catalog.TRAVIS_QUERY_LIMIT:
