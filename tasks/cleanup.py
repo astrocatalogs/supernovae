@@ -32,8 +32,7 @@ def do_cleanup(catalog):
             name = catalog.add_entry(oname)
         except Exception:
             catalog.log.warning(
-                '"{}" was not found, suggests merge occurred in cleanup '
-                'process.'.format(oname))
+                '"{}" was not found, suggests merge occurred in cleanup process.'.format(oname))
             continue
 
         # Set the preferred name, switching to that name if name changed.
@@ -54,8 +53,7 @@ def do_cleanup(catalog):
                             alias.replace(prefix, '')[4:6]
                         ]))
                         if catalog.args.verbose:
-                            tprint('Added discoverdate from name [' + alias +
-                                   ']: ' + discoverdate)
+                            tprint('Added discoverdate from name [' + alias + ']: ' + discoverdate)
                         source = catalog.entries[name].add_self_source()
                         catalog.entries[name].add_quantity(
                             SUPERNOVA.DISCOVER_DATE,
@@ -78,8 +76,7 @@ def do_cleanup(catalog):
                             is_number(alias.replace(prefix, '')[:1])):
                         discoverdate = '20' + alias.replace(prefix, '')[:2]
                         if catalog.args.verbose:
-                            tprint('Added discoverdate from name [' + alias +
-                                   ']: ' + discoverdate)
+                            tprint('Added discoverdate from name [' + alias + ']: ' + discoverdate)
                         source = catalog.entries[name].add_self_source()
                         catalog.entries[name].add_quantity(
                             SUPERNOVA.DISCOVER_DATE,
@@ -101,8 +98,7 @@ def do_cleanup(catalog):
                             alias.replace(prefix, '')[6:8]
                         ]))
                         if catalog.args.verbose:
-                            tprint('Added discoverdate from name [' + alias +
-                                   ']: ' + discoverdate)
+                            tprint('Added discoverdate from name [' + alias + ']: ' + discoverdate)
                         source = catalog.entries[name].add_self_source()
                         catalog.entries[name].add_quantity(
                             SUPERNOVA.DISCOVER_DATE,
@@ -116,15 +112,13 @@ def do_cleanup(catalog):
             prefixes = ['PTFS', 'SNSDF']
             for alias in aliases:
                 for prefix in prefixes:
-                    if (alias.startswith(prefix) and
-                            is_number(alias.replace(prefix, '')[:2])):
+                    if (alias.startswith(prefix) and is_number(alias.replace(prefix, '')[:2])):
                         discoverdate = ('/'.join([
                             '20' + alias.replace(prefix, '')[:2],
                             alias.replace(prefix, '')[2:4]
                         ]))
                         if catalog.args.verbose:
-                            tprint('Added discoverdate from name [' + alias +
-                                   ']: ' + discoverdate)
+                            tprint('Added discoverdate from name [' + alias + ']: ' + discoverdate)
                         source = catalog.entries[name].add_self_source()
                         catalog.entries[name].add_quantity(
                             SUPERNOVA.DISCOVER_DATE,
@@ -373,29 +367,28 @@ def do_cleanup(catalog):
                     pnum = CLIGHT / KM * \
                         ((bestz + 1.)**2. - 1.) / ((bestz + 1.)**2. + 1.)
                     pnum = pretty_num(pnum, sig=bestsig)
-                    catalog.entries[name].add_quantity(
-                        SUPERNOVA.VELOCITY,
-                        pnum,
-                        source,
-                        kind=(SUPERNOVA.VELOCITY.kind_preference[bestkind]
-                              if bestkind else ''))
+                    quant = {}
+                    if bestkind:
+                        quant[QUANTITY.KIND] = SUPERNOVA.VELOCITY.kind_preference[bestkind]
+                    catalog.entries[name].add_quantity(SUPERNOVA.VELOCITY, pnum, source, **quant)
                 if bestz > 0.:
                     if SUPERNOVA.LUM_DIST not in catalog.entries[name]:
                         dl = cosmo.luminosity_distance(bestz)
                         sources = [
                             catalog.entries[name].add_self_source(),
-                            catalog.entries[name]
-                            .add_source(bibcode='2016A&A...594A..13P')
+                            catalog.entries[name].add_source(bibcode='2016A&A...594A..13P')
                         ]
                         sources = uniq_cdl(sources + bestsrc.split(','))
+                        qnt = {}
+                        if bestkind:
+                            qnt[QUANTITY.KIND] = SUPERNOVA.LUM_DIST.kind_preference[bestkind]
+
                         catalog.entries[name].add_quantity(
                             SUPERNOVA.LUM_DIST,
-                            pretty_num(
-                                dl.value, sig=bestsig + 1),
+                            pretty_num(dl.value, sig=bestsig + 1),
                             sources,
-                            kind=(SUPERNOVA.LUM_DIST.kind_preference[bestkind]
-                                  if bestkind else ''),
-                            derived=True)
+                            derived=True,
+                            **qnt)
                         if (SUPERNOVA.MAX_ABS_MAG not in
                             catalog.entries[name] and SUPERNOVA.MAX_APP_MAG in
                                 catalog.entries[name]):
@@ -457,12 +450,11 @@ def do_cleanup(catalog):
                     pnum = CLIGHT / KM * \
                         ((bestz + 1.)**2. - 1.) / ((bestz + 1.)**2. + 1.)
                     pnum = pretty_num(pnum, sig=bestsig)
+                    qnt = {}
+                    if bestkind:
+                        qnt[QUANTITY.KIND] = SUPERNOVA.HOST_VELOCITY.kind_preference[bestkind]
                     catalog.entries[name].add_quantity(
-                        SUPERNOVA.HOST_VELOCITY,
-                        pnum,
-                        source,
-                        kind=(SUPERNOVA.HOST_VELOCITY.kind_preference[bestkind]
-                              if bestkind else ''))
+                        SUPERNOVA.HOST_VELOCITY, pnum, source, **qnt)
                 if bestz > 0.:
                     if SUPERNOVA.HOST_LUM_DIST not in catalog.entries[name]:
                         dl = cosmo.luminosity_distance(bestz)
@@ -472,48 +464,40 @@ def do_cleanup(catalog):
                             .add_source(bibcode='2016A&A...594A..13P')
                         ]
                         sources = uniq_cdl(sources + bestsrc.split(','))
+                        qnt = {}
+                        if bestkind:
+                            qnt[QUANTITY.KIND] = SUPERNOVA.HOST_LUM_DIST.kind_preference[bestkind]
                         catalog.entries[name].add_quantity(
                             SUPERNOVA.HOST_LUM_DIST,
-                            pretty_num(
-                                dl.value, sig=bestsig + 1),
+                            pretty_num(dl.value, sig=bestsig + 1),
                             sources,
-                            kind=(SUPERNOVA.HOST_LUM_DIST.kind_preference[
-                                bestkind] if bestkind else ''),
-                            derived=True)
-                    if SUPERNOVA.HOST_COMOVING_DIST not in catalog.entries[
-                            name]:
+                            derived=True,
+                            **qnt)
+                    if SUPERNOVA.HOST_COMOVING_DIST not in catalog.entries[name]:
                         cd = cosmo.comoving_distance(bestz)
                         sources = [
                             catalog.entries[name].add_self_source(),
-                            catalog.entries[name]
-                            .add_source(bibcode='2016A&A...594A..13P')
+                            catalog.entries[name].add_source(bibcode='2016A&A...594A..13P')
                         ]
                         sources = uniq_cdl(sources + bestsrc.split(','))
                         catalog.entries[name].add_quantity(
                             SUPERNOVA.HOST_COMOVING_DIST,
-                            pretty_num(
-                                cd.value, sig=bestsig),
+                            pretty_num(cd.value, sig=bestsig),
                             sources,
                             derived=True)
         if all([
                 x in catalog.entries[name]
-                for x in [
-                    SUPERNOVA.RA, SUPERNOVA.DEC, SUPERNOVA.HOST_RA,
-                    SUPERNOVA.HOST_DEC
-                ]
+                for x in [SUPERNOVA.RA, SUPERNOVA.DEC, SUPERNOVA.HOST_RA, SUPERNOVA.HOST_DEC]
         ]):
             # For now just using first coordinates that appear in entry
             try:
                 c1 = coord(
                     ra=catalog.entries[name][SUPERNOVA.RA][0][QUANTITY.VALUE],
-                    dec=catalog.entries[name][SUPERNOVA.DEC][0][
-                        QUANTITY.VALUE],
+                    dec=catalog.entries[name][SUPERNOVA.DEC][0][QUANTITY.VALUE],
                     unit=(un.hourangle, un.deg))
                 c2 = coord(
-                    ra=catalog.entries[name][SUPERNOVA.HOST_RA][0][
-                        QUANTITY.VALUE],
-                    dec=catalog.entries[name][SUPERNOVA.HOST_DEC][0][
-                        QUANTITY.VALUE],
+                    ra=catalog.entries[name][SUPERNOVA.HOST_RA][0][QUANTITY.VALUE],
+                    dec=catalog.entries[name][SUPERNOVA.HOST_DEC][0][QUANTITY.VALUE],
                     unit=(un.hourangle, un.deg))
             except (KeyboardInterrupt, SystemExit):
                 raise
@@ -563,7 +547,7 @@ def do_cleanup(catalog):
         catalog.entries[name].sanitize()
         catalog.journal_entries(bury=True, final=True, gz=True)
         cleanupcnt = cleanupcnt + 1
-        if catalog.args.travis and cleanupcnt % 1000 == 0:
+        if catalog.args.travis and cleanupcnt >= 1000:
             break
 
     catalog.save_caches()
