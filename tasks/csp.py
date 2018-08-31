@@ -15,12 +15,10 @@ from ..utils import clean_snname
 def do_csp_photo(catalog):
     """Import CSP photometry."""
     import re
-    file_names = glob(
-        os.path.join(catalog.get_current_task_repo(), 'CSP/*.dat'))
+    file_names = glob(os.path.join(catalog.get_current_task_repo(), 'CSP/*.dat'))
     task_str = catalog.get_current_task_str()
     for fname in pbar(file_names, task_str, sort=True):
-        tsvin = csv.reader(open(fname, 'r'), delimiter='\t',
-                           skipinitialspace=True)
+        tsvin = csv.reader(open(fname, 'r'), delimiter='\t', skipinitialspace=True)
         eventname = os.path.basename(os.path.splitext(fname)[0])
         eventparts = eventname.split('opt+')
         name = clean_snname(eventparts[0])
@@ -29,13 +27,11 @@ def do_csp_photo(catalog):
         reference = 'Carnegie Supernova Project'
         refbib = '2010AJ....139..519C'
         refurl = 'http://csp.obs.carnegiescience.edu/data'
-        source = catalog.entries[name].add_source(
-            bibcode=refbib, name=reference, url=refurl)
+        source = catalog.entries[name].add_source(bibcode=refbib, name=reference, url=refurl)
         catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
 
         year = re.findall(r'\d+', name)[0]
-        catalog.entries[name].add_quantity(
-            SUPERNOVA.DISCOVER_DATE, year, source)
+        catalog.entries[name].add_quantity(SUPERNOVA.DISCOVER_DATE, year, source)
 
         for r, row in enumerate(tsvin):
             if len(row) > 0 and row[0][0] == "#":
@@ -72,7 +68,7 @@ def do_csp_spectra(catalog):
     oldname = ''
     task_str = catalog.get_current_task_str()
     file_names = glob(os.path.join(catalog.get_current_task_repo(), 'CSP/*'))
-    for fi, fname in enumerate(pbar(file_names, task_str), sort=True):
+    for fi, fname in enumerate(pbar(file_names, task_str, sort=True)):
         filename = os.path.basename(fname)
         sfile = filename.split('.')
         if sfile[1] == 'txt':
@@ -80,7 +76,10 @@ def do_csp_spectra(catalog):
         sfile = sfile[0]
         fileparts = sfile.split('_')
         name = 'SN20' + fileparts[0][2:]
-        name = catalog.get_name_for_entry_or_alias(name)
+        # Look for existing name if already added
+        _name = catalog.get_name_for_entry_or_alias(name)
+        if _name is not None:
+            name = _name
         if oldname and name != oldname:
             catalog.journal_entries()
         oldname = name
@@ -129,8 +128,7 @@ def do_csp_fits_spectra(catalog):
 
     fureps = {'erg/cm2/s/A': 'erg/s/cm^2/Angstrom'}
     task_str = catalog.get_current_task_str()
-    dirs = [x[0] for x in os.walk(
-        os.path.join(fpath, 'Gutierrez_et_al_2017'))]
+    dirs = [x[0] for x in os.walk(os.path.join(fpath, 'Gutierrez_et_al_2017'))]
     files = []
     for dir in dirs:
         files.extend(glob(os.path.join(dir, '*.fits')))

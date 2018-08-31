@@ -8,9 +8,8 @@ from math import floor
 
 from astropy.time import Time as astrotime
 
-from astrocats.structures.struct import PHOTOMETRY
-from astrocats.utils import (get_sig_digits, is_number, pbar,
-                                     pretty_num, uniq_cdl)
+from astrocats.structures.struct import PHOTOMETRY, SPECTRUM
+from astrocats.utils import (get_sig_digits, is_number, pbar, pretty_num, uniq_cdl)
 
 from ..supernova import SUPERNOVA
 
@@ -133,19 +132,16 @@ def do_ucb_spectra(catalog):
         catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, sec_source)
         sources = [sec_source]
         if spectrum['Reference']:
-            sources += [catalog.entries[name]
-                        .add_source(bibcode=spectrum['Reference'])]
+            sources += [catalog.entries[name].add_source(bibcode=spectrum['Reference'])]
         sources = uniq_cdl(sources)
 
         if spectrum['Type'] and spectrum['Type'].strip() != 'NoMatch':
             for ct in spectrum['Type'].strip().split(','):
                 catalog.entries[name].add_quantity(
-                    SUPERNOVA.CLAIMED_TYPE, ct.replace('-norm', '').strip(),
-                    sources)
+                    SUPERNOVA.CLAIMED_TYPE, ct.replace('-norm', '').strip(), sources)
         if spectrum['DiscDate']:
             ddate = spectrum['DiscDate'].replace('-', '/')
-            catalog.entries[name].add_quantity(SUPERNOVA.DISCOVER_DATE, ddate,
-                                               sources)
+            catalog.entries[name].add_quantity(SUPERNOVA.DISCOVER_DATE, ddate, sources)
         if spectrum['HostName']:
             host = urllib.parse.unquote(spectrum['HostName']).replace('*', '')
             catalog.entries[name].add_quantity(SUPERNOVA.HOST, host, sources)
@@ -155,8 +151,7 @@ def do_ucb_spectra(catalog):
             month = epoch[4:6]
             day = epoch[6:]
             sig = get_sig_digits(day) + 5
-            mjd = astrotime(year + '-' + month + '-' + str(floor(float(
-                day))).zfill(2)).mjd
+            mjd = astrotime(year + '-' + month + '-' + str(floor(float(day))).zfill(2)).mjd
             mjd = pretty_num(mjd + float(day) - floor(float(day)), sig=sig)
         filename = spectrum['Filename'] if spectrum['Filename'] else ''
         instrument = spectrum['Instrument'] if spectrum['Instrument'] else ''
@@ -169,17 +164,14 @@ def do_ucb_spectra(catalog):
         if not spectrum['SpecID']:
             raise ValueError('ID not found for SNDB spectrum!')
 
-        filepath = os.path.join(catalog.get_current_task_repo(),
-                                'UCB/') + filename
+        filepath = os.path.join(catalog.get_current_task_repo(), 'UCB/') + filename
         spectxt = catalog.load_url(
             'http://heracles.astro.berkeley.edu/sndb/download?id=ds:' +
             str(spectrum['SpecID']),
             filepath,
             archived_mode=True)
 
-        specdata = list(
-            csv.reader(
-                spectxt.splitlines(), delimiter=' ', skipinitialspace=True))
+        specdata = list(csv.reader(spectxt.splitlines(), delimiter=' ', skipinitialspace=True))
         newspecdata = []
         for row in specdata:
             if row[0][0] == '#':
@@ -188,36 +180,39 @@ def do_ucb_spectra(catalog):
                 newspecdata.append(row)
         specdata = newspecdata
 
-        haserrors = len(specdata[0]) == 3 and specdata[0][2] and specdata[0][
-            2] != 'NaN'
+        haserrors = len(specdata[0]) == 3 and specdata[0][2] and specdata[0][2] != 'NaN'
         specdata = [list(ii) for ii in zip(*specdata)]
 
         wavelengths = specdata[0]
         fluxes = specdata[1]
-        errors = ''
+        errors = None
         if haserrors:
             errors = specdata[2]
-
-        if not list(filter(None, errors)):
-            errors = ''
+            if not list(filter(None, errors)):
+                errors = None
 
         units = 'Uncalibrated'
-        catalog.entries[name].add_spectrum(
-            u_wavelengths='Angstrom',
-            u_fluxes=units,
-            u_time='MJD',
-            time=mjd,
-            wavelengths=wavelengths,
-            filename=filename,
-            fluxes=fluxes,
-            errors=errors,
-            u_errors=units,
-            instrument=instrument,
-            source=sources,
-            snr=snr,
-            observer=observer,
-            reducer=reducer,
-            deredshifted=('-noz' in filename))
+        spec = {
+            SPECTRUM.U_WAVELENGTHS: 'Angstrom',
+            SPECTRUM.U_FLUXES: units,
+            SPECTRUM.U_TIME: 'MJD',
+            SPECTRUM.TIME: mjd,
+            SPECTRUM.WAVELENGTHS: wavelengths,
+            SPECTRUM.FILENAME: filename,
+            SPECTRUM.FLUXES: fluxes,
+            SPECTRUM.U_ERRORS: units,
+            SPECTRUM.INSTRUMENT: instrument,
+            SPECTRUM.SOURCE: sources,
+            SPECTRUM.SNR: snr,
+            SPECTRUM.OBSERVER: observer,
+            SPECTRUM.REDUCER: reducer,
+            SPECTRUM.DEREDSHIFTED: ('-noz' in filename)
+        }
+        if errors is not None:
+            spec[SPECTRUM.ERRORS] = errors
+
+        catalog.entries[name].add_spectrum(**spec)
+
         ucbspectracnt = ucbspectracnt + 1
         if catalog.args.travis and ucbspectracnt >= catalog.TRAVIS_QUERY_LIMIT:
             break
