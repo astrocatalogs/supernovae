@@ -10,7 +10,7 @@ from astroquery.vizier import Vizier
 from astrocats.structures.struct import PHOTOMETRY, SPECTRUM
 from astrocats.utils import (get_sig_digits, pbar, pretty_num)
 
-from supernovae import utilds as sn_utils
+from supernovae import utils as sn_utils
 from ..supernova import SUPERNOVA
 
 
