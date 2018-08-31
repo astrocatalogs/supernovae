@@ -2,8 +2,7 @@
 from decimal import Decimal
 from math import floor
 
-from astrocats.utils import (get_sig_digits, is_integer, is_number,
-                                     pretty_num, zpad)
+from astrocats.utils import (get_sig_digits, is_integer, is_number, pretty_num, zpad)
 
 __all__ = ['name_clean', 'host_clean', 'radec_clean', 'clean_snname']
 
