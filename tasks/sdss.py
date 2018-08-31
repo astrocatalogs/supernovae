@@ -34,9 +34,8 @@ def do_sdss_photo(catalog):
     # return
 
     # Load up metadata first
-    with open(
-            os.path.join(catalog.get_current_task_repo(),
-                         'SDSS/sdsssn_master.dat2'), 'r') as f:
+    path = os.path.join(catalog.get_current_task_repo(), 'SDSS/sdsssn_master.dat2')
+    with open(path, 'r') as f:
         rows = list(csv.reader(f.read().splitlines()[1:], delimiter=' '))
         ignored_cids = []
         columns = {
@@ -55,13 +54,9 @@ def do_sdss_photo(catalog):
 
         co = [[x[0], x[99], x[100]] for x in rows if x[99] and x[100]]
         coo = coord([x[1] for x in co], [x[2] for x in co], unit="deg")
-        coo = [
-            ''.join([y[:9] for y in x.split()])
-            for x in coo.to_string(
-                'hmsdms', sep='')
-        ]
-        hostdict = dict(
-            zip([x[0] for x in co], ['SDSS J' + x[1:] for x in coo]))
+        coo = [''.join([y[:9] for y in x.split()])
+               for x in coo.to_string('hmsdms', sep='')]
+        hostdict = dict(zip([x[0] for x in co], ['SDSS J' + x[1:] for x in coo]))
 
         for ri, row in enumerate(pbar(rows, task_str + ": metadata")):
             name = ''
@@ -70,21 +65,18 @@ def do_sdss_photo(catalog):
             ct = row[columns[SUPERNOVA.CLAIMED_TYPE]]
             al = row[columns[SUPERNOVA.ALIAS]]
             if ct in ['AGN', 'Variable', 'Unknown'] and not al:
-                catalog.log.info('`{}` is not a SN, not '
-                                 'adding.'.format(row[0]))
+                catalog.log.info('`{}` is not a SN, not adding.'.format(row[0]))
                 ignored_cids.append(row[0])
                 continue
 
             # Add entry
             (name, source) = catalog.new_entry(
-                'SDSS-II SN ' + row[0],
-                bibcode='2014arXiv1401.3317S',
+                'SDSS-II SN ' + row[0], bibcode='2014arXiv1401.3317S',
                 url='http://data.sdss3.org/sas/dr10/boss/papers/supernova/')
 
             # Add host name
             if row[0] in hostdict:
-                catalog.entries[name].add_quantity(SUPERNOVA.HOST,
-                                                   hostdict[row[0]], source)
+                catalog.entries[name].add_quantity(SUPERNOVA.HOST, hostdict[row[0]], source)
 
             # Add other metadata
             for cn in colnums:
@@ -98,10 +90,7 @@ def do_sdss_photo(catalog):
                 kwargs = {}
                 if key == SUPERNOVA.ALIAS:
                     val = 'SN' + val
-                elif key in [
-                        SUPERNOVA.RA, SUPERNOVA.DEC, SUPERNOVA.HOST_RA,
-                        SUPERNOVA.HOST_DEC
-                ]:
+                elif key in [SUPERNOVA.RA, SUPERNOVA.DEC, SUPERNOVA.HOST_RA, SUPERNOVA.HOST_DEC]:
                     kwargs = {QUANTITY.U_VALUE: 'floatdegrees'}
                     if key in [SUPERNOVA.RA, SUPERNOVA.HOST_RA]:
                         fval = float(val)
@@ -120,21 +109,17 @@ def do_sdss_photo(catalog):
                     val = make_date_string(dt.year, dt.month, dt.day)
                 catalog.entries[name].add_quantity(key, val, source, **kwargs)
 
-    with open(
-            os.path.join(catalog.get_current_task_repo(),
-                         'SDSS/2010ApJ...708..661D.txt'), 'r') as sdss_file:
+    path = os.path.join(catalog.get_current_task_repo(), 'SDSS/2010ApJ...708..661D.txt')
+    with open(path, 'r') as sdss_file:
         bibcodes2010 = sdss_file.read().split('\n')
     sdssbands = ['u', 'g', 'r', 'i', 'z']
-    file_names = (list(
-        glob(os.path.join(catalog.get_current_task_repo(), 'SDSS/sum/*.sum')))
-                  + list(
-                      glob(
-                          os.path.join(catalog.get_current_task_repo(),
-                                       'SDSS/SMP_Data/*.dat'))))
+    pattern1 = os.path.join(catalog.get_current_task_repo(), 'SDSS/sum/*.sum')
+    file_names = list(glob(pattern1))
+    pattern2 = os.path.join(catalog.get_current_task_repo(), 'SDSS/SMP_Data/*.dat')
+    file_names += list(glob(pattern2))
     skipphoto = ['SDSS-II SN 15557']
-    for fi, fname in enumerate(pbar(file_names, task_str), sort=True):
-        tsvin = csv.reader(
-            open(fname, 'r'), delimiter=' ', skipinitialspace=True)
+    for fi, fname in enumerate(pbar(file_names, task_str, sort=True)):
+        tsvin = csv.reader(open(fname, 'r'), delimiter=' ', skipinitialspace=True)
         basename = os.path.basename(fname)
         hasred = True
         rst = 19
@@ -168,12 +153,12 @@ def do_sdss_photo(catalog):
                 val = row[2]
                 if float(val) < -1.0:
                     continue
-                (catalog.entries[name].add_quantity(
+                catalog.entries[name].add_quantity(
                     SUPERNOVA.REDSHIFT,
                     val,
                     source,
                     e_value=error,
-                    kind='heliocentric'))
+                    kind='heliocentric')
             if rr >= rst:
                 # Skip bad measurements
                 if int(row[0]) > 1024:
@@ -203,17 +188,16 @@ def do_sdss_photo(catalog):
                     PHOTOMETRY.SYSTEM: 'SDSS'
                 }
                 if float(fluxd) > 0.0:
-                    photodict[PHOTOMETRY.ZERO_POINT] = str(D25 * Decimal(
-                        fluxd).log10() + Decimal(magnitude))
+                    temp = D25 * Decimal(fluxd).log10() + Decimal(magnitude)
+                    photodict[PHOTOMETRY.ZERO_POINT] = str(temp)
                 ul_sigma = 3.0
-                if int(row[0]) & 32 or float(fluxd) < ul_sigma * float(
-                        e_fluxd):
+                if int(row[0]) & 32 or float(fluxd) < ul_sigma * float(e_fluxd):
                     photodict[PHOTOMETRY.UPPER_LIMIT] = True
                     photodict[PHOTOMETRY.UPPER_LIMIT_SIGMA] = str(ul_sigma)
                 catalog.entries[name].add_photometry(**photodict)
         if catalog.args.travis and fi >= catalog.TRAVIS_QUERY_LIMIT:
             break
-        if not fi % 1000:
+        if fi % 1000 == 0:
             catalog.journal_entries()
 
     catalog.journal_entries()
