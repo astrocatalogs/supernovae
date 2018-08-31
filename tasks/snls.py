@@ -28,8 +28,7 @@ def do_snls_photo(catalog):
         err = row[4]
         name = 'SNLS-' + row[0]
         name = catalog.add_entry(name)
-        source = catalog.entries[name].add_source(
-            bibcode='2010A&A...523A...7G')
+        source = catalog.entries[name].add_source(bibcode='2010A&A...523A...7G')
         catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
         # Conversion comes from SNLS-Readme
         # NOTE: Datafiles avail for download suggest diff zeropoints than 30,
@@ -70,21 +69,23 @@ def do_snls_spectra(catalog):
 
     oldname = ''
     file_names = glob(os.path.join(catalog.get_current_task_repo(), 'SNLS/*'))
-    for fi, fname in enumerate(pbar(file_names, task_str), sort=True):
+    for fi, fname in enumerate(pbar(file_names, task_str, sort=True)):
         filename = os.path.basename(fname)
         fileparts = filename.split('_')
         name = 'SNLS-' + fileparts[1]
-        name = catalog.get_name_for_entry_or_alias(name)
+        # Look for existing name if already added
+        _name = catalog.get_name_for_entry_or_alias(name)
+        if _name is not None:
+            name = _name
         if oldname and name != oldname:
             catalog.journal_entries()
         oldname = name
         name = catalog.add_entry(name)
-        source = catalog.entries[name].add_source(
-            bibcode='2009A&A...507...85B')
+        source = catalog.entries[name].add_source(bibcode='2009A&A...507...85B')
         catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
 
-        catalog.entries[name].add_quantity(SUPERNOVA.DISCOVER_DATE,
-                                           '20' + fileparts[1][:2], source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.DISCOVER_DATE, '20' + fileparts[1][:2], source)
 
         f = open(fname, 'r')
         data = csv.reader(f, delimiter=' ', skipinitialspace=True)
@@ -93,23 +94,15 @@ def do_snls_spectra(catalog):
             if row[0] == '@TELESCOPE':
                 telescope = row[1].strip()
             elif row[0] == '@REDSHIFT':
-                catalog.entries[name].add_quantity(SUPERNOVA.REDSHIFT,
-                                                   row[1].strip(), source)
+                catalog.entries[name].add_quantity(SUPERNOVA.REDSHIFT, row[1].strip(), source)
             if r < 14:
                 continue
             specdata.append(list(filter(None, [x.strip(' \t') for x in row])))
         specdata = [list(i) for i in zip(*specdata)]
         wavelengths = specdata[1]
 
-        fluxes = [
-            pretty_num(
-                float(x) * 1.e-16, sig=get_sig_digits(x)) for x in specdata[2]
-        ]
-        # FIX: this isnt being used
-        errors = [
-            pretty_num(
-                float(x) * 1.e-16, sig=get_sig_digits(x)) for x in specdata[3]
-        ]
+        fluxes = [pretty_num(float(x) * 1.e-16, sig=get_sig_digits(x)) for x in specdata[2]]
+        errors = [pretty_num(float(x) * 1.e-16, sig=get_sig_digits(x)) for x in specdata[3]]
 
         fluxunit = 'erg/s/cm^2/Angstrom'
 
