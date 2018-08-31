@@ -1,12 +1,15 @@
 """Imported tasks for the Carnegie Supernova Program."""
 import csv
 import os
+import warnings
 from decimal import Decimal
 from glob import glob
 
+from astropy.utils.exceptions import AstropyUserWarning
+# from astropy.time import Time as astrotime
+
 from astrocats.structures.struct import SPECTRUM
-from astrocats.utils import is_number, jd_to_mjd, pbar
-from astropy.time import Time as astrotime
+from astrocats.utils import is_number, jd_to_mjd, pbar, astrotime
 
 from ..supernova import SUPERNOVA
 from ..utils import clean_snname
@@ -134,7 +137,9 @@ def do_csp_fits_spectra(catalog):
         files.extend(glob(os.path.join(dir, '*.fits')))
     for datafile in pbar(files, task_str):
         filename = datafile.split('/')[-1]
-        hdulist = fits.open(datafile)
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore", AstropyUserWarning)
+            hdulist = fits.open(datafile)
         for oi, obj in enumerate(hdulist[0].header):
             if any(x in ['.', '/'] for x in obj):
                 del (hdulist[0].header[oi])
@@ -171,7 +176,7 @@ def do_csp_fits_spectra(catalog):
                     dateobs = dval.strip(
                     ) + 'T' + hdulist[0].header['UTC-OBS'].strip()
                 if dateobs is not None:
-                    mjd = str(astrotime(dateobs, format='isot').mjd)
+                    mjd = astrotime(dateobs, input='isot', output='mjd', to_str=True)
             # print(hdulist[0].header)
             if 'CRVAL1' in hdulist[0].header:
                 w0 = hdulist[0].header['CRVAL1']
@@ -215,11 +220,22 @@ def do_csp_fits_spectra(catalog):
             specdict[SPECTRUM.TIME] = mjd
             specdict[SPECTRUM.U_TIME] = 'MJD'
         if 'TELESCOP' in hdrkeys:
-            specdict[SPECTRUM.TELESCOPE] = hdulist[0].header['TELESCOP']
+            specdict[SPECTRUM.TELESCOPE] = str(hdulist[0].header['TELESCOP'])
         if 'INSTRUME' in hdrkeys:
             specdict[SPECTRUM.INSTRUMENT] = hdulist[0].header['INSTRUME']
         if 'AIRMASS' in hdrkeys:
-            specdict[SPECTRUM.AIRMASS] = hdulist[0].header['AIRMASS']
+            airmass = hdulist[0].header['AIRMASS']
+            try:
+                float(airmass)
+            except:
+                airmass = airmass.split()[-1].strip()
+                try:
+                    float(airmass)
+                except:
+                    airmass = None
+
+            if airmass is not None:
+                specdict[SPECTRUM.AIRMASS] = airmass
         if errors:
             specdict[SPECTRUM.ERRORS] = errors
             specdict[SPECTRUM.U_ERRORS] = fluxunit
@@ -228,7 +244,10 @@ def do_csp_fits_spectra(catalog):
         elif 'OBSERVAT' in hdrkeys:
             specdict[SPECTRUM.OBSERVATORY] = hdulist[0].header['OBSERVAT']
         if 'OBSERVER' in hdrkeys:
-            specdict[SPECTRUM.OBSERVER] = hdulist[0].header['OBSERVER']
+            obs = hdulist[0].header['OBSERVER']
+            if len(obs) > 0:
+                specdict[SPECTRUM.OBSERVER] = obs
+
         catalog.entries[name].add_spectrum(**specdict)
         hdulist.close()
         catalog.journal_entries()
