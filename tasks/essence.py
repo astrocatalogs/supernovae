@@ -117,7 +117,9 @@ def do_essence_spectra(catalog):
         filename = os.path.basename(fname)
         fileparts = filename.split('_')
         name = 'ESSENCE ' + fileparts[0]
-        name = catalog.get_name_for_entry_or_alias(name)
+        _name = catalog.get_name_for_entry_or_alias(name)
+        if _name is not None:
+            name = _name
         if oldname and name != oldname:
             catalog.journal_entries()
         oldname = name

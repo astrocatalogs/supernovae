@@ -6,8 +6,7 @@ from decimal import Decimal
 from math import log10, pi, sqrt
 
 from astrocats.structures.struct import QUANTITY
-from astrocats.utils import (get_sig_digits, is_number, pbar,
-                                     pretty_num, tprint, uniq_cdl)
+from astrocats.utils import (get_sig_digits, is_number, pbar, pretty_num, tprint, uniq_cdl)
 from astropy import units as un
 from astropy.coordinates import SkyCoord as coord
 from astropy.cosmology import Planck15 as cosmo
@@ -48,8 +47,7 @@ def do_cleanup(catalog):
             prefixes = ['MLS', 'SSS', 'CSS', 'GRB ']
             for alias in aliases:
                 for prefix in prefixes:
-                    if (alias.startswith(prefix) and
-                            is_number(alias.replace(prefix, '')[:2])):
+                    if (alias.startswith(prefix) and is_number(alias.replace(prefix, '')[:2])):
                         discoverdate = ('/'.join([
                             '20' + alias.replace(prefix, '')[:2],
                             alias.replace(prefix, '')[2:4],

@@ -8,7 +8,8 @@ from bs4 import BeautifulSoup
 
 from astrocats.utils import pbar, utf8
 from astrocats.structures.struct import ENTRY
-from astrocats.supernovae.utils import name_clean
+
+from supernovae.utils import name_clean
 
 
 def do_swift(catalog):

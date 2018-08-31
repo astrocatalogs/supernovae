@@ -9,7 +9,7 @@ from html import unescape
 
 from astropy.time import Time as astrotime
 
-from astrocats.structures.struct import SOURCE
+from astrocats.structures.struct import SOURCE, SPECTRUM
 from astrocats.utils import is_number, pbar, uniq_cdl
 
 from ..supernova import SUPERNOVA
@@ -21,8 +21,7 @@ def do_wiserep_spectra(catalog):
         try:
             spider(update=True, daysago=7, path="/../../sne-external-WISEREP/")
         except:
-            catalog.log.warning(
-                'Spider errored, continuing without letting it complete.')
+            catalog.log.warning('Spider errored, continuing without letting it complete.')
 
     task_str = catalog.get_current_task_str()
     secondaryreference = 'WISeREP'
@@ -68,8 +67,7 @@ def do_wiserep_spectra(catalog):
             url=secondaryrefurl,
             bibcode=secondarybibcode,
             secondary=True)
-        catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name,
-                                           secondarysource)
+        catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, secondarysource)
 
         readme_path = os.path.join(folder, 'README.json')
         if not os.path.exists(readme_path):
@@ -85,8 +83,7 @@ def do_wiserep_spectra(catalog):
         for fname in pbar(files, task_str):
             specfile = os.path.basename(fname)
             if specfile not in fileinfo:
-                catalog.log.warning('Metadata not found for "{}"'.format(
-                    fname))
+                catalog.log.warning('Metadata not found for "{}"'.format(fname))
                 continue
             claimedtype = fileinfo[specfile]["Type"]
             instrument = fileinfo[specfile]["Instrument"]
@@ -103,14 +100,13 @@ def do_wiserep_spectra(catalog):
                 if bibcode in wiserepbibcorrectdict:
                     newbibcode = wiserepbibcorrectdict[bibcode]
                 if newbibcode and len(newbibcode) == 19:
-                    source = catalog.entries[name].add_source(
-                        bibcode=unescape(newbibcode))
+                    source = catalog.entries[name].add_source(bibcode=unescape(newbibcode))
                 else:
                     bibname = unescape(bibcode)
                     source = catalog.entries[name].add_source(name=bibname)
-                    catalog.log.warning('Bibcode "{}" is invalid, using as '
-                                        '`{}` instead'.format(bibname,
-                                                              SOURCE.NAME))
+                    msg = 'Bibcode "{}" is invalid, using as `{}` instead'.format(
+                        bibname, SOURCE.NAME)
+                    catalog.log.warning(msg)
                 sources = uniq_cdl([source, secondarysource])
             else:
                 sources = secondarysource
@@ -118,8 +114,7 @@ def do_wiserep_spectra(catalog):
             if claimedtype not in ['Other']:
                 catalog.entries[name].add_quantity(
                     SUPERNOVA.CLAIMED_TYPE, claimedtype, secondarysource)
-            catalog.entries[name].add_quantity(SUPERNOVA.REDSHIFT, redshift,
-                                               secondarysource)
+            catalog.entries[name].add_quantity(SUPERNOVA.REDSHIFT, redshift, secondarysource)
 
             with open(fname, 'r') as f:
                 data = [x.split() for x in f]
@@ -141,7 +136,7 @@ def do_wiserep_spectra(catalog):
                 data = [list(i) for i in zip(*newdata)]
                 wavelengths = data[0]
                 fluxes = data[1]
-                errors = ''
+                errors = None
                 if len(data) == 3:
                     errors = data[1]
                 time = str(astrotime(epoch).mjd)
@@ -151,29 +146,33 @@ def do_wiserep_spectra(catalog):
                 else:
                     fluxunit = 'Uncalibrated'
 
-                catalog.entries[name].add_spectrum(
-                    u_wavelengths='Angstrom',
-                    errors=errors,
-                    u_fluxes=fluxunit,
-                    u_errors=fluxunit if errors else '',
-                    wavelengths=wavelengths,
-                    fluxes=fluxes,
-                    u_time='MJD',
-                    time=time,
-                    instrument=instrument,
-                    source=sources,
-                    observer=observer,
-                    reducer=reducer,
-                    reduction=reduction,
-                    filename=specfile,
-                    survey=survey,
-                    redshift=redshift)
+                spec = {
+                    SPECTRUM.U_WAVELENGTHS: 'Angstrom',
+                    SPECTRUM.U_FLUXES: fluxunit,
+                    SPECTRUM.WAVELENGTHS: wavelengths,
+                    SPECTRUM.FLUXES: fluxes,
+                    SPECTRUM.U_TIME: 'MJD',
+                    SPECTRUM.TIME: time,
+                    SPECTRUM.INSTRUMENT: instrument,
+                    SPECTRUM.SOURCE: sources,
+                    SPECTRUM.OBSERVER: observer,
+                    SPECTRUM.REDUCER: reducer,
+                    SPECTRUM.REDUCTION: reduction,
+                    SPECTRUM.FILENAME: specfile,
+                    SPECTRUM.REDSHIFT: redshift
+                }
+                if len(survey) > 0:
+                    spec[SPECTRUM.SURVEY] = survey
+                if errors is not None:
+                    spec[SPECTRUM.ERRORS] = errors
+                    spec[SPECTRUM.U_ERRORS] = fluxunit
+
+                catalog.entries[name].add_spectrum(**spec)
 
         catalog.journal_entries()
 
         wiserepcnt = wiserepcnt + 1
-        if (catalog.args.travis and
-                wiserepcnt % catalog.TRAVIS_QUERY_LIMIT == 0):
+        if (catalog.args.travis and wiserepcnt >= catalog.TRAVIS_QUERY_LIMIT):
             break
 
     return

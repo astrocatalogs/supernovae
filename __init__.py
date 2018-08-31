@@ -43,8 +43,6 @@ class Supernova_Paths(astrocats.Paths):
         self.CBETS = os.path.join(self.INPUT, 'cbets.json')
         self.IAUCS = os.path.join(self.INPUT, 'iaucs.json')
         # cached datafiles
-        self.AUTHORS_FILE = os.path.join(
-            self.AUTHORS_FILE, 'bibauthors.json')
         self.EXTINCT = os.path.join(
             self.CACHE, 'extinctions.json')
 

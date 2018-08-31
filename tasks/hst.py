@@ -5,7 +5,8 @@ import os
 
 from astrocats.structures.struct import ENTRY
 from astrocats.utils import is_number, pbar
-from astrocats.supernovae.utils import name_clean
+
+from supernovae.utils import name_clean
 
 
 def do_hst(catalog):

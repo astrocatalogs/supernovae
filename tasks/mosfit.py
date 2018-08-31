@@ -5,8 +5,9 @@ from glob import glob
 import dropbox
 
 from astrocats.utils import pbar
-from astrocats.supernovae.supernova import Supernova, SUPERNOVA
 from astrocats.structures.struct import PHOTOMETRY
+
+from supernovae.supernova import Supernova, SUPERNOVA
 
 
 def do_mosfit(catalog):
