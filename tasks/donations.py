@@ -7,12 +7,10 @@ from glob import glob
 from math import floor, isnan
 
 import numpy as np
-from astrocats.structures.struct import PHOTOMETRY
-from astrocats.structures.struct import SPECTRUM
+from astrocats.structures.struct import PHOTOMETRY, SPECTRUM
 from astrocats.utils import (get_sig_digits, is_number, jd_to_mjd,
-                             pbar, pretty_num, rep_chars)
+                             pbar, pretty_num, rep_chars, astrotime)
 from astropy.io.ascii import read
-from astropy.time import Time as astrotime
 
 from supernovae import utils as sn_utils
 from ..supernova import SUPERNOVA
@@ -206,7 +204,8 @@ def do_donated_photo(catalog):
             (name, source) = catalog.new_entry(inpname, bibcode=bc)
             mag = row[4]
             err = row[5]
-            mjd = str(astrotime('-'.join(row[:3]), format='iso').mjd)
+            # mjd = str(ap_astrotime('-'.join(row[:3]), format='iso').mjd)
+            mjd = astrotime('-'.join(row[:3]), input='iso', output='mjd', to_str=True)
             photodict = {
                 PHOTOMETRY.BAND: row[3],
                 PHOTOMETRY.TIME: mjd,
@@ -629,25 +628,28 @@ def do_donated_spectra(catalog):
     oldname = ''
     for fname in pbar(metadict, task_str):
         name = metadict[fname]['name']
-        name = catalog.get_name_for_entry_or_alias(name)
+        # Find an existing name for this object within the catalog
+        _name = catalog.get_name_for_entry_or_alias(name)
+        # Use that name if it is found
+        if _name is not None:
+            name = _name
+
         if oldname and name != oldname:
             catalog.journal_entries()
         oldname = name
         sec_bibc = metadict[fname]['bibcode']
         name, source = catalog.new_entry(name, bibcode=sec_bibc)
-
         date = metadict[fname].get('date', '')
         year, month, day = date.split('/')
         sig = get_sig_digits(day) + 5
         day_fmt = str(floor(float(day))).zfill(2)
-        time = astrotime(year + '-' + month + '-' + day_fmt).mjd
+        # time = ap_astrotime(year + '-' + month + '-' + day_fmt).mjd
+        time = astrotime(year + '-' + month + '-' + day_fmt, input=None, output="mjd")
         time = time + float(day) - floor(float(day))
         time = pretty_num(time, sig=sig)
 
         with open(os.path.join(fpath, fname), 'r') as f:
-            specdata = list(
-                csv.reader(
-                    f, delimiter=' ', skipinitialspace=True))
+            specdata = list(csv.reader(f, delimiter=' ', skipinitialspace=True))
             specdata = list(filter(None, specdata))
             newspec = []
             oldval = ''
@@ -659,13 +661,12 @@ def do_donated_spectra(catalog):
                 newspec.append(row)
                 oldval = row[1]
             specdata = newspec
-        haserrors = len(specdata[0]) == 3 and specdata[0][2] and specdata[0][
-            2] != 'NaN'
+        haserrors = len(specdata[0]) == 3 and specdata[0][2] and specdata[0][2] != 'NaN'
         specdata = [list(i) for i in zip(*specdata)]
 
         wavelengths = specdata[0]
         fluxes = specdata[1]
-        errors = ''
+        errors = None
         if haserrors:
             errors = specdata[2]
 
@@ -675,10 +676,12 @@ def do_donated_spectra(catalog):
             SPECTRUM.TIME: time,
             SPECTRUM.WAVELENGTHS: wavelengths,
             SPECTRUM.FLUXES: fluxes,
-            SPECTRUM.ERRORS: errors,
             SPECTRUM.SOURCE: source,
             SPECTRUM.FILENAME: fname
         }
+        if errors is not None:
+            specdict[SPECTRUM.ERRORS] = errors
+
         if 'instrument' in metadict[fname]:
             specdict[SPECTRUM.INSTRUMENT] = metadict[fname]['instrument']
         if 'telescope' in metadict[fname]:
@@ -695,8 +698,7 @@ def do_donated_spectra(catalog):
             specdict[SPECTRUM.U_ERRORS] = fluxunit
         catalog.entries[name].add_spectrum(**specdict)
         donationscnt = donationscnt + 1
-        if (catalog.args.travis and
-                donationscnt % catalog.TRAVIS_QUERY_LIMIT == 0):
+        if catalog.args.travis and (donationscnt >= catalog.TRAVIS_QUERY_LIMIT):
             break
 
     catalog.journal_entries()
