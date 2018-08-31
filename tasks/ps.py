@@ -172,6 +172,8 @@ def do_ps_threepi(catalog):
               "ps1threepi/psdb/public/?page=1&sort=followup_flag_date")
     html = catalog.load_url(ps_url, fname, write=False, update_mode=True)
 
+    archived_flag = (catalog.args.archived or catalog.current_task.archived)
+
     # Check if offline.
     offline = False
     if not html:
@@ -214,8 +216,7 @@ def do_ps_threepi(catalog):
             with open(fname, 'r') as f:
                 html = f.read()
         else:
-            if (catalog.current_task.load_archive(catalog.args) and
-                    page < oldnumpages and os.path.isfile(fname)):
+            if archived_flag and (page < oldnumpages) and os.path.isfile(fname):
                 with open(fname, 'r') as f:
                     html = f.read()
             else:
@@ -235,7 +236,7 @@ def do_ps_threepi(catalog):
             refs = []
             aliases = []
             ttype = ''
-            ctype = ''
+            ctype = None
             for tdi, td in enumerate(tds):
                 if tdi == 0:
                     psname = td.contents[0]
@@ -254,7 +255,7 @@ def do_ps_threepi(catalog):
                         continue
                     ctype = td.contents[0]
                     if ctype == 'Observed':
-                        ctype = ''
+                        ctype = None
                 elif tdi == 17:
                     if td.contents:
                         crossrefs = td.findAll('a')
@@ -269,41 +270,35 @@ def do_ps_threepi(catalog):
             if ttype != 'sn' and ttype != 'orphan':
                 continue
 
-            name = ''
+            name = None
             for alias in aliases:
                 if alias in bad_aliases:
                     continue
                 if alias[:2] == 'SN':
                     name = alias
-            if not name:
+            if name is None:
                 name = psname
             name = catalog.add_entry(name)
             sources = [
                 catalog.entries[name].add_source(
-                    name='Pan-STARRS 3Pi',
-                    url=('https://star.pst.qub.ac.uk/'
-                         'ps1threepi/psdb/'))
+                    name='Pan-STARRS 3Pi', url='https://star.pst.qub.ac.uk/ps1threepi/psdb/')
             ]
-            catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name,
-                                               sources[0])
+            catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, sources[0])
             for ref in refs:
-                sources.append(catalog.entries[name].add_source(
-                    name=ref[0], url=ref[1]))
+                sources.append(catalog.entries[name].add_source(name=ref[0], url=ref[1]))
             source = uniq_cdl(sources)
             for alias in aliases:
                 newalias = alias
                 if alias[:3] in ['CSS', 'SSS', 'MLS']:
                     newalias = alias.replace('-', ':', 1)
                 newalias = newalias.replace('PSNJ', 'PSN J')
-                catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, newalias,
-                                                   source)
+                catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, newalias, source)
             catalog.entries[name].add_quantity(SUPERNOVA.RA, ra, source)
             catalog.entries[name].add_quantity(SUPERNOVA.DEC, dec, source)
-            catalog.entries[name].add_quantity(SUPERNOVA.CLAIMED_TYPE, ctype,
-                                               source)
+            if ctype is not None:
+                catalog.entries[name].add_quantity(SUPERNOVA.CLAIMED_TYPE, ctype, source)
 
-            fname2 = os.path.join(catalog.get_current_task_repo(),
-                                  '3pi/candidate-')
+            fname2 = os.path.join(catalog.get_current_task_repo(), '3pi/candidate-')
             fname2 += pslink.rstrip('/').split('/')[-1] + '.html'
             if offline:
                 if not os.path.isfile(fname2):
@@ -311,13 +306,11 @@ def do_ps_threepi(catalog):
                 with open(fname2, 'r') as f:
                     html2 = f.read()
             else:
-                if (catalog.current_task.load_archive(catalog.args) and
-                        os.path.isfile(fname2)):
+                if archived_flag and os.path.isfile(fname2):
                     with open(fname2, 'r') as f:
                         html2 = f.read()
                 else:
-                    pslink = ('https://star.pst.qub.ac.uk/'
-                              'ps1threepi/psdb/public/') + pslink
+                    pslink = 'https://star.pst.qub.ac.uk/ps1threepi/psdb/public/' + pslink
                     try:
                         session2 = requests.Session()
                         response2 = session2.get(pslink)
@@ -380,8 +373,8 @@ def do_ps_threepi(catalog):
             #             source=source,
             #             telescope=teles)
             assoctab = bs2.find('table', {'class': 'generictable'})
-            hostname = ''
-            redshift = ''
+            hostname = None
+            redshift = None
             if assoctab:
                 trs = assoctab.findAll('tr')
                 headertds = [x.contents[0] for x in trs[1].findAll('td')]
@@ -393,21 +386,19 @@ def do_ps_threepi(catalog):
                         if 'z' in headertds:
                             redshift = td.contents[0].strip()
             # Skip galaxies with just SDSS id
-            if is_number(hostname):
-                continue
-            catalog.entries[name].add_quantity(SUPERNOVA.HOST, hostname,
-                                               source)
-            if redshift:
-                catalog.entries[name].add_quantity(
-                    [SUPERNOVA.REDSHIFT, SUPERNOVA.HOST_REDSHIFT],
-                    redshift,
-                    source,
-                    kind='host')
+            if hostname is not None:
+                if is_number(hostname):
+                    continue
+                catalog.entries[name].add_quantity(SUPERNOVA.HOST, hostname, source)
+
+            if redshift is not None:
+                for qkey in [SUPERNOVA.REDSHIFT, SUPERNOVA.HOST_REDSHIFT]:
+                    catalog.entries[name].add_quantity(qkey, redshift, source, kind='host')
             if catalog.args.update:
                 catalog.journal_entries()
 
         catalog.journal_entries()
-        # Only run first page for Travis
+
         if catalog.args.travis:
             break
 
