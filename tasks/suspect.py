@@ -9,11 +9,12 @@ from glob import glob
 from html import unescape
 from math import floor
 
-from astropy.time import Time as astrotime
+# from astropy.time import Time as astrotime
 from bs4 import BeautifulSoup
 
 from astrocats.structures.struct import PHOTOMETRY, SPECTRUM
-from astrocats.utils import (get_sig_digits, is_number, jd_to_mjd, pbar, pretty_num, uniq_cdl)
+from astrocats.utils import (astrotime, get_sig_digits, is_number, jd_to_mjd,
+                             pbar, pretty_num, uniq_cdl)
 from decimal import Decimal
 
 from ..supernova import SUPERNOVA
@@ -133,7 +134,10 @@ def do_suspect_spectra(catalog):
             name = eventfolder
             if is_number(name[:4]):
                 name = 'SN' + name
-            name = catalog.get_name_for_entry_or_alias(name)
+            # If entry already exists use name
+            _name = catalog.get_name_for_entry_or_alias(name)
+            if _name is not None:
+                name = _name
             if oldname and name != oldname:
                 catalog.journal_entries()
             oldname = name
@@ -168,7 +172,8 @@ def do_suspect_spectra(catalog):
                 day = date[6:]
                 sig = get_sig_digits(day) + 5
                 day_fmt = str(floor(float(day))).zfill(2)
-                time = astrotime(year + '-' + month + '-' + day_fmt).mjd
+                # time = astrotime(year + '-' + month + '-' + day_fmt).mjd
+                time = astrotime(year + '-' + month + '-' + day_fmt, input=None, output='mjd')
                 time = time + float(day) - floor(float(day))
                 time = pretty_num(time, sig=sig)
 
