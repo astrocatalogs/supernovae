@@ -54,8 +54,7 @@ def do_nedd(catalog):
                     cleanhost, []).append(Decimal(dist))
         if snname and 'HOST' not in snname:
             snname, secondarysource = catalog.new_entry(
-                snname, srcname=reference, bibcode=nedbib, url=refurl,
-                secondary=True)
+                snname, name=reference, bibcode=nedbib, url=refurl, secondary=True)
             if bibcode:
                 source = catalog.entries[snname].add_source(bibcode=bibcode)
                 sources = uniq_cdl([source, secondarysource])

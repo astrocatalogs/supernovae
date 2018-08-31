@@ -99,18 +99,14 @@ def do_ps_alerts(catalog):
             wlnamesleft.remove(psname)
 
         name, source = catalog.new_entry(
-            psname,
-            srcname='Pan-STARRS Alerts',
-            url='http://telescopes.rc.fas.harvard.edu/ps1/')
+            psname, name='Pan-STARRS Alerts', url='http://telescopes.rc.fas.harvard.edu/ps1/')
 
         catalog.entries[name].add_quantity(SUPERNOVA.RA, row[4], source)
         catalog.entries[name].add_quantity(SUPERNOVA.DEC, row[5], source)
         if sntype != '-':
-            catalog.entries[name].add_quantity(SUPERNOVA.CLAIMED_TYPE, sntype,
-                                               source)
+            catalog.entries[name].add_quantity(SUPERNOVA.CLAIMED_TYPE, sntype, source)
         if row[22] != '-':
-            catalog.entries[name].add_quantity(SUPERNOVA.REDSHIFT, row[22],
-                                               source)
+            catalog.entries[name].add_quantity(SUPERNOVA.REDSHIFT, row[22], source)
         # Disabling photometry import
         continue
 

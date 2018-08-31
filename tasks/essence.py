@@ -113,7 +113,7 @@ def do_essence_spectra(catalog):
 
     file_names = glob(os.path.join(catalog.get_current_task_repo(), 'ESSENCE', '*'))
     oldname = ''
-    for fi, fname in enumerate(pbar(file_names, task_str), sort=True):
+    for fi, fname in enumerate(pbar(file_names, task_str, sort=True)):
         filename = os.path.basename(fname)
         fileparts = filename.split('_')
         name = 'ESSENCE ' + fileparts[0]

@@ -35,9 +35,8 @@ def do_hst(catalog):
             continue
         if oldname.startswith('PS1-') and not is_number(oldname[4]):
             continue
-        name, source = catalog.new_entry(oldname, srcname=reference, url=url)
-        if (ENTRY.RA in catalog.entries[name] and
-                ENTRY.DEC in catalog.entries[name]):
+        name, source = catalog.new_entry(oldname, name=reference, url=url)
+        if (ENTRY.RA in catalog.entries[name] and ENTRY.DEC in catalog.entries[name]):
             continue
 
         catalog.entries[name].add_quantity(

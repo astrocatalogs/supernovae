@@ -34,7 +34,7 @@ def do_ptss_meta(catalog):
         for met in pbar(meta, task_str + ' - ' + str(year)):
             oldname = met['name']
             name, source = catalog.new_entry(
-                oldname, srcname='PMO & Tsinghua Supernova Survey (PTSS)',
+                oldname, name='PMO & Tsinghua Supernova Survey (PTSS)',
                 url='http://www.cneost.org/ptss/index.php')
             coo = coord(met['ra'], met['dec'], unit=(un.deg, un.deg))
             catalog.entries[name].add_quantity(

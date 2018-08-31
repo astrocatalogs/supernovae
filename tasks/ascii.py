@@ -516,7 +516,7 @@ def _ascii_1b(catalog):
     # for path in pbar(file_names, task_str):
     #     oname = path.split('/')[-1].split('.')[0]
     #     name, source = catalog.new_entry(
-    #         oname, srcname='KEGS', url='http://www.mso.anu.edu.au/kegs/')
+    #         oname, name='KEGS', url='http://www.mso.anu.edu.au/kegs/')
     #     tsvin = list(
     #         csv.reader(
     #             open(path, 'r'), delimiter=' ', skipinitialspace=True))
@@ -563,9 +563,7 @@ def _ascii_2(catalog):
         if nonsne:
             continue
         name, source = catalog.new_entry(
-            row['SNHunt des.'],
-            srcname='CRTS SNhunt',
-            bibcode='2017csnh.book.....H')
+            row['SNHunt des.'], name='CRTS SNhunt', bibcode='2017csnh.book.....H')
         if row['IAU des.'] != '--':
             catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, row['IAU des.'], source)
         for ct in ctypes:

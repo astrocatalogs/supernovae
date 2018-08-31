@@ -18,7 +18,7 @@ def do_snf_aliases(catalog):
     with open(file_path, 'r') as f:
         for row in [x.split(',') for x in f.read().splitlines()]:
             name, source = catalog.new_entry(
-                row[0], bibcode=catalog.OSC_BIBCODE, srcname=catalog.OSC_NAME,
+                row[0], bibcode=catalog.OSC_BIBCODE, name=catalog.OSC_NAME,
                 url=catalog.OSC_URL, secondary=True)
             catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, row[1], source)
 

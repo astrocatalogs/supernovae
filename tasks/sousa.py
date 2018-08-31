@@ -36,9 +36,7 @@ def do_sousa(catalog):
         if name in namereps:
             name = namereps[name]
         name, source = catalog.new_entry(
-            name,
-            srcname='SOUSA',
-            bibcode='2014Ap&SS.354...89B',
+            name, name='SOUSA', bibcode='2014Ap&SS.354...89B',
             url='http://people.physics.tamu.edu/pbrown/SwiftSN/swift_sn.html')
         with open(fi, 'r') as f:
             lines = f.read().splitlines()

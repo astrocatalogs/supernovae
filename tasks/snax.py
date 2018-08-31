@@ -31,7 +31,7 @@ def do_snax(catalog):
         if r == 0 or not row[0]:
             continue
         name, source = catalog.new_entry(
-            row[0], srcname='SNaX', url='http://kronos.uchicago.edu/snax/', secondary=True)
+            row[0], name='SNaX', url='http://kronos.uchicago.edu/snax/', secondary=True)
         sources = [source]
         expsrc = uniq_cdl(sources + [catalog.entries[name].add_source(bibcode=row[-6].strip())])
         coosrc = uniq_cdl(sources + [catalog.entries[name].add_source(bibcode=row[-5].strip())])

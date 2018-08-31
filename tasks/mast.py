@@ -294,8 +294,7 @@ def do_mast_spectra(catalog):
                 try:
                     hdulist = fits.open(datafile)
                 except Exception:
-                    print(
-                        "Couldn't read `{}`, maybe private.".format(filename))
+                    print("Couldn't read `{}`, maybe private.".format(filename))
                     os.remove(datafile)
                     continue
                 for oi, obj in enumerate(hdulist[0].header):
@@ -307,13 +306,11 @@ def do_mast_spectra(catalog):
                 name = entry
                 if not name:
                     name = hdulist[0].header['OBJECT']
-                name, source = catalog.new_entry(
-                    name, srcname=mastref, url=masturl, secondary=True)
+                name, source = catalog.new_entry(name, name=mastref, url=masturl, secondary=True)
                 sources = [source]
                 if 'OBSERVER' in hdrkeys:
                     sources.append(
-                        catalog.entries[name].add_source(
-                            name=hdulist[0].header['OBSERVER']))
+                        catalog.entries[name].add_source(name=hdulist[0].header['OBSERVER']))
                 if observer:
                     source = catalog.entries[name].add_source(name=observer)
                     sources.append(source)

@@ -43,11 +43,7 @@ def do_asiago_photo(catalog):
             refbib = '1989A&AS...81..421B'
 
             name, source = catalog.new_entry(
-                oldname,
-                srcname=reference,
-                url=refurl,
-                bibcode=refbib,
-                secondary=True)
+                oldname, name=reference, url=refurl, bibcode=refbib, secondary=True)
 
             year = re.findall(r'\d+', oldname)[0]
             catalog.entries[name].add_quantity(SUPERNOVA.DISCOVER_DATE, year, source)

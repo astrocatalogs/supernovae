@@ -29,9 +29,7 @@ def do_grb(catalog):
         if r == 0:
             continue
         (name, source) = catalog.new_entry(
-            'GRB ' + row[0],
-            srcname='Gamma-ray Bursts Catalog',
-            url='http://www.grbcatalog.org')
+            'GRB ' + row[0], name='Gamma-ray Bursts Catalog', url='http://www.grbcatalog.org')
         catalog.entries[name].add_quantity(
             SUPERNOVA.RA, row[2], source, u_value='floatdegrees')
         catalog.entries[name].add_quantity(
@@ -96,9 +94,7 @@ def do_batse(catalog):
         if row[0] not in t90s or t90s[row[0]] < 3.0:
             continue
         (name, source) = catalog.new_entry(
-            oname,
-            srcname='BATSE Catalog',
-            bibcode='1999ApJS..122..465P',
+            oname, name='BATSE Catalog', bibcode='1999ApJS..122..465P',
             url='http://gammaray.nsstc.nasa.gov/batse/grb/catalog/')
 
         jd = Decimal(2440000.5) + Decimal(row[3])

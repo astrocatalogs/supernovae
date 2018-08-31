@@ -126,7 +126,7 @@ def do_asas_atels(catalog):
                         objname = objname[0]
             if objname and lcurl:
                 name, source = catalog.new_entry(
-                    objname, srcname='ASAS-SN Sky Patrol',
+                    objname, name='ASAS-SN Sky Patrol',
                     bibcode='2017arXiv170607060K', url='https://asas-sn.osu.edu')
                 csv = catalog.load_url(lcurl + '.csv', os.path.join(
                     catalog.get_current_task_repo(), os.path.join(

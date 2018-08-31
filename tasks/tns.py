@@ -79,7 +79,7 @@ def do_tns(catalog):
             if len(name) < 5:
                 continue
             name, source = catalog.new_entry(
-                name, srcname='Transient Name Server', url=tns_url)
+                name, name='Transient Name Server', url=tns_url)
             if row[2] and row[2] != '00:00:00.00':
                 catalog.entries[name].add_quantity(SUPERNOVA.RA, row[2], source)
             if row[3] and row[3] != '+00:00:00.00':
@@ -204,7 +204,7 @@ def do_tns_photo(catalog):
         if 'photometry' not in objdict:
             continue
         photoarr = objdict['photometry']
-        name, source = catalog.new_entry(oname, srcname='Transient Name Server', url=tns_url)
+        name, source = catalog.new_entry(oname, name='Transient Name Server', url=tns_url)
         for photo in photoarr:
             if 'mag' not in photo['flux_unit']['name'].lower():
                 catalog.log.warning('Unknown flux unit `{}`.'.format(photo['flux_unit']['name']))
@@ -330,7 +330,7 @@ def do_tns_spectra(catalog):
         if 'spectra' not in objdict:
             continue
         specarr = objdict['spectra']
-        name, source = catalog.new_entry(oname, srcname='Transient Name Server', url=tns_url)
+        name, source = catalog.new_entry(oname, name='Transient Name Server', url=tns_url)
         for spectrum in specarr:
             spectrumdict = {PHOTOMETRY.SOURCE: source}
             if 'jd' in spectrum:

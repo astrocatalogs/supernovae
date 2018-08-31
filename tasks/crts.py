@@ -94,9 +94,7 @@ def do_crts(catalog):
                 name = crtsname
 
             name, source = catalog.new_entry(
-                name,
-                srcname='Catalina Sky Survey',
-                bibcode='2009ApJ...696..870D',
+                name, name='Catalina Sky Survey', bibcode='2009ApJ...696..870D',
                 url='http://nesssi.cacr.caltech.edu/catalina/AllSN.html')
 
             catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
