@@ -26,14 +26,11 @@ def do_sousa(catalog):
             continue
         if '.dat' in link['href']:
             ulink = unescape(link['href']).replace('\n', '')
-            catalog.load_url(ulink,
-                             os.path.join(catalog.get_current_task_repo(),
-                                          'SOUSA/') + ulink.split('/')[-1])
+            path = os.path.join(catalog.get_current_task_repo(), 'SOUSA/') + ulink.split('/')[-1]
+            catalog.load_url(ulink, path)
 
     files = glob(os.path.join(catalog.get_current_task_repo(), 'SOUSA/*.dat'))
-    namereps = {
-        'CSS140914': 'CSS140914:010107-101840'
-    }
+    namereps = {'CSS140914': 'CSS140914:010107-101840'}
     for fi in pbar(files, task_str):
         name = os.path.basename(fi).split('_')[0]
         if name in namereps:
@@ -56,22 +53,24 @@ def do_sousa(catalog):
                     continue
                 isupp = cols[2] == 'NULL' and cols[6] != 'NULL'
                 mag = cols[2] if not isupp else cols[4]
-                e_mag = cols[3] if not isupp else ''
-                upp = '' if not isupp else True
+                e_mag = cols[3] if not isupp else None
                 photodict = {
                     PHOTOMETRY.TIME: mjd,
                     PHOTOMETRY.U_TIME: 'MJD',
                     PHOTOMETRY.MAGNITUDE: mag,
-                    PHOTOMETRY.UPPER_LIMIT: upp,
                     PHOTOMETRY.BAND: band,
                     PHOTOMETRY.SOURCE: source,
                     PHOTOMETRY.TELESCOPE: 'Swift',
                     PHOTOMETRY.INSTRUMENT: 'UVOT',
                     PHOTOMETRY.SYSTEM: 'Vega'
                 }
-                if e_mag:
+                if e_mag is not None:
                     photodict[PHOTOMETRY.E_MAGNITUDE] = e_mag
+                if isupp:
+                    photodict[PHOTOMETRY.UPPER_LIMIT] = True
+
                 catalog.entries[name].add_photometry(**photodict)
+
     catalog.journal_entries()
 
     return
