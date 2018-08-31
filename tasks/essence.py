@@ -11,33 +11,25 @@ from astropy.time import Time as astrotime
 
 from decimal import Decimal
 
-from supernovae import utils and sn_utils
+from supernovae import utils as sn_utils
 from ..supernova import SUPERNOVA
 
 
 def do_essence_photo(catalog):
     task_str = catalog.get_current_task_str()
-    ess_path = os.path.join(catalog.get_current_task_repo(), 'ESSENCE',
-                            'obj_table.dat')
-    data = list(
-        csv.reader(
-            open(ess_path, 'r'),
-            delimiter=' ',
-            quotechar='"',
-            skipinitialspace=True))
+    ess_path = os.path.join(catalog.get_current_task_repo(), 'ESSENCE', 'obj_table.dat')
+    data = list(csv.reader(open(ess_path, 'r'),
+                           delimiter=' ', quotechar='"', skipinitialspace=True))
     for row in pbar(data[1:], task_str):
         etype = row[2]
         if etype.upper().replace('?', '') in catalog.nonsnetypes:
             continue
         ess_name = 'ESSENCE ' + row[0]
-        name, source = catalog.new_entry(
-            ess_name, bibcode='2016ApJS..224....3N')
+        name, source = catalog.new_entry(ess_name, bibcode='2016ApJS..224....3N')
         if row[1] != '---':
-            catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, 'SN' + row[1],
-                                               source)
+            catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, 'SN' + row[1], source)
         if etype != '---':
-            catalog.entries[name].add_quantity(SUPERNOVA.CLAIMED_TYPE, etype,
-                                               source)
+            catalog.entries[name].add_quantity(SUPERNOVA.CLAIMED_TYPE, etype, source)
         catalog.entries[name].add_quantity(SUPERNOVA.RA, row[5], source)
         catalog.entries[name].add_quantity(SUPERNOVA.DEC, row[6], source)
         if is_number(row[11]):
@@ -51,10 +43,7 @@ def do_essence_photo(catalog):
             catalog.entries[name].add_quantity(
                 [SUPERNOVA.REDSHIFT, SUPERNOVA.HOST_REDSHIFT], **quantdict)
 
-    files = glob(
-        os.path.join(catalog.get_current_task_repo(), 'ESSENCE',
-                     '*clean*.dat'))
-
+    files = glob(os.path.join(catalog.get_current_task_repo(), 'ESSENCE', '*clean*.dat'))
     for pfile in pbar(files, task_str):
         name = 'ESSENCE ' + pfile.split('/')[-1].split('.')[0]
         name, source = catalog.new_entry(name, bibcode='2016ApJS..224....3N')
@@ -128,8 +117,7 @@ def do_essence_spectra(catalog):
         "fast": "FLWO 1.5m"
     }
 
-    file_names = glob(
-        os.path.join(catalog.get_current_task_repo(), 'ESSENCE', '*'))
+    file_names = glob(os.path.join(catalog.get_current_task_repo(), 'ESSENCE', '*'))
     oldname = ''
     for fi, fname in enumerate(pbar(file_names, task_str), sort=True):
         filename = os.path.basename(fname)
@@ -150,11 +138,10 @@ def do_essence_spectra(catalog):
         dstr = fileparts[doffset]
         mjd = str(
             astrotime(
-                datetime.datetime(
-                    year=int(dstr[:4]),
-                    month=int(dstr[4:6]),
-                    day=int(dstr[6:8])) + datetime.timedelta(days=float(dstr[
-                        8:]))).mjd)
+                datetime.datetime(year=int(dstr[:4]), month=int(dstr[4:6]), day=int(dstr[6:8])) +
+                datetime.timedelta(days=float(dstr[8:]))
+            ).mjd
+        )
 
         instrument = fileparts[-1].split('.')[0]
         telescope = teldict.get(instrument, '')
