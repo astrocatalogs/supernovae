@@ -12,8 +12,7 @@ import requests
 
 from astrocats.structures.struct import PHOTOMETRY
 from astrocats.structures.struct import SPECTRUM
-from astrocats.utils import (is_integer, is_number, jd_to_mjd, pbar,
-                                     pretty_num, sortOD)
+from astrocats.utils import (is_integer, is_number, jd_to_mjd, pbar, pretty_num, sortOD)
 from decimal import Decimal
 
 from ..supernova import SUPERNOVA
@@ -24,22 +23,19 @@ def do_tns(catalog):
     session = requests.Session()
     task_str = catalog.get_current_task_str()
     tns_url = 'https://wis-tns.weizmann.ac.il/'
-    search_url = tns_url + \
-        'search?&num_page=1&format=html&sort=desc&order=id&format=csv&page=0'
-    csvtxt = catalog.load_url(search_url,
-                              os.path.join(catalog.get_current_task_repo(),
-                                           'TNS', 'index.csv'))
+    search_url = tns_url + 'search?&num_page=1&format=html&sort=desc&order=id&format=csv&page=0'
+    path = os.path.join(catalog.get_current_task_repo(), 'TNS', 'index.csv')
+    csvtxt = catalog.load_url(search_url, path)
     if not csvtxt:
         return
     maxid = csvtxt.splitlines()[1].split(',')[0].strip('"')
     maxpages = ceil(int(maxid) / 1000.)
 
     for page in pbar(range(maxpages), task_str):
-        fname = os.path.join(
-            catalog.get_current_task_repo(), 'TNS',
-            'page-') + str(page).zfill(2) + '.csv'
-        if (catalog.current_task.load_archive(catalog.args) and
-                os.path.isfile(fname) and page < 7):
+        fname = os.path.join(catalog.get_current_task_repo(), 'TNS', 'page-')
+        fname += str(page).zfill(2) + '.csv'
+        archived_flag = (catalog.current_task.archived or catalog.args.archived)
+        if archived_flag and os.path.isfile(fname) and page < 7:
             with open(fname, 'r') as tns_file:
                 csvtxt = tns_file.read()
         else:
@@ -64,8 +60,7 @@ def do_tns(catalog):
                     response = session.get(ses_url, timeout=30)
                     csvtxt = response.text
                 except Exception:
-                    catalog.log.warning(
-                        'Could not download TNS page #{}.'.format(str(page)))
+                    catalog.log.warning('Could not download TNS page #{}.'.format(str(page)))
                     if os.path.isfile(fname):
                         with open(fname, 'r') as tns_file:
                             csvtxt = tns_file.read()
@@ -86,30 +81,22 @@ def do_tns(catalog):
             name, source = catalog.new_entry(
                 name, srcname='Transient Name Server', url=tns_url)
             if row[2] and row[2] != '00:00:00.00':
-                catalog.entries[name].add_quantity(SUPERNOVA.RA, row[2],
-                                                   source)
+                catalog.entries[name].add_quantity(SUPERNOVA.RA, row[2], source)
             if row[3] and row[3] != '+00:00:00.00':
-                catalog.entries[name].add_quantity(SUPERNOVA.DEC, row[3],
-                                                   source)
+                catalog.entries[name].add_quantity(SUPERNOVA.DEC, row[3], source)
             if row[4]:
                 catalog.entries[name].add_quantity(
-                    SUPERNOVA.CLAIMED_TYPE, row[4].replace('SN', '').strip(),
-                    source)
+                    SUPERNOVA.CLAIMED_TYPE, row[4].replace('SN', '').strip(), source)
             if row[5]:
                 catalog.entries[name].add_quantity(
                     SUPERNOVA.REDSHIFT, row[5], source, kind='spectroscopic')
             if row[6]:
-                catalog.entries[name].add_quantity(SUPERNOVA.HOST, row[6],
-                                                   source)
+                catalog.entries[name].add_quantity(SUPERNOVA.HOST, row[6], source)
             if row[7]:
-                catalog.entries[name].add_quantity(
-                    [SUPERNOVA.REDSHIFT, SUPERNOVA.HOST_REDSHIFT],
-                    row[7],
-                    source,
-                    kind='host')
+                for qkey in [SUPERNOVA.REDSHIFT, SUPERNOVA.HOST_REDSHIFT]:
+                    catalog.entries[name].add_quantity(qkey, row[7], source, kind='host')
             if row[8]:
-                catalog.entries[name].add_quantity(SUPERNOVA.DISCOVERER,
-                                                   row[8], source)
+                catalog.entries[name].add_quantity(SUPERNOVA.DISCOVERER, row[8], source)
             # Currently, all events listing all possible observers. TNS bug?
             # if row[9]:
             #    observers = row[9].split(',')
@@ -118,9 +105,9 @@ def do_tns(catalog):
             #                                  observer.strip(),
             #                                  source)
             if row[11]:
-                catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, row[11],
-                                                   source)
-            if row[19]:
+                catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, row[11], source)
+
+            if (len(row) > 19) and row[19]:
                 date = row[19].split()[0].replace('-', '/')
                 if date != '0000/00/00':
                     date = date.replace('/00', '')
@@ -130,14 +117,11 @@ def do_tns(catalog):
                         if t != '00:00:00':
                             ts = t.split(':')
                             dt = timedelta(
-                                hours=int(ts[0]),
-                                minutes=int(ts[1]),
-                                seconds=int(ts[2]))
-                            date += pretty_num(
-                                dt.total_seconds() / (24 * 60 * 60),
-                                sig=6).lstrip('0')
-                    catalog.entries[name].add_quantity(SUPERNOVA.DISCOVER_DATE,
-                                                       date, source)
+                                hours=int(ts[0]), minutes=int(ts[1]), seconds=int(ts[2]))
+                            temp = pretty_num(dt.total_seconds() / (24 * 60 * 60), sig=6)
+                            date += temp.lstrip('0')
+                    catalog.entries[name].add_quantity(SUPERNOVA.DISCOVER_DATE, date, source)
+
             if catalog.args.travis and ri >= catalog.TRAVIS_QUERY_LIMIT:
                 break
 
@@ -174,15 +158,13 @@ def do_tns_photo(catalog):
         if not oname:
             continue
         reqname = oname[2:]
-        jsonpath = os.path.join(catalog.get_current_task_repo(), 'TNS',
-                                reqname + '.json')
+        jsonpath = os.path.join(catalog.get_current_task_repo(), 'TNS', reqname + '.json')
         download_json = True
         if os.path.isfile(jsonpath):
             with open(jsonpath, 'r') as f:
                 objdict = json.load(f)
             if ('discoverydate' in objdict and
-                (datetime.now() - datetime.strptime(objdict['discoverydate'],
-                                                    '%Y-%m-%d %H:%M:%S')
+                (datetime.now() - datetime.strptime(objdict['discoverydate'], '%Y-%m-%d %H:%M:%S')
                  ).days > 90):
                 download_json = False
         if download_json:
@@ -199,9 +181,8 @@ def do_tns_photo(catalog):
             objdict = None
             while trys < 3 and not objdict:
                 try:
-                    objdict = json.loads(
-                        urllib.request.urlopen(req, timeout=30).read().decode('ascii'))[
-                            'data']['reply']
+                    objdict = urllib.request.urlopen(req, timeout=30)
+                    objdict = json.loads(objdict.read().decode('ascii'))['data']['reply']
                 except KeyboardInterrupt:
                     raise
                 except Exception:
@@ -209,8 +190,7 @@ def do_tns_photo(catalog):
                         name))
                     time.sleep(5)
                 trys = trys + 1
-            if (not objdict or 'objname' not in objdict or
-                    not isinstance(objdict['objname'], str)):
+            if not objdict or 'objname' not in objdict or not isinstance(objdict['objname'], str):
                 fails = fails + 1
                 catalog.log.warning('Object `{}` not found!'.format(name))
                 if fails >= 5:
@@ -219,18 +199,15 @@ def do_tns_photo(catalog):
             # Cache object here
             with open(jsonpath, 'w') as f:
                 json.dump(sortOD(objdict), f, indent='\t',
-                          separators=(',', ':'), ensure_ascii=False,
-                          sort_keys=True)
+                          separators=(',', ':'), ensure_ascii=False, sort_keys=True)
 
         if 'photometry' not in objdict:
             continue
         photoarr = objdict['photometry']
-        name, source = catalog.new_entry(
-            oname, srcname='Transient Name Server', url=tns_url)
+        name, source = catalog.new_entry(oname, srcname='Transient Name Server', url=tns_url)
         for photo in photoarr:
             if 'mag' not in photo['flux_unit']['name'].lower():
-                catalog.log.warning('Unknown flux unit `{}`.'.format(photo[
-                    'flux_unit']['name']))
+                catalog.log.warning('Unknown flux unit `{}`.'.format(photo['flux_unit']['name']))
                 continue
             if not photo['jd']:
                 continue
@@ -306,15 +283,14 @@ def do_tns_spectra(catalog):
         if not oname:
             continue
         reqname = oname[2:]
-        jsonpath = os.path.join(catalog.get_current_task_repo(), 'TNS', 'meta',
-                                reqname + '.json')
+        jsonpath = os.path.join(
+            catalog.get_current_task_repo(), 'TNS', 'meta', reqname + '.json')
         download_json = True
         if os.path.isfile(jsonpath):
             with open(jsonpath, 'r') as f:
                 objdict = json.load(f)
             if ('discoverydate' in objdict and
-                (datetime.now() - datetime.strptime(objdict['discoverydate'],
-                                                    '%Y-%m-%d %H:%M:%S')
+                (datetime.now() - datetime.strptime(objdict['discoverydate'], '%Y-%m-%d %H:%M:%S')
                  ).days > 90):
                 download_json = False
         if download_json:
@@ -332,17 +308,15 @@ def do_tns_spectra(catalog):
             while trys < 3 and not objdict:
                 try:
                     objdict = json.loads(
-                        urllib.request.urlopen(req, timeout=30).read().decode('ascii'))[
-                            'data']['reply']
+                        urllib.request.urlopen(
+                            req, timeout=30).read().decode('ascii'))['data']['reply']
                 except KeyboardInterrupt:
                     raise
                 except Exception:
-                    catalog.log.warning('API request failed for `{}`.'.format(
-                        name))
+                    catalog.log.warning('API request failed for `{}`.'.format(name))
                     time.sleep(5)
                 trys = trys + 1
-            if (not objdict or 'objname' not in objdict or
-                    not isinstance(objdict['objname'], str)):
+            if not objdict or 'objname' not in objdict or not isinstance(objdict['objname'], str):
                 fails = fails + 1
                 catalog.log.warning('Object `{}` not found!'.format(name))
                 if fails >= 5:
@@ -351,21 +325,16 @@ def do_tns_spectra(catalog):
             # Cache object here
             with open(jsonpath, 'w') as f:
                 json.dump(sortOD(objdict), f, indent='\t',
-                          separators=(',', ':'), ensure_ascii=False,
-                          sort_keys=True)
+                          separators=(',', ':'), ensure_ascii=False, sort_keys=True)
 
         if 'spectra' not in objdict:
             continue
         specarr = objdict['spectra']
-        name, source = catalog.new_entry(
-            oname, srcname='Transient Name Server', url=tns_url)
+        name, source = catalog.new_entry(oname, srcname='Transient Name Server', url=tns_url)
         for spectrum in specarr:
-            spectrumdict = {
-                PHOTOMETRY.SOURCE: source
-            }
+            spectrumdict = {PHOTOMETRY.SOURCE: source}
             if 'jd' in spectrum:
-                spectrumdict[SPECTRUM.TIME] = str(
-                    jd_to_mjd(Decimal(str(spectrum['jd']))))
+                spectrumdict[SPECTRUM.TIME] = str(jd_to_mjd(Decimal(str(spectrum['jd']))))
                 spectrumdict[SPECTRUM.U_TIME] = 'MJD'
             if spectrum.get('observer', ''):
                 spectrumdict[SPECTRUM.OBSERVER] = spectrum['observer']
@@ -385,8 +354,7 @@ def do_tns_spectra(catalog):
                     spectrumdict[SPECTRUM.INSTRUMENT] = instrument
 
             if 'asciifile' in spectrum:
-                fname = urllib.parse.unquote(
-                    spectrum['asciifile'].split('/')[-1])
+                fname = urllib.parse.unquote(spectrum['asciifile'].split('/')[-1])
                 spectxt = catalog.load_url(
                     spectrum['asciifile'],
                     os.path.join(
@@ -429,5 +397,7 @@ def do_tns_spectra(catalog):
                     SPECTRUM.FLUXES: fluxes
                 })
                 catalog.entries[name].add_spectrum(**spectrumdict)
+
         catalog.journal_entries()
+
     return
