@@ -17,6 +17,8 @@ from ..constants import CLIGHT, KM
 from ..supernova import SUPERNOVA
 from ..utils import radec_clean
 
+TRAVIS_LIMIT = True
+
 
 def do_vizier(catalog):
     """Import data from Vizier catalogs."""
@@ -68,7 +70,7 @@ def _viz_1(catalog, viz):
     for ti, table in enumerate(results):
         table.convert_bytestring_to_unicode()
         name, source = catalog.new_entry('SN2002cv', bibcode='2008MNRAS.384..107E')
-        for row in pbar(table, task_str):
+        for ri, row in enumerate(pbar(table, task_str)):
             row = convert_aq_output(row)
             bands = [x for x in row if x.endswith('mag') and not x.startswith('e_')]
             for bandtag in bands:
@@ -89,6 +91,10 @@ def _viz_1(catalog, viz):
                     elif ('e_' + bandtag) in row:
                         photodict[PHOTOMETRY.E_MAGNITUDE] = row['e_' + bandtag]
                     catalog.entries[name].add_photometry(**photodict)
+
+            if TRAVIS_LIMIT and catalog.args.travis and ri >= catalog.TRAVIS_QUERY_LIMIT:
+                break
+
     catalog.journal_entries()
 
     # 2016ApJ...824....6O
@@ -167,8 +173,7 @@ def _viz_1(catalog, viz):
     catalog.journal_entries()
 
     # 2016A&A...593A..68F
-    results = viz.get_catalogs(
-        ['J/A+A/593/A68/ph12os', 'J/A+A/593/A68/ph13bvn'])
+    results = viz.get_catalogs(['J/A+A/593/A68/ph12os', 'J/A+A/593/A68/ph13bvn'])
     for ti, table in enumerate(results):
         table.convert_bytestring_to_unicode()
         name, source = catalog.new_entry(

@@ -31,7 +31,7 @@ def do_tns(catalog):
     maxid = csvtxt.splitlines()[1].split(',')[0].strip('"')
     maxpages = ceil(int(maxid) / 1000.)
 
-    for page in pbar(range(maxpages), task_str):
+    for jj, page in enumerate(pbar(range(maxpages), task_str)):
         fname = os.path.join(catalog.get_current_task_repo(), 'TNS', 'page-')
         fname += str(page).zfill(2) + '.csv'
         archived_flag = (catalog.current_task.archived or catalog.args.archived)
@@ -124,6 +124,9 @@ def do_tns(catalog):
 
             if catalog.args.travis and ri >= catalog.TRAVIS_QUERY_LIMIT:
                 break
+
+        if catalog.args.travis and jj >= catalog.TRAVIS_QUERY_LIMIT:
+            break
 
         catalog.journal_entries()
 

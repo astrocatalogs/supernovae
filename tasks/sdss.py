@@ -37,77 +37,77 @@ def do_sdss_photo(catalog):
     path = os.path.join(catalog.get_current_task_repo(), 'SDSS/sdsssn_master.dat2')
     with open(path, 'r') as f:
         rows = list(csv.reader(f.read().splitlines()[1:], delimiter=' '))
-        ignored_cids = []
-        columns = {
-            SUPERNOVA.RA: 1,
-            SUPERNOVA.DEC: 2,
-            SUPERNOVA.ALIAS: 4,
-            SUPERNOVA.CLAIMED_TYPE: 5,
-            SUPERNOVA.REDSHIFT: 11,
-            SUPERNOVA.MAX_DATE: 21,
-            SUPERNOVA.HOST_RA: 99,
-            SUPERNOVA.HOST_DEC: 100
-        }
-        colnums = {v: k for k, v in columns.items()}
 
-        rows = [[x.replace('\\N', '') for x in y] for y in rows]
+    ignored_cids = []
+    columns = {
+        SUPERNOVA.RA: 1,
+        SUPERNOVA.DEC: 2,
+        SUPERNOVA.ALIAS: 4,
+        SUPERNOVA.CLAIMED_TYPE: 5,
+        SUPERNOVA.REDSHIFT: 11,
+        SUPERNOVA.MAX_DATE: 21,
+        SUPERNOVA.HOST_RA: 99,
+        SUPERNOVA.HOST_DEC: 100
+    }
+    colnums = {v: k for k, v in columns.items()}
 
-        co = [[x[0], x[99], x[100]] for x in rows if x[99] and x[100]]
-        coo = coord([x[1] for x in co], [x[2] for x in co], unit="deg")
-        coo = [''.join([y[:9] for y in x.split()])
-               for x in coo.to_string('hmsdms', sep='')]
-        hostdict = dict(zip([x[0] for x in co], ['SDSS J' + x[1:] for x in coo]))
+    rows = [[x.replace('\\N', '') for x in y] for y in rows]
 
-        for ri, row in enumerate(pbar(rows, task_str + ": metadata")):
-            name = ''
+    co = [[x[0], x[99], x[100]] for x in rows if x[99] and x[100]]
+    coo = coord([x[1] for x in co], [x[2] for x in co], unit="deg")
+    coo = [''.join([y[:9] for y in x.split()]) for x in coo.to_string('hmsdms', sep='')]
+    hostdict = dict(zip([x[0] for x in co], ['SDSS J' + x[1:] for x in coo]))
 
-            # Check if type is non-SNe first
-            ct = row[columns[SUPERNOVA.CLAIMED_TYPE]]
-            al = row[columns[SUPERNOVA.ALIAS]]
-            if ct in ['AGN', 'Variable', 'Unknown'] and not al:
-                catalog.log.info('`{}` is not a SN, not adding.'.format(row[0]))
-                ignored_cids.append(row[0])
+    for ri, row in enumerate(pbar(rows, task_str + ": metadata")):
+        name = ''
+
+        # Check if type is non-SNe first
+        ct = row[columns[SUPERNOVA.CLAIMED_TYPE]]
+        al = row[columns[SUPERNOVA.ALIAS]]
+        if ct in ['AGN', 'Variable', 'Unknown'] and not al:
+            catalog.log.info('`{}` is not a SN, not adding.'.format(row[0]))
+            ignored_cids.append(row[0])
+            continue
+
+        # Add entry
+        name, source = catalog.new_entry(
+            'SDSS-II SN ' + row[0], bibcode='2014arXiv1401.3317S',
+            url='http://data.sdss3.org/sas/dr10/boss/papers/supernova/')
+
+        # Add host name
+        if row[0] in hostdict:
+            catalog.entries[name].add_quantity(SUPERNOVA.HOST, hostdict[row[0]], source)
+
+        # Add other metadata
+        for cn in colnums:
+            key = colnums[cn]
+            if not key:
                 continue
-
-            # Add entry
-            (name, source) = catalog.new_entry(
-                'SDSS-II SN ' + row[0], bibcode='2014arXiv1401.3317S',
-                url='http://data.sdss3.org/sas/dr10/boss/papers/supernova/')
-
-            # Add host name
-            if row[0] in hostdict:
-                catalog.entries[name].add_quantity(SUPERNOVA.HOST, hostdict[row[0]], source)
-
-            # Add other metadata
-            for cn in colnums:
-                key = colnums[cn]
-                if not key:
+            ic = int(cn)
+            val = row[ic]
+            if not val:
+                continue
+            kwargs = {}
+            if key == SUPERNOVA.ALIAS:
+                val = 'SN' + val
+            elif key in [SUPERNOVA.RA, SUPERNOVA.DEC, SUPERNOVA.HOST_RA, SUPERNOVA.HOST_DEC]:
+                kwargs = {QUANTITY.U_VALUE: 'floatdegrees'}
+                if key in [SUPERNOVA.RA, SUPERNOVA.HOST_RA]:
+                    fval = float(val)
+                    if fval < 0.0:
+                        val = str(Decimal(360) + Decimal(fval))
+            elif key == SUPERNOVA.CLAIMED_TYPE:
+                val = val.lstrip('pz').replace('SN', '')
+            elif key == SUPERNOVA.REDSHIFT:
+                kwargs[QUANTITY.KIND] = 'spectroscopic'
+                if float(val) < -1.0:
                     continue
-                ic = int(cn)
-                val = row[ic]
-                if not val:
-                    continue
-                kwargs = {}
-                if key == SUPERNOVA.ALIAS:
-                    val = 'SN' + val
-                elif key in [SUPERNOVA.RA, SUPERNOVA.DEC, SUPERNOVA.HOST_RA, SUPERNOVA.HOST_DEC]:
-                    kwargs = {QUANTITY.U_VALUE: 'floatdegrees'}
-                    if key in [SUPERNOVA.RA, SUPERNOVA.HOST_RA]:
-                        fval = float(val)
-                        if fval < 0.0:
-                            val = str(Decimal(360) + Decimal(fval))
-                elif key == SUPERNOVA.CLAIMED_TYPE:
-                    val = val.lstrip('pz').replace('SN', '')
-                elif key == SUPERNOVA.REDSHIFT:
-                    kwargs[QUANTITY.KIND] = 'spectroscopic'
-                    if float(val) < -1.0:
-                        continue
-                    if float(row[ic + 1]) > 0.0:
-                        kwargs[QUANTITY.E_VALUE] = row[ic + 1]
-                elif key == SUPERNOVA.MAX_DATE:
-                    dt = astrotime(float(val), format='mjd').datetime
-                    val = make_date_string(dt.year, dt.month, dt.day)
-                catalog.entries[name].add_quantity(key, val, source, **kwargs)
+                if float(row[ic + 1]) > 0.0:
+                    kwargs[QUANTITY.E_VALUE] = row[ic + 1]
+            elif key == SUPERNOVA.MAX_DATE:
+                dt = astrotime(float(val), format='mjd').datetime
+                val = make_date_string(dt.year, dt.month, dt.day)
+            catalog.entries[name].add_quantity(key, val, source, **kwargs)
 
     path = os.path.join(catalog.get_current_task_repo(), 'SDSS/2010ApJ...708..661D.txt')
     with open(path, 'r') as sdss_file:
@@ -154,11 +154,7 @@ def do_sdss_photo(catalog):
                 if float(val) < -1.0:
                     continue
                 catalog.entries[name].add_quantity(
-                    SUPERNOVA.REDSHIFT,
-                    val,
-                    source,
-                    e_value=error,
-                    kind='heliocentric')
+                    SUPERNOVA.REDSHIFT, val, source, e_value=error, kind='heliocentric')
             if rr >= rst:
                 # Skip bad measurements
                 if int(row[0]) > 1024:
@@ -195,8 +191,10 @@ def do_sdss_photo(catalog):
                     photodict[PHOTOMETRY.UPPER_LIMIT] = True
                     photodict[PHOTOMETRY.UPPER_LIMIT_SIGMA] = str(ul_sigma)
                 catalog.entries[name].add_photometry(**photodict)
+
         if catalog.args.travis and fi >= catalog.TRAVIS_QUERY_LIMIT:
             break
+
         if fi % 1000 == 0:
             catalog.journal_entries()
 

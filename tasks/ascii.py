@@ -22,6 +22,7 @@ from ..supernova import SUPERNOVA
 from supernovae import utils as sn_utils
 
 READER_KWARGS = dict(delimiter='\t', quotechar='"', skipinitialspace=True)
+TRAVIS_LIMIT = True
 
 
 def do_ascii(catalog):
@@ -457,8 +458,7 @@ def _ascii_1b(catalog):
     catalog.journal_entries()
 
     # 2017arXiv170302402W
-    file_names = glob(
-        os.path.join(task_repo, 'SweetSpot', '*.dat'))
+    file_names = glob(os.path.join(task_repo, 'SweetSpot', '*.dat'))
     for path in pbar(file_names, desc=task_str + ', SweetSpot'):
         tsvin = list(csv.reader(open(path, 'r'), delimiter=' ', skipinitialspace=True))
         oname = path.split('/')[-1].split('_')[0]
@@ -486,8 +486,7 @@ def _ascii_1b(catalog):
     catalog.journal_entries()
 
     # 2014ApJ...789..104O
-    datafile = os.path.join(
-        task_repo, 'ASCII', '2014ApJ...789..104O-tab1.txt')
+    datafile = os.path.join(task_repo, 'ASCII', '2014ApJ...789..104O-tab1.txt')
     tsvin = list(csv.reader(open(datafile, 'r'), delimiter='\t', skipinitialspace=True))
     for row in pbar(tsvin[2:], task_str):
         name, source = catalog.new_entry(row[0], bibcode='2014ApJ...789..104O')
@@ -505,10 +504,9 @@ def _ascii_1b(catalog):
         'PTF10bjb': '27.14',
         'PTF10tel': '27.442'
     }
-    datafile = os.path.join(
-        task_repo, 'ASCII', '2014ApJ...789..104O-tab2.txt')
+    datafile = os.path.join(task_repo, 'ASCII', '2014ApJ...789..104O-tab2.txt')
     data = read(datafile, format='cds')
-    for row in pbar(data, task_str):
+    for ri, row in enumerate(pbar(data, task_str)):
         oname = row['SN']
         name, source = catalog.new_entry(oname, bibcode='2014ApJ...789..104O')
         c = str(row['Flux'])
@@ -524,6 +522,10 @@ def _ascii_1b(catalog):
         }
         sn_utils.set_pd_mag_from_counts(photodict, c, ec=ec, zp=zp, sig=5.0)
         catalog.entries[name].add_photometry(**photodict)
+
+        if TRAVIS_LIMIT and catalog.args.travis and ri >= catalog.TRAVIS_QUERY_LIMIT:
+            break
+
     catalog.journal_entries()
 
     # KEGS
@@ -585,7 +587,8 @@ def _ascii_2(catalog):
         if row['IAU des.'] != '--':
             catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, row['IAU des.'], source)
         for ct in ctypes:
-            catalog.entries[name].add_quantity(SUPERNOVA.CLAIMED_TYPE, ct, source)
+            if len(ct) > 0 and ct != '--':
+                catalog.entries[name].add_quantity(SUPERNOVA.CLAIMED_TYPE, ct, source)
         catalog.entries[name].add_quantity(SUPERNOVA.DISCOVERER, row['Discoverer'], source)
         date = row['Discovery'].split('/')
         date = '/'.join([date[-1].zfill(2), date[0].zfill(2), date[1]])
@@ -605,10 +608,13 @@ def _ascii_2(catalog):
         for band in [x for x in row.columns if x.endswith('mag') and not x.startswith('e_')]:
             if not is_number(row[band]):
                 continue
+            mag = str(row[band])
+            if len(mag) == 0 or mag == '--':
+                continue
             photodict = {
                 PHOTOMETRY.TIME: jd_to_mjd(Decimal(str(row['JD']))),
                 PHOTOMETRY.U_TIME: 'MJD',
-                PHOTOMETRY.MAGNITUDE: str(row[band]),
+                PHOTOMETRY.MAGNITUDE: mag,
                 PHOTOMETRY.BAND: band.replace('mag', ''),
                 PHOTOMETRY.SOURCE: source
             }
@@ -616,8 +622,7 @@ def _ascii_2(catalog):
     catalog.journal_entries()
 
     # 2006AJ....132.1126N
-    datafile = os.path.join(
-        task_repo, 'ASCII', '2006AJ....132.1126N-tab2.tsv')
+    datafile = os.path.join(task_repo, 'ASCII', '2006AJ....132.1126N-tab2.tsv')
     tsvin = list(csv.reader(open(datafile, 'r'), delimiter='\t', skipinitialspace=True))
     for row in pbar(tsvin, task_str):
         name, source = catalog.new_entry(row[0], bibcode='2006AJ....132.1126N')
@@ -631,8 +636,7 @@ def _ascii_2(catalog):
         catalog.entries[name].add_quantity(
             SUPERNOVA.CLAIMED_TYPE, 'Ia', source, kind='spectroscopic')
 
-    datafile = os.path.join(
-        task_repo, 'ASCII', '2006AJ....132.1126N-tab3.tsv')
+    datafile = os.path.join(task_repo, 'ASCII', '2006AJ....132.1126N-tab3.tsv')
     tsvin = list(csv.reader(open(datafile, 'r'), delimiter='\t', skipinitialspace=True))
     for row in pbar(tsvin, task_str):
         name, source = catalog.new_entry(row[0], bibcode='2006AJ....132.1126N')
@@ -649,9 +653,7 @@ def _ascii_2(catalog):
     catalog.journal_entries()
 
     # 2007ApJ...669L..17H
-    datafile = os.path.join(task_repo, 'ASCII',
-                            '2007ApJ...669L..17H.tsv')
-
+    datafile = os.path.join(task_repo, 'ASCII', '2007ApJ...669L..17H.tsv')
     tsvin = list(csv.reader(open(datafile, 'r'), delimiter='\t', skipinitialspace=True))
     name, source = catalog.new_entry('SN2006gz', bibcode='2007ApJ...669L..17H')
     for row in pbar(tsvin[1:], task_str):
@@ -667,8 +669,7 @@ def _ascii_2(catalog):
     catalog.journal_entries()
 
     # 2011ApJ...729...88R
-    file_path = os.path.join(
-        task_repo, 'ASCII', '2011ApJ...729...88R-tab1.tsv')
+    file_path = os.path.join(task_repo, 'ASCII', '2011ApJ...729...88R-tab1.tsv')
     tsvin = list(csv.reader(open(file_path, 'r'), delimiter='\t', skipinitialspace=True))
     for ri, row in enumerate(pbar(tsvin, task_str)):
         name, source = catalog.new_entry('SN2003ma', bibcode='2011ApJ...729...88R')
@@ -683,8 +684,7 @@ def _ascii_2(catalog):
                 PHOTOMETRY.BAND: bands[ci].split('_')[0],
                 PHOTOMETRY.TIME: row[0],
                 PHOTOMETRY.MAGNITUDE: csplit[0].strip('<'),
-                PHOTOMETRY.SURVEY: ('SuperMONGO'
-                                    if '_SM' in bands[ci] else 'OGLE'),
+                PHOTOMETRY.SURVEY: ('SuperMONGO' if '_SM' in bands[ci] else 'OGLE'),
                 PHOTOMETRY.SOURCE: source
             }
             if len(csplit) > 1:
@@ -696,8 +696,7 @@ def _ascii_2(catalog):
     catalog.journal_entries()
 
     # 1998A&A...337..207S
-    file_path = os.path.join(task_repo, 'ASCII',
-                             '1998A&A...337..207S-tab3.tsv')
+    file_path = os.path.join(task_repo, 'ASCII', '1998A&A...337..207S-tab3.tsv')
     tsvin = list(csv.reader(open(file_path, 'r'), delimiter='\t', skipinitialspace=True))
     for ri, row in enumerate(pbar(tsvin, task_str)):
         name, source = catalog.new_entry('SN1996N', bibcode='1998A&A...337..207S')
@@ -962,9 +961,10 @@ def _ascii_2(catalog):
     for row in pbar(tsvin[1:], task_str):
         if len(row) == 1:
             continue
+        e_mag = row[4].strip()
         photodict = {
             PHOTOMETRY.MAGNITUDE: row[3],
-            PHOTOMETRY.E_MAGNITUDE: row[4],
+            PHOTOMETRY.E_MAGNITUDE: e_mag,
             PHOTOMETRY.TIME: row[0],
             PHOTOMETRY.U_TIME: 'MJD',
             PHOTOMETRY.BAND: row[2],
@@ -974,8 +974,7 @@ def _ascii_2(catalog):
         catalog.entries[name].add_photometry(**photodict)
 
     # 2011ApJ...730..134K
-    datafile = os.path.join(task_repo, 'ASCII',
-                            '2011ApJ...730..134K-tab2.txt')
+    datafile = os.path.join(task_repo, 'ASCII', '2011ApJ...730..134K-tab2.txt')
 
     tsvin = list(csv.reader(open(datafile, 'r'), delimiter='\t', skipinitialspace=True))
     name, source = catalog.new_entry('PTF10fqs', bibcode='2011ApJ...730..134K')
@@ -1001,8 +1000,7 @@ def _ascii_2(catalog):
         catalog.entries[name].add_photometry(**photodict)
 
     # 2012ApJ...755..161K
-    datafile = os.path.join(task_repo, 'ASCII',
-                            '2012ApJ...755..161K-tab3.txt')
+    datafile = os.path.join(task_repo, 'ASCII', '2012ApJ...755..161K-tab3.txt')
 
     tsvin = list(csv.reader(open(datafile, 'r'), delimiter='\t', skipinitialspace=True))
     for row in pbar(tsvin[1:], task_str):
@@ -1026,8 +1024,7 @@ def _ascii_2(catalog):
         catalog.entries[name].add_photometry(**photodict)
 
     # 2010ApJ...723L..98K
-    datafile = os.path.join(task_repo, 'ASCII',
-                            '2010ApJ...723L..98K.tex')
+    datafile = os.path.join(task_repo, 'ASCII', '2010ApJ...723L..98K.tex')
 
     data = read(datafile, format='latex')
     name, source = catalog.new_entry('SN2010X', bibcode='2010ApJ...723L..98K')
@@ -1101,8 +1098,7 @@ def _ascii_3(catalog):
     catalog.journal_entries()
 
     # 2013ApJ...767...57F
-    file_path = os.path.join(task_repo,
-                             '2013ApJ...767...57F.txt')
+    file_path = os.path.join(task_repo, '2013ApJ...767...57F.txt')
     tsvin = list(csv.reader(open(file_path, 'r'), delimiter=' ', skipinitialspace=True))
     for ri, row in enumerate(pbar(tsvin, task_str)):
         name, source = catalog.new_entry(
@@ -1110,8 +1106,7 @@ def _ascii_3(catalog):
         catalog.entries[name].add_quantity(SUPERNOVA.CLAIMED_TYPE, 'Ia-02cx', source)
 
     # 2015MNRAS.446.3895F
-    file_path = os.path.join(task_repo,
-                             '2015MNRAS.446.3895F.txt')
+    file_path = os.path.join(task_repo, '2015MNRAS.446.3895F.txt')
     tsvin = list(csv.reader(open(file_path, 'r'), delimiter=' ', skipinitialspace=True))
     for ri, row in enumerate(pbar(tsvin, task_str)):
         if row[0][0] == '#':
@@ -1139,8 +1134,7 @@ def _ascii_3(catalog):
     catalog.journal_entries()
 
     # 2016ApJ...832..108M
-    file_path = os.path.join(task_repo, 'ASCII',
-                             '2016ApJ...832..108M.txt')
+    file_path = os.path.join(task_repo, 'ASCII', '2016ApJ...832..108M.txt')
     tsvin = list(csv.reader(open(file_path, 'r'), delimiter='/', skipinitialspace=True))
     for ri, row in enumerate(pbar(tsvin, task_str)):
         if row[0][0] == '#':
@@ -1154,8 +1148,7 @@ def _ascii_3(catalog):
     catalog.journal_entries()
 
     # 2003ApJ...599..394M
-    datafile = os.path.join(task_repo, 'ASCII',
-                            '2003ApJ...599..394M-tab1.txt')
+    datafile = os.path.join(task_repo, 'ASCII', '2003ApJ...599..394M-tab1.txt')
     data = read(datafile, format='cds')
     name, source = catalog.new_entry('SN2003dh', bibcode='2003ApJ...599..394M')
     for row in pbar(data, task_str):
@@ -1172,8 +1165,7 @@ def _ascii_3(catalog):
         catalog.entries[name].add_photometry(**photodict)
 
     # 2004ApJ...606..381L
-    file_path = os.path.join(task_repo,
-                             '2004ApJ...606..381L-table3.txt')
+    file_path = os.path.join(task_repo, '2004ApJ...606..381L-table3.txt')
     tsvin = list(csv.reader(open(file_path, 'r'), delimiter=' ', skipinitialspace=True))
     name = 'SN2003dh'
     name, source = catalog.new_entry(name, bibcode='2004ApJ...606..381L')
@@ -1222,21 +1214,18 @@ def _ascii_3(catalog):
     catalog.journal_entries()
 
     # 2006ApJ...645..841N
-    file_path = os.path.join(task_repo,
-                             '2006ApJ...645..841N-table3.csv')
+    file_path = os.path.join(task_repo, '2006ApJ...645..841N-table3.csv')
     tsvin = list(csv.reader(open(file_path, 'r'), delimiter=','))
     for ri, row in enumerate(pbar(tsvin, task_str)):
         name = 'SNLS-' + row[0]
         name = catalog.add_entry(name)
-        source = catalog.entries[name].add_source(
-            bibcode='2006ApJ...645..841N')
+        source = catalog.entries[name].add_source(bibcode='2006ApJ...645..841N')
         catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
         catalog.entries[name].add_quantity(
             SUPERNOVA.REDSHIFT, row[1], source, kind='spectroscopic')
         astrot = astrotime(float(row[4]) + 2450000., format='jd').datetime
         date_str = make_date_string(astrot.year, astrot.month, astrot.day)
-        catalog.entries[name].add_quantity(SUPERNOVA.DISCOVER_DATE, date_str,
-                                           source)
+        catalog.entries[name].add_quantity(SUPERNOVA.DISCOVER_DATE, date_str, source)
     catalog.journal_entries()
 
     # Anderson 2014
@@ -1521,8 +1510,9 @@ def _ascii_3(catalog):
             for qkey in [SUPERNOVA.REDSHIFT, SUPERNOVA.HOST_REDSHIFT]:
                 catalog.entries[name].add_quantity(
                     qkey, row[5].replace('?', ''), source, e_value=row[6], kind='host')
-            catalog.entries[name].add_quantity(
-                SUPERNOVA.CLAIMED_TYPE, row[7].replace('SN', '').strip(':* '), source)
+            ctype = row[7].replace('SN', '').strip(':* ')
+            if len(ctype) > 0:
+                catalog.entries[name].add_quantity(SUPERNOVA.CLAIMED_TYPE, ctype, source)
     catalog.journal_entries()
 
     # 2014MNRAS.444.2133S

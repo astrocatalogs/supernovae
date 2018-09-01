@@ -30,13 +30,11 @@ def do_grb(catalog):
             continue
         (name, source) = catalog.new_entry(
             'GRB ' + row[0], name='Gamma-ray Bursts Catalog', url='http://www.grbcatalog.org')
-        catalog.entries[name].add_quantity(
-            SUPERNOVA.RA, row[2], source, u_value='floatdegrees')
-        catalog.entries[name].add_quantity(
-            SUPERNOVA.DEC, row[3], source, u_value='floatdegrees')
-        catalog.entries[name].add_quantity(SUPERNOVA.CLAIMED_TYPE, 'LGRB',
-                                           source)
-        catalog.entries[name].add_quantity(SUPERNOVA.REDSHIFT, row[8], source)
+        catalog.entries[name].add_quantity(SUPERNOVA.RA, row[2], source, u_value='floatdegrees')
+        catalog.entries[name].add_quantity(SUPERNOVA.DEC, row[3], source, u_value='floatdegrees')
+        catalog.entries[name].add_quantity(SUPERNOVA.CLAIMED_TYPE, 'LGRB', source)
+        if len(row[8]) > 0 and row[8] != '-':
+            catalog.entries[name].add_quantity(SUPERNOVA.REDSHIFT, row[8], source)
 
     catalog.journal_entries()
     return
@@ -44,33 +42,23 @@ def do_grb(catalog):
 
 def do_batse(catalog):
     task_str = catalog.get_current_task_str()
-    file_path = os.path.join(catalog.get_current_task_repo(),
-                             'BATSE/basic_table.txt')
+    file_path = os.path.join(catalog.get_current_task_repo(), 'BATSE/basic_table.txt')
     csvtxt = catalog.load_url(
         'http://gammaray.nsstc.nasa.gov/batse/grb/catalog/current/tables/'
         'basic_table.txt', file_path)
     if not csvtxt:
         return
-    data = list(
-        csv.reader(
-            csvtxt.splitlines(),
-            delimiter=' ',
-            quotechar='"',
-            skipinitialspace=True))
+    data = list(csv.reader(csvtxt.splitlines(),
+                           delimiter=' ', quotechar='"', skipinitialspace=True))
 
-    file_path = os.path.join(catalog.get_current_task_repo(),
-                             'BATSE/duration_table.txt')
+    file_path = os.path.join(catalog.get_current_task_repo(), 'BATSE/duration_table.txt')
     csvtxt = catalog.load_url(
         'http://gammaray.nsstc.nasa.gov/batse/grb/catalog/current/tables/'
         'duration_table.txt', file_path)
     if not csvtxt:
         return
-    data2 = list(
-        csv.reader(
-            csvtxt.splitlines(),
-            delimiter=' ',
-            quotechar='"',
-            skipinitialspace=True))
+    data2 = list(csv.reader(csvtxt.splitlines(),
+                            delimiter=' ', quotechar='"', skipinitialspace=True))
     t90s = {}
     for row in data2:
         # Add one sigma to quoted T90 to compare to
@@ -104,19 +92,10 @@ def do_batse(catalog):
             make_date_string(astrot.year, astrot.month, astrot.day), source)
         pos_err = str(Decimal(row[9]) * Decimal(3600))
         catalog.entries[name].add_quantity(
-            SUPERNOVA.RA,
-            row[5],
-            source,
-            u_value='floatdegrees',
-            e_value=pos_err)
+            SUPERNOVA.RA, row[5], source, u_value='floatdegrees', e_value=pos_err)
         catalog.entries[name].add_quantity(
-            SUPERNOVA.DEC,
-            row[6],
-            source,
-            u_value='floatdegrees',
-            e_value=pos_err)
-        catalog.entries[name].add_quantity(SUPERNOVA.CLAIMED_TYPE, 'LGRB',
-                                           source)
+            SUPERNOVA.DEC, row[6], source, u_value='floatdegrees', e_value=pos_err)
+        catalog.entries[name].add_quantity(SUPERNOVA.CLAIMED_TYPE, 'LGRB', source)
 
     catalog.journal_entries()
     return
