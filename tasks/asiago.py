@@ -93,17 +93,11 @@ def do_asiago_photo(catalog):
             if (claimedtype != ''):
                 catalog.entries[name].add_quantity(SUPERNOVA.CLAIMED_TYPE, claimedtype, source)
             if (redshift != ''):
-                catalog.entries[name].add_quantity(
-                    [SUPERNOVA.REDSHIFT, SUPERNOVA.HOST_REDSHIFT],
-                    redshift,
-                    source,
-                    kind='host')
+                for qkey in [SUPERNOVA.REDSHIFT, SUPERNOVA.HOST_REDSHIFT]:
+                    catalog.entries[name].add_quantity(qkey, redshift, source, kind='host')
             if (velocity != ''):
-                catalog.entries[name].add_quantity(
-                    [SUPERNOVA.VELOCITY, SUPERNOVA.HOST_VELOCITY],
-                    velocity,
-                    source,
-                    kind='host')
+                for qkey in [SUPERNOVA.VELOCITY, SUPERNOVA.HOST_VELOCITY]:
+                    catalog.entries[name].add_quantity(qkey, velocity, source, kind='host')
             if (hostra != ''):
                 catalog.entries[name].add_quantity(
                     SUPERNOVA.HOST_RA, hostra, source, u_value='nospace')
@@ -149,8 +143,7 @@ def do_asiago_spectra(catalog):
                 alias = butt.text.strip()
                 alias = alias.replace('PSNJ', 'PSN J').replace('GAIA', 'Gaia')
             elif tdi == 1:
-                name = (td.text.strip().replace('PSNJ', 'PSN J')
-                        .replace('GAIA', 'Gaia'))
+                name = td.text.strip().replace('PSNJ', 'PSN J').replace('GAIA', 'Gaia')
                 if name.startswith('SN '):
                     name = 'SN' + name[3:]
                 if not name:
