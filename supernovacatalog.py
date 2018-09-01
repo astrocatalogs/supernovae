@@ -20,7 +20,7 @@ class SupernovaCatalog(Catalog):
     MODULE_NAME = "supernovae"
     PATHS = _PATHS
 
-    RAISE_ERROR_ON_ADDITION_FAILURE = True
+    RAISE_ERROR_ON_ADDITION_FAILURE = False
 
     def __init__(self, args, log):
         """Initialize catalog."""
@@ -103,13 +103,13 @@ class SupernovaCatalog(Catalog):
         self.url_redirs = read_json_dict(self.PATHS.URL_REDIRECTS)
         self.type_syns = read_json_dict(self.PATHS.TYPE_SYNONYMS)
         # Create/Load auxiliary arrays
-        self.nonsneprefixes_dict = read_json_arr(
-            self.PATHS.NON_SNE_PREFIXES)
+        self.nonsneprefixes_dict = read_json_arr(self.PATHS.NON_SNE_PREFIXES)
         self.nonsnetypes = read_json_arr(self.PATHS.NON_SNE_TYPES)
         return
 
     def save_caches(self):
         """Save caches to JSON files."""
+        # WARNING: use `astroschema` dumps if these `json.dumps` error with numpy values
         jsonstring = json.dumps(self.bibauthor_dict, indent='\t',
                                 separators=(',', ':'), ensure_ascii=False)
         with codecs.open(self.PATHS.AUTHORS_FILE, 'w', encoding='utf8') as f:
