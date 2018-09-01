@@ -44,12 +44,10 @@ def do_snax(catalog):
         if len(row[1]) > 0:
             catalog.entries[name].add_quantity(SUPERNOVA.CLAIMED_TYPE, row[1], source)
         date = astrotime(float(row[2]), format='jd').datetime
-        catalog.entries[name].add_quantity(
-            SUPERNOVA.EXPLOSION_DATE, make_date_string(date.year, date.month, date.day), expsrc)
-        catalog.entries[name].add_quantity(
-            SUPERNOVA.RA, ' '.join(row[3].split()[:3]), coosrc)
-        catalog.entries[name].add_quantity(
-            SUPERNOVA.DEC, ' '.join(row[3].split()[3:]), coosrc)
+        date = make_date_string(date.year, date.month, date.day)
+        catalog.entries[name].add_quantity(SUPERNOVA.EXPLOSION_DATE, date, expsrc)
+        catalog.entries[name].add_quantity(SUPERNOVA.RA, ' '.join(row[3].split()[:3]), coosrc)
+        catalog.entries[name].add_quantity(SUPERNOVA.DEC, ' '.join(row[3].split()[3:]), coosrc)
         if len(row[4]) > 0:
             catalog.entries[name].add_quantity(SUPERNOVA.LUM_DIST, row[4], dissrc)
         if len(row[5]) > 0:
