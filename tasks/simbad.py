@@ -8,12 +8,14 @@ from astrocats.utils import is_number, pbar, single_spaces, uniq_cdl
 from ..supernova import SUPERNOVA
 from ..utils import name_clean
 
+RAISE_ERROR_ON_MIRRORS_FAILURE = False
+
 
 def do_simbad(catalog):
     # Simbad.list_votable_fields()
-    # Some coordinates that SIMBAD claims belong to the SNe actually belong to
-    # the host.
+    # Some coordinates that SIMBAD claims belong to the SNe actually belong to the host.
     task_str = catalog.get_current_task_str()
+    log = catalog.log
     simbadmirrors = ['http://simbad.harvard.edu/simbad/sim-script',
                      'http://simbad.u-strasbg.fr/simbad/sim-script']
     simbadbadcoordbib = ['2013ApJ...770..107C']
@@ -31,18 +33,27 @@ def do_simbad(catalog):
     table = []
     print(customSimbad.SIMBAD_URL)
     for mirror in simbadmirrors:
+        fail = False
         customSimbad.SIMBAD_URL = mirror
         try:
             table = customSimbad.query_criteria('maintype=SN | maintype="SN?"')
         except Exception:
-            continue
+            fail = True
         else:
             if not table:
-                continue
+                fail = True
             break
 
+        if fail:
+            log.warning("Failed to load from SIMBAD mirror '{}'".format(mirror))
+
     if not table:
-        catalog.log.raise_error("SIMBAD unable to load, probably offline.")
+        err = "SIMBAD unable to load, probably offline."
+        if RAISE_ERROR_ON_MIRRORS_FAILURE:
+            log.raise_error(err)
+        else:
+            log.error(err)
+            return
 
     # 2000A&AS..143....9W
     for brow in pbar(table, task_str):
