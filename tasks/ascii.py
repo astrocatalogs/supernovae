@@ -27,9 +27,13 @@ READER_KWARGS = dict(delimiter='\t', quotechar='"', skipinitialspace=True)
 def do_ascii(catalog):
     """Process ASCII files extracted from datatables of published works."""
 
+    # print("1a")
     _ascii_1a(catalog)
+    # print("1b")
     _ascii_1b(catalog)
+    # print("2")
     _ascii_2(catalog)
+    # print("3")
     _ascii_3(catalog)
 
     return
@@ -37,12 +41,13 @@ def do_ascii(catalog):
 
 def _ascii_1a(catalog):
     task_str = catalog.get_current_task_str()
+    task_repo = catalog.get_current_task_repo()
 
     # 2017arXiv171000846J
-    datafile = os.path.join(catalog.get_current_task_repo(), 'PSCosmo', 'pscosmo.txt')
+    datafile = os.path.join(task_repo, 'PSCosmo', 'pscosmo.txt')
     data = read(datafile)
-    photofiles = glob(os.path.join(catalog.get_current_task_repo(), 'PSCosmo', '*'))
-    for row in pbar(data, task_str):
+    photofiles = glob(os.path.join(task_repo, 'PSCosmo', '*'))
+    for ri, row in enumerate(pbar(data, task_str)):
         oname = row['ID'].replace('ps', 'PS')
         name, source = catalog.new_entry(oname, bibcode='2017arXiv171000846J')
         catalog.entries[name].add_quantity(
@@ -55,8 +60,7 @@ def _ascii_1a(catalog):
             SUPERNOVA.HOST_DEC, row['DecHost'], source=source)
         if float(row['zHost']) > 0.0:
             catalog.entries[name].add_quantity(
-                SUPERNOVA.REDSHIFT, str(row['zHost']), source=source,
-                kind='host')
+                SUPERNOVA.REDSHIFT, str(row['zHost']), source=source, kind='host')
         ia_probs = [Decimal(row[x]) for x in ['PIa_PSNID', 'PIa_NN', 'PIa_Fitprob', 'PIa_Galsnid']
                     if float(row[x]) >= 0.0]
         if len(ia_probs):
@@ -82,11 +86,14 @@ def _ascii_1a(catalog):
             }
             sn_utils.set_pd_mag_from_counts(photodict, trow[4], ec=trow[5], zp='27.5', sig=5.0)
             catalog.entries[name].add_photometry(**photodict)
+
+        if catalog.args.travis and ri >= catalog.TRAVIS_QUERY_LIMIT:
+            break
+
     catalog.journal_entries()
 
     # 2017ApJ...836...60L
-    datafile = os.path.join(
-        catalog.get_current_task_repo(), 'ASCII', '2017ApJ...836...60L-tab1.cds')
+    datafile = os.path.join(task_repo, 'ASCII', '2017ApJ...836...60L-tab1.cds')
     data = read(datafile, format='cds')
     for row in pbar(data, task_str):
         oname = row['ID']
@@ -103,7 +110,7 @@ def _ascii_1a(catalog):
     catalog.journal_entries()
 
     # 2017ApJS..233....6H
-    datafile = os.path.join(catalog.get_current_task_repo(), 'ASCII', 'CFA_SNII_NATSYSTEM_LC.txt')
+    datafile = os.path.join(task_repo, 'ASCII', 'CFA_SNII_NATSYSTEM_LC.txt')
     data = read(datafile, format='tab')
     for row in pbar(data, task_str):
         oname = row[0]
@@ -118,7 +125,10 @@ def _ascii_1a(catalog):
             PHOTOMETRY.SOURCE: source
         }
         catalog.entries[name].add_photometry(**photodict)
-    datafile = os.path.join(catalog.get_current_task_repo(), 'ASCII', 'CFA_SNII_NIR_LC.txt')
+        if catalog.args.travis and ri >= catalog.TRAVIS_QUERY_LIMIT:
+            break
+
+    datafile = os.path.join(task_repo, 'ASCII', 'CFA_SNII_NIR_LC.txt')
     data = read(datafile, format='tab')
     for row in pbar(data, task_str):
         oname = row[0]
@@ -131,10 +141,13 @@ def _ascii_1a(catalog):
             PHOTOMETRY.SOURCE: source
         }
         catalog.entries[name].add_photometry(**photodict)
+        if catalog.args.travis and ri >= catalog.TRAVIS_QUERY_LIMIT:
+            break
+
     catalog.journal_entries()
 
     # 1705.10806
-    datafile = os.path.join(catalog.get_current_task_repo(), 'ASCII', '1705.10806.tex')
+    datafile = os.path.join(task_repo, 'ASCII', '1705.10806.tex')
     data = read(datafile, format='latex')
     for row in pbar(data, task_str):
         oname = row['Supernova']
@@ -148,28 +161,33 @@ def _ascii_1a(catalog):
             PHOTOMETRY.SOURCE: source
         }
         catalog.entries[name].add_photometry(**photodict)
+        if catalog.args.travis and ri >= catalog.TRAVIS_QUERY_LIMIT:
+            break
+
     catalog.journal_entries()
 
     # 2017A&A...605A..58A
-    datafile = os.path.join(catalog.get_current_task_repo(), 'ASCII',
+    datafile = os.path.join(task_repo, 'ASCII',
                             '1705.10927.tex')
     data = read(datafile, format='latex')
     for row in pbar(data, task_str):
         oname = row[0].replace('$', '')
         name, source = catalog.new_entry(oname, bibcode='2017A&A...605A..58A')
-        catalog.entries[name].add_quantity(
-            SUPERNOVA.ALIAS, 'MWSNR' + oname[1:], source=source)
+        catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, 'MWSNR' + oname[1:], source=source)
         gallon = float(str(row[1]).replace('$', ''))
         gallat = float(str(row[2]).replace('$', ''))
-        ra, dec = coord(l=gallon * u.degree, b=gallat * u.degree, frame='galactic').icrs.to_string(
-            'hmsdms', sep=':').split()
+        temp = coord(l=gallon * u.degree, b=gallat * u.degree, frame='galactic')
+        ra, dec = temp.icrs.to_string('hmsdms', sep=':').split()
         catalog.entries[name].add_quantity(SUPERNOVA.HOST, 'Milky Way', source=source)
         catalog.entries[name].add_quantity(SUPERNOVA.RA, ra, source=source)
         catalog.entries[name].add_quantity(SUPERNOVA.DEC, dec, source=source)
+        if catalog.args.travis and ri >= catalog.TRAVIS_QUERY_LIMIT:
+            break
+
     catalog.journal_entries()
 
     # 2000MNRAS.319..223H
-    datafile = os.path.join(catalog.get_current_task_repo(), 'ASCII', '2000MNRAS.319..223H.csv')
+    datafile = os.path.join(task_repo, 'ASCII', '2000MNRAS.319..223H.csv')
     tsvin = list(csv.reader(open(datafile, 'r'), delimiter=',', skipinitialspace=True))
     name, source = catalog.new_entry('SN1998bu', bibcode='2000MNRAS.319..223H')
     for ri, row in enumerate(pbar(tsvin, task_str)):
@@ -196,7 +214,7 @@ def _ascii_1a(catalog):
         'iPTF16bad': '1704.05061-tab4.tsv'
     }
     for ev in events:
-        datafile = os.path.join(catalog.get_current_task_repo(), 'ASCII', events[ev])
+        datafile = os.path.join(task_repo, 'ASCII', events[ev])
         tsvin = list(csv.reader(open(datafile, 'r'), delimiter='\t', skipinitialspace=True))
         name, source = catalog.new_entry(ev, bibcode='2017ApJ...848....6Y')
         for row in pbar(tsvin, task_str):
@@ -213,10 +231,9 @@ def _ascii_1a(catalog):
     catalog.journal_entries()
 
     # 2016ApJ...823..147C
-    datafile = os.path.join(catalog.get_current_task_repo(), 'ASCII', '2016ApJ...823..147C.csv')
+    datafile = os.path.join(task_repo, 'ASCII', '2016ApJ...823..147C.csv')
     tsvin = list(csv.reader(open(datafile, 'r'), delimiter=',', skipinitialspace=True))
-    name, src1 = catalog.new_entry(
-        'iPTF13asv', bibcode='2016ApJ...823..147C')
+    name, src1 = catalog.new_entry('iPTF13asv', bibcode='2016ApJ...823..147C')
     src2 = catalog.entries[name].add_source(bibcode='2012PASP..124..668Y')
     source = ','.join([src1, src2])
     for row in pbar(tsvin, task_str):
@@ -243,13 +260,13 @@ def _ascii_1a(catalog):
 
 def _ascii_1b(catalog):
     task_str = catalog.get_current_task_str()
+    task_repo = catalog.get_current_task_repo()
 
     # 2014MNRAS.443.1663C
-    datafile = os.path.join(catalog.get_current_task_repo(), 'ASCII',
+    datafile = os.path.join(task_repo, 'ASCII',
                             '2014MNRAS.443.1663C.tsv')
     tsvin = list(csv.reader(open(datafile, 'r'), delimiter='\t', skipinitialspace=True))
-    name, source = catalog.new_entry(
-        'SN2012dn', bibcode='2014MNRAS.443.1663C')
+    name, source = catalog.new_entry('SN2012dn', bibcode='2014MNRAS.443.1663C')
     for row in pbar(tsvin, task_str):
         if row[0].startswith('#'):
             bands = row[1:]
@@ -270,7 +287,7 @@ def _ascii_1b(catalog):
     catalog.journal_entries()
 
     # 2015ApJ...811...52A
-    datafile = os.path.join(catalog.get_current_task_repo(), 'ASCII', '2015ApJ...811...52A.tsv')
+    datafile = os.path.join(task_repo, 'ASCII', '2015ApJ...811...52A.tsv')
     tsvin = list(csv.reader(open(datafile, 'r'), delimiter='\t', skipinitialspace=True))
     name, source = catalog.new_entry('PTF12csy', bibcode='2015ApJ...811...52A')
     for row in pbar(tsvin, task_str):
@@ -292,7 +309,7 @@ def _ascii_1b(catalog):
         catalog.entries[name].add_photometry(**photodict)
 
     # 2015MNRAS.450.2373B
-    datafile = os.path.join(catalog.get_current_task_repo(), 'ASCII', '2015MNRAS.450.2373B.tsv')
+    datafile = os.path.join(task_repo, 'ASCII', '2015MNRAS.450.2373B.tsv')
     tsvin = list(csv.reader(open(datafile, 'r'), delimiter='\t', skipinitialspace=True))
     name, source = catalog.new_entry('SN2013ab', bibcode='2015MNRAS.450.2373B')
     telkey = {
@@ -331,7 +348,7 @@ def _ascii_1b(catalog):
     catalog.journal_entries()
 
     # 2014ApJ...797....5Z
-    datafile = os.path.join(catalog.get_current_task_repo(), 'ASCII', '2014ApJ...797....5Z.tsv')
+    datafile = os.path.join(task_repo, 'ASCII', '2014ApJ...797....5Z.tsv')
     tsvin = list(csv.reader(open(datafile, 'r'), delimiter='\t', skipinitialspace=True))
     name, source = catalog.new_entry('SN2013am', bibcode='2014ApJ...797....5Z')
     for row in pbar(tsvin, task_str):
@@ -357,7 +374,7 @@ def _ascii_1b(catalog):
     catalog.journal_entries()
 
     # 2015MNRAS.452..838L
-    datafile = os.path.join(catalog.get_current_task_repo(), 'ASCII', '2015MNRAS.452..838L.tsv')
+    datafile = os.path.join(task_repo, 'ASCII', '2015MNRAS.452..838L.tsv')
     tsvin = list(csv.reader(open(datafile, 'r'), delimiter='\t', skipinitialspace=True))
     name, source = catalog.new_entry('SN2013en', bibcode='2015MNRAS.452..838L')
     for row in pbar(tsvin, task_str):
@@ -386,7 +403,7 @@ def _ascii_1b(catalog):
     catalog.journal_entries()
 
     # 2015MNRAS.452.4307P
-    datafile = os.path.join(catalog.get_current_task_repo(), 'ASCII', '2015MNRAS.452.4307P.tsv')
+    datafile = os.path.join(task_repo, 'ASCII', '2015MNRAS.452.4307P.tsv')
     tsvin = list(csv.reader(open(datafile, 'r'), delimiter='\t', skipinitialspace=True))
     name, source = catalog.new_entry('SN2013dy', bibcode='2015MNRAS.452.4307P')
     for row in pbar(tsvin, task_str):
@@ -411,7 +428,7 @@ def _ascii_1b(catalog):
     catalog.journal_entries()
 
     # 2016MNRAS.461.2003Y
-    path = os.path.join(catalog.get_current_task_repo(), 'ASCII', '2016MNRAS.461.2003Y-tab2.txt')
+    path = os.path.join(task_repo, 'ASCII', '2016MNRAS.461.2003Y-tab2.txt')
     tsvin = list(csv.reader(open(path, 'r'), delimiter=',', skipinitialspace=True))
     name, source = catalog.new_entry('SN2013ej', bibcode='2016MNRAS.461.2003Y')
     telstring = ','.join(tsvin[-1]).strip('#')
@@ -441,7 +458,7 @@ def _ascii_1b(catalog):
 
     # 2017arXiv170302402W
     file_names = glob(
-        os.path.join(catalog.get_current_task_repo(), 'SweetSpot', '*.dat'))
+        os.path.join(task_repo, 'SweetSpot', '*.dat'))
     for path in pbar(file_names, desc=task_str + ', SweetSpot'):
         tsvin = list(csv.reader(open(path, 'r'), delimiter=' ', skipinitialspace=True))
         oname = path.split('/')[-1].split('_')[0]
@@ -470,7 +487,7 @@ def _ascii_1b(catalog):
 
     # 2014ApJ...789..104O
     datafile = os.path.join(
-        catalog.get_current_task_repo(), 'ASCII', '2014ApJ...789..104O-tab1.txt')
+        task_repo, 'ASCII', '2014ApJ...789..104O-tab1.txt')
     tsvin = list(csv.reader(open(datafile, 'r'), delimiter='\t', skipinitialspace=True))
     for row in pbar(tsvin[2:], task_str):
         name, source = catalog.new_entry(row[0], bibcode='2014ApJ...789..104O')
@@ -489,7 +506,7 @@ def _ascii_1b(catalog):
         'PTF10tel': '27.442'
     }
     datafile = os.path.join(
-        catalog.get_current_task_repo(), 'ASCII', '2014ApJ...789..104O-tab2.txt')
+        task_repo, 'ASCII', '2014ApJ...789..104O-tab2.txt')
     data = read(datafile, format='cds')
     for row in pbar(data, task_str):
         oname = row['SN']
@@ -512,7 +529,7 @@ def _ascii_1b(catalog):
     # KEGS
     # Zero point not right, commenting out for now.
     # file_names = list(
-    #     glob(os.path.join(catalog.get_current_task_repo(), 'KEGS', '*.dat')))
+    #     glob(os.path.join(task_repo, 'KEGS', '*.dat')))
     # for path in pbar(file_names, task_str):
     #     oname = path.split('/')[-1].split('.')[0]
     #     name, source = catalog.new_entry(
@@ -544,9 +561,10 @@ def _ascii_1b(catalog):
 
 def _ascii_2(catalog):
     task_str = catalog.get_current_task_str()
+    task_repo = catalog.get_current_task_repo()
 
     # Howerton Catalog
-    datafile = os.path.join(catalog.get_current_task_repo(), 'ASCII', 'howerton-catalog.csv')
+    datafile = os.path.join(task_repo, 'ASCII', 'howerton-catalog.csv')
     data = read(datafile, format='csv')
     for rrow in pbar(data, task_str):
         row = dict((x, str(rrow[x])) for x in rrow.columns)
@@ -580,7 +598,7 @@ def _ascii_2(catalog):
 
     # 2006AJ....132.2024L
     datafile = os.path.join(
-        catalog.get_current_task_repo(), 'ASCII', '2006AJ....132.2024L-tab1.txt')
+        task_repo, 'ASCII', '2006AJ....132.2024L-tab1.txt')
     data = read(datafile, format='cds')
     for row in pbar(data, task_str):
         name, source = catalog.new_entry(row['Name'], bibcode='2006AJ....132.2024L')
@@ -599,7 +617,7 @@ def _ascii_2(catalog):
 
     # 2006AJ....132.1126N
     datafile = os.path.join(
-        catalog.get_current_task_repo(), 'ASCII', '2006AJ....132.1126N-tab2.tsv')
+        task_repo, 'ASCII', '2006AJ....132.1126N-tab2.tsv')
     tsvin = list(csv.reader(open(datafile, 'r'), delimiter='\t', skipinitialspace=True))
     for row in pbar(tsvin, task_str):
         name, source = catalog.new_entry(row[0], bibcode='2006AJ....132.1126N')
@@ -614,7 +632,7 @@ def _ascii_2(catalog):
             SUPERNOVA.CLAIMED_TYPE, 'Ia', source, kind='spectroscopic')
 
     datafile = os.path.join(
-        catalog.get_current_task_repo(), 'ASCII', '2006AJ....132.1126N-tab3.tsv')
+        task_repo, 'ASCII', '2006AJ....132.1126N-tab3.tsv')
     tsvin = list(csv.reader(open(datafile, 'r'), delimiter='\t', skipinitialspace=True))
     for row in pbar(tsvin, task_str):
         name, source = catalog.new_entry(row[0], bibcode='2006AJ....132.1126N')
@@ -631,7 +649,7 @@ def _ascii_2(catalog):
     catalog.journal_entries()
 
     # 2007ApJ...669L..17H
-    datafile = os.path.join(catalog.get_current_task_repo(), 'ASCII',
+    datafile = os.path.join(task_repo, 'ASCII',
                             '2007ApJ...669L..17H.tsv')
 
     tsvin = list(csv.reader(open(datafile, 'r'), delimiter='\t', skipinitialspace=True))
@@ -650,7 +668,7 @@ def _ascii_2(catalog):
 
     # 2011ApJ...729...88R
     file_path = os.path.join(
-        catalog.get_current_task_repo(), 'ASCII', '2011ApJ...729...88R-tab1.tsv')
+        task_repo, 'ASCII', '2011ApJ...729...88R-tab1.tsv')
     tsvin = list(csv.reader(open(file_path, 'r'), delimiter='\t', skipinitialspace=True))
     for ri, row in enumerate(pbar(tsvin, task_str)):
         name, source = catalog.new_entry('SN2003ma', bibcode='2011ApJ...729...88R')
@@ -678,7 +696,7 @@ def _ascii_2(catalog):
     catalog.journal_entries()
 
     # 1998A&A...337..207S
-    file_path = os.path.join(catalog.get_current_task_repo(), 'ASCII',
+    file_path = os.path.join(task_repo, 'ASCII',
                              '1998A&A...337..207S-tab3.tsv')
     tsvin = list(csv.reader(open(file_path, 'r'), delimiter='\t', skipinitialspace=True))
     for ri, row in enumerate(pbar(tsvin, task_str)):
@@ -702,7 +720,7 @@ def _ascii_2(catalog):
     catalog.journal_entries()
 
     # 1997ApJ...483..675C
-    file_path = os.path.join(catalog.get_current_task_repo(), 'ASCII',
+    file_path = os.path.join(task_repo, 'ASCII',
                              '1997ApJ...483..675C-tab1.tsv')
     tsvin = list(csv.reader(open(file_path, 'r'), delimiter='\t', skipinitialspace=True))
     for ri, row in enumerate(pbar(tsvin, task_str)):
@@ -728,7 +746,7 @@ def _ascii_2(catalog):
 
     # 2017ApJ...835...58V
     datafile = os.path.join(
-        catalog.get_current_task_repo(), 'ASCII', '2017ApJ...835...58V-tab11.tex')
+        task_repo, 'ASCII', '2017ApJ...835...58V-tab11.tex')
 
     data = read(datafile, format='latex')
     name, source = catalog.new_entry('iPTF13dcc', bibcode='2017ApJ...835...58V')
@@ -752,7 +770,7 @@ def _ascii_2(catalog):
     tables = ['2012A&A...537A.140T-' + x + '.tsv' for x in ['tab4', 'tab6']]
     sns = ['SN2006V', 'SN2006au']
     for ti, tab in enumerate(tables):
-        file_path = os.path.join(catalog.get_current_task_repo(), 'ASCII', tab)
+        file_path = os.path.join(task_repo, 'ASCII', tab)
         tsvin = list(csv.reader(open(file_path, 'r'), delimiter='\t', skipinitialspace=True))
         for ri, row in enumerate(pbar(tsvin, task_str)):
             name, source = catalog.new_entry(sns[ti], bibcode='2012A&A...537A.140T')
@@ -776,7 +794,7 @@ def _ascii_2(catalog):
 
     # 2015MNRAS.449.1215P
     file_path = os.path.join(
-        catalog.get_current_task_repo(), 'ASCII', '2015MNRAS.449.1215P.tsv')
+        task_repo, 'ASCII', '2015MNRAS.449.1215P.tsv')
     tsvin = list(csv.reader(open(file_path, 'r'), delimiter='\t', skipinitialspace=True))
     for ri, row in enumerate(pbar(tsvin, task_str)):
         if row[0][0] == '#':
@@ -804,7 +822,7 @@ def _ascii_2(catalog):
     catalog.journal_entries()
 
     # 2016MNRAS.459.3939V
-    file_path = os.path.join(catalog.get_current_task_repo(), 'ASCII', 'Valenti2016_data.txt')
+    file_path = os.path.join(task_repo, 'ASCII', 'Valenti2016_data.txt')
     tsvin = list(csv.reader(open(file_path, 'r'), delimiter=' ', skipinitialspace=True))
     bandsub = {
         'BS': 'B',
@@ -850,7 +868,7 @@ def _ascii_2(catalog):
 
     # 2014ApJ...797...24V
     datafile = os.path.join(
-        catalog.get_current_task_repo(), 'ASCII', '2014ApJ...797...24V-tab1.txt')
+        task_repo, 'ASCII', '2014ApJ...797...24V-tab1.txt')
     data = read(datafile, format='cds')
     name, source = catalog.new_entry('iPTF13ajg', bibcode='2014ApJ...797...24V')
     for row in pbar(data, task_str):
@@ -877,7 +895,7 @@ def _ascii_2(catalog):
         '\\text{WB6226-7171}': 'WB6226-7171'
     }
 
-    datafile = os.path.join(catalog.get_current_task_repo(), 'ASCII',
+    datafile = os.path.join(task_repo, 'ASCII',
                             '2016arXiv160904444J-tab1.tex')
 
     data = read(datafile, format='latex')
@@ -906,7 +924,7 @@ def _ascii_2(catalog):
             photodict[PHOTOMETRY.INSTRUMENT] = row[3].split('/')[-1]
         catalog.entries[name].add_photometry(**photodict)
 
-    datafile = os.path.join(catalog.get_current_task_repo(), 'ASCII',
+    datafile = os.path.join(task_repo, 'ASCII',
                             '2016arXiv160904444J-tab2.tex')
 
     data = read(datafile, format='latex')
@@ -936,7 +954,7 @@ def _ascii_2(catalog):
         catalog.entries[name].add_photometry(**photodict)
 
     # 2011PhDT........35K
-    datafile = os.path.join(catalog.get_current_task_repo(), 'ASCII',
+    datafile = os.path.join(task_repo, 'ASCII',
                             '2011PhDT........35K-tab2.2.txt')
 
     tsvin = list(csv.reader(open(datafile, 'r'), delimiter='\t', skipinitialspace=True))
@@ -956,7 +974,7 @@ def _ascii_2(catalog):
         catalog.entries[name].add_photometry(**photodict)
 
     # 2011ApJ...730..134K
-    datafile = os.path.join(catalog.get_current_task_repo(), 'ASCII',
+    datafile = os.path.join(task_repo, 'ASCII',
                             '2011ApJ...730..134K-tab2.txt')
 
     tsvin = list(csv.reader(open(datafile, 'r'), delimiter='\t', skipinitialspace=True))
@@ -983,7 +1001,7 @@ def _ascii_2(catalog):
         catalog.entries[name].add_photometry(**photodict)
 
     # 2012ApJ...755..161K
-    datafile = os.path.join(catalog.get_current_task_repo(), 'ASCII',
+    datafile = os.path.join(task_repo, 'ASCII',
                             '2012ApJ...755..161K-tab3.txt')
 
     tsvin = list(csv.reader(open(datafile, 'r'), delimiter='\t', skipinitialspace=True))
@@ -1008,7 +1026,7 @@ def _ascii_2(catalog):
         catalog.entries[name].add_photometry(**photodict)
 
     # 2010ApJ...723L..98K
-    datafile = os.path.join(catalog.get_current_task_repo(), 'ASCII',
+    datafile = os.path.join(task_repo, 'ASCII',
                             '2010ApJ...723L..98K.tex')
 
     data = read(datafile, format='latex')
@@ -1035,9 +1053,10 @@ def _ascii_2(catalog):
 
 def _ascii_3(catalog):
     task_str = catalog.get_current_task_str()
+    task_repo = catalog.get_current_task_repo()
 
     # 2007ApJ...666.1116S
-    file_path = os.path.join(catalog.get_current_task_repo(), '2007ApJ...666.1116S-tab1.csv')
+    file_path = os.path.join(task_repo, '2007ApJ...666.1116S-tab1.csv')
     tsvin = list(csv.reader(open(file_path, 'r'), delimiter=' ', skipinitialspace=True))
     name, source = catalog.new_entry('SN2006gy', bibcode='2007ApJ...666.1116S')
     for ri, row in enumerate(pbar(tsvin, task_str)):
@@ -1059,7 +1078,7 @@ def _ascii_3(catalog):
     catalog.journal_entries()
 
     # 2015ApJ...799...51M
-    file_path = os.path.join(catalog.get_current_task_repo(), '2015ApJ...799...51M-tab1.tsv')
+    file_path = os.path.join(task_repo, '2015ApJ...799...51M-tab1.tsv')
     tsvin = list(csv.reader(open(file_path, 'r'), delimiter='\t', skipinitialspace=True))
     name, source = catalog.new_entry('SN2012ap', bibcode='2015ApJ...799...51M')
     for ri, row in enumerate(pbar(tsvin, task_str)):
@@ -1082,17 +1101,16 @@ def _ascii_3(catalog):
     catalog.journal_entries()
 
     # 2013ApJ...767...57F
-    file_path = os.path.join(catalog.get_current_task_repo(),
+    file_path = os.path.join(task_repo,
                              '2013ApJ...767...57F.txt')
     tsvin = list(csv.reader(open(file_path, 'r'), delimiter=' ', skipinitialspace=True))
     for ri, row in enumerate(pbar(tsvin, task_str)):
         name, source = catalog.new_entry(
             row[0], bibcode='2013ApJ...767...57F')
-        catalog.entries[name].add_quantity(SUPERNOVA.CLAIMED_TYPE, 'Ia-02cx',
-                                           source)
+        catalog.entries[name].add_quantity(SUPERNOVA.CLAIMED_TYPE, 'Ia-02cx', source)
 
     # 2015MNRAS.446.3895F
-    file_path = os.path.join(catalog.get_current_task_repo(),
+    file_path = os.path.join(task_repo,
                              '2015MNRAS.446.3895F.txt')
     tsvin = list(csv.reader(open(file_path, 'r'), delimiter=' ', skipinitialspace=True))
     for ri, row in enumerate(pbar(tsvin, task_str)):
@@ -1121,7 +1139,7 @@ def _ascii_3(catalog):
     catalog.journal_entries()
 
     # 2016ApJ...832..108M
-    file_path = os.path.join(catalog.get_current_task_repo(), 'ASCII',
+    file_path = os.path.join(task_repo, 'ASCII',
                              '2016ApJ...832..108M.txt')
     tsvin = list(csv.reader(open(file_path, 'r'), delimiter='/', skipinitialspace=True))
     for ri, row in enumerate(pbar(tsvin, task_str)):
@@ -1136,7 +1154,7 @@ def _ascii_3(catalog):
     catalog.journal_entries()
 
     # 2003ApJ...599..394M
-    datafile = os.path.join(catalog.get_current_task_repo(), 'ASCII',
+    datafile = os.path.join(task_repo, 'ASCII',
                             '2003ApJ...599..394M-tab1.txt')
     data = read(datafile, format='cds')
     name, source = catalog.new_entry('SN2003dh', bibcode='2003ApJ...599..394M')
@@ -1154,7 +1172,7 @@ def _ascii_3(catalog):
         catalog.entries[name].add_photometry(**photodict)
 
     # 2004ApJ...606..381L
-    file_path = os.path.join(catalog.get_current_task_repo(),
+    file_path = os.path.join(task_repo,
                              '2004ApJ...606..381L-table3.txt')
     tsvin = list(csv.reader(open(file_path, 'r'), delimiter=' ', skipinitialspace=True))
     name = 'SN2003dh'
@@ -1204,7 +1222,7 @@ def _ascii_3(catalog):
     catalog.journal_entries()
 
     # 2006ApJ...645..841N
-    file_path = os.path.join(catalog.get_current_task_repo(),
+    file_path = os.path.join(task_repo,
                              '2006ApJ...645..841N-table3.csv')
     tsvin = list(csv.reader(open(file_path, 'r'), delimiter=','))
     for ri, row in enumerate(pbar(tsvin, task_str)):
@@ -1223,7 +1241,7 @@ def _ascii_3(catalog):
 
     # Anderson 2014
     file_names = list(
-        glob(os.path.join(catalog.get_current_task_repo(), 'SNII_anderson2014/*.dat')))
+        glob(os.path.join(task_repo, 'SNII_anderson2014/*.dat')))
     for datafile in pbar(file_names, task_str, sort=True):
         basename = os.path.basename(datafile)
         if not is_number(basename[:2]):
@@ -1262,7 +1280,7 @@ def _ascii_3(catalog):
 
     # stromlo
     stromlobands = ['B', 'V', 'R', 'I', 'VM', 'RM']
-    file_path = os.path.join(catalog.get_current_task_repo(), 'J_A+A_415_863-1/photometry.csv')
+    file_path = os.path.join(task_repo, 'J_A+A_415_863-1/photometry.csv')
     tsvin = list(csv.reader(open(file_path, 'r'), delimiter=','))
     for row in pbar(tsvin, task_str):
         name = row[0]
@@ -1301,7 +1319,7 @@ def _ascii_3(catalog):
     catalog.journal_entries()
 
     # 2015MNRAS.449..451W
-    file_path = os.path.join(catalog.get_current_task_repo(), '2015MNRAS.449..451W.dat')
+    file_path = os.path.join(task_repo, '2015MNRAS.449..451W.dat')
     data = list(csv.reader(open(file_path, 'r'), **READER_KWARGS))
     for rr, row in enumerate(pbar(data, task_str)):
         if rr == 0:
@@ -1326,7 +1344,7 @@ def _ascii_3(catalog):
     catalog.journal_entries()
 
     # 2016MNRAS.459.1039T
-    file_path = os.path.join(catalog.get_current_task_repo(), '2016MNRAS.459.1039T.tsv')
+    file_path = os.path.join(task_repo, '2016MNRAS.459.1039T.tsv')
     data = list(csv.reader(open(file_path, 'r'), **READER_KWARGS))
     name = catalog.add_entry('LSQ13zm')
     source = catalog.entries[name].add_source(bibcode='2016MNRAS.459.1039T')
@@ -1360,7 +1378,7 @@ def _ascii_3(catalog):
     catalog.journal_entries()
 
     # 2015ApJ...804...28G
-    file_path = os.path.join(catalog.get_current_task_repo(), '2015ApJ...804...28G.tsv')
+    file_path = os.path.join(task_repo, '2015ApJ...804...28G.tsv')
     data = list(csv.reader(open(file_path, 'r'), **READER_KWARGS))
     name = catalog.add_entry('PS1-13arp')
     source = catalog.entries[name].add_source(bibcode='2015ApJ...804...28G')
@@ -1391,7 +1409,7 @@ def _ascii_3(catalog):
     catalog.journal_entries()
 
     # 2016ApJ...819...35A
-    file_path = os.path.join(catalog.get_current_task_repo(), '2016ApJ...819...35A.tsv')
+    file_path = os.path.join(task_repo, '2016ApJ...819...35A.tsv')
     data = list(csv.reader(open(file_path, 'r'), **READER_KWARGS))
     for rr, row in enumerate(pbar(data, task_str)):
         if row[0][0] == '#':
@@ -1408,7 +1426,7 @@ def _ascii_3(catalog):
     catalog.journal_entries()
 
     # 2014ApJ...784..105W
-    file_path = os.path.join(catalog.get_current_task_repo(), '2014ApJ...784..105W.tsv')
+    file_path = os.path.join(task_repo, '2014ApJ...784..105W.tsv')
     data = list(csv.reader(open(file_path, 'r'), **READER_KWARGS))
     for rr, row in enumerate(pbar(data, task_str)):
         if row[0][0] == '#':
@@ -1435,7 +1453,7 @@ def _ascii_3(catalog):
     catalog.journal_entries()
 
     # 2013MNRAS.432L..90B
-    file_path = os.path.join(catalog.get_current_task_repo(), 'ASCII/2013MNRAS.432L..90B.tsv')
+    file_path = os.path.join(task_repo, 'ASCII/2013MNRAS.432L..90B.tsv')
     data = list(csv.reader(open(file_path, 'r'), **READER_KWARGS))
     for rr, row in enumerate(pbar(data, task_str)):
         if row[0][0] == '#':
@@ -1474,7 +1492,7 @@ def _ascii_3(catalog):
         catalog.journal_entries()
 
     # 2014ApJ...783...28G
-    file_path = os.path.join(catalog.get_current_task_repo(), 'apj490105t2_ascii.txt')
+    file_path = os.path.join(task_repo, 'apj490105t2_ascii.txt')
     with open(file_path, 'r') as f:
         data = list(csv.reader(f, **READER_KWARGS))
         for r, row in enumerate(pbar(data, task_str)):
@@ -1492,7 +1510,7 @@ def _ascii_3(catalog):
     catalog.journal_entries()
 
     # 2005ApJ...634.1190H
-    file_path = os.path.join(catalog.get_current_task_repo(), '2005ApJ...634.1190H.tsv')
+    file_path = os.path.join(task_repo, '2005ApJ...634.1190H.tsv')
     with open(file_path, 'r') as f:
         data = list(csv.reader(f, **READER_KWARGS))
         for r, row in enumerate(pbar(data, task_str)):
@@ -1508,7 +1526,7 @@ def _ascii_3(catalog):
     catalog.journal_entries()
 
     # 2014MNRAS.444.2133S
-    file_path = os.path.join(catalog.get_current_task_repo(), '2014MNRAS.444.2133S.tsv')
+    file_path = os.path.join(task_repo, '2014MNRAS.444.2133S.tsv')
     with open(file_path, 'r') as f:
         data = list(csv.reader(f, **READER_KWARGS))
         for r, row in enumerate(pbar(data, task_str)):
@@ -1525,7 +1543,7 @@ def _ascii_3(catalog):
     catalog.journal_entries()
 
     # 2009MNRAS.398.1041B
-    file_path = os.path.join(catalog.get_current_task_repo(), '2009MNRAS.398.1041B.tsv')
+    file_path = os.path.join(task_repo, '2009MNRAS.398.1041B.tsv')
     with open(file_path, 'r') as f:
         data = list(csv.reader(f, **READER_KWARGS))
         for r, row in enumerate(pbar(data, task_str)):
@@ -1558,7 +1576,7 @@ def _ascii_3(catalog):
     catalog.journal_entries()
 
     # 2010arXiv1007.0011P
-    file_path = os.path.join(catalog.get_current_task_repo(), '2010arXiv1007.0011P.tsv')
+    file_path = os.path.join(task_repo, '2010arXiv1007.0011P.tsv')
     with open(file_path, 'r') as f:
         data = list(csv.reader(f, **READER_KWARGS))
         for r, row in enumerate(pbar(data, task_str)):
@@ -1589,7 +1607,7 @@ def _ascii_3(catalog):
     catalog.journal_entries()
 
     # 2000ApJ...533..320G
-    file_path = os.path.join(catalog.get_current_task_repo(), '2000ApJ...533..320G.tsv')
+    file_path = os.path.join(task_repo, '2000ApJ...533..320G.tsv')
     with open(file_path, 'r') as f:
         data = list(csv.reader(f, **READER_KWARGS))
         name, source = catalog.new_entry('SN1997cy', bibcode='2000ApJ...533..320G')
