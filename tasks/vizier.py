@@ -217,8 +217,7 @@ def _viz_1(catalog, viz):
     result = viz.get_catalogs('J/ApJ/826/144/table1')
     table = result[list(result.keys())[0]]
     table.convert_bytestring_to_unicode()
-    name, source = catalog.new_entry(
-        'ASASSN-14lp', bibcode='2016ApJ...826..144S')
+    name, source = catalog.new_entry('ASASSN-14lp', bibcode='2016ApJ...826..144S')
     for row in pbar(table, task_str):
         row = convert_aq_output(row)
         photodict = {
@@ -246,8 +245,7 @@ def _viz_1(catalog, viz):
             name = row['SN']
             if is_number(name[:4]):
                 name = 'SN' + name
-            name, source = catalog.new_entry(
-                name, bibcode='2012ApJ...756..173S')
+            name, source = catalog.new_entry(name, bibcode='2012ApJ...756..173S')
             bands = [x for x in row if x.endswith('mag') and not x.startswith('e_')]
             for bandtag in bands:
                 band = bandtag.replace('mag', '')
@@ -478,8 +476,7 @@ def _viz_1(catalog, viz):
     for row in pbar(table, task_str):
         name = row['Name'].replace('SCP', 'SCP-')
         name = catalog.add_entry(name)
-        source = catalog.entries[name].add_source(
-            bibcode='2012ApJ...746...85S')
+        source = catalog.entries[name].add_source(bibcode='2012ApJ...746...85S')
         catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
         if row['f_Name']:
             catalog.entries[name].add_quantity(SUPERNOVA.CLAIMED_TYPE, 'Ia', source)
@@ -535,12 +532,11 @@ def _viz_2(catalog, viz):
         flux = row['Flux']
         err = row['e_Flux']
         name = catalog.add_entry(name)
-        source = catalog.entries[name].add_source(
-            bibcode='2004ApJ...602..571B')
+        source = catalog.entries[name].add_source(bibcode='2004ApJ...602..571B')
         catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
         band = row['Filt']
-        bandset = ''
-        telescope = ''
+        bandset = None
+        telescope = None
         if band in ['R', 'I']:
             bandset = 'Cousins'
         if band == 'Z':
@@ -550,13 +546,15 @@ def _viz_2(catalog, viz):
             PHOTOMETRY.TIME: str(row['MJD']),
             PHOTOMETRY.U_TIME: 'MJD',
             PHOTOMETRY.BAND: band,
-            PHOTOMETRY.BAND_SET: bandset,
             PHOTOMETRY.COUNT_RATE: flux,
             PHOTOMETRY.E_COUNT_RATE: err,
             PHOTOMETRY.ZERO_POINT: str(zp),
-            PHOTOMETRY.TELESCOPE: telescope,
             PHOTOMETRY.SOURCE: source
         }
+        if bandset is not None:
+            photodict[PHOTOMETRY.BAND_SET] = bandset
+        if telescope is not None:
+            photodict[PHOTOMETRY.TELESCOPE] = telescope
         sn_utils.set_pd_mag_from_counts(photodict, flux, ec=err, zp=zp, sig=5.0)
         catalog.entries[name].add_photometry(**photodict)
 
