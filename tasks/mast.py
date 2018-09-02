@@ -79,9 +79,9 @@ def do_mast_spectra(catalog):
     masturl = 'https://mast.stsci.edu'
     mastref = 'MAST'
     fureps = {'erg/cm2/s/A': 'erg/s/cm^2/Angstrom'}
+    log = catalog.log
 
-    histfile = os.path.join(
-        catalog.get_current_task_repo(), 'MAST', 'history.json')
+    histfile = os.path.join(catalog.get_current_task_repo(), 'MAST', 'history.json')
 
     if os.path.exists(histfile):
         histdict = json.load(open(histfile, 'r'))
@@ -107,16 +107,14 @@ def do_mast_spectra(catalog):
     objs = []
     for entry in catalog.entries:
         if SUPERNOVA.DISCOVER_DATE in catalog.entries[entry]:
-            dd = catalog.entries[entry][
-                SUPERNOVA.DISCOVER_DATE][0][QUANTITY.VALUE]
+            dd = catalog.entries[entry][SUPERNOVA.DISCOVER_DATE][0][QUANTITY.VALUE]
             try:
                 dt = datetime.strptime(dd, '%Y/%m/%d')
                 if dt < datetime(1997, 1, 1):
                     continue
             except Exception:
                 pass
-        if (SUPERNOVA.RA in catalog.entries[entry] and
-                SUPERNOVA.DEC in catalog.entries[entry]):
+        if (SUPERNOVA.RA in catalog.entries[entry] and SUPERNOVA.DEC in catalog.entries[entry]):
             objs.append([
                 entry,
                 catalog.entries[entry][SUPERNOVA.RA][0][QUANTITY.VALUE],
@@ -125,7 +123,17 @@ def do_mast_spectra(catalog):
         return
     objs = np.array(objs).T
 
-    coords = coord(objs[1], objs[2], unit=(un.hourangle, un.deg))
+    try:
+        coords = coord(objs[1], objs[2], unit=(un.hourangle, un.deg))
+    except ValueError:
+        log.error("Converting to coordinates failed!")
+        for name, xx, yy in zip(objs[0], objs[1], objs[2]):
+            try:
+                _ = coord(xx, yy, unit=(un.hourangle, un.deg))
+            except ValueError:
+                log.error("Failure in entry: '{}' with coords: '{}, {}'".format(name, xx, yy))
+                raise
+        raise
 
     for ci, co in enumerate(pbar(coords, desc=task_str)):
         entry = objs[0][ci]
@@ -167,8 +175,7 @@ def do_mast_spectra(catalog):
                 print('`fields` not found for `{}`'.format(entry))
                 continue
 
-            for col, atype in [(
-                    x['name'], x['type']) for x in mastData['fields']]:
+            for col, atype in [(x['name'], x['type']) for x in mastData['fields']]:
                 if atype == "string":
                     atype = "str"
                 if atype == "boolean":
@@ -180,8 +187,8 @@ def do_mast_spectra(catalog):
 
             spectra = [
                 x for x in mastDataTable if
-                x['dataproduct_type'] == 'spectrum' and x[
-                    'obs_collection'] == 'HST']
+                x['dataproduct_type'] == 'spectrum' and x['obs_collection'] == 'HST'
+            ]
 
             spectra = [{
                 'target_classification': x['target_classification'],
@@ -205,11 +212,9 @@ def do_mast_spectra(catalog):
             if obsid is None:
                 continue
 
-            mjd = str(Decimal('0.5') * (
-                Decimal(str(spec['t_min'])) + Decimal(str(spec['t_max']))))
+            mjd = str(Decimal('0.5') * (Decimal(str(spec['t_min'])) + Decimal(str(spec['t_max']))))
             instrument = spec['instrument_name']
-            if ('STIS' not in instrument.upper() and
-                    'COS' not in instrument.upper()):
+            if ('STIS' not in instrument.upper() and 'COS' not in instrument.upper()):
                 continue
             observer = spec['proposal_pi']
 
@@ -225,8 +230,7 @@ def do_mast_spectra(catalog):
                 try:
                     headers, obsProductsString = mastQuery(productRequest)
                 except Exception:
-                    print(
-                        '`mastQuery` failed for `{}`, skipping.'.format(obsid))
+                    print('`mastQuery` failed for `{}`, skipping.'.format(obsid))
                     continue
 
                 obsProducts = json.loads(obsProductsString)
@@ -240,8 +244,7 @@ def do_mast_spectra(catalog):
                               if x.get("productType", None) == 'SCIENCE']
                 scienceProducts = OrderedDict()
 
-                for col, atype in [
-                        (x['name'], x['type']) for x in obsProducts['fields']]:
+                for col, atype in [(x['name'], x['type']) for x in obsProducts['fields']]:
                     if atype == "string":
                         atype = "str"
                     if atype == "boolean":
@@ -250,8 +253,7 @@ def do_mast_spectra(catalog):
                         # array may contain nan values, and they do not exist
                         # in numpy integer arrays.
                         atype = "float"
-                    scienceProducts[col] = [
-                        x.get(col, None) for x in sciProdArr]
+                    scienceProducts[col] = [x.get(col, None) for x in sciProdArr]
 
                 spectra[si]['sciProds'] = scienceProducts
 
@@ -260,21 +262,17 @@ def do_mast_spectra(catalog):
 
             search_str = '_x1d.fits'
             summed = False
-            if any(['_x1dsum.fits' in x for x in scienceProducts[
-                    'productFilename']]):
+            if any(['_x1dsum.fits' in x for x in scienceProducts['productFilename']]):
                 search_str = '_x1dsum.fits'
                 summed = True
-            if any(['_sx1.fits' in x for x in scienceProducts[
-                    'productFilename']]):
+            if any(['_sx1.fits' in x for x in scienceProducts['productFilename']]):
                 search_str = '_sx1.fits'
                 summed = True
             for ri in range(len(scienceProducts['productFilename'])):
                 if search_str not in scienceProducts['productFilename'][ri]:
                     continue
-                filename = str(obsid) + "_" + \
-                    scienceProducts['productFilename'][ri]
-                datafile = os.path.join(
-                    catalog.get_current_task_repo(), 'MAST', filename)
+                filename = str(obsid) + "_" + scienceProducts['productFilename'][ri]
+                datafile = os.path.join(catalog.get_current_task_repo(), 'MAST', filename)
                 if not os.path.exists(datafile):
                     # link is url, so can just dl
                     if "http" in scienceProducts['dataURI'][ri]:
@@ -349,25 +347,21 @@ def do_mast_spectra(catalog):
                     SPECTRUM.SOURCE: source
                 }
                 if 'TELESCOP' in hdrkeys:
-                    specdict[SPECTRUM.TELESCOPE] = hdulist[0].header[
-                        'TELESCOP']
+                    specdict[SPECTRUM.TELESCOPE] = hdulist[0].header['TELESCOP']
                 if not instrument and 'INSTRUME' in hdrkeys:
                     instrument = hdulist[0].header['INSTRUME']
                 if instrument:
                     specdict[SPECTRUM.INSTRUMENT] = instrument
                 if 'SITENAME' in hdrkeys:
-                    specdict[SPECTRUM.OBSERVATORY] = hdulist[0].header[
-                        'SITENAME']
+                    specdict[SPECTRUM.OBSERVATORY] = hdulist[0].header['SITENAME']
                 elif 'OBSERVAT' in hdrkeys:
-                    specdict[SPECTRUM.OBSERVATORY] = hdulist[0].header[
-                        'OBSERVAT']
+                    specdict[SPECTRUM.OBSERVATORY] = hdulist[0].header['OBSERVAT']
                 if 'OBSERVER' in hdrkeys:
                     specdict[SPECTRUM.OBSERVER] = hdulist[0].header['OBSERVER']
                 catalog.entries[name].add_spectrum(**specdict)
         if not use_cache and (ci % 100 == 0 or ci == len(coords) - 1):
             histdict[entry] = [time.time(), spectra]
-            json.dump(histdict, open(histfile, 'w'),
-                      indent='\t', separators=(',', ':'))
+            json.dump(histdict, open(histfile, 'w'), indent='\t', separators=(',', ':'))
         catalog.journal_entries()
 
     return
