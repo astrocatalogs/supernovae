@@ -325,6 +325,7 @@ def do_tns_spectra(catalog):
                 if fails >= 5:
                     break
                 continue
+
             # Cache object here
             with open(jsonpath, 'w') as f:
                 json.dump(sortOD(objdict), f, indent='\t',
@@ -332,6 +333,7 @@ def do_tns_spectra(catalog):
 
         if 'spectra' not in objdict:
             continue
+
         specarr = objdict['spectra']
         name, source = catalog.new_entry(oname, name='Transient Name Server', url=tns_url)
         for spectrum in specarr:
@@ -360,9 +362,8 @@ def do_tns_spectra(catalog):
                 fname = urllib.parse.unquote(spectrum['asciifile'].split('/')[-1])
                 spectxt = catalog.load_url(
                     spectrum['asciifile'],
-                    os.path.join(
-                        catalog.get_current_task_repo(), 'TNS', 'spectra',
-                        fname), archived_mode=True)
+                    os.path.join(catalog.get_current_task_repo(), 'TNS', 'spectra', fname),
+                    archived_mode=True)
                 data = [x.split() for x in spectxt.splitlines()]
 
                 skipspec = False
@@ -382,7 +383,7 @@ def do_tns_spectra(catalog):
                 data = [list(i) for i in zip(*newdata)]
                 wavelengths = data[0]
                 fluxes = data[1]
-                errors = ''
+                errors = None
                 if len(data) == 3:
                     errors = data[1]
 
@@ -393,12 +394,13 @@ def do_tns_spectra(catalog):
 
                 spectrumdict.update({
                     SPECTRUM.U_WAVELENGTHS: 'Angstrom',
-                    SPECTRUM.ERRORS: errors,
                     SPECTRUM.U_FLUXES: fluxunit,
-                    SPECTRUM.U_ERRORS: fluxunit if errors else '',
                     SPECTRUM.WAVELENGTHS: wavelengths,
                     SPECTRUM.FLUXES: fluxes
                 })
+                if errors:
+                    spectrumdict[SPECTRUM.ERRORS] = errors
+                    spectrumdict[SPECTRUM.U_ERRORS] = fluxunit
                 catalog.entries[name].add_spectrum(**spectrumdict)
 
         catalog.journal_entries()
