@@ -655,7 +655,7 @@
         "nice_name": "Merging duplicates",
         "active": false,
         "update": false,
-        "module": "catalog.tasks.merge_duplicates",
+        "module": "astrocats.tasks.merge_duplicates",
         "function": "merge_duplicates",
         "groups": ["meta"],
         "priority": -100
