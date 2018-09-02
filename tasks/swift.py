@@ -26,6 +26,7 @@ def do_swift(catalog):
             post={'year': str(year)},
             archived_mode=archived,
             verify=False)
+
         if not html:
             continue
 
@@ -41,30 +42,35 @@ def do_swift(catalog):
 
         loopcnt = 0
         for record in pbar(records, task_str):
-            if len(record) > 1 and record[0] != '':
-                oldname = name_clean(record[0])
-                radeg = record[1].strip()
-                decdeg = record[2].strip()
+            if len(record) <= 1 or record[0] == '':
+                continue
 
-                if catalog.get_name_for_entry_or_alias(oldname) is None:
-                    continue
-                if float(radeg) == 0.0 and float(decdeg) == 0.0:
-                    continue
+            oldname = name_clean(record[0])
+            radeg = record[1].strip()
+            decdeg = record[2].strip()
 
-                name = catalog.add_entry(oldname)
-                if (ENTRY.RA in catalog.entries[name] and ENTRY.DEC in catalog.entries[name]):
-                    catalog.journal_entries()
-                    continue
-                source = catalog.entries[name].add_source(name=reference, url=url)
+            if catalog.get_name_for_entry_or_alias(oldname) is None:
+                continue
+            if float(radeg) == 0.0 and float(decdeg) == 0.0:
+                continue
 
-                catalog.entries[name].add_quantity(
-                    ENTRY.RA, radeg, u_value='floatdegrees', source=source)
-                catalog.entries[name].add_quantity(
-                    ENTRY.DEC, decdeg, u_value='floatdegrees', source=source)
+            name = catalog.add_entry(oldname)
+            if (ENTRY.RA in catalog.entries[name]) and (ENTRY.DEC in catalog.entries[name]):
                 catalog.journal_entries()
-                loopcnt = loopcnt + 1
-                if (catalog.args.travis and loopcnt >= catalog.TRAVIS_QUERY_LIMIT):
-                    break
+                continue
+            source = catalog.entries[name].add_source(name=reference, url=url)
+
+            catalog.entries[name].add_quantity(
+                ENTRY.RA, radeg, u_value='floatdegrees', source=source)
+            catalog.entries[name].add_quantity(
+                ENTRY.DEC, decdeg, u_value='floatdegrees', source=source)
+
+            catalog.journal_entries()
+            loopcnt = loopcnt + 1
+            
+            if catalog.args.travis and (loopcnt >= catalog.TRAVIS_QUERY_LIMIT):
+                break
+
     catalog.journal_entries()
 
     return
