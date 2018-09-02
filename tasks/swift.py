@@ -22,8 +22,7 @@ def do_swift(catalog):
         archived = True if year < years[-1] - 1 else False
         html = catalog.load_url(
             url,
-            os.path.join(catalog.get_current_task_repo(),
-                         'Swift/' + str(year) + '.html'),
+            os.path.join(catalog.get_current_task_repo(), 'Swift/' + str(year) + '.html'),
             post={'year': str(year)},
             archived_mode=archived,
             verify=False)
@@ -53,24 +52,18 @@ def do_swift(catalog):
                     continue
 
                 name = catalog.add_entry(oldname)
-                if (ENTRY.RA in catalog.entries[name] and
-                        ENTRY.DEC in catalog.entries[name]):
+                if (ENTRY.RA in catalog.entries[name] and ENTRY.DEC in catalog.entries[name]):
                     catalog.journal_entries()
                     continue
-                source = catalog.entries[name].add_source(
-                    name=reference, url=url)
+                source = catalog.entries[name].add_source(name=reference, url=url)
 
                 catalog.entries[name].add_quantity(
                     ENTRY.RA, radeg, u_value='floatdegrees', source=source)
                 catalog.entries[name].add_quantity(
-                    ENTRY.DEC,
-                    decdeg,
-                    u_value='floatdegrees',
-                    source=source)
+                    ENTRY.DEC, decdeg, u_value='floatdegrees', source=source)
                 catalog.journal_entries()
                 loopcnt = loopcnt + 1
-                if (catalog.args.travis and loopcnt %
-                        catalog.TRAVIS_QUERY_LIMIT == 0):
+                if (catalog.args.travis and loopcnt >= catalog.TRAVIS_QUERY_LIMIT):
                     break
     catalog.journal_entries()
 
