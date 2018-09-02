@@ -54,7 +54,7 @@ def do_wiserep_spectra(catalog):
         name = os.path.basename(folder).strip()
         if name.startswith('sn'):
             name = 'SN' + name[2:]
-        if (name.startswith(('CSS', 'SSS', 'MLS')) and ':' not in name):
+        if name.startswith(('CSS', 'SSS', 'MLS')) and (':' not in name):
             name = name.replace('-', ':', 1)
         if name.startswith('MASTERJ'):
             name = name.replace('MASTERJ', 'MASTER OT J')
@@ -78,8 +78,7 @@ def do_wiserep_spectra(catalog):
         with open(readme_path, 'r') as f:
             fileinfo = json.loads(f.read())
 
-        files = list(
-            set(glob(folder + '/*')) - set(glob(folder + '/README.json')))
+        files = list(set(glob(folder + '/*')) - set(glob(folder + '/README.json')))
         for fname in pbar(files, task_str):
             specfile = os.path.basename(fname)
             if specfile not in fileinfo:
@@ -119,55 +118,57 @@ def do_wiserep_spectra(catalog):
             with open(fname, 'r') as f:
                 data = [x.split() for x in f]
 
-                skipspec = False
-                newdata = []
-                oldval = ''
-                for row in data:
-                    if row and '#' not in row[0]:
-                        if (len(row) >= 2 and is_number(row[0]) and
-                                is_number(row[1]) and row[1] != oldval):
-                            newdata.append(row)
-                            oldval = row[1]
-
-                if skipspec or not newdata:
-                    warnings.warn('Skipped adding spectrum file ' + specfile)
+            skipspec = False
+            newdata = []
+            oldval = ''
+            for row in data:
+                if (not row) or ('#' in row[0]):
                     continue
+                if len(row) < 2:
+                    continue
+                if is_number(row[0]) and is_number(row[1]) and (row[1] != oldval):
+                    newdata.append(row)
+                    oldval = row[1]
 
-                data = [list(i) for i in zip(*newdata)]
-                wavelengths = data[0]
-                fluxes = data[1]
-                errors = None
-                if len(data) == 3:
-                    errors = data[1]
-                time = str(astrotime(epoch).mjd)
+            if skipspec or not newdata:
+                warnings.warn('Skipped adding spectrum file ' + specfile)
+                continue
 
-                if max([float(x) for x in fluxes]) < 1.0e-5:
-                    fluxunit = 'erg/s/cm^2/Angstrom'
-                else:
-                    fluxunit = 'Uncalibrated'
+            data = [list(i) for i in zip(*newdata)]
+            wavelengths = data[0]
+            fluxes = data[1]
+            errors = None
+            if len(data) == 3:
+                errors = data[1]
+            time = str(astrotime(epoch).mjd)
 
-                spec = {
-                    SPECTRUM.U_WAVELENGTHS: 'Angstrom',
-                    SPECTRUM.U_FLUXES: fluxunit,
-                    SPECTRUM.WAVELENGTHS: wavelengths,
-                    SPECTRUM.FLUXES: fluxes,
-                    SPECTRUM.U_TIME: 'MJD',
-                    SPECTRUM.TIME: time,
-                    SPECTRUM.INSTRUMENT: instrument,
-                    SPECTRUM.SOURCE: sources,
-                    SPECTRUM.OBSERVER: observer,
-                    SPECTRUM.REDUCER: reducer,
-                    SPECTRUM.REDUCTION: reduction,
-                    SPECTRUM.FILENAME: specfile,
-                    SPECTRUM.REDSHIFT: redshift
-                }
-                if len(survey) > 0:
-                    spec[SPECTRUM.SURVEY] = survey
-                if errors is not None:
-                    spec[SPECTRUM.ERRORS] = errors
-                    spec[SPECTRUM.U_ERRORS] = fluxunit
+            if max([float(x) for x in fluxes]) < 1.0e-5:
+                fluxunit = 'erg/s/cm^2/Angstrom'
+            else:
+                fluxunit = 'Uncalibrated'
 
-                catalog.entries[name].add_spectrum(**spec)
+            spec = {
+                SPECTRUM.U_WAVELENGTHS: 'Angstrom',
+                SPECTRUM.U_FLUXES: fluxunit,
+                SPECTRUM.WAVELENGTHS: wavelengths,
+                SPECTRUM.FLUXES: fluxes,
+                SPECTRUM.U_TIME: 'MJD',
+                SPECTRUM.TIME: time,
+                SPECTRUM.INSTRUMENT: instrument,
+                SPECTRUM.SOURCE: sources,
+                SPECTRUM.OBSERVER: observer,
+                SPECTRUM.REDUCER: reducer,
+                SPECTRUM.REDUCTION: reduction,
+                SPECTRUM.FILENAME: specfile,
+                SPECTRUM.REDSHIFT: redshift
+            }
+            if len(survey) > 0:
+                spec[SPECTRUM.SURVEY] = survey
+            if errors is not None:
+                spec[SPECTRUM.ERRORS] = errors
+                spec[SPECTRUM.U_ERRORS] = fluxunit
+
+            catalog.entries[name].add_spectrum(**spec)
 
         catalog.journal_entries()
 
