@@ -18,51 +18,44 @@ from ..supernova import SUPERNOVA
 
 def do_ps_mds(catalog):
     task_str = catalog.get_current_task_str()
-    with open(
-            os.path.join(catalog.get_current_task_repo(),
-                         'MDS/apj506838t1_mrt.txt')) as f:
-        for ri, row in enumerate(pbar(f.read().splitlines(), task_str)):
-            if ri < 35:
-                continue
-            cols = [x.strip() for x in row.split(',')]
-            name = catalog.add_entry(cols[0])
-            source = catalog.entries[name].add_source(
-                bibcode='2015ApJ...799..208S')
-            catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
-            catalog.entries[name].add_quantity(SUPERNOVA.RA, cols[2], source)
-            catalog.entries[name].add_quantity(SUPERNOVA.DEC, cols[3], source)
-            astrot = astrotime(float(cols[4]), format='mjd').datetime
-            ddate = make_date_string(astrot.year, astrot.month, astrot.day)
-            catalog.entries[name].add_quantity(SUPERNOVA.DISCOVER_DATE, ddate,
-                                               source)
-            catalog.entries[name].add_quantity(
-                SUPERNOVA.REDSHIFT, cols[5], source, kind='spectroscopic')
-            catalog.entries[name].add_quantity(SUPERNOVA.CLAIMED_TYPE, 'II P',
-                                               source)
+    path = os.path.join(catalog.get_current_task_repo(), 'MDS/apj506838t1_mrt.txt')
+    with open(path) as f:
+        lines = f.read().splitlines()
+
+    for ri, row in enumerate(pbar(lines, task_str)):
+        if ri < 35:
+            continue
+        cols = [x.strip() for x in row.split(',')]
+        name = catalog.add_entry(cols[0])
+        source = catalog.entries[name].add_source(bibcode='2015ApJ...799..208S')
+        catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
+        catalog.entries[name].add_quantity(SUPERNOVA.RA, cols[2], source)
+        catalog.entries[name].add_quantity(SUPERNOVA.DEC, cols[3], source)
+        astrot = astrotime(float(cols[4]), format='mjd').datetime
+        ddate = make_date_string(astrot.year, astrot.month, astrot.day)
+        catalog.entries[name].add_quantity(SUPERNOVA.DISCOVER_DATE, ddate, source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.REDSHIFT, cols[5], source, kind='spectroscopic')
+        catalog.entries[name].add_quantity(SUPERNOVA.CLAIMED_TYPE, 'II P', source)
+
     catalog.journal_entries()
     return
 
 
 def do_ps_alerts(catalog):
+    log = catalog.log
     task_str = catalog.get_current_task_str()
     alertstables = ['alertstable-2010', 'alertstable-2011', 'alertstable']
     rows = []
     for at in alertstables:
-        with open(
-                os.path.join(catalog.get_current_task_repo(), 'ps1-clean',
-                             at)) as f:
-            rows.extend(
-                list(csv.reader(
-                    f, delimiter=' ', skipinitialspace=True))[1:])
-    alertfiles = glob(
-        os.path.join(catalog.get_current_task_repo(), 'ps1-clean/*.dat'))
-    alertfilestag = dict(
-        [(x.split('/')[-1].split('.')[0], x) for x in alertfiles])
-    alertfilesid = dict([(x.split('/')[-1].split('.')[0].split('-')[-1], x)
-                         for x in alertfiles])
-    with open(
-            os.path.join(catalog.get_current_task_repo(),
-                         'ps1-clean/whitelist')) as f:
+        path = os.path.join(catalog.get_current_task_repo(), 'ps1-clean', at)
+        with open(path) as f:
+            rows.extend(list(csv.reader(f, delimiter=' ', skipinitialspace=True))[1:])
+    alertfiles = glob(os.path.join(catalog.get_current_task_repo(), 'ps1-clean/*.dat'))
+    alertfilestag = dict([(x.split('/')[-1].split('.')[0], x) for x in alertfiles])
+    alertfilesid = dict([(x.split('/')[-1].split('.')[0].split('-')[-1], x) for x in alertfiles])
+    path = os.path.join(catalog.get_current_task_repo(), 'ps1-clean/whitelist')
+    with open(path) as f:
         whitelist = list(csv.reader(f, delimiter=' ', skipinitialspace=True))
     wlnames = [x[0] for x in whitelist]
     wlnamesleft = list(wlnames)
@@ -103,11 +96,13 @@ def do_ps_alerts(catalog):
 
         catalog.entries[name].add_quantity(SUPERNOVA.RA, row[4], source)
         catalog.entries[name].add_quantity(SUPERNOVA.DEC, row[5], source)
-        if sntype != '-':
+        if len(sntype) > 0 and sntype != '-':
             catalog.entries[name].add_quantity(SUPERNOVA.CLAIMED_TYPE, sntype, source)
-        if row[22] != '-':
+        if len(row[22]) > 0 and row[22] != '-':
             catalog.entries[name].add_quantity(SUPERNOVA.REDSHIFT, row[22], source)
+
         # Disabling photometry import
+        log.warning("`ps.do_ps_alerts`: photometry import is disabled!")
         continue
 
         if skip_photo:
@@ -123,9 +118,7 @@ def do_ps_alerts(catalog):
                 continue
             pspath = alertfilestag[psinternal]
         with open(pspath) as f:
-            photrows = list(
-                csv.reader(
-                    f, delimiter=' ', skipinitialspace=True))
+            photrows = list(csv.reader(f, delimiter=' ', skipinitialspace=True))
         for pi, prow in enumerate(photrows):
             if pi == 0 or prow[3] == '-':
                 continue
