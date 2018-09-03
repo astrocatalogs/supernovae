@@ -127,13 +127,31 @@ def do_mast_spectra(catalog):
         coords = coord(objs[1], objs[2], unit=(un.hourangle, un.deg))
     except ValueError:
         log.error("Converting to coordinates failed!")
-        for name, xx, yy in zip(objs[0], objs[1], objs[2]):
+        num_obs = objs.shape[-1]
+        goods = np.ones(num_obs, dtype=bool)
+        # for name, xx, yy in zip(objs[0], objs[1], objs[2]):
+        for ii in range(num_obs):
+            name = objs[0, ii]
+            xx = objs[1, ii]
+            yy = objs[2, ii]
             try:
                 _ = coord(xx, yy, unit=(un.hourangle, un.deg))
             except ValueError:
-                log.error("Failure in entry: '{}' with coords: '{}, {}'".format(name, xx, yy))
-                raise
-        raise
+                log.error("Failure in entry: '{}' with coords: '{}, {}'.  Removing.".format(
+                    name, xx, yy))
+                goods[ii] = False
+
+        num_bad = num_obs - np.sum(goods)
+        objs = objs[:, goods]
+        try:
+            coords = coord(objs[1], objs[2], unit=(un.hourangle, un.deg))
+        except ValueError as err:
+            log.error("Coordinate conversion still failing after removing {}/{} entries.".format(
+                num_bad, num_obs))
+            log.raise_error(err)
+        else:
+            log.info("Coordinate conversion succeeded after removing {}/{} entries.".format(
+                num_bad, num_obs))
 
     for ci, co in enumerate(pbar(coords, desc=task_str)):
         entry = objs[0][ci]
@@ -280,9 +298,8 @@ def do_mast_spectra(catalog):
                     else:  # link is uri, need to go through direct dl request
                         server = 'mast.stsci.edu'
                         conn = httplib.HTTPSConnection(server)
-                        conn.request(
-                            "GET", "/api/v0/download/file/" +
-                            scienceProducts['dataURI'][ri].lstrip('mast:'))
+                        conn.request("GET", "/api/v0/download/file/" +
+                                     scienceProducts['dataURI'][ri].lstrip('mast:'))
                         resp = conn.getresponse()
                         fileContent = resp.read()
                         with open(datafile, 'wb') as FLE:
@@ -297,7 +314,7 @@ def do_mast_spectra(catalog):
                     continue
                 for oi, obj in enumerate(hdulist[0].header):
                     if any(x in ['.', '/'] for x in obj):
-                        del (hdulist[0].header[oi])
+                        del hdulist[0].header[oi]
                 hdulist[0].verify('silentfix')
                 hdrkeys = list(hdulist[0].header.keys())
                 # print(hdrkeys)
