@@ -54,11 +54,12 @@ def do_swift(catalog):
             if float(radeg) == 0.0 and float(decdeg) == 0.0:
                 continue
 
-            name = catalog.add_entry(oldname)
+            # name = catalog.add_entry(oldname)
+            name, source = catalog.new_entry(oldname, name=reference, url=url)
             if (ENTRY.RA in catalog.entries[name]) and (ENTRY.DEC in catalog.entries[name]):
                 catalog.journal_entries()
                 continue
-            source = catalog.entries[name].add_source(name=reference, url=url)
+            # source = catalog.entries[name].add_source(name=reference, url=url)
 
             catalog.entries[name].add_quantity(
                 ENTRY.RA, radeg, u_value='floatdegrees', source=source)
@@ -67,7 +68,7 @@ def do_swift(catalog):
 
             catalog.journal_entries()
             loopcnt = loopcnt + 1
-            
+
             if catalog.args.travis and (loopcnt >= catalog.TRAVIS_QUERY_LIMIT):
                 break
 
