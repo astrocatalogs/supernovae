@@ -153,6 +153,7 @@ def do_mast_spectra(catalog):
             log.info("Coordinate conversion succeeded after removing {}/{} entries.".format(
                 num_bad, num_obs))
 
+    mastcnt = 0
     for ci, co in enumerate(pbar(coords, desc=task_str)):
         entry = objs[0][ci]
         use_cache = False
@@ -380,5 +381,9 @@ def do_mast_spectra(catalog):
             histdict[entry] = [time.time(), spectra]
             json.dump(histdict, open(histfile, 'w'), indent='\t', separators=(',', ':'))
         catalog.journal_entries()
+
+        mastcnt = mastcnt + 1
+        if (catalog.args.travis and mastcnt >= catalog.TRAVIS_QUERY_LIMIT):
+            break
 
     return
