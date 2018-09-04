@@ -127,14 +127,11 @@ class Supernova(struct.Entry_New_Adder):
         elif key == self._KEYS.HOST:
             if utils.is_number(value):
                 return False
-            if value.lower() in [
-                    'anonymous', 'anon.', 'anon', 'intergalactic'
-            ]:
+            if value.lower() in ['anonymous', 'anon.', 'anon', 'intergalactic']:
                 return False
             value = host_clean(value)
-            if ((not kinds and ((value.lower().startswith('abell') and
-                                 utils.is_number(value[5:].strip())) or
-                                'cluster' in value.lower()))):
+            is_abell = (value.lower().startswith('abell') and utils.is_number(value[5:].strip()))
+            if (not kinds) and (is_abell or ('cluster' in value.lower())):
                 kinds = ['cluster']
         elif key == self._KEYS.HOST_REDSHIFT:
             kinds = list(filter(lambda x: x != 'host', kinds))
@@ -154,27 +151,17 @@ class Supernova(struct.Entry_New_Adder):
                 value = value + '?'
             if not value:
                 return False
-        elif key in [
-                self._KEYS.RA, self._KEYS.DEC, self._KEYS.HOST_RA,
-                self._KEYS.HOST_DEC
-        ]:
-            (value, unit) = radec_clean(value, key, unit=unit)
+        elif key in [self._KEYS.RA, self._KEYS.DEC, self._KEYS.HOST_RA, self._KEYS.HOST_DEC]:
+            value, unit = radec_clean(value, key, unit=unit)
         elif key == self._KEYS.MAX_DATE or key == self._KEYS.DISCOVER_DATE:
             # Make sure month and day have leading zeroes
             sparts = value.split('/')
             if len(sparts[0]) > 5:
-                self._log.warn("Date year {} greater than four "
-                               "digits.".format(sparts[0]))
+                self._log.warn("Date year {} greater than four digits.".format(sparts[0]))
             if len(sparts) >= 2:
                 value = sparts[0] + '/' + sparts[1].zfill(2)
             if len(sparts) == 3:
                 value = value + '/' + sparts[2].zfill(2)
-
-            # for ii, ct in enumerate(self.parent[key]):
-            #     # Only add dates if they have more information
-            #     if len(ct[QUANTITY.VALUE].split('/')) >
-            #            len(value.split('/')):
-            #         return False
 
         if utils.is_number(value):
             value = '%g' % Decimal(value)
@@ -187,10 +174,11 @@ class Supernova(struct.Entry_New_Adder):
             quantity[QUANTITY.E_VALUE] = error
         if unit:
             quantity[QUANTITY.U_VALUE] = unit
+
         if kinds:
             quantity[QUANTITY.KIND] = kinds if len(kinds) > 1 else kinds[0]
         elif QUANTITY.KIND in quantity:
-            del (quantity[QUANTITY.KIND])
+            del quantity[QUANTITY.KIND]
 
         return True
 
