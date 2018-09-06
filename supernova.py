@@ -102,13 +102,6 @@ class Supernova(struct.Entry_New_Adder):
         kinds = [x.strip() for x in utils.listify(quantity.get(QUANTITY.KIND, []))]
         key = quantity._key
 
-        if not value:
-            return False
-
-        if error and (not utils.is_number(error) or float(error) < 0):
-            raise ValueError(self[self._KEYS.NAME] + "'s quanta " + key +
-                             ' error value must be a number and positive.')
-
         # Set default units
         if not unit and key == self._KEYS.VELOCITY:
             unit = 'km/s'
@@ -208,10 +201,8 @@ class Supernova(struct.Entry_New_Adder):
                             isworse = False
                             continue
                         elif len(ctsplit) < len(svsplit) and len(svsplit) == 3:
-                            val_one = max(
-                                2, utils.get_sig_digits(ctsplit[-1].lstrip('0')))
-                            val_two = max(
-                                2, utils.get_sig_digits(svsplit[-1].lstrip('0')))
+                            val_one = max(2, utils.get_sig_digits(ctsplit[-1].lstrip('0')))
+                            val_two = max(2, utils.get_sig_digits(svsplit[-1].lstrip('0')))
                             if val_one < val_two:
                                 isworse = False
                                 continue
@@ -229,14 +220,11 @@ class Supernova(struct.Entry_New_Adder):
                                     utils.listify(ct.get(QUANTITY.KIND, [])))
                                     .isdisjoint(quantity.kind_preference) and
                                     not set(
-                                        utils.listify(
-                                            added_quantity.get(QUANTITY.KIND,
-                                                               [])))
+                                        utils.listify(added_quantity.get(QUANTITY.KIND, [])))
                                     .isdisjoint(quantity.kind_preference)):
                                 aqi = min([
                                     quantity.kind_preference.index(x)
-                                    for x in utils.listify(added_quantity[
-                                        QUANTITY.KIND])
+                                    for x in utils.listify(added_quantity[QUANTITY.KIND])
                                 ])
                                 qqi = min([
                                     quantity.kind_preference.index(x)
@@ -259,8 +247,7 @@ class Supernova(struct.Entry_New_Adder):
                                             <= float(ct[QUANTITY.E_VALUE])):
                                         isworse = False
                             else:
-                                if (checke and
-                                        QUANTITY.E_VALUE in added_quantity):
+                                if (checke and QUANTITY.E_VALUE in added_quantity):
                                     isworse = False
                                 else:
                                     oldsig = utils.get_sig_digits(ct[QUANTITY.VALUE])
@@ -278,14 +265,11 @@ class Supernova(struct.Entry_New_Adder):
                                     utils.listify(ct.get(QUANTITY.KIND, [])))
                                     .isdisjoint(quantity.kind_preference) and
                                     not set(
-                                        utils.listify(
-                                            added_quantity.get(QUANTITY.KIND,
-                                                               [])))
+                                        utils.listify(added_quantity.get(QUANTITY.KIND, [])))
                                     .isdisjoint(quantity.kind_preference)):
                                 aqi = min([
                                     quantity.kind_preference.index(x)
-                                    for x in utils.listify(added_quantity[
-                                        QUANTITY.KIND])
+                                    for x in utils.listify(added_quantity[QUANTITY.KIND])
                                 ])
                                 qqi = min([
                                     quantity.kind_preference.index(x)
@@ -305,8 +289,7 @@ class Supernova(struct.Entry_New_Adder):
                     self._log.info("Removing quantity '{}' with value '{}' "
                                    "and kind '{}' determined to be worse than "
                                    "existing alternative values.".format(
-                                       quantity, added_quantity[
-                                           QUANTITY.VALUE],
+                                       quantity, added_quantity[QUANTITY.VALUE],
                                        added_quantity.get(QUANTITY.KIND, '')))
                 else:
                     newquantities.append(added_quantity)
@@ -329,18 +312,8 @@ class Supernova(struct.Entry_New_Adder):
 
     def add_source(self, **kwargs):
         # Sanitize some fields before adding source
-        # Replace reference names and URLs using dictionaries.
-        if (kwargs.get(SOURCE.BIBCODE, []) and
-                len(kwargs[SOURCE.BIBCODE]) != 19):
-            raise ValueError("Bibcode '{}' must be exactly 19 characters "
-                             "long".format(kwargs[SOURCE.BIBCODE]))
-
-        # if SOURCE.NAME not in kwargs:
-        #     kwargs[SOURCE.NAME] = kwargs[SOURCE.BIBCODE]
-
         if SOURCE.NAME in kwargs:
-            if (kwargs[SOURCE.NAME].upper().startswith('ATEL') and
-                    SOURCE.BIBCODE not in kwargs):
+            if (kwargs[SOURCE.NAME].upper().startswith('ATEL') and SOURCE.BIBCODE not in kwargs):
                 kwargs[SOURCE.NAME] = (
                     kwargs[SOURCE.NAME].replace('ATEL', 'ATel')
                     .replace('Atel', 'ATel').replace('ATel #', 'ATel ')
@@ -350,19 +323,15 @@ class Supernova(struct.Entry_New_Adder):
                 if utils.is_number(atelnum) and atelnum in self.catalog.atels_dict:
                     kwargs[SOURCE.BIBCODE] = self.catalog.atels_dict[atelnum]
 
-            if (kwargs[SOURCE.NAME].upper().startswith('CBET') and
-                    SOURCE.BIBCODE not in kwargs):
-                kwargs[SOURCE.NAME] = kwargs[SOURCE.NAME].replace('CBET',
-                                                                  'CBET ')
+            if (kwargs[SOURCE.NAME].upper().startswith('CBET') and SOURCE.BIBCODE not in kwargs):
+                kwargs[SOURCE.NAME] = kwargs[SOURCE.NAME].replace('CBET', 'CBET ')
                 kwargs[SOURCE.NAME] = ' '.join(kwargs[SOURCE.NAME].split())
                 cbetnum = kwargs[SOURCE.NAME].split()[-1]
                 if utils.is_number(cbetnum) and cbetnum in self.catalog.cbets_dict:
                     kwargs[SOURCE.BIBCODE] = self.catalog.cbets_dict[cbetnum]
 
-            if (kwargs[SOURCE.NAME].upper().startswith('IAUC') and
-                    SOURCE.BIBCODE not in kwargs):
-                kwargs[SOURCE.NAME] = kwargs[SOURCE.NAME].replace('IAUC',
-                                                                  'IAUC ')
+            if (kwargs[SOURCE.NAME].upper().startswith('IAUC') and SOURCE.BIBCODE not in kwargs):
+                kwargs[SOURCE.NAME] = kwargs[SOURCE.NAME].replace('IAUC', 'IAUC ')
                 kwargs[SOURCE.NAME] = ' '.join(kwargs[SOURCE.NAME].split())
                 iaucnum = kwargs[SOURCE.NAME].split()[-1]
                 if utils.is_number(iaucnum) and iaucnum in self.catalog.iaucs_dict:
