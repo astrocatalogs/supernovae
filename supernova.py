@@ -16,7 +16,8 @@ from .utils import frame_priority, host_clean, radec_clean
 import pyastroschema as pas
 
 
-@struct.set_struct_schema("astroschema_entry", extensions=["astrocats_entry"])
+# @struct.set_struct_schema("astroschema_entry", extensions=["astrocats_entry"])
+@struct.set_struct_schema("entry")
 # class Supernova(struct.Entry):
 class Supernova(struct.Entry_New_Adder):
     """Supernova `Entry` child class.
