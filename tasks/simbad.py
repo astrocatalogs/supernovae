@@ -39,7 +39,8 @@ def do_simbad(catalog):
         else:
             if not table:
                 continue
-            break
+            else:
+                break
 
     if not table:
         catalog.log.warning('SIMBAD unable to load, probably offline.')
