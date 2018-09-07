@@ -36881,6 +36881,10 @@
 			{
 				"value":"PS1-14abq",
 				"source":"2,10"
+			},
+			{
+				"value":"MASTER OT JJ044212.20+230616.7",
+				"source":"2,6"
 			}
 		],
 		"edit":false,
@@ -41885,7 +41889,7 @@
 		"name":"OGLE-2015-SN-043",
 		"alias":[
 			{
-				"value":"MLS180621:224135+294134",
+				"value":"MLS180625:234739+442857",
 				"source":"2,3,4"
 			}
 		],
@@ -46439,6 +46443,44 @@
 			{
 				"idtype":"name,name",
 				"id":"ATel 11663,Latest Supernovae"
+			}
+		]
+	},
+	{
+		"name":"SN2018bsz",
+		"alias":[
+			{
+				"value":"SN2018bsz",
+				"source":"3,4,5,7,9"
+			},
+			{
+				"value":"AT2018bsz",
+				"source":"3,4,7"
+			},
+			{
+				"value":"ASASSN-18km",
+				"source":"3,4,7"
+			},
+			{
+				"value":"ATLAS18pny",
+				"source":"4,7"
+			}
+		],
+		"edit":false,
+		"quantity":"claimedtype",
+		"difference":"",
+		"values":[
+			"II",
+			"SLSN-I"
+		],
+		"sources":[
+			{
+				"idtype":"name,name,name,name,name,bibcode",
+				"id":"Transient Name Server,ATel 11660,ASAS-SN Supernovae,ATel https://wis-tns.weizmann.ac.il/object/2018bsz,Latest Supernovae,2012PASP..124..668Y"
+			},
+			{
+				"idtype":"name,name",
+				"id":"ATel 11660,Latest Supernovae"
 			}
 		]
 	},
