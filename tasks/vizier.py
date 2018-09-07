@@ -1,18 +1,18 @@
 """Import tasks from the catalog available on VizieR."""
 import csv
 import os
+from decimal import Decimal
 from math import isnan
 
-from astrocats.structures.struct import PHOTOMETRY
-from astrocats.structures.struct import QUANTITY
-from astrocats.utils import (convert_aq_output, get_sig_digits,
-                             is_number, jd_to_mjd, make_date_string,
-                             pbar, rep_chars, round_sig, uniq_cdl)
+from astrocats.structures.struct import PHOTOMETRY, QUANTITY
+from astrocats.utils import (convert_aq_output, get_sig_digits, is_number,
+                             jd_to_mjd, make_date_string, pbar, rep_chars,
+                             round_sig, uniq_cdl)
 from astropy.time import Time as astrotime
 from astroquery.vizier import Vizier
-from decimal import Decimal
 
 from supernovae import utils as sn_utils
+
 from ..constants import CLIGHT, KM
 from ..supernova import SUPERNOVA
 from ..utils import radec_clean
@@ -25,7 +25,7 @@ def do_vizier(catalog):
 
     viz = Vizier(columns=['**'])
     viz.ROW_LIMIT = -1
-    viz.VIZIER_SERVER = 'vizier.cfa.harvard.edu'
+    # viz.VIZIER_SERVER = 'vizier.cfa.harvard.edu'
 
     _viz_1(catalog, viz)
     _viz_2(catalog, viz)
@@ -43,10 +43,12 @@ def _viz_1(catalog, viz):
     result = viz.get_catalogs('J/ApJ/854/L14/ph17dio')
     table = result[list(result.keys())[0]]
     table.convert_bytestring_to_unicode()
-    name, source = catalog.new_entry('SN2017dio', bibcode='2018ApJ...854L..14K')
+    name, source = catalog.new_entry(
+        'SN2017dio', bibcode='2018ApJ...854L..14K')
     for row in pbar(table, task_str):
         row = convert_aq_output(row)
-        bands = [x for x in row if x.endswith('mag') and not x.startswith('e_')]
+        bands = [x for x in row if x.endswith(
+            'mag') and not x.startswith('e_')]
         for bandtag in bands:
             band = bandtag.replace('mag', '')
             if (bandtag in row and is_number(row[bandtag]) and not isnan(float(row[bandtag]))):
@@ -69,10 +71,12 @@ def _viz_1(catalog, viz):
     )
     for ti, table in enumerate(results):
         table.convert_bytestring_to_unicode()
-        name, source = catalog.new_entry('SN2002cv', bibcode='2008MNRAS.384..107E')
+        name, source = catalog.new_entry(
+            'SN2002cv', bibcode='2008MNRAS.384..107E')
         for ri, row in enumerate(pbar(table, task_str)):
             row = convert_aq_output(row)
-            bands = [x for x in row if x.endswith('mag') and not x.startswith('e_')]
+            bands = [x for x in row if x.endswith(
+                'mag') and not x.startswith('e_')]
             for bandtag in bands:
                 band = bandtag.replace('mag', '')
                 if (bandtag in row and is_number(row[bandtag]) and not isnan(float(row[bandtag]))):
@@ -104,7 +108,8 @@ def _viz_1(catalog, viz):
     name, source = catalog.new_entry('SN2015bh', bibcode='2016ApJ...824....6O')
     for row in pbar(table, task_str):
         row = convert_aq_output(row)
-        bands = [x for x in row if x.endswith('mag') and not x.startswith('e_')]
+        bands = [x for x in row if x.endswith(
+            'mag') and not x.startswith('e_')]
         for bandtag in bands:
             band = bandtag.replace('mag', '')
             if (bandtag in row and is_number(row[bandtag]) and
@@ -132,7 +137,8 @@ def _viz_1(catalog, viz):
     name, source = catalog.new_entry('SN2013dy', bibcode='2016AJ....151..125Z')
     for row in pbar(table, task_str):
         row = convert_aq_output(row)
-        bands = [x for x in row if x.endswith('mag') and not x.startswith('e_')]
+        bands = [x for x in row if x.endswith(
+            'mag') and not x.startswith('e_')]
         for bandtag in bands:
             band = bandtag.replace('mag', '')
             if (bandtag in row and is_number(row[bandtag]) and
@@ -158,7 +164,8 @@ def _viz_1(catalog, viz):
     table = result[list(result.keys())[0]]
     table.convert_bytestring_to_unicode()
     for row in pbar(table, task_str):
-        name, source = catalog.new_entry(row['Name'], bibcode='2016A&A...592..A40F')
+        name, source = catalog.new_entry(
+            row['Name'], bibcode='2016A&A...592..A40F')
         tel, filt = row['Filter'].split('_')
         photodict = {
             PHOTOMETRY.TIME: str(row['MJD']),
@@ -173,7 +180,8 @@ def _viz_1(catalog, viz):
     catalog.journal_entries()
 
     # 2016A&A...593A..68F
-    results = viz.get_catalogs(['J/A+A/593/A68/ph12os', 'J/A+A/593/A68/ph13bvn'])
+    results = viz.get_catalogs(
+        ['J/A+A/593/A68/ph12os', 'J/A+A/593/A68/ph13bvn'])
     for ti, table in enumerate(results):
         table.convert_bytestring_to_unicode()
         name, source = catalog.new_entry(
@@ -199,7 +207,8 @@ def _viz_1(catalog, viz):
         'iPTF13bvn', bibcode='2016ApJ...825L..22F')
     for row in pbar(table, task_str):
         row = convert_aq_output(row)
-        bands = [x for x in row if x.endswith('mag') and not x.startswith('e_')]
+        bands = [x for x in row if x.endswith(
+            'mag') and not x.startswith('e_')]
         for bandtag in bands:
             band = bandtag.replace('mag', '')
             if (bandtag in row and is_number(row[bandtag]) and not isnan(float(row[bandtag]))):
@@ -222,7 +231,8 @@ def _viz_1(catalog, viz):
     result = viz.get_catalogs('J/ApJ/826/144/table1')
     table = result[list(result.keys())[0]]
     table.convert_bytestring_to_unicode()
-    name, source = catalog.new_entry('ASASSN-14lp', bibcode='2016ApJ...826..144S')
+    name, source = catalog.new_entry(
+        'ASASSN-14lp', bibcode='2016ApJ...826..144S')
     for row in pbar(table, task_str):
         row = convert_aq_output(row)
         photodict = {
@@ -242,7 +252,8 @@ def _viz_1(catalog, viz):
     catalog.journal_entries()
 
     # 2012ApJ...756..173S
-    results = viz.get_catalogs(['J/ApJ/756/173/table2', 'J/ApJ/756/173/table3'])
+    results = viz.get_catalogs(
+        ['J/ApJ/756/173/table2', 'J/ApJ/756/173/table3'])
     for ti, table in enumerate(results):
         table.convert_bytestring_to_unicode()
         for row in pbar(table, task_str):
@@ -250,8 +261,10 @@ def _viz_1(catalog, viz):
             name = row['SN']
             if is_number(name[:4]):
                 name = 'SN' + name
-            name, source = catalog.new_entry(name, bibcode='2012ApJ...756..173S')
-            bands = [x for x in row if x.endswith('mag') and not x.startswith('e_')]
+            name, source = catalog.new_entry(
+                name, bibcode='2012ApJ...756..173S')
+            bands = [x for x in row if x.endswith(
+                'mag') and not x.startswith('e_')]
             for bandtag in bands:
                 band = bandtag.replace('mag', '')
                 if (bandtag in row and is_number(row[bandtag]) and not isnan(float(row[bandtag]))):
@@ -304,8 +317,10 @@ def _viz_1(catalog, viz):
             for row in pbar(table, task_str):
                 row = convert_aq_output(row)
                 name = snnames[sni]
-                name, source = catalog.new_entry(name, bibcode='2013NewA...20...30M')
-                bands = [x for x in row if x.endswith('mag') and not x.startswith('e_')]
+                name, source = catalog.new_entry(
+                    name, bibcode='2013NewA...20...30M')
+                bands = [x for x in row if x.endswith(
+                    'mag') and not x.startswith('e_')]
                 for bandtag in bands:
                     band = bandtag.replace('mag', '')
                     if (bandtag in row and is_number(row[bandtag]) and
@@ -331,8 +346,10 @@ def _viz_1(catalog, viz):
     table.convert_bytestring_to_unicode()
     for row in pbar(table, task_str):
         row = convert_aq_output(row)
-        name, source = catalog.new_entry(row['SN'], bibcode='2008ApJ...686..749K')
-        bands = [x for x in row if x.endswith('mag') and not x.startswith('e_')]
+        name, source = catalog.new_entry(
+            row['SN'], bibcode='2008ApJ...686..749K')
+        bands = [x for x in row if x.endswith(
+            'mag') and not x.startswith('e_')]
         for bandtag in bands:
             band = bandtag.replace('mag', '')
             if (bandtag in row and is_number(row[bandtag]) and not isnan(float(row[bandtag]))):
@@ -352,8 +369,10 @@ def _viz_1(catalog, viz):
     table.convert_bytestring_to_unicode()
     for row in pbar(table, task_str):
         row = convert_aq_output(row)
-        name, source = catalog.new_entry(row['SN'], bibcode='2008ApJ...686..749K')
-        bands = [x for x in row if x.endswith('Flux') and not x.startswith('e_')]
+        name, source = catalog.new_entry(
+            row['SN'], bibcode='2008ApJ...686..749K')
+        bands = [x for x in row if x.endswith(
+            'Flux') and not x.startswith('e_')]
         for bandtag in bands:
             band = bandtag.replace('Flux', '')
             flux = str(row[bandtag])
@@ -372,12 +391,14 @@ def _viz_1(catalog, viz):
                     PHOTOMETRY.SOURCE: source,
                     PHOTOMETRY.SURVEY: 'SCP'
                 }
-                sn_utils.set_pd_mag_from_counts(photodict, flux, ec=err, zp=zp, sig=5.0)
+                sn_utils.set_pd_mag_from_counts(
+                    photodict, flux, ec=err, zp=zp, sig=5.0)
                 catalog.entries[name].add_photometry(**photodict)
     catalog.journal_entries()
 
     # 2013A&A...555A..10T
-    results = viz.get_catalogs(['J/A+A/555/A10/table4', 'J/A+A/555/A10/table5'])
+    results = viz.get_catalogs(
+        ['J/A+A/555/A10/table4', 'J/A+A/555/A10/table5'])
     for ti, table in enumerate(results):
         table.convert_bytestring_to_unicode()
         for row in pbar(table, task_str):
@@ -385,8 +406,10 @@ def _viz_1(catalog, viz):
             name = row['SN']
             if is_number(name[:4]):
                 name = 'SN' + name
-            name, source = catalog.new_entry(name, bibcode='2013A&A...555A..10T')
-            bands = [x for x in row if x.endswith('mag') and not x.startswith('e_')]
+            name, source = catalog.new_entry(
+                name, bibcode='2013A&A...555A..10T')
+            bands = [x for x in row if x.endswith(
+                'mag') and not x.startswith('e_')]
             for bandtag in bands:
                 band = bandtag.replace('mag', '')
                 if (bandtag in row and is_number(row[bandtag]) and
@@ -418,8 +441,10 @@ def _viz_1(catalog, viz):
         row = convert_aq_output(row)
         name = row['SN']
         name, source = catalog.new_entry(name, bibcode='2016ApJ...820...33R')
-        catalog.entries[name].add_quantity(SUPERNOVA.RA, row['RAJ2000'], source)
-        catalog.entries[name].add_quantity(SUPERNOVA.DEC, row['DEJ2000'], source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.RA, row['RAJ2000'], source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.DEC, row['DEJ2000'], source)
         catalog.entries[name].add_quantity(
             SUPERNOVA.REDSHIFT, str(row['z']), source, kind='spectroscopic')
 
@@ -456,7 +481,8 @@ def _viz_1(catalog, viz):
         if is_number(name[:4]):
             name = 'SN' + name
         name = catalog.add_entry(name)
-        source = catalog.entries[name].add_source(bibcode='2012ApJS..200...12H')
+        source = catalog.entries[name].add_source(
+            bibcode='2012ApJS..200...12H')
         catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
         if '[' not in row['Gal']:
             catalog.entries[name].add_quantity(
@@ -465,8 +491,10 @@ def _viz_1(catalog, viz):
             SUPERNOVA.REDSHIFT, str(row['z']), source, kind='heliocentric')
         catalog.entries[name].add_quantity(
             SUPERNOVA.REDSHIFT, str(row['zCMB']), source, kind='cmb')
-        catalog.entries[name].add_quantity(SUPERNOVA.RA, row['RAJ2000'], source)
-        catalog.entries[name].add_quantity(SUPERNOVA.DEC, row['DEJ2000'], source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.RA, row['RAJ2000'], source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.DEC, row['DEJ2000'], source)
         quant = {}
         err = row['e_E_B-V_']
         if err and err != '--':
@@ -481,19 +509,24 @@ def _viz_1(catalog, viz):
     for row in pbar(table, task_str):
         name = row['Name'].replace('SCP', 'SCP-')
         name = catalog.add_entry(name)
-        source = catalog.entries[name].add_source(bibcode='2012ApJ...746...85S')
+        source = catalog.entries[name].add_source(
+            bibcode='2012ApJ...746...85S')
         catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
         if row['f_Name']:
-            catalog.entries[name].add_quantity(SUPERNOVA.CLAIMED_TYPE, 'Ia', source)
+            catalog.entries[name].add_quantity(
+                SUPERNOVA.CLAIMED_TYPE, 'Ia', source)
         if row['z']:
             catalog.entries[name].add_quantity(
                 SUPERNOVA.REDSHIFT, str(row['z']), source, kind='spectroscopic')
         else:
             catalog.entries[name].add_quantity(
                 SUPERNOVA.REDSHIFT, str(row['zCl']), source, kind='cluster')
-        catalog.entries[name].add_quantity(SUPERNOVA.EBV, str(row['E_B-V_']), source)
-        catalog.entries[name].add_quantity(SUPERNOVA.RA, row['RAJ2000'], source)
-        catalog.entries[name].add_quantity(SUPERNOVA.DEC, row['DEJ2000'], source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.EBV, str(row['E_B-V_']), source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.RA, row['RAJ2000'], source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.DEC, row['DEJ2000'], source)
 
     result = viz.get_catalogs('J/ApJ/746/85/table2')
     table = result[list(result.keys())[0]]
@@ -518,7 +551,8 @@ def _viz_1(catalog, viz):
             PHOTOMETRY.SOURCE: source,
             PHOTOMETRY.INSTRUMENT: row['Inst']
         }
-        sn_utils.set_pd_mag_from_counts(photodict, flux, ec=err, zp=zp, sig=5.0)
+        sn_utils.set_pd_mag_from_counts(
+            photodict, flux, ec=err, zp=zp, sig=5.0)
         catalog.entries[name].add_photometry(**photodict)
 
     return
@@ -537,7 +571,8 @@ def _viz_2(catalog, viz):
         flux = row['Flux']
         err = row['e_Flux']
         name = catalog.add_entry(name)
-        source = catalog.entries[name].add_source(bibcode='2004ApJ...602..571B')
+        source = catalog.entries[name].add_source(
+            bibcode='2004ApJ...602..571B')
         catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
         band = row['Filt']
         bandset = None
@@ -560,7 +595,8 @@ def _viz_2(catalog, viz):
             photodict[PHOTOMETRY.BAND_SET] = bandset
         if telescope is not None:
             photodict[PHOTOMETRY.TELESCOPE] = telescope
-        sn_utils.set_pd_mag_from_counts(photodict, flux, ec=err, zp=zp, sig=5.0)
+        sn_utils.set_pd_mag_from_counts(
+            photodict, flux, ec=err, zp=zp, sig=5.0)
         catalog.entries[name].add_photometry(**photodict)
 
     # 2014MNRAS.444.3258M
@@ -575,7 +611,8 @@ def _viz_2(catalog, viz):
             continue
         oldname = name
         name = catalog.add_entry(name)
-        source = catalog.entries[name].add_source(bibcode='2014MNRAS.444.3258M')
+        source = catalog.entries[name].add_source(
+            bibcode='2014MNRAS.444.3258M')
         catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
         catalog.entries[name].add_quantity(
             SUPERNOVA.REDSHIFT, str(row['z']), source,
@@ -594,12 +631,15 @@ def _viz_2(catalog, viz):
         row = convert_aq_output(row)
         name = row['SN']
         name = catalog.add_entry(name)
-        source = catalog.entries[name].add_source(bibcode='2014MNRAS.438.1391P')
+        source = catalog.entries[name].add_source(
+            bibcode='2014MNRAS.438.1391P')
         catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
         catalog.entries[name].add_quantity(
             SUPERNOVA.REDSHIFT, str(row['zh']), source, kind='heliocentric')
-        catalog.entries[name].add_quantity(SUPERNOVA.RA, row['RAJ2000'], source)
-        catalog.entries[name].add_quantity(SUPERNOVA.DEC, row['DEJ2000'], source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.RA, row['RAJ2000'], source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.DEC, row['DEJ2000'], source)
     catalog.journal_entries()
 
     # 2012ApJ...749...18B
@@ -610,7 +650,8 @@ def _viz_2(catalog, viz):
         row = convert_aq_output(row)
         name = row['Name'].replace(' ', '')
         name = catalog.add_entry(name)
-        source = catalog.entries[name].add_source(bibcode='2012ApJ...749...18B')
+        source = catalog.entries[name].add_source(
+            bibcode='2012ApJ...749...18B')
         catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
         mjd = str(
             astrotime(float(Decimal('2450000') + Decimal(row['JD'])), format='jd').mjd)
@@ -642,21 +683,26 @@ def _viz_2(catalog, viz):
         row = convert_aq_output(row)
         name = 'SNLS-' + row['SNLS']
         name = catalog.add_entry(name)
-        source = catalog.entries[name].add_source(bibcode='2010A&A...523A...7G')
+        source = catalog.entries[name].add_source(
+            bibcode='2010A&A...523A...7G')
         catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
         astrot = astrotime(
             float(Decimal('2450000') + Decimal(row['Date1'])), format='jd').datetime
         catalog.entries[name].add_quantity(
             SUPERNOVA.DISCOVER_DATE,
             make_date_string(astrot.year, astrot.month, astrot.day), source)
-        catalog.entries[name].add_quantity(SUPERNOVA.EBV, str(row['E_B-V_']), source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.EBV, str(row['E_B-V_']), source)
         catalog.entries[name].add_quantity(
             SUPERNOVA.REDSHIFT, str(row['z']), source, kind='heliocentric')
         type_str = (row['Type'].replace('*', '?').replace('SN', '')
                     .replace('(pec)', ' P').replace('Ia? P?', 'Ia P?'))
-        catalog.entries[name].add_quantity(SUPERNOVA.CLAIMED_TYPE, type_str, source)
-        catalog.entries[name].add_quantity(SUPERNOVA.RA, row['RAJ2000'], source)
-        catalog.entries[name].add_quantity(SUPERNOVA.DEC, row['DEJ2000'], source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.CLAIMED_TYPE, type_str, source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.RA, row['RAJ2000'], source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.DEC, row['DEJ2000'], source)
     catalog.journal_entries()
 
     # 2004A&A...415..863G
@@ -667,17 +713,22 @@ def _viz_2(catalog, viz):
         row = convert_aq_output(row)
         name = 'SN' + row['SN']
         name = catalog.add_entry(name)
-        source = catalog.entries[name].add_source(bibcode='2004A&A...415..863G')
+        source = catalog.entries[name].add_source(
+            bibcode='2004A&A...415..863G')
         catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
         datesplit = row['Date'].split('-')
         date_str = make_date_string(datesplit[0], datesplit[1].lstrip('0'),
                                     datesplit[2].lstrip('0'))
-        catalog.entries[name].add_quantity(SUPERNOVA.DISCOVER_DATE, date_str, source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.DISCOVER_DATE, date_str, source)
         catalog.entries[name].add_quantity(
             SUPERNOVA.HOST, 'Abell ' + str(row['Abell']), source)
-        catalog.entries[name].add_quantity(SUPERNOVA.CLAIMED_TYPE, row['Type'], source)
-        catalog.entries[name].add_quantity(SUPERNOVA.RA, row['RAJ2000'], source)
-        catalog.entries[name].add_quantity(SUPERNOVA.DEC, row['DEJ2000'], source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.CLAIMED_TYPE, row['Type'], source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.RA, row['RAJ2000'], source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.DEC, row['DEJ2000'], source)
         if row['zSN'] and row['zSN'] != '--':
             catalog.entries[name].add_quantity(
                 SUPERNOVA.REDSHIFT, str(row['zSN']), source,
@@ -700,9 +751,12 @@ def _viz_2(catalog, viz):
         catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
         ctype = row['SpType'].replace('SN.', '').strip(':')
         if len(ctype):
-            catalog.entries[name].add_quantity(SUPERNOVA.CLAIMED_TYPE, ctype, source)
-        catalog.entries[name].add_quantity(SUPERNOVA.RA, row['RAJ2000'], source)
-        catalog.entries[name].add_quantity(SUPERNOVA.DEC, row['DEJ2000'], source)
+            catalog.entries[name].add_quantity(
+                SUPERNOVA.CLAIMED_TYPE, ctype, source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.RA, row['RAJ2000'], source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.DEC, row['DEJ2000'], source)
 
     # 2010ApJ...708..661D
     result = viz.get_catalogs('J/ApJ/708/661/sn')
@@ -716,13 +770,17 @@ def _viz_2(catalog, viz):
         else:
             name = 'SN' + name
         name = catalog.add_entry(name)
-        source = catalog.entries[name].add_source(bibcode='2010ApJ...708..661D')
+        source = catalog.entries[name].add_source(
+            bibcode='2010ApJ...708..661D')
         catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
         catalog.entries[name].add_quantity(
             SUPERNOVA.ALIAS, 'SDSS-II SN ' + str(row['SDSS-II']), source)
-        catalog.entries[name].add_quantity(SUPERNOVA.CLAIMED_TYPE, 'II P', source)
-        catalog.entries[name].add_quantity(SUPERNOVA.RA, row['RAJ2000'], source)
-        catalog.entries[name].add_quantity(SUPERNOVA.DEC, row['DEJ2000'], source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.CLAIMED_TYPE, 'II P', source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.RA, row['RAJ2000'], source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.DEC, row['DEJ2000'], source)
 
     result = viz.get_catalogs('J/ApJ/708/661/table1')
     table = result[list(result.keys())[0]]
@@ -734,7 +792,8 @@ def _viz_2(catalog, viz):
         else:
             name = 'SN' + row['SN']
         name = catalog.add_entry(name)
-        source = catalog.entries[name].add_source(bibcode='2010ApJ...708..661D')
+        source = catalog.entries[name].add_source(
+            bibcode='2010ApJ...708..661D')
         catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
         catalog.entries[name].add_quantity(
             SUPERNOVA.REDSHIFT, str(row['z']), source, e_value=str(row['e_z']))
@@ -748,7 +807,8 @@ def _viz_2(catalog, viz):
         row = convert_aq_output(row)
         name = row['SN']
         name = catalog.add_entry(name)
-        source = catalog.entries[name].add_source(bibcode='2014ApJ...795...44R')
+        source = catalog.entries[name].add_source(
+            bibcode='2014ApJ...795...44R')
         catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
         astrot = astrotime(float(row['tdisc']), format='mjd').datetime
         catalog.entries[name].add_quantity(
@@ -757,8 +817,10 @@ def _viz_2(catalog, viz):
         catalog.entries[name].add_quantity(
             SUPERNOVA.REDSHIFT, str(row['z']), source,
             e_value=str(row['e_z']), kind='heliocentric')
-        catalog.entries[name].add_quantity(SUPERNOVA.RA, row['RAJ2000'], source)
-        catalog.entries[name].add_quantity(SUPERNOVA.DEC, row['DEJ2000'], source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.RA, row['RAJ2000'], source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.DEC, row['DEJ2000'], source)
         catalog.entries[name].add_quantity(
             SUPERNOVA.CLAIMED_TYPE, 'Ia', source, kind='spectroscopic')
 
@@ -769,7 +831,8 @@ def _viz_2(catalog, viz):
         row = convert_aq_output(row)
         name = row['SN']
         name = catalog.add_entry(name)
-        source = catalog.entries[name].add_source(bibcode='2014ApJ...795...44R')
+        source = catalog.entries[name].add_source(
+            bibcode='2014ApJ...795...44R')
         catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
         if row['mag'] != '--':
             photodict = {
@@ -815,7 +878,8 @@ def _viz_2(catalog, viz):
         oldname = 'SN' + row['SN']
         name = catalog.add_entry(oldname)
         sources = [
-            catalog.entries[name].add_source(bibcode='1990A&AS...82..145C', secondary=True)
+            catalog.entries[name].add_source(
+                bibcode='1990A&AS...82..145C', secondary=True)
         ]
         mjd = str(jd_to_mjd(Decimal(row['JD'])))
         mag = str(row['m'])
@@ -871,7 +935,8 @@ def _viz_2(catalog, viz):
         source = src1 + ',' + src2
         catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, oldname, source)
 
-        catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, row['SNR'].strip(), source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.ALIAS, row['SNR'].strip(), source)
         catalog.entries[name].add_quantity(
             SUPERNOVA.ALIAS, 'MWSNR ' + row['SNR'].strip('G '), source)
 
@@ -886,8 +951,10 @@ def _viz_2(catalog, viz):
                         SUPERNOVA.DISCOVER_DATE, nam.strip()[2:], source)
 
         catalog.entries[name].add_quantity(SUPERNOVA.HOST, 'Milky Way', source)
-        catalog.entries[name].add_quantity(SUPERNOVA.RA, row['RAJ2000'], source)
-        catalog.entries[name].add_quantity(SUPERNOVA.DEC, row['DEJ2000'], source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.RA, row['RAJ2000'], source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.DEC, row['DEJ2000'], source)
 
     catalog.journal_entries()
 
@@ -899,11 +966,14 @@ def _viz_2(catalog, viz):
         row = convert_aq_output(row)
         name = 'SN' + row['SN']
         name = catalog.add_entry(name)
-        source = catalog.entries[name].add_source(bibcode='2014MNRAS.442..844F')
+        source = catalog.entries[name].add_source(
+            bibcode='2014MNRAS.442..844F')
         catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
         for qkey in [SUPERNOVA.REDSHIFT, SUPERNOVA.HOST_REDSHIFT]:
-            catalog.entries[name].add_quantity(qkey, str(row['zhost']), source, kind='host')
-        catalog.entries[name].add_quantity(SUPERNOVA.EBV, str(row['E_B-V_']), source)
+            catalog.entries[name].add_quantity(
+                qkey, str(row['zhost']), source, kind='host')
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.EBV, str(row['E_B-V_']), source)
     catalog.journal_entries()
 
     viz_cat_name = 'J/MNRAS/442/844/table2'
@@ -922,7 +992,8 @@ def _viz_2(catalog, viz):
         row = convert_aq_output(row)
         name = 'SN' + str(row['SN'])
         name = catalog.add_entry(name)
-        source = catalog.entries[name].add_source(bibcode='2014MNRAS.442..844F')
+        source = catalog.entries[name].add_source(
+            bibcode='2014MNRAS.442..844F')
         catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
         for band in ['B', 'V', 'R', 'I']:
             bandtag = band + 'mag'
@@ -948,18 +1019,23 @@ def _viz_2(catalog, viz):
         row = convert_aq_output(row)
         name = ''.join(row['SimbadName'].split(' '))
         name = catalog.add_entry(name)
-        source = catalog.entries[name].add_source(bibcode='2012MNRAS.425.1789S')
+        source = catalog.entries[name].add_source(
+            bibcode='2012MNRAS.425.1789S')
         catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
-        catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, 'SN' + row['SN'], source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.ALIAS, 'SN' + row['SN'], source)
         if len(row['Gal']) > 0:
-            catalog.entries[name].add_quantity(SUPERNOVA.HOST, row['Gal'], source)
+            catalog.entries[name].add_quantity(
+                SUPERNOVA.HOST, row['Gal'], source)
         cz = row['cz']
         if is_number(cz):
-            red_str = round_sig(float(cz) * KM / CLIGHT, sig=get_sig_digits(str(cz)))
+            red_str = round_sig(float(cz) * KM / CLIGHT,
+                                sig=get_sig_digits(str(cz)))
             red_str = str(red_str)
             catalog.entries[name].add_quantity(
                 SUPERNOVA.REDSHIFT, red_str, source, kind='heliocentric')
-        catalog.entries[name].add_quantity(SUPERNOVA.EBV, str(row['E_B-V_']), source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.EBV, str(row['E_B-V_']), source)
 
     catalog.journal_entries()
 
@@ -971,13 +1047,17 @@ def _viz_2(catalog, viz):
         row = convert_aq_output(row)
         name = u'LSQ' + str(row['LSQ'])
         name = catalog.add_entry(name)
-        source = catalog.entries[name].add_source(bibcode='2015ApJS..219...13W')
+        source = catalog.entries[name].add_source(
+            bibcode='2015ApJS..219...13W')
         catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
-        catalog.entries[name].add_quantity(SUPERNOVA.RA, row['RAJ2000'], source)
-        catalog.entries[name].add_quantity(SUPERNOVA.DEC, row['DEJ2000'], source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.RA, row['RAJ2000'], source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.DEC, row['DEJ2000'], source)
         catalog.entries[name].add_quantity(
             SUPERNOVA.REDSHIFT, row['z'], source, e_value=row['e_z'], kind='heliocentric')
-        catalog.entries[name].add_quantity(SUPERNOVA.EBV, row['E_B-V_'], source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.EBV, row['E_B-V_'], source)
         catalog.entries[name].add_quantity(
             SUPERNOVA.CLAIMED_TYPE, 'Ia', source, kind='spectroscopic')
     result = viz.get_catalogs('J/ApJS/219/13/table2')
@@ -987,7 +1067,8 @@ def _viz_2(catalog, viz):
         row = convert_aq_output(row)
         name = 'LSQ' + row['LSQ']
         name = catalog.add_entry(name)
-        source = catalog.entries[name].add_source(bibcode='2015ApJS..219...13W')
+        source = catalog.entries[name].add_source(
+            bibcode='2015ApJS..219...13W')
         catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
         photodict = {
             PHOTOMETRY.TIME: str(jd_to_mjd(Decimal(row['JD']))),
@@ -1018,7 +1099,8 @@ def _viz_3(catalog, viz):
     name = catalog.add_entry(name)
     source = catalog.entries[name].add_source(bibcode='2012Natur.491..228C')
     catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
-    catalog.entries[name].add_quantity(SUPERNOVA.CLAIMED_TYPE, 'SLSN-R', source)
+    catalog.entries[name].add_quantity(
+        SUPERNOVA.CLAIMED_TYPE, 'SLSN-R', source)
     for row in pbar(table, task_str):
         row = convert_aq_output(row)
         for band in ['g', 'r', 'i']:
@@ -1041,7 +1123,8 @@ def _viz_3(catalog, viz):
     name = catalog.add_entry(name)
     source = catalog.entries[name].add_source(bibcode='2012Natur.491..228C')
     catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
-    catalog.entries[name].add_quantity(SUPERNOVA.CLAIMED_TYPE, 'SLSN-II?', source)
+    catalog.entries[name].add_quantity(
+        SUPERNOVA.CLAIMED_TYPE, 'SLSN-II?', source)
     for row in pbar(table, task_str):
         row = convert_aq_output(row)
         for band in ['g', 'r', 'i']:
@@ -1066,7 +1149,8 @@ def _viz_3(catalog, viz):
         row = convert_aq_output(row)
         name = str(row['Name'])
         name = catalog.add_entry(name)
-        source = catalog.entries[name].add_source(bibcode='2011Natur.474..484Q')
+        source = catalog.entries[name].add_source(
+            bibcode='2011Natur.474..484Q')
         catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
         photodict = {
             PHOTOMETRY.TIME: row['MJD'],
@@ -1617,7 +1701,8 @@ def _viz_4(catalog, viz):
         row = convert_aq_output(row)
         name = str(row['SN'])
         name = catalog.add_entry(name)
-        source = catalog.entries[name].add_source(bibcode='2011ApJ...741...97D')
+        source = catalog.entries[name].add_source(
+            bibcode='2011ApJ...741...97D')
         catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
         photo = {
             PHOTOMETRY.TIME: str(jd_to_mjd(Decimal(row['JD']))),
@@ -1773,9 +1858,11 @@ def _viz_4(catalog, viz):
         row = convert_aq_output(row)
         name = str(row['SN']).replace(' ', '')
         name = catalog.add_entry(name)
-        source = catalog.entries[name].add_source(bibcode='2012AJ....143..126B')
+        source = catalog.entries[name].add_source(
+            bibcode='2012AJ....143..126B')
         catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
-        catalog.entries[name].add_quantity(SUPERNOVA.CLAIMED_TYPE, 'Ia-' + row['Wcl'], source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.CLAIMED_TYPE, 'Ia-' + row['Wcl'], source)
     catalog.journal_entries()
 
     # 2015ApJS..220....9F
@@ -1789,9 +1876,11 @@ def _viz_4(catalog, viz):
             if row['SN'].lower() in excludes:
                 continue
             name = catalog.add_entry(name=row['SN'])
-            source = catalog.entries[name].add_source(bibcode='2015ApJS..220....9F')
+            source = catalog.entries[name].add_source(
+                bibcode='2015ApJS..220....9F')
             catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
-            catalog.entries[name].add_quantity(SUPERNOVA.CLAIMED_TYPE, row['Type'], source)
+            catalog.entries[name].add_quantity(
+                SUPERNOVA.CLAIMED_TYPE, row['Type'], source)
             catalog.entries[name].add_quantity(
                 SUPERNOVA.RA, row['RAJ2000'], source, u_value='floatdegrees')
             catalog.entries[name].add_quantity(
@@ -1814,9 +1903,11 @@ def _viz_4(catalog, viz):
     for row in pbar(table, task_str):
         row = convert_aq_output(row)
         name = catalog.add_entry(row['SN'])
-        source = catalog.entries[name].add_source(bibcode='2015ApJS..220....9F')
+        source = catalog.entries[name].add_source(
+            bibcode='2015ApJS..220....9F')
         catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
-        catalog.entries[name].add_quantity(SUPERNOVA.CLAIMED_TYPE, row['Type'], source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.CLAIMED_TYPE, row['Type'], source)
         catalog.entries[name].add_photometry(
             time=row['MJD'],
             u_time='MJD',
@@ -1833,7 +1924,8 @@ def _viz_4(catalog, viz):
     for row in pbar(table, task_str):
         row = convert_aq_output(row)
         name = catalog.add_entry(name='SN' + row['SN'])
-        source = catalog.entries[name].add_source(bibcode='2008ApJ...673..999P')
+        source = catalog.entries[name].add_source(
+            bibcode='2008ApJ...673..999P')
         catalog.entries[name].add_quantity(
             SUPERNOVA.ALIAS, name, source)
         catalog.entries[name].add_quantity(
@@ -1857,7 +1949,8 @@ def _viz_4(catalog, viz):
     table.convert_bytestring_to_unicode()
     for row in pbar(table, task_str):
         row = convert_aq_output(row)
-        name, source = catalog.new_entry('SNSDF' + row['SNSDF'], bibcode="2011MNRAS.417..916G")
+        name, source = catalog.new_entry(
+            'SNSDF' + row['SNSDF'], bibcode="2011MNRAS.417..916G")
         catalog.entries[name].add_quantity(
             SUPERNOVA.RA, row['RAJ2000'], source)
         catalog.entries[name].add_quantity(
@@ -1879,7 +1972,8 @@ def _viz_4(catalog, viz):
     table.convert_bytestring_to_unicode()
     for row in pbar(table, task_str):
         row = convert_aq_output(row)
-        name, source = catalog.new_entry('SDSS' + row['SDSS'], bibcode="2013MNRAS.430.1746G")
+        name, source = catalog.new_entry(
+            'SDSS' + row['SDSS'], bibcode="2013MNRAS.430.1746G")
         catalog.entries[name].add_quantity(
             SUPERNOVA.RA, row['RAJ2000'], source, u_value='floatdegrees')
         catalog.entries[name].add_quantity(
@@ -1899,15 +1993,20 @@ def _viz_4(catalog, viz):
     table.convert_bytestring_to_unicode()
     for row in pbar(table, task_str):
         row = convert_aq_output(row)
-        name, source = catalog.new_entry(row['Name'], bibcode="2014AJ....148...13R")
-        catalog.entries[name].add_quantity(SUPERNOVA.RA, row['RAJ2000'], source)
-        catalog.entries[name].add_quantity(SUPERNOVA.DEC, row['DEJ2000'], source)
+        name, source = catalog.new_entry(
+            row['Name'], bibcode="2014AJ....148...13R")
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.RA, row['RAJ2000'], source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.DEC, row['DEJ2000'], source)
         catalog.entries[name].add_quantity(
             SUPERNOVA.DISCOVER_DATE, '20' + row['Name'][3:5], source)
         catalog.entries[name].add_quantity(
             SUPERNOVA.REDSHIFT, row['zSN'], source, kind='heliocentric', e_value=row['e_zSN'])
-        catalog.entries[name].add_quantity(SUPERNOVA.HOST_RA, row['RAG'], source)
-        catalog.entries[name].add_quantity(SUPERNOVA.HOST_DEC, row['DEG'], source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.HOST_RA, row['RAG'], source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.HOST_DEC, row['DEG'], source)
         catalog.entries[name].add_quantity(
             SUPERNOVA.HOST_OFFSET_ANG, row['ASep'], source, u_value='arcseconds')
         for qkey in [SUPERNOVA.REDSHIFT, SUPERNOVA.HOST_REDSHIFT]:
@@ -1919,15 +2018,20 @@ def _viz_4(catalog, viz):
     table.convert_bytestring_to_unicode()
     for row in pbar(table, task_str):
         row = convert_aq_output(row)
-        name, source = catalog.new_entry(row['Name'], bibcode="2014AJ....148...13R")
-        catalog.entries[name].add_quantity(SUPERNOVA.RA, row['RAJ2000'], source)
-        catalog.entries[name].add_quantity(SUPERNOVA.DEC, row['DEJ2000'], source)
+        name, source = catalog.new_entry(
+            row['Name'], bibcode="2014AJ....148...13R")
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.RA, row['RAJ2000'], source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.DEC, row['DEJ2000'], source)
         catalog.entries[name].add_quantity(
             SUPERNOVA.DISCOVER_DATE, '20' + row['Name'][3:5], source)
         catalog.entries[name].add_quantity(
             SUPERNOVA.REDSHIFT, row['zSN'], source, kind='heliocentric', e_value=row['e_zSN'])
-        catalog.entries[name].add_quantity(SUPERNOVA.HOST_RA, row['RAG'], source)
-        catalog.entries[name].add_quantity(SUPERNOVA.HOST_DEC, row['DEG'], source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.HOST_RA, row['RAG'], source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.HOST_DEC, row['DEG'], source)
         catalog.entries[name].add_quantity(
             SUPERNOVA.HOST_OFFSET_ANG, row['ASep'], source, u_value='arcseconds')
         for qkey in [SUPERNOVA.REDSHIFT, SUPERNOVA.HOST_REDSHIFT]:
@@ -1948,8 +2052,10 @@ def _viz_4(catalog, viz):
             name = essname
         name, source = catalog.new_entry(name, bibcode="2007ApJ...666..674M")
         catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, essname, source)
-        catalog.entries[name].add_quantity(SUPERNOVA.RA, row['RAJ2000'], source)
-        catalog.entries[name].add_quantity(SUPERNOVA.DEC, row['DEJ2000'], source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.RA, row['RAJ2000'], source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.DEC, row['DEJ2000'], source)
         catalog.entries[name].add_quantity(
             SUPERNOVA.REDSHIFT, row['zSN'], source, e_value=row['e_zSN'], kind='heliocentric')
         for qkey in [SUPERNOVA.REDSHIFT, SUPERNOVA.HOST_REDSHIFT]:
@@ -1957,7 +2063,8 @@ def _viz_4(catalog, viz):
                 qkey, row['zGal'], source, kind='host')
         ct = row['SType'] if row['SType'] else row['Type']
         if ct != '---':
-            catalog.entries[name].add_quantity(SUPERNOVA.CLAIMED_TYPE, ct, source)
+            catalog.entries[name].add_quantity(
+                SUPERNOVA.CLAIMED_TYPE, ct, source)
     catalog.journal_entries()
 
     # 2013AcA....63....1K
@@ -1968,10 +2075,14 @@ def _viz_4(catalog, viz):
         row = convert_aq_output(row)
         if 'OGLE' not in row['Name']:
             continue
-        name, source = catalog.new_entry(row['Name'], bibcode="2013AcA....63....1K")
-        catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, row['OGLEIV'], source)
-        catalog.entries[name].add_quantity(SUPERNOVA.RA, row['RAJ2000'], source)
-        catalog.entries[name].add_quantity(SUPERNOVA.DEC, row['DEJ2000'], source)
+        name, source = catalog.new_entry(
+            row['Name'], bibcode="2013AcA....63....1K")
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.ALIAS, row['OGLEIV'], source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.RA, row['RAJ2000'], source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.DEC, row['DEJ2000'], source)
         astrot = astrotime(float(row['Tmax']), format='jd').datetime
         catalog.entries[name].add_quantity(
             SUPERNOVA.MAX_DATE, make_date_string(astrot.year, astrot.month, astrot.day), source)
@@ -1983,7 +2094,8 @@ def _viz_4(catalog, viz):
     table.convert_bytestring_to_unicode()
     for row in pbar(table, task_str):
         row = convert_aq_output(row)
-        name, source = catalog.new_entry('SNLS-' + row['SN'], bibcode="2011MNRAS.410.1262W")
+        name, source = catalog.new_entry(
+            'SNLS-' + row['SN'], bibcode="2011MNRAS.410.1262W")
         catalog.entries[name].add_quantity(
             SUPERNOVA.RA, row['_RA'], source, u_value='floatdegrees')
         catalog.entries[name].add_quantity(
@@ -2005,13 +2117,16 @@ def _viz_4(catalog, viz):
             name = sdssname
         name, source = catalog.new_entry(name, bibcode="2012ApJ...755...61S")
         catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, sdssname, source)
-        catalog.entries[name].add_quantity(SUPERNOVA.HOST_RA, row['RAJ2000'], source)
-        catalog.entries[name].add_quantity(SUPERNOVA.HOST_DEC, row['DEJ2000'], source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.HOST_RA, row['RAJ2000'], source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.HOST_DEC, row['DEJ2000'], source)
         quant = {}
         if is_number(row['e_z']):
             quant[QUANTITY.E_VALUE] = row['e_z']
         for qkey in [SUPERNOVA.REDSHIFT, SUPERNOVA.HOST_REDSHIFT]:
-            catalog.entries[name].add_quantity(qkey, row['z'], source, kind='host', **quant)
+            catalog.entries[name].add_quantity(
+                qkey, row['z'], source, kind='host', **quant)
 
     catalog.journal_entries()
 
@@ -2076,8 +2191,10 @@ def _viz_5(catalog, viz):
         row = convert_aq_output(row)
         name, source = catalog.new_entry(
             row['SN'], bibcode="2013ApJ...770..107C")
-        catalog.entries[name].add_quantity(SUPERNOVA.HOST_RA, row['RAJ2000'], source)
-        catalog.entries[name].add_quantity(SUPERNOVA.HOST_DEC, row['DEJ2000'], source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.HOST_RA, row['RAJ2000'], source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.HOST_DEC, row['DEJ2000'], source)
         quant = {QUANTITY.E_VALUE: row['e_z']} if is_number(row['e_z']) else {}
         for qkey in [SUPERNOVA.REDSHIFT, SUPERNOVA.HOST_REDSHIFT]:
             catalog.entries[name].add_quantity(
@@ -2095,7 +2212,8 @@ def _viz_5(catalog, viz):
         fra = Decimal(row['RAJ2000'])
         if fra < Decimal(0.0):
             fra = Decimal('360') + fra
-        catalog.entries[name].add_quantity(SUPERNOVA.RA, str(fra), source, u_value='floatdegrees')
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.RA, str(fra), source, u_value='floatdegrees')
         catalog.entries[name].add_quantity(
             SUPERNOVA.DEC, row['DEJ2000'], source, u_value='floatdegrees')
         catalog.entries[name].add_quantity(
@@ -2142,11 +2260,14 @@ def _viz_5(catalog, viz):
                    if isinstance(row['DEJ2000'], str) else radec_clean(
                        str(row['DEJ2000']), SUPERNOVA.DEC,
                        unit='floatdegrees')[0])
-            name = (tab.upper() + 'SNR J' + rep_chars(ra, ' :.') + rep_chars(dec, ' :.'))
-            name, source = catalog.new_entry(name, bibcode="2015MNRAS.446..943V")
+            name = (tab.upper() + 'SNR J' +
+                    rep_chars(ra, ' :.') + rep_chars(dec, ' :.'))
+            name, source = catalog.new_entry(
+                name, bibcode="2015MNRAS.446..943V")
             catalog.entries[name].add_quantity(SUPERNOVA.RA, ra, source)
             catalog.entries[name].add_quantity(SUPERNOVA.DEC, dec, source)
-            catalog.entries[name].add_quantity(SUPERNOVA.HOST, tab.upper(), source)
+            catalog.entries[name].add_quantity(
+                SUPERNOVA.HOST, tab.upper(), source)
     catalog.journal_entries()
 
     # 2009ApJ...703..370C
@@ -2157,10 +2278,13 @@ def _viz_5(catalog, viz):
         row = convert_aq_output(row)
         ra = row['RAJ2000']
         dec = row['DEJ2000']
-        name = row['Gal'].replace(' ', '') + 'SNR J' + rep_chars(ra, ' .') + rep_chars(dec, ' .')
+        name = row['Gal'].replace(' ', '') + 'SNR J' + \
+            rep_chars(ra, ' .') + rep_chars(dec, ' .')
         name, source = catalog.new_entry(name, bibcode="2009ApJ...703..370C")
-        catalog.entries[name].add_quantity(SUPERNOVA.RA, row['RAJ2000'], source)
-        catalog.entries[name].add_quantity(SUPERNOVA.DEC, row['DEJ2000'], source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.RA, row['RAJ2000'], source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.DEC, row['DEJ2000'], source)
         catalog.entries[name].add_quantity(SUPERNOVA.HOST, row['Gal'], source)
     catalog.journal_entries()
 
@@ -2232,7 +2356,8 @@ def _viz_5(catalog, viz):
                 upp = False
                 if "l_" + bandtag in row and row["l_" + bandtag] == ">":
                     upp = True
-                e_mag = row["e_" + bandtag] if is_number(row["e_" + bandtag]) else None
+                e_mag = row["e_" +
+                            bandtag] if is_number(row["e_" + bandtag]) else None
                 photodict = {
                     PHOTOMETRY.TIME: str(row["MJD"]),
                     PHOTOMETRY.U_TIME: 'MJD',
@@ -2255,9 +2380,12 @@ def _viz_5(catalog, viz):
         row = convert_aq_output(row)
         name = row['Name'].replace('SN ', 'SN')
         name, source = catalog.new_entry(name, bibcode="2004ApJ...607..665R")
-        catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, row['OName'], source)
-        catalog.entries[name].add_quantity(SUPERNOVA.RA, row['RAJ2000'], source)
-        catalog.entries[name].add_quantity(SUPERNOVA.DEC, row['DEJ2000'], source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.ALIAS, row['OName'], source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.RA, row['RAJ2000'], source)
+        catalog.entries[name].add_quantity(
+            SUPERNOVA.DEC, row['DEJ2000'], source)
     result = viz.get_catalogs("J/ApJ/607/665/table2")
     table = result[list(result.keys())[0]]
     table.convert_bytestring_to_unicode()
@@ -2310,19 +2438,26 @@ def do_lennarz(catalog):
         catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, name, source)
 
         if row['RAJ2000']:
-            catalog.entries[name].add_quantity(SUPERNOVA.RA, row['RAJ2000'], source)
+            catalog.entries[name].add_quantity(
+                SUPERNOVA.RA, row['RAJ2000'], source)
         if row['DEJ2000']:
-            catalog.entries[name].add_quantity(SUPERNOVA.DEC, row['DEJ2000'], source)
+            catalog.entries[name].add_quantity(
+                SUPERNOVA.DEC, row['DEJ2000'], source)
         if row['RAG']:
-            catalog.entries[name].add_quantity(SUPERNOVA.HOST_RA, row['RAG'], source)
+            catalog.entries[name].add_quantity(
+                SUPERNOVA.HOST_RA, row['RAG'], source)
         if row['DEG']:
-            catalog.entries[name].add_quantity(SUPERNOVA.HOST_DEC, row['DEG'], source)
+            catalog.entries[name].add_quantity(
+                SUPERNOVA.HOST_DEC, row['DEG'], source)
         if row['Gal']:
-            catalog.entries[name].add_quantity(SUPERNOVA.HOST, row['Gal'], source)
+            catalog.entries[name].add_quantity(
+                SUPERNOVA.HOST, row['Gal'], source)
         if row['Type']:
-            claimedtypes = list(set([x.strip(' -') for x in row['Type'].split('|')]))
+            claimedtypes = list(set([x.strip(' -')
+                                     for x in row['Type'].split('|')]))
             for claimedtype in claimedtypes:
-                catalog.entries[name].add_quantity(SUPERNOVA.CLAIMED_TYPE, claimedtype, source)
+                catalog.entries[name].add_quantity(
+                    SUPERNOVA.CLAIMED_TYPE, claimedtype, source)
         if row['z'] and is_number(row['z']):
             if name not in ['SN1985D', 'SN2004cq']:
                 for qkey in [SUPERNOVA.REDSHIFT, SUPERNOVA.HOST_REDSHIFT]:
@@ -2342,7 +2477,8 @@ def do_lennarz(catalog):
         if row['Ddate']:
             datestring = row['Ddate'].replace('-', '/')
 
-            catalog.entries[name].add_quantity(SUPERNOVA.DISCOVER_DATE, datestring, source)
+            catalog.entries[name].add_quantity(
+                SUPERNOVA.DISCOVER_DATE, datestring, source)
 
             if 'photometry' not in catalog.entries[name]:
                 if ('Dmag' in row and is_number(row['Dmag']) and not isnan(float(row['Dmag']))):
@@ -2363,7 +2499,8 @@ def do_lennarz(catalog):
         if row['Mdate']:
             datestring = row['Mdate'].replace('-', '/')
 
-            catalog.entries[name].add_quantity(SUPERNOVA.MAX_DATE, datestring, source)
+            catalog.entries[name].add_quantity(
+                SUPERNOVA.MAX_DATE, datestring, source)
 
             if 'photometry' not in catalog.entries[name]:
                 if ('MMag' in row and is_number(row['MMag']) and not isnan(float(row['MMag']))):
