@@ -10,6 +10,8 @@ python -m astrocats supernovae import
 SNEUPDATE=$?
 echo $SNEUPDATE
 if [[ $SNEUPDATE == 0 ]]; then
+	python -m astrocats supernovae git-pull
+	python -m astrocats supernovae git-push
 	astrocats/supernovae/scripts/generate-web.sh
 	python -m astrocats supernovae git-pull
 	python -m astrocats supernovae git-push

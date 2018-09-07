@@ -15,7 +15,7 @@ def do_grb(catalog):
     task_str = catalog.get_current_task_str()
     file_path = os.path.join(catalog.get_current_task_repo(),
                              'GRB-catalog/catalog.csv')
-    csvtxt = catalog.load_url('http://www.grbcatalog.org/'
+    csvtxt = catalog.load_url('http://www.grbcatalog.com/'
                               'download_data?cut_0_min=3&cut_0=BAT%20T90'
                               '&cut_0_max=100000&num_cuts=1&no_date_cut=True',
                               file_path)
@@ -31,7 +31,7 @@ def do_grb(catalog):
         (name, source) = catalog.new_entry(
             'GRB ' + row[0],
             srcname='Gamma-ray Bursts Catalog',
-            url='http://www.grbcatalog.org')
+            url='http://www.grbcatalog.com')
         catalog.entries[name].add_quantity(
             SUPERNOVA.RA, row[2], source, u_value='floatdegrees')
         catalog.entries[name].add_quantity(
