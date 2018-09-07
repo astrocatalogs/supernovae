@@ -42,7 +42,8 @@ def do_simbad(catalog):
         else:
             if not table:
                 fail = True
-            break
+            else:
+                break
 
         if fail:
             log.warning("Failed to load from SIMBAD mirror '{}'".format(mirror))
