@@ -207,6 +207,7 @@ SNR catalogs:
 * GALEX SNR catalog?
 * GRBs (FERMI, GRBs from early 2000s)
 * https://arxiv.org/abs/1806.04280
+* https://arxiv.org/abs/1809.03535
 
 Online catalogs:
 * No known missing online catalogs at this time.
