@@ -37,6 +37,7 @@ Multiple SN datasets:
 * https://arxiv.org/pdf/1806.03855.pdf (no data but lists a bunch of future sources)
 * https://arxiv.org/abs/1808.02710 (4 GRBs with SNe components)
 * https://arxiv.org/abs/1808.09082 (revised distances to SNRs)
+* https://arxiv.org/abs/1809.06381 (SN2012ht and SN2015F)
 
 Other single SN datasets:
 
