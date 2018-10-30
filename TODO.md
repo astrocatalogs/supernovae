@@ -37,6 +37,7 @@ Multiple SN datasets:
 * https://arxiv.org/pdf/1806.03855.pdf (no data but lists a bunch of future sources)
 * https://arxiv.org/abs/1808.02710 (4 GRBs with SNe components)
 * https://arxiv.org/abs/1808.09082 (revised distances to SNRs)
+* https://arxiv.org/abs/1809.06381 (SN2012ht and SN2015F)
 
 Other single SN datasets:
 
@@ -139,8 +140,9 @@ Other single SN datasets:
 * SN2014J - http://adsabs.harvard.edu/abs/2015MNRAS.451.4104J
 * SN2014J - http://adsabs.harvard.edu/abs/2016MNRAS.457.1000S
 * SN2014ad - http://adsabs.harvard.edu/abs/2017MNRAS.469.1897S (Photometry only in plot form)
+* SN2014dt - https://arxiv.org/abs/1810.00922 (Late-time photometry)
 * iPTF14atg - http://adsabs.harvard.edu/abs/2015Natur.521..328C (Photometry, but data not in paper)
-* iPTF14gqr - De et al in prep (photometry and spectra)
+* iPTF14gqr - https://arxiv.org/abs/1810.05181 (photometry and spectra)
 * SN2015H - http://adsabs.harvard.edu/abs/2016A%26A...589A..89M (Photometry, data not in paper)
 * SN2015J - https://arxiv.org/abs/1711.08655 (X-ray)
 * SN2015as - https://arxiv.org/abs/1802.06731
@@ -207,6 +209,7 @@ SNR catalogs:
 * GALEX SNR catalog?
 * GRBs (FERMI, GRBs from early 2000s)
 * https://arxiv.org/abs/1806.04280
+* https://arxiv.org/abs/1809.03535
 
 Online catalogs:
 * No known missing online catalogs at this time.
