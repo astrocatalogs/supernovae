@@ -45,11 +45,11 @@ def do_nedd(catalog):
         cleanhost = ''
         if name != snname and (name + ' HOST' != snname):
             cleanhost = host_clean(distname)
-            if cleanhost.endswith(' HOST'):
+            if cleanhost.endswith(' HOST') or cleanhost.startswith('SN'):
                 cleanhost = ''
             if not is_number(dist):
                 print(dist)
-            if dist:
+            if dist and cleanhost:
                 catalog.nedd_dict.setdefault(
                     cleanhost, []).append(Decimal(dist))
         if snname and 'HOST' not in snname:
