@@ -38,6 +38,7 @@ Multiple SN datasets:
 * https://arxiv.org/abs/1808.02710 (4 GRBs with SNe components)
 * https://arxiv.org/abs/1808.09082 (revised distances to SNRs)
 * https://arxiv.org/abs/1809.06381 (SN2012ht and SN2015F)
+* https://arxiv.org/abs/1811.02378 (DES light curves)
 
 Other single SN datasets:
 
