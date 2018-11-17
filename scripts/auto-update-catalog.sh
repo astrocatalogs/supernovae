@@ -1,6 +1,9 @@
 #! /bin/bash
 set -e
 
+# kill any already running supernova imports
+pkill -f python.*supernova.*
+
 PATH=/root/miniconda3/bin:/opt/local/bin:/usr/local/bin:$PATH ; export PATH
 LD_LIBRARY_PATH=/usr/local/lib:/opt/local/lib ; export LD_LIBRARY_PATH
 
