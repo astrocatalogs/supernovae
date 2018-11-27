@@ -153,10 +153,14 @@ def do_mast_spectra(catalog):
             try:
                 headers, mastDataString = mastQuery(mastRequest)
             except Exception:
-                print('`mastQuery` failed for `{}`, skipping.'.format(entry))
+                print('`mastQuery` failed for `{}`, request failed, skipping.'.format(entry))
                 continue
 
-            mastData = json.loads(mastDataString)
+            try:
+                mastData = json.loads(mastDataString)
+            except Exception:
+                print('`mastQuery` failed for `{}`, couldn\'t decode JSON, skipping.'.format(entry))
+                continue
 
             # print(mastData.keys())
             # print("Query status:", mastData['status'])
