@@ -172,7 +172,9 @@ Other single SN datasets:
 * SN2018oh - https://arxiv.org/pdf/1811.10061 (photometry)
 * ASASSN-14jb - https://arxiv.org/abs/1811.11771 (photometry)
 * SN1978K - http://arxiv.org/abs/1811.11267v1 (late-time photometry/radio)
-
+* SN2015cp - https://arxiv.org/abs/1812.02756 (x-ray and radio)
+* SN2015cp - https://arxiv.org/abs/1812.02757 (late-time photometry)
+* SN2017ein - https://arxiv.org/abs/1812.03076 (photometry)
 
 Spectra to recover that were donated to SuSpect (bad wavelength solutions, etc):
 * 2000E_20000130_3274_7356_00.dat
