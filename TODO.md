@@ -40,6 +40,7 @@ Multiple SN datasets:
 * https://arxiv.org/abs/1809.06381 (SN2012ht and SN2015F)
 * https://arxiv.org/abs/1811.02378 (DES light curves)
 * https://arxiv.org/abs/1812.01439 (PTF light curves, data not actually available as claimed)
+* https://arxiv.org/abs/1812.04071 (21 SLSN LCs, data not publicly available yet)
 
 Other single SN datasets:
 
