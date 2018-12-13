@@ -176,6 +176,7 @@ Other single SN datasets:
 * SN2015cp - https://arxiv.org/abs/1812.02756 (x-ray and radio)
 * SN2015cp - https://arxiv.org/abs/1812.02757 (late-time photometry)
 * SN2017ein - https://arxiv.org/abs/1812.03076 (photometry)
+* SN2018aoq - https://arxiv.org/abs/1812.04988 (late-time photometry)
 
 Spectra to recover that were donated to SuSpect (bad wavelength solutions, etc):
 * 2000E_20000130_3274_7356_00.dat
