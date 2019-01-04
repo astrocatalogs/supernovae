@@ -39,6 +39,8 @@ Multiple SN datasets:
 * https://arxiv.org/abs/1808.09082 (revised distances to SNRs)
 * https://arxiv.org/abs/1809.06381 (SN2012ht and SN2015F)
 * https://arxiv.org/abs/1811.02378 (DES light curves)
+* https://arxiv.org/abs/1812.01439 (PTF light curves, data not actually available as claimed)
+* https://arxiv.org/abs/1812.04071 (21 SLSN LCs, data not publicly available yet)
 
 Other single SN datasets:
 
@@ -169,7 +171,12 @@ Other single SN datasets:
 * W0948+0318 - https://arxiv.org/abs/1807.07985 (IR photometry in plot form)
 * ASASSN-18bt - https://arxiv.org/abs/1807.11526 (photometry in plot form only)
 * SN2018oh - https://arxiv.org/pdf/1811.10061 (photometry)
-
+* ASASSN-14jb - https://arxiv.org/abs/1811.11771 (photometry)
+* SN1978K - http://arxiv.org/abs/1811.11267v1 (late-time photometry/radio)
+* SN2015cp - https://arxiv.org/abs/1812.02756 (x-ray and radio)
+* SN2015cp - https://arxiv.org/abs/1812.02757 (late-time photometry)
+* SN2017ein - https://arxiv.org/abs/1812.03076 (photometry)
+* SN2018aoq - https://arxiv.org/abs/1812.04988 (late-time photometry)
 
 Spectra to recover that were donated to SuSpect (bad wavelength solutions, etc):
 * 2000E_20000130_3274_7356_00.dat
