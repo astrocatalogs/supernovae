@@ -22,7 +22,7 @@ def do_ptf(catalog):
     # name = catalog.add_entry(name)
     task_str = catalog.get_current_task_str()
 
-    html = catalog.load_url('http://wiserep.weizmann.ac.il/spectra/update',
+    html = catalog.load_url('http://wiserep1.weizmann.ac.il/spectra/update',
                             os.path.join(catalog.get_current_task_repo(),
                                          'PTF/update.html'))
 

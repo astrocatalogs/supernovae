@@ -629,7 +629,7 @@ def do_donated_spectra(catalog):
 
     donationscnt = 0
     oldname = ''
-    for fname in pbar(metadict, task_str):
+    for fname in pbar(list(metadict.keys()), task_str):
         name = metadict[fname]['name']
         name = catalog.get_preferred_name(name)
         if oldname and name != oldname:

@@ -74,7 +74,8 @@ def do_tns(catalog):
                 else:
                     tns_file.write(csvtxt)
 
-        tsvin = list(csv.reader(csvtxt.splitlines(), delimiter=','))
+        tsvin = list(csv.reader([x.replace('[data validation error, please contact site admin]',
+            '""') for x in csvtxt.splitlines()], delimiter=','))
         for ri, row in enumerate(pbar(tsvin, task_str, leave=False)):
             if ri == 0:
                 continue
@@ -122,7 +123,9 @@ def do_tns(catalog):
                                                    source)
             if row[19]:
                 date = row[19].split()[0].replace('-', '/')
-                if date != '0000/00/00':
+                if 'clear' in row[19].lower():
+                    print(row)
+                if date != '0000/00/00' and 'clear' not in row[19].lower():
                     date = date.replace('/00', '')
                     dsplit = row[19].split()
                     if len(dsplit) >= 2:

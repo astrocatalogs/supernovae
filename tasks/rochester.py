@@ -19,8 +19,8 @@ def do_rochester(catalog):
         'http://www.supernova.thistlethwaites.com/'
     ]
     rochesterpaths = [
-        'snimages/snredshiftall.html', 'sn2017/snredshift.html',
-        'sn2018/snredshift.html', 'snimages/snredboneyard.html',
+        'snimages/snredshiftall.html', 'sn2018/snredshift.html',
+        'sn2019/snredshift.html', 'snimages/snredboneyard.html',
         'snimages/snredboneyard-old.html'
     ]
     rochesterupdate = [False, True, True, False]

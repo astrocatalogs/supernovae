@@ -147,7 +147,7 @@ def do_csp_fits_spectra(catalog):
         hdrkeys = list(hdulist[0].header.keys())
         # print(hdrkeys)
         name = datafile.split('/')[-2]
-        if name[2] == '9':
+        if name[2] in '6789':
             name = 'SN19' + name[2:]
         elif name != 'SN210':
             name = 'SN20' + name[2:]
