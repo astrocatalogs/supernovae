@@ -1,5 +1,7 @@
 #### Below are known sources of data that need to be added to the catalog. 
 
+Last ArXiv catch-up: 01/15/19
+
 Donated datasets:
 * Several SNe from Prieto via e-mail.
 
@@ -41,6 +43,7 @@ Multiple SN datasets:
 * https://arxiv.org/abs/1811.02378 (DES light curves)
 * https://arxiv.org/abs/1812.01439 (PTF light curves, data not actually available as claimed)
 * https://arxiv.org/abs/1812.04071 (21 SLSN LCs, data not publicly available yet)
+* https://arxiv.org/abs/1901.00871 (Radio data for SPIRITS SNe)
 
 Other single SN datasets:
 
@@ -177,6 +180,10 @@ Other single SN datasets:
 * SN2015cp - https://arxiv.org/abs/1812.02757 (late-time photometry)
 * SN2017ein - https://arxiv.org/abs/1812.03076 (photometry)
 * SN2018aoq - https://arxiv.org/abs/1812.04988 (late-time photometry)
+* SN2018byg - https://arxiv.org/abs/1901.00874 (photometry, only in plot form)
+* SN2013gs - https://arxiv.org/abs/1901.01353 (photometry)
+* SN2017eaw - https://arxiv.org/abs/1901.01940 (IR photometry)
+* OGLE17aag - https://arxiv.org/abs/1901.03718 (photometry)
 
 Spectra to recover that were donated to SuSpect (bad wavelength solutions, etc):
 * 2000E_20000130_3274_7356_00.dat
