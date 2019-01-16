@@ -43,35 +43,35 @@ def do_tns(catalog):
             with open(fname, 'r') as tns_file:
                 csvtxt = tns_file.read()
         else:
-            with open(fname, 'w') as tns_file:
-                session = requests.Session()
-                ses_url = (tns_url + 'search?&num_page=1000&format=html&edit'
-                           '[type]=&edit[objname]=&edit[id]=&sort=asc&order=id'
-                           '&display[redshift]=1'
-                           '&display[hostname]=1&display[host_redshift]=1'
-                           '&display[source_group_name]=1'
-                           '&display[programs_name]=1'
-                           '&display[internal_name]=1'
-                           '&display[isTNS_AT]=1'
-                           '&display[public]=1'
-                           '&display[end_pop_period]=0'
-                           '&display[spectra_count]=1'
-                           '&display[discoverymag]=1&display[discmagfilter]=1'
-                           '&display[discoverydate]=1&display[discoverer]=1'
-                           '&display[sources]=1'
-                           '&display[bibcode]=1&format=csv&page=' + str(page))
-                try:
-                    response = session.get(ses_url, timeout=30)
-                    csvtxt = response.text
-                except Exception:
-                    catalog.log.warning(
-                        'Could not download TNS page #{}.'.format(str(page)))
-                    if os.path.isfile(fname):
-                        with open(fname, 'r') as tns_file:
-                            csvtxt = tns_file.read()
-                    else:
-                        continue
+            session = requests.Session()
+            ses_url = (tns_url + 'search?&num_page=1000&format=html&edit'
+                       '[type]=&edit[objname]=&edit[id]=&sort=asc&order=id'
+                       '&display[redshift]=1'
+                       '&display[hostname]=1&display[host_redshift]=1'
+                       '&display[source_group_name]=1'
+                       '&display[programs_name]=1'
+                       '&display[internal_name]=1'
+                       '&display[isTNS_AT]=1'
+                       '&display[public]=1'
+                       '&display[end_pop_period]=0'
+                       '&display[spectra_count]=1'
+                       '&display[discoverymag]=1&display[discmagfilter]=1'
+                       '&display[discoverydate]=1&display[discoverer]=1'
+                       '&display[sources]=1'
+                       '&display[bibcode]=1&format=csv&page=' + str(page))
+            try:
+                response = session.get(ses_url, timeout=20)
+                csvtxt = response.text
+            except Exception:
+                catalog.log.warning(
+                    'Could not download TNS page #{}.'.format(str(page)))
+                if os.path.isfile(fname):
+                    with open(fname, 'r') as tns_file:
+                        csvtxt = tns_file.read()
                 else:
+                    continue
+            else:
+                with open(fname, 'w') as tns_file:
                     tns_file.write(csvtxt)
 
         tsvin = list(csv.reader([x.replace('[data validation error, please contact site admin]',
