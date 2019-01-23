@@ -184,6 +184,7 @@ Other single SN datasets:
 * SN2013gs - https://arxiv.org/abs/1901.01353 (photometry)
 * SN2017eaw - https://arxiv.org/abs/1901.01940 (IR photometry)
 * OGLE17aag - https://arxiv.org/abs/1901.03718 (photometry)
+* KISS15s - https://arxiv.org/abs/1901.05508 (photometry)
 
 Spectra to recover that were donated to SuSpect (bad wavelength solutions, etc):
 * 2000E_20000130_3274_7356_00.dat
