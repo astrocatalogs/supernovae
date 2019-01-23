@@ -60,9 +60,9 @@ def do_tns(catalog):
                        '&display[sources]=1'
                        '&display[bibcode]=1&format=csv&page=' + str(page))
             try:
-                response = session.get(ses_url, timeout=20)
+                response = session.get(ses_url, timeout=40)
                 csvtxt = response.text
-            except Exception:
+            except Exception as e:
                 catalog.log.warning(
                     'Could not download TNS page #{}.'.format(str(page)))
                 if os.path.isfile(fname):
