@@ -1,6 +1,6 @@
 #### Below are known sources of data that need to be added to the catalog. 
 
-Last ArXiv catch-up: 01/15/19
+Last ArXiv catch-up: 02/04/19
 
 Donated datasets:
 * Several SNe from Prieto via e-mail.
