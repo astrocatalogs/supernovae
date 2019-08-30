@@ -64,7 +64,7 @@ def do_snls_spectra(catalog):
     task_str = catalog.get_current_task_str()
     result = Vizier.get_catalogs('J/A+A/507/85/table1')
     table = result[list(result.keys())[0]]
-    table.convert_bytestring_to_unicode(python3_only=True)
+    table.convert_bytestring_to_unicode()
     datedict = {}
     for row in table:
         datedict['SNLS-' + row['SN']] = str(astrotime(row['Date']).mjd)
