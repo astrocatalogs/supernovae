@@ -1,6 +1,6 @@
 #### Below are known sources of data that need to be added to the catalog. 
 
-Last ArXiv catch-up: 01/15/19
+Last ArXiv catch-up: 02/04/19
 
 Donated datasets:
 * Several SNe from Prieto via e-mail.
@@ -185,6 +185,8 @@ Other single SN datasets:
 * SN2017eaw - https://arxiv.org/abs/1901.01940 (IR photometry)
 * OGLE17aag - https://arxiv.org/abs/1901.03718 (photometry)
 * KISS15s - https://arxiv.org/abs/1901.05508 (photometry)
+* ASASSN-15oz - https://arxiv.org/abs/1901.09962 (photometry, radio, x-ray)
+* PTF10hgi - https://arxiv.org/abs/1901.10479 (radio)
 
 Spectra to recover that were donated to SuSpect (bad wavelength solutions, etc):
 * 2000E_20000130_3274_7356_00.dat
