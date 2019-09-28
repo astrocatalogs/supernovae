@@ -4,6 +4,7 @@ Last ArXiv catch-up: 02/04/19
 
 Donated datasets:
 * Several SNe from Prieto via e-mail.
+* E-mail from C. Angus (SLSNe).
 
 SN on WISeREP that were made public after being posted:
 * None known at this time.
