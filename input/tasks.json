@@ -185,6 +185,7 @@
         "nice_name": "%pre PTSS",
         "active": true,
         "update": false,
+        "archived": true,
         "module": "supernovae.tasks.ptss",
         "function": "do_ptss_meta",
         "repo": "input/sne-external",
@@ -595,6 +596,17 @@
         "repo": "input/sne-external-spectra",
         "always_journal": true,
         "priority": 212
+    },
+    "wiserep2_spectra": {
+        "nice_name": "%pre WISeREP2 spectra",
+        "active": true,
+        "update": true,
+        "module": "supernovae.tasks.tns",
+        "function": "do_wiserep2_spectra",
+        "groups": ["spectra"],
+        "repo": "input/sne-external-spectra",
+        "always_journal": true,
+        "priority": 213
     },
     "wiserep_spectra": {
         "nice_name": "%pre WISeREP spectra",

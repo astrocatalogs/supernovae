@@ -281,11 +281,14 @@ def do_tns_photo(catalog):
     return
 
 
-def do_tns_spectra(catalog):
+def do_wiserep2_spectra(catalog):
+    do_tns_spectra(catalog, tns_url='https://wiserep.weizmann.ac.il/', directory='WISEREP2')
+
+
+def do_tns_spectra(catalog, tns_url='https://wis-tns.weizmann.ac.il/', directory='TNS'):
     """Load TNS spectra."""
     requests.packages.urllib3.disable_warnings()
     task_str = catalog.get_current_task_str()
-    tns_url = 'https://wis-tns.weizmann.ac.il/'
     try:
         with open('tns.key', 'r') as f:
             tnskey = f.read().splitlines()[0]
@@ -309,7 +312,7 @@ def do_tns_spectra(catalog):
         if not oname:
             continue
         reqname = oname[2:]
-        jsonpath = os.path.join(catalog.get_current_task_repo(), 'TNS', 'meta',
+        jsonpath = os.path.join(catalog.get_current_task_repo(), directory, 'meta',
                                 reqname + '.json')
         download_json = True
         if os.path.isfile(jsonpath):
@@ -329,7 +332,7 @@ def do_tns_spectra(catalog):
                 })
             }).encode('ascii')
             req = urllib.request.Request(
-                'https://wis-tns.weizmann.ac.il/api/get/object', data=data)
+                tns_url + 'api/get/object', data=data)
             trys = 0
             objdict = None
             while trys < 3 and not objdict:
@@ -393,7 +396,7 @@ def do_tns_spectra(catalog):
                 spectxt = catalog.load_url(
                     spectrum['asciifile'],
                     os.path.join(
-                        catalog.get_current_task_repo(), 'TNS', 'spectra',
+                        catalog.get_current_task_repo(), directory, 'spectra',
                         fname), archived_mode=True)
                 data = [x.split() for x in spectxt.splitlines()]
 

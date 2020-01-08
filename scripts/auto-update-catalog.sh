@@ -1,5 +1,6 @@
 #! /bin/bash
 # kill any already running supernova imports
+pkill -f python.*webcat.*sne.*
 pkill -f python.*supernovae.*
 
 set -e

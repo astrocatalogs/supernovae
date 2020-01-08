@@ -19,8 +19,8 @@ def do_rochester(catalog):
         'http://www.supernova.thistlethwaites.com/'
     ]
     rochesterpaths = [
-        'snimages/snredshiftall.html', 'sn2018/snredshift.html',
-        'sn2019/snredshift.html', 'snimages/snredboneyard.html',
+        'snimages/snredshiftall.html', 'sn2020/snredshift.html',
+        'snimages/snredboneyard.html',
         'snimages/snredboneyard-old.html'
     ]
     rochesterupdate = [False, True, True, False]
@@ -111,8 +111,8 @@ def do_rochester(catalog):
                 if not sn or sn in ['Transient']:
                     continue
 
-            ra = str(cols[cns['ra']].contents[0]).strip()
-            dec = str(cols[cns['dec']].contents[0]).strip()
+            ra = str(cols[cns['ra']].contents[0]).strip().replace(':.', '.')
+            dec = str(cols[cns['dec']].contents[0]).strip().replace(':.', '.')
 
             if not name:
                 if sn[:8] == 'MASTER J':
@@ -155,7 +155,8 @@ def do_rochester(catalog):
                     catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, aka,
                                                        sources)
 
-            if str(cols[cns['type']].contents[0]).strip() != 'unk':
+            if (len(cols[cns['type']].contents) > 0 and
+                    str(cols[cns['type']].contents[0]).strip() != 'unk'):
                 type = str(cols[cns['type']].contents[0]).strip(' :,')
                 catalog.entries[name].add_quantity(SUPERNOVA.CLAIMED_TYPE,
                                                    type, sources)
