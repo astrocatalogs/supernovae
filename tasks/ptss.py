@@ -16,7 +16,7 @@ def do_ptss_meta(catalog):
     """Import metadata from PTSS webpage."""
     task_str = catalog.get_current_task_str()
 
-    years = list(range(2015, datetime.today().year + 1))
+    years = list(range(2015, 2019 + 1))
     for year in years:
         jsontxt = None
         while jsontxt is None:

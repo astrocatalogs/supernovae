@@ -612,6 +612,7 @@
         "nice_name": "%pre WISeREP spectra",
         "active": true,
         "update": false,
+		"archived": true,
         "module": "supernovae.tasks.wiserep",
         "function": "do_wiserep_spectra",
         "groups": ["spectra"],

@@ -16,13 +16,13 @@ from ..supernova import SUPERNOVA
 
 
 def do_wiserep_spectra(catalog):
-    if not catalog.args.travis:
-        from ..input.WISeWEBSpider.wisewebspider import spider
-        try:
-            spider(update=True, daysago=7, path="/../../sne-external-WISEREP/")
-        except:
-            catalog.log.warning(
-                'Spider errored, continuing without letting it complete.')
+    #if not catalog.args.travis:
+    #    from ..input.WISeWEBSpider.wisewebspider import spider
+    #    try:
+    #        spider(update=True, daysago=7, path="/../../sne-external-WISEREP/")
+    #    except:
+    #        catalog.log.warning(
+    #            'Spider errored, continuing without letting it complete.')
 
     task_str = catalog.get_current_task_str()
     secondaryreference = 'WISeREP'
