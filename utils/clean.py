@@ -11,6 +11,7 @@ __all__ = ['name_clean', 'host_clean', 'radec_clean', 'clean_snname']
 def name_clean(name):
     """Apply list of renaming rules for supernova names."""
     newname = name.strip(' ;,*.')
+    newname = ' '.join(newname.split())
     if newname.startswith('NAME '):
         newname = newname.replace('NAME ', '', 1)
     if newname.endswith(' SN'):

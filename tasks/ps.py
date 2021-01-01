@@ -219,9 +219,13 @@ def do_ps_threepi(catalog):
                 with open(fname, 'r') as f:
                     html = f.read()
             else:
-                response = urllib.request.urlopen(
-                    "https://star.pst.qub.ac.uk/ps1threepi/psdb/public/?page=" +
-                    str(page) + "&sort=followup_flag_date")
+                try:
+                    response = urllib.request.urlopen(
+                        "https://star.pst.qub.ac.uk/ps1threepi/psdb/public/?page=" +
+                        str(page) + "&sort=followup_flag_date")
+                except:
+                    print('Failed to retrieve {}'.format(page))
+                    continue
                 with open(fname, 'w') as f:
                     html = response.read().decode('utf-8')
                     f.write(html)

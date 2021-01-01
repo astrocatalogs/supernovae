@@ -34,6 +34,9 @@ def do_snax(catalog):
             row[0], srcname='SNaX', url='http://kronos.uchicago.edu/snax/',
             secondary=True)
         sources = [source]
+        bibcode = row[-6].strip()
+        if len(bibcode) != 19:
+            continue
         expsrc = uniq_cdl(sources + [
             catalog.entries[name].add_source(bibcode=row[-6].strip())
         ])

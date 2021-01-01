@@ -182,7 +182,7 @@ def do_ucb_spectra(catalog):
                 spectxt.splitlines(), delimiter=' ', skipinitialspace=True))
         newspecdata = []
         for row in specdata:
-            if row[0][0] == '#':
+            if not row or not row[0] or row[0][0] == '#':
                 continue
             else:
                 newspecdata.append(row)

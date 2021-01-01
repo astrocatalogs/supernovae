@@ -23,7 +23,7 @@ def do_tns(catalog):
     """Load TNS metadata."""
     session = requests.Session()
     task_str = catalog.get_current_task_str()
-    tns_url = 'https://wis-tns.weizmann.ac.il/'
+    tns_url = 'https://www.wis-tns.org/'
     search_url = tns_url + \
         'search?&num_page=1&format=html&sort=desc&order=id&format=csv&page=0'
     csvtxt = catalog.load_url(search_url,
@@ -118,16 +118,16 @@ def do_tns(catalog):
             #        catalog.entries[name].add_quantity('observer',
             #                                  observer.strip(),
             #                                  source)
-            if row[11]:
-                catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, row[11],
+            if row[12]:
+                catalog.entries[name].add_quantity(SUPERNOVA.ALIAS, row[12],
                                                    source)
-            if row[19]:
-                date = row[19].split()[0].replace('-', '/')
-                if 'clear' in row[19].lower():
+            if row[20]:
+                date = row[20].split()[0].replace('-', '/')
+                if 'clear' in row[20].lower():
                     print(row)
-                if date != '0000/00/00' and 'clear' not in row[19].lower():
+                if date != '0000/00/00' and 'clear' not in row[20].lower():
                     date = date.replace('/00', '')
-                    dsplit = row[19].split()
+                    dsplit = row[20].split()
                     if len(dsplit) >= 2:
                         t = dsplit[1]
                         if t != '00:00:00':
@@ -135,7 +135,7 @@ def do_tns(catalog):
                             dt = timedelta(
                                 hours=int(ts[0]),
                                 minutes=int(ts[1]),
-                                seconds=int(ts[2]))
+                                seconds=float(ts[2]))
                             date += pretty_num(
                                 dt.total_seconds() / (24 * 60 * 60),
                                 sig=6).lstrip('0')
@@ -152,7 +152,7 @@ def do_tns(catalog):
 def do_tns_photo(catalog):
     """Load TNS photometry."""
     task_str = catalog.get_current_task_str()
-    tns_url = 'https://wis-tns.weizmann.ac.il/'
+    tns_url = 'https://www.wis-tns.org/'
     try:
         with open('tns.key', 'r') as f:
             tnskey = f.read().splitlines()[0]
@@ -183,11 +183,16 @@ def do_tns_photo(catalog):
         if os.path.isfile(jsonpath):
             with open(jsonpath, 'r') as f:
                 objdict = json.load(f)
-            if ('discoverydate' in objdict and
-                (datetime.now() - datetime.strptime(objdict['discoverydate'],
-                                                    '%Y-%m-%d %H:%M:%S')
-                 ).days > 90):
-                download_json = False
+            if 'discoverydate' in objdict:
+                discoverydate = objdict['discoverydate']
+                if '.' not in discoverydate:
+                    discoverydate += '.0'
+                try:
+                    if (datetime.now() - datetime.strptime(
+                            discoverydate, '%Y-%m-%d %H:%M:%S.%f')).days > 90:
+                        download_json = False
+                except ValueError:
+                    download_json = False
         if download_json:
             data = urllib.parse.urlencode({
                 'api_key': tnskey,
@@ -197,7 +202,7 @@ def do_tns_photo(catalog):
                 })
             }).encode('ascii')
             req = urllib.request.Request(
-                'https://wis-tns.weizmann.ac.il/api/get/object', data=data)
+                'https://www.wis-tns.org/api/get/object', data=data)
             trys = 0
             objdict = None
             while trys < 3 and not objdict:
@@ -285,7 +290,7 @@ def do_wiserep2_spectra(catalog):
     do_tns_spectra(catalog, tns_url='https://wiserep.weizmann.ac.il/', directory='WISEREP2')
 
 
-def do_tns_spectra(catalog, tns_url='https://wis-tns.weizmann.ac.il/', directory='TNS'):
+def do_tns_spectra(catalog, tns_url='https://www.wis-tns.org/', directory='TNS'):
     """Load TNS spectra."""
     requests.packages.urllib3.disable_warnings()
     task_str = catalog.get_current_task_str()
@@ -318,11 +323,16 @@ def do_tns_spectra(catalog, tns_url='https://wis-tns.weizmann.ac.il/', directory
         if os.path.isfile(jsonpath):
             with open(jsonpath, 'r') as f:
                 objdict = json.load(f)
-            if ('discoverydate' in objdict and
-                (datetime.now() - datetime.strptime(objdict['discoverydate'],
-                                                    '%Y-%m-%d %H:%M:%S')
-                 ).days > 90):
-                download_json = False
+            if 'discoverydate' in objdict:
+                discoverydate = objdict['discoverydate']
+                if '.' not in discoverydate:
+                    discoverydate += '.0'
+                try:
+                    if (datetime.now() - datetime.strptime(
+                            discoverydate, '%Y-%m-%d %H:%M:%S.%f')).days > 90:
+                        download_json = False
+                except ValueError:
+                    download_json = False
         if download_json:
             data = urllib.parse.urlencode({
                 'api_key': tnskey,

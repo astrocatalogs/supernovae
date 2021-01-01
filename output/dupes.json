@@ -56,6 +56,25 @@
 		"edit":false
 	},
 	{
+		"name1":"SN1993aj",
+		"aliases1":[
+			"SN1993aj"
+		],
+		"name2":"AT2020hxu",
+		"aliases2":[
+			"AT2020hxu",
+			"PS20cnf"
+		],
+		"ra1":"12:04:21.15",
+		"dec1":"-00:43:13.9",
+		"ra2":"12:04:21.520",
+		"dec2":"-00:43:18.65",
+		"distdeg":"7.3048011651557925",
+		"maxdiffyear":"26.311111111110904",
+		"discdiffyear":"26.311111111110904",
+		"edit":false
+	},
+	{
 		"name1":"SN1993N",
 		"aliases1":[
 			"SN1993N"
@@ -266,6 +285,48 @@
 		"edit":false
 	},
 	{
+		"name1":"SN1996ce",
+		"aliases1":[
+			"SN1996ce"
+		],
+		"name2":"AT2018lrm",
+		"aliases2":[
+			"AT2018lrm",
+			"ZTF18aaxmaxb"
+		],
+		"ra1":"13:16:15.47",
+		"dec1":"+30:15:52.6",
+		"ra2":"13:16:15.700",
+		"dec2":"+30:15:47.70",
+		"distdeg":"5.734916445766919",
+		"maxdiffyear":"21.463888888888732",
+		"discdiffyear":"21.46388888888896",
+		"edit":false
+	},
+	{
+		"name1":"SN1996D",
+		"aliases1":[
+			"SN1996D",
+			"JCMTSE J043400.1-083444",
+			"JCMTSF J043400.1-083444"
+		],
+		"name2":"SN2020cuj",
+		"aliases2":[
+			"SN2020cuj",
+			"AT2020cuj",
+			"ZTF20aaoffej",
+			"Gaia20ayu"
+		],
+		"ra1":"04:34:00.30",
+		"dec1":"-08:34:44.0",
+		"ra2":"04:34:00.518",
+		"dec2":"-08:34:43.49",
+		"distdeg":"3.27338747615871",
+		"maxdiffyear":"24.075000000000045",
+		"discdiffyear":"24.008333333333212",
+		"edit":false
+	},
+	{
 		"name1":"SN1997dk",
 		"aliases1":[
 			"SN1997dk"
@@ -341,6 +402,25 @@
 		"distdeg":"1.6958958554825934",
 		"maxdiffyear":"21.00833333333344",
 		"discdiffyear":"21.005555555555475",
+		"edit":false
+	},
+	{
+		"name1":"SN1998ek",
+		"aliases1":[
+			"SN1998ek"
+		],
+		"name2":"AT2020ehl",
+		"aliases2":[
+			"AT2020ehl",
+			"ATLAS20hts"
+		],
+		"ra1":"06:36:30.59",
+		"dec1":"-37:58:40.2",
+		"ra2":"06:36:30.600",
+		"dec2":"-37:58:37.88",
+		"distdeg":"2.323011017971912",
+		"maxdiffyear":"21.402777777778056",
+		"discdiffyear":"21.40000000000009",
 		"edit":false
 	},
 	{
@@ -500,27 +580,6 @@
 		"edit":false
 	},
 	{
-		"name1":"SN1999bs",
-		"aliases1":[
-			"SN1999bs",
-			"Gaiaalerts; iptf",
-			"Gaia16azz"
-		],
-		"name2":"AT2018gwp",
-		"aliases2":[
-			"AT2018gwp",
-			"KAIT-18ar"
-		],
-		"ra1":"18:01:48.800",
-		"dec1":"+07:00:49.40",
-		"ra2":"18:01:48.750",
-		"dec2":"+07:00:49.61",
-		"distdeg":"0.7734422933159396",
-		"maxdiffyear":"19.458333333333485",
-		"discdiffyear":"19.458333333333485",
-		"edit":false
-	},
-	{
 		"name1":"SN1999bu",
 		"aliases1":[
 			"SN1999bu"
@@ -536,6 +595,26 @@
 		"distdeg":"4.888056398888137",
 		"maxdiffyear":"5.066666666666606",
 		"discdiffyear":"4.974999999999909",
+		"edit":false
+	},
+	{
+		"name1":"SN1999dq",
+		"aliases1":[
+			"SN1999dq",
+			"AAVSO 0228+20"
+		],
+		"name2":"AT2020yyz",
+		"aliases2":[
+			"AT2020yyz",
+			"PS20kvn"
+		],
+		"ra1":"02:33:59.68",
+		"dec1":"+20:58:30.4",
+		"ra2":"02:34:00.136",
+		"dec2":"+20:58:26.39",
+		"distdeg":"7.541288662264554",
+		"maxdiffyear":"21.158333333333303",
+		"discdiffyear":"21.139941666666573",
 		"edit":false
 	},
 	{
@@ -598,6 +677,24 @@
 		"distdeg":"9.124979866425958",
 		"maxdiffyear":"4.7000000000000455",
 		"discdiffyear":"4.022222222222354",
+		"edit":false
+	},
+	{
+		"name1":"AT2003mi",
+		"aliases1":[
+			"AT2003mi"
+		],
+		"name2":"AT2017keo",
+		"aliases2":[
+			"AT2017keo"
+		],
+		"ra1":"15:08:51.038",
+		"dec1":"+06:58:10.42",
+		"ra2":"15:08:51.072",
+		"dec2":"+06:58:11.28",
+		"distdeg":"0.997932956794707",
+		"maxdiffyear":"14.025000000000091",
+		"discdiffyear":"14.022222222222354",
 		"edit":false
 	},
 	{
@@ -767,6 +864,47 @@
 		"distdeg":"8.627003117994741",
 		"maxdiffyear":"3.7527777777777374",
 		"discdiffyear":"3.7666666666666515",
+		"edit":false
+	},
+	{
+		"name1":"SN2001bs",
+		"aliases1":[
+			"SN2001bs",
+			"2MASS J15433936+6745302"
+		],
+		"name2":"AT2020bmv",
+		"aliases2":[
+			"AT2020bmv",
+			"ZTF20aadcxxm"
+		],
+		"ra1":"15:43:39.37",
+		"dec1":"+67:45:30.3",
+		"ra2":"15:43:39.863",
+		"dec2":"+67:45:33.16",
+		"distdeg":"4.001787241438062",
+		"maxdiffyear":"18.611111111111086",
+		"discdiffyear":"18.61666666666656",
+		"edit":false
+	},
+	{
+		"name1":"SN2001cg",
+		"aliases1":[
+			"SN2001cg"
+		],
+		"name2":"SN2020afp",
+		"aliases2":[
+			"SN2020afp",
+			"AT2020afp",
+			"ASASSN-20aq",
+			"Gaia20alv"
+		],
+		"ra1":"12:55:40.87",
+		"dec1":"+27:15:03.9",
+		"ra2":"12:55:41.263",
+		"dec2":"+27:15:01.97",
+		"distdeg":"5.584802717631247",
+		"maxdiffyear":"18.674999999999955",
+		"discdiffyear":"18.638888888888687",
 		"edit":false
 	},
 	{
@@ -1147,25 +1285,6 @@
 		"edit":false
 	},
 	{
-		"name1":"SN2003ge",
-		"aliases1":[
-			"SN2003ge"
-		],
-		"name2":"ASASSN-19xu",
-		"aliases2":[
-			"ASASSN-19xu",
-			"AT2019riy"
-		],
-		"ra1":"16:20:08.75",
-		"dec1":"+37:47:53.7",
-		"ra2":"16:20:09.519",
-		"dec2":"+37:47:53.60",
-		"distdeg":"9.115204264574563",
-		"maxdiffyear":"16.272222222222126",
-		"discdiffyear":"16.26944444444439",
-		"edit":false
-	},
-	{
 		"name1":"SN2003gr",
 		"aliases1":[
 			"SN2003gr"
@@ -1273,6 +1392,26 @@
 		"distdeg":"9.900000000008198",
 		"maxdiffyear":"11.477777777777646",
 		"discdiffyear":"11.477777777777874",
+		"edit":false
+	},
+	{
+		"name1":"SN2003is",
+		"aliases1":[
+			"SN2003is"
+		],
+		"name2":"SN2020ayh",
+		"aliases2":[
+			"SN2020ayh",
+			"AT2020ayh",
+			"Gaia20ale"
+		],
+		"ra1":"19:21:08.00",
+		"dec1":"+43:19:35.4",
+		"ra2":"19:21:08.160",
+		"dec2":"+43:19:43.21",
+		"distdeg":"8.002757902039985",
+		"maxdiffyear":"16.283333333333303",
+		"discdiffyear":"16.280555555555566",
 		"edit":false
 	},
 	{
@@ -1433,6 +1572,46 @@
 		"edit":false
 	},
 	{
+		"name1":"SN2004ds",
+		"aliases1":[
+			"SN2004ds"
+		],
+		"name2":"SN2020nub",
+		"aliases2":[
+			"SN2020nub",
+			"AT2020nub",
+			"ASASSN-20ho",
+			"Gaia20drn"
+		],
+		"ra1":"02:03:56.51",
+		"dec1":"-23:18:50.6",
+		"ra2":"02:03:56.098",
+		"dec2":"-23:18:50.22",
+		"distdeg":"5.6881083935702215",
+		"maxdiffyear":"15.891666666666424",
+		"discdiffyear":"15.88611111111095",
+		"edit":false
+	},
+	{
+		"name1":"SN2004eb",
+		"aliases1":[
+			"SN2004eb"
+		],
+		"name2":"AT2020rnh",
+		"aliases2":[
+			"AT2020rnh",
+			"ZTF20abqnexq"
+		],
+		"ra1":"17:28:24.30",
+		"dec1":"+57:32:45.7",
+		"ra2":"17:28:23.816",
+		"dec2":"+57:32:43.32",
+		"distdeg":"4.565360644344631",
+		"maxdiffyear":"15.938888888888869",
+		"discdiffyear":"15.938888888888869",
+		"edit":false
+	},
+	{
 		"name1":"SN2004fb",
 		"aliases1":[
 			"SN2004fb"
@@ -1488,6 +1667,26 @@
 		"distdeg":"0.36626684292949435",
 		"maxdiffyear":"",
 		"discdiffyear":"",
+		"edit":false
+	},
+	{
+		"name1":"SN2004gh",
+		"aliases1":[
+			"SN2004gh",
+			"2MASS J10243159-2333184"
+		],
+		"name2":"AT2020nqy",
+		"aliases2":[
+			"AT2020nqy",
+			"MASTER OT J102431.40-233314.2"
+		],
+		"ra1":"10:24:31.60",
+		"dec1":"-23:33:18.4",
+		"ra2":"10:24:31.400",
+		"dec2":"-23:33:14.20",
+		"distdeg":"5.0202313564092025",
+		"maxdiffyear":"15.611111111110858",
+		"discdiffyear":"15.608333333333121",
 		"edit":false
 	},
 	{
@@ -2613,6 +2812,25 @@
 		"edit":false
 	},
 	{
+		"name1":"AT2020vpb",
+		"aliases1":[
+			"AT2020vpb",
+			"PS20ikh"
+		],
+		"name2":"PTF09fmk",
+		"aliases2":[
+			"PTF09fmk"
+		],
+		"ra1":"23:57:46.556",
+		"dec1":"+11:58:41.33",
+		"ra2":"23:57:46.19",
+		"dec2":"+11:58:45.3",
+		"distdeg":"6.678523758234387",
+		"maxdiffyear":"",
+		"discdiffyear":"11.767849999999953",
+		"edit":false
+	},
+	{
 		"name1":"SN2014cf",
 		"aliases1":[
 			"SN2014cf"
@@ -2848,6 +3066,25 @@
 		"edit":false
 	},
 	{
+		"name1":"AT2020pru",
+		"aliases1":[
+			"AT2020pru",
+			"PS20fzh"
+		],
+		"name2":"SDSS2199-53556-232",
+		"aliases2":[
+			"SDSS2199-53556-232"
+		],
+		"ra1":"16:01:16.037",
+		"dec1":"+17:46:04.87",
+		"ra2":"16:01:16.5",
+		"dec2":"+17:46:04",
+		"distdeg":"6.670703561245987",
+		"maxdiffyear":"",
+		"discdiffyear":"14.94444444444457",
+		"edit":false
+	},
+	{
 		"name1":"SN2019vv",
 		"aliases1":[
 			"SN2019vv",
@@ -2887,6 +3124,27 @@
 		"edit":false
 	},
 	{
+		"name1":"SN2005bm",
+		"aliases1":[
+			"SN2005bm",
+			"2MASS J15204508+3648423",
+			"SDSS1400-53470-234"
+		],
+		"name2":"AT2020ktd",
+		"aliases2":[
+			"AT2020ktd",
+			"ZTF18aatjoxq"
+		],
+		"ra1":"15:20:45.08",
+		"dec1":"+36:48:42.3",
+		"ra2":"15:20:45.030",
+		"dec2":"+36:48:39.80",
+		"distdeg":"2.5710992078318884",
+		"maxdiffyear":"15.152777777777828",
+		"discdiffyear":"15.116666666666788",
+		"edit":false
+	},
+	{
 		"name1":"SN2005bt",
 		"aliases1":[
 			"SN2005bt"
@@ -2909,8 +3167,9 @@
 		"aliases1":[
 			"SN2005bt"
 		],
-		"name2":"AT2019xbm",
+		"name2":"SN2019xbm",
 		"aliases2":[
+			"SN2019xbm",
 			"AT2019xbm",
 			"ZTF19acyjjni"
 		],
@@ -2919,7 +3178,7 @@
 		"ra2":"13:07:13.987",
 		"dec2":"+58:08:03.38",
 		"distdeg":"8.827818171267365",
-		"maxdiffyear":"14.666666666666742",
+		"maxdiffyear":"14.716666666666697",
 		"discdiffyear":"14.663888888888778",
 		"edit":false
 	},
@@ -2960,26 +3219,6 @@
 		"distdeg":"6.016280408575272",
 		"maxdiffyear":"13.588888888888732",
 		"discdiffyear":"13.57222222222208",
-		"edit":false
-	},
-	{
-		"name1":"SN2005eh",
-		"aliases1":[
-			"SN2005eh",
-			"SDSS-II SN 679"
-		],
-		"name2":"PS19dwx",
-		"aliases2":[
-			"PS19dwx",
-			"AT2019lyx"
-		],
-		"ra1":"21:49:44.4",
-		"dec1":"+00:39:27.248",
-		"ra2":"21:49:44.458",
-		"dec2":"+00:39:27.68",
-		"distdeg":"0.9713003092417333",
-		"maxdiffyear":"13.872222222222263",
-		"discdiffyear":"13.88611111111095",
 		"edit":false
 	},
 	{
@@ -3325,6 +3564,48 @@
 		"edit":false
 	},
 	{
+		"name1":"SN2006ds",
+		"aliases1":[
+			"SN2006ds"
+		],
+		"name2":"AT2020uei",
+		"aliases2":[
+			"AT2020uei",
+			"ATLAS20bbsu"
+		],
+		"ra1":"22:55:18.32",
+		"dec1":"-33:55:17.5",
+		"ra2":"22:55:18.641",
+		"dec2":"-33:55:10.51",
+		"distdeg":"8.051365270242059",
+		"maxdiffyear":"14.183333333333394",
+		"discdiffyear":"14.180555555555657",
+		"edit":false
+	},
+	{
+		"name1":"SN2006ed",
+		"aliases1":[
+			"SN2006ed",
+			"AT2017cgh",
+			"PS17bvk"
+		],
+		"name2":"SN2020pni",
+		"aliases2":[
+			"SN2020pni",
+			"AT2020pni",
+			"ZTF20ablygyy",
+			"Gaia20dus"
+		],
+		"ra1":"15:03:50.64",
+		"dec1":"+42:06:48.5",
+		"ra2":"15:03:49.964",
+		"dec2":"+42:06:50.52",
+		"distdeg":"7.788512685259704",
+		"maxdiffyear":"14.011111111111177",
+		"discdiffyear":"13.91111111111104",
+		"edit":false
+	},
+	{
 		"name1":"SN2006fy",
 		"aliases1":[
 			"SN2006fy",
@@ -3423,6 +3704,27 @@
 		"edit":false
 	},
 	{
+		"name1":"SN2007ea",
+		"aliases1":[
+			"SN2007ea",
+			"SNF20070517-000"
+		],
+		"name2":"AT2020qqp",
+		"aliases2":[
+			"AT2020qqp",
+			"ATLAS20vgb",
+			"Gaia20drm"
+		],
+		"ra1":"15:53:46.27",
+		"dec1":"-27:02:15.5",
+		"ra2":"15:53:46.266",
+		"dec2":"-27:02:15.52",
+		"distdeg":"0.05706223912516834",
+		"maxdiffyear":"13.211111111110995",
+		"discdiffyear":"13.208333333333258",
+		"edit":false
+	},
+	{
 		"name1":"SN2007ec",
 		"aliases1":[
 			"SN2007ec"
@@ -3479,12 +3781,32 @@
 		"edit":false
 	},
 	{
+		"name1":"SN2007ff",
+		"aliases1":[
+			"SN2007ff",
+			"SNF20070630-003"
+		],
+		"name2":"AT2016jjj",
+		"aliases2":[
+			"AT2016jjj"
+		],
+		"ra1":"01:24:10.24",
+		"dec1":"+09:00:40.5",
+		"ra2":"01:24:10.704",
+		"dec2":"+09:00:42.84",
+		"distdeg":"7.261454652323246",
+		"maxdiffyear":"9.119444444444525",
+		"discdiffyear":"9.116666666666788",
+		"edit":false
+	},
+	{
 		"name1":"SN2007G",
 		"aliases1":[
 			"SN2007G"
 		],
-		"name2":"AT2019hbr",
+		"name2":"SN2019hbr",
 		"aliases2":[
+			"SN2019hbr",
 			"AT2019hbr",
 			"ZTF19aawsday"
 		],
@@ -3540,17 +3862,22 @@
 			"SN2007ir",
 			"SNF20070824-017"
 		],
-		"name2":"SN2016hkn",
+		"name2":"SN2020mbe",
 		"aliases2":[
+			"SN2020mbe",
+			"AT2020mbe",
+			"Gaia20aez",
 			"SN2016hkn",
-			"AT2016hkn"
+			"AT2016hkn",
+			"ZTF20aaetirf",
+			"ATLAS20avp"
 		],
 		"ra1":"02:08:34.02",
 		"dec1":"+29:14:14.3",
 		"ra2":"02:08:34.230",
 		"dec2":"+29:14:11.10",
 		"distdeg":"4.218463680732518",
-		"maxdiffyear":"9.119444444444298",
+		"maxdiffyear":"9.111111111111086",
 		"discdiffyear":"9.16111111111104",
 		"edit":false
 	},
@@ -3609,6 +3936,47 @@
 		"distdeg":"4.187608491487292",
 		"maxdiffyear":"",
 		"discdiffyear":"0.0",
+		"edit":false
+	},
+	{
+		"name1":"SN2007mc",
+		"aliases1":[
+			"SN2007mc",
+			"SDSS-II SN 18740"
+		],
+		"name2":"AT2020psu",
+		"aliases2":[
+			"AT2020psu",
+			"ZTF20abmuerj"
+		],
+		"ra1":"01:07:25.70",
+		"dec1":"+01:02:37.4",
+		"ra2":"01:07:25.680",
+		"dec2":"+01:02:37.49",
+		"distdeg":"0.3131615194612274",
+		"maxdiffyear":"12.777777777777828",
+		"discdiffyear":"12.775000000000091",
+		"edit":false
+	},
+	{
+		"name1":"SN2007ok",
+		"aliases1":[
+			"SN2007ok",
+			"2MASS J02282391+0011096",
+			"SDSS-II SN 19616"
+		],
+		"name2":"AT2020yis",
+		"aliases2":[
+			"AT2020yis",
+			"PS20kkn"
+		],
+		"ra1":"02:28:23.916",
+		"dec1":"+00:11:09.61",
+		"ra2":"02:28:23.854",
+		"dec2":"+00:11:10.73",
+		"distdeg":"1.4557784411375463",
+		"maxdiffyear":"12.936111111111131",
+		"discdiffyear":"12.973511111111065",
 		"edit":false
 	},
 	{
@@ -3691,6 +4059,24 @@
 		"edit":false
 	},
 	{
+		"name1":"SN2008bx",
+		"aliases1":[
+			"SN2008bx"
+		],
+		"name2":"AT2020rte",
+		"aliases2":[
+			"AT2020rte"
+		],
+		"ra1":"14:54:39.00",
+		"dec1":"+42:01:22.5",
+		"ra2":"14:54:38.820",
+		"dec2":"+42:01:23.16",
+		"distdeg":"2.1115621490764127",
+		"maxdiffyear":"12.299999999999955",
+		"discdiffyear":"12.32777777777801",
+		"edit":false
+	},
+	{
 		"name1":"SN2008cs",
 		"aliases1":[
 			"SN2008cs"
@@ -3766,6 +4152,27 @@
 		"distdeg":"8.250878454407326",
 		"maxdiffyear":"3.2222222222221717",
 		"discdiffyear":"3.052777777777692",
+		"edit":false
+	},
+	{
+		"name1":"SN2008et",
+		"aliases1":[
+			"SN2008et"
+		],
+		"name2":"SN2020uli",
+		"aliases2":[
+			"SN2020uli",
+			"AT2020uli",
+			"ATLAS20bcev",
+			"Gaia20fjz"
+		],
+		"ra1":"19:32:51.69",
+		"dec1":"-45:13:14.2",
+		"ra2":"19:32:51.790",
+		"dec2":"-45:13:20.26",
+		"distdeg":"6.151414768653949",
+		"maxdiffyear":"12.141666666666652",
+		"discdiffyear":"12.139572222222114",
 		"edit":false
 	},
 	{
@@ -4034,6 +4441,25 @@
 		"edit":false
 	},
 	{
+		"name1":"SN2009dp",
+		"aliases1":[
+			"SN2009dp"
+		],
+		"name2":"AT2020mob",
+		"aliases2":[
+			"AT2020mob",
+			"ZTF20abfcrzj"
+		],
+		"ra1":"20:26:52.69",
+		"dec1":"-18:37:04.2",
+		"ra2":"20:26:52.288",
+		"dec2":"-18:37:02.13",
+		"distdeg":"6.077819303642512",
+		"maxdiffyear":"11.133333333333212",
+		"discdiffyear":"11.141666666666652",
+		"edit":false
+	},
+	{
 		"name1":"SN2009gv",
 		"aliases1":[
 			"SN2009gv"
@@ -4203,6 +4629,27 @@
 		"edit":false
 	},
 	{
+		"name1":"SNF20070617-008",
+		"aliases1":[
+			"SNF20070617-008",
+			"2MASS J16390472+0821308"
+		],
+		"name2":"SN2020beu",
+		"aliases2":[
+			"SN2020beu",
+			"AT2020beu",
+			"ZTF19aawmcjt"
+		],
+		"ra1":"16:39:04.721",
+		"dec1":"+08:21:30.88",
+		"ra2":"16:39:04.731",
+		"dec2":"+08:21:30.88",
+		"distdeg":"0.148406652792899",
+		"maxdiffyear":"",
+		"discdiffyear":"12.605555555555384",
+		"edit":false
+	},
+	{
 		"name1":"SNF20070718-025",
 		"aliases1":[
 			"SNF20070718-025"
@@ -4351,6 +4798,26 @@
 		"distdeg":"1.3285019976657735",
 		"maxdiffyear":"",
 		"discdiffyear":"",
+		"edit":false
+	},
+	{
+		"name1":"AT2013kn",
+		"aliases1":[
+			"AT2013kn",
+			"PS20gbu"
+		],
+		"name2":"AT2020pqz",
+		"aliases2":[
+			"AT2020pqz",
+			"ZTF20abmaouw"
+		],
+		"ra1":"21:57:50.820",
+		"dec1":"-20:19:32.37",
+		"ra2":"21:57:50.815",
+		"dec2":"-20:19:32.56",
+		"distdeg":"0.20259888625480052",
+		"maxdiffyear":"6.902777777777601",
+		"discdiffyear":"6.902777777777601",
 		"edit":false
 	},
 	{
@@ -4507,6 +4974,25 @@
 		"edit":false
 	},
 	{
+		"name1":"AT2020bdo",
+		"aliases1":[
+			"AT2020bdo",
+			"ZTF20aahsvoh"
+		],
+		"name2":"CSS111016:012615+174808",
+		"aliases2":[
+			"CSS111016:012615+174808"
+		],
+		"ra1":"01:26:15.294",
+		"dec1":"+17:48:06.71",
+		"ra2":"01:26:15.28",
+		"dec2":"+17:48:07.7",
+		"distdeg":"1.0099890965059184",
+		"maxdiffyear":"8.280555555555566",
+		"discdiffyear":"8.277777777777828",
+		"edit":false
+	},
+	{
 		"name1":"AT2019ber",
 		"aliases1":[
 			"AT2019ber",
@@ -4598,6 +5084,25 @@
 		"edit":false
 	},
 	{
+		"name1":"AT2020nro",
+		"aliases1":[
+			"AT2020nro",
+			"ZTF20abfdrfo"
+		],
+		"name2":"CSS130609:130230+510716",
+		"aliases2":[
+			"CSS130609:130230+510716"
+		],
+		"ra1":"13:02:29.946",
+		"dec1":"+51:07:15.92",
+		"ra2":"13:02:29.91",
+		"dec2":"+51:07:16.3",
+		"distdeg":"0.5091990623344653",
+		"maxdiffyear":"7.008333333333439",
+		"discdiffyear":"7.008333333333212",
+		"edit":false
+	},
+	{
 		"name1":"CSS131224:084819+205704",
 		"aliases1":[
 			"CSS131224:084819+205704",
@@ -4673,6 +5178,25 @@
 		"edit":false
 	},
 	{
+		"name1":"AT2020xst",
+		"aliases1":[
+			"AT2020xst",
+			"PS20kfk"
+		],
+		"name2":"DES14C2fkf",
+		"aliases2":[
+			"DES14C2fkf"
+		],
+		"ra1":"03:35:38.015",
+		"dec1":"-28:19:08.68",
+		"ra2":"03:35:38.75",
+		"dec2":"-28:19:09.6",
+		"distdeg":"9.74901682816304",
+		"maxdiffyear":"5.9833333333333485",
+		"discdiffyear":"6.055555555555429",
+		"edit":false
+	},
+	{
 		"name1":"EGS11Tho",
 		"aliases1":[
 			"EGS11Tho"
@@ -4688,6 +5212,25 @@
 		"distdeg":"0.5197347391639823",
 		"maxdiffyear":"",
 		"discdiffyear":"0.4833333333333485",
+		"edit":false
+	},
+	{
+		"name1":"AT2020icu",
+		"aliases1":[
+			"AT2020icu",
+			"ZTF20aavvpdy"
+		],
+		"name2":"Gaia14adg",
+		"aliases2":[
+			"Gaia14adg"
+		],
+		"ra1":"11:50:32.786",
+		"dec1":"-02:06:17.00",
+		"ra2":"11:50:32.78",
+		"dec2":"-02:06:17.1",
+		"distdeg":"0.13449563024507172",
+		"maxdiffyear":"5.46666666666647",
+		"discdiffyear":"5.46666666666647",
 		"edit":false
 	},
 	{
@@ -4711,8 +5254,9 @@
 		"edit":false
 	},
 	{
-		"name1":"AT2018lkg",
+		"name1":"SN2018lkg",
 		"aliases1":[
+			"SN2018lkg",
 			"AT2018lkg",
 			"<a id=\"MASJ070634.76+635056.9\">MASTER OT J070634.76+635056.9</a>"
 		],
@@ -4749,22 +5293,41 @@
 		"edit":false
 	},
 	{
-		"name1":"AT2019zhf",
+		"name1":"AT2019oqu",
 		"aliases1":[
-			"AT2019zhf",
-			"Gaia19fud"
+			"AT2019oqu",
+			"ATLAS19teq"
 		],
-		"name2":"Gaia19fud",
+		"name2":"Gaia20aty",
 		"aliases2":[
-			"Gaia19fud"
+			"Gaia20aty"
 		],
-		"ra1":"02:57:36.700",
-		"dec1":"-41:34:50.16",
-		"ra2":"02:57:36.696",
-		"dec2":"-41:34:50.16",
-		"distdeg":"0.04488137094012532",
-		"maxdiffyear":"",
-		"discdiffyear":"",
+		"ra1":"02:01:19.303",
+		"dec1":"+11:50:49.83",
+		"ra2":"02:01:19.344",
+		"dec2":"+11:50:49.56",
+		"distdeg":"0.6596842703717446",
+		"maxdiffyear":"0.0",
+		"discdiffyear":"4.980555555555384",
+		"edit":false
+	},
+	{
+		"name1":"AT2020tfa",
+		"aliases1":[
+			"AT2020tfa",
+			"ATLAS20babe"
+		],
+		"name2":"Gaia20eyp",
+		"aliases2":[
+			"Gaia20eyp"
+		],
+		"ra1":"21:56:52.656",
+		"dec1":"+25:48:43.72",
+		"ra2":"21:56:52.56",
+		"dec2":"+25:48:43.92",
+		"distdeg":"1.3116633419811763",
+		"maxdiffyear":"0.1305555555554747",
+		"discdiffyear":"5.849999999999909",
 		"edit":false
 	},
 	{
@@ -5133,6 +5696,26 @@
 		"edit":false
 	},
 	{
+		"name1":"SN2020aauk",
+		"aliases1":[
+			"SN2020aauk",
+			"AT2020aauk",
+			"ZTF20actiymd"
+		],
+		"name2":"LSQ12axx",
+		"aliases2":[
+			"LSQ12axx"
+		],
+		"ra1":"08:17:50.951",
+		"dec1":"-05:43:09.64",
+		"ra2":"08:17:50.67",
+		"dec2":"-05:43:11.1",
+		"distdeg":"4.440875089417099",
+		"maxdiffyear":"8.722222222222399",
+		"discdiffyear":"8.709544977778023",
+		"edit":false
+	},
+	{
 		"name1":"SN2012bq",
 		"aliases1":[
 			"SN2012bq",
@@ -5169,25 +5752,6 @@
 		"distdeg":"1.0377393423047725",
 		"maxdiffyear":"7.058333333333394",
 		"discdiffyear":"7.055555555555429",
-		"edit":false
-	},
-	{
-		"name1":"LSQ12hxg",
-		"aliases1":[
-			"LSQ12hxg"
-		],
-		"name2":"PS19gxg",
-		"aliases2":[
-			"PS19gxg",
-			"AT2019vxt"
-		],
-		"ra1":"04:11:47.42",
-		"dec1":"-05:55:08.5",
-		"ra2":"04:11:47.933",
-		"dec2":"-05:55:09.03",
-		"distdeg":"7.6723020516451985",
-		"maxdiffyear":"6.930555555555657",
-		"discdiffyear":"6.930555555555657",
 		"edit":false
 	},
 	{
@@ -5339,6 +5903,25 @@
 		"distdeg":"1.6695069086554792",
 		"maxdiffyear":"",
 		"discdiffyear":"0.08055555555552019",
+		"edit":false
+	},
+	{
+		"name1":"AT2020ljv",
+		"aliases1":[
+			"AT2020ljv",
+			"PS20dng"
+		],
+		"name2":"MLS110225:131516-071914",
+		"aliases2":[
+			"MLS110225:131516-071914"
+		],
+		"ra1":"13:15:15.672",
+		"dec1":"-07:19:17.39",
+		"ra2":"13:15:15.84",
+		"dec2":"-07:19:13.764",
+		"distdeg":"4.403993506979573",
+		"maxdiffyear":"",
+		"discdiffyear":"9.25",
 		"edit":false
 	},
 	{
@@ -5617,6 +6200,25 @@
 		"edit":false
 	},
 	{
+		"name1":"SN2014eg",
+		"aliases1":[
+			"SN2014eg",
+			"<a id=\"PRESTOESO154-G10\">PESSTO ESO 154-G10</a>"
+		],
+		"name2":"PESSTO ESO 154-G10",
+		"aliases2":[
+			"PESSTO ESO 154-G10"
+		],
+		"ra1":"02:45:09.27",
+		"dec1":"-55:44:16.9",
+		"ra2":"02:45:09.12",
+		"dec2":"-55:44:16.8",
+		"distdeg":"1.270641263047049",
+		"maxdiffyear":"",
+		"discdiffyear":"0.019444444444388864",
+		"edit":false
+	},
+	{
 		"name1":"PS1-1000789",
 		"aliases1":[
 			"PS1-1000789"
@@ -5668,6 +6270,25 @@
 		"distdeg":"0.6122981906010292",
 		"maxdiffyear":"",
 		"discdiffyear":"0.3194444444443434",
+		"edit":false
+	},
+	{
+		"name1":"AT2020koo",
+		"aliases1":[
+			"AT2020koo",
+			"PS20dgu"
+		],
+		"name2":"PS1-11aj",
+		"aliases2":[
+			"PS1-11aj"
+		],
+		"ra1":"10:03:16.080",
+		"dec1":"+03:28:38.18",
+		"ra2":"10:03:16.274",
+		"dec2":"+03:28:29.81",
+		"distdeg":"8.85967656734692",
+		"maxdiffyear":"9.402777777777828",
+		"discdiffyear":"9.347222222222399",
 		"edit":false
 	},
 	{
@@ -5725,6 +6346,102 @@
 		"distdeg":"0.3441295855673666",
 		"maxdiffyear":"",
 		"discdiffyear":"0.8527777777776464",
+		"edit":false
+	},
+	{
+		"name1":"AT2020xg",
+		"aliases1":[
+			"AT2020xg",
+			"ZTF20aafdhqm"
+		],
+		"name2":"PS1-13dgc",
+		"aliases2":[
+			"PS1-13dgc"
+		],
+		"ra1":"01:29:49.216",
+		"dec1":"+51:53:18.26",
+		"ra2":"01:29:49.21",
+		"dec2":"+51:53:18.3",
+		"distdeg":"0.068450935890216",
+		"maxdiffyear":"6.313888888888641",
+		"discdiffyear":"6.316666666666379",
+		"edit":false
+	},
+	{
+		"name1":"AT2020aawy",
+		"aliases1":[
+			"AT2020aawy",
+			"ZTF20acrvrel"
+		],
+		"name2":"PS1-13dvp",
+		"aliases2":[
+			"PS1-13dvp"
+		],
+		"ra1":"21:03:31.366",
+		"dec1":"+15:10:54.12",
+		"ra2":"21:03:31.49",
+		"dec2":"+15:10:49.2",
+		"distdeg":"5.237246972759943",
+		"maxdiffyear":"7.177777777777692",
+		"discdiffyear":"7.2307802499999525",
+		"edit":false
+	},
+	{
+		"name1":"SN2020syb",
+		"aliases1":[
+			"SN2020syb",
+			"AT2020syb",
+			"ZTF20abyxcib"
+		],
+		"name2":"PS1-13eqn",
+		"aliases2":[
+			"PS1-13eqn"
+		],
+		"ra1":"05:33:50.181",
+		"dec1":"-13:21:17.85",
+		"ra2":"05:33:50.10",
+		"dec2":"-13:21:18.8",
+		"distdeg":"1.516562609933844",
+		"maxdiffyear":"6.71388888888896",
+		"discdiffyear":"6.708333333333485",
+		"edit":false
+	},
+	{
+		"name1":"AT2020uha",
+		"aliases1":[
+			"AT2020uha",
+			"ZTF20abvbqmo"
+		],
+		"name2":"PS1-14adw",
+		"aliases2":[
+			"PS1-14adw"
+		],
+		"ra1":"07:12:43.798",
+		"dec1":"+42:03:22.19",
+		"ra2":"07:12:43.46",
+		"dec2":"+42:03:17.0",
+		"distdeg":"6.4114941240123695",
+		"maxdiffyear":"5.777777777777828",
+		"discdiffyear":"5.779235983333365",
+		"edit":false
+	},
+	{
+		"name1":"AT2020bbu",
+		"aliases1":[
+			"AT2020bbu",
+			"ZTF20aahgass"
+		],
+		"name2":"PS1-14tk",
+		"aliases2":[
+			"PS1-14tk"
+		],
+		"ra1":"14:40:09.621",
+		"dec1":"+78:17:35.08",
+		"ra2":"14:40:09.89",
+		"dec2":"+78:17:34.9",
+		"distdeg":"0.8382791678561566",
+		"maxdiffyear":"1.5361111111110404",
+		"discdiffyear":"6.013888888888914",
 		"edit":false
 	},
 	{
@@ -5989,6 +6706,26 @@
 		"edit":false
 	},
 	{
+		"name1":"SN2010iq",
+		"aliases1":[
+			"PSN J21542359+1509224"
+		],
+		"name2":"SN2020pkj",
+		"aliases2":[
+			"SN2020pkj",
+			"AT2020pkj",
+			"ZTF19aanyuyh"
+		],
+		"ra1":"21:54:23.59",
+		"dec1":"+15:09:22.4",
+		"ra2":"21:54:23.065",
+		"dec2":"+15:09:24.41",
+		"distdeg":"7.862338635651109",
+		"maxdiffyear":"6.191666666666606",
+		"discdiffyear":"6.172222222222217",
+		"edit":false
+	},
+	{
 		"name1":"PSN MACSJ1621.3+3810",
 		"aliases1":[
 			"PSN MACSJ1621.3+3810"
@@ -6004,6 +6741,25 @@
 		"distdeg":"0.0",
 		"maxdiffyear":"",
 		"discdiffyear":"",
+		"edit":false
+	},
+	{
+		"name1":"SNhunt432",
+		"aliases1":[
+			"SNhunt432",
+			"AT2020jfk"
+		],
+		"name2":"PTF10kcn",
+		"aliases2":[
+			"PTF10kcn"
+		],
+		"ra1":"13:35:41.616",
+		"dec1":"+45:55:31.80",
+		"ra2":"13:35:41.52",
+		"dec2":"+45:55:30",
+		"distdeg":"2.059932028558808",
+		"maxdiffyear":"",
+		"discdiffyear":"10.430555555555657",
 		"edit":false
 	},
 	{
@@ -6116,6 +6872,25 @@
 		"distdeg":"6.849580003212878",
 		"maxdiffyear":"4.336111111111222",
 		"discdiffyear":"4.324999999999818",
+		"edit":false
+	},
+	{
+		"name1":"AT2020lvo",
+		"aliases1":[
+			"AT2020lvo",
+			"PS20drt"
+		],
+		"name2":"PTF11blu",
+		"aliases2":[
+			"PTF11blu"
+		],
+		"ra1":"12:38:54.169",
+		"dec1":"+56:23:06.48",
+		"ra2":"12:38:54.58",
+		"dec2":"+56:23:07.9",
+		"distdeg":"3.696591411818295",
+		"maxdiffyear":"9.074999999999818",
+		"discdiffyear":"9.127777777777737",
 		"edit":false
 	},
 	{
@@ -6385,25 +7160,6 @@
 		"edit":false
 	},
 	{
-		"name1":"SN2010ag",
-		"aliases1":[
-			"SN2010ag"
-		],
-		"name2":"PS19eht",
-		"aliases2":[
-			"PS19eht",
-			"AT2019myr"
-		],
-		"ra1":"17:03:53.63",
-		"dec1":"+31:30:06.2",
-		"ra2":"17:03:53.930",
-		"dec2":"+31:29:58.35",
-		"distdeg":"8.737502778312837",
-		"maxdiffyear":"9.474999999999909",
-		"discdiffyear":"9.424999999999955",
-		"edit":false
-	},
-	{
 		"name1":"SN2010bt",
 		"aliases1":[
 			"SN2010bt"
@@ -6498,6 +7254,27 @@
 		"distdeg":"8.273598597795061",
 		"maxdiffyear":"5.33055555555552",
 		"discdiffyear":"5.2916666666667425",
+		"edit":false
+	},
+	{
+		"name1":"SN2010iq",
+		"aliases1":[
+			"SN2010iq",
+			"PTF10yow"
+		],
+		"name2":"SN2020pkj",
+		"aliases2":[
+			"SN2020pkj",
+			"AT2020pkj",
+			"ZTF19aanyuyh"
+		],
+		"ra1":"21:54:23.25",
+		"dec1":"+15:09:20.6",
+		"ra2":"21:54:23.065",
+		"dec2":"+15:09:24.41",
+		"distdeg":"4.657287966307046",
+		"maxdiffyear":"9.780555555555566",
+		"discdiffyear":"9.761111111111177",
 		"edit":false
 	},
 	{
@@ -6635,6 +7412,26 @@
 		"aliases1":[
 			"SN2010P"
 		],
+		"name2":"SN2018lrd",
+		"aliases2":[
+			"SN2018lrd",
+			"AT2018lrd",
+			"ATLAS20jns"
+		],
+		"ra1":"11:28:31.38",
+		"dec1":"+58:33:49.3",
+		"ra2":"11:28:30.413",
+		"dec2":"+58:33:44.04",
+		"distdeg":"9.214149344441696",
+		"maxdiffyear":"7.977777777777874",
+		"discdiffyear":"7.977777777777874",
+		"edit":false
+	},
+	{
+		"name1":"SN2010P",
+		"aliases1":[
+			"SN2010P"
+		],
 		"name2":"SN2019lqo",
 		"aliases2":[
 			"SN2019lqo",
@@ -6648,6 +7445,48 @@
 		"distdeg":"9.563498343574532",
 		"maxdiffyear":"9.630555555555702",
 		"discdiffyear":"9.50833333333344",
+		"edit":false
+	},
+	{
+		"name1":"SN2010P",
+		"aliases1":[
+			"SN2010P"
+		],
+		"name2":"SN2020fkb",
+		"aliases2":[
+			"SN2020fkb",
+			"AT2020fkb",
+			"ZTF18aarlpzd"
+		],
+		"ra1":"11:28:31.38",
+		"dec1":"+58:33:49.3",
+		"ra2":"11:28:30.436",
+		"dec2":"+58:33:46.78",
+		"distdeg":"7.803331385867616",
+		"maxdiffyear":"10.21388888888896",
+		"discdiffyear":"10.19444444444457",
+		"edit":false
+	},
+	{
+		"name1":"SN2011as",
+		"aliases1":[
+			"SN2011as",
+			"PSN J04370666+4355353",
+			"<a id=\"PSNJ04370666+4355353\">PSN J04370666+4355353</a>"
+		],
+		"name2":"AT2020qwf",
+		"aliases2":[
+			"AT2020qwf",
+			"ZTF20abqlonn",
+			"Gaia20eff"
+		],
+		"ra1":"04:37:06.66",
+		"dec1":"+43:55:35.3",
+		"ra2":"04:37:05.964",
+		"dec2":"+43:55:34.54",
+		"distdeg":"7.5575321106471325",
+		"maxdiffyear":"9.538888888889005",
+		"discdiffyear":"9.53333333333353",
 		"edit":false
 	},
 	{
@@ -7995,6 +8834,25 @@
 		"edit":false
 	},
 	{
+		"name1":"AT2020sba",
+		"aliases1":[
+			"AT2020sba",
+			"MASTER OT J202523.22-532407.7"
+		],
+		"name2":"ASASSN-15rx",
+		"aliases2":[
+			"ASASSN-15rx"
+		],
+		"ra1":"20:25:23.220",
+		"dec1":"-53:24:07.70",
+		"ra2":"20:25:23.13",
+		"dec2":"-53:24:07.7",
+		"distdeg":"0.8048631215875091",
+		"maxdiffyear":"4.836111111111222",
+		"discdiffyear":"4.833333333333485",
+		"edit":false
+	},
+	{
 		"name1":"SN2016dsn",
 		"aliases1":[
 			"SN2016dsn",
@@ -9072,25 +9930,6 @@
 		"edit":false
 	},
 	{
-		"name1":"AT2015cz",
-		"aliases1":[
-			"AT2015cz",
-			"<a id=\"PNVJ01315945+3328458\">PNV J01315945+3328458</a>"
-		],
-		"name2":"PSN J01315945+3328458",
-		"aliases2":[
-			"PSN J01315945+3328458"
-		],
-		"ra1":"01:31:59.45",
-		"dec1":"+33:28:45.8",
-		"ra2":"01:31:59.45",
-		"dec2":"+33:28:45.8",
-		"distdeg":"0.0",
-		"maxdiffyear":"",
-		"discdiffyear":"",
-		"edit":false
-	},
-	{
 		"name1":"AT2015dd",
 		"aliases1":[
 			"AT2015dd",
@@ -9329,6 +10168,27 @@
 		"edit":false
 	},
 	{
+		"name1":"AT2017ecb",
+		"aliases1":[
+			"AT2017ecb",
+			"ATLAS17flk",
+			"PS17dbj"
+		],
+		"name2":"AT2020oip",
+		"aliases2":[
+			"AT2020oip",
+			"PS20eus"
+		],
+		"ra1":"15:13:28.770",
+		"dec1":"+28:26:35.43",
+		"ra2":"15:13:29.156",
+		"dec2":"+28:26:27.43",
+		"distdeg":"9.482601327427208",
+		"maxdiffyear":"3.0861111111112223",
+		"discdiffyear":"3.0888888888889596",
+		"edit":false
+	},
+	{
 		"name1":"AT2017gsm",
 		"aliases1":[
 			"AT2017gsm",
@@ -9425,6 +10285,47 @@
 		"distdeg":"0.4187992777101138",
 		"maxdiffyear":"0.0861111111109949",
 		"discdiffyear":"0.008333333333439441",
+		"edit":false
+	},
+	{
+		"name1":"AT2017ime",
+		"aliases1":[
+			"AT2017ime",
+			"ATLAS17njw",
+			"Gaia17dar"
+		],
+		"name2":"AT2020qyq",
+		"aliases2":[
+			"AT2020qyq",
+			"ZTF20abqskhf"
+		],
+		"ra1":"21:02:14.760",
+		"dec1":"-17:45:13.30",
+		"ra2":"21:02:14.226",
+		"dec2":"-17:45:07.54",
+		"distdeg":"9.55890340032807",
+		"maxdiffyear":"2.7083333333332575",
+		"discdiffyear":"2.7222222222221717",
+		"edit":false
+	},
+	{
+		"name1":"AT2017iqk",
+		"aliases1":[
+			"AT2017iqk"
+		],
+		"name2":"SN2020uve",
+		"aliases2":[
+			"SN2020uve",
+			"AT2020uve",
+			"ZTF20acgnelh"
+		],
+		"ra1":"02:12:29.940",
+		"dec1":"-22:28:15.50",
+		"ra2":"02:12:30.106",
+		"dec2":"-22:28:21.95",
+		"distdeg":"6.84812148742988",
+		"maxdiffyear":"2.8527777777776464",
+		"discdiffyear":"2.8527777777776464",
 		"edit":false
 	},
 	{
@@ -9786,6 +10687,48 @@
 		"edit":false
 	},
 	{
+		"name1":"AT2018erm",
+		"aliases1":[
+			"AT2018erm",
+			"ATLAS18tcl"
+		],
+		"name2":"SN2020lbf",
+		"aliases2":[
+			"SN2020lbf",
+			"AT2020lbf",
+			"ATLAS20nxr",
+			"Gaia20clm"
+		],
+		"ra1":"20:43:43.960",
+		"dec1":"-01:14:19.96",
+		"ra2":"20:43:44.275",
+		"dec2":"-01:14:16.96",
+		"distdeg":"5.595998185451275",
+		"maxdiffyear":"1.8527777777776464",
+		"discdiffyear":"1.8027777777776919",
+		"edit":false
+	},
+	{
+		"name1":"AT2018erv",
+		"aliases1":[
+			"AT2018erv",
+			"ZTF18ablqdru"
+		],
+		"name2":"AT2020lqk",
+		"aliases2":[
+			"AT2020lqk",
+			"ATLAS17hah"
+		],
+		"ra1":"14:24:09.300",
+		"dec1":"+12:15:30.54",
+		"ra2":"14:24:09.140",
+		"dec2":"+12:15:30.58",
+		"distdeg":"2.3456202693115276",
+		"maxdiffyear":"1.7666666666666515",
+		"discdiffyear":"1.7666666666666515",
+		"edit":false
+	},
+	{
 		"name1":"AT2018fpl",
 		"aliases1":[
 			"AT2018fpl",
@@ -9863,6 +10806,26 @@
 		"distdeg":"5.095008482259882",
 		"maxdiffyear":"1.2944444444444798",
 		"discdiffyear":"1.2722222222221262",
+		"edit":false
+	},
+	{
+		"name1":"AT2018fua",
+		"aliases1":[
+			"AT2018fua",
+			"ATLAS18ugc"
+		],
+		"name2":"AT2020riv",
+		"aliases2":[
+			"AT2020riv",
+			"PS20gsi"
+		],
+		"ra1":"02:11:37.440",
+		"dec1":"+34:02:31.44",
+		"ra2":"02:11:37.778",
+		"dec2":"+34:02:34.41",
+		"distdeg":"5.144928306755034",
+		"maxdiffyear":"1.9222222222222172",
+		"discdiffyear":"1.9249999999999545",
 		"edit":false
 	},
 	{
@@ -10068,6 +11031,26 @@
 		"edit":false
 	},
 	{
+		"name1":"AT2018iwl",
+		"aliases1":[
+			"AT2018iwl",
+			"ZTF18abzyvbt"
+		],
+		"name2":"AT2020uqd",
+		"aliases2":[
+			"AT2020uqd",
+			"ZTF18achondo"
+		],
+		"ra1":"02:37:09.850",
+		"dec1":"-11:54:52.15",
+		"ra2":"02:37:09.754",
+		"dec2":"-11:54:51.75",
+		"distdeg":"1.4646567203173488",
+		"maxdiffyear":"1.8472222222221717",
+		"discdiffyear":"1.8444444444444343",
+		"edit":false
+	},
+	{
 		"name1":"AT2018jbs",
 		"aliases1":[
 			"AT2018jbs",
@@ -10101,29 +11084,27 @@
 		"ra2":"1:28:21.8962",
 		"dec2":"+04:30:39.91",
 		"distdeg":"0.5832911925606075",
-		"maxdiffyear":"0.03055555555556566",
+		"maxdiffyear":"0.03333333333330302",
 		"discdiffyear":"0.03055555555556566",
 		"edit":false
 	},
 	{
-		"name1":"AT2018jmn",
+		"name1":"AT2018jmb",
 		"aliases1":[
-			"AT2018jmn",
-			"ATLAS18baig"
+			"AT2018jmb",
+			"ATLAS18bagf"
 		],
-		"name2":"AT2019civ",
+		"name2":"Gaia20fjl",
 		"aliases2":[
-			"AT2019civ",
-			"PS19cku",
-			"ZTF19aanetfm"
+			"Gaia20fjl"
 		],
-		"ra1":"09:39:36.277",
-		"dec1":"+30:12:41.70",
-		"ra2":"09:39:35.860",
-		"dec2":"+30:12:40.35",
-		"distdeg":"5.571444109850933",
-		"maxdiffyear":"0.3083333333331666",
-		"discdiffyear":"0.31111111111090395",
+		"ra1":"07:10:16.323",
+		"dec1":"+29:31:32.09",
+		"ra2":"07:10:16.32",
+		"dec2":"+29:31:32.16",
+		"distdeg":"0.08020723528975063",
+		"maxdiffyear":"1.9805555555556111",
+		"discdiffyear":"1.9805555555556111",
 		"edit":false
 	},
 	{
@@ -10147,27 +11128,6 @@
 		"edit":false
 	},
 	{
-		"name1":"AT2018lqj",
-		"aliases1":[
-			"AT2018lqj",
-			"ATLAS19guz"
-		],
-		"name2":"SN2019cdn",
-		"aliases2":[
-			"SN2019cdn",
-			"AT2019cdn",
-			"ZTF19aanbojt"
-		],
-		"ra1":"10:10:49.591",
-		"dec1":"+54:12:54.28",
-		"ra2":"10:10:49.736",
-		"dec2":"+54:12:52.92",
-		"distdeg":"1.8620251163562755",
-		"maxdiffyear":"0.7944444444442524",
-		"discdiffyear":"0.7805555555555657",
-		"edit":false
-	},
-	{
 		"name1":"AT2018mm",
 		"aliases1":[
 			"AT2018mm",
@@ -10188,24 +11148,45 @@
 		"edit":false
 	},
 	{
-		"name1":"AT2019aah",
+		"name1":"AT2019aabx",
 		"aliases1":[
-			"AT2019aah",
-			"PS19cuq",
-			"ZTF19aadypig",
-			"ATLAS19bxf"
+			"AT2019aabx",
+			"ATLAS20fjh"
 		],
-		"name2":"PTSS-19ckly",
+		"name2":"AT2020bwj",
 		"aliases2":[
-			"PTSS-19ckly"
+			"AT2020bwj",
+			"ZTF18aaxtpmj"
 		],
-		"ra1":"15:01:30.715",
-		"dec1":"+04:52:41.82",
-		"ra2":"15:01:30.756",
-		"dec2":"+04:52:41.8019",
-		"distdeg":"0.6130394860031679",
-		"maxdiffyear":"0.13333333333343944",
-		"discdiffyear":"0.17777777777791925",
+		"ra1":"15:44:34.319",
+		"dec1":"+61:29:40.69",
+		"ra2":"15:44:33.952",
+		"dec2":"+61:29:41.01",
+		"distdeg":"2.6466247405575443",
+		"maxdiffyear":"1.0194444444446162",
+		"discdiffyear":"1.0222222222223536",
+		"edit":false
+	},
+	{
+		"name1":"AT2019abo",
+		"aliases1":[
+			"AT2019abo",
+			"ZTF19aaeiowr",
+			"ATLAS19cby"
+		],
+		"name2":"SN2020bzv",
+		"aliases2":[
+			"SN2020bzv",
+			"AT2020bzv",
+			"ZTF20aambbfn"
+		],
+		"ra1":"10:33:29.822",
+		"dec1":"+49:18:56.50",
+		"ra2":"10:33:29.900",
+		"dec2":"+49:19:02.11",
+		"distdeg":"5.661608551654719",
+		"maxdiffyear":"1.038888888889005",
+		"discdiffyear":"1.0333333333335304",
 		"edit":false
 	},
 	{
@@ -10249,6 +11230,26 @@
 		"edit":false
 	},
 	{
+		"name1":"AT2019bal",
+		"aliases1":[
+			"AT2019bal",
+			"ZTF19aaklsto"
+		],
+		"name2":"AT2020jsn",
+		"aliases2":[
+			"AT2020jsn",
+			"ZTF20aaznlnj"
+		],
+		"ra1":"16:44:30.394",
+		"dec1":"+52:48:41.73",
+		"ra2":"16:44:30.553",
+		"dec2":"+52:48:42.00",
+		"distdeg":"1.466650042177271",
+		"maxdiffyear":"1.2111111111112223",
+		"discdiffyear":"1.2138888888889596",
+		"edit":false
+	},
+	{
 		"name1":"AT2019bex",
 		"aliases1":[
 			"AT2019bex",
@@ -10287,6 +11288,26 @@
 		"edit":false
 	},
 	{
+		"name1":"AT2019bjb",
+		"aliases1":[
+			"AT2019bjb",
+			"ZTF19aakzcfh"
+		],
+		"name2":"AT2020ev",
+		"aliases2":[
+			"AT2020ev",
+			"ZTF19acyjisf"
+		],
+		"ra1":"12:31:53.419",
+		"dec1":"+55:02:52.73",
+		"ra2":"12:31:53.959",
+		"dec2":"+55:02:47.63",
+		"distdeg":"6.895228576466937",
+		"maxdiffyear":"0.8555555555556111",
+		"discdiffyear":"0.8555555555553838",
+		"edit":false
+	},
+	{
 		"name1":"AT2019bkx",
 		"aliases1":[
 			"AT2019bkx",
@@ -10309,7 +11330,9 @@
 		"name1":"AT2019blm",
 		"aliases1":[
 			"AT2019blm",
-			"ZTF19aalcwjt"
+			"ZTF19aalcwjt",
+			"AT2019skc",
+			"ATLAS19gvi"
 		],
 		"name2":"PTSS-19ckae",
 		"aliases2":[
@@ -10363,6 +11386,48 @@
 		"dec2":"+36:44:32.37",
 		"distdeg":"0.3119571272792701",
 		"maxdiffyear":"0.2722222222221262",
+		"discdiffyear":"0.31111111111090395",
+		"edit":false
+	},
+	{
+		"name1":"AT2019bun",
+		"aliases1":[
+			"AT2019bun",
+			"ZTF19aamhjen"
+		],
+		"name2":"AT2020nzx",
+		"aliases2":[
+			"AT2020nzx",
+			"PS20eqg"
+		],
+		"ra1":"17:40:23.350",
+		"dec1":"+41:56:10.95",
+		"ra2":"17:40:23.511",
+		"dec2":"+41:56:08.13",
+		"distdeg":"3.343622160028162",
+		"maxdiffyear":"1.2944444444444798",
+		"discdiffyear":"1.2944444444444798",
+		"edit":false
+	},
+	{
+		"name1":"AT2019civ",
+		"aliases1":[
+			"AT2019civ",
+			"PS19cku",
+			"ZTF19aanetfm"
+		],
+		"name2":"SN2018jmn",
+		"aliases2":[
+			"SN2018jmn",
+			"AT2018jmn",
+			"ATLAS18baig"
+		],
+		"ra1":"09:39:35.860",
+		"dec1":"+30:12:40.35",
+		"ra2":"09:39:36.277",
+		"dec2":"+30:12:41.70",
+		"distdeg":"5.571444109847445",
+		"maxdiffyear":"0.3083333333331666",
 		"discdiffyear":"0.31111111111090395",
 		"edit":false
 	},
@@ -10617,7 +11682,7 @@
 		"ra2":"6:51:39.3192",
 		"dec2":"+20:26:24.306",
 		"distdeg":"0.8365314755453533",
-		"maxdiffyear":"0.008333333333439441",
+		"maxdiffyear":"0.027777777777828305",
 		"discdiffyear":"0.02500000000009095",
 		"edit":false
 	},
@@ -10871,7 +11936,7 @@
 		"ra2":"15:43:37.8168",
 		"dec2":"-01:17:36.46",
 		"distdeg":"1.743927183730317",
-		"maxdiffyear":"0.030555555555793035",
+		"maxdiffyear":"0.002777777777737356",
 		"discdiffyear":"0.02777777777805568",
 		"edit":false
 	},
@@ -10915,26 +11980,6 @@
 		"edit":false
 	},
 	{
-		"name1":"AT2019etb",
-		"aliases1":[
-			"AT2019etb",
-			"ZTF19aargqez",
-			"ATLAS19kbb"
-		],
-		"name2":"PS19dax",
-		"aliases2":[
-			"PS19dax"
-		],
-		"ra1":"21:10:48.666",
-		"dec1":"+04:20:43.97",
-		"ra2":"21:10:48.67",
-		"dec2":"+04:20:43.9",
-		"distdeg":"0.09208328508685794",
-		"maxdiffyear":"0.1361111111111768",
-		"discdiffyear":"0.1361111111111768",
-		"edit":false
-	},
-	{
 		"name1":"AT2019fdr",
 		"aliases1":[
 			"AT2019fdr",
@@ -10971,27 +12016,6 @@
 		"distdeg":"0.6143449318361062",
 		"maxdiffyear":"0.08055555555552019",
 		"discdiffyear":"0.10555555555538376",
-		"edit":false
-	},
-	{
-		"name1":"AT2019fyj",
-		"aliases1":[
-			"AT2019fyj",
-			"PS19dbt",
-			"ZTF19aavhypb"
-		],
-		"name2":"Gaia19ffs",
-		"aliases2":[
-			"Gaia19ffs",
-			"AT2019vlc"
-		],
-		"ra1":"14:38:33.999",
-		"dec1":"+50:05:14.05",
-		"ra2":"14:38:34.236",
-		"dec2":"+50:05:12.88",
-		"distdeg":"2.563536249817364",
-		"maxdiffyear":"0.4944444444445253",
-		"discdiffyear":"0.49166666666678793",
 		"edit":false
 	},
 	{
@@ -11053,6 +12077,27 @@
 		"edit":false
 	},
 	{
+		"name1":"AT2019hiw",
+		"aliases1":[
+			"AT2019hiw",
+			"PS19bfp",
+			"ATLAS19mue"
+		],
+		"name2":"AT2020kkp",
+		"aliases2":[
+			"AT2020kkp",
+			"ZTF20abasbqq"
+		],
+		"ra1":"21:42:38.809",
+		"dec1":"+03:48:39.80",
+		"ra2":"21:42:38.189",
+		"dec2":"+03:48:41.51",
+		"distdeg":"9.435674755856736",
+		"maxdiffyear":"0.9472222222223081",
+		"discdiffyear":"0.9444444444445708",
+		"edit":false
+	},
+	{
 		"name1":"AT2019htg",
 		"aliases1":[
 			"AT2019htg",
@@ -11089,26 +12134,6 @@
 		"distdeg":"0.7329254314663367",
 		"maxdiffyear":"4.0166666666666515",
 		"discdiffyear":"4.019444444444389",
-		"edit":false
-	},
-	{
-		"name1":"AT2019kkc",
-		"aliases1":[
-			"AT2019kkc",
-			"ZTF18aceiqif"
-		],
-		"name2":"PS19etc",
-		"aliases2":[
-			"PS19etc",
-			"AT2019opo"
-		],
-		"ra1":"23:13:57.142",
-		"dec1":"-11:30:18.83",
-		"ra2":"23:13:57.029",
-		"dec2":"-11:30:10.79",
-		"distdeg":"8.20977153226844",
-		"maxdiffyear":"0.13055555555570209",
-		"discdiffyear":"0.1916666666668334",
 		"edit":false
 	},
 	{
@@ -11167,6 +12192,26 @@
 		"distdeg":"0.10999999997949016",
 		"maxdiffyear":"",
 		"discdiffyear":"1.7611111111111768",
+		"edit":false
+	},
+	{
+		"name1":"AT2019kxs",
+		"aliases1":[
+			"AT2019kxs",
+			"ATLAS19owf"
+		],
+		"name2":"AT2020mrb",
+		"aliases2":[
+			"AT2020mrb",
+			"PS20ehm"
+		],
+		"ra1":"21:39:54.146",
+		"dec1":"+03:32:58.10",
+		"ra2":"21:39:54.033",
+		"dec2":"+03:32:57.05",
+		"distdeg":"1.9911087131329832",
+		"maxdiffyear":"0.9277777777776919",
+		"discdiffyear":"0.9305555555554292",
 		"edit":false
 	},
 	{
@@ -11313,6 +12358,108 @@
 		"edit":false
 	},
 	{
+		"name1":"AT2019oxl",
+		"aliases1":[
+			"AT2019oxl",
+			"ZTF19abucixu",
+			"ATLAS19txx"
+		],
+		"name2":"AT2020bhv",
+		"aliases2":[
+			"AT2020bhv",
+			"ZTF20aafuwsl"
+		],
+		"ra1":"01:59:24.585",
+		"dec1":"+37:30:41.23",
+		"ra2":"01:59:24.475",
+		"dec2":"+37:30:45.91",
+		"distdeg":"4.859569107062937",
+		"maxdiffyear":"0.3805555555554747",
+		"discdiffyear":"0.3805555555554747",
+		"edit":false
+	},
+	{
+		"name1":"AT2019pev",
+		"aliases1":[
+			"AT2019pev",
+			"ZTF19abvgxrq"
+		],
+		"name2":"Gaia19eby",
+		"aliases2":[
+			"Gaia19eby"
+		],
+		"ra1":"04:29:22.710",
+		"dec1":"+00:37:07.46",
+		"ra2":"04:29:22.728",
+		"dec2":"+00:37:07.5",
+		"distdeg":"0.27293130754622863",
+		"maxdiffyear":"0.027777777777828305",
+		"discdiffyear":"4.538888888888778",
+		"edit":false
+	},
+	{
+		"name1":"AT2019ptz",
+		"aliases1":[
+			"AT2019ptz",
+			"ZTF18aarunws"
+		],
+		"name2":"SN2020hph",
+		"aliases2":[
+			"SN2020hph",
+			"AT2020hph",
+			"ZTF20aauwuui"
+		],
+		"ra1":"15:17:20.884",
+		"dec1":"+50:54:16.02",
+		"ra2":"15:17:20.743",
+		"dec2":"+50:54:17.27",
+		"distdeg":"1.8279444006386207",
+		"maxdiffyear":"0.6138888888888232",
+		"discdiffyear":"0.6055555555556111",
+		"edit":false
+	},
+	{
+		"name1":"AT2019puu",
+		"aliases1":[
+			"AT2019puu",
+			"ZTF19abvhaqq",
+			"ATLAS19uzt"
+		],
+		"name2":"AT2020abng",
+		"aliases2":[
+			"AT2020abng",
+			"ZTF20acuytjb"
+		],
+		"ra1":"04:06:36.786",
+		"dec1":"+23:49:47.23",
+		"ra2":"04:06:36.816",
+		"dec2":"+23:49:45.44",
+		"distdeg":"1.8367215330768727",
+		"maxdiffyear":"1.224999999999909",
+		"discdiffyear":"1.2277777777778738",
+		"edit":false
+	},
+	{
+		"name1":"AT2019pxg",
+		"aliases1":[
+			"AT2019pxg",
+			"ZTF19abyixmc"
+		],
+		"name2":"AT2020whd",
+		"aliases2":[
+			"AT2020whd",
+			"PS20jab"
+		],
+		"ra1":"02:31:04.975",
+		"dec1":"+09:26:04.77",
+		"ra2":"02:31:05.149",
+		"dec2":"+09:26:01.06",
+		"distdeg":"4.515880226529145",
+		"maxdiffyear":"1.027777777777601",
+		"discdiffyear":"1.029172222222087",
+		"edit":false
+	},
+	{
 		"name1":"AT2019qbs",
 		"aliases1":[
 			"AT2019qbs",
@@ -11333,28 +12480,6 @@
 		"distdeg":"7.571874522194298",
 		"maxdiffyear":"1.0805555555555202",
 		"discdiffyear":"1.086111111110995",
-		"edit":false
-	},
-	{
-		"name1":"AT2019qds",
-		"aliases1":[
-			"AT2019qds",
-			"ZTF19aacomym"
-		],
-		"name2":"SN2019vzf",
-		"aliases2":[
-			"SN2019vzf",
-			"AT2019vzf",
-			"ZTF19acwrqtv",
-			"Gaia19fpl"
-		],
-		"ra1":"01:44:21.110",
-		"dec1":"+50:06:56.99",
-		"ra2":"01:44:21.380",
-		"dec2":"+50:06:55.90",
-		"distdeg":"2.8164900737922918",
-		"maxdiffyear":"0.9472222222223081",
-		"discdiffyear":"0.9027777777778283",
 		"edit":false
 	},
 	{
@@ -11419,6 +12544,25 @@
 		"edit":false
 	},
 	{
+		"name1":"AT2019qph",
+		"aliases1":[
+			"AT2019qph",
+			"ZTF18abxbkaj"
+		],
+		"name2":"Gaia20fgl",
+		"aliases2":[
+			"Gaia20fgl"
+		],
+		"ra1":"07:46:48.142",
+		"dec1":"+16:32:42.76",
+		"ra2":"07:46:48.24",
+		"dec2":"+16:32:42.36",
+		"distdeg":"1.4648081619044222",
+		"maxdiffyear":"1.1916666666668334",
+		"discdiffyear":"4.486111111111086",
+		"edit":false
+	},
+	{
 		"name1":"AT2019sap",
 		"aliases1":[
 			"AT2019sap",
@@ -11462,48 +12606,6 @@
 		"edit":false
 	},
 	{
-		"name1":"AT2019sgp",
-		"aliases1":[
-			"AT2019sgp",
-			"ZTF19acctlps"
-		],
-		"name2":"SN2017fys",
-		"aliases2":[
-			"SN2017fys",
-			"AT2017fys",
-			"PS17dzx"
-		],
-		"ra1":"16:28:48.440",
-		"dec1":"+23:30:11.18",
-		"ra2":"16:28:48.450",
-		"dec2":"+23:30:13.65",
-		"distdeg":"2.473827296121537",
-		"maxdiffyear":"2.158333333333303",
-		"discdiffyear":"2.1611111111110404",
-		"edit":false
-	},
-	{
-		"name1":"AT2019sgq",
-		"aliases1":[
-			"AT2019sgq",
-			"ZTF19accvilj",
-			"PS19fyj"
-		],
-		"name2":"PS19fwi",
-		"aliases2":[
-			"PS19fwi",
-			"AT2019sas"
-		],
-		"ra1":"00:43:49.963",
-		"dec1":"+36:56:17.21",
-		"ra2":"00:43:50.318",
-		"dec2":"+36:56:16.10",
-		"distdeg":"4.398562529474538",
-		"maxdiffyear":"0.008333333333212067",
-		"discdiffyear":"0.008333333333212067",
-		"edit":false
-	},
-	{
 		"name1":"AT2019sjy",
 		"aliases1":[
 			"AT2019sjy",
@@ -11524,24 +12626,23 @@
 		"edit":false
 	},
 	{
-		"name1":"AT2019skc",
+		"name1":"AT2019sjy",
 		"aliases1":[
-			"AT2019skc",
-			"ATLAS19gvi"
+			"AT2019sjy",
+			"ZTF19aceftwk"
 		],
-		"name2":"SN2019bml",
+		"name2":"AT2020ilc",
 		"aliases2":[
-			"SN2019bml",
-			"AT2019bml",
-			"ATLAS19dsv"
+			"AT2020ilc",
+			"ZTF20aaoqfcr"
 		],
-		"ra1":"16:11:32.899",
-		"dec1":"+29:22:25.95",
-		"ra2":"16:11:32.930",
-		"dec2":"+29:22:24.20",
-		"distdeg":"1.7963025322725465",
-		"maxdiffyear":"0.008333333333439441",
-		"discdiffyear":"0.0",
+		"ra1":"08:02:25.763",
+		"dec1":"+04:47:44.84",
+		"ra2":"08:02:25.910",
+		"dec2":"+04:47:47.59",
+		"distdeg":"3.520019227035077",
+		"maxdiffyear":"0.3388888888889596",
+		"discdiffyear":"0.341666666666697",
 		"edit":false
 	},
 	{
@@ -11603,47 +12704,6 @@
 		"distdeg":"4.550853923561582",
 		"maxdiffyear":"0.22499999999990905",
 		"discdiffyear":"0.23611111111108585",
-		"edit":false
-	},
-	{
-		"name1":"AT2019syz",
-		"aliases1":[
-			"AT2019syz",
-			"ZTF19acgjnis"
-		],
-		"name2":"AT2019unj",
-		"aliases2":[
-			"AT2019unj",
-			"ATLAS19bahn"
-		],
-		"ra1":"12:26:05.324",
-		"dec1":"+68:01:05.82",
-		"ra2":"12:26:05.171",
-		"dec2":"+68:01:07.55",
-		"distdeg":"1.93153815981635",
-		"maxdiffyear":"0.036111111111267746",
-		"discdiffyear":"0.036111111111267746",
-		"edit":false
-	},
-	{
-		"name1":"AT2019tka",
-		"aliases1":[
-			"AT2019tka",
-			"ZTF19acihgng"
-		],
-		"name2":"SN2017keg",
-		"aliases2":[
-			"SN2017keg",
-			"AT2017keg",
-			"ATLAS19zod"
-		],
-		"ra1":"19:19:34.400",
-		"dec1":"+61:50:49.00",
-		"ra2":"19:19:34.716",
-		"dec2":"+61:50:48.88",
-		"distdeg":"2.239685464498738",
-		"maxdiffyear":"1.9555555555552928",
-		"discdiffyear":"1.9583333333332575",
 		"edit":false
 	},
 	{
@@ -11807,6 +12867,46 @@
 		"edit":false
 	},
 	{
+		"name1":"AT2019uqw",
+		"aliases1":[
+			"AT2019uqw",
+			"ZTF19acrcjaz"
+		],
+		"name2":"AT2020aay",
+		"aliases2":[
+			"AT2020aay",
+			"ZTF20aafxkkl"
+		],
+		"ra1":"08:02:25.463",
+		"dec1":"+04:47:46.38",
+		"ra2":"08:02:24.861",
+		"dec2":"+04:47:46.03",
+		"distdeg":"9.005185241667318",
+		"maxdiffyear":"0.21666666666669698",
+		"discdiffyear":"0.21666666666669698",
+		"edit":false
+	},
+	{
+		"name1":"AT2019uqw",
+		"aliases1":[
+			"AT2019uqw",
+			"ZTF19acrcjaz"
+		],
+		"name2":"AT2020ilc",
+		"aliases2":[
+			"AT2020ilc",
+			"ZTF20aaoqfcr"
+		],
+		"ra1":"08:02:25.463",
+		"dec1":"+04:47:46.38",
+		"ra2":"08:02:25.910",
+		"dec2":"+04:47:47.59",
+		"distdeg":"6.7901995290307635",
+		"maxdiffyear":"0.2888888888890051",
+		"discdiffyear":"0.29166666666674246",
+		"edit":false
+	},
+	{
 		"name1":"AT2019uvo",
 		"aliases1":[
 			"AT2019uvo",
@@ -11824,28 +12924,6 @@
 		"distdeg":"8.61357379285276",
 		"maxdiffyear":"0.0",
 		"discdiffyear":"0.0",
-		"edit":false
-	},
-	{
-		"name1":"AT2019uvv",
-		"aliases1":[
-			"AT2019uvv",
-			"ATLAS19bany"
-		],
-		"name2":"SN2019uhz",
-		"aliases2":[
-			"SN2019uhz",
-			"AT2019uhz",
-			"ZTF19acpfnth",
-			"Gaia19fsv"
-		],
-		"ra1":"01:47:13.875",
-		"dec1":"-08:27:42.34",
-		"ra2":"01:47:13.970",
-		"dec2":"-08:27:41.10",
-		"distdeg":"1.8773006723771677",
-		"maxdiffyear":"0.011111111111176797",
-		"discdiffyear":"0.019444444444388864",
 		"edit":false
 	},
 	{
@@ -11926,26 +13004,6 @@
 		"distdeg":"3.103788660772742",
 		"maxdiffyear":"0.01666666666665151",
 		"discdiffyear":"0.013888888888914153",
-		"edit":false
-	},
-	{
-		"name1":"AT2019vfb",
-		"aliases1":[
-			"AT2019vfb",
-			"ATLAS19barl"
-		],
-		"name2":"PS19gjg",
-		"aliases2":[
-			"PS19gjg",
-			"AT2019tvo"
-		],
-		"ra1":"01:01:17.463",
-		"dec1":"-22:12:23.68",
-		"ra2":"01:01:17.618",
-		"dec2":"-22:12:25.09",
-		"distdeg":"2.5732374563127793",
-		"maxdiffyear":"0.052777777777919255",
-		"discdiffyear":"0.052777777777919255",
 		"edit":false
 	},
 	{
@@ -12051,6 +13109,26 @@
 		"edit":false
 	},
 	{
+		"name1":"AT2019vkk",
+		"aliases1":[
+			"AT2019vkk",
+			"ZTF19acukrxv"
+		],
+		"name2":"AT2020doz",
+		"aliases2":[
+			"AT2020doz",
+			"ZTF20aapdazm"
+		],
+		"ra1":"02:45:26.446",
+		"dec1":"+35:03:44.00",
+		"ra2":"02:45:26.515",
+		"dec2":"+35:03:53.61",
+		"distdeg":"9.647268301965767",
+		"maxdiffyear":"0.21944444444443434",
+		"discdiffyear":"0.23055555555561114",
+		"edit":false
+	},
+	{
 		"name1":"AT2019vle",
 		"aliases1":[
 			"AT2019vle",
@@ -12113,21 +13191,41 @@
 		"edit":false
 	},
 	{
-		"name1":"AT2019wlx",
+		"name1":"AT2019wey",
 		"aliases1":[
-			"AT2019wlx",
-			"ZTF19acxmfay"
+			"AT2019wey",
+			"ATLAS19bcxp"
 		],
-		"name2":"AT2019wtq",
+		"name2":"Gaia20aua",
 		"aliases2":[
+			"Gaia20aua"
+		],
+		"ra1":"04:35:23.293",
+		"dec1":"+55:22:34.20",
+		"ra2":"04:35:23.28",
+		"dec2":"+55:22:34.32",
+		"distdeg":"0.16332730099335804",
+		"maxdiffyear":"0.4777777777778738",
+		"discdiffyear":"0.1805555555556566",
+		"edit":false
+	},
+	{
+		"name1":"AT2019wtq",
+		"aliases1":[
 			"AT2019wtq",
 			"ATLAS19bdcm"
 		],
-		"ra1":"14:13:06.563",
-		"dec1":"+03:42:31.04",
-		"ra2":"14:13:06.694",
-		"dec2":"+03:42:30.61",
-		"distdeg":"2.0074787264013367",
+		"name2":"SN2019wlx",
+		"aliases2":[
+			"SN2019wlx",
+			"AT2019wlx",
+			"ZTF19acxmfay"
+		],
+		"ra1":"14:13:06.694",
+		"dec1":"+03:42:30.61",
+		"ra2":"14:13:06.563",
+		"dec2":"+03:42:31.04",
+		"distdeg":"2.0074787264015237",
 		"maxdiffyear":"0.005555555555474712",
 		"discdiffyear":"0.005555555555474712",
 		"edit":false
@@ -12153,81 +13251,141 @@
 		"edit":false
 	},
 	{
-		"name1":"AT2019xaq",
+		"name1":"AT2019xub",
 		"aliases1":[
-			"AT2019xaq",
-			"ZTF19acyjzbe"
+			"AT2019xub",
+			"ATLAS19bdto",
+			"Gaia20anc"
 		],
-		"name2":"Gaia19fue",
+		"name2":"Gaia20czy",
 		"aliases2":[
-			"Gaia19fue"
+			"Gaia20czy",
+			"AT2020ntd"
 		],
-		"ra1":"13:54:46.705",
-		"dec1":"+84:04:01.50",
-		"ra2":"13:54:46.8",
-		"dec2":"+84:04:01.56",
-		"distdeg":"0.15904516733394",
-		"maxdiffyear":"0.0",
-		"discdiffyear":"0.03611111111104037",
+		"ra1":"10:24:33.184",
+		"dec1":"-36:16:07.67",
+		"ra2":"10:24:32.649",
+		"dec2":"-36:16:14.73",
+		"distdeg":"9.576300407854385",
+		"maxdiffyear":"0.46111111111122227",
+		"discdiffyear":"0.5111111111111768",
 		"edit":false
 	},
 	{
-		"name1":"AT2019zbj",
+		"name1":"AT2019zri",
 		"aliases1":[
-			"AT2019zbj",
-			"ZTF18aaizerg"
+			"AT2019zri",
+			"ZTF19adbsblp"
 		],
-		"name2":"Gaia19fuf",
+		"name2":"SN2019zck",
 		"aliases2":[
-			"Gaia19fuf"
-		],
-		"ra1":"14:38:47.564",
-		"dec1":"+50:06:09.82",
-		"ra2":"14:38:47.52",
-		"dec2":"+50:06:09.72",
-		"distdeg":"0.43498349060136376",
-		"maxdiffyear":"0.0",
-		"discdiffyear":"0.002777777777737356",
-		"edit":false
-	},
-	{
-		"name1":"AT2019zck",
-		"aliases1":[
+			"SN2019zck",
 			"AT2019zck",
 			"ATLAS19bezm"
+		],
+		"ra1":"03:32:02.101",
+		"dec1":"+01:10:35.18",
+		"ra2":"03:32:01.964",
+		"dec2":"+01:10:33.97",
+		"distdeg":"2.3843962255745654",
+		"maxdiffyear":"0.002777777777737356",
+		"discdiffyear":"0.0",
+		"edit":false
+	},
+	{
+		"name1":"AT2019zri",
+		"aliases1":[
+			"AT2019zri",
+			"ZTF19adbsblp"
 		],
 		"name2":"SDSS-II SN 17130",
 		"aliases2":[
 			"SDSS-II SN 17130"
 		],
-		"ra1":"03:32:01.964",
-		"dec1":"+01:10:33.97",
+		"ra1":"03:32:02.101",
+		"dec1":"+01:10:35.18",
 		"ra2":"03:32:01.896",
 		"dec2":"+01:10:34.5",
-		"distdeg":"1.1492874452768467",
+		"distdeg":"3.148656820612015",
 		"maxdiffyear":"13.297222222222217",
 		"discdiffyear":"",
 		"edit":false
 	},
 	{
-		"name1":"AT2019zhj",
+		"name1":"AT2020abmi",
 		"aliases1":[
-			"AT2019zhj",
-			"ATLAS19bfnj"
+			"AT2020abmi"
 		],
-		"name2":"SN2019wwa",
+		"name2":"AT2020abmi",
 		"aliases2":[
-			"SN2019wwa",
-			"AT2019wwa",
-			"ZTF19acyiqnw"
+			"AT2020abmi",
+			"ATLAS20bgnv"
 		],
-		"ra1":"12:52:48.762",
-		"dec1":"+80:19:26.89",
-		"ra2":"12:52:48.081",
-		"dec2":"+80:19:24.93",
-		"distdeg":"2.605653817693598",
+		"ra1":"02:38:06.575",
+		"dec1":"+10:38:38.76",
+		"ra2":"02:38:06.575",
+		"dec2":"+10:38:38.76",
+		"distdeg":"0.0",
 		"maxdiffyear":"",
 		"discdiffyear":"",
+		"edit":false
+	},
+	{
+		"name1":"AT2020abpv",
+		"aliases1":[
+			"AT2020abpv"
+		],
+		"name2":"AT2020abpv",
+		"aliases2":[
+			"AT2020abpv",
+			"ZTF20acvcgwq"
+		],
+		"ra1":"01:11:08.536",
+		"dec1":"+33:54:10.06",
+		"ra2":"01:11:08.536",
+		"dec2":"+33:54:10.06",
+		"distdeg":"0.0",
+		"maxdiffyear":"",
+		"discdiffyear":"",
+		"edit":false
+	},
+	{
+		"name1":"AT2020uxf",
+		"aliases1":[
+			"AT2020uxf",
+			"ZTF18adiaqui"
+		],
+		"name2":"CSS150920:004125+271550",
+		"aliases2":[
+			"CSS150920:004125+271550"
+		],
+		"ra1":"00:41:24.862",
+		"dec1":"+27:15:49.60",
+		"ra2":"00:41:24.85",
+		"dec2":"+27:15:49.8",
+		"distdeg":"0.25612698238417575",
+		"maxdiffyear":"5.04444444444448",
+		"discdiffyear":"5.038888888888778",
+		"edit":false
+	},
+	{
+		"name1":"AT2020htf",
+		"aliases1":[
+			"AT2020htf",
+			"ATLAS20kot",
+			"Gaia20bzf"
+		],
+		"name2":"CSS151031:104809+094237",
+		"aliases2":[
+			"CSS151031:104809+094237"
+		],
+		"ra1":"10:48:08.612",
+		"dec1":"+09:42:36.90",
+		"ra2":"10:48:09.0",
+		"dec2":"+09:42:37",
+		"distdeg":"5.737489960663377",
+		"maxdiffyear":"4.488888888889051",
+		"discdiffyear":"4.46666666666647",
 		"edit":false
 	},
 	{
@@ -12896,6 +14054,26 @@
 		"edit":false
 	},
 	{
+		"name1":"Gaia17aqy",
+		"aliases1":[
+			"Gaia17aqy",
+			"AT2017cey"
+		],
+		"name2":"Gaia20cyr",
+		"aliases2":[
+			"Gaia20cyr",
+			"AT2020nom"
+		],
+		"ra1":"07:35:25.976",
+		"dec1":"-26:36:15.88",
+		"ra2":"07:35:26.429",
+		"dec2":"-26:36:17.82",
+		"distdeg":"6.377747122898697",
+		"maxdiffyear":"3.0555555555554292",
+		"discdiffyear":"3.224999999999909",
+		"edit":false
+	},
+	{
 		"name1":"PTSS-17dyf",
 		"aliases1":[
 			"PTSS-17dyf"
@@ -12974,6 +14152,47 @@
 		"edit":false
 	},
 	{
+		"name1":"AT2020myv",
+		"aliases1":[
+			"AT2020myv",
+			"PS20eid",
+			"Gaia20czp"
+		],
+		"name2":"Gaia17bnu",
+		"aliases2":[
+			"Gaia17bnu",
+			"AT2017esx"
+		],
+		"ra1":"13:00:16.546",
+		"dec1":"-17:01:45.20",
+		"ra2":"13:00:16.394",
+		"dec2":"-17:01:40.30",
+		"distdeg":"5.363076106478541",
+		"maxdiffyear":"3.0333333333335304",
+		"discdiffyear":"3.005555555555702",
+		"edit":false
+	},
+	{
+		"name1":"AT2020lii",
+		"aliases1":[
+			"AT2020lii",
+			"ZTF20abcxmdy"
+		],
+		"name2":"Gaia18aca",
+		"aliases2":[
+			"Gaia18aca",
+			"AT2018bv"
+		],
+		"ra1":"22:11:47.911",
+		"dec1":"-00:34:54.29",
+		"ra2":"22:11:47.677",
+		"dec2":"-00:35:00.53",
+		"distdeg":"7.15935933979596",
+		"maxdiffyear":"2.3944444444446162",
+		"discdiffyear":"2.3944444444446162",
+		"edit":false
+	},
+	{
 		"name1":"Gaia18agf",
 		"aliases1":[
 			"Gaia18agf",
@@ -12991,6 +14210,47 @@
 		"distdeg":"1.7998275301198685",
 		"maxdiffyear":"0.05555555555542924",
 		"discdiffyear":"1.0361111111112677",
+		"edit":false
+	},
+	{
+		"name1":"AT2020emc",
+		"aliases1":[
+			"AT2020emc",
+			"ATLAS20hxf"
+		],
+		"name2":"Gaia18aqu",
+		"aliases2":[
+			"Gaia18aqu",
+			"AT2018ajd"
+		],
+		"ra1":"04:22:40.059",
+		"dec1":"-15:39:31.92",
+		"ra2":"04:22:39.912",
+		"dec2":"-15:39:28.15",
+		"distdeg":"4.326747589179545",
+		"maxdiffyear":"1.9833333333333485",
+		"discdiffyear":"1.9833333333333485",
+		"edit":false
+	},
+	{
+		"name1":"AT2020gbs",
+		"aliases1":[
+			"AT2020gbs",
+			"ATLAS20jks"
+		],
+		"name2":"Gaia18avc",
+		"aliases2":[
+			"Gaia18avc",
+			"AT2018aqq",
+			"ATLAS18nek"
+		],
+		"ra1":"09:56:38.079",
+		"dec1":"-26:22:22.06",
+		"ra2":"09:56:38.246",
+		"dec2":"-26:22:17.40",
+		"distdeg":"5.17227983030926",
+		"maxdiffyear":"1.9527777777777828",
+		"discdiffyear":"1.991666666666788",
 		"edit":false
 	},
 	{
@@ -13057,6 +14317,26 @@
 		"edit":false
 	},
 	{
+		"name1":"AT2020lzy",
+		"aliases1":[
+			"AT2020lzy",
+			"PS20dyt"
+		],
+		"name2":"Gaia18cck",
+		"aliases2":[
+			"Gaia18cck",
+			"AT2018exo"
+		],
+		"ra1":"15:31:58.706",
+		"dec1":"+00:11:18.25",
+		"ra2":"15:31:58.261",
+		"dec2":"+00:11:17.34",
+		"distdeg":"6.736708683544799",
+		"maxdiffyear":"1.6055555555553838",
+		"discdiffyear":"1.6083333333331211",
+		"edit":false
+	},
+	{
 		"name1":"SN2018hcq",
 		"aliases1":[
 			"SN2018hcq",
@@ -13094,26 +14374,6 @@
 		"distdeg":"1.2172373308857276",
 		"maxdiffyear":"0.08611111111122227",
 		"discdiffyear":"0.058333333333393966",
-		"edit":false
-	},
-	{
-		"name1":"Gaia19aiv",
-		"aliases1":[
-			"Gaia19aiv",
-			"AT2019ahy"
-		],
-		"name2":"PS19ebb",
-		"aliases2":[
-			"PS19ebb",
-			"AT2019mlc"
-		],
-		"ra1":"18:24:12.166",
-		"dec1":"+46:14:39.91",
-		"ra2":"18:24:12.270",
-		"dec2":"+46:14:38.31",
-		"distdeg":"1.929759095088649",
-		"maxdiffyear":"0.45277777777778283",
-		"discdiffyear":"0.5",
 		"edit":false
 	},
 	{
@@ -13281,6 +14541,47 @@
 		"edit":false
 	},
 	{
+		"name1":"Gaia19dsq",
+		"aliases1":[
+			"Gaia19dsq",
+			"AT2019orw"
+		],
+		"name2":"Gaia20dyv",
+		"aliases2":[
+			"Gaia20dyv",
+			"AT2020rzl"
+		],
+		"ra1":"07:01:50.114",
+		"dec1":"+04:55:10.13",
+		"ra2":"07:01:50.301",
+		"dec2":"+04:55:06.13",
+		"distdeg":"4.879567224414348",
+		"maxdiffyear":"1.0027777777777374",
+		"discdiffyear":"1.0027777777777374",
+		"edit":false
+	},
+	{
+		"name1":"AT2020zbn",
+		"aliases1":[
+			"AT2020zbn",
+			"PS20kwr"
+		],
+		"name2":"Gaia19dxc",
+		"aliases2":[
+			"Gaia19dxc",
+			"AT2019pnq",
+			"ATLAS19vbb"
+		],
+		"ra1":"05:47:48.334",
+		"dec1":"-25:09:57.60",
+		"ra2":"05:47:48.508",
+		"dec2":"-25:09:57.67",
+		"distdeg":"2.363294367879621",
+		"maxdiffyear":"1.1611111111112677",
+		"discdiffyear":"1.162572222222252",
+		"edit":false
+	},
+	{
 		"name1":"SN2016com",
 		"aliases1":[
 			"SN2016com",
@@ -13299,6 +14600,45 @@
 		"distdeg":"6.481680110275967",
 		"maxdiffyear":"3.3555555555553838",
 		"discdiffyear":"3.3555555555553838",
+		"edit":false
+	},
+	{
+		"name1":"SN2019wka",
+		"aliases1":[
+			"SN2019wka",
+			"AT2019wka",
+			"PS19hcu"
+		],
+		"name2":"Gaia19fum",
+		"aliases2":[
+			"Gaia19fum"
+		],
+		"ra1":"03:14:40.146",
+		"dec1":"-00:52:16.69",
+		"ra2":"03:14:40.152",
+		"dec2":"-00:52:16.68",
+		"distdeg":"0.09054350872939712",
+		"maxdiffyear":"0.03611111111104037",
+		"discdiffyear":"0.07222222222208075",
+		"edit":false
+	},
+	{
+		"name1":"AT2020znj",
+		"aliases1":[
+			"AT2020znj",
+			"ZTF20acpvxmk"
+		],
+		"name2":"Gaia20fim",
+		"aliases2":[
+			"Gaia20fim"
+		],
+		"ra1":"07:12:24.060",
+		"dec1":"+15:35:30.44",
+		"ra2":"07:12:24",
+		"dec2":"+15:35:30.48",
+		"distdeg":"0.8678033210156039",
+		"maxdiffyear":"0.0",
+		"discdiffyear":"5.6428876388890785",
 		"edit":false
 	},
 	{
@@ -13468,6 +14808,25 @@
 		"edit":false
 	},
 	{
+		"name1":"AT2020zdl",
+		"aliases1":[
+			"AT2020zdl",
+			"MASTER OT J205816.98+235811.4"
+		],
+		"name2":"MASTER OT J205816.98+235812.6",
+		"aliases2":[
+			"MASTER OT J205816.98+235812.6"
+		],
+		"ra1":"20:58:16.980",
+		"dec1":"+23:58:11.40",
+		"ra2":"20:58:16.980",
+		"dec2":"+23:58:12.60",
+		"distdeg":"1.1999999999921913",
+		"maxdiffyear":"4.4222222222224445",
+		"discdiffyear":"4.4196026388888185",
+		"edit":false
+	},
+	{
 		"name1":"SN2016cxb",
 		"aliases1":[
 			"SN2016cxb",
@@ -13560,6 +14919,25 @@
 		"distdeg":"0.8958325703710293",
 		"maxdiffyear":"0.04722222222221717",
 		"discdiffyear":"0.04722222222221717",
+		"edit":false
+	},
+	{
+		"name1":"AT2020abjr",
+		"aliases1":[
+			"AT2020abjr",
+			"XM47MZ"
+		],
+		"name2":"MLS180929:004944+403338",
+		"aliases2":[
+			"MLS180929:004944+403338"
+		],
+		"ra1":"00:49:43.912",
+		"dec1":"+40:33:38.05",
+		"ra2":"00:49:43.905",
+		"dec2":"+40:33:37.91",
+		"distdeg":"0.16113142253471044",
+		"maxdiffyear":"",
+		"discdiffyear":"2.1764080194445796",
 		"edit":false
 	},
 	{
@@ -13657,6 +15035,101 @@
 		"edit":false
 	},
 	{
+		"name1":"SN2020jbl",
+		"aliases1":[
+			"SN2020jbl",
+			"AT2020jbl",
+			"ZTF18aangpkx"
+		],
+		"name2":"PS15apz",
+		"aliases2":[
+			"PS15apz"
+		],
+		"ra1":"17:01:21.345",
+		"dec1":"+32:47:09.29",
+		"ra2":"17:01:21.13",
+		"dec2":"+32:47:13.1",
+		"distdeg":"4.676208455095777",
+		"maxdiffyear":"4.944444444444343",
+		"discdiffyear":"4.913888888889005",
+		"edit":false
+	},
+	{
+		"name1":"AT2020mxy",
+		"aliases1":[
+			"AT2020mxy",
+			"ZTF18abvowtp"
+		],
+		"name2":"PS15avw",
+		"aliases2":[
+			"PS15avw"
+		],
+		"ra1":"19:57:07.301",
+		"dec1":"-25:27:21.34",
+		"ra2":"19:57:07.30",
+		"dec2":"-25:27:20.8",
+		"distdeg":"0.5401698188322622",
+		"maxdiffyear":"4.994444444444525",
+		"discdiffyear":"4.997222222222263",
+		"edit":false
+	},
+	{
+		"name1":"AT2020idx",
+		"aliases1":[
+			"AT2020idx",
+			"ZTF20aawggqr"
+		],
+		"name2":"PS15bgu",
+		"aliases2":[
+			"PS15bgu"
+		],
+		"ra1":"16:07:39.509",
+		"dec1":"-25:32:14.11",
+		"ra2":"16:07:39.49",
+		"dec2":"-25:32:14.0",
+		"distdeg":"0.2796957769591206",
+		"maxdiffyear":"4.783333333333303",
+		"discdiffyear":"4.783333333333303",
+		"edit":false
+	},
+	{
+		"name1":"PS15bhp",
+		"aliases1":[
+			"PS15bhp"
+		],
+		"name2":"Gaia20axm",
+		"aliases2":[
+			"Gaia20axm"
+		],
+		"ra1":"17:03:17.81",
+		"dec1":"-12:08:55.7",
+		"ra2":"17:03:17.76",
+		"dec2":"-12:08:56.04",
+		"distdeg":"0.8081997315619891",
+		"maxdiffyear":"4.58611111111145",
+		"discdiffyear":"4.58611111111145",
+		"edit":false
+	},
+	{
+		"name1":"AT2020byx",
+		"aliases1":[
+			"AT2020byx",
+			"ZTF19aagxcga"
+		],
+		"name2":"PS15ccm",
+		"aliases2":[
+			"PS15ccm"
+		],
+		"ra1":"04:08:55.554",
+		"dec1":"+17:45:54.14",
+		"ra2":"04:08:55.52",
+		"dec2":"+17:45:54.3",
+		"distdeg":"0.5113570230571605",
+		"maxdiffyear":"4.377777777777965",
+		"discdiffyear":"4.377777777777965",
+		"edit":false
+	},
+	{
 		"name1":"PS15cfw",
 		"aliases1":[
 			"PS15cfw"
@@ -13672,6 +15145,25 @@
 		"distdeg":"3.7805757257301966",
 		"maxdiffyear":"0.0",
 		"discdiffyear":"0.0",
+		"edit":false
+	},
+	{
+		"name1":"AT2020vja",
+		"aliases1":[
+			"AT2020vja",
+			"PS20iex"
+		],
+		"name2":"PS15cin",
+		"aliases2":[
+			"PS15cin"
+		],
+		"ra1":"02:11:30.235",
+		"dec1":"+12:55:41.62",
+		"ra2":"02:11:30.32",
+		"dec2":"+12:55:44.7",
+		"distdeg":"3.321242031135928",
+		"maxdiffyear":"4.938888888888869",
+		"discdiffyear":"4.941666666666606",
 		"edit":false
 	},
 	{
@@ -13696,6 +15188,44 @@
 		"edit":false
 	},
 	{
+		"name1":"AT2020eyy",
+		"aliases1":[
+			"AT2020eyy",
+			"PS20aic"
+		],
+		"name2":"PS15dme",
+		"aliases2":[
+			"PS15dme"
+		],
+		"ra1":"08:55:56.857",
+		"dec1":"+06:20:07.93",
+		"ra2":"08:55:57.38",
+		"dec2":"+06:20:12.2",
+		"distdeg":"8.88973260073447",
+		"maxdiffyear":"4.272222222222354",
+		"discdiffyear":"4.277777777777828",
+		"edit":false
+	},
+	{
+		"name1":"AT2020eyy",
+		"aliases1":[
+			"PS15dme"
+		],
+		"name2":"AT2020ghe",
+		"aliases2":[
+			"AT2020ghe",
+			"ATLAS20jsk"
+		],
+		"ra1":"08:55:57.38",
+		"dec1":"+06:20:12.2",
+		"ra2":"08:55:57.038",
+		"dec2":"+06:20:09.77",
+		"distdeg":"5.648118795428504",
+		"maxdiffyear":"4.322222222222308",
+		"discdiffyear":"4.327777777777783",
+		"edit":false
+	},
+	{
 		"name1":"PS15dov",
 		"aliases1":[
 			"PS15dov"
@@ -13714,22 +15244,61 @@
 		"edit":false
 	},
 	{
-		"name1":"PS15m",
+		"name1":"AT2020zbm",
 		"aliases1":[
-			"PS15m"
+			"AT2020zbm",
+			"ATLAS20bffh"
 		],
-		"name2":"PS19gdr",
+		"name2":"PS15jj",
 		"aliases2":[
-			"PS19gdr",
-			"AT2019tas"
+			"PS15jj"
 		],
-		"ra1":"01:41:53.68",
-		"dec1":"+01:05:03.4",
-		"ra2":"01:41:54.024",
-		"dec2":"+01:05:09.05",
-		"distdeg":"7.651049079270227",
-		"maxdiffyear":"4.777777777777828",
-		"discdiffyear":"4.780555555555566",
+		"ra1":"11:49:54.735",
+		"dec1":"+12:31:30.62",
+		"ra2":"11:49:54.90",
+		"dec2":"+12:31:32.4",
+		"distdeg":"3.000985454238268",
+		"maxdiffyear":"5.716666666666697",
+		"discdiffyear":"5.718380555555541",
+		"edit":false
+	},
+	{
+		"name1":"AT2020mgw",
+		"aliases1":[
+			"AT2020mgw",
+			"PS20ebx"
+		],
+		"name2":"PS15rp",
+		"aliases2":[
+			"PS15rp",
+			"LSQ15wr"
+		],
+		"ra1":"13:57:27.260",
+		"dec1":"-06:44:16.31",
+		"ra2":"13:57:27.22",
+		"dec2":"-06:44:14.1",
+		"distdeg":"2.28891782738536",
+		"maxdiffyear":"5.0166666666666515",
+		"discdiffyear":"5.022222222222126",
+		"edit":false
+	},
+	{
+		"name1":"AT2020jgt",
+		"aliases1":[
+			"AT2020jgt",
+			"PS20cul"
+		],
+		"name2":"PS16dpm",
+		"aliases2":[
+			"PS16dpm"
+		],
+		"ra1":"14:23:20.538",
+		"dec1":"-00:32:13.33",
+		"ra2":"14:23:20.100",
+		"dec2":"-00:32:16.40",
+		"distdeg":"7.251620637873566",
+		"maxdiffyear":"3.7444444444445253",
+		"discdiffyear":"3.744444444444298",
 		"edit":false
 	},
 	{
@@ -13814,23 +15383,24 @@
 		"edit":false
 	},
 	{
-		"name1":"PS19fqv",
+		"name1":"SN2019etb",
 		"aliases1":[
-			"PS19fqv",
-			"AT2019rjk"
+			"SN2019etb",
+			"AT2019etb",
+			"ZTF19aargqez",
+			"ATLAS19kbb"
 		],
-		"name2":"PS19iqk",
+		"name2":"PS19dax",
 		"aliases2":[
-			"PS19iqk",
-			"AT2019yom"
+			"PS19dax"
 		],
-		"ra1":"19:45:32.480",
-		"dec1":"-18:03:32.00",
-		"ra2":"19:45:32.951",
-		"dec2":"-18:03:30.90",
-		"distdeg":"6.806447079434363",
-		"maxdiffyear":"0.07222222222208075",
-		"discdiffyear":"0.07222222222208075",
+		"ra1":"21:10:48.666",
+		"dec1":"+04:20:43.97",
+		"ra2":"21:10:48.67",
+		"dec2":"+04:20:43.9",
+		"distdeg":"0.09208328508830708",
+		"maxdiffyear":"0.1361111111111768",
+		"discdiffyear":"0.1361111111111768",
 		"edit":false
 	},
 	{
@@ -19910,6 +21480,27 @@
 		"edit":false
 	},
 	{
+		"name1":"SN2020lbf",
+		"aliases1":[
+			"SN2020lbf",
+			"AT2020lbf",
+			"ATLAS20nxr",
+			"Gaia20clm"
+		],
+		"name2":"PTSS-18ifw",
+		"aliases2":[
+			"PTSS-18ifw"
+		],
+		"ra1":"20:43:44.275",
+		"dec1":"-01:14:16.96",
+		"ra2":"20:43:43.98",
+		"dec2":"-01:14:20.8313",
+		"distdeg":"5.878642692574565",
+		"maxdiffyear":"1.7638888888889142",
+		"discdiffyear":"1.7138888888889596",
+		"edit":false
+	},
+	{
 		"name1":"SN2018fsf",
 		"aliases1":[
 			"SN2018fsf",
@@ -22590,6 +24181,28 @@
 		"edit":false
 	},
 	{
+		"name1":"SN2019aah",
+		"aliases1":[
+			"SN2019aah",
+			"PS19cuq",
+			"AT2019aah",
+			"ZTF19aadypig",
+			"ATLAS19bxf"
+		],
+		"name2":"PTSS-19ckly",
+		"aliases2":[
+			"PTSS-19ckly"
+		],
+		"ra1":"15:01:30.715",
+		"dec1":"+04:52:41.82",
+		"ra2":"15:01:30.756",
+		"dec2":"+04:52:41.8019",
+		"distdeg":"0.6130394860031593",
+		"maxdiffyear":"0.13333333333343944",
+		"discdiffyear":"0.17777777777791925",
+		"edit":false
+	},
+	{
 		"name1":"PTSS-19ckmn",
 		"aliases1":[
 			"PTSS-19ckmn"
@@ -23707,6 +25320,25 @@
 		"edit":false
 	},
 	{
+		"name1":"SN2015cz",
+		"aliases1":[
+			"SN2015cz",
+			"<a id=\"PNVJ01315945+3328458\">PNV J01315945+3328458</a>"
+		],
+		"name2":"PSN J01315945+3328458",
+		"aliases2":[
+			"PSN J01315945+3328458"
+		],
+		"ra1":"01:31:59.45",
+		"dec1":"+33:28:45.8",
+		"ra2":"01:31:59.45",
+		"dec2":"+33:28:45.8",
+		"distdeg":"0.0",
+		"maxdiffyear":"",
+		"discdiffyear":"",
+		"edit":false
+	},
+	{
 		"name1":"SN2015da",
 		"aliases1":[
 			"SN2015da",
@@ -23723,6 +25355,29 @@
 		"distdeg":"0.0",
 		"maxdiffyear":"",
 		"discdiffyear":"",
+		"edit":false
+	},
+	{
+		"name1":"SN2016bkx",
+		"aliases1":[
+			"SN2016bkx",
+			"AT2016bkx",
+			"KAIT-16P",
+			"Gaia16alb"
+		],
+		"name2":"AT2020drl",
+		"aliases2":[
+			"AT2020drl",
+			"ZTF20aarbvub",
+			"Gaia20brp"
+		],
+		"ra1":"07:28:11.04",
+		"dec1":"+72:34:31.5",
+		"ra2":"07:28:11.513",
+		"dec2":"+72:34:41.01",
+		"distdeg":"9.744401379818727",
+		"maxdiffyear":"3.8777777777777374",
+		"discdiffyear":"3.925000000000182",
 		"edit":false
 	},
 	{
@@ -23749,6 +25404,26 @@
 		"edit":false
 	},
 	{
+		"name1":"SN2016epw",
+		"aliases1":[
+			"SN2016epw",
+			"AT2016epw"
+		],
+		"name2":"AT2020zy",
+		"aliases2":[
+			"AT2020zy",
+			"ZTF20aaflmou"
+		],
+		"ra1":"02:15:02.060",
+		"dec1":"+18:15:18.60",
+		"ra2":"02:15:01.619",
+		"dec2":"+18:15:25.74",
+		"distdeg":"9.510183445187849",
+		"maxdiffyear":"3.4472222222220807",
+		"discdiffyear":"3.449999999999818",
+		"edit":false
+	},
+	{
 		"name1":"SN2016faa",
 		"aliases1":[
 			"SN2016faa",
@@ -23771,6 +25446,51 @@
 		"edit":false
 	},
 	{
+		"name1":"SN2016ino",
+		"aliases1":[
+			"SN2016ino",
+			"AT2016ino",
+			"Gaia16bzn"
+		],
+		"name2":"SN2020qim",
+		"aliases2":[
+			"SN2020qim",
+			"AT2020qim",
+			"GOTO20avm",
+			"Gaia20dyn"
+		],
+		"ra1":"17:22:44.460",
+		"dec1":"+62:09:44.40",
+		"ra2":"17:22:43.515",
+		"dec2":"+62:09:39.82",
+		"distdeg":"8.049410487680177",
+		"maxdiffyear":"3.6638888888887777",
+		"discdiffyear":"3.66944444444448",
+		"edit":false
+	},
+	{
+		"name1":"SN2017acp",
+		"aliases1":[
+			"SN2017acp",
+			"AT2017acp",
+			"PS17alp"
+		],
+		"name2":"SN2019gxo",
+		"aliases2":[
+			"SN2019gxo",
+			"AT2019gxo",
+			"ZTF19aavqics"
+		],
+		"ra1":"11:28:58.620",
+		"dec1":"+22:05:23.69",
+		"ra2":"11:28:58.417",
+		"dec2":"+22:05:22.54",
+		"distdeg":"3.046846692109646",
+		"maxdiffyear":"2.3444444444444343",
+		"discdiffyear":"2.33055555555552",
+		"edit":false
+	},
+	{
 		"name1":"SN2017cms",
 		"aliases1":[
 			"SN2017cms",
@@ -23789,6 +25509,74 @@
 		"distdeg":"3.2465670726702673",
 		"maxdiffyear":"0.09444444444443434",
 		"discdiffyear":"0.09444444444443434",
+		"edit":false
+	},
+	{
+		"name1":"SN2017dae",
+		"aliases1":[
+			"SN2017dae",
+			"AT2017dae",
+			"ATLAS17dzg",
+			"Gaia17bic"
+		],
+		"name2":"AT2020cns",
+		"aliases2":[
+			"AT2020cns",
+			"ZTF20aandqdk"
+		],
+		"ra1":"09:08:34.750",
+		"dec1":"+48:36:26.06",
+		"ra2":"09:08:34.326",
+		"dec2":"+48:36:25.39",
+		"distdeg":"4.258386486636873",
+		"maxdiffyear":"2.683333333333394",
+		"discdiffyear":"2.827777777777783",
+		"edit":false
+	},
+	{
+		"name1":"SN2017fys",
+		"aliases1":[
+			"SN2017fys",
+			"AT2017fys",
+			"PS17dzx"
+		],
+		"name2":"SN2019sgp",
+		"aliases2":[
+			"SN2019sgp",
+			"AT2019sgp",
+			"ZTF19acctlps"
+		],
+		"ra1":"16:28:48.450",
+		"dec1":"+23:30:13.65",
+		"ra2":"16:28:48.440",
+		"dec2":"+23:30:11.18",
+		"distdeg":"2.473827296119695",
+		"maxdiffyear":"2.211111111110995",
+		"discdiffyear":"2.1611111111110404",
+		"edit":false
+	},
+	{
+		"name1":"SN2017gbh",
+		"aliases1":[
+			"SN2017gbh",
+			"AT2017gbh",
+			"Gaia17cay"
+		],
+		"name2":"AT2020hsf",
+		"aliases2":[
+			"AT2020hsf",
+			"ATLAS20kjs",
+			"Gaia20byn",
+			"AT2020hse",
+			"ATLAS20kjr"
+		],
+		"ra1":"18:18:09.418",
+		"dec1":"+18:05:24.69",
+		"ra2":"18:18:09.776",
+		"dec2":"+18:05:32.65",
+		"distdeg":"9.456096090963916",
+		"maxdiffyear":"2.661111111110813",
+		"discdiffyear":"2.686111111110904",
 		"edit":false
 	},
 	{
@@ -23832,6 +25620,28 @@
 		"distdeg":"6.507375946419185",
 		"maxdiffyear":"1.7027777777777828",
 		"discdiffyear":"1.691666666666606",
+		"edit":false
+	},
+	{
+		"name1":"SN2017keg",
+		"aliases1":[
+			"SN2017keg",
+			"AT2017keg",
+			"ATLAS19zod"
+		],
+		"name2":"SN2019tka",
+		"aliases2":[
+			"SN2019tka",
+			"AT2019tka",
+			"ZTF19acihgng"
+		],
+		"ra1":"19:19:34.716",
+		"dec1":"+61:50:48.88",
+		"ra2":"19:19:34.400",
+		"dec2":"+61:50:49.00",
+		"distdeg":"2.239685464498083",
+		"maxdiffyear":"1.9583333333332575",
+		"discdiffyear":"1.9583333333332575",
 		"edit":false
 	},
 	{
@@ -23882,6 +25692,51 @@
 		"edit":false
 	},
 	{
+		"name1":"SN2018eph",
+		"aliases1":[
+			"SN2018eph",
+			"AT2018eph",
+			"ASASSN-18qv"
+		],
+		"name2":"Gaia20cqc",
+		"aliases2":[
+			"Gaia20cqc",
+			"AT2020ltx"
+		],
+		"ra1":"04:55:50.161",
+		"dec1":"-61:45:23.98",
+		"ra2":"04:55:50.176",
+		"dec2":"-61:45:14.01",
+		"distdeg":"9.970568574952479",
+		"maxdiffyear":"1.75",
+		"discdiffyear":"1.75",
+		"edit":false
+	},
+	{
+		"name1":"SN2018ggu",
+		"aliases1":[
+			"SN2018ggu",
+			"AT2018ggu",
+			"ZTF18abrzbtb",
+			"ATLAS18xor"
+		],
+		"name2":"SN2020umi",
+		"aliases2":[
+			"SN2020umi",
+			"AT2020umi",
+			"ZTF20acfkzcg",
+			"Gaia20fei"
+		],
+		"ra1":"07:43:04.670",
+		"dec1":"+50:17:22.35",
+		"ra2":"07:43:04.750",
+		"dec2":"+50:17:19.61",
+		"distdeg":"2.845245648320323",
+		"maxdiffyear":"2.1611111111112677",
+		"discdiffyear":"2.079105555555543",
+		"edit":false
+	},
+	{
 		"name1":"SN2018gl",
 		"aliases1":[
 			"SN2018gl",
@@ -23902,6 +25757,27 @@
 		"edit":false
 	},
 	{
+		"name1":"SN2018gtg",
+		"aliases1":[
+			"SN2018gtg",
+			"AT2018gtg",
+			"ATLAS18vmu"
+		],
+		"name2":"AT2020ztk",
+		"aliases2":[
+			"AT2020ztk",
+			"ZTF20acqpzbo"
+		],
+		"ra1":"01:57:26.220",
+		"dec1":"+08:55:02.54",
+		"ra2":"01:57:26.773",
+		"dec2":"+08:54:59.53",
+		"distdeg":"8.730061749168996",
+		"maxdiffyear":"2.1805555555556566",
+		"discdiffyear":"2.1700338861112414",
+		"edit":false
+	},
+	{
 		"name1":"SN2018hyw",
 		"aliases1":[
 			"SN2018hyw",
@@ -23919,6 +25795,29 @@
 		"distdeg":"1.4021051002021547",
 		"maxdiffyear":"",
 		"discdiffyear":"0.14166666666687888",
+		"edit":false
+	},
+	{
+		"name1":"SN2018hyy",
+		"aliases1":[
+			"SN2018hyy",
+			"AT2018hyy",
+			"ZTF18acckoil",
+			"ATLAS18yho",
+			"Gaia18dwe"
+		],
+		"name2":"Gaia20czd",
+		"aliases2":[
+			"Gaia20czd",
+			"AT2020nrc"
+		],
+		"ra1":"02:31:55.410",
+		"dec1":"+03:07:33.75",
+		"ra2":"02:31:54.811",
+		"dec2":"+03:07:32.05",
+		"distdeg":"9.131275093835079",
+		"maxdiffyear":"1.6388888888889142",
+		"discdiffyear":"1.6472222222221262",
 		"edit":false
 	},
 	{
@@ -23943,6 +25842,29 @@
 		"edit":false
 	},
 	{
+		"name1":"SN2018kly",
+		"aliases1":[
+			"SN2018kly",
+			"AT2018kly",
+			"ZTF18adaadmh",
+			"ATLAS18bcez"
+		],
+		"name2":"SN2020cki",
+		"aliases2":[
+			"SN2020cki",
+			"AT2020cki",
+			"ZTF20aamujvi"
+		],
+		"ra1":"01:15:07.995",
+		"dec1":"+01:30:05.25",
+		"ra2":"01:15:08.539",
+		"dec2":"+01:30:05.77",
+		"distdeg":"8.173755577235246",
+		"maxdiffyear":"1.1250000000002274",
+		"discdiffyear":"1.1472222222221262",
+		"edit":false
+	},
+	{
 		"name1":"SN2018kva",
 		"aliases1":[
 			"SN2018kva",
@@ -23961,6 +25883,94 @@
 		"distdeg":"5.2405479574230815",
 		"maxdiffyear":"",
 		"discdiffyear":"",
+		"edit":false
+	},
+	{
+		"name1":"SN2018lqj",
+		"aliases1":[
+			"SN2018lqj",
+			"AT2018lqj",
+			"ATLAS19guz"
+		],
+		"name2":"SN2019cdn",
+		"aliases2":[
+			"SN2019cdn",
+			"AT2019cdn",
+			"ZTF19aanbojt"
+		],
+		"ra1":"10:10:49.591",
+		"dec1":"+54:12:54.28",
+		"ra2":"10:10:49.736",
+		"dec2":"+54:12:52.92",
+		"distdeg":"1.8620251163562755",
+		"maxdiffyear":"0.7944444444442524",
+		"discdiffyear":"0.7805555555555657",
+		"edit":false
+	},
+	{
+		"name1":"SN2018lrd",
+		"aliases1":[
+			"SN2018lrd",
+			"AT2018lrd",
+			"ATLAS20jns"
+		],
+		"name2":"SN2020fkb",
+		"aliases2":[
+			"SN2020fkb",
+			"AT2020fkb",
+			"ZTF18aarlpzd"
+		],
+		"ra1":"11:28:30.413",
+		"dec1":"+58:33:44.04",
+		"ra2":"11:28:30.436",
+		"dec2":"+58:33:46.78",
+		"distdeg":"2.7459021394274807",
+		"maxdiffyear":"2.236111111111086",
+		"discdiffyear":"2.216666666666697",
+		"edit":false
+	},
+	{
+		"name1":"SN2018ltg",
+		"aliases1":[
+			"SN2018ltg",
+			"AT2018ltg",
+			"ZTF18aarqxbw"
+		],
+		"name2":"SN2019tpi",
+		"aliases2":[
+			"SN2019tpi",
+			"AT2019tpi",
+			"ATLAS19zev"
+		],
+		"ra1":"18:25:42.370",
+		"dec1":"+34:39:30.56",
+		"ra2":"18:25:42.764",
+		"dec2":"+34:39:29.66",
+		"distdeg":"4.943923797910164",
+		"maxdiffyear":"1.474999999999909",
+		"discdiffyear":"1.474999999999909",
+		"edit":false
+	},
+	{
+		"name1":"SN2018ltk",
+		"aliases1":[
+			"SN2018ltk",
+			"AT2018ltk",
+			"ATLAS19bfst"
+		],
+		"name2":"SN2019abb",
+		"aliases2":[
+			"SN2019abb",
+			"AT2019abb",
+			"ZTF19aadwtoe"
+		],
+		"ra1":"07:54:17.361",
+		"dec1":"+14:16:24.01",
+		"ra2":"07:54:17.265",
+		"dec2":"+14:16:22.63",
+		"distdeg":"1.9626404677314755",
+		"maxdiffyear":"0.6999999999998181",
+		"discdiffyear":"0.6999999999998181",
 		"edit":false
 	},
 	{
@@ -23983,6 +25993,116 @@
 		"distdeg":"2.9399830005062553",
 		"maxdiffyear":"",
 		"discdiffyear":"",
+		"edit":false
+	},
+	{
+		"name1":"SN2018zz",
+		"aliases1":[
+			"SN2018zz",
+			"AT2018zz",
+			"ASASSN-18en",
+			"Gaia18ari"
+		],
+		"name2":"SN2020alh",
+		"aliases2":[
+			"SN2020alh",
+			"AT2020alh",
+			"ATLAS20caf"
+		],
+		"ra1":"14:03:39.043",
+		"dec1":"-33:58:42.80",
+		"ra2":"14:03:38.763",
+		"dec2":"-33:58:37.39",
+		"distdeg":"6.434163903102407",
+		"maxdiffyear":"1.8638888888888232",
+		"discdiffyear":"1.87777777777751",
+		"edit":false
+	},
+	{
+		"name1":"SN2019bbd",
+		"aliases1":[
+			"SN2019bbd",
+			"AT2019bbd",
+			"ZTF19aaksrgj"
+		],
+		"name2":"AT2020hzk",
+		"aliases2":[
+			"AT2020hzk",
+			"ZTF20aavpwxl"
+		],
+		"ra1":"12:38:06.406",
+		"dec1":"+08:02:46.33",
+		"ra2":"12:38:06.367",
+		"dec2":"+08:02:40.97",
+		"distdeg":"5.391207781548926",
+		"maxdiffyear":"1.1388888888886868",
+		"discdiffyear":"1.1611111111110404",
+		"edit":false
+	},
+	{
+		"name1":"SN2019cat",
+		"aliases1":[
+			"SN2019cat",
+			"AT2019cat",
+			"ZTF19aalyecr"
+		],
+		"name2":"AT2020atr",
+		"aliases2":[
+			"AT2020atr",
+			"ZTF20aahkolj"
+		],
+		"ra1":"04:59:33.037",
+		"dec1":"-08:49:47.53",
+		"ra2":"04:59:32.760",
+		"dec2":"-08:49:42.38",
+		"distdeg":"6.58633477826936",
+		"maxdiffyear":"0.8833333333332121",
+		"discdiffyear":"0.8861111111109494",
+		"edit":false
+	},
+	{
+		"name1":"SN2019fcc",
+		"aliases1":[
+			"SN2019fcc",
+			"AT2019fcc",
+			"MASTER OT J135130.87-525534.4",
+			"Gaia19ciw"
+		],
+		"name2":"AT2020fgr",
+		"aliases2":[
+			"AT2020fgr",
+			"MSOSSP_03",
+			"Gaia20boj"
+		],
+		"ra1":"13:51:30.870",
+		"dec1":"-52:55:34.40",
+		"ra2":"13:51:29.930",
+		"dec2":"-52:55:33.40",
+		"distdeg":"8.558732761905038",
+		"maxdiffyear":"0.8805555555554747",
+		"discdiffyear":"0.8694444444442979",
+		"edit":false
+	},
+	{
+		"name1":"SN2019hvj",
+		"aliases1":[
+			"SN2019hvj",
+			"AT2019hvj",
+			"ZTF19abaeyln",
+			"Gaia19ctc"
+		],
+		"name2":"AT2020lhf",
+		"aliases2":[
+			"AT2020lhf",
+			"ZTF18adgwyzm"
+		],
+		"ra1":"15:25:06.936",
+		"dec1":"+11:35:06.78",
+		"ra2":"15:25:06.678",
+		"dec2":"+11:35:06.62",
+		"distdeg":"3.7945319490764744",
+		"maxdiffyear":"0.9111111111112677",
+		"discdiffyear":"0.941666666666606",
 		"edit":false
 	},
 	{
@@ -24106,6 +26226,181 @@
 		"dec2":"+58:33:46.589",
 		"distdeg":"9.472672212096487",
 		"maxdiffyear":"",
+		"discdiffyear":"",
+		"edit":false
+	},
+	{
+		"name1":"SN2019pab",
+		"aliases1":[
+			"SN2019pab",
+			"AT2019pab",
+			"ZTF19abtuhqa",
+			"ATLAS19txd"
+		],
+		"name2":"SN2020nje",
+		"aliases2":[
+			"SN2020nje",
+			"AT2020nje",
+			"ZTF20abgaovd"
+		],
+		"ra1":"16:44:45.924",
+		"dec1":"-01:19:28.36",
+		"ra2":"16:44:46.110",
+		"dec2":"-01:19:27.80",
+		"distdeg":"2.8449149725957263",
+		"maxdiffyear":"0.8583333333331211",
+		"discdiffyear":"0.7972222222222172",
+		"edit":false
+	},
+	{
+		"name1":"SN2019pfb",
+		"aliases1":[
+			"SN2019pfb",
+			"AT2019pfb",
+			"ZTF19abvdgqo"
+		],
+		"name2":"AT2020pnl",
+		"aliases2":[
+			"AT2020pnl",
+			"ZTF20abkfvzo"
+		],
+		"ra1":"19:39:47.302",
+		"dec1":"+59:22:04.79",
+		"ra2":"19:39:46.975",
+		"dec2":"+59:22:09.33",
+		"distdeg":"5.1824123860063",
+		"maxdiffyear":"0.841666666666697",
+		"discdiffyear":"0.8583333333333485",
+		"edit":false
+	},
+	{
+		"name1":"SN2019qds",
+		"aliases1":[
+			"SN2019qds",
+			"AT2019qds",
+			"ZTF19aacomym"
+		],
+		"name2":"SN2019vzf",
+		"aliases2":[
+			"SN2019vzf",
+			"AT2019vzf",
+			"ZTF19acwrqtv",
+			"Gaia19fpl"
+		],
+		"ra1":"01:44:21.110",
+		"dec1":"+50:06:56.99",
+		"ra2":"01:44:21.380",
+		"dec2":"+50:06:55.90",
+		"distdeg":"2.8164900737922918",
+		"maxdiffyear":"0.2555555555554747",
+		"discdiffyear":"0.9027777777778283",
+		"edit":false
+	},
+	{
+		"name1":"SN2019rqv",
+		"aliases1":[
+			"SN2019rqv",
+			"AT2019rqv",
+			"ZTF19acbwhqc"
+		],
+		"name2":"AT2020ovb",
+		"aliases2":[
+			"AT2020ovb",
+			"PS20few"
+		],
+		"ra1":"17:04:45.836",
+		"dec1":"+15:21:15.17",
+		"ra2":"17:04:46.280",
+		"dec2":"+15:21:07.77",
+		"distdeg":"9.798273945801975",
+		"maxdiffyear":"0.6305555555557021",
+		"discdiffyear":"0.6416666666668789",
+		"edit":false
+	},
+	{
+		"name1":"SN2019rx",
+		"aliases1":[
+			"SN2019rx",
+			"AT2019rx",
+			"ATLAS19bfd",
+			"Gaia19amr"
+		],
+		"name2":"AT2020zjk",
+		"aliases2":[
+			"AT2020zjk",
+			"ZTF20acptgfl"
+		],
+		"ra1":"05:21:59.586",
+		"dec1":"-07:11:24.54",
+		"ra2":"05:22:00.030",
+		"dec2":"-07:11:20.88",
+		"distdeg":"7.5535711057148305",
+		"maxdiffyear":"1.7472222222222626",
+		"discdiffyear":"1.8305555555557476",
+		"edit":false
+	},
+	{
+		"name1":"SN2019tjm",
+		"aliases1":[
+			"SN2019tjm",
+			"AT2019tjm",
+			"ASASSN-19zw",
+			"Gaia19eyr"
+		],
+		"name2":"AT2020pxp",
+		"aliases2":[
+			"AT2020pxp",
+			"ATLAS20tpo",
+			"Gaia20dji"
+		],
+		"ra1":"01:16:45.170",
+		"dec1":"-28:33:39.97",
+		"ra2":"01:16:45.718",
+		"dec2":"-28:33:41.04",
+		"distdeg":"7.2985390457765575",
+		"maxdiffyear":"0.7111111111109949",
+		"discdiffyear":"0.7305555555553838",
+		"edit":false
+	},
+	{
+		"name1":"SN2019tml",
+		"aliases1":[
+			"SN2019tml",
+			"AT2019tml",
+			"ZTF19acgemxh"
+		],
+		"name2":"AT2020ksj",
+		"aliases2":[
+			"AT2020ksj",
+			"ZTF20abazgfi",
+			"Gaia20cqa"
+		],
+		"ra1":"18:32:15.315",
+		"dec1":"+43:47:44.77",
+		"ra2":"18:32:15.139",
+		"dec2":"+43:47:43.05",
+		"distdeg":"2.5670355418949264",
+		"maxdiffyear":"0.6166666666667879",
+		"discdiffyear":"0.5888888888889596",
+		"edit":false
+	},
+	{
+		"name1":"SN2019zck",
+		"aliases1":[
+			"SN2019zck",
+			"AT2019zck",
+			"ATLAS19bezm"
+		],
+		"name2":"SDSS-II SN 17130",
+		"aliases2":[
+			"SDSS-II SN 17130"
+		],
+		"ra1":"03:32:01.964",
+		"dec1":"+01:10:33.97",
+		"ra2":"03:32:01.896",
+		"dec2":"+01:10:34.5",
+		"distdeg":"1.1492874452768467",
+		"maxdiffyear":"13.299999999999955",
 		"discdiffyear":"",
 		"edit":false
 	},
@@ -24584,6 +26879,1107 @@
 		"distdeg":"0.17089197778315152",
 		"maxdiffyear":"",
 		"discdiffyear":"",
+		"edit":false
+	},
+	{
+		"name1":"ASASSN-20mi",
+		"aliases1":[
+			"ASASSN-20mi",
+			"AT2020ual"
+		],
+		"name2":"Gaia20fct",
+		"aliases2":[
+			"Gaia20fct",
+			"AT2020zeb"
+		],
+		"ra1":"21:15:40.313",
+		"dec1":"-49:04:36.01",
+		"ra2":"21:15:40.260",
+		"dec2":"-49:04:35.18",
+		"distdeg":"0.9798448723642924",
+		"maxdiffyear":"0.11666666666678793",
+		"discdiffyear":"0.1189305555556075",
+		"edit":false
+	},
+	{
+		"name1":"AT2020aaij",
+		"aliases1":[
+			"AT2020aaij",
+			"PS20ljz"
+		],
+		"name2":"AT2020shq",
+		"aliases2":[
+			"AT2020shq",
+			"ZTF20abwsbxg"
+		],
+		"ra1":"04:49:32.033",
+		"dec1":"-03:31:59.10",
+		"ra2":"04:49:31.914",
+		"dec2":"-03:31:54.94",
+		"distdeg":"4.52545344329408",
+		"maxdiffyear":"0.20000000000004547",
+		"discdiffyear":"0.19853888888883375",
+		"edit":false
+	},
+	{
+		"name1":"AT2020aarv",
+		"aliases1":[
+			"AT2020aarv",
+			"XM46MZ"
+		],
+		"name2":"Gaia20fla",
+		"aliases2":[
+			"Gaia20fla"
+		],
+		"ra1":"09:55:40.440",
+		"dec1":"+69:03:24.08",
+		"ra2":"09:55:40.56",
+		"dec2":"+69:03:24.12",
+		"distdeg":"0.644641382502925",
+		"maxdiffyear":"0.0",
+		"discdiffyear":"0.008438077777782382",
+		"edit":false
+	},
+	{
+		"name1":"AT2020aboi",
+		"aliases1":[
+			"AT2020aboi",
+			"ZTF20acvakai"
+		],
+		"name2":"SN2020ykd",
+		"aliases2":[
+			"SN2020ykd",
+			"AT2020ykd",
+			"ZTF20acnzkxb"
+		],
+		"ra1":"10:00:09.540",
+		"dec1":"+38:27:23.83",
+		"ra2":"10:00:09.471",
+		"dec2":"+38:27:25.32",
+		"distdeg":"1.696167875650234",
+		"maxdiffyear":"0.06944444444434339",
+		"discdiffyear":"0.09994916666664722",
+		"edit":false
+	},
+	{
+		"name1":"AT2020ahe",
+		"aliases1":[
+			"AT2020ahe",
+			"ZTF20aagvzsb"
+		],
+		"name2":"AT2020bac",
+		"aliases2":[
+			"AT2020bac",
+			"ZTF20aaiswkz"
+		],
+		"ra1":"10:48:03.080",
+		"dec1":"+40:46:16.43",
+		"ra2":"10:48:03.425",
+		"dec2":"+40:46:16.13",
+		"distdeg":"3.930614589469125",
+		"maxdiffyear":"0.03055555555556566",
+		"discdiffyear":"0.03333333333330302",
+		"edit":false
+	},
+	{
+		"name1":"AT2020ahe",
+		"aliases1":[
+			"AT2020ahe",
+			"ZTF20aagvzsb"
+		],
+		"name2":"AT2020bfo",
+		"aliases2":[
+			"AT2020bfo",
+			"ZTF20aajbsru"
+		],
+		"ra1":"10:48:03.080",
+		"dec1":"+40:46:16.43",
+		"ra2":"10:48:02.456",
+		"dec2":"+40:46:16.90",
+		"distdeg":"7.104101254245773",
+		"maxdiffyear":"0.0388888888890051",
+		"discdiffyear":"0.04166666666674246",
+		"edit":false
+	},
+	{
+		"name1":"AT2020ahe",
+		"aliases1":[
+			"AT2020ahe",
+			"ZTF20aagvzsb"
+		],
+		"name2":"AT2020dwx",
+		"aliases2":[
+			"AT2020dwx",
+			"ZTF20aahfdag"
+		],
+		"ra1":"10:48:03.080",
+		"dec1":"+40:46:16.43",
+		"ra2":"10:48:02.630",
+		"dec2":"+40:46:16.93",
+		"distdeg":"5.136319711020486",
+		"maxdiffyear":"0.02222222222212622",
+		"discdiffyear":"0.019444444444388864",
+		"edit":false
+	},
+	{
+		"name1":"AT2020ahh",
+		"aliases1":[
+			"AT2020ahh",
+			"ZTF20aagwpqr"
+		],
+		"name2":"AT2020ilc",
+		"aliases2":[
+			"AT2020ilc",
+			"ZTF20aaoqfcr"
+		],
+		"ra1":"08:02:26.485",
+		"dec1":"+04:47:47.40",
+		"ra2":"08:02:25.910",
+		"dec2":"+04:47:47.59",
+		"distdeg":"8.596894502074074",
+		"maxdiffyear":"0.08611111111122227",
+		"discdiffyear":"0.08611111111122227",
+		"edit":false
+	},
+	{
+		"name1":"AT2020akk",
+		"aliases1":[
+			"AT2020akk",
+			"ATLAS20bsy"
+		],
+		"name2":"AT2020ii",
+		"aliases2":[
+			"AT2020ii",
+			"ZTF18acqrcks"
+		],
+		"ra1":"09:49:42.334",
+		"dec1":"+61:30:20.68",
+		"ra2":"09:49:42.619",
+		"dec2":"+61:30:20.62",
+		"distdeg":"2.0403599552146683",
+		"maxdiffyear":"0.04999999999972715",
+		"discdiffyear":"0.052777777777919255",
+		"edit":false
+	},
+	{
+		"name1":"AT2020amq",
+		"aliases1":[
+			"AT2020amq",
+			"ZTF20aafdflr"
+		],
+		"name2":"SN1969J",
+		"aliases2":[
+			"SN1969J"
+		],
+		"ra1":"01:26:33.557",
+		"dec1":"+31:36:52.50",
+		"ra2":"01:26:33",
+		"dec2":"+31:36.9",
+		"distdeg":"7.271444783200998",
+		"maxdiffyear":"50.29722222222222",
+		"discdiffyear":"50.2777777777776",
+		"edit":false
+	},
+	{
+		"name1":"AT2020apk",
+		"aliases1":[
+			"AT2020apk",
+			"ZTF20aaezfjd"
+		],
+		"name2":"AT2020zrm",
+		"aliases2":[
+			"AT2020zrm",
+			"PS20lak"
+		],
+		"ra1":"03:25:47.118",
+		"dec1":"+09:56:56.30",
+		"ra2":"03:25:47.186",
+		"dec2":"+09:56:49.28",
+		"distdeg":"7.09152665235659",
+		"maxdiffyear":"0.75",
+		"discdiffyear":"0.7487833333334493",
+		"edit":false
+	},
+	{
+		"name1":"AT2020ayx",
+		"aliases1":[
+			"AT2020ayx",
+			"ZTF20aaitcxf"
+		],
+		"name2":"AT2020ild",
+		"aliases2":[
+			"AT2020ild",
+			"ZTF20aaozbix"
+		],
+		"ra1":"11:20:28.319",
+		"dec1":"+26:57:12.51",
+		"ra2":"11:20:28.011",
+		"dec2":"+26:57:13.47",
+		"distdeg":"4.228561836449695",
+		"maxdiffyear":"0.044444444444479814",
+		"discdiffyear":"0.044444444444479814",
+		"edit":false
+	},
+	{
+		"name1":"AT2020bac",
+		"aliases1":[
+			"AT2020bac",
+			"ZTF20aaiswkz"
+		],
+		"name2":"AT2020cvl",
+		"aliases2":[
+			"AT2020cvl",
+			"ZTF20aaokejd"
+		],
+		"ra1":"10:48:03.425",
+		"dec1":"+40:46:16.13",
+		"ra2":"10:48:04.121",
+		"dec2":"+40:46:15.43",
+		"distdeg":"7.937400974174302",
+		"maxdiffyear":"0.07500000000004547",
+		"discdiffyear":"0.07777777777778283",
+		"edit":false
+	},
+	{
+		"name1":"AT2020bac",
+		"aliases1":[
+			"AT2020bac",
+			"ZTF20aaiswkz"
+		],
+		"name2":"AT2020dwx",
+		"aliases2":[
+			"AT2020dwx",
+			"ZTF20aahfdag"
+		],
+		"ra1":"10:48:03.425",
+		"dec1":"+40:46:16.13",
+		"ra2":"10:48:02.630",
+		"dec2":"+40:46:16.93",
+		"distdeg":"9.066437654313088",
+		"maxdiffyear":"0.05277777777769188",
+		"discdiffyear":"0.05277777777769188",
+		"edit":false
+	},
+	{
+		"name1":"AT2020bbx",
+		"aliases1":[
+			"AT2020bbx",
+			"ZTF20aajcbsr"
+		],
+		"name2":"AT2020mky",
+		"aliases2":[
+			"AT2020mky",
+			"ZTF20abemvkz"
+		],
+		"ra1":"13:50:36.189",
+		"dec1":"+72:42:50.46",
+		"ra2":"13:50:35.831",
+		"dec2":"+72:42:45.32",
+		"distdeg":"5.381997662019627",
+		"maxdiffyear":"0.3750000000002274",
+		"discdiffyear":"0.375",
+		"edit":false
+	},
+	{
+		"name1":"AT2020bet",
+		"aliases1":[
+			"AT2020bet",
+			"ZTF18aawhuvt"
+		],
+		"name2":"AT2020ehn",
+		"aliases2":[
+			"AT2020ehn",
+			"ATLAS20hub"
+		],
+		"ra1":"17:32:14.133",
+		"dec1":"+34:50:45.62",
+		"ra2":"17:32:14.336",
+		"dec2":"+34:50:46.56",
+		"distdeg":"2.669943248123093",
+		"maxdiffyear":"0.10555555555561114",
+		"discdiffyear":"0.10555555555583851",
+		"edit":false
+	},
+	{
+		"name1":"AT2020bfi",
+		"aliases1":[
+			"AT2020bfi",
+			"ZTF20aaizylq"
+		],
+		"name2":"AT2020bjd",
+		"aliases2":[
+			"AT2020bjd",
+			"ZTF20aagkjwh"
+		],
+		"ra1":"09:17:31.186",
+		"dec1":"+26:38:56.15",
+		"ra2":"09:17:30.534",
+		"dec2":"+26:38:55.95",
+		"distdeg":"8.743375385184635",
+		"maxdiffyear":"0.03888888888877773",
+		"discdiffyear":"0.03888888888877773",
+		"edit":false
+	},
+	{
+		"name1":"AT2020bfk",
+		"aliases1":[
+			"AT2020bfk",
+			"ZTF20aajbdvd"
+		],
+		"name2":"AT2020bis",
+		"aliases2":[
+			"AT2020bis",
+			"ZTF20aakgpme"
+		],
+		"ra1":"09:30:32.503",
+		"dec1":"+48:06:37.46",
+		"ra2":"09:30:33.222",
+		"dec2":"+48:06:37.22",
+		"distdeg":"7.205119064095111",
+		"maxdiffyear":"0.06111111111113132",
+		"discdiffyear":"0.06111111111113132",
+		"edit":false
+	},
+	{
+		"name1":"AT2020bfm",
+		"aliases1":[
+			"AT2020bfm",
+			"ZTF20aajckmr"
+		],
+		"name2":"AT2020bih",
+		"aliases2":[
+			"AT2020bih",
+			"ZTF20aahglqo"
+		],
+		"ra1":"14:36:06.688",
+		"dec1":"+48:35:16.42",
+		"ra2":"14:36:07.449",
+		"dec2":"+48:35:15.72",
+		"distdeg":"7.583076314679176",
+		"maxdiffyear":"0.008333333333212067",
+		"discdiffyear":"0.011111111110949423",
+		"edit":false
+	},
+	{
+		"name1":"AT2020bfo",
+		"aliases1":[
+			"AT2020bfo",
+			"ZTF20aajbsru"
+		],
+		"name2":"AT2020bnx",
+		"aliases2":[
+			"AT2020bnx",
+			"ZTF20aadyati"
+		],
+		"ra1":"10:48:02.456",
+		"dec1":"+40:46:16.90",
+		"ra2":"10:48:01.807",
+		"dec2":"+40:46:16.49",
+		"distdeg":"7.383923414421892",
+		"maxdiffyear":"0.011111111111176797",
+		"discdiffyear":"0.011111111111176797",
+		"edit":false
+	},
+	{
+		"name1":"AT2020bfo",
+		"aliases1":[
+			"AT2020bfo",
+			"ZTF20aajbsru"
+		],
+		"name2":"AT2020dwx",
+		"aliases2":[
+			"AT2020dwx",
+			"ZTF20aahfdag"
+		],
+		"ra1":"10:48:02.456",
+		"dec1":"+40:46:16.90",
+		"ra2":"10:48:02.630",
+		"dec2":"+40:46:16.93",
+		"distdeg":"1.9768368198874058",
+		"maxdiffyear":"0.06111111111113132",
+		"discdiffyear":"0.06111111111113132",
+		"edit":false
+	},
+	{
+		"name1":"AT2020bim",
+		"aliases1":[
+			"AT2020bim",
+			"ZTF20aakecqy"
+		],
+		"name2":"AT2020dpd",
+		"aliases2":[
+			"AT2020dpd",
+			"ATLAS20hcb"
+		],
+		"ra1":"03:57:05.526",
+		"dec1":"+18:27:41.74",
+		"ra2":"03:57:05.655",
+		"dec2":"+18:27:43.08",
+		"distdeg":"2.272520579931969",
+		"maxdiffyear":"0.07500000000004547",
+		"discdiffyear":"0.07500000000027285",
+		"edit":false
+	},
+	{
+		"name1":"AT2020bnx",
+		"aliases1":[
+			"AT2020bnx",
+			"ZTF20aadyati"
+		],
+		"name2":"AT2020dwx",
+		"aliases2":[
+			"AT2020dwx",
+			"ZTF20aahfdag"
+		],
+		"ra1":"10:48:01.807",
+		"dec1":"+40:46:16.49",
+		"ra2":"10:48:02.630",
+		"dec2":"+40:46:16.93",
+		"distdeg":"9.35949035556709",
+		"maxdiffyear":"0.049999999999954525",
+		"discdiffyear":"0.049999999999954525",
+		"edit":false
+	},
+	{
+		"name1":"AT2020ckm",
+		"aliases1":[
+			"AT2020ckm",
+			"ZTF20aamusdc"
+		],
+		"name2":"AT2020dnm",
+		"aliases2":[
+			"AT2020dnm",
+			"ATLAS20gxp"
+		],
+		"ra1":"05:34:22.736",
+		"dec1":"-23:38:39.47",
+		"ra2":"05:34:22.735",
+		"dec2":"-23:38:41.37",
+		"distdeg":"1.9000496858400124",
+		"maxdiffyear":"0.03611111111104037",
+		"discdiffyear":"0.036111111111267746",
+		"edit":false
+	},
+	{
+		"name1":"AT2020dft",
+		"aliases1":[
+			"AT2020dft",
+			"ATLAS20glv"
+		],
+		"name2":"SN2020coy",
+		"aliases2":[
+			"SN2020coy",
+			"AT2020coy",
+			"ZTF20aansmlm"
+		],
+		"ra1":"12:32:06.045",
+		"dec1":"-08:07:48.15",
+		"ra2":"12:32:06.112",
+		"dec2":"-08:07:49.89",
+		"distdeg":"2.004351168519502",
+		"maxdiffyear":"0.019444444444388864",
+		"discdiffyear":"0.02222222222212622",
+		"edit":false
+	},
+	{
+		"name1":"AT2020dhc",
+		"aliases1":[
+			"AT2020dhc",
+			"ZTF20aaqnnrn"
+		],
+		"name2":"AT2020efk",
+		"aliases2":[
+			"AT2020efk",
+			"ATLAS20hqn"
+		],
+		"ra1":"09:13:26.563",
+		"dec1":"+16:26:04.60",
+		"ra2":"09:13:26.428",
+		"dec2":"+16:26:04.80",
+		"distdeg":"1.9525348943903662",
+		"maxdiffyear":"0.02222222222212622",
+		"discdiffyear":"0.02500000000009095",
+		"edit":false
+	},
+	{
+		"name1":"AT2020dhf",
+		"aliases1":[
+			"AT2020dhf",
+			"ZTF20aaqrmxg"
+		],
+		"name2":"AT2020hij",
+		"aliases2":[
+			"AT2020hij",
+			"ZTF20aauuumh"
+		],
+		"ra1":"13:12:40.317",
+		"dec1":"+18:43:54.01",
+		"ra2":"13:12:40.075",
+		"dec2":"+18:43:55.41",
+		"distdeg":"3.711867034221527",
+		"maxdiffyear":"0.14166666666642413",
+		"discdiffyear":"0.1416666666666515",
+		"edit":false
+	},
+	{
+		"name1":"AT2020dhg",
+		"aliases1":[
+			"AT2020dhg",
+			"ZTF20aaqshsc"
+		],
+		"name2":"AT2020nys",
+		"aliases2":[
+			"AT2020nys",
+			"ZTF20abjnmhn"
+		],
+		"ra1":"15:01:20.077",
+		"dec1":"+15:45:30.74",
+		"ra2":"15:01:19.927",
+		"dec2":"+15:45:26.87",
+		"distdeg":"4.434639324096885",
+		"maxdiffyear":"0.3583333333333485",
+		"discdiffyear":"0.36111111111108585",
+		"edit":false
+	},
+	{
+		"name1":"AT2020dl",
+		"aliases1":[
+			"AT2020dl",
+			"ZTF20aabqjhy"
+		],
+		"name2":"AT2020dwv",
+		"aliases2":[
+			"AT2020dwv",
+			"ZTF20aascsxs"
+		],
+		"ra1":"14:36:05.595",
+		"dec1":"+48:35:16.96",
+		"ra2":"14:36:05.098",
+		"dec2":"+48:35:17.61",
+		"distdeg":"4.973892566125495",
+		"maxdiffyear":"0.10833333333357587",
+		"discdiffyear":"0.10833333333357587",
+		"edit":false
+	},
+	{
+		"name1":"AT2020dvv",
+		"aliases1":[
+			"AT2020dvv",
+			"ZTF20aarbhlc"
+		],
+		"name2":"AT2020ech",
+		"aliases2":[
+			"AT2020ech",
+			"ATLAS20hlm"
+		],
+		"ra1":"15:17:18.561",
+		"dec1":"+07:07:07.10",
+		"ra2":"15:17:18.751",
+		"dec2":"+07:07:07.21",
+		"distdeg":"2.830169673106775",
+		"maxdiffyear":"0.002777777777737356",
+		"discdiffyear":"0.02500000000009095",
+		"edit":false
+	},
+	{
+		"name1":"AT2020ekl",
+		"aliases1":[
+			"AT2020ekl",
+			"ATLAS20hxn"
+		],
+		"name2":"SN2020dsf",
+		"aliases2":[
+			"SN2020dsf",
+			"AT2020dsf",
+			"Gaia20bbu"
+		],
+		"ra1":"19:44:44.535",
+		"dec1":"-28:23:12.14",
+		"ra2":"19:44:44.447",
+		"dec2":"-28:23:13.27",
+		"distdeg":"1.620330624679013",
+		"maxdiffyear":"0.002777777777737356",
+		"discdiffyear":"0.03611111111104037",
+		"edit":false
+	},
+	{
+		"name1":"AT2020eyy",
+		"aliases1":[
+			"AT2020eyy",
+			"PS20aic"
+		],
+		"name2":"AT2020ghe",
+		"aliases2":[
+			"AT2020ghe",
+			"ATLAS20jsk"
+		],
+		"ra1":"08:55:56.857",
+		"dec1":"+06:20:07.93",
+		"ra2":"08:55:57.038",
+		"dec2":"+06:20:09.77",
+		"distdeg":"3.266045962713621",
+		"maxdiffyear":"0.049999999999954525",
+		"discdiffyear":"0.049999999999954525",
+		"edit":false
+	},
+	{
+		"name1":"AT2020fav",
+		"aliases1":[
+			"AT2020fav",
+			"ATLAS20jfx"
+		],
+		"name2":"AT2020fyd",
+		"aliases2":[
+			"AT2020fyd",
+			"ZTF20aaubkfu"
+		],
+		"ra1":"06:30:50.003",
+		"dec1":"+59:26:08.81",
+		"ra2":"06:30:50.298",
+		"dec2":"+59:26:07.77",
+		"distdeg":"2.4788555873226916",
+		"maxdiffyear":"2.2737367544323206e-13",
+		"discdiffyear":"0.013888888888686779",
+		"edit":false
+	},
+	{
+		"name1":"AT2020fmh",
+		"aliases1":[
+			"AT2020fmh",
+			"ZTF20aatuqge"
+		],
+		"name2":"AT2020tjs",
+		"aliases2":[
+			"AT2020tjs",
+			"ZTF20abyhhjg"
+		],
+		"ra1":"16:55:27.786",
+		"dec1":"+38:07:57.24",
+		"ra2":"16:55:28.213",
+		"dec2":"+38:07:56.98",
+		"distdeg":"5.044778581547395",
+		"maxdiffyear":"0.4388888888888687",
+		"discdiffyear":"0.4277777777776919",
+		"edit":false
+	},
+	{
+		"name1":"AT2020frl",
+		"aliases1":[
+			"AT2020frl",
+			"ZTF20aaugobs"
+		],
+		"name2":"AT2020pt",
+		"aliases2":[
+			"AT2020pt",
+			"ZTF20aaerrhb"
+		],
+		"ra1":"16:07:16.310",
+		"dec1":"+69:32:12.09",
+		"ra2":"16:07:15.525",
+		"dec2":"+69:32:06.59",
+		"distdeg":"6.870068199276449",
+		"maxdiffyear":"0.23333333333357587",
+		"discdiffyear":"0.23055555555561114",
+		"edit":false
+	},
+	{
+		"name1":"AT2020ftc",
+		"aliases1":[
+			"AT2020ftc",
+			"ZTF20aauktau",
+			"Gaia20bpf"
+		],
+		"name2":"SN2020ydk",
+		"aliases2":[
+			"SN2020ydk",
+			"AT2020ydk",
+			"MASTER OT J032552.38+404456.1"
+		],
+		"ra1":"03:25:52.810",
+		"dec1":"+40:44:54.15",
+		"ra2":"03:25:52.380",
+		"dec2":"+40:44:56.10",
+		"distdeg":"5.261116133426991",
+		"maxdiffyear":"0.002777777777737356",
+		"discdiffyear":"0.004385722222195909",
+		"edit":false
+	},
+	{
+		"name1":"AT2020gcr",
+		"aliases1":[
+			"AT2020gcr",
+			"MSOSSP_04"
+		],
+		"name2":"Gaia20bsz",
+		"aliases2":[
+			"Gaia20bsz"
+		],
+		"ra1":"19:45:47.830",
+		"dec1":"-54:20:31.60",
+		"ra2":"19:45:47.76",
+		"dec2":"-54:20:30.84",
+		"distdeg":"0.9758369773067104",
+		"maxdiffyear":"0.005555555555702085",
+		"discdiffyear":"0.01666666666665151",
+		"edit":false
+	},
+	{
+		"name1":"AT2020gkr",
+		"aliases1":[
+			"AT2020gkr",
+			"ATLAS20jvu"
+		],
+		"name2":"SN2020gjj",
+		"aliases2":[
+			"SN2020gjj",
+			"AT2020gjj",
+			"PS20bce"
+		],
+		"ra1":"10:25:50.042",
+		"dec1":"+66:18:47.03",
+		"ra2":"10:25:49.775",
+		"dec2":"+66:18:44.64",
+		"distdeg":"2.881134431017633",
+		"maxdiffyear":"0.01666666666665151",
+		"discdiffyear":"0.02500000000009095",
+		"edit":false
+	},
+	{
+		"name1":"AT2020hax",
+		"aliases1":[
+			"AT2020hax",
+			"<a id=\"ATLAS2020hax2\">ATLAS20jxl</a>"
+		],
+		"name2":"Gaia20cjv",
+		"aliases2":[
+			"Gaia20cjv"
+		],
+		"ra1":"20:27:11.310",
+		"dec1":"-37:09:50.90",
+		"ra2":"20:27:11.28",
+		"dec2":"-37:09:50.76",
+		"distdeg":"0.38496785762226804",
+		"maxdiffyear":"0.0027777777779647295",
+		"discdiffyear":"0.008333333333439441",
+		"edit":false
+	},
+	{
+		"name1":"AT2020hef",
+		"aliases1":[
+			"AT2020hef",
+			"PS20byc"
+		],
+		"name2":"SN2020afj",
+		"aliases2":[
+			"SN2020afj",
+			"AT2020afj",
+			"ZTF20aagnbpw"
+		],
+		"ra1":"13:32:25.191",
+		"dec1":"+38:21:36.31",
+		"ra2":"13:32:25.294",
+		"dec2":"+38:21:39.81",
+		"distdeg":"3.703734747172951",
+		"maxdiffyear":"0.21388888888895963",
+		"discdiffyear":"0.23055555555561114",
+		"edit":false
+	},
+	{
+		"name1":"AT2020hfp",
+		"aliases1":[
+			"AT2020hfp",
+			"ZTF20aasbzzp"
+		],
+		"name2":"AT2020ms",
+		"aliases2":[
+			"AT2020ms",
+			"ZTF20aaeiatj"
+		],
+		"ra1":"11:36:06.168",
+		"dec1":"+62:14:22.80",
+		"ra2":"11:36:05.536",
+		"dec2":"+62:14:22.61",
+		"distdeg":"4.419628471777245",
+		"maxdiffyear":"0.17222222222244454",
+		"discdiffyear":"0.1750000000001819",
+		"edit":false
+	},
+	{
+		"name1":"AT2020ibp",
+		"aliases1":[
+			"AT2020ibp",
+			"ZTF20aavrsht"
+		],
+		"name2":"AT2020lvs",
+		"aliases2":[
+			"AT2020lvs",
+			"PS20dry"
+		],
+		"ra1":"15:22:39.061",
+		"dec1":"+22:28:16.41",
+		"ra2":"15:22:38.878",
+		"dec2":"+22:28:16.92",
+		"distdeg":"2.5873372540706914",
+		"maxdiffyear":"0.01666666666665151",
+		"discdiffyear":"0.01666666666665151",
+		"edit":false
+	},
+	{
+		"name1":"AT2020ies",
+		"aliases1":[
+			"AT2020ies",
+			"PS20cnv"
+		],
+		"name2":"AT2020olf",
+		"aliases2":[
+			"AT2020olf",
+			"PS20ewx"
+		],
+		"ra1":"14:54:08.077",
+		"dec1":"-21:11:18.97",
+		"ra2":"14:54:08.292",
+		"dec2":"-21:11:27.42",
+		"distdeg":"8.96907253798161",
+		"maxdiffyear":"0.14999999999986358",
+		"discdiffyear":"0.15000000000009095",
+		"edit":false
+	},
+	{
+		"name1":"AT2020lgj",
+		"aliases1":[
+			"AT2020lgj",
+			"ZTF20abcawtk"
+		],
+		"name2":"SN2020ksl",
+		"aliases2":[
+			"SN2020ksl",
+			"AT2020ksl",
+			"ZTF20abatows"
+		],
+		"ra1":"16:14:08.422",
+		"dec1":"+30:02:34.59",
+		"ra2":"16:14:07.777",
+		"dec2":"+30:02:29.89",
+		"distdeg":"9.603872182234063",
+		"maxdiffyear":"0.005555555555474712",
+		"discdiffyear":"0.02500000000009095",
+		"edit":false
+	},
+	{
+		"name1":"AT2020lvz",
+		"aliases1":[
+			"AT2020lvz",
+			"PS20dsf"
+		],
+		"name2":"SDSS-II SN 15206",
+		"aliases2":[
+			"SDSS-II SN 15206"
+		],
+		"ra1":"20:31:04.639",
+		"dec1":"+00:51:51.02",
+		"ra2":"20:31:04.56",
+		"dec2":"+00:51:47.65",
+		"distdeg":"3.572227026414866",
+		"maxdiffyear":"13.62222222222249",
+		"discdiffyear":"",
+		"edit":false
+	},
+	{
+		"name1":"AT2020mwc",
+		"aliases1":[
+			"AT2020mwc",
+			"PS20ehx"
+		],
+		"name2":"AT2020xlm",
+		"aliases2":[
+			"AT2020xlm",
+			"ATLAS20bdrc"
+		],
+		"ra1":"09:59:23.255",
+		"dec1":"+06:29:49.90",
+		"ra2":"09:59:23.414",
+		"dec2":"+06:29:51.47",
+		"distdeg":"2.8425848017460438",
+		"maxdiffyear":"0.3638888888888232",
+		"discdiffyear":"0.3638888888888232",
+		"edit":false
+	},
+	{
+		"name1":"AT2020nwa",
+		"aliases1":[
+			"AT2020nwa",
+			"ZTF20abhfypy"
+		],
+		"name2":"SDSS-II SN 21492",
+		"aliases2":[
+			"SDSS-II SN 21492"
+		],
+		"ra1":"22:11:06.695",
+		"dec1":"+00:18:11.54",
+		"ra2":"22:11:06.96",
+		"dec2":"+00:18:10.181",
+		"distdeg":"4.200840875930501",
+		"maxdiffyear":"12.727777777777646",
+		"discdiffyear":"",
+		"edit":false
+	},
+	{
+		"name1":"AT2020nyu",
+		"aliases1":[
+			"AT2020nyu",
+			"PS20epo"
+		],
+		"name2":"AT2020zaj",
+		"aliases2":[
+			"AT2020zaj",
+			"PS20kvw"
+		],
+		"ra1":"20:38:42.089",
+		"dec1":"-01:12:59.15",
+		"ra2":"20:38:42.186",
+		"dec2":"-01:13:02.85",
+		"distdeg":"3.9756848595826138",
+		"maxdiffyear":"0.39444444444461624",
+		"discdiffyear":"0.392255555555721",
+		"edit":false
+	},
+	{
+		"name1":"AT2020obc",
+		"aliases1":[
+			"AT2020obc",
+			"ATLAS20sax"
+		],
+		"name2":"Gaia20dhx",
+		"aliases2":[
+			"Gaia20dhx"
+		],
+		"ra1":"15:09:36.587",
+		"dec1":"+04:34:19.42",
+		"ra2":"15:09:36.48",
+		"dec2":"+04:34:19.056",
+		"distdeg":"1.6407781499753735",
+		"maxdiffyear":"0.03055555555556566",
+		"discdiffyear":"0.03055555555556566",
+		"edit":false
+	},
+	{
+		"name1":"AT2020pdd",
+		"aliases1":[
+			"AT2020pdd",
+			"PS20fmr"
+		],
+		"name2":"AT2020pgi",
+		"aliases2":[
+			"AT2020pgi",
+			"PS20ffi"
+		],
+		"ra1":"21:09:45.081",
+		"dec1":"-20:46:02.95",
+		"ra2":"21:09:45.333",
+		"dec2":"-20:46:03.41",
+		"distdeg":"3.5642093689799994",
+		"maxdiffyear":"0.10833333333334849",
+		"discdiffyear":"0.10833333333334849",
+		"edit":false
+	},
+	{
+		"name1":"AT2020rnr",
+		"aliases1":[
+			"AT2020rnr",
+			"ZTF20abseebc"
+		],
+		"name2":"AT2020uua",
+		"aliases2":[
+			"AT2020uua",
+			"PS20iaq"
+		],
+		"ra1":"19:56:39.591",
+		"dec1":"+61:20:30.54",
+		"ra2":"19:56:40.340",
+		"dec2":"+61:20:36.25",
+		"distdeg":"7.85076023986627",
+		"maxdiffyear":"0.11111111111108585",
+		"discdiffyear":"0.13333333333321207",
+		"edit":false
+	},
+	{
+		"name1":"AT2020tlk",
+		"aliases1":[
+			"AT2020tlk",
+			"PS20hmi"
+		],
+		"name2":"SDSS-II SN 19993",
+		"aliases2":[
+			"SDSS-II SN 19993"
+		],
+		"ra1":"00:52:21.970",
+		"dec1":"-01:03:24.07",
+		"ra2":"00:52:22.248",
+		"dec2":"-01:03:27.828",
+		"distdeg":"5.612979985359759",
+		"maxdiffyear":"12.991666666666788",
+		"discdiffyear":"",
+		"edit":false
+	},
+	{
+		"name1":"AT2020ufp",
+		"aliases1":[
+			"AT2020ufp",
+			"ZTF20acectxy"
+		],
+		"name2":"Gaia20fkc",
+		"aliases2":[
+			"Gaia20fkc",
+			"AT2020zyf",
+			"ZTF20acqwaiy"
+		],
+		"ra1":"18:35:42.345",
+		"dec1":"+48:54:03.79",
+		"ra2":"18:35:43.040",
+		"dec2":"+48:54:07.45",
+		"distdeg":"7.769050914261843",
+		"maxdiffyear":"0.16111111111126775",
+		"discdiffyear":"0.1364267305557405",
+		"edit":false
+	},
+	{
+		"name1":"AT2020uwu",
+		"aliases1":[
+			"AT2020uwu",
+			"PS20ich"
+		],
+		"name2":"SN1989O",
+		"aliases2":[
+			"SN1989O"
+		],
+		"ra1":"00:21:04.446",
+		"dec1":"+34:30:46.92",
+		"ra2":"00:21:04.85",
+		"dec2":"+34:30:55.5",
+		"distdeg":"9.927233647581836",
+		"maxdiffyear":"31.06388888888887",
+		"discdiffyear":"31.06388888888887",
+		"edit":false
+	},
+	{
+		"name1":"AT2020yla",
+		"aliases1":[
+			"AT2020yla",
+			"ATLAS20beuq"
+		],
+		"name2":"SN2020jtu",
+		"aliases2":[
+			"SN2020jtu",
+			"AT2020jtu",
+			"ZTF20aazlsqn"
+		],
+		"ra1":"21:49:44.997",
+		"dec1":"+22:40:44.58",
+		"ra2":"21:49:45.177",
+		"dec2":"+22:40:44.24",
+		"distdeg":"2.5143288206741388",
+		"maxdiffyear":"0.4722222222221717",
+		"discdiffyear":"0.47031111111095925",
 		"edit":false
 	},
 	{
@@ -40565,6 +43961,30 @@
 		"distdeg":"3.6788345840438517",
 		"maxdiffyear":"",
 		"discdiffyear":"",
+		"edit":false
+	},
+	{
+		"name1":"SN2020rov",
+		"aliases1":[
+			"SN2020rov",
+			"AT2020rov",
+			"ZTF20abujoya"
+		],
+		"name2":"SN2020uk",
+		"aliases2":[
+			"SN2020uk",
+			"AT2020uk",
+			"ZTF20aaeszsm",
+			"ATLAS20bjf",
+			"PS20yd"
+		],
+		"ra1":"03:59:42.097",
+		"dec1":"+26:35:22.67",
+		"ra2":"03:59:41.515",
+		"dec2":"+26:35:19.96",
+		"distdeg":"8.26369509626305",
+		"maxdiffyear":"0.5916666666669244",
+		"discdiffyear":"0.6000000000001364",
 		"edit":false
 	},
 	{

@@ -426,12 +426,16 @@ class Supernova(Entry):
 
             if self._KEYS.DISCOVERY_DATE in self.keys():
                 repo_years = self.catalog.PATHS.get_repo_years()
-                dyr = self[self._KEYS.DISCOVERY_DATE][0][QUANTITY.VALUE].split(
-                    '/')[0]
-                for r, year in enumerate(repo_years):
-                    if int(dyr) <= year:
-                        outdir = repo_folders[r]
-                        break
+                try:
+                    dyr = int(self[self._KEYS.DISCOVERY_DATE][0][QUANTITY.VALUE].split(
+                        '/')[0])
+                except Exception as exc:
+                    self._log.warn("Could not extract year from discovery date ({}).".format(repr(exc)))
+                else:
+                    for r, year in enumerate(repo_years):
+                        if int(dyr) <= year:
+                            outdir = repo_folders[r]
+                            break
 
         return outdir, filename
 

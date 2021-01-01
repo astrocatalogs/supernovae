@@ -71,25 +71,26 @@ def do_gaia(catalog):
         csvtxt = catalog.load_url('http://gsaweb.ast.cam.ac.uk/alerts/alert/' +
                                   row[0] + '/lightcurve.csv', fname)
 
-        tsvin2 = csv.reader(csvtxt.splitlines())
-        for ri2, row2 in enumerate(tsvin2):
-            if ri2 <= 1 or not row2:
-                continue
-            mjd = str(jd_to_mjd(Decimal(row2[1].strip())))
-            magnitude = row2[2].strip()
-            if magnitude == 'null':
-                continue
-            e_mag = 0.
-            telescope = 'GAIA'
-            band = 'G'
-            catalog.entries[name].add_photometry(
-                time=mjd,
-                u_time='MJD',
-                telescope=telescope,
-                band=band,
-                magnitude=magnitude,
-                e_magnitude=e_mag,
-                source=source)
+        if csvtxt:
+            tsvin2 = csv.reader(csvtxt.splitlines())
+            for ri2, row2 in enumerate(tsvin2):
+                if ri2 <= 1 or not row2:
+                    continue
+                mjd = str(jd_to_mjd(Decimal(row2[1].strip())))
+                magnitude = row2[2].strip()
+                if magnitude == 'null':
+                    continue
+                e_mag = 0.
+                telescope = 'GAIA'
+                band = 'G'
+                catalog.entries[name].add_photometry(
+                    time=mjd,
+                    u_time='MJD',
+                    telescope=telescope,
+                    band=band,
+                    magnitude=magnitude,
+                    e_magnitude=e_mag,
+                    source=source)
         if catalog.args.update:
             catalog.journal_entries()
         loopcnt = loopcnt + 1
