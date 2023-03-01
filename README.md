@@ -15,9 +15,17 @@ https://github.com/astrocatalogs/sne-2010-2014 – Supernovae discovered between
 https://github.com/astrocatalogs/sne-2015-2019 – Supernovae discovered between 2015 and 2019.
 https://github.com/astrocatalogs/sne-2020-2024 – Supernovae discovered between 2015 and the present.
 
-## Contributing Data ##
+## Contributing ##
 
-To contribute data to the repository, please read our [contribution guide](https://sne.space/contribute/).
+Contributions are greatly appreciated!
+
+1. Fork the project
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some amazing stuff'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Create a new Pull Request
+
+Issues and feature requests are welcome! Feel free to check issues page.
 
 ## Format of Data Files ##
 
