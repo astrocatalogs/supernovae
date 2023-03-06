@@ -12,7 +12,8 @@ https://github.com/astrocatalogs/sne-1990-1999 – Supernovae discovered between
 https://github.com/astrocatalogs/sne-2000-2004 – Supernovae discovered between 2000 and 2004.  
 https://github.com/astrocatalogs/sne-2005-2009 – Supernovae discovered between 2005 and 2009.  
 https://github.com/astrocatalogs/sne-2010-2014 – Supernovae discovered between 2010 and 2014.  
-https://github.com/astrocatalogs/sne-2015-2019 – Supernovae discovered between 2015 and the present.
+https://github.com/astrocatalogs/sne-2015-2019 – Supernovae discovered between 2015 and 2019.
+https://github.com/astrocatalogs/sne-2020-2024 – Supernovae discovered between 2015 and the present.
 
 ## Contributing Data ##
 
