@@ -189,6 +189,10 @@ Other single SN datasets:
 * ASASSN-15oz - https://arxiv.org/abs/1901.09962 (photometry, radio, x-ray)
 * PTF10hgi - https://arxiv.org/abs/1901.10479 (radio)
 
+VizieR Submitted:
+
+* SN2020oi - https://iopscience.iop.org/article/10.3847/1538-4357/abd850 (Spectra) 
+
 Spectra to recover that were donated to SuSpect (bad wavelength solutions, etc):
 * 2000E_20000130_3274_7356_00.dat
 * 2000E_20000131_3274_7349_00.dat
